@@ -7,38 +7,14 @@
 <head>
     <script src="~/SB/DataSetup/SBCustomerMasterFile/SBCustomerMasterFile.js"></script>
     <link href="~/SB/DataSetup/SBCustomerMasterFile/SBCustomerMasterFile.css" rel="stylesheet" />
+    <script src="~/SB/DataSetup/SBCustomerMasterFile/UploadCustom.js"></script>
+
 </head>
 
 
 
 <div id="noah-webui-Toolbox" class="nk-toolbar-c">
-    <div class="nk-toolbar-pagination">
-        <div class="tb-page-control tb-page-control-first">
-            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 22 22" height="22" width="22" class="svg-first-icon">
-                <path d="M19.11,5.25a1.83,1.83,0,0,0-1.81,0L15,6.57V5.8a2,2,0,0,0-3-1.74L3,9.26a2,2,0,0,0,0,3.48l9,5.2a2,2,0,0,0,1,.27,2,2,0,0,0,1-.27,2,2,0,0,0,1-1.74v-.77l2.28,1.32a1.88,1.88,0,0,0,.91.24A1.81,1.81,0,0,0,20,15.18V6.82A1.8,1.8,0,0,0,19.11,5.25ZM14,16.2a1,1,0,0,1-1.51.87l-9-5.2a1,1,0,0,1,0-1.74l9-5.2A1,1,0,0,1,14,5.8V16.2Zm5-1a.81.81,0,0,1-1.22.7L15,14.27V7.73L17.8,6.12a.81.81,0,0,1,1.22.7Z"></path>
-            </svg>
-        </div>
-        <div class="tb-page-control tb-page-control-prev">
-            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 22 22" height="22" width="22" class="svg-prev-icon">
-                <path d="M16,4.06a2,2,0,0,0-2,0L5,9.26a2,2,0,0,0,0,3.48l9,5.2a2,2,0,0,0,1,.27,2,2,0,0,0,1-.27,2,2,0,0,0,1-1.74V5.8A2,2,0,0,0,16,4.06ZM16,16.2a1,1,0,0,1-1.51.87l-9-5.2a1,1,0,0,1,0-1.74l9-5.2A1,1,0,0,1,16,5.8Z"></path>
-            </svg>
-        </div>
-        <div class="tb-input">
-            <input type="text" name="" class="tb-page-search" value="0">
-        </div>
-        <div class="tb-page-of-txt">of</div>
-        <div class="tb-page-count-total">100</div>
-        <div class="tb-page-control tb-page-control-next">
-            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 22 22" height="22" width="22" class="svg-next-icon">
-                <path d="M18,11a2,2,0,0,0-1-1.71L8,4.07A2,2,0,0,0,5,5.81V16.19a2,2,0,0,0,1,1.74,2,2,0,0,0,2,0l9-5.19A2,2,0,0,0,18,11Zm-1.48.89-9,5.2A1,1,0,0,1,6,16.2V5.8a1,1,0,0,1,1.51-.87l9,5.2A1,1,0,0,1,16.52,11.87Z"></path>
-            </svg>
-        </div>
-        <div class="tb-page-control tb-page-control-last">
-            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 22 22" width="22" height="22" class="svg-last-icon">
-                <path d="M19,9.26l-9-5.2A2,2,0,0,0,7,5.8v.77L4.72,5.25a1.83,1.83,0,0,0-1.81,0A1.8,1.8,0,0,0,2,6.82v8.36a1.81,1.81,0,0,0,.9,1.57,1.85,1.85,0,0,0,1.82,0L7,15.43v.77a2,2,0,0,0,1,1.74,2,2,0,0,0,1,.27,2,2,0,0,0,1-.27l9-5.2A2,2,0,0,0,20,11v0A2,2,0,0,0,19,9.26ZM4.22,15.88A.81.81,0,0,1,3,15.18V6.82a.81.81,0,0,1,1.22-.7L7,7.73v6.54Zm14.3-4-9,5.2A1,1,0,0,1,8,16.2V5.8a1,1,0,0,1,1.51-.87l9,5.2A1,1,0,0,1,18.52,11.87Z"></path>
-            </svg>
-        </div>
-    </div>
+ 
 
     <div class="nk-toolbar-btn">
         <div class="btn-tb-action btn-tb-new">
@@ -49,17 +25,14 @@
             <div class="_icon"></div>
             <div class="_lbl">Save</div>
         </div>
-        <div class="btn-tb-action btn-tb-update">
-            <div class="_icon"></div>
-            <div class="_lbl">Update</div>
-        </div>
-        <div class="btn-tb-action btn-tb-delete">
-            <div class="_icon"></div>
-            <div class="_lbl">Delete</div>
-        </div>
         <div class="btn-tb-action btn-tb-refresh">
             <div class="_icon"></div>
             <div class="_lbl">Refresh</div>
+        </div>
+
+        <div class="btn-tb-action btn-tb-delete">
+            <div class="_icon"></div>
+            <div class="_lbl">Delete</div>
         </div>
         <div class="btn-tb-action btn-tb-inquire">
             <div class="_icon"></div>
@@ -71,7 +44,10 @@
             <div class="_lbl">Export</div>
         </div>
 
-
+        <div class="btn-tb-action btn-tb-update">
+            <div class="_icon"></div>
+            <div class="_lbl">Update</div>
+        </div>
     </div>
 </div>
 
@@ -100,178 +76,182 @@
     <input id="txtMunicipalityCB" class="txtFull txtbox cmbMunicipality" type="text" />
     <input id="txtBarangayCB" class="txtFull txtbox cmbBarangay" type="text" />
     <input id="txtRegionCodeCB" class="txtFull txtbox dsbld txtRegionCode" type="text" />
+    <input id="txtRegionCodeCO" class="txtFull txtbox dsbld txtRegionCodeCO" type="text" />
     <input id="txtCountryCodeCB" class="txtFull txtbox dsbld txtCountryCode" type="text" disabled />
+    <input id="txtCountryCodeCO" class="txtFull txtbox dsbld txtCountryCodeCO" type="text" disabled />
+
     <input id="txtFullNameAF" class="txtmri txtbox txtFullName" type="text" placeholder="M.I." disabled />
 </div>
 
 <div class="container-flex mainCon">
     <div class="row row-parent padding-10">
-        <div class="col col-6 col-parent fsMain">
 
+            <div class="col col-8 col-parent fsMain">
+                <fieldset id="topFieldSet" class="topFieldSet fullwidth">
 
-            <div class="row">
-                <div class="col col-12">
+                    <div class="row">
+                        <div class="col col-12">
 
-                    <label id="nwredColor" class="lbltxt"><b>Please specify all the required (*) fields.</b></label>
-                </div>
-
-            </div>
-
-
-            <div class="row ">
-                <div class="col col-4">
-                    <label class="lbltxt">Sales Tagging</label>
-                </div>
-                <div class="col col-8" id="grpSalesTag">
-                    <div class="col col-5">
-                        <div class="rdo-wrapper">
-                            <input name="grpSalesTag" class="rdo rdoSalesTag" id="cbNewInquiry" type="radio" />
-                            <label id="lblNewInquiry" class="lbl-rdo" for="cbNewInquiry">New Inquiry </label>
+                            <label id="nwredColor" class="lbltxt"><b>Please specify all the required (*) fields.</b></label>
                         </div>
-                    </div>
-                    <div class="col col-6">
-                        <div class="rdo-wrapper">
-                            <input name="grpSalesTag" class="rdo rdoSalesTag" id="cbNewReservation" type="radio" />
-                            <label id="lblNewReservation" class="lbl-rdo" for="cbNewReservation">New Reservation </label>
-                        </div>
+
                     </div>
 
-                    <div class="col col-1">
-                        <div class="rdo-wrapper">
-                            <input name="grpSalesTag" class="rdo rdoSalesTag" id="cbTransfer" type="radio" />
-                            <label id="lblTransfer" class="lbl-rdo" for="cbTransfer">Transfer </label>
+
+                    <div class="row ">
+                        <div class="col col-4">
+                            <label class="lbltxt">Sales Tagging</label>
                         </div>
-                    </div>
+                        <div class="col col-8" id="grpSalesTag">
+                            <div class="col col-5">
+                                <div class="rdo-wrapper">
+                                    <input name="grpSalesTag" class="rdo rdoSalesTag" id="cbNewInquiry" type="radio" />
+                                    <label id="lblNewInquiry" class="lbl-rdo" for="cbNewInquiry">New Inquiry </label>
+                                </div>
+                            </div>
+                            <div class="col col-6">
+                                <div class="rdo-wrapper">
+                                    <input name="grpSalesTag" class="rdo rdoSalesTag" id="cbNewReservation" type="radio" />
+                                    <label id="lblNewReservation" class="lbl-rdo" for="cbNewReservation">New Reservation </label>
+                                </div>
+                            </div>
 
-                </div>
-            </div>
+                            <div class="col col-1">
+                                <div class="rdo-wrapper">
+                                    <input name="grpSalesTag" class="rdo rdoSalesTag" id="cbTransfer" type="radio" />
+                                    <label id="lblTransfer" class="lbl-rdo" for="cbTransfer">Transfer </label>
+                                </div>
+                            </div>
 
-
-
-
-            <div class="row">
-                <div class="col col-4">
-                    <label class="lbltxt">Customer Type</label>
-                </div>
-                <div class="col col-8" id="grpCustomerTypes">
-                    <div class="col col-5">
-                        <div class="rdo-wrapper">
-                            <input name="grpCustomerType" class="rdo" id="cbIndividual" type="radio" />
-                            <label id="lblIndividual" class="lbl-rdo" for="cbIndividual">Individual</label>
-                        </div>
-                    </div>
-                    <div class="col col-6">
-                        <div class="rdo-wrapper">
-                            <input name="grpCustomerType" class="rdo" style="width: 50px" id="cbCompany" type="radio" />
-                            <label id="lblCompany" class="lbl-rdo" for="cbCompany">Company</label>
                         </div>
                     </div>
 
-                    <div class="col col-1">
-                        <div class="rdo-wrapper">
-                            <input name="grpVIP" class="chk" id="cbVIP" type="checkbox" />
-                            <label id="lblVIP" class="lbl-chk" for="cbVIP">VIP</label>
+
+
+
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Customer Type</label>
+                        </div>
+                        <div class="col col-8" id="grpCustomerTypes">
+                            <div class="col col-5">
+                                <div class="rdo-wrapper">
+                                    <input name="grpCustomerType" class="rdo" id="cbIndividual" type="radio" />
+                                    <label id="lblIndividual" class="lbl-rdo" for="cbIndividual">Individual</label>
+                                </div>
+                            </div>
+                            <div class="col col-6">
+                                <div class="rdo-wrapper">
+                                    <input name="grpCustomerType" class="rdo" style="width: 50px" id="cbCompany" type="radio" />
+                                    <label id="lblCompany" class="lbl-rdo" for="cbCompany">Company</label>
+                                </div>
+                            </div>
+
+                            <div class="col col-1">
+                                <div class="rdo-wrapper">
+                                    <input name="grpVIP" class="chk" id="cbVIP" type="checkbox" />
+                                    <label id="lblVIP" class="lbl-chk" for="cbVIP">VIP</label>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
-                </div>
-            </div>
 
 
 
-
-            <div class="row">
-                <div class="col col-4">
-                    <label class="lbltxt">Customer Code</label>
-                </div>
-                <div class="col col-8">
-
-                    <input id="txtCode" class="txtbox dsbld" type="text" disabled />
-
-
-
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-4">
-                    <label class="lbltxt">Customer Classification</label>
-                </div>
-                <div class="col col-8">
-                    <select id="cmbCustClass" class="cmb fullwidth "></select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-4">
-                    <label class="lbltxt">VIP Type</label>
-                </div>
-                <div class="col col-8">
-                    <select id="cmbVIPType" class="cmb fullwidth "></select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-4">
-                    <label class="lbltxt">Record Status</label>
-                </div>
-                <div class="col col-8">
-                    <input id="txtStatus" class="txtbox dsbld nwcuz0001" type="text" disabled />
-
-
-                </div>
-            </div>
-
-
-
-
-
-        </div>
-        <div class="col col-3 col-parent">
-
-
-            <div class="row">
-                <fieldset id="profile-box">
-                    <legend>Picture</legend>
-                    <div class="noah-webui-containerRowItem">
-                        <div>
-                            <button id="btnCaptureImage" data-target="" style="display:none;" class="data-entry btn-default">Capture Image</button>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Customer Code</label>
                         </div>
-                        <div>
-                            <div id="profile-img"></div>
-                        </div>
-                        <div>
-                            <button data-target="" id="attachIDPicture" class="data-entry btn-default" disabled>Attach ID Picture</button>
+                        <div class="col col-8">
+
+                            <input id="txtCode" class="txtbox dsbld" type="text" disabled />
+
+
+
+
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Customer Classification</label>
+                        </div>
+                        <div class="col col-8">
+                            <select id="cmbCustClass" class="cmb fullwidth cmbCustClass"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">VIP Type</label>
+                        </div>
+                        <div class="col col-8">
+                            <select id="cmbVIPType" class="cmb fullwidth cmbVIPType"></select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Record Status</label>
+                        </div>
+                        <div class="col col-8">
+                            <input id="txtStatus" class="txtbox dsbld nwcuz0001" type="text" disabled />
+
+
+                        </div>
+                    </div>
+
+
+
+
                 </fieldset>
             </div>
+            <div class="col col-4 col-parent">
 
 
-            <div class="row">
-                <fieldset id="signature-box">
-                    <legend>Signature</legend>
-                    <div class="noah-webui-containerRowItem">
-                        <div>
-                            <div id="profile-img-signature"></div>
+                <div class="row">
+                    <fieldset id="profile-box" class="fullwidth">
+                        <legend>Picture</legend>
+                        <div class="noah-webui-containerRowItem">
+                            <div>
+                                <button id="btnCaptureImage" data-target="" style="display:none;" class="data-entry btn-default">Capture Image</button>
+                            </div>
+                            <div>
+                                <div id="profile-img"></div>
+                            </div>
+                            <div>
+                                <button data-target="" id="attachIDPicture" class="data-entry btn-default fullwidth" disabled>Attach ID Picture</button>
+                            </div>
                         </div>
-                        <div>
-                            <button data-target="" id="attachSignature" class="data-entry btn-default" disabled>Attach Signature</button>
+                    </fieldset>
+                </div>
+
+
+                <div class="row">
+                    <fieldset id="signature-box" class="fullwidth">
+                        <legend>Signature</legend>
+                        <div class="noah-webui-containerRowItem">
+                            <div>
+                                <div id="profile-img-signature"></div>
+                            </div>
+                            <div>
+                                <button data-target="" id="attachSignature" class="data-entry btn-default fullwidth" disabled>Attach Signature</button>
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
+                    </fieldset>
+
+                </div>
+
+
+                <div class="row">
+                    <button class="btn btn-default btn-default-orange fullwidth" id="btnReqCompliance" disabled="disabled">Requirements Compliance</button>
+
+
+                </div>
 
             </div>
-
-
-            <div class="row">
-                <button class="btn btn-default btn-default-orange fullwidth" id="btnReqCompliance" disabled="disabled">Requirements Compliance</button>
-
-
-            </div>
-
         </div>
-    </div>
 
 
     @*==============================INDIVIDUAL BUYER==============================*@
@@ -283,7 +263,7 @@
             @*====Full Name======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Seller</label>
+                    <label class="lbltxt">Full Name</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
                     <div class="col col-2">
@@ -303,7 +283,10 @@
 
                     </div>
                     <div class="col col-2">
-                        <select id="cmbSuffix" class="cmb txtName cmbSuffix"></select>
+                        <select id="cmbSuffix" class="cmb txtName cmbSuffix">
+                            <option value="" selected disabled>Name Suffix</option>
+
+                        </select>
 
 
                     </div>
@@ -380,7 +363,7 @@
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtBday" class="txtbox txtbox-date txtBday" age="txtAge" type="date" />
+                        <input id="txtBday" class="txtbox txtbox-date txtBday" age="txtAge" type="date" max="9999-12-31"/>
                     </div>
                     <div class="col col-2">
                         <label class="lbltxt">Age</label>
@@ -471,7 +454,7 @@
             @*====Landline Number & Mobile No.======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Landline No.</label>
+                    <label class="lbltxt">Home Phone No.</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
 
@@ -497,20 +480,22 @@
             @*====Local Number & Email Address======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Local No.</label>
+                    @*<label class="lbltxt">Local No.</label>*@
+                    <label class="lbltxt">Email Address </label>
+
                 </div>
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtLocalNo" class="txtFull txtbox txtLocalNo" type="text" />
+                        @*<input id="txtLocalNo" class="txtFull txtbox txtLocalNo" type="text" />*@
+                        <input id="txtEmail" class="txtFull txtbox txtEmail" type="text" />
+
                     </div>
                     <div class="col col-2">
-                        <label class="lbltxt">Email Address </label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
 
-                        <input id="txtEmail" class="txtFull txtbox txtEmail" type="text" />
                     </div>
 
                     <div class="col col-2">
@@ -518,8 +503,55 @@
 
                 </div>
             </div>
+            @*====Valid ID & Date Issued======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Valid ID</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtValidID" class="txtFull txtbox txtValidID" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Date Issued</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <input id="txtDateIssued" class="txtbox txtbox-date txtDateIssued" type="date" max="9999-12-31"/>
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+            @*====Place Issued======*@
+            <div class="row">
+                <div class="col col-2">
 
 
+                    <div class="rdo-wrapper">
+                        @*<input name="chkMailingAddress" class="chk chkMailAddress" id="chkMailingAddress" type="checkbox" />*@
+                        <label id="lblPlaceIssued" class="lbl-chk" for="PlaceIssued">Place Issued</label>
+                    </div>
+
+
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-8 nwCustomCol-8">
+                        <textarea id="txtPlaceIssued" class="txtarea txtPlaceIssued"> </textarea>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                    </div>
+                    <div class="col col-2">
+                    </div>
+                </div>
+            </div>
             @*====Home Ownership & Location Type======*@
             <div class="row">
                 <div class="col col-2">
@@ -575,16 +607,41 @@
                 </div>
             </div>
 
-
-            @*====Provide & Municipality/City======*@
+            @*====Mailing Address======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Provide</label>
+
+
+                    <div class="rdo-wrapper">
+                        @*<input name="chkMailingAddress" class="chk chkMailAddress" id="chkMailingAddress" type="checkbox" />*@
+                        <label id="lblchkMailingAddress" class="lbl-chk" for="chkMailingAddress">Mailing Address</label>
+                    </div>
+
+
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-8 nwCustomCol-8">
+                        <textarea id="txtMailAddress" class="txtarea txtMailAddress"> </textarea>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                    </div>
+                    <div class="col col-2">
+                    </div>
+                </div>
+            </div>
+
+            @*====Province & Municipality/City======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Province</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <select id="cmbProvince" class="cmb cmbFull cmbProvince"></select>
+                        <select id="cmbProvince" class="cmb cmbFull cmbProvince fullwidth"></select>
                     </div>
                     <div class="col col-2">
                         <label class="lbltxt">Municipality/City</label>
@@ -660,13 +717,294 @@
                 </div>
             </div>
 
+            @*====Contact person other than spouse / Contact No. of Contact person other than spouse======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Contact person other than spouse</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
 
+                    <div class="col col-4 nwCustomCol-4">
+                        <textarea id="txtEmpContactPerson" class="txtFull txtbox txtEmpContactPerson" type="text" autocomplete="off" ></textarea>
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Contact No. of Contact person other than spouse</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <textarea id="txtEmpContactPersonNum" class="txtFull txtbox txtEmpContactPersonNum" type="text" autocomplete="off" ></textarea>
+
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
 
 
 
         </div>
     </div>
 
+
+
+
+    @*==============================With Co-Owner ==============================*@
+    <div class="groupHeader fsEmploymentInfo col col-12">Employment Information</div>
+    <div class="row row-parent padding-10 fsSec fsEmploymentInfo">
+        <div class="col col-10 col-parent nwCustomContainer">
+
+
+            @*==== Employer/Business Name =====*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Employer/Business Name</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-8 nwCustomCol-8">
+                        <textarea id="txtEmployerNameCO" class="txtarea"> </textarea>
+                    </div>
+                    <div class="col col-2">
+
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+
+            @*==== Office Address =====*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Office Address</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-8 nwCustomCol-8">
+                        <textarea id="txtEmployerAddressCO" class="txtarea"> </textarea>
+                    </div>
+                    <div class="col col-2">
+
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+
+            @*====Occupation  & Zip ======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Occupation </label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <select id="cmbEmpInfoOccupation" class="cmb cmbFull cmbOccupation fullwidth"></select>
+
+
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Zip Code</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <input id="txtEmpInfoZip" class="txtFull txtbox txtEmpInfoZip" type="text" />
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+            @*=== Employment Sub Type and Source of Income======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Employment Sub Type</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <select id="cmbEmpSubTypeCO" class="cmb cmbFull cmbEmpSubType"></select>
+
+
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt"> Source of Income</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <select id="cmbSrcOfIncomeCO" class="cmb cmbFull cmbSourceOfIncome"></select>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
+            @*=== Employment Status/Employer/Nature of Business======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Employment Status</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <select id="cmbEmpStatusEMP" class="cmb cmbFull cmbEmpStatus"></select>
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt"> Nature of Business</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <select id="cmbNatureOfBusinessEMP" class="cmb cmbFull cmbNatureOfBusiness fullwidth"></select>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            @*=== Profession/Personal Income======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Profession </label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtProfessionEMP" class="txtFull txtbox txtProfession" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Phone (Office)</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <input id="txtEmployerContactEMP" class="txtFull txtbox txtEmployerContact" type="text" />
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+            @*=== Position/Personal Income======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Position</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtPositionEMP" class="txtFull txtbox txtPosition" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Personal Income</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <select id="cmbPersonalIncomeEMP" class="cmb cmbFull cmbPersonalIncome"></select>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+                </div>
+            </div>
+
+            @*=== Engaged in Business?/Household Income======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Engaged in Business?</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <div class="rdo-wrapper">
+                            <input name="grp10" id="rdbEngagedYes" class="rdo" type="radio" />
+                            <label id="lblEngagedYes" class="lbl-rdo" for="rdbEngagedYes">Yes </label>
+                            <input name="grp10" id="rdbEngagedYesNo" class="rdo" type="radio" />
+                            <label id="lblEngagedNo" class="lbl-rdo" for="rdbEngagedYesNo">No</label>
+                        </div>
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Household Income</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <select id="cmbHouseholdIncomeEMP" class="cmb cmbFull cmbHouseholdIncome"></select>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            @*=== Total No. of years abroad./Date of Current Contract Ends======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Total no. of Yrs. Abroad</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtNoYrsAbroad" class="txtFull txtbox txtNoYrsAbroad" type="number" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Date of current contract ends</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <input id="txtCurrContractEndEMP" class="txtbox txtbox-date txtCurrContractEndEMP" type="date" max="9999-12-31"/>
+
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @*==============================Current Bank Accounts ==============================*@
+    <div class="groupHeader fsCurrAccBnk col col-12">Current Bank Accounts</div>
+    <div class="row row-parent padding-10 fsSec fsCurrAccBnk">
+        <div class="col col-10 col-parent nwCustomContainer">
+
+
+            @*==== Current Bank Accounts Grid =====*@
+            <div class="row">
+                <div class="col col-12 col-parent" id="nwGridMainCon">
+                </div>
+            </div>
+
+
+        </div>
+    </div>
     @*==============================Spouse Information SP==============================*@
     <div class="groupHeader fsSpouseInfo col col-12">Spouse Information</div>
     <div class="row row-parent padding-10 fsSec fsSpouseInfo">
@@ -687,7 +1025,7 @@
                     </div>
                     <div class="col col-2">
 
-                        <input id="txtMiddleNameSP" class="txtbox txtName txtMiddleName" sec="" placeholder="Middle Name" type="text" style="min-width: 160px; max-width: 160px;" maxlength="50" />
+                        <input id="txtMiddleNameSP" class="txtbox txtName txtMiddleName" sec="SP" placeholder="Middle Name" type="text" style="min-width: 160px; max-width: 160px;" maxlength="50" />
                     </div>
                     <div class="col col-1">
                         <input id="txtmriSP" class="txtbox dsbld txtName" type="text" placeholder="M.I." disabled />
@@ -695,7 +1033,10 @@
 
                     </div>
                     <div class="col col-2">
-                        <select id="cmbSuffixSP" class="cmb txtName cmbSuffix"></select>
+                        <select id="cmbSuffixSP" class="cmb txtName cmbSuffix" >
+                            <option value="" selected disabled>Name Suffix</option>
+
+                        </select>
 
 
                     </div>
@@ -736,7 +1077,7 @@
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtBdaySP" class="txtbox txtbox-date txtBday" age="txtAgeSP" type="date" maxlength="" />
+                        <input id="txtBdaySP" class="txtbox txtbox-date txtBday" age="txtAgeSP" type="date" max="9999-12-31" />
 
 
                     </div>
@@ -755,7 +1096,7 @@
             </div>
 
 
-            @*====Date of Marriage  & Occupation ======*@
+            @*====Date of Marriage  & Nationality ======*@
             <div class="row">
                 <div class="col col-2">
                     <label class="lbltxt">Date of Marriage </label>
@@ -763,7 +1104,7 @@
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtDateMarriageSP" class="txtbox txtbox-date txtBday" age="txtAge" type="date" />
+                        <input id="txtDateMarriageSP" class="txtbox txtbox-date txtBday" age="txtAge" type="date" max="9999-12-31"/>
 
 
                     </div>
@@ -772,7 +1113,7 @@
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-                        <select id="cmbNationalitySP" class="cmb cmbFull cmbOccupation"></select>
+                        <select id="cmbNationalitySP" class="cmb cmbFull cmbNationality"></select>
 
                     </div>
 
@@ -784,15 +1125,15 @@
 
 
 
-            @*====Occupation  & Individual TIN ======*@
+            @*====Mobile No.  & Individual TIN ======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Occupation </label>
+                    <label class="lbltxt">Mobile No.</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <select id="cmbOccupationSP" class="cmb cmbFull cmbOccupation"></select>
+                        <input id="txtMobileNoSp" class="txtFull txtbox txtSpsMobileNoSps" type="text" />
 
 
                     </div>
@@ -811,16 +1152,90 @@
                 </div>
             </div>
 
+            @*====Valid ID & Date Issued======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Valid ID</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtValidIDSP" class="txtFull txtbox txtValidIDSP" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Date Issued</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <input id="txtDateIssuedSP" class="txtbox txtbox-date txtDateIssuedSP" type="date" max="9999-12-31"/>
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+            @*====Place Issued======*@
+            <div class="row">
+                <div class="col col-2">
 
 
+                    <div class="rdo-wrapper">
+                        @*<input name="chkMailingAddress" class="chk chkMailAddress" id="chkMailingAddress" type="checkbox" />*@
+                        <label id="lblPlaceIssued" class="lbl-chk" for="PlaceIssued">Place Issued</label>
+                    </div>
 
+
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-8 nwCustomCol-8">
+                        <textarea id="txtPlaceIssuedSP" class="txtarea txtPlaceIssuedSP"> </textarea>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                    </div>
+                    <div class="col col-2">
+                    </div>
+                </div>
+            </div>
+
+            @*====Contact person other than spouse / Contact No. of Contact person other than spouse======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Contact person other than spouse</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <textarea id="txtContactPersonSP" class="txtFull txtbox txtContactPersonSP" type="text" autocomplete="off" ></textarea>
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Contact No. of Contact person other than spouse</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <textarea id="txtContactPersonNumSP" class="txtFull txtbox txtContactPersonNumSP" type="text" autocomplete="off" ></textarea>
+
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 
+    @*==== Spouse Employment Information =====*@
 
-    @*==============================With Co-Owner ==============================*@
-    <div class="groupHeader fsEmploymentInfo col col-12">Employment Information</div>
-    <div class="row row-parent padding-10 fsSec fsEmploymentInfo">
+
+    <div class="groupHeader fsSpsEmploymentInfo col col-12">Spouse Employment Information</div>
+    <div class="row row-parent padding-10 fsSec fsSpsEmploymentInfo">
         <div class="col col-10 col-parent nwCustomContainer">
 
 
@@ -832,7 +1247,7 @@
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-8 nwCustomCol-8">
-                        <textarea id="txtEmployerNameEMP" class="txtarea"> </textarea>
+                        <textarea id="txtEmployerNameSPS" class="txtarea"> </textarea>
                     </div>
                     <div class="col col-2">
 
@@ -856,7 +1271,7 @@
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-8 nwCustomCol-8">
-                        <textarea id="txtEmployerAddressEMP" class="txtarea"> </textarea>
+                        <textarea id="txtEmployerAddressSPS" class="txtarea"> </textarea>
                     </div>
                     <div class="col col-2">
 
@@ -872,24 +1287,49 @@
                 </div>
             </div>
 
+            @*====Occupation  & Zip ======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Occupation </label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
 
-            @*=== Employment Sub Type and Nature Of Business======*@
+                    <div class="col col-4 nwCustomCol-4">
+                        <select id="cmbInfoOccupationSPS" class="cmb cmbFull cmbOccupation fullwidth"></select>
+
+
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Zip Code</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <input id="txtInfoZipSps" class="txtFull txtbox txtInfoZipSps" type="text" />
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+            @*=== Employment Sub Type and Source of Income======*@
             <div class="row">
                 <div class="col col-2">
                     <label class="lbltxt">Employment Sub Type</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
                     <div class="col col-4 nwCustomCol-4">
-                        <select id="cmbEmpSubTypeEMP" class="cmb cmbFull cmbEmpSubTypeEMP"></select>
+                        <select id="cmbEmpSubTypeSps" class="cmb cmbFull cmbEmpSubType"></select>
 
 
                     </div>
                     <div class="col col-2">
-                        <label class="lbltxt"> Nature of Business</label>
+                        <label class="lbltxt"> Source of Income</label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-                        <select id="cmbNatureOfBusinessEMP" class="cmb cmbFull cmbNatureOfBusiness"></select>
+                        <select id="cmbSrcOfIncomeSps" class="cmb cmbFull cmbSourceOfIncome"></select>
                     </div>
                     <div class="col col-2">
 
@@ -900,22 +1340,22 @@
             </div>
 
 
-            @*=== Employment Status/Employer/Business Contact No======*@
+            @*=== Employment Status/Employer/Nature of Business======*@
             <div class="row">
                 <div class="col col-2">
                     <label class="lbltxt">Employment Status</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
                     <div class="col col-4 nwCustomCol-4">
-                        <select id="cmbEmpStatusEMP" class="cmb cmbFull"></select>
+                        <select id="cmbEmpStatusSps" class="cmb cmbFull cmbEmpStatus"></select>
                     </div>
                     <div class="col col-2">
-                        <label class="lbltxt">Phone (Office)</label>
+                        <label class="lbltxt"> Nature of Business</label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
 
-                        <input id="txtEmployerContactEMP" class="txtFull txtbox txtEmployerContact" type="text" />
+                        <select id="cmbNatureOfBusinessSps" class="cmb cmbFull cmbNatureOfBusiness fullwidth"></select>
                     </div>
                     <div class="col col-2">
 
@@ -926,21 +1366,21 @@
             </div>
 
 
-            @*=== Profession/Personal Income======*@
+            @*=== Profession/Phone======*@
             <div class="row">
                 <div class="col col-2">
                     <label class="lbltxt">Profession </label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtProfessionEMP" class="txtFull txtbox txtProfession" type="text" />
+                        <input id="txtProfessionSps" class="txtFull txtbox txtProfessionSps" type="text" />
                     </div>
                     <div class="col col-2">
-                        <label class="lbltxt">Personal Income</label>
+                        <label class="lbltxt">Phone (Office)</label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-                        <select id="cmbPersonalIncomeEMP" class="cmb cmbFull"></select>
+                        <input id="txtEmployerContactSps" class="txtFull txtbox txtEmployerContactSps" type="text" />
                     </div>
                     <div class="col col-2">
 
@@ -952,21 +1392,53 @@
 
 
 
-            @*=== Position/Household Income======*@
+            @*=== Position/Personal Income======*@
             <div class="row">
                 <div class="col col-2">
                     <label class="lbltxt">Position</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtPositionEMP" class="txtFull txtbox txtPosition" type="text" />
+                        <input id="txtPositionSps" class="txtFull txtbox txtPositionSps" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Personal Income</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <select id="cmbPersonalIncomeSps" class="cmb cmbFull cmbPersonalIncome"></select>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+                </div>
+            </div>
+
+            @*=== Engaged in Business?/Household Income======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Engaged in Business?</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <div class="rdo-wrapper">
+                            <input name="grp11" id="rdbEngagedYesSps" class="rdo" type="radio" />
+                            <label id="lblEngagedYes" class="lbl-rdo" for="rdbEngagedYesSps">Yes </label>
+
+
+
+                            <input name="grp11" id="rdbEngagedYesNoSps" class="rdo" type="radio" />
+                            <label id="lblEngagedNo" class="lbl-rdo" for="rdbEngagedYesNoSps">No</label>
+                        </div>
+                       
                     </div>
                     <div class="col col-2">
                         <label class="lbltxt">Household Income</label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-                        <select id="cmbHouseholdIncomeEMP" class="cmb cmbFull"></select>
+                        <select id="cmbHouseholdIncomeSps" class="cmb cmbFull cmbHouseholdIncome"></select>
                     </div>
                     <div class="col col-2">
 
@@ -976,37 +1448,49 @@
             </div>
 
 
+            @*=== Total No. of years abroad./Date of Current Contract Ends======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Engaged to Business?</label>
+                    <label class="lbltxt">Total no. of Yrs. Abroad</label>
                 </div>
-                <div class="col col-10">
-
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtNoYrsAbroadSps" class="txtFull txtbox txtNoYrsAbroadSps" type="text" />
+                    </div>
                     <div class="col col-2">
-                        <div class="rdo-wrapper">
-                            <input name="grp10" id="rdbEngagedYes" class="rdo" type="radio" />
-                            <label id="lblEngagedYes" class="lbl-rdo" for="rdbEngagedYes">Yes </label>
-                        </div>
-                    </div>
+                        <label class="lbltxt">Date of current contract ends</label>
 
-                    <div class="col col-1">
-                        <div class="rdo-wrapper">
-                            <input name="grp10" id="rdbEngagedYesNo" class="rdo" type="radio" />
-                            <label id="lblEngagedNo" class="lbl-rdo" for="rdbEngagedYesNo">No</label>
-                        </div>
                     </div>
-                    <div class="col col-5">
+                    <div class="col col-3 nwCustomCol-3">
+                        <input id="txtContractEndSpS" class="txtbox txtbox-date txtContractEndSpS" type="date" max="9999-12-31" />
+
+                    </div>
+                    <div class="col col-2">
 
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @*==============================Current Bank Accounts ==============================*@
+    <div class="groupHeader fsSpsCurBnkAcc col col-12 " id="fsSpsCurBnkAcc">Spouse Current Bank Accounts</div>
+    <div class="row row-parent padding-10 fsSec fsSpsCurBnkAcc" >
+        <div class="col col-10 col-parent nwCustomContainer">
+
+
+            @*==== Current Bank Accounts Grid =====*@
+            <div class="row">
+                <div class="col col-12 col-parent" id="nwGridMainCon2">
                 </div>
             </div>
 
 
         </div>
     </div>
-
-
     @*==============================With Co-Owner ==============================*@
     <div class="groupHeader fsCoownerInfo col col-12">Co-Owner Information</div>
     <div class="row row-parent padding-10 fsSec fsCoownerInfo">
@@ -1051,16 +1535,19 @@
                     </div>
                     <div class="col col-2">
 
-               
-                        <input id="txtMiddleNameCO" class="txtbox txtMiddleName txtName" sec="CO" placeholder="Middle Name" type="text"  autocomplete="off">
+
+                        <input id="txtMiddleNameCO" class="txtbox txtMiddleName txtName" sec="CO" placeholder="Middle Name" type="text" autocomplete="off">
                     </div>
                     <div class="col col-1">
- 
-                        <input id="txtmriCO" class="txtmri txtbox dsbld txtName noah-webui-disabled" type="text" sec="CO" placeholder="M.I."  disabled="" nwdisabled="true" autocomplete="off">
+
+                        <input id="txtmriCO" class="txtmri txtbox dsbld txtName noah-webui-disabled" type="text" sec="CO" placeholder="M.I." disabled="" nwdisabled="true" autocomplete="off">
 
                     </div>
                     <div class="col col-2">
-                        <select id="cmbSuffixCO" class="cmb txtName cmbSuffix"></select>
+                        <select id="cmbSuffixCO" class="cmb txtName cmbSuffix">
+                            <option value="" selected disabled>Name Suffix</option>
+
+                        </select>
 
 
                     </div>
@@ -1068,17 +1555,16 @@
             </div>
 
 
-            @*====Relationship to the Customer and Gender ======*@
+            @*====Salutation and Gender ======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Relationship to Customer</label>
+                    <label class="lbltxt">Salutation</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
                     <div class="col col-4 nwCustomCol-4">
-                    
 
-                        <select id="cmbRelationshipCO" class="cmb cmbFull cmbRelationship"></select>
-                    </div>
+
+                        <select id="cmbSalutationCO" class="cmb cmbFull cmbSalutation"></select>                    </div>
                     <div class="col col-2">
                         <label class="lbltxt">Gender</label>
 
@@ -1094,6 +1580,29 @@
                 </div>
             </div>
 
+            @*====Mother's Maiden Name ======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Mother's Maiden Name</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-8 nwCustomCol-8">
+                        <input id="txtMothersMaidenCO" class="txtbox txtName fullwidth" type="text" />
+                    </div>
+                    <div class="col col-2">
+
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
 
             @*====Date of Birth & Age ======*@
             <div class="row">
@@ -1103,7 +1612,7 @@
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtBdayCO" class="txtbox txtbox-date txtBday" age="txtAgeCO" type="date" />
+                        <input id="txtBdayCO" class="txtbox txtbox-date txtBday" age="txtAgeCO" type="date" max="9999-12-31"/>
 
 
                     </div>
@@ -1121,6 +1630,26 @@
 
                 </div>
             </div>
+            @*====Place of Birth (City/Province) ======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Place of Birth (City/Province)</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-8 nwCustomCol-8">
+                        <textarea id="txtPlaceBirthCO" class="txtarea noah-webui-disabled"> </textarea>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                    </div>
+                    <div class="col col-2">
+                    </div>
+                </div>
+            </div>
+
+          
 
 
             @*====Civil Status & Nationality ======*@
@@ -1148,19 +1677,75 @@
                 </div>
             </div>
 
-
-            @*==== Present Residence Address =====*@
+            @*====Individual TIN & Payment Option======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Present Residence Address</label>
+                    <label class="lbltxt">Individual TIN</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
 
-                    <div class="col col-8 nwCustomCol-8">
-                        <textarea id="txtResidentialAddressCO" class="txtarea"> </textarea>
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtTINCO" class="txtFull txtTINCO txtbox" type="text" />
                     </div>
                     <div class="col col-2">
+                        <label class="lbltxt">Payment Option</label>
 
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <select id="cmbPaymentOptionCO" class="cmb cmbFull cmbPaymentOption"></select>
+
+
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+
+            @*====Landline Number & Mobile No.======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Home Phone No.</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtLandlineNoCO" class="txtFull txtbox txtLandlineNoCO" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Mobile No.</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <input id="txtMobileNoCO" class="txtFull txtbox txtMobileNoCO" type="text" />
+
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+          
+
+            @*====Local Number & Email Address======*@
+            <div class="row">
+                <div class="col col-2">
+                    @*<label class="lbltxt">Local No.</label>*@
+                    <label class="lbltxt">Email Address </label>
+
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        @*<input id="txtLocalNo" class="txtFull txtbox txtLocalNo" type="text" />*@
+                        <input id="txtEmailCO" class="txtFull txtbox txtEmailCO" type="text" />
+
+                    </div>
+                    <div class="col col-2">
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
@@ -1172,9 +1757,56 @@
 
                 </div>
             </div>
+            @*====Valid ID & Date Issued======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Valid ID</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtValidIDCO" class="txtFull txtbox txtValidIDCO" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Date Issued</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <input id="txtDateIssuedCO" class="txtbox txtbox-date txtDateIssuedCO" type="date" max="9999-12-31" />
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+            @*====Place Issued======*@
+            <div class="row">
+                <div class="col col-2">
 
 
-            @*==== Home Ownership and Email Address ======*@
+                    <div class="rdo-wrapper">
+                        @*<input name="chkMailingAddress" class="chk chkMailAddress" id="chkMailingAddress" type="checkbox" />*@
+                        <label id="lblPlaceIssued" class="lbl-chk" for="PlaceIssued">Place Issued</label>
+                    </div>
+
+
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-8 nwCustomCol-8">
+                        <textarea id="txtPlaceIssuedCO" class="txtarea txtPlaceIssuedCO"> </textarea>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                    </div>
+                    <div class="col col-2">
+                    </div>
+                </div>
+            </div>
+            @*====Home Ownership & Location Type======*@
             <div class="row">
                 <div class="col col-2">
                     <label class="lbltxt">Home Ownership</label>
@@ -1185,11 +1817,13 @@
                         <select id="cmbHomeOwnCO" class="cmb cmbFull cmbHomeOwn"></select>
                     </div>
                     <div class="col col-2">
-                        <label class="lbltxt">Nationality</label>
+                        <label class="lbltxt">Location Type</label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-                        <input id="txtEmailCO" class="txtFull txtbox txtEmail" type="text" />
+                        <select id="cmbLocTypeCO" class="cmb cmbFull cmbLocType"></select>
+
+
 
                     </div>
 
@@ -1201,123 +1835,160 @@
 
 
 
-            @*==== Landline No. and Local No. ======*@
+            @*====Full Address======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Landline No.</label>
+
+
+                    <div class="rdo-wrapper">
+                        <input name="chkFullAddressCO" class="chk chkFullAddressCO" id="chkFullAddressCO" type="checkbox" />
+                        <label id="lblchkFullAddressCO" class="lbl-chk" for="chkFullAddressCO">Full Address</label>
+                    </div>
+
+
                 </div>
                 <div class="col col-10 col-parent adisabled">
-
-                    <div class="col col-4 nwCustomCol-4">
-                        <input id="txtLandlineNoCO" class="txtFull txtbox txtLandlineNoCO" type="text" />
-                    </div>
-                    <div class="col col-2">
-                        <label class="lbltxt">Local No.</label>
-
-                    </div>
-                    <div class="col col-3 nwCustomCol-3">
-                        <input id="txtLocalNoCO" class="txtFull txtbox txtLocalNoCO" type="text" />
-
-                    </div>
-
-                    <div class="col col-2">
-                    </div>
-
-                </div>
-            </div>
-
-
-            @*==== Mobile No. and Individual TIN ======*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Mobile No. </label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-
-                    <div class="col col-4 nwCustomCol-4">
-                        <input id="txtMobileNoCO" class="txtFull txtbox txtMobileNoCO" type="text" />
-                    </div>
-                    <div class="col col-2">
-                        <label class="lbltxt">Individual TIN</label>
-
-                    </div>
-                    <div class="col col-3 nwCustomCol-3">
-                        <input id="txtTINCOD" class="txtFull txtbox txtTIN" type="text">
-
-                    </div>
-
-                    <div class="col col-2">
-                    </div>
-
-                </div>
-            </div>
-
-
-            @*==== Employer/Business Name  =====*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Employer/Business Name </label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-
                     <div class="col col-8 nwCustomCol-8">
-                        <textarea id="txtEmployerNameCO" class="txtarea txtEmployerNameCO"> </textarea>
+                        <textarea id="txtFullAddressCO" class="txtarea txtFullAddressCO"> </textarea>
                     </div>
                     <div class="col col-2">
-
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-
                     </div>
-
                     <div class="col col-2">
                     </div>
-
                 </div>
             </div>
 
-
-            @*==== Employer/Business Address  =====*@
+            @*====Mailing Address======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Employer/Business Address </label>
+
+
+                    <div class="rdo-wrapper">
+                        @*<input name="chkMailingAddressCO" class="chk chkMailAddress" id="chkMailingAddressCO" type="checkbox" />*@
+                        <label id="lblchkMailingAddress" class="lbl-chk" for="chkMailingAddress">Mailing Address</label>
+                    </div>
+
+
                 </div>
                 <div class="col col-10 col-parent adisabled">
-
                     <div class="col col-8 nwCustomCol-8">
-                        <textarea id="txtEmployerAddressCO" class="txtarea txtEmployerNameCO"> </textarea>
+                        <textarea id="txtMailAddressCO" class="txtarea txtMailAddressCO"> </textarea>
                     </div>
                     <div class="col col-2">
-
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-
                     </div>
-
                     <div class="col col-2">
                     </div>
-
                 </div>
             </div>
 
-            @*==== Employer/Business Contact No. / Position  ======*@
+            @*====Province & Municipality/City======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Employer/Business Contact No. </label>
+                    <label class="lbltxt">Province</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtEmployerContactCO" class="txtFull txtbox txtEmployerContactCO" type="text" />
+                        <select id="cmbProvinceCO" class="cmb cmbFull cmbProvinceCO fullwidth"></select>
                     </div>
                     <div class="col col-2">
-                        <label class="lbltxt">Position</label>
+                        <label class="lbltxt">Municipality/City</label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-                        <input id="txtPositionCO" class="txtFull txtbox txtPositionCO" type="text" />
+
+                        <select id="cmbMunicipalityCO" class="cmb cmbFull cmbMunicipalityCO"></select>
+
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            @*====Barangay & ZIP Code======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Barangay</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <select id="cmbBarangayCO" class="cmb cmbFull cmbBarangayCO"></select>
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">ZIP Code</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <input id="txtZipCodeCO" class="txtFull txtbox txtZipCodeCO" type="text" nwdisabled="false" autocomplete="off">
+
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+
+
+            @*====Region & Country======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Region</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtRegionCO" class="txtFull txtbox txtRegionCO" type="text" autocomplete="off" disabled>
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Country</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <input id="txtCountryCO" class="txtFull txtbox txtCountryCO" type="text" autocomplete="off" disabled>
+
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+
+            @*====Contact person other than spouse / Contact No. of Contact person other than spouse======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Contact person other than spouse</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <textarea id="txtContactPersonCO" class="txtFull txtbox txtContactPersonCO" type="text" autocomplete="off" ></textarea>
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Contact No. of Contact person other than spouse</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <textarea id="txtContactPersonNumCO" class="txtFull txtbox txtContactPersonNumCO" type="text" autocomplete="off" ></textarea>
+
 
                     </div>
 
@@ -1331,7 +2002,246 @@
 
         </div>
     </div>
+    @*==== Co-owner Employment Information =====*@
 
+
+    <div class="groupHeader fsCoEmploymentInfo col col-12">Co-Owner Employment Information</div>
+    <div class="row row-parent padding-10 fsSec fsCoEmploymentInfo">
+        <div class="col col-10 col-parent nwCustomContainer">
+            @*==== Employer/Business Name =====*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Employer/Business Name</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-8 nwCustomCol-8">
+                        <textarea id="txtEmployerNameCO" class="txtarea"> </textarea>
+                    </div>
+                    <div class="col col-2">
+
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+
+            @*==== Office Address =====*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Office Address</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-8 nwCustomCol-8">
+                        <textarea id="txtEmployerAddressCO" class="txtarea"> </textarea>
+                    </div>
+                    <div class="col col-2">
+
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+
+            @*====Occupation  & Zip ======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Occupation </label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+
+                    <div class="col col-4 nwCustomCol-4">
+                        <select id="cmbInfoOccupationCO" class="cmb cmbFull cmbOccupation fullwidth"></select>
+
+
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Zip Code</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <input id="txtInfoZipCO" class="txtFull txtbox txtInfoZipCO" type="text" />
+
+                    </div>
+
+                    <div class="col col-2">
+                    </div>
+
+                </div>
+            </div>
+            @*=== Employment Sub Type and Source of Income======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Employment Sub Type</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <select id="cmbEmpSubTypeCO" class="cmb cmbFull cmbEmpSubType"></select>
+
+
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt"> Source of Income</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <select id="cmbSrcOfIncomeCO" class="cmb cmbFull cmbSourceOfIncome"></select>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            @*=== Employment Status/ Nature of Business======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Employment Status</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <select id="cmbEmpStatusCO" class="cmb cmbFull cmbEmpStatus"></select>
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt"> Nature of Business</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+
+                        <select id="cmbNatureOfBusinessCO" class="cmb cmbFull cmbNatureOfBusiness fullwidth"></select>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            @*=== Profession/Employer Contact======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Profession </label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtProfessionCO" class="txtFull txtbox txtProfessionCO" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Phone (Office)</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <input id="txtEmployerContactCO" class="txtFull txtbox txtEmployerContactCO" type="text" />
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+            @*=== Position/Personal Income======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Position</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtPositionCO" class="txtFull txtbox txtPositionCO" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Personal Income</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <select id="cmbPersonalIncomeCO" class="cmb cmbFull cmbPersonalIncome"></select>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+                </div>
+            </div>
+
+            @*=== Engaged in Business?/Household Income======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Engaged in Business?</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <div class="rdo-wrapper">
+                            <input name="grp12" id="rdbEngagedYesCO" class="rdo" type="radio" />
+                            <label id="lblrdbEngagedYesCO" class="lbl-rdo" for="rdbEngagedYesCO">Yes </label>
+                            <input name="grp12" id="rdbEngagedYesNoCO" class="rdo" type="radio" />
+                            <label id="lblrdbEngagedYesNoCO" class="lbl-rdo" for="rdbEngagedYesNoCO">No</label>
+                        </div>
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Household Income</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <select id="cmbHouseholdIncomeCO" class="cmb cmbFull cmbHouseholdIncome"></select>
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            @*=== Total No. of years abroad./Date of Current Contract Ends======*@
+            <div class="row">
+                <div class="col col-2">
+                    <label class="lbltxt">Total no. of Yrs. Abroad</label>
+                </div>
+                <div class="col col-10 col-parent adisabled">
+                    <div class="col col-4 nwCustomCol-4">
+                        <input id="txtNoYrsAbroadCO" class="txtFull txtbox txtNoYrsAbroadCO" type="text" />
+                    </div>
+                    <div class="col col-2">
+                        <label class="lbltxt">Date of current contract ends</label>
+
+                    </div>
+                    <div class="col col-3 nwCustomCol-3">
+                        <input id="txtContractEndCO" class="txtbox txtbox-date txtContractEndCO" type="date" max="9999-12-31" />
+
+                    </div>
+                    <div class="col col-2">
+
+                    </div>
+
+                </div>
+            </div>
+
+         
+
+
+        </div>
+    </div>
     @*==============================Co-Owner Spouse Information==============================*@
     <div class="groupHeader  col col-12 fsCoOwnerSpouseInfo">Co-Owner Spouse Information</div>
     <div class="row row-parent padding-10 fsSec fsCoOwnerSpouseInfo">
@@ -1352,7 +2262,7 @@
                     </div>
                     <div class="col col-2">
 
-                        <input id="txtMiddleNameCOS" class="txtbox txtName txtMiddleName" sec="" placeholder="Middle Name" type="text" style="min-width: 160px; max-width: 160px;" maxlength="50" />
+                        <input id="txtMiddleNameCOS" class="txtbox txtName txtMiddleName" sec="COS" placeholder="Middle Name" type="text" style="min-width: 160px; max-width: 160px;" maxlength="50" />
                     </div>
                     <div class="col col-1">
                         <input id="txtmriCOS" class="txtbox dsbld txtName" type="text" placeholder="M.I." disabled />
@@ -1360,7 +2270,10 @@
 
                     </div>
                     <div class="col col-2">
-                        <select id="cmbSuffixCOS" class="cmb txtName cmbSuffix"></select>
+                        <select id="cmbSuffixCOS" class="cmb txtName cmbSuffix">
+                            <option value="" selected disabled>Name Suffix</option>
+
+                        </select>
 
 
                     </div>
@@ -1402,7 +2315,7 @@
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtBdayCOS" class="txtbox txtbox-date txtBday" age="txtAge" type="date" />
+                        <input id="txtBdayCOS" class="txtbox txtbox-date txtBday" age="txtAge" type="date" max="9999-12-31"/>
 
 
                     </div>
@@ -1430,7 +2343,7 @@
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtDateMarriageCOS" class="txtbox txtbox-date txtBday" age="txtAge" type="date" />
+                        <input id="txtDateMarriageCOS" class="txtbox txtbox-date txtBday" age="txtAge" type="date" max="9999-12-31"/>
 
 
                     </div>
@@ -1623,10 +2536,10 @@
 
 
 
-            @*==== Landline No./Local No. =====*@
+            @*==== Home Phone No./Local No. =====*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Landline No.</label>
+                    <label class="lbltxt">Home Phone No.</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
 
@@ -1672,148 +2585,22 @@
                 </div>
             </div>
 
-
-            @*==== Allow Notifications? =====*@
-            <div class="row">
-                <div class="col col-3">
-                    <label class="lbltxt">Allow Notifications?</label>
-                </div>
-                <div class="col col-9 col-parent adisabled">
-                    <div class="row">
-                        <div class="">
-                            <div class="rdo-wrapper">
-                                <input name="grp_rdbAllowNotitCorpo" class="rdo rdoSalesTag" style="width: 50px" id="rdbAllowNotitCorpoYes" type="radio" />
-                                <label id="lblrdbAllowNotitCorpoYes" class="lbl-rdo" for="rdbAllowNotitCorpoYes">Yes </label>
-                            </div>
-                        </div>
-
-                        <div class="col col-6">
-                            <div class="rdo-wrapper">
-                                <input name="grp_rdbAllowNotitCorpo" class="rdo rdoSalesTag" style="width: 50px" id="rdbAllowNotifCorpoNo" type="radio" />
-                                <label id="lblrdbAllowNotitCorpoNo" class="lbl-rdo" for="rdbAllowNotifCorpoNo">No </label>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    @*======Attorney-In-Fact Information(Corporate Buyer - With Representative)======*@
-    <div class="groupHeader fsAttyInfo col col-12">Attorney-In-Fact Information</div>
-
-    <div class="row row-parent padding-10 fsSec fsAttyInfo">
-        <div class="col col-10 col-parent nwCustomContainer">
-
-
-            @*====Full Name Attorney-In-Fact Information======*@
+            @*====Business/Company Type & Nature of Business======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Full Name</label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-                    <div class="col col-2">
-                        <input id="txtLastNameAF" class="txtbox txtName" placeholder="Last Name" type="text" maxlength="50" />
-                    </div>
-                    <div class="col col-2">
-                        <input id="txtFirstNameAF" class="txtbox txtName" placeholder="First Name" maxlength="50" />
-
-                    </div>
-                    <div class="col col-2">
-
-                        <input id="txtMiddleNameAF" class="txtbox txtMiddleName txtName" sec="AF" placeholder="Middle Name" type="text" maxlength="50" nwdisabled="false" autocomplete="off">
-                    </div>
-                    <div class="col col-1">
-
-                        <input id="txtmriAF" class="txtmri txtbox dsbld txtName noah-webui-disabled" type="text" sec="AF" placeholder="M.I." disabled="" nwdisabled="true" autocomplete="off">
-                    </div>
-                    <div class="col col-2">
-                        <select id="cmbSuffixAF" class="cmb txtName cmbSuffix"></select>
-
-
-
-                    </div>
-                </div>
-            </div>
-
-
-
-            @*====Effective Date From and To ======*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Effective Date From </label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-                    <div class="col col-4 nwCustomCol-4">
-                        <input id="txtEffectiveDateFromAF" class="txtbox txtbox-date txtBday" age="txtAge" type="date" />
-                    </div>
-                    <div class="col col-2">
-                        <label class="lbltxt">Effective Date To</label>
-
-                    </div>
-                    <div class="col col-3 nwCustomCol-3">
-                        <input id="txtEffectiveDateToAF" class="txtbox txtbox-date txtBday" age="txtAge" type="date" />
-                    </div>
-                    <div class="col col-2">
-
-                    </div>
-
-
-                </div>
-            </div>
-
-
-
-            @*====Relationship to the Customer and Gender ======*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Relationship to Customer</label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-                    <div class="col col-4 nwCustomCol-4">
-                        <select id="cmbRelationshipAF" class="cmb cmbFull cmbRelationship"></select>
-                    </div>
-                    <div class="col col-2">
-                        <label class="lbltxt">Gender</label>
-
-                    </div>
-                    <div class="col col-3 nwCustomCol-3">
-                        <select id="cmbGenderAF" class="cmb cmbFull cmbGender"></select>
-                    </div>
-                    <div class="col col-2">
-
-                    </div>
-
-
-                </div>
-            </div>
-
-
-
-            @*====Date of Birth & Age ======*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Date of Birth</label>
+                    <label class="lbltxt">Business/Company Type</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <input id="txtBdayAF" class="txtbox txtbox-date txtBday" age="txtAgeAF" type="date" />
-
-
-
-                        @*====Display HIDE======*@
-                        <input id="getCSD" style="display: none" />
+                        <select id="cmbBusinessCompTypeCB" class="cmb cmbFull cmbBusinessType"></select>
                     </div>
                     <div class="col col-2">
-                        <label class="lbltxt">Age</label>
+                        <label class="lbltxt">Nature of Business</label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-                        <input id="txtAgeAF" class="txtbox txtAge dsbld" type="text" disabled />
+                        <select id="cmbNatureOfBusinessCB" class="cmb cmbFull cmbNatureOfBusiness fullwidth"></select>
 
                     </div>
 
@@ -1823,24 +2610,23 @@
                 </div>
             </div>
 
-
-            @*====Civil Status & Nationality ======*@
+            @*====Community Tax Certificate No. & Date Issued======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Civil Status</label>
+                    <label class="lbltxt">Community Tax Certificate No.</label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
 
                     <div class="col col-4 nwCustomCol-4">
-                        <select id="cmbCivilStatusAF" class="cmb cmbFull cmbCivilStatus"></select>
+                        <input id="txtComTaxCertCB" class="txtFull txtbox txtComTaxCertCB" type="text" />
                     </div>
                     <div class="col col-2">
-                        <label class="lbltxt">Nationality</label>
+                        <label class="lbltxt">Date Issued</label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-                        <select id="cmbNationalityAF" class="cmb cmbFull cmbNationality"></select>
 
+                        <input id="txtDateIssuedCB" class="txtbox txtbox-date txtDateIssuedCB" type="date" max="9999-12-31"/>
                     </div>
 
                     <div class="col col-2">
@@ -1848,154 +2634,541 @@
 
                 </div>
             </div>
-
-
-            @*====Mobile Number and Landline No.======*@
+            @*====Place Issued======*@
             <div class="row">
                 <div class="col col-2">
-                    <label class="lbltxt">Mobile Number</label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
 
-                    <div class="col col-4 nwCustomCol-4">
-                        <input id="txtMobileNoAF" class="txtFull txtbox txtMobileNoAF" type="text" />
-                    </div>
-                    <div class="col col-2">
-                        <label class="lbltxt">Landline No.</label>
 
-                    </div>
-                    <div class="col col-3 nwCustomCol-3">
-                        <input id="txtLandlineNoAF" class="txtFull txtbox txtLandlineNo" type="text" />
-
+                    <div class="rdo-wrapper">
+                        @*<input name="chkMailingAddress" class="chk chkMailAddress" id="chkMailingAddress" type="checkbox" />*@
+                        <label id="lblPlaceIssued" class="lbl-chk" for="PlaceIssued">Place Issued</label>
                     </div>
 
-                    <div class="col col-2">
-                    </div>
 
-                </div>
-            </div>
-
-
-            @*====Individual TIN and Email Address======*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Individual TIN</label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-
-                    <div class="col col-4 nwCustomCol-4">
-                        <input id="txtTINAF" class="txtFull txtbox txtTIN" type="text" />
-                    </div>
-                    <div class="col col-2">
-                        <label class="lbltxt">Email Address</label>
-
-                    </div>
-                    <div class="col col-3 nwCustomCol-3">
-                        <input id="txtEmailAF" class="txtFull txtbox txtEmail" type="text" />
-
-                    </div>
-
-                    <div class="col col-2">
-                    </div>
-
-                </div>
-            </div>
-
-            @*==== Home Address =====*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Home Address </label>
                 </div>
                 <div class="col col-10 col-parent adisabled">
                     <div class="col col-8 nwCustomCol-8">
-                        <textarea id="txtHomeAddressAF" class="txtarea"> </textarea>
-                    </div>
-
-                    <div class="col col-2">
-                    </div>
-
-                </div>
-            </div>
-
-            @*==== Business Address =====*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Home Address </label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-                    <div class="col col-8 nwCustomCol-8">
-                        <textarea id="txtBusinessAddressAF" class="txtarea"> </textarea>
-                    </div>
-
-                    <div class="col col-2">
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    @*==============================PREFERENCE INFORMATION==============================*@
-    <div class="groupHeader fsPreferenceInfo col col-12">PREFERENCE INFORMATION</div>
-    <div class="row row-parent padding-10 fsSec fsPreferenceInfo">
-        <div class="col col-10 col-parent nwCustomContainer">
-
-            @*====Reason for Buying & Please Specify =====*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Reason for Buyung</label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-
-                    <div class="col col-4 nwCustomCol-4">
-                        <select id="cmbReasonForBuyingPI" class="cmb cmbFull cmbReasonForBuying"></select>
+                        <textarea id="txtPlaceIssuedCB" class="txtarea txtPlaceIssuedCB"> </textarea>
                     </div>
                     <div class="col col-2">
-                        <label class="lbltxt">Please Specify</label>
 
                     </div>
                     <div class="col col-3 nwCustomCol-3">
-                        <input id="txtOthersReasonPI" class="txtFull txtbox txtOthers" type="text" />
                     </div>
-
                     <div class="col col-2">
                     </div>
-
                 </div>
-            </div>
 
 
-            @*====Desired Property And Please Specify =====*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Desired Property</label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
+                @*====Full Address======*@
+                <div class="row">
+                    <div class="col col-2">
 
-                    <div class="col col-4 nwCustomCol-4">
 
-                        <div class="col col-12">
-                            <input type="text" id="txtDesiredPropertyPI"  class="txtbox descval txtlookup txtDesiredProperty">
-                            <div class="btn btn-sm-default btn-sm-default-lookup"  id="btnAddDesiredProperty"  nwid="btnAddDesiredProperty" nwtype="btnAddDesiredProperty"></div>
+                        <div class="rdo-wrapper">
+                            <input name="chkFullAddressCB" class="chk chkFullAddressCB" id="chkFullAddressCB" type="checkbox" />
+                            <label id="lblchkFullAddressCB" class="lbl-chk" for="chkFullAddressCB">Full Address</label>
                         </div>
-                        <input id="txtHiddenDesiredPrptyIndex" class="txtFull txtbox dsbld txtDesiredProperty nwHide" type="text" disabled />
-
-                        @*<div class="col col-12">
-                            <input id="txtDesiredPropertyPI"  type="text" name="" class="txtbox txtdesc txtlookup txtDesiredProperty">
-                            <div class="btn btn-sm-default btn-sm-default-lookup" id="btnAddDesiredProperty" nwid="btnAddDesiredProperty" nwtype="btnAddDesiredProperty"></div>
-                        
-                         </div>*@
 
 
-                        @*<div class="row">
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+                        <div class="col col-8 nwCustomCol-8">
+                            <textarea id="txtFullAddressCB" class="txtarea txtFullAddressCB"> </textarea>
+                        </div>
+                        <div class="col col-2">
 
-                            <input id="txtDesiredPropertyPI" class="txtFull txtbox dsbld txtDesiredProperty" type="text" disabled />
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                        </div>
+                        <div class="col col-2">
+                        </div>
+                    </div>
+                </div>
 
-                            <div class="btn-icon-action btn-icon-search" title="Search" id="btnAddDesiredProperty" nwid="btnAddDesiredProperty" nwtype="btnAddDesiredProperty">
-                                <div class="btn-icon"></div>
-                            </div>*@
+                @*====Mailing Address======*@
+                <div class="row">
+                    <div class="col col-2">
+
+
+                        <div class="rdo-wrapper">
+                            <label id="lblchkMailingAddress" class="lbl-chk" for="chkMailingAddress">Mailing Address</label>
+                        </div>
+
+
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+                        <div class="col col-8 nwCustomCol-8">
+                            <textarea id="txtMailAddressCB" class="txtarea txtMailAddressCB"> </textarea>
+                        </div>
+                        <div class="col col-2">
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                        </div>
+                        <div class="col col-2">
+                        </div>
+                    </div>
+                </div>
+
+                @*====Province & Municipality/City======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <select id="cmbProvinceCB" class="cmb cmbFull cmbProvince fullwidth"></select>
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Municipality/City</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+
+                            <select id="cmbMunicipalityCB" class="cmb cmbFull cmbMunicipality"></select>
+
+
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                @*====Barangay & ZIP Code======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Barangay</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <select id="cmbBarangayCB" class="cmb cmbFull cmbBarangayCB"></select>
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">ZIP Code</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+
+                            <input id="txtZipCodeCB" class="txtFull txtbox txtZipCodeCB" type="text" nwdisabled="false" autocomplete="off">
+
+
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @*====Region & Country======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <input id="txtRegionCB" class="txtFull txtbox txtRegionCB" type="text" autocomplete="off" disabled>
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Country</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+
+                            <input id="txtCountryCB" class="txtFull txtbox txtCountryCB" type="text" autocomplete="off" disabled>
+
+
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+                @*==== Allow Notifications? =====*@
+                @*<div class="row">
+                        <div class="col col-3">
+                            <label class="lbltxt">Allow Notifications?</label>
+                        </div>
+                        <div class="col col-9 col-parent adisabled">
+                            <div class="row">
+                                <div class="">
+                                    <div class="rdo-wrapper">
+                                        <input name="grp_rdbAllowNotitCorpo" class="rdo rdoSalesTag" style="width: 50px" id="rdbAllowNotitCorpoYes" type="radio" />
+                                        <label id="lblrdbAllowNotitCorpoYes" class="lbl-rdo" for="rdbAllowNotitCorpoYes">Yes </label>
+                                    </div>
+                                </div>
+
+                                <div class="col col-6">
+                                    <div class="rdo-wrapper">
+                                        <input name="grp_rdbAllowNotitCorpo" class="rdo rdoSalesTag" style="width: 50px" id="rdbAllowNotifCorpoNo" type="radio" />
+                                        <label id="lblrdbAllowNotitCorpoNo" class="lbl-rdo" for="rdbAllowNotifCorpoNo">No </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+
+            </div>
+        </div>
+
+
+        @*======Attorney-In-Fact Information(Corporate Buyer - With Representative)======*@
+        <div class="groupHeader fsAttyInfo col col-12">Attorney-In-Fact Information</div>
+
+        <div class="row row-parent padding-10 fsSec fsAttyInfo">
+            <div class="col col-10 col-parent nwCustomContainer">
+
+
+                @*====Full Name Attorney-In-Fact Information======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Full Name</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+                        <div class="col col-2">
+                            <input id="txtLastNameAF" class="txtbox txtName" placeholder="Last Name" type="text" maxlength="50" />
+                        </div>
+                        <div class="col col-2">
+                            <input id="txtFirstNameAF" class="txtbox txtName" placeholder="First Name" maxlength="50" />
+
+                        </div>
+                        <div class="col col-2">
+
+                            <input id="txtMiddleNameAF" class="txtbox txtMiddleName txtName" sec="AF" placeholder="Middle Name" type="text" maxlength="50" nwdisabled="false" autocomplete="off">
+                        </div>
+                        <div class="col col-1">
+
+                            <input id="txtmriAF" class="txtmri txtbox dsbld txtName noah-webui-disabled" type="text" sec="AF" placeholder="M.I." disabled="" nwdisabled="true" autocomplete="off">
+                        </div>
+                        <div class="col col-2">
+                            <select id="cmbSuffixAF" class="cmb txtName cmbSuffix">
+                                <option value="" selected disabled>Name Suffix</option>
+
+                            </select>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                @*====Effective Date From and To ======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Effective Date From </label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+                        <div class="col col-4 nwCustomCol-4">
+                            <input id="txtEffectiveDateFromAF" class="txtbox txtbox-date txtBday" age="txtAge" type="date" max="9999-12-31"/>
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Effective Date To</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                            <input id="txtEffectiveDateToAF" class="txtbox txtbox-date txtBday" age="txtAge" type="date" max="9999-12-31"/>
+                        </div>
+                        <div class="col col-2">
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                @*====Relationship to the Customer and Gender ======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Relationship to Customer</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+                        <div class="col col-4 nwCustomCol-4">
+                            <select id="cmbRelationshipAF" class="cmb cmbFull cmbRelationship"></select>
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Gender</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                            <select id="cmbGenderAF" class="cmb cmbFull cmbGender"></select>
+                        </div>
+                        <div class="col col-2">
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+                @*====Date of Birth & Age ======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Date of Birth</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <input id="txtBdayAF" class="txtbox txtbox-date txtBday" age="txtAgeAF" type="date" max="9999-12-31"/>
+
+
+
+                            @*====Display HIDE======*@
+                            <input id="getCSD" style="display: none" />
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Age</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                            <input id="txtAgeAF" class="txtbox txtAge dsbld" type="text" disabled />
+
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @*====Civil Status & Nationality ======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Civil Status</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <select id="cmbCivilStatusAF" class="cmb cmbFull cmbCivilStatus"></select>
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Nationality</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                            <select id="cmbNationalityAF" class="cmb cmbFull cmbNationality"></select>
+
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @*====Mobile Number and Landline No.======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Mobile No.</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <input id="txtMobileNoAF" class="txtFull txtbox txtMobileNoAF" type="text" />
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Landline No.</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                            <input id="txtLandlineNoAF" class="txtFull txtbox txtLandlineNo" type="text" />
+
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @*====Individual TIN and Email Address======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Individual TIN</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <input id="txtTINAF" class="txtFull txtbox txtTIN" type="text" />
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Email Address</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                            <input id="txtEmailAF" class="txtFull txtbox txtEmail" type="text" />
+
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+                @*====Valid ID & Date Issued======*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Valid ID</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <input id="txtValidIDAF" class="txtFull txtbox txtValidIDAF" type="text" />
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Date Issued</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+
+                            <input id="txtDateIssuedAF" class="txtbox txtbox-date txtDateIssuedAF" type="date" max="9999-12-31"/>
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+                @*====Place Issued======*@
+                <div class="row">
+                    <div class="col col-2">
+
+
+                        <div class="rdo-wrapper">
+                            @*<input name="chkMailingAddress" class="chk chkMailAddress" id="chkMailingAddress" type="checkbox" />*@
+                            <label id="lblPlaceIssued" class="lbl-chk" for="PlaceIssued">Place Issued</label>
+                        </div>
+
+
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+                        <div class="col col-8 nwCustomCol-8">
+                            <textarea id="txtPlaceIssuedAF" class="txtarea txtPlaceIssuedAF"> </textarea>
+                        </div>
+                        <div class="col col-2">
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                        </div>
+                        <div class="col col-2">
+                        </div>
+                    </div>
+                </div>
+                @*==== Home Address =====*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Home Address </label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+                        <div class="col col-8 nwCustomCol-8">
+                            <textarea id="txtHomeAddressAF" class="txtarea"> </textarea>
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+                @*==== Business Address =====*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Business Address </label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+                        <div class="col col-8 nwCustomCol-8">
+                            <textarea id="txtBusinessAddressAF" class="txtarea"> </textarea>
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        @*==============================PREFERENCE INFORMATION==============================*@
+        <div class="groupHeader fsPreferenceInfo col col-12">PREFERENCE INFORMATION</div>
+        <div class="row row-parent padding-10 fsSec fsPreferenceInfo">
+            <div class="col col-10 col-parent nwCustomContainer">
+
+                @*====Reason for Buying & Please Specify =====*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Reason for Buying</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <select id="cmbReasonForBuyingPI" class="cmb cmbFull cmbReasonForBuying"></select>
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Please Specify</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                            <input id="txtOthersReasonPI" class="txtFull txtbox txtOthers" type="text" />
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @*====Desired Property And Please Specify =====*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Desired Property</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+
+                            <div class="col col-12">
+                                  <input id="txtDesiredPropertyPI"  type="text" name="" class="txtbox txtdesc txtlookup txtDesiredProperty">
+                                  <div class="btn btn-sm-default btn-sm-default-lookup" id="btnAddDesiredProperty" nwid="btnAddDesiredProperty" nwtype="btnAddDesiredProperty"></div>
+
+                             </div>
+                            <input id="txtHiddenDesiredPrptyIndex" class="txtFull txtbox dsbld txtDesiredProperty nwHide" type="text" disabled />
+
+                            @*<div class="col col-12">
+                                   <input id="txtDesiredPropertyPI"  type="text" name="" class="txtbox txtdesc txtlookup txtDesiredProperty">
+                                   <div class="btn btn-sm-default btn-sm-default-lookup" id="btnAddDesiredProperty" nwid="btnAddDesiredProperty" nwtype="btnAddDesiredProperty"></div>
+
+                                </div>*@
+
+
+                            @*<div class="row">
+
+                                <input id="txtDesiredPropertyPI" class="txtFull txtbox dsbld txtDesiredProperty" type="text" disabled />
+
+                                <div class="btn-icon-action btn-icon-search" title="Search" id="btnAddDesiredProperty" nwid="btnAddDesiredProperty" nwtype="btnAddDesiredProperty">
+                                    <div class="btn-icon"></div>
+                                </div>*@
                             @*<div class="col col-12">
                                     <input id="txtDesiredPropertyPI"  type="text" name="" class="txtbox txtdesc txtlookup">
                                     <div id="btnAddDesiredProperty" class="btn btn-sm-default btn-sm-default-lookup"></div>
@@ -2003,135 +3176,135 @@
 
 
                             @*====Display HIDE======*@
-                        
-                        @*</div>*@
-                    </div>
-                    <div class="col col-2">
-                        <label class="lbltxt">Please Specify</label>
 
-                    </div>
-                    <div class="col col-3 nwCustomCol-3">
-                        <input id="txtOthersDesiredPI" class="txtFull txtbox txtOthers" type="text" />
-                    </div>
+                            @*</div>*@
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Please Specify</label>
 
-                    <div class="col col-2">
-                    </div>
-
-                </div>
-            </div>
-
-
-            @*==== Source of Awareness and Please Specify =====*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Source of Awareness</label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-
-                    <div class="col col-4 nwCustomCol-4">
-                        <select id="cmbSourceOfAwarenessPI" class="cmb cmbFull cmbSourceOfAwareness"></select>
-                    </div>
-                    <div class="col col-2">
-                        <label class="lbltxt">Please Specify</label>
-
-                    </div>
-                    <div class="col col-3 nwCustomCol-3">
-                        <input id="txtOthersSourceOfAwarenessPI" class="txtFull txtbox txtOthers" type="text" />
-                    </div>
-
-                    <div class="col col-2">
-                    </div>
-
-                </div>
-            </div>
-
-
-            @*==== Price Range =====*@
-            <div class="row">
-                <div class="col col-2">
-                    <label class="lbltxt">Price Range</label>
-                </div>
-                <div class="col col-10 col-parent adisabled">
-
-                    <div class="col col-8 nwCustomCol-8">
-                        <select id="cmbPriceRangePI" class="cmb cmbFull cmbPriceRange"></select>
-                    </div>
-                    <div class="col col-2">
-
-
-                    </div>
-                    <div class="col col-3 nwCustomCol-3">
-
-                    </div>
-
-                    <div class="col col-2">
-                    </div>
-
-                </div>
-            </div>
-
-            @*==== Will you recommend us to Family and Friends? =====*@
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Will you recommend us to Family and Friends?  </label>
-                </div>
-                <div class="col col-7 col-parent adisabled">
-                    <div class="row">
-                        <div class="">
-                            <div class="rdo-wrapper">
-                                <input name="grp4" style="width: 110px;" id="cbYes" class="rdo" onclick="func_ChangeRecommendation('Y',true)" type="radio" />
-                                <label id="lblYesPI" class="lbl-rdo" for="cbYes">Yes </label>
-                            </div>
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                            <input id="txtOthersDesiredPI" class="txtFull txtbox txtOthers" type="text" />
                         </div>
 
-                        <div class="col col-1">
-                            <div class="rdo-wrapper">
+                        <div class="col col-2">
+                        </div>
 
-                                <input name="grp4" style="width: 110px" id="cbNo" class="rdo" onclick="func_ChangeRecommendation('N',true)" type="radio" />
-                                <label id="lblNoPI" class="lbl-rdo" for="cbNo">No</label>
+                    </div>
+                </div>
 
+
+                @*==== Source of Awareness and Please Specify =====*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Source of Awareness</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-4 nwCustomCol-4">
+                            <select id="cmbSourceOfAwarenessPI" class="cmb cmbFull cmbSourceOfAwareness"></select>
+                        </div>
+                        <div class="col col-2">
+                            <label class="lbltxt">Please Specify</label>
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+                            <input id="txtOthersSourceOfAwarenessPI" class="txtFull txtbox txtOthers" type="text" />
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @*==== Price Range =====*@
+                <div class="row">
+                    <div class="col col-2">
+                        <label class="lbltxt">Price Range</label>
+                    </div>
+                    <div class="col col-10 col-parent adisabled">
+
+                        <div class="col col-8 nwCustomCol-8">
+                            <select id="cmbPriceRangePI" class="cmb cmbFull cmbPriceRange"></select>
+                        </div>
+                        <div class="col col-2">
+
+
+                        </div>
+                        <div class="col col-3 nwCustomCol-3">
+
+                        </div>
+
+                        <div class="col col-2">
+                        </div>
+
+                    </div>
+                </div>
+
+                @*==== Will you recommend us to Family and Friends? =====*@
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Will you recommend us to Family and Friends?  </label>
+                    </div>
+                    <div class="col col-7 col-parent adisabled">
+                        <div class="row">
+                            <div class="">
+                                <div class="rdo-wrapper">
+                                    <input name="grp4" style="width: 110px;" id="cbYes" class="rdo" onclick="func_ChangeRecommendation('Y',true)" type="radio" />
+                                    <label id="lblYesPI" class="lbl-rdo" for="cbYes">Yes </label>
+                                </div>
+                            </div>
+
+                            <div class="col col-1">
+                                <div class="rdo-wrapper">
+
+                                    <input name="grp4" style="width: 110px" id="cbNo" class="rdo" onclick="func_ChangeRecommendation('N',true)" type="radio" />
+                                    <label id="lblNoPI" class="lbl-rdo" for="cbNo">No</label>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+        </div>
 
         </div>
     </div>
 
-
-</div>
-
-<div class="nk-footer-c">
-    <div class="nk-footer-info">
-        <div class="nk-footer-create">
-            <div class="nkf nk-f-createBy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
-                    <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
-                    </path>
-                </svg>
-                <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
+    <div class="nk-footer-c">
+        <div class="nk-footer-info">
+            <div class="nk-footer-create">
+                <div class="nkf nk-f-createBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
+                </div>
+                <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
+                <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
             </div>
-            <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
-            <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
-            <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
-        </div>
-        <div class="nk-footer-x"></div>
-        <div class="nk-footer-modified">
-            <div class="nkf nk-f-modifiedBy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
-                    <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
-                    </path>
-                </svg>
-                <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
+            <div class="nk-footer-x"></div>
+            <div class="nk-footer-modified">
+                <div class="nkf nk-f-modifiedBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
+                </div>
+                <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
+                <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
             </div>
-            <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
-            <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
-            <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
         </div>
     </div>
-</div>
 
 
-@RenderPage("~/SB/DataSetup/SBCustomerMasterFile/Popups/SBCustomerMasterFile_ViewAllRecords.cshtml")
-@RenderPage("~/Views/Form_Standards/Uploading.cshtml", "DCRequirementCompliance")
+        @RenderPage("~/SB/DataSetup/SBCustomerMasterFile/Popups/SBCustomerMasterFile_ViewAllRecords.cshtml")
+        @RenderPage("~/Views/Form_Standards/Uploading.cshtml", "SBCustomerMasterFile")

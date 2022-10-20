@@ -12,7 +12,7 @@ namespace DALComponent
         #region STANDARD
 
         public string MenuItemCode = "SBCustomerMasterFile"; // This is default parameter  for version
-        public string MenuItemVersion = "10.0.0.1"; // This is default parameter for version
+        public string MenuItemVersion = "10.0.0.6"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
             if (_MenuItemCode.Trim() != "") MenuItemCode = _MenuItemCode;
@@ -134,6 +134,10 @@ namespace DALComponent
         {
             return SFObjects.LoadDataTable(string.Format("EXEC [PRT].[nsp_SBCustomerMasterFile] @Code='" + code + "',@FilterType='"+ft+"',@QueryType=" + qt + ",@CustomerCode='" + cust + "'"), _ConnectionString);
         }
+        public DataTable GetComboValueSpecialCO(int qt, string code, string ft, string cust)
+        {
+            return SFObjects.LoadDataTable(string.Format("EXEC [PRT].[nsp_SBCustomerMasterFile] @Code='" + code + "',@FilterType='" + ft + "',@QueryType=" + qt + ",@CustomerCode='" + cust + "'"), _ConnectionString);
+        }
         public DataTable GetCoownerDetails(string code)
         {
             return SFObjects.LoadDataTable(string.Format("EXEC [PRT].[nsp_SBCustomerMasterFile] @CustomerCode='" + code + "',@QueryType=14"), _ConnectionString);
@@ -155,7 +159,7 @@ namespace DALComponent
                 switch (i)
                 {
                     case 0://main
-                        foreach(DataRow dr in dt.Rows)
+                        foreach (DataRow dr in dt.Rows)
                         {
                             cmd.Parameters.AddWithValue("@CustomerTypeInd", dr["CustomerTypeInd"]);
                             cmd.Parameters.AddWithValue("@CustomerTypeComp", dr["CustomerTypeComp"]);
@@ -195,7 +199,14 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@PaymentOption", dr["PaymentOption"]);
                             cmd.Parameters.AddWithValue("@EmpSubType", dr["empSubType"]);
                             cmd.Parameters.AddWithValue("@CustomerClassification", dr["custclassification"]);
+                            cmd.Parameters.AddWithValue("@validID", dr["validID"]);
+                            cmd.Parameters.AddWithValue("@dateIssued", dr["dateIssued"]);
+                            cmd.Parameters.AddWithValue("@placeIssued", dr["placeIssued"]);
+
+
                             cmd.Parameters.AddWithValue("@moduser", dr["moduser"]);
+
+
                             cmd.Parameters.AddWithValue("@QueryType", isNew ? 1 : 2);
                         }
                         break;
@@ -218,6 +229,8 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@MobileNo", dr["MobileNo"]);
                             cmd.Parameters.AddWithValue("@EmailAdd", dr["EmailAdd"]);
                             cmd.Parameters.AddWithValue("@EffectiveDate", dr["EffectiveDate"]);
+                            cmd.Parameters.AddWithValue("@OtherContactPerson", dr["OtherContactPerson"]);
+                            cmd.Parameters.AddWithValue("@OtherContactPersonNo", dr["OtherContactPersonNo"]);
                             cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
                             cmd.Parameters.AddWithValue("@QueryType", 33);
                         }
@@ -254,6 +267,9 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@City", dr["City"]);
                             cmd.Parameters.AddWithValue("@NatureOfBusiness", dr["NatureOfBusiness"]);
                             cmd.Parameters.AddWithValue("@BusinessType", dr["BusinessType"]);
+                            cmd.Parameters.AddWithValue("@mailAddress", dr["mailAddress"]);
+
+
                             cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
                             cmd.Parameters.AddWithValue("@QueryType", 35);
                         }
@@ -277,6 +293,12 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@Salutation", dr["Salutation"]);
                             cmd.Parameters.AddWithValue("@NameSuffix", dr["NameSuffix"]);
                             cmd.Parameters.AddWithValue("@TIN", dr["TIN"]);
+                            cmd.Parameters.AddWithValue("@validID", dr["validID"]);
+                            cmd.Parameters.AddWithValue("@dateIssued", dr["dateIssued"]);
+                            cmd.Parameters.AddWithValue("@MobileNo", dr["MobileNo"]);
+                            cmd.Parameters.AddWithValue("@placeIssued", dr["placeIssued"]);
+                            cmd.Parameters.AddWithValue("@OtherContactPerson", dr["OtherContactPerson"]);
+                            cmd.Parameters.AddWithValue("@OtherContactPersonNo", dr["OtherContactPersonNo"]);
                             cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
                             cmd.Parameters.AddWithValue("@QueryType", 36);
                         }
@@ -307,6 +329,13 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@Profession", dr["Profession"]);
                             cmd.Parameters.AddWithValue("@NatureOfBusiness", dr["NatureOfBusiness"]);
                             cmd.Parameters.AddWithValue("@Position", dr["Position_ENH"]);
+                            cmd.Parameters.AddWithValue("@EngageInBusinessYes", dr["EngageInBusinessYes"]);
+                            cmd.Parameters.AddWithValue("@EngageInBusinessNo", dr["EngageInBusinessNo"]);
+                            cmd.Parameters.AddWithValue("@TotalYearsAbroad", dr["TotalYearsAbroad"]);
+                            cmd.Parameters.AddWithValue("@CurrentContractEndDate", dr["CurrentContractEndDate"]);
+                            cmd.Parameters.AddWithValue("@Occupation", dr["occupationCode"]);
+                            cmd.Parameters.AddWithValue("@ZIPCode", dr["ZIPCode"]);
+                            cmd.Parameters.AddWithValue("@SourceOfIncome", dr["IncomeSrcCode"]);
                             cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
                             cmd.Parameters.AddWithValue("@QueryType", 38);
                         }
@@ -324,7 +353,7 @@ namespace DALComponent
                         foreach (DataRow dr in dt.Rows)
                         {
                             cmd.Parameters.AddWithValue("@CustomerCode", dr["Customer"]);
-                            cmd.Parameters.AddWithValue("@RelationshiptotheCustomer", dr["RelationshiptotheCustomer"]);
+                            //cmd.Parameters.AddWithValue("@RelationshiptotheCustomer", dr["RelationshiptotheCustomer"]);
                             cmd.Parameters.AddWithValue("@LastName", dr["LName"]);
                             cmd.Parameters.AddWithValue("@FirstName", dr["FName"]);
                             cmd.Parameters.AddWithValue("@MiddleName", dr["MName"]);
@@ -344,7 +373,21 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@myname", dr["myname"]);
                             cmd.Parameters.AddWithValue("@spouses", dr["spouses"]);
                             cmd.Parameters.AddWithValue("@namesuffix", dr["namesuffix"]);
-                            cmd.Parameters.AddWithValue("@Position", dr["Position_ENH"]);
+                            //cmd.Parameters.AddWithValue("@Position", dr["Position_ENH"]);
+                            cmd.Parameters.AddWithValue("@Salutation", dr["Salutation"]);
+                            cmd.Parameters.AddWithValue("@Gender", dr["Gender"]);
+                            cmd.Parameters.AddWithValue("@MothersMaidenName", dr["MothersMaidenName"]);
+                            cmd.Parameters.AddWithValue("@validID", dr["validID"]);
+                            cmd.Parameters.AddWithValue("@dateIssued", dr["dateIssued"]);
+                            cmd.Parameters.AddWithValue("@placeIssued", dr["placeIssued"]);
+                            cmd.Parameters.AddWithValue("@FullLocationAddress", dr["FullLocationAddress"]);
+                            cmd.Parameters.AddWithValue("@mailAddress", dr["mailingAddress_ENH"]);
+                            cmd.Parameters.AddWithValue("@ProvincialAddress", dr["ProvincialAddress"]);
+                            cmd.Parameters.AddWithValue("@Municipality", dr["Municipality"]);
+                            cmd.Parameters.AddWithValue("@Barangay", dr["Barangay"]);
+                            cmd.Parameters.AddWithValue("@ZIPCode", dr["ZIPCode"]);
+                            cmd.Parameters.AddWithValue("@Region", dr["Region"]);
+                            cmd.Parameters.AddWithValue("@Country", dr["Country"]);
                             cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
                             cmd.Parameters.AddWithValue("@QueryType", 40);
                         }
@@ -414,6 +457,9 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@BusinessAddress", dr["BusinessAddress"]);
                             cmd.Parameters.AddWithValue("@rownum", dr["ROWNO"]);
                             cmd.Parameters.AddWithValue("@CivilStatus", dr["CivilStatus_ENH"]);
+                            cmd.Parameters.AddWithValue("@validID", dr["validID"]);
+                            cmd.Parameters.AddWithValue("@dateIssued", dr["dateIssued"]);
+                            cmd.Parameters.AddWithValue("@placeIssued", dr["placeIssued"]);
                             cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
                             cmd.Parameters.AddWithValue("@QueryType", 44);
                         }
@@ -460,12 +506,97 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@QueryType", 57);
                         }
                         break;
-                }
-                //cmd.ExecuteNonQuery();
-                res = base.ExecProcedure(cmd, _ConnectionString);
-            }
 
-            return res;
+                    case 17:  // Employee Current Bank Accounts
+                        int rows = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            rows++;
+                            cmd.Parameters.AddWithValue("@customercode", dr["customercode"]);
+                            cmd.Parameters.AddWithValue("@NameOfInstitution", dr["NameOfInstitution"]);
+                            cmd.Parameters.AddWithValue("@BranchContactNo", dr["BranchContactNo"]);
+                            cmd.Parameters.AddWithValue("@TypeofAccount", dr["TypeofAccount"]);
+                            cmd.Parameters.AddWithValue("@AccountNumber", dr["AccountNumber"]);
+                            cmd.Parameters.AddWithValue("@AverageAmount", dr["AverageAmount"]);
+                            cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
+                            cmd.Parameters.AddWithValue("@QueryType", 63);
+                        }
+                        break;
+                    case 18: // Spouse Current Bank Accounts
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            cmd.Parameters.AddWithValue("@customercode", dr["customercode"]);
+                            cmd.Parameters.AddWithValue("@NameOfInstitution", dr["NameOfInstitution"]);
+                            cmd.Parameters.AddWithValue("@BranchContactNo", dr["BranchContactNo"]);
+                            cmd.Parameters.AddWithValue("@TypeofAccount", dr["TypeofAccount"]);
+                            cmd.Parameters.AddWithValue("@AccountNumber", dr["AccountNumber"]);
+                            cmd.Parameters.AddWithValue("@AverageAmount", dr["AverageAmount"]);
+                            cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
+                            cmd.Parameters.AddWithValue("@QueryType", 64);
+
+                        }
+                        break;
+                    case 19:
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            cmd.Parameters.AddWithValue("@customercode", dr["customercode"]);
+                            cmd.Parameters.AddWithValue("@employer", dr["employer"]);
+                            cmd.Parameters.AddWithValue("@businessadd", dr["businessadd"]);
+                            cmd.Parameters.AddWithValue("@businesscont", dr["businesscont"]);
+                            cmd.Parameters.AddWithValue("@empstatuscode", dr["empstatuscode"]);
+                            cmd.Parameters.AddWithValue("@effectiveDate", dr["effectiveDate"]);
+                            cmd.Parameters.AddWithValue("@rownum", dr["rownum"]);
+                            cmd.Parameters.AddWithValue("@EmploymentSubType", dr["EmploymentSubType"]);
+                            cmd.Parameters.AddWithValue("@MonthlyPersonalInc", dr["MonthlyPersonalIncRange"]);
+                            cmd.Parameters.AddWithValue("@MonthlyHouseholdInc", dr["MonthlyHouseholdIncRange"]);
+                            cmd.Parameters.AddWithValue("@Profession", dr["Profession"]);
+                            cmd.Parameters.AddWithValue("@NatureOfBusiness", dr["NatureOfBusiness"]);
+                            cmd.Parameters.AddWithValue("@Position", dr["Position_ENH"]);
+                            cmd.Parameters.AddWithValue("@EngageInBusinessYes", dr["EngageInBusinessYes"]);
+                            cmd.Parameters.AddWithValue("@EngageInBusinessNo", dr["EngageInBusinessNo"]);
+                            cmd.Parameters.AddWithValue("@TotalYearsAbroad", dr["TotalYearsAbroad"]);
+                            cmd.Parameters.AddWithValue("@CurrentContractEndDate", dr["CurrentContractEndDate"]);
+                            cmd.Parameters.AddWithValue("@Occupation", dr["occupationCode"]);
+                            cmd.Parameters.AddWithValue("@ZIPCode", dr["ZIPCode"]);
+                            cmd.Parameters.AddWithValue("@SourceOfIncome", dr["IncomeSrcCode"]);
+                            cmd.Parameters.AddWithValue("@QueryType", 65);
+
+                        }
+                        break;
+                    case 20:
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            cmd.Parameters.AddWithValue("@customercode", dr["customercode"]);
+                            cmd.Parameters.AddWithValue("@employer", dr["employer"]);
+                            cmd.Parameters.AddWithValue("@businessadd", dr["businessadd"]);
+                            cmd.Parameters.AddWithValue("@businesscont", dr["businesscont"]);
+                            cmd.Parameters.AddWithValue("@empstatuscode", dr["empstatuscode"]);
+                            cmd.Parameters.AddWithValue("@effectiveDate", dr["effectiveDate"]);
+                            cmd.Parameters.AddWithValue("@rownum", dr["rownum"]);
+                            cmd.Parameters.AddWithValue("@EmploymentSubType", dr["EmploymentSubType"]);
+                            cmd.Parameters.AddWithValue("@MonthlyPersonalInc", dr["MonthlyPersonalIncRange"]);
+                            cmd.Parameters.AddWithValue("@MonthlyHouseholdInc", dr["MonthlyHouseholdIncRange"]);
+                            cmd.Parameters.AddWithValue("@Profession", dr["Profession"]);
+                            cmd.Parameters.AddWithValue("@NatureOfBusiness", dr["NatureOfBusiness"]);
+                            cmd.Parameters.AddWithValue("@Position", dr["Position_ENH"]);
+                            cmd.Parameters.AddWithValue("@EngageInBusinessYes", dr["EngageInBusinessYes"]);
+                            cmd.Parameters.AddWithValue("@EngageInBusinessNo", dr["EngageInBusinessNo"]);
+                            cmd.Parameters.AddWithValue("@TotalYearsAbroad", dr["TotalYearsAbroad"]);
+                            cmd.Parameters.AddWithValue("@CurrentContractEndDate", dr["CurrentContractEndDate"]);
+                            cmd.Parameters.AddWithValue("@Occupation", dr["occupationCode"]);
+                            cmd.Parameters.AddWithValue("@ZIPCode", dr["ZIPCode"]);
+                            cmd.Parameters.AddWithValue("@SourceOfIncome", dr["IncomeSrcCode"]);
+                            cmd.Parameters.AddWithValue("@QueryType", 66);
+
+                        }
+                        break;
+                        //cmd.ExecuteNonQuery();
+                }
+                   res = base.ExecProcedure(cmd, _ConnectionString);
+                }
+
+                return res;
+            
         }
 
         public string DeleteData(string Code)
@@ -635,9 +766,11 @@ namespace DALComponent
             return SFObjects.LoadDataTable(sql, _ConnectionString);
         }
 
-        public string GetData(string recuser,string nwCustno)
+        public string GetData(string recuser, string nwCustno, string codevalue)
+        //public string GetData(string recuser, string codevalue)
+
         {
-            string a = string.Format($"exec [PRT].[nsp_SBCustomerMasterFile] @Querytype = 0, @recuser = '{recuser}', @CustomerCode = '{nwCustno}'");
+            string a = string.Format($"exec [PRT].[nsp_SBCustomerMasterFile] @Querytype = 0, @recuser = '{recuser}', @CustomerCode = '{codevalue}'");
 
             focusRecordPK = string.Empty;
             a = a.Replace(Environment.NewLine, " "); /*Do not Remove this*/
@@ -833,14 +966,48 @@ namespace DALComponent
             return SFObjects.returnText($@"SELECT [DC].[fn_ChkIfHasReqComplianceAll]('{docno}')", _ConnectionString);
         }
 
+        public DataTable getCurBnkLin(string CustomerCode)
+        {
+            string strSQL = $@"EXEC [PRT].[nsp_SBCustomerMasterFile] @CustomerCode = '{CustomerCode}', @QueryType = 58";
+            return SFObjects.LoadDataTable(strSQL, _ConnectionString);
+        }
+
+
+        public DataTable SpsCurBnkLin()
+        {
+            string strSQL = $@"EXEC [PRT].[nsp_SBCustomerMasterFile] @QueryType = 59";
+            return SFObjects.LoadDataTable(strSQL, _ConnectionString);
+        }
+        public string Institution()
+        {
+            string sql = "EXEC [PRT].[nsp_SBCustomerMasterFile] @QueryType = 60";
+            return string.Format(sql, _ConnectionString);
+        }
+
+        public string LoadTypeOfAccount()
+        {
+            string sql = "EXEC [PRT].[nsp_SBCustomerMasterFile] @QueryType = 61";
+            return string.Format(sql, _ConnectionString);
+        }
 
 
 
+        public DataTable LoadIndividualAcc()
+        {
+            return SFObjects.LoadDataTable("SELECT * FROM [RE].[CustomerAccountsInformationDeposits] WHERE 1<>1", _ConnectionString);
+        }
 
+
+        public DataTable LoadSpouseAcc()
+        {
+            return SFObjects.LoadDataTable("SELECT * FROM [RE].[CustomerSpouseAccountsInformationDeposits] WHERE 1<>1", _ConnectionString);
+        }
+
+        public string GetNewCode()
+        {
+            return SFObjects.returnText($@"select [re].fn_GenerateNextNo('C',12)", _ConnectionString);
+        }
     }
-
-
-
 
     public static class Patterns
     {
