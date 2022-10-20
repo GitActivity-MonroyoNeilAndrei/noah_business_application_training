@@ -22,17 +22,27 @@ function func_Reload() {
     LoadStringsCases();
     //crnwTagSingleBind = true;
 
+    nwTrustedLinks.push("fli.promptus8.com");
     crLnk = "../SBClientRegDeactivation/SBClientRegDeactivation_Gateway";
     crLnkGateKey = "SBClientRegDeactivation";
 
-    //$("#settingstabs").loadAddtoList({ list: ["Customer", "Customer Classification"], icon: true });
-    //$t().onReload();
+  
+    //var fullength = "SBCustomerMasterFile";
+    //let nwCustno = nwGridMainCon_Book.ActiveSheet.GetValue(SPR_CustomerCode - 1, row);
+    //let nwCustno = 'C-00000000000003';
+    //var fullength = "SBCustomerMasterFile?nwCustno=" + nwCustno;
+
+    //nwPopupForm_Create("form-Details", true, fullength);
+
+
 
     var isContinue = true;
     init_request();
     ToolBoxGetData = false;
     DisableFields();
 
+
+    
     return isContinue;
 }
 
@@ -146,6 +156,7 @@ function DisableFields() {
 }
 
 function EnableFieldsDone() {//Binding Done
+
 }
 
 
@@ -225,6 +236,11 @@ function cust_GetPara() {
     //nwParameter_Add("txtCode", $('#txtCode').val());
     nwParameter_Add("Customer", $('#idvallugCustomer_aspx').val());
 
+    try {
+        nwParameter_Add_DataSet("conGrid");
+    } catch (ex) {
+    }
+
 }
 
 //new
@@ -266,13 +282,18 @@ function p8Spread_Click(canvasID, row, col) {
     if (canvasID == "conGrid") {
         if (col == (SPR_Details - 1)) {
             let nwCustno = nwGridMainCon_Book.ActiveSheet.GetValue(SPR_CustomerCode - 1, row);
-            let url = "";
 
             if (nwCustno !== "") {
-                nwCustno = `nwCustno=${nwCustno}`;
-                url = `../DataSetup/SBCustomerMasterFile/SBCustomerMasterFile.aspx?${nwCustno}`;
-                nwPopupForm_Create("form-Details", true, url);
+
+                $("#txtvalue").val(nwCustno);
+
+                var fullength = "SBCustomerMasterFile?nwCustno=" + nwCustno;
+                nwPopupForm_Create("form-Details", true, fullength);
+
+                $('#form-Details .BoxTitle').text("View Details");
+
                 nwPopupForm_ShowModal("form-Details");
+      
             }
 
         }

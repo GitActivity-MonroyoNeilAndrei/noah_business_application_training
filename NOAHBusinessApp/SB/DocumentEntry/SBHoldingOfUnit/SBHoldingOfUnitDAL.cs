@@ -14,7 +14,7 @@ namespace DALComponent
         #region STANDARD
 
         public string MenuItemCode = "SBHoldingOfUnit"; // This is default parameter  for version
-        public string MenuItemVersion = "10.0.0.1E"; // This is default parameter for version
+        public string MenuItemVersion = "10.0.0.2"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
             if (_MenuItemCode.Trim() != "") MenuItemCode = _MenuItemCode;
@@ -180,13 +180,14 @@ namespace DALComponent
 
         }
 
-        public string DeleteData(string transNo, string user)
+        public string DeleteData(string transNo, string user, string ReasonForCancellation)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Clear();
             cmd.CommandText = spName;
             cmd.Parameters.AddWithValue("@TransactionNo", transNo);
+            cmd.Parameters.AddWithValue("@ReasonForCancellation", ReasonForCancellation);
             cmd.Parameters.AddWithValue("@Recuser", user);
             cmd.Parameters.AddWithValue("@QueryType", 3);
 
@@ -453,6 +454,11 @@ namespace DALComponent
             return SFObjects.returnText($@"SELECT [DC].[fn_ChkIfHasReqComplianceAll]('{docno}')", _ConnectionString);
         }
 
+        public DataTable cmbReasonSelect()
+        {
+            return SFObjects.LoadDataTable($@"EXEC {spName} @QueryType = 37", _ConnectionString);
+        }
+
         public string SaveRBAO(DataTable dt, bool IsNewRow)
         {
             List<SqlCommand> cmdlist = new List<SqlCommand>();
@@ -508,6 +514,17 @@ namespace DALComponent
         public string validateForeignOwnership(string uc, string projCode, string tranNo)
         {
             return string.Format($@"EXEC {spName} @UnitCode='{uc}',@ProjectCode='{projCode}',@TransactionNo'{tranNo}', @QueryType = 33");
+        }
+
+        public string getUnitDesc(string code)
+        {
+            return string.Format($@"SELECT b.unitDesc FROM RE.IVUnitInvAddOnAssignLIN a JOIN RE.UnitInventory b ON b.UnitCode = a.UnitCode WHERE a.unitInventory = '" + code + "'");
+        }
+
+        public string getUnitCode(string code)
+        {
+            return string.Format($@"SELECT UnitCode FROM RE.IVUnitInvAddOnAssignLIN WHERE unitInventory = '" + code  + "'");
+            
         }
 
 

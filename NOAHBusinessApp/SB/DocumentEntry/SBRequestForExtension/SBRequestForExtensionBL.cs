@@ -172,8 +172,8 @@ namespace Noah_Web.forms_BusinessLayer
                         RecordOperation(eRecordOperation.Search, pozt);
                         break;
                     case "11":
-                        BindHeader();
-                        js.ADD("func_Refresh();");
+                        //BindHeader();
+                        //js.ADD("func_Refresh();");
                         break;
                 }
                 #endregion
@@ -308,21 +308,55 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
 
                 case eRecordOperation.Save:
+                    RecordOperationResult = AreValidEntries(0);
+                    if (RecordOperationResult.Length <= 0)
+                    {
+                        isNewRow = checkIsNewRow();
+                        DataTable dtHDR = LoadSchema();
+                        RecordOperationResult = dal.SaveData(dtHDR, isNewRow, 0);
+                        if (RecordOperationResult.ToLower().Contains("success"))
+                        {
+                            RecordOperationResult = "Saved successfully";
+                            BindHeader();
+                            //js.ADD("func_Refresh();");
+                        }
+                    }
                     break;
 
                 case eRecordOperation.Delete:
-                    RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtCode"));
-                    if (RecordOperationResult == "")
+                    //RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtCode"));
+                    //if (RecordOperationResult == "")
+                    //    RecordOperationResult = "Deleted successfully";
+                    RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtTransactionNo"));
+                    if (RecordOperationResult.ToLower().Contains("success"))
+                    {
                         RecordOperationResult = "Deleted successfully";
+                        BindHeader();
+                        //js.ADD("func_Refresh();");
+                    }
                     break;
 
                 case eRecordOperation.Process:
-                    tempstr = "Process";
-                    Prompt.Information(tempstr, based.Title);
+                    RecordOperationResult = AreValidEntries(1);
+                    if (RecordOperationResult.Length <= 0)
+                    {
+                        isNewRow = checkIsNewRow();
+                        DataTable dtHDR = LoadSchema();
+                        RecordOperationResult = dal.SaveData(dtHDR, isNewRow, 1);
+                        if (RecordOperationResult.ToLower().Contains("success"))
+                        {
+                            RecordOperationResult = "Process completed";
+                            BindHeader();
+                            //js.ADD("func_Refresh();");
+                        }
+                    }
+                    //tempstr = "Process";
+                    //Prompt.Information(tempstr, based.Title);
                     break;
 
                 case eRecordOperation.Refresh:
                     RefreshData();
+                    BindHeader();
                     js.ADD("nwLoading_End('actbindcollection');");
                     break;
 
@@ -364,19 +398,21 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
 
                 case eRecordOperation.Closing:
-                    RecordOperationResult = AreValidEntries(0);
-                    if (RecordOperationResult.Length <= 0)
-                    {
-                        isNewRow = checkIsNewRow();
-                        DataTable dtHDR = LoadSchema();
-                        RecordOperationResult = dal.SaveData(dtHDR, isNewRow, 0);
-                    }
+                    tempstr = "closing";
+                    //RecordOperationResult = AreValidEntries(0);
+                    //if (RecordOperationResult.Length <= 0)
+                    //{
+                    //    isNewRow = checkIsNewRow();
+                    //    DataTable dtHDR = LoadSchema();
+                    //    RecordOperationResult = dal.SaveData(dtHDR, isNewRow, 0);
+                    //}
                     break;
 
                 case eRecordOperation.Search:
-                    RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtTransactionNo"));
-                    if (RecordOperationResult.ToLower().Contains("success"))
-                        RecordOperationResult = "Deleted successfully";
+                    tempstr = "search";
+                    //RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtTransactionNo"));
+                    //if (RecordOperationResult.ToLower().Contains("success"))
+                    //    RecordOperationResult = "Deleted successfully";
                     break;
 
             }
@@ -385,7 +421,7 @@ namespace Noah_Web.forms_BusinessLayer
                 if (RecordOperationResult.IndexOf("Error") != 0 && RecordOperationResult.IndexOf("Cannot save") != 0)
                 {
                     BindHeader();
-                    js.ADD("func_Refresh();");
+                    //js.ADD("func_Refresh();");
                     RecordOperationResult = Prompt.PromptToolBoxMessage(RecordOperationResult, i);
                     Prompt.Information(RecordOperationResult, based.Title);
                 }
@@ -420,15 +456,15 @@ namespace Noah_Web.forms_BusinessLayer
                     js.ADD("nwLoading_End('xSample')");
                     break;
 
-                case "actRefresh":
-                    js.ADD("nwLoading_End('actRefresh')");
-                    break;
+                //case "actRefresh":
+                //    js.ADD("nwLoading_End('actRefresh')");
+                //    break;
 
-                case "actbtnRefresh":
-                    BindHeader();
-                    js.ADD("func_Refresh();");
-                    js.ADD("nwLoading_End('actbtnRefresh')");
-                    break;
+                //case "actbtnRefresh":
+                //    BindHeader();
+                //    js.ADD("func_Refresh();");
+                //    js.ADD("nwLoading_End('actbtnRefresh')");
+                //    break;
 
                 case "actLoadRequest":
                     DataTable hasQueue = new DataTable();
@@ -443,34 +479,34 @@ namespace Noah_Web.forms_BusinessLayer
                         else
                         {
                             BindHeader();
-                            js.ADD("func_Refresh();");
+                            //js.ADD("func_Refresh();");
                         }
                     }
                     
                     js.ADD("nwLoading_End('actLoadRequest')");
                     break;
 
-                case "actProcess":
-                    RecordOperationResult = AreValidEntries(0);
-                    if (RecordOperationResult.Length <= 0)
-                    {
-                        isNewRow = checkIsNewRow();
-                        DataTable dtHDR = LoadSchema();
-                        RecordOperationResult = dal.SaveData(dtHDR, isNewRow, 1);
-                    }
+                //case "actProcess":
+                //    RecordOperationResult = AreValidEntries(0);
+                //    if (RecordOperationResult.Length <= 0)
+                //    {
+                //        isNewRow = checkIsNewRow();
+                //        DataTable dtHDR = LoadSchema();
+                //        RecordOperationResult = dal.SaveData(dtHDR, isNewRow, 1);
+                //    }
 
-                    if (RecordOperationResult.ToLower().Contains("success"))
-                    {
-                        Prompt.Information("Process completed", based.Title);
-                        BindHeader();
-                        js.ADD("func_Refresh();");
-                    }
-                    else
-                    {
-                        Prompt.Error(RecordOperationResult, based.Title);
-                    }
-                    js.ADD("nwLoading_End('actProcess')");
-                    break;
+                //    if (RecordOperationResult.ToLower().Contains("success"))
+                //    {
+                //        Prompt.Information("Process completed", based.Title);
+                //        BindHeader();
+                //        js.ADD("func_Refresh();");
+                //    }
+                //    else
+                //    {
+                //        Prompt.Error(RecordOperationResult, based.Title);
+                //    }
+                //    js.ADD("nwLoading_End('actProcess')");
+                //    break;
 
                 case "actHasRqrdCompli":
                     setRqmtCompProp();

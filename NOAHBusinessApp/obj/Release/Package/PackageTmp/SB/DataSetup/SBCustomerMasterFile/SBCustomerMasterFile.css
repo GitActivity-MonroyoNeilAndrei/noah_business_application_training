@@ -9,11 +9,11 @@
         margin-bottom: 6px !important;
     }
 
-#attachIDPicture,#attachSignature {
-    min-width: 245px;
+/*#attachIDPicture,#attachSignature {
+    min-width: auto;
     max-width: 245px;
 
-}
+}*/
 
 
 #profile-img-signature {
@@ -94,3 +94,5 @@
     max-height:500px;
 }
 
+textarea{ resize: none !important;}
+.topFieldSet{ padding-right: 60px; padding-bottom: 82px }

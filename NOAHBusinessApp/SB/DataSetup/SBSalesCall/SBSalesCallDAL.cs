@@ -14,7 +14,7 @@ namespace DALComponent
         #region STANDARD
 
         public string MenuItemCode = "SBSalesCall"; // This is default parameter  for version
-        public string MenuItemVersion = "10.0.0.1"; // This is default parameter for version
+        public string MenuItemVersion = "10.0.0.4"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
             if (_MenuItemCode.Trim() != "") MenuItemCode = _MenuItemCode;
@@ -116,18 +116,9 @@ namespace DALComponent
             return string.Format(@"EXEC " + storedProcedureName + " @Tower = '" + filt5 + "', @Proj = '" + proj1 + "', @QueryType = 24");
         }
 
-        public string GetData(string curusers,string docno)
+        public string GetData(string curusers, string codevalue)
         {
-            string a = string.Format(@"EXEC " + storedProcedureName + " @Seller = '" + curusers + "' , @id='"+  docno +"' , @QueryType = 0");
-
-            focusRecordPK = string.Empty;
-            a = a.Replace(Environment.NewLine, " "); /*Do not Remove this*/
-
-            return a;
-        }
-        public string GetData(string curusers)
-        {
-            string a = string.Format(@"EXEC " + storedProcedureName + " @Seller = '" + curusers + "', @QueryType = 0");
+            string a = string.Format(@"EXEC " + storedProcedureName + " @Seller = '" + curusers + "',@ID='"+ codevalue + "', @QueryType = 0");
 
             focusRecordPK = string.Empty;
             a = a.Replace(Environment.NewLine, " "); /*Do not Remove this*/
@@ -260,6 +251,11 @@ namespace DALComponent
         {
             string cmd2 = string.Format(@"EXEC " + storedProcedureName + " @ID = '" + ID + "', @QueryType = 25");
             return SFObjects.LoadDataTable(cmd2, _ConnectionString);
+        }
+
+        public string getNoahDate()
+        {
+            return SFObjects.returnText("SELECT dbo.GetNoahDate()", _ConnectionString);
         }
 
     }

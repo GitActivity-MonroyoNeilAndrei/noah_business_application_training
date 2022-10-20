@@ -175,19 +175,23 @@ a.nav-li:not(.active):visited {
     margin-top: 3px;
 }
 .list-items-c {
-    font-size: 0;
+    /*font-size: 0;
     padding: 15px;
-    margin-right: -15px;
+    margin-right: -15px;*/
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px;
 }
 div.list-item {
     display: inline-block;
-    margin-right: 15px;
-    margin-bottom: 15px;
+    /*margin-right: 15px;
+    margin-bottom: 15px;*/
     font-size: 14px;
     height: 260px;
-    width: 337px;
+        flex: 0 0 calc(25% - 10px);
+    /*width: 337px;*/
     background-color: #ffffff;
-    padding: 4px;
+    /*padding: 4px;*/
     text-decoration: none;
     color: #111111;
     font-family: 'Segoe UI';
@@ -284,6 +288,44 @@ div.list-item:active {
     transform: rotate(135deg);
     top: 13px;
     right: 15px;
+}
+.nav-virtmap-img {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 3px;
+    background-color: #e5effa;
+    background-image: url('../media/icons/vrtour.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    height: 34px;
+    position: relative;
+    cursor:pointer;
+}
+.nav-virtmap-imgp {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 3px;
+    background-color: #e5effa;
+    background-image: url(../media/icons/vrtour.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 10px;
+    /* margin-top: 10px; */
+    height: 34px;
+    position: relative;
+    cursor: pointer;
 }
 .nav-user-img {
     display: inline-block;
@@ -389,9 +431,9 @@ div.list-item:active {
 .welcome-user-img {
     width: 70px;
     display: inline-block;
-    margin-top: 8px;
+    /*margin-top: 8px;
     margin-left: 10px;
-    margin-right: 15px;
+    margin-right: 15px;*/
     border-radius: 50%;
     height: 70px;
     vertical-align: middle;
@@ -403,6 +445,12 @@ div.list-item:active {
     background-position: center;
     overflow: hidden;
 }
+.welcome-remarks {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .welcome-remarks,
 .summary-header {
     height: 110px;
@@ -417,7 +465,7 @@ div.list-item:active {
     vertical-align: middle;
     font-size: 22px;
     font-family: 'Segoe UI', 'Century Gothic', sans-serif;
-    margin-top: 5px;
+    /*margin-top: 5px;*/
     text-shadow: -1px 2px 3px rgba(0, 0, 0, .18);
     font-weight: 600;
 }
@@ -432,15 +480,25 @@ div.list-item:active {
 }
 .welcome-remarks-sec.left,
 .summary-header-sec.left {
-    float: left;
+    /*float: left;
     display: inline-block;
-    width: 40%;
+    width: 40%;*/
+}
+
+/*.welcome-remarks-sec.left {
+    width: 45%;
+}*/
+
+.welcome-remarks-sec.right {
+    display: flex;
+    gap: 10px;
+    /*width: 55%;*/
 }
 .welcome-remarks-sec.right,
 .summary-header-sec.right {
-    float: right;
+    /*float: right;
     display: inline-block;
-    padding: 0 10px;
+    padding: 0 10px;*/
 }
 .hdr-tile {
     cursor: pointer;
@@ -454,7 +512,7 @@ div.list-item:active {
     background: linear-gradient(to right, rgba(0,0,0,.16), rgba(0, 0, 0, 0.22));
     box-sizing: border-box;
     padding: 10px 12px;
-    margin: 12px 2px;
+    /*margin: 12px 2px;*/
     border-radius: 6px;
     color: #ffffff;
     text-align: right;
@@ -774,8 +832,7 @@ span.leg-note-color.yellow,
     user-select: none;
     text-shadow: -1px 1px 3px rgba(0,0,0,.24);
     transition: .12s ease box-shadow;
-    margin: 0 auto;
-    margin-top: 15px;
+    margin: 10px 0px;
     max-width: 380px;
 }
 .btn.btn-type1:hover {
@@ -1088,14 +1145,33 @@ span.leg-note-color.yellow,
     text-align: center;
     margin-bottom: 30px;
 }
-.lbl-hdr-row {
+/*.lbl-hdr-row {
     margin: 10px auto 10px auto;
     margin-left: 0;
     margin-bottom: 20px;
     font-family: 'Segoe UI', 'Century Gothic', sans-serif;
     font-size: 15px;
     display: flex;
+}*/
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
+
+.flex-row.row-c.lbl-hdr-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.flex-col:nth-child(4) {
+    flex-direction: row;
+    align-self: flex-start;
+}
+
 .lbl-hdr-row > .col {
     vertical-align: middle;
     align-self: center;
@@ -1664,9 +1740,9 @@ div.list-item:hover, div.list-item:active {
     width: 34%;
     text-align: right;
 }
-.new-np .row-c:not(:first-of-type) {
+/*.new-np .row-c:not(:first-of-type) {
     margin-top: 10px;
-}
+}*/
 #tblComSum {
     width: 1500px;
 }
@@ -2377,13 +2453,21 @@ ul#listFloor li .li-Shortcut p {
 .new-np .content-c .row-c:not(.row-list-c) .lbl-title-list .btn.btn-cancel {
     display: none !important;
 }
+
+.flex-jus-content {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0px;
+    align-items: center;
+}
+
 .lbl-title-note-land {
     font-size: 14px;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     /* text-align: center; */
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
     font-style: italic;
-    color: #387ac5 !important;
+    color: #2f415a !important;
     font-weight: bold !important;
 }
 
@@ -2571,8 +2655,8 @@ ul#listFloor li {
 .rdo + .lblrdo:after {
     width: 11px;
     height: 11px;
-    left: 10px;
-    top: 10px;
+    left: 8px;
+    top: 8px;
     -webkit-transform: scale(0);
     -moz-transform: scale(0);
     transform: scale(0);
@@ -2609,18 +2693,19 @@ ul#listFloor li {
 }
 /*END WEBUI*/
 
-.divBulkBtn
+/*.divBulkBtn
 {
     float:right;
     margin-top: -35px;
-}
+}*/
 .divBulkRdo
 {
     margin-left: 170px;
 }
 #btnProceedBulk
 {
-    font-size:15px !important
+    font-size:15px !important;
+            width: 380px;
 }
 .BulkDtls-c {
     border-radius: 10px;
@@ -2689,7 +2774,26 @@ ul#listFloor li {
 {
     margin-left: 100px !important;
 }
-@media only screen and (max-width: 800px) {
+.colprj
+{
+    display:inline-block !important;
+}
+@media only screen and (max-width: 1000px) {
+    /*RPB 10052022*/
+    .welcome-remarks {
+        flex-direction: column;
+    }
+
+    #btnProceedBulk {
+        font-size: 15px !important;
+        width: 100%;
+        min-width: 100%;
+    }
+
+.slr-p.new-np.my-space .welcome-remarks .welcome-remarks-sec.left {
+    background: linear-gradient(to bottom, #2569b7, #07224d) !important;
+}
+
     /*MAM 09202020*/
     #commfrom,#commto
     {
@@ -2712,11 +2816,11 @@ ul#listFloor li {
     {
         width: 100% !important;
     }
-    .divBulkBtn
+    /*.divBulkBtn
     {
         float:none !important;
         margin-top: 0px !important;
-    }
+    }*/
     .divBulkRdo
     {
         margin-left: 0px !important;
@@ -2847,7 +2951,7 @@ ul#listFloor li {
         padding: 0;
     }
     .row-c {
-        padding: 2% 2%;
+        padding: 12px;
         margin: 0 auto !important;
     }
     .row-c.row-welcome {
@@ -2860,10 +2964,10 @@ ul#listFloor li {
         padding: 0;
         background: none !important;
     }
-    .welcome-remarks-sec {
+    /*.welcome-remarks-sec {
         display: block !important;
         float: none !important;
-    }
+    }*/
     .welcome-remarks-sec.left {
         background: linear-gradient(to right, #0b5a88, #6776a5);
         padding: 4%;
@@ -2893,10 +2997,21 @@ ul#listFloor li {
     }
     .welcome-remarks-sec.right {
         text-align: center;
-        padding: 4% 2%;
+        padding: 10px 10px 0px 10px;
         font-size: 0;
         white-space: nowrap;
-        overflow: hidden;
+        overflow: initial;
+        width: 100%;
+        margin-bottom: 0px;
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+
+    .flex-jus-content {
+        margin: 0px 15px;
+        align-items: flex-start;
+        flex-direction: column;
     }
     .hdr-tile {
         /*margin: 0 auto;
@@ -2907,12 +3022,9 @@ ul#listFloor li {
         padding: 10px;
         user-select: none;
         height: 50px;*/
-
-        margin: 0 auto;
-        margin-right: 1%;
-        width: 24%;
+        width: calc(50% - 3px);
         background: none;
-        border: 1px solid #e2e2e2;
+        border: 1px solid #6185bd;
         padding: 5px;
         user-select: none;
         height: 50px;
@@ -2931,7 +3043,7 @@ ul#listFloor li {
         white-space: nowrap;
         height: 20px;
         line-height: 20px;*/
-        color: #000000;
+        color: #2f415a;
         font-size: 14px;
         font-weight: normal;
         /* position: absolute; */
@@ -2957,7 +3069,7 @@ ul#listFloor li {
         overflow: hidden;
         white-space: nowrap;*/
 
-        color: #000000;
+        color: #2f415a;
         font-size: 14px;
         font-weight: bold;
         /* position: absolute; */
@@ -2985,13 +3097,20 @@ ul#listFloor li {
         color: #0b5a88;
     }
     .row-c.lbl-hdr-row {
-        margin: 0 !important;
         width: 100%;
-        padding: 3% 2%;
-        padding-top: 0;
         box-sizing: border-box;
-        display: block;
         border-bottom: 1px solid #ffffff;
+    }
+
+    .flex-row.row-c.lbl-hdr-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .flex-col {
+        flex-direction: column;
+        gap: 0px;
+        width: 100%;
     }
     .lbl-hdr-row > .col {
         width: 100%;
@@ -3007,7 +3126,7 @@ ul#listFloor li {
     }
     label.lbl-hdr-text {
         display: block;
-        margin: 4px 0;
+        /*margin: 4px 0;*/
         text-indent: 0;
         float: initial;
         font-size: 14px;
@@ -3061,9 +3180,10 @@ ul#listFloor li {
         padding: 0;
         width: 100%;
         overflow: auto;
+            flex-direction: column;
     }
     .list-item.btn {
-        margin: 10px auto;
+        /*margin: 10px auto;*/
         margin-top: 8px;
         width: 100%;
         display: block;
@@ -3093,9 +3213,9 @@ ul#listFloor li {
         padding-left: 10px;
     }
     .row-c.row-list-c {
-        padding: 3% 0;
+        padding: 0px 16px;
         padding-bottom: 0;
-        border-bottom: 10px solid #e7edf0;
+        margin-bottom: 20px !important;
     }
     .li-item-loc, .li-item-name {
         padding: 0 2%;
@@ -3202,7 +3322,7 @@ ul#listFloor li {
         margin-bottom: 0;
     }
     .btn.btn-type1 {
-        margin: 0 auto;
+        /*margin: 0 auto;*/
         line-height: 36px;
         padding: 0 10px;
         white-space: nowrap;
@@ -3856,9 +3976,9 @@ ul#listFloor li {
     .row-lastborder-c {
         border-bottom-color: transparent !important;
     }
-    .lbl-title-note-land {
+    /*.lbl-title-note-land {
         padding: 2%;
-    }
+    }*/
 
 
 

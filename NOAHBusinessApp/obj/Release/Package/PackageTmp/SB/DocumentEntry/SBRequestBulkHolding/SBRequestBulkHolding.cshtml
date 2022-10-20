@@ -7,6 +7,8 @@
 <head>
     <script src="~/SB/DocumentEntry/SBRequestBulkHolding/SBRequestBulkHolding.js"></script>
     <link href="~/SB/DocumentEntry/SBRequestBulkHolding/SBRequestBulkHolding.css" rel="stylesheet" />
+    @*<script type="text/javascript" src="/materials/jslib/fx.js"></script>
+    <script type="text/javascript" src="/materials/jslib/fx-main.js"></script>*@
 </head>
 
 @*ToolBox*@
@@ -22,10 +24,6 @@
     <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item">
         <div class="_icon"></div>
         <div class="_lbl">Delete</div>
-    </div>
-    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
-        <div class="_icon"></div>
-        <div class="_lbl">Refresh</div>
     </div>
     <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item">
         <div class="_icon"></div>
@@ -104,12 +102,29 @@
                 </div>
             </div>
 
+
+
             <div class="row">
                 <div class="col col-5">
-                    <label class="lbltxt">Number of unit to be held</label>
+                    <label class="lbltxt">Direct Seller</label>
+                </div>
+                <div id="lugDirectSeller" class="col col-7 col-parent lookups">
+                    <div class="col col-5">
+                        <input type="text" name="" class="txtbox idval clr">
+                    </div>
+                    <div class="col col-7">
+                        <input type="text" name="" class="txtbox descval clr">
+                        <div class="btn btn-sm-default btn-sm-default-lookup" id="btnDirectSeller"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-5">
+                    <label class="lbltxt">Length of Holding</label>
                 </div>
                 <div class="col col-7">
-                    <input type="text" name="txtnoUnitHeld" id="txtnoUnitHeld" disabled="" class="input isNumber nwAlignRight open" maxlength="3">
+                    <input type="text" name="txtnoUnitHeld" id="txtnoUnitHeld" disabled="" class="input nwAlignRight open">
                 </div>
             </div>
 
@@ -187,8 +202,44 @@
   
 
 </div>
+<div class="container-flex">
+    <div class="col col-12">
+        <div id="RequirementCompliance" class="row row-parent padding-10 nwCuz001" title="Requirements Compliance">
+                <iframe id="Details" class=""></iframe>
+        </div>
+    </div>
+</div>
+<div class="container-flex">
+        <div class="col col-12">
+            <div class="tabs tabs-lbl-bold" nk-tabs-style="3">
+                <div class="tabs-content">
+                    <input id="nkTabs_e_1" type="radio" class="tabs-rdb" checked="" name="tabs-e">
+                    <label for="nkTabs_e_1" class="tabs-lbl">UNIT DETAILS</label>
+                    <div class="tabs-text">
+                        <div class="row row-parent padding">
+                                 <div class="col col-12 col-parent fullwidth" id="nwGridCon1">
 
-@*Footer*@
+                                </div>
+
+                        </div>
+                    </div>
+                    <!--  -->
+                    <input id="nkTabs_e_2" type="radio" class="tabs-rdb" name="tabs-e">
+                    <label for="nkTabs_e_2" class="tabs-lbl">SELLER DETAILS</label>
+                    <div class="tabs-text">
+                        <div class="row row-parent padding">
+                            <div class="col col-12 col-parent fullwidth" id="nwGridCon2">
+
+                            </div>
+                    </div>
+                    <!--  -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    @*Footer*@
 <div class="nk-footer-c">
     <div class="nk-footer-info">
         <div class="nk-footer-create">

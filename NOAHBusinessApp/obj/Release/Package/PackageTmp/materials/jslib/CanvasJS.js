@@ -1,9 +1,9 @@
-﻿/* # Canvas JS Library 1.10.1.66
+﻿/* # Canvas JS Library 1.10.1.67
 # Company Owner: Forecasting and Planning Technologies Inc. / Promptus8 Inc.
 # Developers : Angelo Carlo A. Gonzales
 Omar B. Credito
 # Date Created : March 2018
-# Date Modified : August 22 2022 / 05:17 PM  - before: 08-05-2022
+# Date Modified : September 30 2022 / 12:17 PM  - before: 08-22-2022
 
 For  NoahWeb Application and Promptus8 Modules used only. 
 
@@ -1088,13 +1088,22 @@ P8.SpreadSheet.prototype.SetEnable = function (c, r, data) {
 };
 
 
-P8.SpreadSheet.prototype.SetObjectType = function (c, r, data) {
+P8.SpreadSheet.prototype.SetObjectType = function (c, r, data,data2,data3) {
     var irow = r; icol = c;
 
     if (data == undefined || data == "") data = "celltext";
 
     if (data == "checkboxtext")
         this.SetText2(c, r, this.GetText(c, r));
+
+    if (data == "button") {
+        this.SetTextAlign(c, r, "center");
+        this.SetVerticalAlign(c, r, "middle");
+       
+        _sfSetFormat(this, icol, irow, "ButtonBG", (data2 || "gray"));
+        _sfSetFormat(this, icol, irow, "ButtonText", (data3 || ""));
+    }
+
 
     _sfSetFormat(this, icol, irow, "ObjectType", data);
 
@@ -6559,8 +6568,28 @@ function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedVa
                 CanvasTextWrapper(canvas, stringText + " " + symbols, option);
             }
         }
-        else
+        else {
+
+            if (cobjecttype == "button") {
+                //var c = document.getElementById("myCanvas");
+                //var ctx = c.getContext("2d");
+
+                var buttonbg = _sfCheckConfigType(obj, curRow - 1, curCol - 1, "ButtonBG", "gray");
+                var buttonText = _sfCheckConfigType(obj, curRow - 1, curCol - 1, "ButtonText", "");
+                if (buttonText != "")
+                    stringText = buttonText;
+
+                var my_gradient = contextSheet.createLinearGradient(0, 0, 0, option.x + option.width);
+                my_gradient.addColorStop(0, "silver");
+                my_gradient.addColorStop(1, buttonbg);
+                my_gradient.addColorStop(1, buttonbg);
+                contextSheet.fillStyle = my_gradient;
+                contextSheet.fillRect(option.x, option.y+2, option.width, option.height);
+            }
+
             CanvasTextWrapper(canvas, stringText, option);
+
+        }
     }
 
 

@@ -15,10 +15,33 @@ namespace NOAHBusinessApp.Controllers.SA
     {
         public ActionResult Index()
         {
+            nwStandardUploadingSnipet nwUpload = new nwStandardUploadingSnipet(this);
+            nwUpload.UploadDefaultConfig();
+
+
             mainDataAccess main = new mainDataAccess();
             main.MenuAccess(User, this);
             return View(@"~\SB\DataSetup\SBMyProspectCustomers\SBMyProspectCustomers.cshtml");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Upload()
+        {
+            //app layer
+            nwStandardUploadingSnipet nwUpload = new nwStandardUploadingSnipet(this);
+            nwUpload.UploadLink = "SBMyProspectCustomers/Upload";
+            nwUpload.AdditonalPath = "SBMyProspectCustomers";
+            nwUpload.Bind();
+
+            nwUpload.Upload_Start();
+            //your code
+            nwUpload.UploadingType = nwStandardUploading.nwUploadingType.DefaultServerPath;
+            nwUpload.Upload_End();
+
+            return null;
+        }
+
 
         public ActionResult SBMyProspectCustomers_Gateway()
         {

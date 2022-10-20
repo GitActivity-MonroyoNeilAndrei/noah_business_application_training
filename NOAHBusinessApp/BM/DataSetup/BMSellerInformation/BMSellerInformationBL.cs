@@ -374,7 +374,8 @@ namespace Noah_Web.forms_BusinessLayer
                                   select row;
 
                     config = results.First().Field<string>("configval");
-                    strSQL = dal.qryLevel(WebApp.nwobjectText("idvallugSellerType"), config, WebApp.nwobjectText("idvallugMktgGrpCode"));
+                    //idvallugSellerType
+                    strSQL = dal.qryLevel(WebApp.nwobjectText("txtSellerTypeCode"), config, WebApp.nwobjectText("idvallugMktgGrpCode"));
                     strMethod = strMethod.Substring(3);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
@@ -428,7 +429,8 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
 
                 case "getlugCivilStatus":
-                    strSQL = dal.getCivilStatus(WebApp.nwobjectText("idvallugSalutation"));
+                    //idvallugSalutation
+                    strSQL = dal.getCivilStatus(WebApp.nwobjectText("txtSalutationCode"));
                     strMethod = strMethod.Substring(3);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
@@ -632,13 +634,15 @@ namespace Noah_Web.forms_BusinessLayer
 
                     //js.ADD("$().css()");
                     //## FOR EXPORTING ###
-                    Random rnd = new Random();
-                    string SessionID = DateTime.Now.ToString("yyyyddMMhhmmss") + rnd.Next(0, 9999).ToString().PadRight(4, '0');
-                    HttpContext.Current.Session["Config_" + SessionID] = frmlist.m_Spread.ExportConfig();
-                    HttpContext.Current.Session["Data_" + SessionID] = frmlist.m_Spread.GetDataSource();
-                    HttpContext.Current.Session["Filename_" + SessionID] = LISTINGFILENAME;
-                    HttpContext.Current.Session["Header_" + SessionID] = "0";
-                    js.ADD("ExportSessionID='" + SessionID + "'");
+                    //Random rnd = new Random();
+                    //string SessionID = DateTime.Now.ToString("yyyyddMMhhmmss") + rnd.Next(0, 9999).ToString().PadRight(4, '0');
+                    //HttpContext.Current.Session["Config_" + SessionID] = frmlist.m_Spread.ExportConfig();
+                    //HttpContext.Current.Session["Data_" + SessionID] = frmlist.m_Spread.GetDataSource();
+                    //HttpContext.Current.Session["Filename_" + SessionID] = LISTINGFILENAME;
+                    //HttpContext.Current.Session["Header_" + SessionID] = "0";
+                    //js.ADD("ExportSessionID='" + SessionID + "'");
+                    frmlist.m_Spread.ExportFileName = LISTINGFILENAME;
+                    frmlist.MenuItemName = based.Title;
 
                     //frmlist.m_Spread.SetText(5, 5, WebApp.nwobjectText("txtLevel1").Replace("*", ""));
                     //frmlist.m_Spread.SetText(6, 5, WebApp.nwobjectText("txtLevel1").Replace("*", "") + " Description");
@@ -648,7 +652,7 @@ namespace Noah_Web.forms_BusinessLayer
 
                     js.Show("#nwExportContainerMain", 0);
                     js.ADD(frmlist.CreateScript());
-
+                    js.ADD("$('#nwExportContainerMain .modal-box-s .modal-hdr .modal-hdr-title').text('"+ LISTINGFILENAME + "')");
 
                     break;
                 case eRecordOperation.Print:
@@ -757,8 +761,8 @@ namespace Noah_Web.forms_BusinessLayer
                         js.ADD("$('.noah-webui-default-Content_Container').enable(true);");
                     }
 
-                       
-                    DataTable dtjsonlevelconfig = dal.getConfiglvl(WebApp.nwobjectText("idvallugSellerType"));
+                    //idvallugSellerType
+                    DataTable dtjsonlevelconfig = dal.getConfiglvl(WebApp.nwobjectText("txtSellerTypeCode"));
 
                     foreach (DataRow r in dtjsonlevelconfig.Rows)
                     {
@@ -902,19 +906,28 @@ namespace Noah_Web.forms_BusinessLayer
                     string gendercode = dt.Rows[0]["Gender"].ToString();
                     string genderdesc = dt.Rows[0]["genderDesc"].ToString();
 
-                    js.makeValueText("#idvallugGender", gendercode);
-                    js.makeValueText("#descvallugGender", genderdesc);
+                    //js.makeValueText("#idvallugGender", gendercode);
+                    //js.makeValueText("#descvallugGender", genderdesc);
 
-                    js.ADD("$('#idvallugCivilStatus').val('')");
-                    js.ADD("$('#descvallugCivilStatus').val('')");
+                    js.makeValueText("#txtGenderCode", gendercode);
+                    js.makeValueText("#txtGenderDesc", genderdesc);
+
+                    //js.ADD("$('#idvallugCivilStatus').val('')");
+                    //js.ADD("$('#descvallugCivilStatus').val('')");
+
+                    js.ADD("$('#txtCivilStatusCode').val('')");
+                    js.ADD("$('#txtCivilStatusDesc').val('')");
 
                     if (dt.Rows.Count == 1)
                     {
                         string civilcode = dt.Rows[0]["civilstatus"].ToString();
                         string civildesc = dt.Rows[0]["civilDesc"].ToString();
 
-                        js.makeValueText("#idvallugCivilStatus", civilcode);
-                        js.makeValueText("#descvallugCivilStatus", civildesc);
+                        //js.makeValueText("#idvallugCivilStatus", civilcode);
+                        //js.makeValueText("#descvallugCivilStatus", civildesc);
+
+                        js.makeValueText("#txtCivilStatusCode", civilcode);
+                        js.makeValueText("#txtCivilStatusDesc", civildesc);
                     }
 
                     js.ADD("nwLoading_End('actSalutation')");
@@ -977,34 +990,65 @@ namespace Noah_Web.forms_BusinessLayer
             //SFObject.SetControlBinding("#txtCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerGroup");
             //SFObject.SetControlBinding("#txtDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerGroupDesc");
 
-            SFObject.SetControlBinding("#idvallugSellerType", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerType");
-            SFObject.SetControlBinding("#descvallugSellerType", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerTypeDesc");
+            //SFObject.SetControlBinding("#idvallugSellerType", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerType");
+            //SFObject.SetControlBinding("#descvallugSellerType", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerTypeDesc");
+
+            SFObject.SetControlBinding("#txtSellerTypeCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerType");
+            SFObject.SetControlBinding("#txtSellerTypeDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerTypeDesc");
 
             SFObject.SetControlBinding("#idvallugSellergroup", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerGroup");
             SFObject.SetControlBinding("#descvallugSellergroup", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerGroupDesc");
 
-            SFObject.SetControlBinding("#idvallugSellerRole", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerRole");
-            SFObject.SetControlBinding("#descvallugSellerRole", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerRoleDesc");
-            SFObject.SetControlBinding("#idvallugSellerStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerStatus");
-            SFObject.SetControlBinding("#descvallugSellerStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerStatusDesc");
+            //SFObject.SetControlBinding("#idvallugSellerRole", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerRole");
+            //SFObject.SetControlBinding("#descvallugSellerRole", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerRoleDesc");
+
+            SFObject.SetControlBinding("#txtSellerRoleCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerRole");
+            SFObject.SetControlBinding("#txtSellerRoleDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerRoleDesc");
+            SFObject.SetControlBinding("#txtSellergroupCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerGroup");
+            SFObject.SetControlBinding("#txtSellergroupDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerGroupDesc");
+
+            //SFObject.SetControlBinding("#idvallugSellerStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerStatus");
+            //SFObject.SetControlBinding("#descvallugSellerStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerStatusDesc");
+
+            SFObject.SetControlBinding("#txtSellerStatusCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerStatus");
+            SFObject.SetControlBinding("#txtSellerStatusDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerStatusDesc");
+
             SFObject.SetControlBinding("#txtPRCNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PRCLicenseNo");
-            SFObject.SetControlBinding("#idvallugSalutation", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Salutation");
-            SFObject.SetControlBinding("#descvallugSalutation", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SalutationDesc");
+            //SFObject.SetControlBinding("#idvallugSalutation", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Salutation");
+            //SFObject.SetControlBinding("#descvallugSalutation", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SalutationDesc");
+
+            SFObject.SetControlBinding("#txtSalutationCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Salutation");
+            SFObject.SetControlBinding("#txtSalutationDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SalutationDesc");
+
             SFObject.SetControlBinding("#txtLastName", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "LastName");
             SFObject.SetControlBinding("#txtFirstName", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "FirstName");
             SFObject.SetControlBinding("#txtMiddleName", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "MiddleName");
             SFObject.SetControlBinding("#txtMI", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "MiddleInitial");
             SFObject.SetControlBinding("#txtMaidenName", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "MaidenName");
             SFObject.SetControlBinding("#txtMotherMaidenName", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "MotherMaidenName");
-            SFObject.SetControlBinding("#idvallugNameSuffix", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NameSuffix");
-            SFObject.SetControlBinding("#descvallugNameSuffix", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NameSuffixDesc");
+            //SFObject.SetControlBinding("#idvallugNameSuffix", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NameSuffix");
+            //SFObject.SetControlBinding("#descvallugNameSuffix", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NameSuffixDesc");
+
+            SFObject.SetControlBinding("#txtNameSuffixCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NameSuffix");
+            SFObject.SetControlBinding("#txtNameSuffixDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NameSuffixDesc");
+
             SFObject.SetControlBinding("#txtBirthdate", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "BirthDate");
             SFObject.SetControlBinding("#idvallugGender", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Gender");
             SFObject.SetControlBinding("#descvallugGender", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "GenderDesc");
-            SFObject.SetControlBinding("#idvallugCivilStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CivilStatus");
-            SFObject.SetControlBinding("#descvallugCivilStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CivilStatusDesc");
-            SFObject.SetControlBinding("#idvallugNationality", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Nationality");
-            SFObject.SetControlBinding("#descvallugNationality", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NationalityDesc");
+
+            SFObject.SetControlBinding("#txtGenderCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Gender");
+            SFObject.SetControlBinding("#txtGenderDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "GenderDesc");
+
+            //SFObject.SetControlBinding("#idvallugCivilStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CivilStatus");
+            //SFObject.SetControlBinding("#descvallugCivilStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CivilStatusDesc");
+            SFObject.SetControlBinding("#txtCivilStatusCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CivilStatus");
+            SFObject.SetControlBinding("#txtCivilStatusDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CivilStatusDesc");
+            //SFObject.SetControlBinding("#idvallugNationality", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Nationality");
+            //SFObject.SetControlBinding("#descvallugNationality", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NationalityDesc");
+
+            SFObject.SetControlBinding("#txtNationalityCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Nationality");
+            SFObject.SetControlBinding("#txtNationalityDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NationalityDesc");
+
             SFObject.SetControlBinding("#txtPlaceofBirth", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PlaceofBirth");
             SFObject.SetControlBinding("#txtIndividualTIN", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "TIN");
             SFObject.SetControlBinding("#txtRegisteredName", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RegisteredName");
@@ -1016,8 +1060,10 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#txtNonVATRegTIN", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NonVATRegTIN");
             SFObject.SetControlBinding("#idvallugDefaultVATCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "DefaultVATTaxCode");
             SFObject.SetControlBinding("#descvallugDefaultVATCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "DefVATTaxCodeDesc");
-            SFObject.SetControlBinding("#idvallugDefaultCWTTaxCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "DefaultCWTTaxCode");
-            SFObject.SetControlBinding("#descvallugDefaultCWTTaxCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "DefCWTTaxCodeDesc");
+            //SFObject.SetControlBinding("#idvallugDefaultCWTTaxCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "DefaultCWTTaxCode");
+            //SFObject.SetControlBinding("#descvallugDefaultCWTTaxCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "DefCWTTaxCodeDesc");
+            SFObject.SetControlBinding("#txtDefaultCWTTaxCodeCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "DefaultCWTTaxCode");
+            SFObject.SetControlBinding("#txtDefaultCWTTaxCodeDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "DefCWTTaxCodeDesc");
             SFObject.SetControlBinding("#txtSSSNumber", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SSSNumber");
             SFObject.SetControlBinding("#txtPagIBIGNumber", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PagIBIGNumber");
             SFObject.SetControlBinding("#txtPhilHealthNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PhilHealthNumber");
@@ -1027,8 +1073,10 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#txtsellerAdd1", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerAddress");
             SFObject.SetControlBinding("#txtSellerAdd2", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerAddress2");
             SFObject.SetControlBinding("#txtRecruitDate", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RecruitmentDate");
-            SFObject.SetControlBinding("#idvallugRecruitedBy", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RecruitedBy");
-            SFObject.SetControlBinding("#descvallugRecruitedBy", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RecreuitedByDesc");
+            //SFObject.SetControlBinding("#idvallugRecruitedBy", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RecruitedBy");
+            //SFObject.SetControlBinding("#descvallugRecruitedBy", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RecreuitedByDesc");
+            SFObject.SetControlBinding("#txtRecruitedByCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RecruitedBy");
+            SFObject.SetControlBinding("#txtRecruitedByDesc", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RecreuitedByDesc");
             SFObject.SetControlBinding("#txtFirstSaleDate", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "FirstSaleDate");
             SFObject.SetControlBinding("#txtRecordStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "StatusDesc");
             SFObject.SetControlBinding("#txtStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Status");
@@ -1075,7 +1123,8 @@ namespace Noah_Web.forms_BusinessLayer
             //string level1 = dal.getLabel("Level1");
             //string level2 = dal.getLabel("Level2");
             js.ADD("$('.li-Shortcut').enable(true);");
-            DataTable dtlbl = dal.getlevelLabel(WebApp.nwobjectText("idvallugSellerType"));
+            //idvallugSellerType
+            DataTable dtlbl = dal.getlevelLabel(WebApp.nwobjectText("txtSellerTypeCode"));
             if (dtlbl.Rows.Count > 0)
             {
                 DataRow rw = dtlbl.Rows[0];
@@ -1145,6 +1194,8 @@ namespace Noah_Web.forms_BusinessLayer
             {
                 js.ADD("$('#noah-webui-Toolbox').bindingProcess().enable(true);");
             }
+
+            js.ADD("$('#noah-webui-default-Export').enable(true);");
         }
 
         private string ValidateData(string Status)
@@ -1161,19 +1212,20 @@ namespace Noah_Web.forms_BusinessLayer
 
             if (WebApp.nwobjectText("idvallugMktgGrpCode")!= "")
             {
-                if (WebApp.nwobjectText("idvallugSellerType").Length <= 0)
+                //idvallugSellerType
+                if (WebApp.nwobjectText("txtSellerTypeCode").Length <= 0)
                 {
                     errorResult += "Cannot " + Status + ". " + WebApp.nwobjectText("txtLevel2").Replace("*", "") + " is required. \n";
                 }
             }
-        
 
-            if (WebApp.nwobjectText("idvallugSellerRole").Length <= 0)
+            //idvallugSellerRole
+            if (WebApp.nwobjectText("txtSellerRoleCode").Length <= 0)
             {
                 errorResult += "Cannot " + Status + ". Seller Role is required. \n";
             }
-
-            if (WebApp.nwobjectText("idvallugSellerStatus").Length <= 0)
+            //idvallugSellerStatus
+            if (WebApp.nwobjectText("txtSellerStatusCode").Length <= 0)
             {
                 errorResult += "Cannot " + Status + ". Seller Status is required. \n";
             }
@@ -1246,8 +1298,8 @@ namespace Noah_Web.forms_BusinessLayer
                     errorResult += "Cannot " + Status + ". Document Details should be completed. \n";
                 }
             //}
-
-            if (WebApp.nwobjectText("idvallugDefaultCWTTaxCode").Length <= 0)
+            //idvallugDefaultCWTTaxCode
+            if (WebApp.nwobjectText("txtDefaultCWTTaxCodeCode").Length <= 0)
             {
                 errorResult += "Cannot " + Status + ". Default CWT Tax Code is required. \n";
             }
@@ -1286,8 +1338,8 @@ namespace Noah_Web.forms_BusinessLayer
 
 
             if (bool.Parse((WebApp.nwobjectText("rbIndividual"))))
-            {
-                if (WebApp.nwobjectText("idvallugSalutation").Length <= 0)
+            {//idvallugSalutation
+                if (WebApp.nwobjectText("txtSalutationCode").Length <= 0)
                 {
                     errorResult += "Cannot " + Status + ". Salutation/Title is required. \n";
                 }
@@ -1310,15 +1362,17 @@ namespace Noah_Web.forms_BusinessLayer
                         errorResult += "Cannot " + Status + ". Seller must not be below the age of 18. \n";
                     }
                 }
-                if (WebApp.nwobjectText("idvallugGender").Length <= 0)
+                //idvallugGender
+                if (WebApp.nwobjectText("txtGenderCode").Length <= 0)
                 {
                     errorResult += "Cannot " + Status + ". Gender is required. \n";
-                }
-                if (WebApp.nwobjectText("idvallugCivilStatus").Length <= 0)
+                }//dvallugCivilStatus
+                if (WebApp.nwobjectText("txtCivilStatusCode").Length <= 0)
                 {
                     errorResult += "Cannot " + Status + ". Civil Status is required. \n";
                 }
-                if (WebApp.nwobjectText("idvallugNationality").Length <= 0)
+                //idvallugNationality
+                if (WebApp.nwobjectText("txtNationalityCode").Length <= 0)
                 {
                     errorResult += "Cannot " + Status + ". Nationality is required. \n";
                 }
@@ -1413,24 +1467,24 @@ namespace Noah_Web.forms_BusinessLayer
             dr["SellerClassification"] = WebApp.nwobjectBool("rbRegular")  ? 1 : 0;
             dr["SellerCrossRefCode"] = WebApp.nwobjectText("txtCrossReference");
             dr["SellerName"] = WebApp.nwobjectText("txtSellername");
-            dr["SellerGroup"] = WebApp.nwobjectText("idvallugSellergroup");
-            dr["SellerType"] = WebApp.nwobjectText("idvallugSellerType");
-            dr["SellerRole"] = WebApp.nwobjectText("idvallugSellerRole");
+            dr["SellerGroup"] = WebApp.nwobjectText("txtSellergroupCode");
+            dr["SellerType"] = WebApp.nwobjectText("txtSellerTypeCode");
+            dr["SellerRole"] = WebApp.nwobjectText("txtSellerRoleCode");
             //dr["SellerRole"] = WebApp.nwobjectText("idvallugLvl1");
-            dr["SellerStatus"] = WebApp.nwobjectText("idvallugSellerStatus");
+            dr["SellerStatus"] = WebApp.nwobjectText("txtSellerStatusCode");
             dr["PRCLicenseNo"] = WebApp.nwobjectText("txtPRCNo");
-            dr["Salutation"] = WebApp.nwobjectText("idvallugSalutation");
+            dr["Salutation"] = WebApp.nwobjectText("txtSalutationCode");
             dr["LastName"] = WebApp.nwobjectText("txtLastName");
             dr["FirstName"] = WebApp.nwobjectText("txtFirstName");
             dr["MiddleName"] = WebApp.nwobjectText("txtMiddleName");
             dr["MiddleInitial"] = WebApp.nwobjectText("txtMI");
             dr["MaidenName"] = WebApp.nwobjectText("txtMaidenName");
             dr["MotherMaidenName"] = WebApp.nwobjectText("txtMotherMaidenName");
-            dr["NameSuffix"] = WebApp.nwobjectText("idvallugNameSuffix");
+            dr["NameSuffix"] = WebApp.nwobjectText("txtNameSuffixCode");
             dr["BirthDate"] = WebApp.nwobjectText("txtBirthdate") == string.Empty ? (object)DBNull.Value : WebApp.nwobjectText("txtBirthdate");
-            dr["Gender"] = WebApp.nwobjectText("idvallugGender");
-            dr["CivilStatus"] = WebApp.nwobjectText("idvallugCivilStatus");
-            dr["Nationality"] = WebApp.nwobjectText("idvallugNationality");
+            dr["Gender"] = WebApp.nwobjectText("txtGenderCode");
+            dr["CivilStatus"] = WebApp.nwobjectText("txtCivilStatusCode");
+            dr["Nationality"] = WebApp.nwobjectText("txtNationalityCode");
             dr["BirthPlace"] = WebApp.nwobjectText("txtPlaceofBirth");
             dr["TIN"] = WebApp.nwobjectText("txtIndividualTIN");
             dr["RegisteredName"] = WebApp.nwobjectText("txtRegisteredName");
@@ -1438,7 +1492,7 @@ namespace Noah_Web.forms_BusinessLayer
             dr["VATRegTIN"] = WebApp.nwobjectText("txtVATRegTIN");
             dr["NonVATRegTIN"] = WebApp.nwobjectText("txtNonVATRegTIN");
             dr["DefaultVATTaxCode"] = WebApp.nwobjectText("idvallugDefaultVATCode");
-            dr["DefaultCWTTaxCode"] = WebApp.nwobjectText("idvallugDefaultCWTTaxCode");
+            dr["DefaultCWTTaxCode"] = WebApp.nwobjectText("txtDefaultCWTTaxCodeCode");
             dr["SSSNumber"] = WebApp.nwobjectText("txtSSSNumber");
             dr["PagIBIGNumber"] = WebApp.nwobjectText("txtPagIBIGNumber");
             dr["PhilHealthNumber"] = WebApp.nwobjectText("txtPhilHealthNo");
@@ -1456,7 +1510,7 @@ namespace Noah_Web.forms_BusinessLayer
             dr["ContractDurationTo"] = WebApp.nwobjectText("txtContractDurationTo") == string.Empty ? (object)DBNull.Value : WebApp.nwobjectText("txtContractDurationTo");
 
             dr["RecruitmentDate"] = WebApp.nwobjectText("txtRecruitDate") == string.Empty ? (object)DBNull.Value : WebApp.nwobjectText("txtRecruitDate");
-            dr["RecruitedBy"] = WebApp.nwobjectText("idvallugRecruitedBy");
+            dr["RecruitedBy"] = WebApp.nwobjectText("txtRecruitedByCode");
             dr["FirstSaleDate"] = WebApp.nwobjectText("txtFirstSaleDate") == string.Empty ? (object)DBNull.Value : WebApp.nwobjectText("txtFirstSaleDate");
             dr["ContractStatus"] = WebApp.nwobjectText("idvallugSellerCotractStatus");
 

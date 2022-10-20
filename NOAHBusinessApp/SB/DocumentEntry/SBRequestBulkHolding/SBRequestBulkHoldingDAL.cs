@@ -16,7 +16,7 @@ namespace DALComponent
         #region STANDARD
 
         public string MenuItemCode = "SBRequestBulkHolding"; // This is default parameter  for version
-        public string MenuItemVersion = "10.0.0.0"; // This is default parameter for version
+        public string MenuItemVersion = "10.0.0.3"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
             if (_MenuItemCode.Trim() != "") MenuItemCode = _MenuItemCode;
@@ -85,9 +85,9 @@ namespace DALComponent
             return string.Format($@"EXEC {spName} @QueryType=5");
         }
 
-        public string GetData()
+        public string GetData(string codevalue)
         {
-            string a = string.Format($@"EXEC {spName} @QueryType=0");
+            string a = string.Format($@"EXEC {spName} @Docno= '{codevalue}' ,@QueryType=0");
             focusRecordPK = string.Empty;
             a = a.Replace(Environment.NewLine, " "); /*Do not Remove this*/
             return a;
@@ -119,6 +119,7 @@ namespace DALComponent
                 cmd.Parameters.AddWithValue("@ReasonBulkHold", dr["ReasonBulkHold"]);
                 cmd.Parameters.AddWithValue("@Customer", dr["Customer"]);
                 cmd.Parameters.AddWithValue("@Project", dr["Project"]);
+                cmd.Parameters.AddWithValue("@sellerCode", dr["sellerCode"]);
                 cmd.Parameters.AddWithValue("@noUnitHeld", dr["noUnitHeld"]);
                 cmd.Parameters.AddWithValue("@Remarks", dr["Remarks"]);
                 cmd.Parameters.AddWithValue("@DocDate", dr["DocDate"]);
@@ -220,6 +221,25 @@ namespace DALComponent
             return string.Format($@"EXEC {spName} @QueryType=11");
         }
 
+        public string getlugDirectSeller()
+        {
+            return string.Format($@"EXEC {spName} @QueryType=12");
+        }
+        public string getUnit(string project)
+        {
+            //return string.Format($@"EXEC {spName} @QueryType=15");
+            return string.Format($@"EXEC {spName} @projectCode ='{project}', @QueryType = 15");
+        }
+        public DataTable getUnitDetails(string project)
+        {
+            string strSQL = $@"EXEC {spName} @projectCode ='{project}', @QueryType = 13";
+            return SFObjects.LoadDataTable(strSQL, _ConnectionString);
+        }
+        public DataTable getSellerDetails(string seller)
+        {
+            string strSQL = $@"EXEC {spName} @sellerCode ='{seller}',@QueryType = 14";
+            return SFObjects.LoadDataTable(strSQL, _ConnectionString);
+        }
         public DataTable GetDefaultLocAcctForms(string user)
         {
             SqlCommand cmd = new SqlCommand();
@@ -236,13 +256,14 @@ namespace DALComponent
             return SFObjects.returnText($@"SELECT [DC].[fn_ChkIfHasReqComplianceAll]('{docno}')", _ConnectionString);
         }
 
-        public string Process(string Docno, string subdate)
+        public string Process(string Docno, string subdate, string locform)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Clear();
             cmd.CommandText = spName;
             cmd.Parameters.AddWithValue("@Docno", Docno);
+            cmd.Parameters.AddWithValue("@LocForm", locform);
             cmd.Parameters.AddWithValue("@QueryType", 7);
             return base.ExecProcedure(cmd, _ConnectionString);
         }

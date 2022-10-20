@@ -100,6 +100,17 @@ namespace Noah_Web.forms_BusinessLayer
         int xtotalrecords = 0;
         Dictionary<string, string> xdic_chars = new Dictionary<string, string>();
 
+        private static int StartIndex = 0,
+
+            SPR_PROJECT = StartIndex,
+            SPR_PHASE_TOWER = ++StartIndex,
+            SPR_BLOCK_FLOOR = ++StartIndex,
+            SPR_LOT = ++StartIndex,
+            SPR_SELLING_PRICE = ++StartIndex,
+            SPR_QUEUE_NUM = ++StartIndex;
+
+        
+
         public const int
                         SPR_ITEMCODE = 1,
                         SPR_ITEMDESC = 2,
@@ -234,6 +245,16 @@ namespace Noah_Web.forms_BusinessLayer
                     strMethod = strMethod.Substring(3);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
+                case "getlugDirectSeller": 
+                    strSQL = dal.getlugDirectSeller();
+                    strMethod = strMethod.Substring(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    break;
+                case "getUnit":
+                    strSQL = dal.getUnit(WebApp.nwobjectText("idvallugProject"));
+                    strMethod = strMethod.Substring(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    break;
             }
 
             return strFinal;
@@ -268,12 +289,13 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
 
                 case eRecordOperation.Process:
-                    string Docno = WebApp.nwobjectText("Docno");
+                    string Docno = WebApp.nwobjectText("txtDocNo");
+                    string locform = WebApp.nwobjectText("idvallugLocAcctForms");
                     DateTime currentDate = SFObject.GetServerDateTime(this.UserDefinedConnectionString);
                     string date = currentDate.ToString();
                     if (RecordOperationResult == string.Empty)
                     {
-                        RecordOperationResult = dal.Process(WebApp.nwobjectText("Docno"), date);
+                        RecordOperationResult = dal.Process(Docno, date, locform);
                     }
                     break;
 
@@ -282,6 +304,7 @@ namespace Noah_Web.forms_BusinessLayer
                     js.ADD("loc_LookupInquireWithValue('" + string.Empty + "') ");
                     break;
                 case eRecordOperation.Inquire:
+      
                     tempstr = "inqure";
                     break;
 
@@ -379,6 +402,18 @@ namespace Noah_Web.forms_BusinessLayer
                     js.ADD("nwLoading_End('actHasRqrdCompli')");
                     break;
 
+                case "actCallSeller":
+                    DataTable dt2 = dtGridLin2();
+
+                    CreateGrid2(false, dt2);
+
+                    break;
+                case "actSelectProject":
+                    //DataTable dt1 = dtGridLin();
+                    DataTable dt1 = InitializeGrid();
+                    CreateGrid(false, dt1);
+                    break;
+
                 default:
                     Prompt.Information("act_Method not found: " + strMethod, "Error");
                     break;
@@ -395,10 +430,12 @@ namespace Noah_Web.forms_BusinessLayer
             switch (getMethod)
             {
                 case "toolbox":
+                    string codevalue = WebApp.nwobjectText("codevalue"); // codevalue will be filter of primary key add these filter
+
                     nwStandardBL standardBL = new nwStandardBL(WebApp);
                     standardBL.PrimaryKey = "Docno";
                  
-                    strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(), this.UserDefinedConnectionString);
+                    strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(codevalue), this.UserDefinedConnectionString);
                     break;
             }
 
@@ -416,6 +453,9 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#descvallugCustomer", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CustomerDesc");
             SFObject.SetControlBinding("#idvallugProject", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Project");
             SFObject.SetControlBinding("#descvallugProject", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "ProjectDesc");
+            SFObject.SetControlBinding("#idvallugDirectSeller", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "sellerCode");
+            SFObject.SetControlBinding("#descvallugDirectSeller", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "sellerName");
+
             SFObject.SetControlBinding("#txtnoUnitHeld", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "noUnitHeld");
             SFObject.SetControlBinding("#txtRemarks", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Remarks");
             SFObject.SetControlBinding("#txtDocNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Docno");
@@ -437,22 +477,24 @@ namespace Noah_Web.forms_BusinessLayer
         private void InitializeValues()
         {
             nwToolBox.bindingNavigatorSaveItem.Enable = true;
-            nwToolBox.bindingNavigatorAddNewItem.Enable =
-            nwToolBox.bindingNavigatorInquireItem.Enable =
+            nwToolBox.bindingNavigatorAddNewItem.Enable = false;
+            nwToolBox.bindingNavigatorInquireItem.Enable = true;
             nwToolBox.bindingNavigatorDeleteItem.Visible =
+            nwToolBox.bindingNavigatorDeleteItem.Enable = false;
             nwToolBox.bindingNavigatorProcessItem.Enable = false;
             nwToolBox.bindingNavigatorExportItem.Visible = false;
 
             DefaultLocAcctForms();
         }
 
+
         private void BindCollection()
         {
             js.ADD("RefreshData();");
-            
+
             //if (WebApp.nwobjectText("txtCode").Length > 0)
             //    js.ADD("isExists(" + dal.isExisted(WebApp.nwobjectText("txtCode")) + ")");
-
+            js.ADD("nwLoading_End('actBindCollection');");
             js.ADD("nwLoading_End('xSample');");
         }
 
@@ -499,6 +541,7 @@ namespace Noah_Web.forms_BusinessLayer
             dr["ReasonBulkHold"] = WebApp.nwobjectText("ReasonBulkHold");
             dr["Customer"] = WebApp.nwobjectText("Customer");
             dr["Project"] = WebApp.nwobjectText("Project");
+            dr["sellerCode"] = WebApp.nwobjectText("sellerCode");
             dr["noUnitHeld"] = WebApp.nwobjectText("noUnitHeld");
             dr["Remarks"] = WebApp.nwobjectText("Remarks");
             dr["DocDate"] = WebApp.nwobjectDate("DocDate").Equals("") ? (object)DBNull.Value : WebApp.nwobjectDate("DocDate");
@@ -528,17 +571,32 @@ namespace Noah_Web.forms_BusinessLayer
 
         private void Main_Load()
         {
+
+            DataTable dt1 = InitializeGrid();
+            DataTable dt2 = dtGridLin2();
+
+            CreateGrid(false, dt1);
+            js.ADD("nwGridMainCon_Book.ActiveSheet.Refresh;");
+
+            CreateGrid2(false, dt2);
+
+            js.ADD("nwGridMainCon_Book2.ActiveSheet.Refresh;");
+
             if (based.isInterface == true) dal.UpdateVersion();
-            
+  
             based.SecurityAccess.RecUser = WebApp.nwobjectText("txtRecuser");
         }
 
         private void RefreshData()
         {
+
+            js.ADD("nwGridMainCon_Book2.ActiveSheet.Refresh;");
             js.ADD("ClearFields();");
             js.ADD("func_Toolbox_Clear();");
             js.ADD("func_ToolboxData(\"#noah-webui-Toolbox-Grid\", \"toolbox\");"); // goto: getToolBoxData
-
+                                                                                
+            //js.ADD("$('#noah-webui-default-Delete').enable(false)");
+         
         }
 
         private void DefaultLocAcctForms()
@@ -571,6 +629,170 @@ namespace Noah_Web.forms_BusinessLayer
                 js.ADD("$('#btnReqCompliance').removeClass('btnGreen');");
                 js.ADD("$('#btnReqCompliance').addClass('btnOrange');");
             }
+        }
+
+
+
+        //create grid
+        public void CreateGrid(bool isInitialize, DataTable dtGridLin)
+        {
+            string gridID = "nwGridCon1";
+
+            nwGrid grid = new nwGrid(gridID);
+
+            DataTable dt1 = new DataTable();
+
+            grid.Type = nwGridType.SpreadCanvas;
+            grid.varSpreadBook = "nwGridMainCon_Book";
+            grid.varSpreadSheet = "nwGridMainCon_Sheet";
+            dt1 = dtGridLin;
+
+            if (!isInitialize) //grid should load data, when the function is called the parameter for initialize is false
+            {
+                if (dt1.Rows.Count <= 0)
+                {  //as per the old code there should be but if its not passing right then there will be no rows
+                    Console.Write("no record to show"); // open console if this message appears
+                }
+                dt1.Rows.Add();      //add an empty row after the loaded rows
+          
+            }
+            else //new grid load, no data. Parameter is true (ex CreateGrid (true,dt);)
+            {
+
+                while (dt1.Rows.Count < 5)
+                {
+
+                    dt1.Rows.Add();      //create 5 empty rows
+                }
+
+            }
+
+
+            grid.dataSource(dt1);
+
+            grid.RowHeight(5);
+
+            grid.TableHeight(200);
+
+
+            for (int i = 0; i < dtGridLin.Columns.Count; i++)
+            {
+                grid.nwobject(i).BackgroundColor("Gainsboro");
+            }
+
+
+
+
+            grid.nwobject(SPR_LOT).TextAlign("center");
+            grid.nwobject(SPR_LOT).BackgroundColor("aqua");
+            js.ADD(grid.createTable());
+
+
+        }
+
+        public void CreateGrid2(bool isInitialize, DataTable dtGridLin2)
+        {
+            string gridID2 = "nwGridCon2";
+
+            nwGrid grid2 = new nwGrid(gridID2);
+
+            DataTable dt2 = new DataTable();
+
+            grid2.Type = nwGridType.SpreadCanvas;
+
+            dt2 = dtGridLin2;
+
+            if (!isInitialize) //grid should load data, when the function is called the parameter for initialize is false
+            {
+                if (dt2.Rows.Count <= 0)
+                {  //as per the old code there should be but if its not passing right then there will be no rows
+                    Console.Write("no record to show"); // open console if this message appears
+                }
+                dt2.Rows.Add();      //add an empty row after the loaded rows
+
+            }
+            else //new grid load, no data. Parameter is true (ex CreateGrid (true,dt);)
+            {
+
+    
+
+                while (dt2.Rows.Count < 5)
+                {
+
+                    dt2.Rows.Add();      //create 5 empty rows
+                }
+            }
+
+
+
+            grid2.dataSource(dt2);
+
+            grid2.RowHeight(5);
+
+            grid2.TableHeight(200);
+
+
+            for (int i = 0; i < dtGridLin2.Columns.Count; i++)
+            {
+                grid2.nwobject(i).BackgroundColor("Gainsboro");
+            }
+
+
+
+            grid2.varSpreadBook = "nwGridMainCon_Book2";
+            grid2.varSpreadSheet = "nwGridMainCon_Sheet2";
+            js.ADD(grid2.createTable());
+
+
+        }
+
+        public DataTable dtGridLin()
+        {
+            DataTable dt1 = new DataTable();
+            string project = WebApp.nwobjectText("idvallugProject");
+            dt1 = dal.getUnitDetails(project);
+
+
+            return dt1;
+        }
+
+        public DataTable dtGridLin2()
+        {
+            DataTable dt2 = new DataTable();
+            string seller = WebApp.nwobjectText("idvallugDirectSeller");
+            dt2 = dal.getSellerDetails(seller);
+
+            return dt2;
+        }
+
+        private DataTable InitializeGrid()
+        {
+            DataTable dt = new DataTable();
+
+
+            dt.Columns.Add("Project Code"); //1
+            dt.Columns.Add("Phase/Tower"); //2
+            dt.Columns.Add("Block/Floor"); //3
+            dt.Columns.Add("Lot/Unit/Slot No."); //4
+            dt.Columns.Add("Selling Price (VATEX)"); //5
+            dt.Columns.Add("Queue No."); //6
+
+
+
+            return dt;
+        }
+        private DataTable InitializeGrid2()
+        {
+            DataTable dt = new DataTable();
+
+
+            dt.Columns.Add("SellerName"); //1
+            dt.Columns.Add("SellerRole"); //2
+
+
+
+
+            return dt;
         }
 
     }

@@ -17004,6 +17004,15 @@ function func_nwfixedUI() {
 }
 
 
+function GOTOURL(url)
+{
+    var spec = window.location.origin + window.location.pathname;
+    if (spec.lastIndexOf("/") + 1 == spec.length)
+        window.location = window.location.origin + window.location.pathname + url;//'../default/'
+    else
+        window.location = window.location.origin + window.location.pathname + '/' + url ;//../default/'
+}
+
 
 
 /*Add To list function*/

@@ -1,4 +1,4 @@
-﻿var mtitle = "Request for Extension Entry";
+﻿var mtitle = "Transfer of Unit";
 
 var crntRow = 0;
 var SPR_ProjectCode = 1,
@@ -22,7 +22,7 @@ function func_Reload() {
 
     LoadStringsCases();
     //crnwTagSingleBind = true;
-
+    nwTrustedLinks.push("fli.promptus8.com");
     crLnk = "../SBTransferOfUnit/SBTransferOfUnit_Gateway";
     crLnkGateKey = "SBTransferOfUnit";
 
@@ -61,6 +61,9 @@ function func_ToolboxSave(indef, enume) {
     var isContinue = true;
     cust_GetPara();
 
+    func_ActionDriven("actSave", false);
+
+    $('#noah-webui-default-Process').enable(true);
     parent_MessageBoxQuestionToolBox("Do you want to save the current record?", mtitle, "", indef, enume);
     isContinue = false;
 
@@ -86,6 +89,10 @@ function func_ToolboxRefresh(indef, enume) {
 
 function func_ToolboxInquire(indef, enume) {
     var isContinue = true;
+
+    //func_ActionDriven("actInquire", false);
+    //nwLoading_Start("actInquire", crLoadingHTML);
+
     return isContinue;
 }
 
@@ -140,11 +147,35 @@ $(document).on("click", "#btnProcess", function () {
     parent_MessageBoxQuestion("Do you want to process the current record?", mtitle, "Question");
 });
 
-$(document).on("click", "#btnRefresh", function () {
+$(document).on("click", "#popup-default-Refresh", function () {
     cust_GetPara();
     func_ActionDriven("actbtnRefresh", false);
     nwLoading_Start("actbtnRefresh", crLoadingHTML);
 });
+
+//newly added
+//$(document).on("click", "#popup-default-New", function () {
+//    var isContinue = true;
+//    EnableFields();
+//    ClearFields();
+//    func_Toolbox_Clear();
+
+//    func_ActionDriven("actbtnAdd", false);
+//    nwLoading_Start("actbtnAdd", crLoadingHTML);
+
+//    return isContinue;
+//});
+
+//$(document).on("click", "#popup-default-Inquire", function () {
+
+//    func_ActionDriven("actbtnInquire", false);
+//    nwLoading_Start("actbtnInquire", crLoadingHTML);
+
+//    var isContinue = true;
+//    return isContinue;
+//});
+
+
 
 ///////////////////// Bind tool
 function cust_GetPara() {
@@ -195,13 +226,34 @@ function ClearFields() {
     $("#txtReason").val("");
     $("#txtReturnRemarks").val("");
     $('#txtIsReq').val('');
-    $('#nwtxt_RecUser').text('')
-    $('#nwtxt_RecDate').text('')
-    $('#nwtxt_ModUser').text('')
-    $('#nwtxt_ModDate').text('')
+    $('#nwtxt_RecUser').text('');
+    $('#nwtxt_RecDate').text('');
+    $('#nwtxt_ModUser').text('');
+    $('#nwtxt_ModDate').text('');
+
+    //added from submenu folder
+    $('#idvallugLocAccForms').val("");
+    $('#descvallugLocAccForms').val("");
+    $('#idvallugReTranUnit').val("");
+    $('#descvallugReTranUnit').val("");
+    $('#idvallugNewUnit').val("");
+    $('#descvallugNewUnit').val("");
+    $('#idvallugRefHoldTrans').val("");
+    $('#descvallugRefHoldTrans').val("");
+    $('#txtRemarks').val("");
+
+    $('#txtDocNo').val("");
+    $('#txtDocDate').val("");
+    $('#txtDocStatus').val("");
+    $('#txtReasDis').val("");
+    $('#txtRemDis').val("");
+
+
 }
 
 function EnableFields() {
+
+
     $("#btnSave").enable(true);
     $("#lugLocform").enable(true);
     $("#lugReason").enable(true);
@@ -212,18 +264,23 @@ function EnableFields() {
     $("#btnReqCompliance").removeClass("btnGreen");
     $("#btnReqCompliance").removeClass("btnGray");
 
-    //added
-    $('#lugLocAccForms').enable(true);
-    $('#lugReTranUnit').enable(true);
-    $('#lugNewUnit').enable(true);
-    $('#lugRefHoldTrans').enable(true);
-    $('#txtRemarks').enable(true);
+    //added from submenu folder
+    //$('#lugLocAccForms').enable(true);
+    //$('#lugReTranUnit').enable(true);
+    //$('#lugNewUnit').enable(true);
+    //$('#lugRefHoldTrans').enable(true);
+    //$('#txtRemarks').enable(true);
 
-    $('#txtDocNo').enable(false);
-    $('#txtDocDate').enable(false);
-    $('#txtDocStatus').enable(false);
-    $('#txtReasDis').enable(false);
-    $('#txtRemDis').enable(false);
+    //$('#txtDocNo').enable(false);
+    //$('#txtDocDate').enable(false);
+    //$('#txtDocStatus').enable(false);
+    //$('#txtReasDis').enable(false);
+    //$('#txtRemDis').enable(false);
+
+    //$('#noah-webui-default-Delete').enable(true);
+    //$('#noah-webui-default-Process').enable(true);
+    //$('#noah-webui-default-Save').enable(false);
+
 }
 
 function DisableFields() {
@@ -240,18 +297,26 @@ function DisableFields() {
     $("#btnReqCompliance").removeClass("btnGreen");
     $("#btnReqCompliance").removeClass("btnOrange");
 
-    //added
-    $('#lugLocAccForms').enable(false);
-    $('#lugReTranUnit').enable(false);
-    $('#lugNewUnit').enable(false);
-    $('#lugRefHoldTrans').enable(false);
-    $('#txtRemarks').enable(false);
+    //added from submenu folder
+    //$('#lugLocAccForms').enable(false);
+    //$('#lugReTranUnit').enable(false);
+    //$('#lugNewUnit').enable(false);
+    //$('#lugRefHoldTrans').enable(false);
+    //$('#txtRemarks').enable(false);
 
-    $('#txtDocNo').enable(false);
-    $('#txtDocDate').enable(false);
-    $('#txtDocStatus').enable(false);
-    $('#txtReasDis').enable(false);
-    $('#txtRemDis').enable(false);
+    //$('#txtDocNo').enable(false);
+    //$('#txtDocDate').enable(false);
+    //$('#txtDocStatus').enable(false);
+    //$('#txtReasDis').enable(false);
+    //$('#txtRemDis').enable(false);
+
+    //$('#noah-webui-default-Delete').enable(false);
+    //$('#noah-webui-default-Process').enable(false);
+    //$('#noah-webui-default-Save').enable(true);
+
+
+    $("#noah-webui-default-New").bindingDelete().visible(false);
+    $("#noah-webui-Toolbox").bindingInquire().enable(false);
 }
 
 function RefreshData() {
@@ -263,7 +328,7 @@ function RefreshData() {
 }
 
 function EnableFieldsDone() {//Binding Done
-    $('#lugLocform').enable(false);
+    //$('#lugLocform').enable(false);
     $('#btnDelete').enable(true);
     $('#btnProcess').enable(true);
 
@@ -276,24 +341,28 @@ function EnableFieldsDone() {//Binding Done
         $('.noah-webui-Toolbox').visible(false);
     }
 
-    //added
-    $('#lugLocAccForms').enable(true);
-    $('#lugReTranUnit').enable(true);
-    $('#lugNewUnit').enable(true);
-    $('#lugRefHoldTrans').enable(true);
-    $('#txtRemarks').enable(true);
+    //added from submenu folder
+    //$('#lugLocAccForms').enable(true);
+    //$('#lugReTranUnit').enable(true);
+    //$('#lugNewUnit').enable(true);
+    //$('#lugRefHoldTrans').enable(true);
+    //$('#txtRemarks').enable(true);
 
-    $('#txtDocNo').enable(false);
-    $('#txtDocDate').enable(false);
-    $('#txtDocStatus').enable(false);
-    $('#txtReasDis').enable(false);
-    $('#txtRemDis').enable(false);
+    //$('#txtDocNo').enable(false);
+    //$('#txtDocDate').enable(false);
+    //$('#txtDocStatus').enable(false);
+    //$('#txtReasDis').enable(false);
+    //$('#txtRemDis').enable(false);
 
-    $("#btnNew").bindingNew().visible(true);
-    $("#btnNew").bindingNew().enable(true);
-    $("#btnSave").bindingSave().enable(true);
-    $("#btnInquire").bindingInquire().enable(true);
-    $("#btnDelete").bindingDelete().visible(true);
+    $("#noah-webui-Toolbox").bindingNew().visible(true);
+    $("#noah-webui-Toolbox").bindingNew().enable(true);
+    $("#noah-webui-Toolbox").bindingSave().enable(true);
+    $("#noah-webui-Toolbox").bindingExport().enable(true);
+    $("#noah-webui-Toolbox").bindingInquire().enable(true);
+    $("#noah-webui-Toolbox").bindingDelete().visible(true);
+    $("#noah-webui-Toolbox").bindingProcess().enable(true);
+    ProcessEnabler();
+
 }
 
 function DisableFieldsEmpty() {
@@ -307,25 +376,26 @@ function DisableFieldsEmpty() {
     $("#btnReqCompliance").removeClass("btnGreen");
     $("#btnReqCompliance").removeClass("btnGray");
 
-    //added
-    $('#lugLocAccForms').enable(false);
-    $('#lugReTranUnit').enable(false);
-    $('#lugNewUnit').enable(false);
-    $('#lugRefHoldTrans').enable(false);
-    $('#txtRemarks').enable(false);
+    //added from submenu folder
+    //$('#lugLocAccForms').enable(false);
+    //$('#lugReTranUnit').enable(false);
+    //$('#lugNewUnit').enable(false);
+    //$('#lugRefHoldTrans').enable(false);
+    //$('#txtRemarks').enable(false);
 
-    $('#txtDocNo').enable(false);
-    $('#txtDocDate').enable(false);
-    $('#txtDocStatus').enable(false);
-    $('#txtReasDis').enable(false);
-    $('#txtRemDis').enable(false);
+    //$('#txtDocNo').enable(false);
+    //$('#txtDocDate').enable(false);
+    //$('#txtDocStatus').enable(false);
+    //$('#txtReasDis').enable(false);
+    //$('#txtRemDis').enable(false);
 
-    $("#btnNew").bindingNew().visible(true);
-    $("#btnNew").bindingNew().enable(true);
-    $("#btnSave").bindingSave().enable(false);
-    $("#btnDelete").bindingDelete().visible(false);
-    $("#btnRefresh").bindingRefresh().visible(true);
-    $("#btnInquire").bindingInquire().enable(false);
+    $("#noah-webui-Toolbox").bindingNew().visible(true);
+    $("#noah-webui-Toolbox").bindingNew().enable(true);
+    $("#noah-webui-Toolbox").bindingSave().enable(false);
+    $("#noah-webui-Toolbox").bindingDelete().visible(false);
+    $("#noah-webui-Toolbox").bindingRefresh().visible(true);
+    $("#noah-webui-Toolbox").bindingExport().enable(false);
+    $("#noah-webui-Toolbox").bindingInquire().enable(false);
 }
 
 function func_DisableHasData() {
@@ -340,6 +410,18 @@ function func_DisableHasData() {
     $("#btnReqCompliance").addClass("btnGray");
     $("#btnReqCompliance").removeClass("btnGreen");
     $("#btnReqCompliance").removeClass("btnOrange");
+}
+
+//added from subfolder
+function ProcessEnabler() {
+    var docstats = $("#txtDocStatus").val();
+
+    if (docstats == "Saved") {
+        $("#noah-webui-Toolbox").bindingProcess().enable(true);
+    }
+    else {
+        $("#noah-webui-Toolbox").bindingProcess().enable(false);
+    }
 }
 
 ////////////////////////////////////////
@@ -385,34 +467,75 @@ function CreateGridDone() {
 
 }
 
+
+function EnableFields_popup() {
+    $('#lugLocAccForms').enable(true);
+    //$('#lugReTranUnit').enable(true);
+    //$('#lugNewUnit').enable(true);
+    $('#lugRefHoldTrans').enable(true);
+    $('#txtRemarks').enable(true);
+
+    $('#txtDocNo').enable(false);
+    $('#txtDocDate').enable(false);
+    $('#txtDocStatus').enable(false);
+    $('#txtReasDis').enable(false);
+    //$('#txtRemDis').enable(false);
+
+    $('#noah-webui-default-Delete').enable(true);
+    $('#noah-webui-default-Process').enable(true);
+    $('#noah-webui-default-Save').enable(false);
+}
+
+function DisableFields_popup() {
+    $('#lugLocAccForms').enable(false);
+    //$('#lugReTranUnit').enable(false);
+    //$('#lugNewUnit').enable(false);
+    $('#lugRefHoldTrans').enable(false);
+    //$('#txtRemarks').enable(false);
+
+    $('#txtDocNo').enable(false);
+    $('#txtDocDate').enable(false);
+    $('#txtDocStatus').enable(false);
+    $('#txtReasDis').enable(false);
+    $('#txtRemDis').enable(false);
+
+    $('#noah-webui-default-Delete').enable(false);
+    $('#noah-webui-default-Process').enable(false);
+    $('#noah-webui-default-Save').enable(true);
+}
+
+function DataProcessed_popup() {
+    $('#lugLocAccForms').enable(false);
+    //$('#lugReTranUnit').enable(false);
+    //$('#lugNewUnit').enable(false);
+    $('#lugRefHoldTrans').enable(false);
+    //$('#txtRemarks').enable(false);
+
+    $('#txtDocNo').enable(false);
+    $('#txtDocDate').enable(false);
+    $('#txtDocStatus').enable(false);
+    $('#txtReasDis').enable(false);
+    $('#txtRemDis').enable(false);
+
+    $('#noah-webui-default-Delete').enable(false);
+    $('#noah-webui-default-Process').enable(false);
+    $('#noah-webui-default-Save').enable(false);
+}
+
 function p8Spread_Click(canvasID, row, col) {
 
     if (canvasID == "nwGridMainCon") {
 
         if (col == (SPR_Request - 1)) {
+
             var docno = '';
             var unitC = '';
-            var docstat = '';
             docno = nwGridMainCon_Book.ActiveSheet.GetText((SPR_Docno - 1), nwGridMainCon_Book.ActiveSheet.GetSelectedIndexes().row);
-            docstat = nwGridMainCon_Book.ActiveSheet.GetText((SPR_UnitCode - 1), nwGridMainCon_Book.ActiveSheet.GetSelectedIndexes().row);
-
+            unitC = nwGridMainCon_Book.ActiveSheet.GetText((SPR_UnitCode - 1), nwGridMainCon_Book.ActiveSheet.GetSelectedIndexes().row);
             if (docno == "") {
                 return false;
             } else {
-
-                if (docstat !== "") {
-
-                    $("#docstat").val(docstat);
-
-                    var fullength = "../../../SB/DocumentEntry/SBTransferOfUnitSubMenu/SBTransferOfUnitSubMenu.aspx?docstat=" + docstat;
-
-                    nwPopupForm_Create("form-Details", true, fullength);
-                    nwPopupForm_ShowModal("form-Details");
-                }
-
-
-
-
+                nwPopupForm_ShowModal("popup");
                 //nwPopupForm_ShowModal("popup");
                 //$('#btnDelete').enable(false);
                 //$('#btnProcess').enable(false);
@@ -425,19 +548,30 @@ function p8Spread_Click(canvasID, row, col) {
                 //func_ActionDriven("actLoadRequest", false);
                 //nwLoading_Start("actLoadRequest", crLoadingHTML);
 
-                //$("#iframetitle").text("Transfer of Unit");
-                //$(document).find('#popup').fadeIn();
-                //$('#btnDelete').enable(false);
-                //$('#btnProcess').enable(false);
-                //ClearFields();
+                $("#iframetitle").text("Transfer of Unit");
+                $(document).find('#popup').fadeIn();
+                $('#btnDelete').enable(false);
+                $('#btnProcess').enable(false);
+
+                ClearFields();
                 //DisableFields();
-                //$('#txtRefDocno').val(docno);
-                //cust_GetPara();
-                //nwParameter_Add("refDocno", getParameterByName("refDocno"));
-                //nwParameter_Add("unitC", unitC);
-                //func_ActionDriven("actLoadRequest", false);
-                //nwLoading_Start("actLoadRequest", crLoadingHTML);
+                $('#txtRefDocno').val(docno);
+                cust_GetPara();
+
+                $('#lugReTranUnit').enable(true);
+                $('#lugNewUnit').enable(true);
+
+                $('#btnReqCompliance').enable(true);
+                nwParameter_Add("refDocno", getParameterByName("refDocno"));
+                nwParameter_Add("unitC", unitC);
+                func_ActionDriven("actLoadRequest", false);
+                nwLoading_Start("actLoadRequest", crLoadingHTML);
+
+                //url = `../DataSetup/SBCustomerMasterFile/SBCustomerMasterFile.cshtml?${nwCustno}`;
+                //nwPopupForm_Create("form-Details", true, url);
+                //nwPopupForm_ShowModal("form-Details");
             }
+
         }
     }
 
@@ -448,7 +582,7 @@ function p8Spread_Click(canvasID, row, col) {
 ///////////////////// Requirements
 $(document).on("click", "#btnReqCompliance", function (e) {
 
-    var trantype = 'HLDEXT';
+    var trantype = 'STRNUN';
     var docno = $('#txtTransactionNo').val();
     var status = $('#txtStatusCode').val();
     nwDocno = getParameterByName('refDocno');
@@ -462,7 +596,7 @@ $(document).on("click", "#btnReqCompliance", function (e) {
 
     nwLoading_Start('btnReqCompliance', crLoadingHTML);
     nwPopupForm_Create("nwPopUpReqComp", true, fullength);
-    $('#nwPopUpReqComp .BoxTitle').text("Requirements Compliance");
+    $('#nwPopUpReqComp .BoxTitle').text("SAMPLE");
     $("#nwPopUpReqComp").css({ "min-width": "90%" });
     $("#nwPopUpReqComp").css({ "min-height": "90%" });
     nwPopupForm_ShowModal("nwPopUpReqComp");

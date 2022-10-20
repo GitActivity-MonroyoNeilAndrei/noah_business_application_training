@@ -14,7 +14,7 @@ namespace DALComponent
         #region STANDARD
 
         public string MenuItemCode = "SBPaymentTermOptions"; // This is default parameter  for version
-        public string MenuItemVersion = "8.0.0.0"; // This is default parameter for version
+        public string MenuItemVersion = "10.0.0.1"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
             if (_MenuItemCode.Trim() != "") MenuItemCode = _MenuItemCode;
@@ -104,7 +104,7 @@ namespace DALComponent
 
         public string getLookup()
         {
-            return string.Format($@"EXEC [PRT].[nsp_NewPaymentTermOption] @QueryType = 0");
+            return string.Format($@"EXEC [PRT].[nsp_NewPaymentTermOption] @filter = 'PaymentTerm', @QueryType = 1");
         }
 
         public DataTable GetYearList()

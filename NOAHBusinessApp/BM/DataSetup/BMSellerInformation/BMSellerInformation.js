@@ -18,9 +18,9 @@ var level1Code = "",
     level10Code = "";
 
 var jsonlevelconfig = [];
-
+var nwGridMainCon_Book;
+var nwGridMainCon_Sheet;
 function func_Reload() {
-
     //crnwTagSingleBind = true;
     crLnk = "../BMSellerInformation/BMSellerInformation_Gateway";
     crLnkGateKey = "BMSellerInformation";
@@ -76,6 +76,7 @@ function ViewingToolbox() {
     $('#noah-webui-default-Inquire').visible(false);
     $('#noah-webui-default-Update').visible(false);
     $('#noah-webui-Toolbox-BindingNavigator').visible(false);
+    $('#noah-webui-default-Export').enable(false);
 
     $("#statusdiv").hide();
     isView = true;
@@ -212,8 +213,14 @@ function cust_GetPara() {
     nwParameter_Add("level10Code", level10Code);
 
     nwParameter_Add("idvallugDefaultVATCode", $("#idvallugDefaultVATCode").val());
-    nwParameter_Add("idvallugDefaultCWTTaxCode", $("#idvallugDefaultCWTTaxCode").val());
-    nwParameter_Add("idvallugSellerRole", $("#idvallugSellerRole").val());
+    //nwParameter_Add("idvallugDefaultCWTTaxCode", $("#idvallugDefaultCWTTaxCode").val());
+    nwParameter_Add("txtDefaultCWTTaxCodeCode", $("#txtDefaultCWTTaxCodeCode").val());
+    nwParameter_Add("txtDefaultCWTTaxCodeDesc", $("#txtDefaultCWTTaxCodeDesc").val());
+    //nwParameter_Add("idvallugSellerRole", $("#idvallugSellerRole").val());
+
+    nwParameter_Add("txtSellerRoleCode", $("#txtSellerRoleCode").val());
+    nwParameter_Add("txtSellerRoleDesc", $("#txtSellerRoleDesc").val());
+
     nwParameter_Add("level2", $('#level2').text());
     nwParameter_Add("level1", $('#level1').text());
 
@@ -222,7 +229,11 @@ function cust_GetPara() {
     nwParameter_Add("txtMiddleName", $('#txtMiddleName').val());
     
     nwParameter_Add("idvallugMktgGrpCode", $('#idvallugMktgGrpCode').val());
-    nwParameter_Add("idvallugSellerTypee", $('#idvallugSellerTypee').val()); 
+    //nwParameter_Add("idvallugSellerType", $('#idvallugSellerType').val()); 
+
+    nwParameter_Add("txtSellerTypeCode", $("#txtSellerTypeCode").val());
+    nwParameter_Add("txtSellerTypeDesc", $("#txtSellerTypeDesc").val());
+
     nwParameter_Add("txtSellername", $('#txtSellername').val());
 
     nwParameter_Add("level2", $('#level2').text());
@@ -237,7 +248,10 @@ function cust_GetPara() {
     nwParameter_Add("SaveStatus", $('#txtRecordStatus').val());
     nwParameter_Add("UpdateStatus", $('#txtUpdateStatus').val());
 
-    nwParameter_Add("idvallugSalutation", $('#idvallugSalutation').val());
+    //nwParameter_Add("idvallugSalutation", $('#idvallugSalutation').val());
+
+    nwParameter_Add("txtSalutationCode", $("#txtSalutationCode").val());
+    nwParameter_Add("txtSalutationDesc", $("#txtSalutationDesc").val());
     
 }
 
@@ -289,8 +303,11 @@ function Lookup_DoneFunction(idName, idNum) {
     } else if (idName == 'lugDefaultCWTTaxCode') {
         $('#idvallugDefaultVATTaxCode').val('')
         $('#descvallugDefaultVATTaxCode').val('')
-        $('#idvallugDefaultVATTaxCode').val($('#idvallugDefaultCWTTaxCode').val())
-        $('#descvallugDefaultVATTaxCode').val($('#descvallugDefaultCWTTaxCode').val())
+        //$('#idvallugDefaultVATTaxCode').val($('#idvallugDefaultCWTTaxCode').val())
+        //$('#descvallugDefaultVATTaxCode').val($('#descvallugDefaultCWTTaxCode').val())
+
+        $('#txtDefaultVATTaxCodeCode').val($('#txtDefaultCWTTaxCodeCode').val())
+        $('#txtDefaultVATTaxCodeDesc').val($('#txtDefaultCWTTaxCodeDesc').val())
     }
     else if (idName == 'DocDetails') {
         
@@ -383,69 +400,109 @@ function Lookup_DoneFunction(idName, idNum) {
 
         if(level10Code != '')
         {
-            $('#idvallugSellerType').val(level10Code);
-            $('#descvallugSellerType').val(level10Desc);
+            //$('#idvallugSellerType').val(level10Code);
+            //$('#descvallugSellerType').val(level10Desc);
+
+            $('#txtSellerTypeCode').val(level10Code);
+            $('#txtSellerTypeDesc').val(level10Desc);
+
             $('#txtCode').val(level9Code);
             $('#txtDesc').val(level9Desc);
         }
         else if (level9Code != '')
         {
-            $('#idvallugSellerType').val(level9Code);
-            $('#descvallugSellerType').val(level9Desc);
+            //$('#idvallugSellerType').val(level9Code);
+            //$('#descvallugSellerType').val(level9Desc);
+
+            $('#txtSellerTypeCode').val(level9Code);
+            $('#txtSellerTypeDesc').val(level9Desc);
+
             $('#txtCode').val(level8Code);
             $('#txtDesc').val(level8Desc);
         }
         else if (level8Code != '')
         {
-            $('#idvallugSellerType').val(level8Code);
-            $('#descvallugSellerType').val(level8Desc);
+            //$('#idvallugSellerType').val(level8Code);
+            //$('#descvallugSellerType').val(level8Desc);
+
+            $('#txtSellerTypeCode').val(level8Code);
+            $('#txtSellerTypeDesc').val(level8Desc);
+
             $('#txtCode').val(level7Code);
             $('#txtDesc').val(level7Desc);
         }
         else if (level7Code != '')
         {
-            $('#idvallugSellerType').val(level7Code);
-            $('#descvallugSellerType').val(level7Desc);
+            //$('#idvallugSellerType').val(level7Code);
+            //$('#descvallugSellerType').val(level7Desc);
+
+            $('#txtSellerTypeCode').val(level7Code);
+            $('#txtSellerTypeDesc').val(level7Desc);
+
             $('#txtCode').val(level6Code);
             $('#txtDesc').val(level6Desc);
         }
         else if (level6Code != '')
         {
-            $('#idvallugSellerType').val(level6Code);
-            $('#descvallugSellerType').val(level6Desc);
+        //    $('#idvallugSellerType').val(level6Code);
+        //    $('#descvallugSellerType').val(level6Desc);
+
+            $('#txtSellerTypeCode').val(level6Code);
+            $('#txtSellerTypeDesc').val(level6Desc);
+
             $('#txtCode').val(level5Code);
             $('#txtDesc').val(level5Desc);
         }
         else if (level5Code != '')
         {
-            $('#idvallugSellerType').val(level5Code);
-            $('#descvallugSellerType').val(level5Desc);
+            //$('#idvallugSellerType').val(level5Code);
+            //$('#descvallugSellerType').val(level5Desc);
+
+            $('#txtSellerTypeCode').val(level5Code);
+            $('#txtSellerTypeDesc').val(level5Desc);
+
             $('#txtCode').val(level4Code);
             $('#txtDesc').val(level4Desc);
         }
         else if (level4Code != '')
         {
-            $('#idvallugSellerType').val(level4Code);
-            $('#descvallugSellerType').val(level4Desc);
+            //$('#idvallugSellerType').val(level4Code);
+            //$('#descvallugSellerType').val(level4Desc);
+
+            $('#txtSellerTypeCode').val(level4Code);
+            $('#txtSellerTypeDesc').val(level4Desc);
+
             $('#txtCode').val(level3Code);
             $('#txtDesc').val(level3Desc);
         }
         else if (level3Code != '')
         {
-            $('#idvallugSellerType').val(level3Code);
-            $('#descvallugSellerType').val(level3Desc);
+            //$('#idvallugSellerType').val(level3Code);
+            //$('#descvallugSellerType').val(level3Desc);
+
+            $('#txtSellerTypeCode').val(level3Code);
+            $('#txtSellerTypeDesc').val(level3Desc);
+
             $('#txtCode').val(level2Code);
             $('#txtDesc').val(level2Desc);
         }
         else if (level2Code != '') {
-            $('#idvallugSellerType').val(level2Code);
-            $('#descvallugSellerType').val(level2Desc);
+            //$('#idvallugSellerType').val(level2Code);
+            //$('#descvallugSellerType').val(level2Desc);
+
+            $('#txtSellerTypeCode').val(level2Code);
+            $('#txtSellerTypeDesc').val(level2Desc);
+
             $('#txtCode').val(level1Code);
             $('#txtDesc').val(level1Desc);
         }
         else {
-            $('#idvallugSellerType').val(level1Code);
-            $('#descvallugSellerType').val(level1Desc);
+            //$('#idvallugSellerType').val(level1Code);
+            //$('#descvallugSellerType').val(level1Desc);
+
+            $('#txtSellerTypeCode').val(level1Code);
+            $('#txtSellerTypeDesc').val(level1Desc);
+
             $('#txtCode').val('');
             $('#txtDesc').val('');
         }
@@ -455,16 +512,22 @@ function Lookup_DoneFunction(idName, idNum) {
     //    var sellertype = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(2)").text();
     //    var sellerTypeDesc = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(3)").text();
 
-    //    $('#idvallugSellerTypee').val(sellertype);
-    //    $('#descvallugSellerTypee').val(sellerTypeDesc);
+    //    $('#idvallugSellerType').val(sellertype);
+    //    $('#descvallugSellerType').val(sellerTypeDesc);
     //}
 
     else if (idName == 'lugMktgGrpCode') {
-        $('#idvallugSellerTypee').val('');
-        $('#idvallugSellerTypee').val('');
+        //$('#idvallugSellerType').val('');
+        //$('#idvallugSellerType').val('');
 
-        $('#idvallugSellerTypee').val(val3);
-        $('#descvallugSellerTypee').val(val4);
+        $('#txtSellerTypeCode').val('');
+        $('#txtSellerTypeDesc').val('');
+
+        //$('#idvallugSellerType').val(val3);
+        //$('#descvallugSellerType').val(val4);
+
+        $('#txtSellerTypeCode').val(val3);
+        $('#txtSellerTypeDesc').val(val4);
 
 
         if ($('#idvallugMktgGrpCode').val() != "") {
@@ -505,8 +568,11 @@ function Lookup_DoneFunction(idName, idNum) {
             level10Desc = "Level 10";
 
 
-            $('#idvallugSellerTypee').val('');
-            $('#descvallugSellerTypee').val('');
+            //$('#idvallugSellerType').val('');
+            //$('#descvallugSellerType').val('');
+
+            $('#txtSellerTypeCode').val('');
+            $('#txtSellerTypeDesc').val('');
 
         }
 
@@ -607,7 +673,8 @@ function Lookup_DoneFunction(idName, idNum) {
 
     }
     else if (idName == "lugSalutation") {
-        nwParameter_Add("salutation", $('#idvallugSalutation').val());
+        //
+        nwParameter_Add("salutation", $('#txtSalutationCode').val());
         func_ActionDriven("actSalutation", false);
     }
 
@@ -740,23 +807,56 @@ function EnableFields() {
     $("#rbIndividual").enable(true);
     $("#rbCompany").enable(true);
 
-    $('#txtCrossReference').enable(true);
-    $('#lugSellergroup').enable(true);
-    $('#lugSellerType').enable(true);
-    $('#lugSellerRole').enable(true);
-    $('#lugSellerStatus').enable(true);
-    $('#txtPRCNo').enable(true);
-    $('#lugSalutation').enable(true);
+    $('#txtCrossReference').enable(false);
+    //$('#lugSellergroup').enable(true);
+    //$('#lugSellerType').enable(true);
+    //$('#lugSellerRole').enable(true);
+
+    $('#txtSellerRoleCode').enable(true);
+    $('#txtSellerRoleDesc').enable(true);
+    $('#txtSellergroupCode').enable(true);
+    $('#txtSellergroupDesc').enable(true);
+    $('#txtSellerTypeCode').enable(true);
+    $('#txtSellerTypeDesc').enable(true);
+
+
+    //$('#lugSellerStatus').enable(true);
+
+    $('#txtSellerStatusCode').enable(false);
+    $('#txtSellerStatusDesc').enable(false);
+
+    $('#txtPRCNo').enable(false);
+   // $('#lugSalutation').enable(true);
+
+    $('#txtSalutationCode').enable(true);
+    $('#txtSalutationDesc').enable(true);
+
     $("#txtLastName").enable(true);
     $("#txtFirstName").enable(true);
     $('#txtMiddleName').enable(true);
     $('#txtMaidenName').enable(true);
     $('#txtMotherMaidenName').enable(true);
-    $('#lugNameSuffix').enable(true);
+    //$('#lugNameSuffix').enable(true);
+
+    $('#txtNameSuffixCode').enable(true);
+    $('#txtNameSuffixDesc').enable(true);
+
     $('#txtBirthdate').enable(true);
-    $('#lugGender').enable(true);
-    $('#lugCivilStatus').enable(true);
-    $('#lugNationality').removeClass("adisabled");
+   // $('#lugGender').enable(true);
+
+    $('#txtGenderCode').enable(true);
+    $('#txtGenderDesc').enable(true);
+
+    //$('#lugCivilStatus').enable(true);
+
+    $('#txtCivilStatusCode').enable(true);
+    $('#txtCivilStatusDesc').enable(true);
+    //$('#lugNationality').removeClass("adisabled");
+
+    $('#txtNationalityCode').enable(true);
+    $('#txtNationalityDesc').enable(true);
+
+
     $('#txtPlaceofBirth').enable(true);
     $('#txtIndividualTIN').enable(true);
     $('#txtRegisteredName').enable(false);
@@ -765,18 +865,24 @@ function EnableFields() {
     $('#txtVATRegTIN').enable(true);
 
     $('#lugDefaultVATTaxCode').removeClass("adisabled");
-    $('#lugDefaultCWTTaxCode').removeClass("adisabled");
-    $('#txtSSSNumber').enable(true);
-    $('#txtPagIBIGNumber').enable(true);
-    $('#txtPhilHealthNo').enable(true);
-    $('#txtMobile').enable(true);
-    $('#txtTelephone').enable(true);
-    $('#txtEmail').enable(true);
-    $('#txtsellerAdd1').enable(true);
-    $('#txtSellerAdd2').enable(true);
-    $('#txtRecruitDate').enable(true);
-    $('#lugRecruitedBy').removeClass("adisabled");
-    $('#txtFirstSaleDate').enable(true);
+    //$('#lugDefaultCWTTaxCode').removeClass("adisabled");
+
+    $('#txtDefaultCWTTaxCodeCode').enable(false);
+    $('#txtDefaultCWTTaxCodeDesc').enable(false);
+
+    $('#txtSSSNumber').enable(false);
+    $('#txtPagIBIGNumber').enable(false);
+    $('#txtPhilHealthNo').enable(false);
+    $('#txtMobile').enable(false);
+    $('#txtTelephone').enable(false);
+    $('#txtEmail').enable(false);
+    $('#txtsellerAdd1').enable(false);
+    $('#txtSellerAdd2').enable(false);
+    $('#txtRecruitDate').enable(false);
+   // $('#lugRecruitedBy').removeClass("adisabled");
+    $('#txtRecruitedByCode').enable(false);
+    $('#txtRecruitedByDesc').enable(false);
+    $('#txtFirstSaleDate').enable(false);
     
     $('#nwGrid1Con').enable(true);
 
@@ -798,22 +904,52 @@ function DisableFields() {
     $("#rbIndividual").enable(false);
     $("#rbCompany").enable(false);
     //$('#txtCrossReference').enable(false);
-    $('#lugSellergroup').addClass("adisabled");
-    $('#lugSellerType').addClass("adisabled");
-    $('#lugSellerRole').addClass("adisabled");
-    $('#lugSellerStatus').addClass("adisabled");
+    //$('#lugSellergroup').addClass("adisabled");
+    //$('#lugSellerType').addClass("adisabled");
+    //$('#lugSellerRole').addClass("adisabled");
+
+    $('#txtSellerRoleCode').enable(false);
+    $('#txtSellerRoleDesc').enable(false);
+    $('#txtSellergroupCode').enable(false);
+    $('#txtSellergroupDesc').enable(false);
+    $('#txtSellerTypeCode').enable(false);
+    $('#txtSellerTypeDesc').enable(false);
+
+    //$('#lugSellerStatus').addClass("adisabled");
+
+    $('#txtSellerStatusCode').enable(false);
+    $('#txtSellerStatusDesc').enable(false);
+
     $('#txtPRCNo').enable(false);
-    $('#lugSalutation').addClass("adisabled");
+    //$('#lugSalutation').addClass("adisabled");
+
+    $('#txtSalutationCode').enable(false);
+    $('#txtSalutationDesc').enable(false);
+
     $("#txtLastName").enable(false);
     $("#txtFirstName").enable(false);
     $('#txtMiddleName').enable(false);
     $('#txtMaidenName').enable(false);
     $('#txtMotherMaidenName').enable(false);
-    $('#lugNameSuffix').addClass("adisabled");
+    //$('#lugNameSuffix').addClass("adisabled");
+
+    $('#txtNameSuffixCode').enable(false);
+    $('#txtNameSuffixDesc').enable(false);
+
     $('#txtBirthdate').enable(false);
-    $('#lugGender').addClass("adisabled");
-    $('#lugCivilStatus').addClass("adisabled");
-    $('#lugNationality').addClass("adisabled");
+    //$('#lugGender').addClass("adisabled");
+
+    $('#txtGenderCode').enable(false);
+    $('#txtGenderDesc').enable(false);
+
+    //$('#lugCivilStatus').addClass("adisabled");
+    //$('#lugNationality').addClass("adisabled");
+
+    $('#txtCivilStatusCode').enable(false);
+    $('#txtCivilStatusDesc').enable(false);
+    $('#txtNationalityCode').enable(false);
+    $('#txtNationalityDesc').enable(false);
+
     $('#txtPlaceofBirth').enable(false);
     $('#txtIndividualTIN').enable(false);
     $('#txtRegisteredName').enable(false);
@@ -822,7 +958,9 @@ function DisableFields() {
     $('#txtVATRegTIN').enable(false);
     $('#txtNonVATRegTIN').enable(false);
     $('#lugDefaultVATTaxCode').addClass("adisabled");
-    $('#lugDefaultCWTTaxCode').addClass("adisabled");
+    //$('#lugDefaultCWTTaxCode').addClass("adisabled");
+    $('#txtDefaultCWTTaxCodeCode').enable(false);
+    $('#txtDefaultCWTTaxCodeDesc').enable(false);
     $('#txtSSSNumber').enable(false);
     $('#txtPagIBIGNumber').enable(false);
     $('#txtPhilHealthNo').enable(false);
@@ -832,7 +970,9 @@ function DisableFields() {
     $('#txtsellerAdd1').enable(false);
     $('#txtSellerAdd2').enable(false);
     $('#txtRecruitDate').enable(false);
-    $('#lugRecruitedBy').addClass("adisabled");
+    //$('#lugRecruitedBy').addClass("adisabled");
+    $('#txtRecruitedByCode').enable(false);
+    $('#txtRecruitedByDesc').enable(false);
     $('#txtFirstSaleDate').enable(false);
 
     $('#txtPassportIDNumber').enable(false);
@@ -856,22 +996,53 @@ function EnableFieldsDone() {//Binding Done
         $("#rbIndividual").enable(false);
         $("#rbCompany").enable(false);
         //$('#txtCrossReference').enable(false);
-        $('#lugSellergroup').addClass("adisabled");
-        $('#lugSellerType').addClass("adisabled");
-        $('#lugSellerRole').addClass("adisabled");
-        $('#lugSellerStatus').addClass("adisabled");
+        //$('#lugSellergroup').addClass("adisabled");
+        //$('#lugSellerType').addClass("adisabled");
+        //$('#lugSellerRole').addClass("adisabled");
+
+        $('#txtSellerRoleCode').enable(false);
+        $('#txtSellerRoleDesc').enable(false);
+        $('#txtSellergroupCode').enable(false);
+        $('#txtSellergroupDesc').enable(false);
+        $('#txtSellerTypeCode').enable(false);
+        $('#txtSellerTypeDesc').enable(false);
+
+        //$('#lugSellerStatus').addClass("adisabled");
+
+        $('#txtSellerStatusCode').enable(false);
+        $('#txtSellerStatusDesc').enable(false);
+
         $('#txtPRCNo').enable(false);
-        $('#lugSalutation').addClass("adisabled");
+        //$('#lugSalutation').addClass("adisabled");
+
+        $('#txtSalutationCode').enable(false);
+        $('#txtSalutationDesc').enable(false);
+
         $("#txtLastName").enable(false);
         $("#txtFirstName").enable(false);
         $('#txtMiddleName').enable(false);
         $('#txtMaidenName').enable(false);
         $('#txtMotherMaidenName').enable(false);
-        $('#lugNameSuffix').addClass("adisabled");
+        //$('#lugNameSuffix').addClass("adisabled");
+
+        $('#txtNameSuffixCode').enable(false);
+        $('#txtNameSuffixDesc').enable(false);
+
         $('#txtBirthdate').enable(false);
         $('#lugGender').addClass("adisabled");
-        $('#lugCivilStatus').addClass("adisabled");
-        $('#lugNationality').addClass("adisabled");
+
+        $('#txtGenderCode').enable(false);
+        $('#txtGenderDesc').enable(false);
+
+
+        //$('#lugCivilStatus').addClass("adisabled");
+        //$('#lugNationality').addClass("adisabled");
+
+        $('#txtNationalityCode').enable(false);
+        $('#txtNationalityDesc').enable(false);
+        $('#txtCivilStatusCode').enable(false);
+        $('#txtCivilStatusDesc').enable(false);
+
         $('#txtPlaceofBirth').enable(false);
         $('#txtIndividualTIN').enable(false);
         $('#txtRegisteredName').enable(false);
@@ -888,7 +1059,9 @@ function EnableFieldsDone() {//Binding Done
         $('#txtsellerAdd1').enable(false);
         $('#txtSellerAdd2').enable(false);
         $('#txtRecruitDate').enable(false);
-        $('#lugRecruitedBy').enable(true);
+        //$('#lugRecruitedBy').enable(true);
+        $('#txtRecruitedByCode').enable(false);
+        $('#txtRecruitedByDesc').enable(false);
         $('#txtFirstSaleDate').enable(false);
         $('#lugMktgGrpCode').enable(false);
         $('#nwGrid1Con').enable(false);
@@ -900,35 +1073,82 @@ function EnableFieldsDone() {//Binding Done
         $("#txtContractDurationTo").enable(true);
         $("#txtPassportIDNumber").enable(false);
         $('#lugLocSegment').enable(false);
-        $('#lugSellerStatus').enable(true);
+        //$('#lugSellerStatus').enable(true);
+
+        $('#txtSellerStatusCode').enable(false);
+        $('#txtSellerStatusDesc').enable(false);
+
     }
 
     $(".noah-webui-default-Content_Container").enable(true);
     //$('#lugTrantype').removeClass('adisabled');
-    $('#lugSellerStatus').enable(true);
+    //$('#lugSellerStatus').enable(true);
+
+    $('#txtSellerStatusCode').enable(false);
+    $('#txtSellerStatusDesc').enable(false);
+
     $('#lugLocSegment').enable(true);
     //$('#txtEffectiveDate').prop("disabled", false);
-    $('#txtCrossReference').enable(true);
+    $('#txtCrossReference').enable(false);
     $(".nwSellerCategory").enable(false);
-    $('#lugSellergroup').enable(false);
-    $('#lugSellerType').enable(false);
-    $('#lugSellerRole').enable(false);
-    $('#txtPRCNo').enable(true);
+    //$('#lugSellergroup').enable(false);
+    //$('#lugSellerType').enable(false);
+    //$('#lugSellerRole').enable(false);
+
+    $('#txtSellerRoleCode').enable(false);
+    $('#txtSellerRoleDesc').enable(false);
+    $('#txtSellergroupCode').enable(false);
+    $('#txtSellergroupDesc').enable(false);
+    $('#txtSellerTypeCode').enable(false);
+    $('#txtSellerTypeDesc').enable(false);
+
+    $('#txtPRCNo').enable(false);
     $('#lugMktgGrpCode').enable(true);
 
     if ($('#rbIndividual').prop("checked")) {
-        $('#lugSalutation').addClass("adisabled");
-        $("#txtLastName").enable(true);
-        $("#txtFirstName").enable(true);
-        $('#txtMiddleName').enable(true);
-        $('#txtMaidenName').enable(true);
-        $('#txtMotherMaidenName').enable(true);
-        $('#lugNameSuffix').addClass("adisabled");
+        
+        //$('#lugSellergroup').show();
+        //$('#idvallugSellerRole').visible(true);
+
+        $('#txtSellerRoleCode').visible(true);
+        $('#txtSellerRoleDesc').visible(true);
+        $('#txtSellergroupCode').visible(true);
+        $('#txtSellergroupDesc').visible(true);
+
+        $("#lblSalutation").show();
+        //$('#lugSellergroup').show();
+        //$('#lugSellergroup').show();
+
+        //$('#lugSalutation').addClass("adisabled");
+
+        $('#txtSalutationCode').enable(false);
+        $('#txtSalutationDesc').enable(false);
+
+        $("#txtLastName").enable(false);
+        $("#txtFirstName").enable(false);
+        $('#txtMiddleName').enable(false);
+        $('#txtMaidenName').enable(false);
+        $('#txtMotherMaidenName').enable(false);
+       // $('#lugNameSuffix').addClass("adisabled");
+
+        $('#txtNameSuffixCode').enable(false);
+        $('#txtNameSuffixDesc').enable(false);
+
         $('#txtBirthdate').enable(false);
-        $('#lugGender').addClass("adisabled");
-        $('#lugCivilStatus').addClass("adisabled");
-        $('#lugNationality').addClass("adisabled");
-        $('#txtPlaceofBirth').enable(true);
+        //$('#lugGender').addClass("adisabled");
+
+        $('#txtGenderCode').enable(false);
+        $('#txtGenderDesc').enable(false);
+
+        //$('#lugCivilStatus').addClass("adisabled");
+        $('#txtCivilStatusCode').enable(false);
+        $('#txtCivilStatusDesc').enable(false);
+       // $('#lugNationality').addClass("adisabled");
+
+        $('#txtNationalityCode').enable(false);
+        $('#txtNationalityDesc').enable(false);
+
+        $('#txtPlaceofBirth').enable(false);
         $('#txtIndividualTIN').enable(false);
     }
   
@@ -938,18 +1158,22 @@ function EnableFieldsDone() {//Binding Done
     $('#txtVATRegTIN').enable(false);
 
     $('#lugDefaultVATCode').enable(true);
-    $('#lugDefaultCWTTaxCode').enable(true);
-    $('#txtSSSNumber').enable(true);
-    $('#txtPagIBIGNumber').enable(true);
-    $('#txtPhilHealthNo').enable(true);
-    $('#txtMobile').enable(true);
-    $('#txtTelephone').enable(true);
-    $('#txtEmail').enable(true);
-    $('#txtsellerAdd1').enable(true);
-    $('#txtSellerAdd2').enable(true);
-    $('#txtRecruitDate').enable(true);
-    $('#lugRecruitedBy').enable(true);
-    $('#txtFirstSaleDate').enable(true);
+    //$('#lugDefaultCWTTaxCode').enable(true);
+    $('#txtDefaultCWTTaxCodeCode').enable(false);
+    $('#txtDefaultCWTTaxCodeDesc').enable(false);
+    $('#txtSSSNumber').enable(false);
+    $('#txtPagIBIGNumber').enable(false);
+    $('#txtPhilHealthNo').enable(false);
+    $('#txtMobile').enable(false);
+    $('#txtTelephone').enable(false);
+    $('#txtEmail').enable(false);
+    $('#txtsellerAdd1').enable(false);
+    $('#txtSellerAdd2').enable(false);
+    $('#txtRecruitDate').enable(false);
+    //$('#lugRecruitedBy').enable(true);
+    $('#txtRecruitedByCode').enable(false);
+    $('#txtRecruitedByDesc').enable(false);
+    $('#txtFirstSaleDate').enable(false);
 
     $("#txtContractDurationFrom").enable(true);
     $("#txtContractDurationTo").enable(true);
@@ -967,6 +1191,7 @@ function EnableFieldsDone() {//Binding Done
         $('#lblBirthdate').show();
         $("#lblGender").show();
         $("#lblCivilStatus").show();
+        
         $('#lblNationality').show();
         $('#lblIndividualTIN').show();
 
@@ -984,6 +1209,7 @@ function EnableFieldsDone() {//Binding Done
         $('#lblBirthdate').hide();
         $("#lblGender").hide();
         $("#lblCivilStatus").hide();
+        
         $('#lblNationality').hide();
         $('#lblIndividualTIN').hide();
 
@@ -1164,23 +1390,54 @@ $(document).on("keyup", "#txtTelephone", function () {
 //});
 
 function EnableFieldsIndividual() {
-    $('#txtCrossReference').enable(true);
-    $('#lugSellergroup').removeClass("adisabled");
-    $('#lugSellerType').removeClass("adisabled");
-    $('#lugSellerRole').removeClass("adisabled");
-    $('#lugSellerStatus').removeClass("adisabled");
-    $('#txtPRCNo').enable(true);
-    $('#lugSalutation').removeClass("adisabled");
+    $('#txtCrossReference').enable(false);
+    //$('#lugSellergroup').removeClass("adisabled");
+    //$('#lugSellerType').removeClass("adisabled");
+    //$('#lugSellerRole').removeClass("adisabled");
+
+    $('#txtSellerRoleCode').enable(true);
+    $('#txtSellerRoleDesc').enable(true);
+    $('#txtSellergroupCode').enable(true);
+    $('#txtSellergroupDesc').enable(true);
+    $('#txtSellerTypeCode').enable(true);
+    $('#txtSellerTypeDesc').enable(true);
+
+    //$('#lugSellerStatus').removeClass("adisabled");
+
+    $('#txtSellerStatusCode').enable(false);
+    $('#txtSellerStatusDesc').enable(false);
+
+    $('#txtPRCNo').enable(false);
+    //$('#lugSalutation').removeClass("adisabled");
+
+    $('#txtSalutationCode').enable(true);
+    $('#txtSalutationDesc').enable(true);
+
     $("#txtLastName").enable(true);
     $("#txtFirstName").enable(true);
     $('#txtMiddleName').enable(true);
     $('#txtMaidenName').enable(true);
     $('#txtMotherMaidenName').enable(true);
-    $('#lugNameSuffix').removeClass("adisabled");
+    //$('#lugNameSuffix').removeClass("adisabled");
+
+    $('#txtNameSuffixCode').enable(true);
+    $('#txtNameSuffixDesc').enable(true);
+
     $('#txtBirthdate').enable(true);
-    $('#lugGender').removeClass("adisabled");
-    $('#lugCivilStatus').removeClass("adisabled");
-    $('#lugNationality').removeClass("adisabled");
+    //$('#lugGender').removeClass("adisabled");
+
+    $('#txtGenderCode').enable(true);
+    $('#txtGenderDesc').enable(true);
+
+    //$('#lugCivilStatus').removeClass("adisabled");
+    $('#txtCivilStatusCode').enable(true);
+    $('#txtCivilStatusDesc').enable(true);
+
+    //$('#lugNationality').removeClass("adisabled");
+
+    $('#txtNationalityCode').enable(true);
+    $('#txtNationalityDesc').enable(true);
+
     $('#txtPlaceofBirth').enable(true);
     $('#txtIndividualTIN').enable(true);
     $('#txtRegisteredName').enable(false);
@@ -1189,18 +1446,22 @@ function EnableFieldsIndividual() {
     $('#txtVATRegTIN').enable(false);
     $('#txtNonVATRegTIN').enable(false);
     $('#lugDefaultVATTaxCode').removeClass("adisabled");
-    $('#lugDefaultCWTTaxCode').removeClass("adisabled");
-    $('#txtSSSNumber').enable(true);
-    $('#txtPagIBIGNumber').enable(true);
-    $('#txtPhilHealthNo').enable(true);
-    $('#txtMobile').enable(true);
-    $('#txtTelephone').enable(true);
-    $('#txtEmail').enable(true);
-    $('#txtsellerAdd1').enable(true);
-    $('#txtSellerAdd2').enable(true);
-    $('#txtRecruitDate').enable(true);
-    $('#lugRecruitedBy').removeClass("adisabled");
-    $('#txtFirstSaleDate').enable(true);
+    //$('#lugDefaultCWTTaxCode').removeClass("adisabled");
+    $('#txtDefaultCWTTaxCodeCode').enable(false);
+    $('#txtDefaultCWTTaxCodeDesc').enable(false);
+    $('#txtSSSNumber').enable(false);
+    $('#txtPagIBIGNumber').enable(false);
+    $('#txtPhilHealthNo').enable(false);
+    $('#txtMobile').enable(false);
+    $('#txtTelephone').enable(false);
+    $('#txtEmail').enable(false);
+    $('#txtsellerAdd1').enable(false);
+    $('#txtSellerAdd2').enable(false);
+    $('#txtRecruitDate').enable(false);
+    //$('#lugRecruitedBy').removeClass("adisabled");
+    $('#txtRecruitedByCode').enable(false);
+    $('#txtRecruitedByDesc').enable(false);
+    $('#txtFirstSaleDate').enable(false);
 
     $('#txtPassportIDNumber').enable(true);
     
@@ -1223,23 +1484,52 @@ function EnableFieldsIndividual() {
 }
 
 function EnableFieldsCompany() {
-    $('#txtCrossReference').enable(true);
-    $('#lugSellergroup').removeClass("adisabled");
-    $('#lugSellerType').removeClass("adisabled");
-    $('#lugSellerRole').removeClass("adisabled");
-    $('#lugSellerStatus').removeClass("adisabled");
-    $('#txtPRCNo').enable(true);
-    $('#lugSalutation').addClass("adisabled");
+    $('#txtCrossReference').enable(false);
+    //$('#lugSellergroup').removeClass("adisabled");
+    //$('#lugSellerType').removeClass("adisabled");
+    //$('#lugSellerRole').removeClass("adisabled");
+
+    $('#txtSellerRoleCode').enable(true);
+    $('#txtSellerRoleDesc').enable(true);
+    $('#txtSellergroupCode').enable(true);
+    $('#txtSellergroupDesc').enable(true);
+    $('#txtSellerTypeCode').enable(true);
+    $('#txtSellerTypeDesc').enable(true);
+
+    //$('#lugSellerStatus').removeClass("adisabled");
+
+    $('#txtSellerStatusCode').enable(false);
+    $('#txtSellerStatusDesc').enable(false);
+
+    $('#txtPRCNo').enable(false);
+    //$('#lugSalutation').addClass("adisabled");
+
+    $('#txtSalutationCode').enable(false);
+    $('#txtSalutationDesc').enable(false);
+
     $("#txtLastName").enable(false);
     $("#txtFirstName").enable(false);
     $('#txtMiddleName').enable(false);
     $('#txtMaidenName').enable(false);
     $('#txtMotherMaidenName').enable(false);
-    $('#lugNameSuffix').addClass("adisabled");
+    //$('#lugNameSuffix').addClass("adisabled");
+
+    $('#txtNameSuffixCode').enable(false);
+    $('#txtNameSuffixDesc').enable(false);
+
     $('#txtBirthdate').enable(false);
-    $('#lugGender').addClass("adisabled");
-    $('#lugCivilStatus').addClass("adisabled");
-    $('#lugNationality').addClass("adisabled");
+    //$('#lugGender').addClass("adisabled");
+
+    $('#txtGenderCode').enable(false);
+    $('#txtGenderDesc').enable(false);
+
+    //$('#lugCivilStatus').addClass("adisabled");
+    //$('#lugNationality').addClass("adisabled");
+    $('#txtCivilStatusCode').enable(false);
+    $('#txtCivilStatusDesc').enable(false);
+    $('#txtNationalityCode').enable(false);
+    $('#txtNationalityDesc').enable(false);
+
     $('#txtPlaceofBirth').enable(false);
     $('#txtIndividualTIN').enable(false);
     $('#txtRegisteredName').enable(true);
@@ -1248,18 +1538,22 @@ function EnableFieldsCompany() {
     //$('#txtVATRegTIN').enable(true);
     //$('#txtNonVATRegTIN').enable(true);
     $('#lugDefaultVATTaxCode').removeClass("adisabled");
-    $('#lugDefaultCWTTaxCode').removeClass("adisabled");
-    $('#txtSSSNumber').enable(true);
-    $('#txtPagIBIGNumber').enable(true);
-    $('#txtPhilHealthNo').enable(true);
-    $('#txtMobile').enable(true);
-    $('#txtTelephone').enable(true);
-    $('#txtEmail').enable(true);
-    $('#txtsellerAdd1').enable(true);
-    $('#txtSellerAdd2').enable(true);
-    $('#txtRecruitDate').enable(true);
-    $('#lugRecruitedBy').removeClass("adisabled");
-    $('#txtFirstSaleDate').enable(true);
+    //$('#lugDefaultCWTTaxCode').removeClass("adisabled");
+    $('#txtDefaultCWTTaxCodeCode').enable(false);
+    $('#txtDefaultCWTTaxCodeDesc').enable(false);
+    $('#txtSSSNumber').enable(false);
+    $('#txtPagIBIGNumber').enable(false);
+    $('#txtPhilHealthNo').enable(false);
+    $('#txtMobile').enable(false);
+    $('#txtTelephone').enable(false);
+    $('#txtEmail').enable(false);
+    $('#txtsellerAdd1').enable(false);
+    $('#txtSellerAdd2').enable(false);
+    $('#txtRecruitDate').enable(false);
+    //$('#lugRecruitedBy').removeClass("adisabled");
+    $('#txtRecruitedByCode').enable(false);
+    $('#txtRecruitedByDesc').enable(false);
+    $('#txtFirstSaleDate').enable(false);
 
     $('#txtPassportIDNumber').enable(false);
 
@@ -1285,33 +1579,63 @@ function EnableFieldsCompany() {
 
 function ClearFields() {
     $('#txtCrossReference').val("");
-    $('#idvallugSellergroup').val("");
-    $('#descvallugSellergroup').val("");
-    $('#idvallugSellerType').val("");
-    $('#descvallugSellerType').val("");
-    $('#idvallugSellerRole').val("");
-    $('#descvallugSellerRole').val("");
-    $('#idvallugSellerStatus').val("");
-    $('#descvallugSellerStatus').val("");
+    //$('#idvallugSellergroup').val("");
+    //$('#descvallugSellergroup').val("");
+    //$('#idvallugSellerType').val("");
+    //$('#descvallugSellerType').val("");
+    //$('#idvallugSellerRole').val("");
+    //$('#descvallugSellerRole').val("");
+
+    $('#txtSellerRoleCode').val("");
+    $('#txtSellerRoleDesc').val("");
+    $('#txtSellergroupCode').val("");
+    $('#txtSellergroupDesc').val("");
+    $('#txtSellerTypeCode').val("");
+    $('#txtSellerTypeDesc').val("");
+
+    //$('#idvallugSellerStatus').val("");
+    //$('#descvallugSellerStatus').val("");
+
+    $('#txtSellerStatusCode').val("");
+    $('#txtSellerStatusDesc').val("");
+
     $('#txtPRCNo').val("");
-    $('#idvallugSalutation').val("");
-    $('#descvallugSalutation').val("");
+    //$('#idvallugSalutation').val("");
+    //$('#descvallugSalutation').val("");
+
+    $('#txtSalutationCode').val("");
+    $('#txtSalutationDesc').val("");
+
     $("#txtLastName").val("");
     $("#txtFirstName").val("");
     $('#txtMiddleName').val("");
     $('#txtMI').val("");
     $('#txtMaidenName').val("");
     $('#txtMotherMaidenName').val("");
-    $('#idvallugNameSuffix').val("");
-    $('#descvallugNameSuffix').val("");
+    //$('#idvallugNameSuffix').val("");
+    //$('#descvallugNameSuffix').val("");
+
+    $('#txtNameSuffixCode').val("");
+    $('#txtNameSuffixDesc').val("");
+
     $('#txtBirthdate').val("");
     $('#txtAge').val("");
     $('#idvallugGender').val("");
     $('#descvallugGender').val("");
-    $('#idvallugCivilStatus').val("");
-    $('#descvallugCivilStatus').val("");
-    $('#idvallugNationality').val("");
-    $('#descvallugNationality').val("");
+    
+    $('#txtGenderCode').val("");
+    $('#txtGenderDesc').val("");
+
+    //$('#idvallugCivilStatus').val("");
+    //$('#descvallugCivilStatus').val("");
+    $('#txtCivilStatusCode').val("");
+    $('#txtCivilStatusDesc').val("");
+    //$('#idvallugNationality').val("");
+    //$('#descvallugNationality').val("");
+
+    $('#txtNationalityCode').val("");
+    $('#txtNationalityDesc').val("");
+
     $('#txtPlaceofBirth').val("");
     $('#txtIndividualTIN').val("");
     $('#txtRegisteredName').val("");
@@ -1321,8 +1645,10 @@ function ClearFields() {
     $('#txtNonVATRegTIN').val("");
     $('#idvallugDefaultVATTaxCode').val("");
     $('#descvallugDefaultVATTaxCode').val("");
-    $('#idvallugDefaultCWTTaxCode').val("");
-    $('#descvallugDefaultCWTTaxCode').val("");
+    //$('#idvallugDefaultCWTTaxCode').val("");
+    //$('#descvallugDefaultCWTTaxCode').val("");
+    $('#txtDefaultCWTTaxCodeCode').val("");
+    $('#txtDefaultCWTTaxCodeDesc').val("");
     $('#txtSSSNumber').val("");
     $('#txtPagIBIGNumber').val("");
     $('#txtPhilHealthNo').val("");
@@ -1332,8 +1658,10 @@ function ClearFields() {
     $('#txtsellerAdd1').val("");
     $('#txtSellerAdd2').val("");
     $('#txtRecruitDate').val("");
-    $('#idvallugRecruitedBy').val("");
-    $('#descvallugRecruitedBy').val("");
+    //$('#idvallugRecruitedBy').val("");
+    //$('#descvallugRecruitedBy').val("");
+    $('#txtRecruitedByCode').val("");
+    $('#dtxtRecruitedByDesc').val("");
     $('#txtFirstSaleDate').val("");
     //url('images/placeholder.png')
     $("#profile-img").css('background-image', "");
@@ -1894,7 +2222,7 @@ $(document).on("click", "#btnModeofcommision", function (e) {
         PopupWindow(1);
     }
 });
-$(document).on("click", "#btnDocDtls", function (e) {
+$(document).on("click", "#btnReqCom", function (e) {
     var SellerCode = $("#txtSellerCode").val();
     if (SellerCode == '') {
         MessageBox("Cannot Proceed. Please save the record first.", "Seller Information");
@@ -1960,6 +2288,7 @@ $(document).on("click", "#btnUpdateSellerRole", function (e) {
         PopupWindow(7);
     }
 });
+
 $(document).on("click", "#btnViewUpdateHist", function (e) {
     var SellerCode = $("#txtSellerCode").val();
     if (SellerCode == '') {
@@ -2021,35 +2350,35 @@ function PopupWindow(ID) {
             //For Debugging
             case 1:
                 title = "Mode of Commission Release Details";
-                fullength = "BMSellerInformationButtons?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=MOCR&nwtitle=" + encodeURI(title);
+                fullength = "../BMSellerInformationButtons/?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=MOCR&nwtitle=" + encodeURI(title);
                 break;
             case 2:
                 title = "Document Details";
-                fullength = "DCRequirementCompliance/DCRequirementCompliance?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=DOCD&nwtitle=" + encodeURI(title);
+                fullength = "../DCRequirementCompliance/?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=DOCD&nwtitle=" + encodeURI(title);
                 break;
             case 3:
                 title = "Bank Account Details";
-                fullength = "BMSellerInformationButtons?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=BAAC&nwtitle=" + encodeURI(title);
+                fullength = "../BMSellerInformationButtons/?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=BAAC&nwtitle=" + encodeURI(title);
                 break;
             case 4:
                 title = "Account Details (As a Customer)";
-                fullength = "BMSellerInformationButtons?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=ADAC&nwtitle=" + encodeURI(title);
+                fullength = "../BMSellerInformationButtons/?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=ADAC&nwtitle=" + encodeURI(title);
                 break;
             case 5:
                 title = "Seminars/Trainings Attended Details";
-                fullength = "BMSellerInformationButtons?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=SETD&nwtitle=" + encodeURI(title);
+                fullength = "../BMSellerInformationButtons/?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=SETD&nwtitle=" + encodeURI(title);
                 break;
             case 6:
                 title = "Seller Role/Level Details";
-                fullength = "BMSellerInformationButtons?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=SELD&nwtitle=" + encodeURI(title);
+                fullength = "../BMSellerInformationButtons/?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=SELD&nwtitle=" + encodeURI(title);
                 break;
             case 7:
                 title = "Update Seller Role";
-                fullength = "BMSellerInformationButtons?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=UPSR&nwtitle=" + encodeURI(title) + "&nwSellerFrom=" + encodeURI(SellerFrom) + "&nwSellerFromDesc=" + encodeURI(SellerFromDesc);
+                fullength = "../BMSellerInformationButtons/?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=UPSR&nwtitle=" + encodeURI(title) + "&nwSellerFrom=" + encodeURI(SellerFrom) + "&nwSellerFromDesc=" + encodeURI(SellerFromDesc);
                 break;
             case 8:
                 title = "View Update History";
-                fullength = "BMSellerInformationButtons?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=VUPH&nwtitle=" + encodeURI(title);
+                fullength = "../BMSellerInformationButtons/?nwType=1&isView=" + encodeURI(isView) + "&nwSellerCode=" + encodeURI(SellerCode) + "&nwSellerName=" + encodeURI(Sellername) + "&nwTranType=VUPH&nwtitle=" + encodeURI(title);
                 break;
         }
         //var fullengthfinal = urlencode(fullength);
@@ -2063,15 +2392,18 @@ function PopupWindow(ID) {
 
         nwPopupForm_Create("nwButtonDtls", true, fullength);
         $('#nwButtonDtls .BoxTitle').text(title);
-        //$("#nwButtonDtls").css({ "min-width": "98%" });
-        //$("#nwButtonDtls").css({ "min-height": "500px" });
+        $("#nwButtonDtls .modal-box-s").css({ "min-width": "90%" });
+        $("#nwButtonDtls .modal-box-s").css({ "min-height": "90%" });
+        $("#nwButtonDtls .modal-box-s .nk-modal-body .nwmenuFrame").css({ "min-width": "100%" });
+        $("#nwButtonDtls .modal-box-s .nk-modal-body .nwmenuFrame").css({ "min-height": "100%" });
+        $("#nwButtonDtls .modal-box-s .modal-hdr .modal-hdr-title").text(title);
         nwPopupForm_ShowModal("nwButtonDtls");
         nwLoading_End('xSample');
 }
 
 function Update() {
     $('#lugMktgGrpCode').removeClass("adisabled");
-    $('#txtSSSNumber').enable(true);
+    $('#txtSSSNumber').enable(false);
 
         $("#lugLvl1").removeClass("adisabled");
 
@@ -2116,25 +2448,45 @@ function Update() {
     
 
     //here
-    $('#txtCrossReference').enable(true);
-    $('#lugSellergroup').enable(true);
-    $('#lugSellerRole').enable(false);
-    $('#lugSellerStatus').enable(true);
-    $('#txtPRCNo').enable(true);
+    $('#txtCrossReference').enable(false);
+    //$('#lugSellergroup').enable(true);
+
+    $('#txtSellergroupCode').enable(true);
+    $('#txtSellergroupDesc').enable(true);
+
+    //$('#lugSellerRole').enable(false);
+
+    $('#txtSellerRoleCode').enable(false);
+    $('#txtSellerRoleDesc').enable(false);
+
+    //$('#lugSellerStatus').enable(true);
+
+    $('#txtSellerStatusCode').enable(false);
+    $('#txtSellerStatusDesc').enable(false);
+
+    $('#txtPRCNo').enable(false);
     $('#lugDefaultVATCode').enable(true);
-    $('#lugDefaultCWTTaxCode').enable(true);
-    $('#txtMobile').enable(true);
-    $('#txtTelephone').enable(true);
-    $('#txtEmail').enable(true);
-    $('#txtsellerAdd1').enable(true);
-    $('#txtSellerAdd2').enable(true);
-    $('#txtRecruitDate').enable(true);
-    $('#lugRecruitedBy').enable(true);
-    $('#txtFirstSaleDate').enable(true);
+    //$('#lugDefaultCWTTaxCode').enable(true);
+    $('#txtDefaultCWTTaxCodeCode').enable(false);
+    $('#txtDefaultCWTTaxCodeDesc').enable(false);
+    $('#txtMobile').enable(false);
+    $('#txtTelephone').enable(false);
+    $('#txtEmail').enable(false);
+    $('#txtsellerAdd1').enable(false);
+    $('#txtSellerAdd2').enable(false);
+    $('#txtRecruitDate').enable(false);
+    //$('#lugRecruitedBy').enable(true);
+    $('#txtRecruitedByCode').enable(false);
+    $('#txtRecruitedByDesc').enable(false);
+    $('#txtFirstSaleDate').enable(false);
     $('#txtPassportIDNumber').enable(true);
     $('#txtContractDurationFrom').enable(true);
     $('#txtContractDurationTo').enable(true);
     $('#lugSellerType').removeClass("adisabled");
+
+    $('#txtSellerTypeCode').enable(true);
+    $('#txtSellerTypeDesc').enable(true);
+
     $('#lugLocSegment').removeClass("adisabled");
     $('#lugSellerContractType').removeClass("adisabled");
     $('#lugSellerCotractStatus').removeClass("adisabled");
@@ -2143,20 +2495,38 @@ function Update() {
 
     if ($("#rbIndividual").prop("checked")) {
         $('#lugSalutation').removeClass("adisabled");
+
+        $('#txtSalutationCode').enable(true);
+        $('#txtSalutationDesc').enable(true);
+
         $("#txtLastName").enable(true);
         $("#txtFirstName").enable(true);
         $('#txtMiddleName').enable(true);
         $('#txtMaidenName').enable(true);
         $('#txtMotherMaidenName').enable(true);
-        $('#lugNameSuffix').removeClass("adisabled");
+        //$('#lugNameSuffix').removeClass("adisabled");
+
+        $('#txtNameSuffixCode').enable(true);
+        $('#txtNameSuffixDesc').enable(true);
+
         $('#txtBirthdate').enable(true);
-        $('#lugGender').removeClass("adisabled");
-        $('#lugCivilStatus').removeClass("adisabled");
-        $('#lugNationality').removeClass("adisabled");
+        //$('#lugGender').removeClass("adisabled");
+
+        $('#txtGenderCode').enable(true);
+        $('#txtGenderDesc').enable(true);
+
+        //$('#lugCivilStatus').removeClass("adisabled");
+        $('#txtCivilStatusCode').enable(true);
+        $('#txtCivilStatusDesc').enable(true);
+        //$('#lugNationality').removeClass("adisabled");
+
+        $('#txtNationalityCode').enable(true);
+        $('#txtNationalityDesc').enable(true);
+
         $('#txtPlaceofBirth').enable(true);
         $('#txtIndividualTIN').enable(true);
-        $('#txtPagIBIGNumber').enable(true);
-        $('#txtPhilHealthNo').enable(true);
+        $('#txtPagIBIGNumber').enable(false);
+        $('#txtPhilHealthNo').enable(false);
     } else {
         $('#txtRegisteredName').enable(true);
         $('#rbVAT').enable(true);
@@ -2190,26 +2560,60 @@ function DisabledAll() {
     $('#lugSellerCotractStatus').enable(false);
     $('#txtCrossReference').enable(false);
     $(".nwSellerCategory").enable(false);
-    $('#lugSellergroup').enable(false);
-    $('#lugSellerType').enable(false);
-    $('#lugSellerRole').enable(false);
-    $('#lugSellerStatus').enable(false);
+    //$('#lugSellergroup').enable(false);
+
+    $('#txtSellergroupCode').enable(false);
+    $('#txtSellergroupDesc').enable(false);
+
+    //$('#lugSellerType').enable(false);
+
+    $('#txtSellerTypeCode').enable(false);
+    $('#txtSellerTypeDesc').enable(false);
+
+    //$('#lugSellerRole').enable(false);
+
+    $('#txtSellerRoleCode').enable(false);
+    $('#txtSellerRoleDesc').enable(false);
+
+    //$('#lugSellerStatus').enable(false);
+
+    $('#txtSellerStatusCode').enable(false);
+    $('#txtSellerStatusDesc').enable(false);
+
     $('#txtPRCNo').enable(false);
     $('#lugDefaultVATCode').enable(false);
-    $('#lugSellerStatus').enable(false);
+    //$('#lugSellerStatus').enable(false);
     $('#lugMktgGrpCode').enable(false);
     $('#lugLocSegment').enable(false);
     $('#lugSalutation').enable(false);
+
+    $('#txtSalutationCode').enable(false);
+    $('#txtSalutationDesc').enable(false);
+
     $("#txtLastName").enable(false);
     $("#txtFirstName").enable(false);
     $('#txtMiddleName').enable(false);
     $('#txtMaidenName').enable(false);
     $('#txtMotherMaidenName').enable(false);
-    $('#lugNameSuffix').enable(false);
+    //$('#lugNameSuffix').enable(false);
+
+    $('#txtNameSuffixCode').enable(false);
+    $('#txtNameSuffixDesc').enable(false);
+
     $('#txtBirthdate').enable(false);
-    $('#lugGender').enable(false);
-    $('#lugCivilStatus').enable(false);
-    $('#lugNationality').enable(false);
+    //$('#lugGender').enable(false);
+
+    $('#txtGenderCode').enable(false);
+    $('#txtGenderDesc').enable(false);
+
+    //$('#lugCivilStatus').enable(false);
+    $('#txtCivilStatusCode').enable(false);
+    $('#txtCivilStatusDesc').enable(false);
+    //$('#lugNationality').enable(false);
+
+    $('#txtNationalityCode').enable(false);
+    $('#txtNationalityDesc').enable(false);
+
     $('#txtPlaceofBirth').enable(false);
     $('#txtIndividualTIN').enable(false);
 
@@ -2219,7 +2623,9 @@ function DisabledAll() {
     $('#txtNonVATRegTIN').enable(false);
 
     $('#lugDefaultVATTaxCode').enable(false);
-    $('#lugDefaultCWTTaxCode').enable(false);
+    //$('#lugDefaultCWTTaxCode').enable(false);
+    $('#txtDefaultCWTTaxCodeCode').enable(false);
+    $('#txtDefaultCWTTaxCodeDesc').enable(false);
     $('#txtSSSNumber').enable(false);
     $('#txtPagIBIGNumber').enable(false);
     $('#txtPhilHealthNo').enable(false);
@@ -2229,7 +2635,9 @@ function DisabledAll() {
     $('#txtsellerAdd1').enable(false);
     $('#txtSellerAdd2').enable(false);
     $('#txtRecruitDate').enable(false);
-    $('#lugRecruitedBy').enable(false);
+    //$('#lugRecruitedBy').enable(false);
+    $('#txtRecruitedByCode').enable(false);
+    $('#txtRecruitedByDesc').enable(false);
     $('#txtFirstSaleDate').enable(false);
 
     $('#nwGrid1Con').enable(false);

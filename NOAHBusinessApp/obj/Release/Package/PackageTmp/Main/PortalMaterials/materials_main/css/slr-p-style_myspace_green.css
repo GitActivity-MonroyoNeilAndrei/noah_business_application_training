@@ -156,10 +156,10 @@
 }
 
 @media only screen and (max-width: 800px) {
-    .slr-p.new-np.my-space .welcome-remarks .welcome-remarks-sec.left {
+    /*.slr-p.new-np.my-space .welcome-remarks .welcome-remarks-sec.left {
        background: linear-gradient(to right, #327b37, #368882) !important;
-        /* background: #e5f4f7 !important;*/
-    }
+         background: #e5f4f7 !important;
+    }*/
     .hdr-tile .hdr-tile-title,.hdr-tile-count
     {
         color: #358882 !important;
@@ -171,11 +171,11 @@
         margin-top: 2px;
     }
 
-    .slr-p.new-np.my-space .welcome-remarks-sec.right {
+    /*.slr-p.new-np.my-space .welcome-remarks-sec.right {
         overflow-x: auto;
         margin-bottom: 10px;
         padding-bottom: 8px;
-    }
+    }*/
 
     .slr-p.new-np.my-space .hdr-tile-count {
         color: #ffffff;

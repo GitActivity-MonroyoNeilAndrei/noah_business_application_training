@@ -15,32 +15,25 @@
 
 
 <div id="noah-webui-Toolbox" class="nk-toolbar-c">
-
-    <div class="nk-toolbar-btn">
-        <div id="noah-webui-Toolbox" class="nk-toolbar-c">
-            <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new">
-                <div class="_icon"></div>
-                <div class="_lbl">New</div>
-            </div>
-            <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save">
-                <div class="_icon"></div>
-                <div class="_lbl">Save</div>
-            </div>
-
-            <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete">
-                <div class="_icon"></div>
-                <div class="_lbl">Delete</div>
-            </div>
-           
-            <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire">
-                <div class="_icon"></div>
-                <div class="_lbl">Inquire</div>
-            </div>
-            <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process">
-                <div class="_icon"></div>
-                <div class="_lbl">Process</div>
-            </div>
-        </div>
+    <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new">
+        <div class="_icon"></div>
+        <div class="_lbl">New</div>
+    </div>
+    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save">
+        <div class="_icon"></div>
+        <div class="_lbl">Save</div>
+    </div>
+    <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete">
+        <div class="_icon"></div>
+        <div class="_lbl">Delete</div>
+    </div>
+    <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire">
+        <div class="_icon"></div>
+        <div class="_lbl">Inquire</div>
+    </div>
+    <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process">
+        <div class="_icon"></div>
+        <div class="_lbl">Process</div>
     </div>
 </div>
 
@@ -77,7 +70,7 @@
             <!-- Prospect Customer -->
             <div class="row">
                 <div class="col col-4">
-                    <label class="lbltxt">Prospect Customer</label>
+                    <label class="lbltxt">Prospect Customer<span class="nwRequiredField"> *</span></label>
                 </div>
                 <div id="lugProspectCust" class="col col-8 lookups">
                     <div class="col col-4 conval">
@@ -92,7 +85,7 @@
             <!-- Sales Force Activity -->
             <div class="row">
                 <div class="col col-4">
-                    <label class="lbltxt">Sales Force Activity</label>
+                    <label class="lbltxt">Sales Force Activity<span class="nwRequiredField"> *</span></label>
                 </div>
                 <div id="lugSalesForceAct" class="col col-8 lookups">
                     <div class="col col-4 conval">
@@ -171,7 +164,7 @@
             <div class="row">
                 <div class="col col-4">
                     <input type="hidden" id="txtServerDate" name="" class="txtbox txtcode nwHideImportant dtpicker" disabled autocomplete="off">
-                    <label class="lbltxt">Start Date/Time</label>
+                    <label class="lbltxt">Start Date/Time<span class="nwRequiredField"> *</span></label>
                 </div>
                 <div class="col col-8">
                     <input type="hidden" id="txtOldStartDate" name="" class="txtbox txtcode isNumber nwHideImportant dtpicker" disabled autocomplete="off">
@@ -182,7 +175,7 @@
             <div class="row">
                 <div class="col col-4">
 
-                    <label class="lbltxt">End Date/Time</label>
+                    <label class="lbltxt">End Date/Time<span class="nwRequiredField"> *</span></label>
                 </div>
                 <div class="col col-8">
                     <input type="hidden" id="txtOldEndDate" name="" class="txtbox txtcode isNumber nwHideImportant dtpicker" disabled autocomplete="off">

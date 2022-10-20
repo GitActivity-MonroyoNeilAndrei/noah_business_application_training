@@ -110,8 +110,8 @@ function upload() {
                             var path = "";
                             serverlink = $('#txtServerLink').val();
 
-                            //path = "\\" + 'SBCustomerMasterFile' + "\\" + filepath;
-                            path = "\\" + filepath;
+                            path = "\\" + 'SBCustomerMasterFile' + "\\" + filepath;
+                           // path = "\\" + filepath;
 
                             if (filepath != "") {
                                 linkcat = serverlink + path;

@@ -59,10 +59,8 @@ function func_ToolboxADD(indef, enume) {
 function func_ToolboxSave(indef, enume) {
     var isContinue = true;
     cust_GetPara();
-
     parent_MessageBoxQuestionToolBox("Do you want to save the current record?", mtitle, "", indef, enume);
     isContinue = false;
-
     return isContinue;
 }
 
@@ -70,6 +68,7 @@ function func_ToolboxDelete(indef, enume) {
     var isContinue = true;
     cust_GetPara();
     parent_MessageBoxQuestionToolBox("Do you want to delete the current record?", mtitle, "", indef, enume);
+    nwPopupForm_HideModal("nwSearch");
     isContinue = false;
     return isContinue;
 }
@@ -78,7 +77,6 @@ function func_ToolboxRefresh(indef, enume) {
     var isContinue = true;
     cust_GetPara();
     nwLoading_Start("actbindcollection", crLoadingHTML);
-
     isRefreshed = true;
     return isContinue;
 }
@@ -90,6 +88,10 @@ function func_ToolboxInquire(indef, enume) {
 
 function func_ToolboxProcess(indef, enume) {
     var isContinue = true;
+    cust_GetPara();
+    //parent_MessageBoxQuestion("Do you want to process the current record?", mtitle, "Question");
+    parent_MessageBoxQuestionToolBox("Do you want to delete the current record?", mtitle, "", indef, enume);
+    isContinue = false;
     return isContinue;
 }
 
@@ -111,39 +113,39 @@ function func_ToolboxPrint(indef, enume) {
 
 function func_ToolboxClosing(indef, enume) {
     var isContinue = true;
-    cust_GetPara();
-
-    parent_MessageBoxQuestionToolBox("Do you want to save the current record?", mtitle, "", indef, enume);
-    isContinue = false;
+    //cust_GetPara();
+    //parent_MessageBoxQuestionToolBox("Do you want to save the current record?", mtitle, "", indef, enume);
+    //isContinue = false;
     return isContinue;
 }
 
 function func_ToolboxSearch(indef, enume) {
     var isContinue = true;
-    isContinue = false;
-    nwPopupForm_HideModal("nwSearch");
-    cust_GetPara();
-    parent_MessageBoxQuestionToolBox("Do you want to delete the current record?", mtitle, "", indef, enume);
+    //isContinue = false;
+    //nwPopupForm_HideModal("nwSearch");
+    //cust_GetPara();
+    //parent_MessageBoxQuestionToolBox("Do you want to delete the current record?", mtitle, "", indef, enume);
     return isContinue;
 }
 
-function func_Refresh() {
-    cust_GetPara();
-    func_ActionDriven("actRefresh", false);
-    nwLoading_Start("actRefresh", crLoadingHTML);
-}
+//function func_Refresh() {
+//    cust_GetPara();
+//    func_ActionDriven("actRefresh", false);
+//    nwLoading_Start("actRefresh", crLoadingHTML);
+//}
 
-$(document).on("click", "#btnProcess", function () {
-    msgBoxContainerQuestion = "btnProcess";
-    $('#Message_Cancel').visible(false);
-    parent_MessageBoxQuestion("Do you want to process the current record?", mtitle, "Question");
-});
+//$(document).on("click", "#btnProcess", function () {
+//    msgBoxContainerQuestion = "btnProcess";
+//    $('#Message_Cancel').visible(false);
+//    cust_GetPara();
+//    parent_MessageBoxQuestion("Do you want to process the current record?", mtitle, "Question");
+//});
 
-$(document).on("click", "#btnRefresh", function () {
-    cust_GetPara();
-    func_ActionDriven("actbtnRefresh", false);
-    nwLoading_Start("actbtnRefresh", crLoadingHTML);
-});
+//$(document).on("click", "#btnRefresh", function () {
+//    cust_GetPara();
+//    func_ActionDriven("actbtnRefresh", false);
+//    nwLoading_Start("actbtnRefresh", crLoadingHTML);
+//});
 
 ///////////////////// Bind tool
 function cust_GetPara() {
@@ -369,7 +371,7 @@ $(document).on("click", "#btnReqCompliance", function (e) {
 
     nwLoading_Start('btnReqCompliance', crLoadingHTML);
     nwPopupForm_Create("nwPopUpReqComp", true, fullength);
-    $('#nwPopUpReqComp .BoxTitle').text("Requirements Compliance");
+    $("#nwPopUpReqComp .modal-hdr-title").text("Requirement Compliance");
     $("#nwPopUpReqComp").css({ "min-width": "90%" });
     $("#nwPopUpReqComp").css({ "min-height": "90%" });
     nwPopupForm_ShowModal("nwPopUpReqComp");

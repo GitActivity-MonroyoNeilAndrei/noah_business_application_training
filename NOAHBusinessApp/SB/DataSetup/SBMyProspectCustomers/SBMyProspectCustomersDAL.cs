@@ -12,7 +12,7 @@ namespace DALComponent
         #region STANDARD
 
         public string MenuItemCode = "SBMyProspectCustomers"; // This is default parameter  for version
-        public string MenuItemVersion = "9.0.0.2"; // This is default parameter for version
+        public string MenuItemVersion = "10.0.0.5"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
             if (_MenuItemCode.Trim() != "") MenuItemCode = _MenuItemCode;
@@ -212,6 +212,15 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@AllowNotifIndivNo", dr["AllowNotifIndivNo"]);
                             cmd.Parameters.AddWithValue("@AllowNotifCorpoYes", dr["AllowNotifCorpoYes"]);
                             cmd.Parameters.AddWithValue("@AllowNotifCorpoNo", dr["AllowNotifCorpoNo"]);
+                            cmd.Parameters.AddWithValue("@FullAdd1", dr["FullAdd"]);
+                            cmd.Parameters.AddWithValue("@Province1", dr["Province"]);
+                            cmd.Parameters.AddWithValue("@ProspectCustomerCode", dr["ProspectCustomerCode"]);
+                            cmd.Parameters.AddWithValue("@Municipality1", dr["Municipality"]);
+                            cmd.Parameters.AddWithValue("@Barangay1", dr["Barangay"]);
+                            cmd.Parameters.AddWithValue("@ZIPCode1", dr["ZIPCode"]);
+                            cmd.Parameters.AddWithValue("@Region1", dr["Region"]);
+                            cmd.Parameters.AddWithValue("@Country1", dr["Country"]);
+                            cmd.Parameters.AddWithValue("@isCheck", dr["isCheck"]);
                             cmd.Parameters.AddWithValue("@QueryType", isNew ? 1 : 2);
                         }
                         break;
@@ -220,10 +229,12 @@ namespace DALComponent
                         foreach (DataRow dr in dt.Rows)
                         {
                             cmd.Parameters.AddWithValue("@CustomerCode", dr["customerCode"]);
+                            cmd.Parameters.AddWithValue("@ProspectCustomerCode", dr["ProspectCustomerCode"]);
                             cmd.Parameters.AddWithValue("@LandlineNo", dr["LandlineNo"]);
                             cmd.Parameters.AddWithValue("@LocalNo", dr["LocalNo"]);
                             cmd.Parameters.AddWithValue("@MobileNo", dr["MobileNo"]);
                             cmd.Parameters.AddWithValue("@EmailAdd", dr["EmailAdd"]);
+                                                      
                             cmd.Parameters.AddWithValue("@EffectiveDate", dr["EffectiveDate"]);
                             cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
                             cmd.Parameters.AddWithValue("@QueryType", 33);
@@ -235,6 +246,7 @@ namespace DALComponent
                         foreach (DataRow dr in dt.Rows)
                         {
                             cmd.Parameters.AddWithValue("@CustomerCode", dr["Customer"]);
+                            cmd.Parameters.AddWithValue("@ProspectCustomerCode", dr["ProspectCustomerCode"]);
                             cmd.Parameters.AddWithValue("@RelationshiptotheCustomer", dr["RelationshiptotheCustomer"]);
                             cmd.Parameters.AddWithValue("@LastName", dr["LName"]);
                             cmd.Parameters.AddWithValue("@FirstName", dr["FName"]);
@@ -242,7 +254,8 @@ namespace DALComponent
                             cmd.Parameters.AddWithValue("@TIN", dr["TIN"]);
                             cmd.Parameters.AddWithValue("@Gender", dr["Gender"]);
                             cmd.Parameters.AddWithValue("@Nationality", dr["Nationality"]);
-                            cmd.Parameters.AddWithValue("@Birthday", dr["DateofBirth"]);
+                            //cmd.Parameters.AddWithValue("@DateofBirth", dr["DateofBirth"]);
+                            cmd.Parameters.AddWithValue("@CoownerDateofBirth", dr["DateofBirth"]);
                             cmd.Parameters.AddWithValue("@Age", dr["Age"]);
                             cmd.Parameters.AddWithValue("@PlaceofBirth", dr["PlaceofBirth"]);
                             cmd.Parameters.AddWithValue("@PresentAddress", dr["PresentAddress"]);
@@ -264,6 +277,7 @@ namespace DALComponent
                         foreach (DataRow dr in dt.Rows)
                         {
                             cmd.Parameters.AddWithValue("@CustomerCode", dr["Customer"]);
+                            cmd.Parameters.AddWithValue("@ProspectCustomerCode", dr["ProspectCustomerCode"]);
                             cmd.Parameters.AddWithValue("@LandlineNo", dr["Landline"]);
                             cmd.Parameters.AddWithValue("@LocalNo", dr["LocalNo"]);
                             cmd.Parameters.AddWithValue("@MobileNo", dr["MobileNo"]);
@@ -280,15 +294,16 @@ namespace DALComponent
                         foreach (DataRow dr in dt.Rows)
                         {
                             cmd.Parameters.AddWithValue("@CustomerCode", dr["customerCode"]);
+                            cmd.Parameters.AddWithValue("@ProspectCustomerCode", dr["ProspectCustomerCode"]);
                             cmd.Parameters.AddWithValue("@LastName", dr["lastName"]);
                             cmd.Parameters.AddWithValue("@FirstName", dr["firstName"]);
                             cmd.Parameters.AddWithValue("@MiddleName", dr["middleName"]);
                             cmd.Parameters.AddWithValue("@mi", dr["mi"]);
                             cmd.Parameters.AddWithValue("@Salutation", dr["salutationCode"]);
                             cmd.Parameters.AddWithValue("@Gender", dr["genderCode"]);
-                            cmd.Parameters.AddWithValue("@Birthday", dr["dateofBirth"]);
+                            cmd.Parameters.AddWithValue("@cospdateofBirth", dr["dateofBirth"]);
                             cmd.Parameters.AddWithValue("@tin", dr["tin"]);
-                            cmd.Parameters.AddWithValue("@dateOfMarriage", dr["dateOfMarriage"]);
+                            cmd.Parameters.AddWithValue("@cosDateOfMarriage", dr["dateOfMarriage"]);
                             cmd.Parameters.AddWithValue("@Nationality", dr["nationalityCode"]);
                             cmd.Parameters.AddWithValue("@Occupation", dr["occupationCode"]);
                             cmd.Parameters.AddWithValue("@spouseID", dr["spouseID"]);
@@ -301,13 +316,14 @@ namespace DALComponent
                         foreach (DataRow dr in dt.Rows)
                         {
                             cmd.Parameters.AddWithValue("@CustomerCode", dr["ID"]);
+                            cmd.Parameters.AddWithValue("@ProspectCustomerCode", dr["ProspectCustomerCode"]);
                             cmd.Parameters.AddWithValue("@EffectiveDateFrm", dr["EffectiveDateFrm"]);
                             cmd.Parameters.AddWithValue("@EffectiveDateTo", dr["EffectiveDateTo"]);
                             cmd.Parameters.AddWithValue("@LastName", dr["LastName"]);
                             cmd.Parameters.AddWithValue("@FirstName", dr["FirstName"]);
                             cmd.Parameters.AddWithValue("@MiddleName", dr["MiddleName"]);
                             cmd.Parameters.AddWithValue("@TIN", dr["TIN"]);
-                            cmd.Parameters.AddWithValue("@Birthday", dr["DateofBirth"]);
+                            cmd.Parameters.AddWithValue("@attyBirthday", dr["DateofBirth"]);
                             cmd.Parameters.AddWithValue("@Age", dr["Age"]);
                             cmd.Parameters.AddWithValue("@Gender", dr["Gender"]);
                             cmd.Parameters.AddWithValue("@Nationality", dr["Nationality"]);
@@ -326,6 +342,7 @@ namespace DALComponent
                         foreach (DataRow dr in dt.Rows)
                         {
                             cmd.Parameters.AddWithValue("@CustomerCode", dr["ID"]);
+                            cmd.Parameters.AddWithValue("@ProspectCustomerCode", dr["ProspectCustomerCode"]);
                             cmd.Parameters.AddWithValue("@LandlineNo", dr["LandlineNo"]);
                             cmd.Parameters.AddWithValue("@LocalNo", dr["LocalNo"]);
                             cmd.Parameters.AddWithValue("@MobileNo", dr["MobileNo"]);
@@ -340,19 +357,37 @@ namespace DALComponent
                         foreach (DataRow dr in dt.Rows)
                         {
                             cmd.Parameters.AddWithValue("@CustomerCode", dr["customerCode"]);
+                            cmd.Parameters.AddWithValue("@ProspectCustomerCode", dr["ProspectCustomerCode"]);
                             cmd.Parameters.AddWithValue("@ReasonForBuying", dr["ReasonForBuying"]);
                             cmd.Parameters.AddWithValue("@ReasonForBuyingOthers", dr["ReasonForBuyingOthers"]);
                             cmd.Parameters.AddWithValue("@DesiredProperty", dr["DesiredProperty"]);
                             cmd.Parameters.AddWithValue("@DesiredPropertyOthers", dr["DesiredPropertyOthers"]);
                             cmd.Parameters.AddWithValue("@SourceOfAwareness", dr["SourceOfAwareness"]);
                             cmd.Parameters.AddWithValue("@SourceOfAwarenessOthers", dr["SourceOfAwarenessOthers"]);
+                            cmd.Parameters.AddWithValue("@SalesActivity", dr["SalesActivity"]);
+                            cmd.Parameters.AddWithValue("@SalesActivityOthers", dr["SalesActivityOthers"]);
                             cmd.Parameters.AddWithValue("@PriceRange", dr["PriceRange"]);
+                            cmd.Parameters.AddWithValue("@isNomination", dr["isNomination"]);
                             cmd.Parameters.AddWithValue("@isRecommended", dr["isRecommended"]);
                             cmd.Parameters.AddWithValue("@Name", dr["Name"]);
                             cmd.Parameters.AddWithValue("@MobileNo", dr["MobileNo"]);
                             cmd.Parameters.AddWithValue("@EmailAdd", dr["Email"]);
                             cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
                             cmd.Parameters.AddWithValue("@QueryType", 57);
+                        }
+                        break;
+                    case 8://other details lin
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            cmd.Parameters.AddWithValue("@CustomerCode", dr["customerCode"]);
+                            cmd.Parameters.AddWithValue("@ProspectCustomerCode", dr["ProspectCustomerCode"]);
+                            cmd.Parameters.AddWithValue("@ConfirmedApptDate", dr["ConfirmedApptDate"]);
+                            cmd.Parameters.AddWithValue("@DateSigned", dr["DateSigned"]);
+                            cmd.Parameters.AddWithValue("@TimeOfAppt", dr["TimeOfAppt"]);
+                            cmd.Parameters.AddWithValue("@TimeSigned", dr["TimeSigned"]);
+                            cmd.Parameters.AddWithValue("@SubmissionDate", dr["SubmissionDate"]);
+                            cmd.Parameters.AddWithValue("@isUpdate", isNew ? 0 : 1);
+                            cmd.Parameters.AddWithValue("@QueryType", 58);
                         }
                         break;
                 }
@@ -530,9 +565,9 @@ namespace DALComponent
             return SFObjects.LoadDataTable(sql, _ConnectionString);
         }
 
-        public string GetData(string recuser, string nwCustno)
+        public string GetData(string recuser, string nwCustno,string codevalue)
         {
-            string a = string.Format($"exec {spName} @Querytype = 0, @recuser = '{recuser}', @CustomerCode = '{nwCustno}'");
+            string a = string.Format($"exec {spName} @Querytype = 0, @recuser = '{recuser}', @ID='{codevalue}'");
 
             focusRecordPK = string.Empty;
             a = a.Replace(Environment.NewLine, " "); /*Do not Remove this*/
@@ -720,6 +755,18 @@ namespace DALComponent
         {
 
             return SFObjects.returnText($@"SELECT [DC].[fn_ChkIfHasReqComplianceAll]('{docno}')", _ConnectionString);
+        }
+
+        public string GetNewCustCode()
+        {
+
+            return SFObjects.returnText($@"EXEC {spName} @QueryType = 63", _ConnectionString);
+        }
+
+        public string GetNewProsCustCode()
+        {
+
+            return SFObjects.returnText($@"EXEC {spName} @QueryType = 64", _ConnectionString);
         }
 
 

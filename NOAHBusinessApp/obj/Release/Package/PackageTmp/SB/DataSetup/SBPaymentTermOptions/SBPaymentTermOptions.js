@@ -28,9 +28,10 @@ var SPR_TransactionType = 1,
 var BasedTitle = "";
 function func_Reload() {
     LoadStringsCases();
-    crLnk = "../SBPaymentTermOptions_Gateway.aspx";
+    crLnk = "../SBPaymentTermOptions/SBPaymentTermOptions_Gateway";
     crLnkGateKey = "SBPaymentTermOptions";
     var isContinue = true;
+    crnwTagSingleBind = true;
     init_request();
     ToolBoxGetData = false;
     return isContinue;
@@ -288,7 +289,7 @@ $(document).on("click", ".RightFilterHeaderlookup", function () {
 
 
 $(function () {
-    $("#settingstabs").tabs();
+    $("#settingstabs").loadAddtoList({ list: ["Payment Term"], icon: true });
 });
 
 function GenerateLookupListDataHTML(xvalue, xdisplay) {
@@ -340,16 +341,19 @@ $(document).on('click', 'span.classx', function () {
 
 
 function nwGrid_AddtoListDoneCustom(verID, addtoListTableRec, index) {
-    //var value = "<option value='" + addtoListTableRec.find('tr:eq(' + index + ') td:eq(1)').text() + "'>" + addtoListTableRec.find('tr:eq(' + index + ') td:eq(1)').text() + "</option>"
-
-    //$('#cmbluglocacc').append(value)
+    var xChecked = "";
     var xvalue = "";
     var xdisplay = "";
+    xChecked = addtoListTableRec.find('tr:eq(' + index + ')').find('input[type="checkbox"]').prop('checked');
     xvalue = addtoListTableRec.find('tr:eq(' + index + ') td:eq(1)').text();
     xdisplay = addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text();
 
     if ($('div.atlContainer[nwtype="' + verID + '"]').find('div.spantext[nwcode="' + xvalue + '"]').length < 1) {
-        $('div.atlContainer[nwtype="' + verID + '"] div.innertext').append(GenerateLookupListDataHTML(xvalue, xdisplay));
+        if (xChecked) {
+
+            $('div.atlContainer[nwtype="' + verID + '"] div.innertext').append(GenerateLookupListDataHTML(xvalue, xdisplay));
+        }
+
     }
 }
 

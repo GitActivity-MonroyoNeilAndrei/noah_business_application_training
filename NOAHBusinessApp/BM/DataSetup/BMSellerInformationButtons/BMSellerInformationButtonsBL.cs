@@ -529,7 +529,7 @@ namespace Noah_Web.forms_BusinessLayer
 
                 case eRecordOperation.Refresh:
                     RefreshData();
-                    js.ADD("nwLoading_End('xRefreshBtn');");
+                    js.ADD("nwLoading_End('xRefreshBtn');");                   
                     break;
                 case eRecordOperation.Inquire:
                     tempstr = "inqure";
@@ -1100,12 +1100,13 @@ namespace Noah_Web.forms_BusinessLayer
                 CreateGridBMDocumentDetails(isInitialize);
             else if (nwTranType == "BAAC")
                 CreateGridBMBankAccount(isInitialize);
-            else if (nwTranType == "ADAC")
-                CreateGridAccountDetailsAsACustomer(isInitialize);
+            else if (nwTranType == "SELD")
+                CreateGridSellerRoleLevelDetails(isInitialize);            
             else if (nwTranType == "SETD")
                 CreateGridSeminarTrainingsDetails(isInitialize);
-            else if (nwTranType == "SELD")
-                CreateGridSellerRoleLevelDetails(isInitialize);
+            else if (nwTranType == "ADAC")
+                CreateGridAccountDetailsAsACustomer(isInitialize);
+
             else if (nwTranType == "VUPH")
                 CreateGridViewUpdateHistory(isInitialize);
             else if (nwTranType == "VWHD")
@@ -1119,12 +1120,14 @@ namespace Noah_Web.forms_BusinessLayer
         public void CreateGridBMSellerInformationButtons(bool isInitialize)
         {
 
-            string gridID = "nwGrid";
+            string gridID = "nwGridMainCon";
             nwGrid nwGrid = new nwGrid(gridID);
             DataTable dtDataSource = new DataTable();
             string txtID = WebApp.nwobjectText("txtID");
             string nwTranType = WebApp.nwobjectText("nwTranType");
-
+            nwGrid.Type = nwGridType.SpreadCanvas;
+            nwGrid.varSpreadBook = "nwGridMainCon_Book";
+            nwGrid.varSpreadSheet = "nwGridMainCon_Sheet";
             dtDataSource = dal.getLineDetails(txtID, nwTranType);
 
             int rowCnt = 0;
@@ -1185,23 +1188,22 @@ namespace Noah_Web.forms_BusinessLayer
                 nwGrid.dataSource(dtDataSource);
             else
                 nwGrid.CreateExcelGrid(rowCnt, colCnt);
-
+                js.ADD(nwGrid.createTable());
             //## THEME FORMAT
-            nwGrid.HeaderBorderColor("#DEDEDE");
-            nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
-            nwGrid.TableBorderColor("#BBB");
-            nwGrid.BodyBorderColor("#BBB");
-            nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
-            nwGrid.HeaderTextColor("#131313");
-            nwGrid.HoverColor("#DEDEDE", "inherit");
-            nwGrid.SelectedRowHover("#DEDEDE");
-            nwGrid.SelectedRowHoverColor("inherit");
-
-            js.makeHTML("#nwGridCon", nwGrid.createTable());
-            js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
-            js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
-            js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
-            js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
+            //nwGrid.HeaderBorderColor("#DEDEDE");
+            //nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
+            //nwGrid.TableBorderColor("#BBB");
+            //nwGrid.BodyBorderColor("#BBB");
+            //nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
+            //nwGrid.HeaderTextColor("#131313");
+            //nwGrid.HoverColor("#DEDEDE", "inherit");
+            //nwGrid.SelectedRowHover("#DEDEDE");
+            //nwGrid.SelectedRowHoverColor("inherit");
+            //js.makeHTML("#nwGridCon", nwGrid.createTable());
+            //js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
+            //js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
+            //js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
+            //js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
 
 
         }
@@ -1322,34 +1324,35 @@ namespace Noah_Web.forms_BusinessLayer
                 nwGrid.dataSource(dtDataSource);
             else
                 nwGrid.CreateExcelGrid(rowCnt, colCnt);
-
+            js.ADD(nwGrid.createTable());
             //## THEME FORMAT
-            nwGrid.HeaderBorderColor("#DEDEDE");
-            nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
-            nwGrid.TableBorderColor("#BBB");
-            nwGrid.BodyBorderColor("#BBB");
-            nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
-            nwGrid.HeaderTextColor("#131313");
-            nwGrid.HoverColor("#DEDEDE", "inherit");
-            nwGrid.SelectedRowHover("#DEDEDE");
-            nwGrid.SelectedRowHoverColor("inherit");
-
-            js.makeHTML("#nwGridCon", nwGrid.createTable());
-            js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
-            js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
-            js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
-            js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
+            //nwGrid.HeaderBorderColor("#DEDEDE");
+            //nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
+            //nwGrid.TableBorderColor("#BBB");
+            //nwGrid.BodyBorderColor("#BBB");
+            //nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
+            //nwGrid.HeaderTextColor("#131313");
+            //nwGrid.HoverColor("#DEDEDE", "inherit");
+            //nwGrid.SelectedRowHover("#DEDEDE");
+            //nwGrid.SelectedRowHoverColor("inherit");
+            //js.makeHTML("#nwGridCon", nwGrid.createTable());
+            //js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
+            //js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
+            //js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
+            //js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
         }
 
         public void CreateGridBMBankAccount(bool isInitialize)
         {
 
-            string gridID = "nwGrid";
+            string gridID = "nwGridMainCon";
             nwGrid nwGrid = new nwGrid(gridID);
             DataTable dtDataSource = new DataTable();
             string txtID = WebApp.nwobjectText("txtID");
             string nwTranType = WebApp.nwobjectText("nwTranType");
-
+            nwGrid.Type = nwGridType.SpreadCanvas;
+            nwGrid.varSpreadBook = "nwGridMainCon_Book";
+            nwGrid.varSpreadSheet = "nwGridMainCon_Sheet";
             dtDataSource = dal.getLineDetails(txtID, nwTranType);
 
             int rowCnt = 0;
@@ -1363,6 +1366,7 @@ namespace Noah_Web.forms_BusinessLayer
             {
                 //ex.ToString();
                 //rowCnt = dtDataSource.Rows.Count;
+                
             }
 
             int colCnt = SPR_BACombine;
@@ -1440,34 +1444,35 @@ namespace Noah_Web.forms_BusinessLayer
                 nwGrid.dataSource(dtDataSource);
             else
                 nwGrid.CreateExcelGrid(rowCnt, colCnt);
-
+            js.ADD(nwGrid.createTable());
             //## THEME FORMAT
-            nwGrid.HeaderBorderColor("#DEDEDE");
-            nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
-            nwGrid.TableBorderColor("#BBB");
-            nwGrid.BodyBorderColor("#BBB");
-            nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
-            nwGrid.HeaderTextColor("#131313");
-            nwGrid.HoverColor("#DEDEDE", "inherit");
-            nwGrid.SelectedRowHover("#DEDEDE");
-            nwGrid.SelectedRowHoverColor("inherit");
-
-            js.makeHTML("#nwGridCon", nwGrid.createTable());
-            js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
-            js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
-            js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
-            js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
+            //nwGrid.HeaderBorderColor("#DEDEDE");
+            //nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
+            //nwGrid.TableBorderColor("#BBB");
+            //nwGrid.BodyBorderColor("#BBB");
+            //nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
+            //nwGrid.HeaderTextColor("#131313");
+            //nwGrid.HoverColor("#DEDEDE", "inherit");
+            //nwGrid.SelectedRowHover("#DEDEDE");
+            //nwGrid.SelectedRowHoverColor("inherit");
+            //js.makeHTML("#nwGridCon", nwGrid.createTable());
+            //js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
+            //js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
+            //js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
+            //js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
         }
 
         public void CreateGridAccountDetailsAsACustomer(bool isInitialize)
         {
 
-            string gridID = "nwGrid";
+            string gridID = "nwGridMainCon";
             nwGrid nwGrid = new nwGrid(gridID);
             DataTable dtDataSource = new DataTable();
             string txtID = WebApp.nwobjectText("txtID");
             string nwTranType = WebApp.nwobjectText("nwTranType");
-
+            nwGrid.Type = nwGridType.SpreadCanvas;
+            nwGrid.varSpreadBook = "nwGridMainCon_Book";
+            nwGrid.varSpreadSheet = "nwGridMainCon_Sheet";
             dtDataSource = dal.getLineDetails(txtID, nwTranType);
 
             int rowCnt = 0;
@@ -1542,34 +1547,35 @@ namespace Noah_Web.forms_BusinessLayer
                 nwGrid.dataSource(dtDataSource);
             else
                 nwGrid.CreateExcelGrid(rowCnt, colCnt);
-
+            js.ADD(nwGrid.createTable());
             //## THEME FORMAT
-            nwGrid.HeaderBorderColor("#DEDEDE");
-            nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
-            nwGrid.TableBorderColor("#BBB");
-            nwGrid.BodyBorderColor("#BBB");
-            nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
-            nwGrid.HeaderTextColor("#131313");
-            nwGrid.HoverColor("#DEDEDE", "inherit");
-            nwGrid.SelectedRowHover("#DEDEDE");
-            nwGrid.SelectedRowHoverColor("inherit");
-
-            js.makeHTML("#nwGridCon", nwGrid.createTable());
-            js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
-            js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
-            js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
-            js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
+            //nwGrid.HeaderBorderColor("#DEDEDE");
+            //nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
+            //nwGrid.TableBorderColor("#BBB");
+            //nwGrid.BodyBorderColor("#BBB");
+            //nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
+            //nwGrid.HeaderTextColor("#131313");
+            //nwGrid.HoverColor("#DEDEDE", "inherit");
+            //nwGrid.SelectedRowHover("#DEDEDE");
+            //nwGrid.SelectedRowHoverColor("inherit");
+            //js.makeHTML("#nwGridCon", nwGrid.createTable());
+            //js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
+            //js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
+            //js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
+            //js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
         }
 
         public void CreateGridSeminarTrainingsDetails(bool isInitialize)
         {
 
-            string gridID = "nwGrid";
+            string gridID = "nwGridMainCon";
             nwGrid nwGrid = new nwGrid(gridID);
             DataTable dtDataSource = new DataTable();
             string txtID = WebApp.nwobjectText("txtID");
             string nwTranType = WebApp.nwobjectText("nwTranType");
-
+            nwGrid.Type = nwGridType.SpreadCanvas;
+            nwGrid.varSpreadBook = "nwGridMainCon_Book";
+            nwGrid.varSpreadSheet = "nwGridMainCon_Sheet";
             dtDataSource = dal.getLineDetails(txtID, nwTranType);
 
             int rowCnt = 0;
@@ -1647,37 +1653,38 @@ namespace Noah_Web.forms_BusinessLayer
                 nwGrid.dataSource(dtDataSource);
             else
                 nwGrid.CreateExcelGrid(rowCnt, colCnt);
-
+                js.ADD(nwGrid.createTable());
             //## THEME FORMAT
-            nwGrid.HeaderBorderColor("#DEDEDE");
-            nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
-            nwGrid.TableBorderColor("#BBB");
-            nwGrid.BodyBorderColor("#BBB");
-            nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
-            nwGrid.HeaderTextColor("#131313");
-            nwGrid.HoverColor("#DEDEDE", "inherit");
-            nwGrid.SelectedRowHover("#DEDEDE");
-            nwGrid.SelectedRowHoverColor("inherit");
-
-            js.makeHTML("#nwGridCon", nwGrid.createTable());
-            js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
-            js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
-            js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
-            js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
+            //nwGrid.HeaderBorderColor("#DEDEDE");
+            //nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
+            //nwGrid.TableBorderColor("#BBB");
+            //nwGrid.BodyBorderColor("#BBB");
+            //nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
+            //nwGrid.HeaderTextColor("#131313");
+            //nwGrid.HoverColor("#DEDEDE", "inherit");
+            //nwGrid.SelectedRowHover("#DEDEDE");
+            //nwGrid.SelectedRowHoverColor("inherit");
+            //js.makeHTML("#nwGridCon", nwGrid.createTable());
+            //js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
+            //js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
+            //js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
+            //js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
 
         }
 
         public void CreateGridSellerRoleLevelDetails(bool isInitialize)
         {
 
-            string gridID = "nwGrid";
+            string gridID = "nwGridMainCon";
             nwGrid nwGrid = new nwGrid(gridID);
             DataTable dtDataSource = new DataTable();
             DataTable dtDataLoad = new DataTable();
             string txtID = WebApp.nwobjectText("txtID");
             string nwTranType = WebApp.nwobjectText("nwTranType");
             string nwSellerCode = WebApp.nwobjectText("nwSellerCode");
-
+            nwGrid.Type = nwGridType.SpreadCanvas;
+            nwGrid.varSpreadBook = "nwGridMainCon_Book";
+            nwGrid.varSpreadSheet = "nwGridMainCon_Sheet";
             dtDataSource = dal.getLineDetails(txtID, nwTranType);
             dtDataLoad = dal.getLineLoadedSELD(nwSellerCode);
 
@@ -1770,23 +1777,23 @@ namespace Noah_Web.forms_BusinessLayer
                 nwGrid.dataSource(dtDataLoad);
             }
 
-
+            //nwGrid.CreateExcelGrid(rowCnt, colCnt);
+            js.ADD(nwGrid.createTable());
             //## THEME FORMAT
-            nwGrid.HeaderBorderColor("#DEDEDE");
-            nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
-            nwGrid.TableBorderColor("#BBB");
-            nwGrid.BodyBorderColor("#BBB");
-            nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
-            nwGrid.HeaderTextColor("#131313");
-            nwGrid.HoverColor("#DEDEDE", "inherit");
-            nwGrid.SelectedRowHover("#DEDEDE");
-            nwGrid.SelectedRowHoverColor("inherit");
-
-            js.makeHTML("#nwGridCon", nwGrid.createTable());
-            js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
-            js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
-            js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
-            js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
+            //nwGrid.HeaderBorderColor("#DEDEDE");
+            //nwGrid.rowBackground("#FFFFFF", "#FFFFFF");
+            //nwGrid.TableBorderColor("#BBB");
+            //nwGrid.BodyBorderColor("#BBB");
+            //nwGrid.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
+            //nwGrid.HeaderTextColor("#131313");
+            //nwGrid.HoverColor("#DEDEDE", "inherit");
+            //nwGrid.SelectedRowHover("#DEDEDE");
+            //nwGrid.SelectedRowHoverColor("inherit");
+            //js.makeHTML("#nwGridCon", nwGrid.createTable());
+            //js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
+            //js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",0,0)");
+            //js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
+            //js.ADD("$('.nwGrid div.nwGridData').css('background-color', 'white');");
 
         }
 

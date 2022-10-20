@@ -1181,14 +1181,11 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-  
-    $(".btn.btn-modal-back").on("click", function () {
-        $(".modal-s").removeClass("_show");
-        $(".modal-box-s").removeClass("_slide-m");
-    });
-});
 
+$(document).on("click", ".btn.btn-modal-back", function () {
+    $(this).parents(".modal-s").removeClass("_show");
+    $(this).parents(".modal-box-s").removeClass("_slide-m");
+});
 
 
 

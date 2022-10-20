@@ -53,12 +53,13 @@ namespace Noah_Web.forms_BusinessLayer
             SPR_QueueNo = 9,
             SPR_AgeinDays = 10,
             SPR_Docno = 11,
-            SPR_Request = 12,
+            SPR_Transfer = 12,
             SPR_UnitCode = 13;
 
         DataTable emptyDT = new DataTable();
 
         public string Result = "";
+        public string Trantype = "STRNUN";
         nwEntry based = new nwEntry();
         #endregion
 
@@ -139,6 +140,7 @@ namespace Noah_Web.forms_BusinessLayer
                 {
                     case "0":
                         RecordOperation(eRecordOperation.AddNew, pozt);
+                        //InitializeValues();
                         break;
                     case "1":
                         RecordOperation(eRecordOperation.Save, pozt);
@@ -211,7 +213,10 @@ namespace Noah_Web.forms_BusinessLayer
         }
         public string getToolBoxDataCreate(string tableName, string sql, string strconn, int startIndex, int batchRowcounts)
         {
-            string strFinal = String.Empty; string strRet = String.Empty; string sqlOrig = sql;
+            string strFinal = String.Empty;
+            string strRet = String.Empty;
+            string sqlOrig = sql;
+
             DataTable dt = new DataTable();
             int startColumn = 0; int rownumber = startIndex;
 
@@ -269,7 +274,7 @@ namespace Noah_Web.forms_BusinessLayer
             switch (strMethod)
             {
                 case "gettoolboxInquire":
-                    strSQL = dal.inquireQuery();
+                    strSQL = dal.inquireQuery_popup();
                     strMethod = strMethod.Substring(3);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
@@ -284,6 +289,65 @@ namespace Noah_Web.forms_BusinessLayer
                     nwObject.ColumnHide(3);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
+
+                //added from submenu folder
+                case "getpopup-default-Inquire":
+                    strSQL = dal.inquireQuery_popup();
+                    //nwObject.ColumnSort("Code", "asc");
+                    strMethod = strMethod.Substring(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+
+                    break;
+
+                case "getlugLocAccForms":
+                    strSQL = dal.lugLocAccForms_popup();
+                    //nwObject.ColumnSort("Code", "asc");
+                    strMethod = strMethod.Substring(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    break;
+
+                case "getlugReTranUnit":
+                    strSQL = dal.lugReTranUnit_popup();
+                    //nwObject.ColumnSort("Code", "asc");
+                    strMethod = strMethod.Substring(3);
+                    //nwObject.ColumnHide(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    break;
+
+                case "getlugRefHoldTrans":
+                    strSQL = dal.lugRefHoldTrans_popup();
+                    //nwObject.ColumnSort("Code", "asc");
+                    strMethod = strMethod.Substring(3);
+                    nwObject.ColumnHide(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    break;
+
+                case "gettxtDocNo":
+                    strSQL = dal.txtDocNo_popup();
+                    //nwObject.ColumnSort("Code", "asc");
+                    strMethod = strMethod.Substring(3);
+                    nwObject.ColumnHide(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    break;
+
+                case "gettxtDocDate":
+                    strSQL = dal.txtDocDate_popup();
+                    //nwObject.ColumnSort("Code", "asc");
+                    strMethod = strMethod.Substring(3);
+                    nwObject.ColumnHide(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    break;
+
+                case "getlugNewUnit":
+                    strSQL = dal.lugNewUnit_popup();
+                    //nwObject.ColumnSort("Code", "asc");
+                    strMethod = strMethod.Substring(3);
+                    nwObject.ColumnHide(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    break;
+
+
+
             }
             return strFinal;
         }
@@ -305,18 +369,78 @@ namespace Noah_Web.forms_BusinessLayer
                     nwToolBox.bindingNavigatorDeleteItem.Enable =
                     nwToolBox.bindingNavigatorDeleteItem.Visible =
                     nwToolBox.bindingNavigatorExportItem.Enable = false;
+
+                    //added from submenu folder
+                    //js.ADD("ClearFields();");
+                    //js.makeValueText("#txtDocDate", dal.txtDocDate_popup().ToString());
+
+                    //string locaccforms = "";
+                    //string container = "";
+                    //if (HttpContext.Current != null)
+                    //{
+                    //    var request = HttpContext.Current.Request;
+                    //    locaccforms = WebApp.nwobjectText("locaccforms");
+                    //    container = dal.txtidvalLugLocAccForms_popup(locaccforms);
+                    //    js.makeValueText("#idvallugLocAccForms", container);
+                    //    js.makeValueText("#descvallugLocAccForms", dal.txtdescvalLugLocAccForms_popup(locaccforms));
+                    //}
+
+                    //InitializeValues();
+
                     break;
 
                 case eRecordOperation.Save:
+
+                    //added from submenu folder
+
+                    
+
+                    RecordOperationResult = ValidateData_popup();
+
+                    if (RecordOperationResult.Length <= 0)
+                    {
+                        DataTable dt = new DataTable();
+
+                        dt = LoadSchema_popup();
+                        RecordOperationResult = dal.SaveData_popup(dt, isNewRow, Trantype);
+
+                        string docnum = "";
+                        string docno = "";
+                        docnum = dal.txtDocNo_popup().ToString();
+                        docno = WebApp.nwobjectText("idvallugLocAccForms") + "-STRNUN-" + docnum;
+
+                        js.ADD("$('#txtDocNo').val('" + docno + "')");
+
+                        //js.makeValueText("#txtDocNo", docno);
+
+                        nwToolBox.bindingNavigatorProcessItem.Enable = true;
+
+                    }
+
+
+
+                    tempstr = "Save";
+                    Prompt.Information(tempstr, based.Title);
+                    js.ADD("EnableFieldsDone();");
+
                     break;
 
                 case eRecordOperation.Delete:
-                    RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtCode"));
-                    if (RecordOperationResult == "")
-                        RecordOperationResult = "Deleted successfully";
+                    //RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtCode"));
+                    //if (RecordOperationResult == "")
+                    //    RecordOperationResult = "Deleted successfully";
+
+                    //added from submenu folder
+                    string deldocno = WebApp.nwobjectText("txtDocNo");
+                    RecordOperationResult = dal.deletedata_popup(deldocno);
+
+                    tempstr = "Delete";
+                    Prompt.Information(tempstr, based.Title);
+
                     break;
 
                 case eRecordOperation.Process:
+                    ProcessData();
                     tempstr = "Process";
                     Prompt.Information(tempstr, based.Title);
                     break;
@@ -368,7 +492,7 @@ namespace Noah_Web.forms_BusinessLayer
                     if (RecordOperationResult.Length <= 0)
                     {
                         isNewRow = checkIsNewRow();
-                        DataTable dtHDR = LoadSchema();
+                        DataTable dtHDR = LoadSchemaHDR();
                         RecordOperationResult = dal.SaveData(dtHDR, isNewRow, 0);
                     }
                     break;
@@ -412,6 +536,64 @@ namespace Noah_Web.forms_BusinessLayer
             WebApp = new WebApplib(strParameter, strValue);
             switch (strMethod)
             {
+                //newly added
+                case "actbtnAdd":
+                    InitializeValues_popup();
+                    js.ADD("func_ToolboxADD();");
+                    js.ADD("nwLoading_End('actbtnAdd')");
+                    break;
+
+
+                case "actSave":
+                    js.makeValueText("#txtDocDate", dal.txtDocDate_popup().ToString());
+
+                    RecordOperationResult = ValidateData_popup();
+
+                    if (RecordOperationResult.Length <= 0)
+                    {
+                        //DataTable dt = new DataTable();
+
+                        //dt = LoadSchema_popup();
+                        //RecordOperationResult = dal.SaveData_popup(dt, isNewRow, Trantype);
+
+                        //string docnum = "";
+                        //string docno = "";
+                        //docnum = dal.txtDocNo_popup().ToString();
+                        //docno = WebApp.nwobjectText("idvallugLocAccForms") + "-STRNUN-" + docnum;
+
+                        //js.ADD("$('#txtDocNo').val('" + docno + "')");
+
+                        //js.makeValueText("#txtDocNo", docno);
+
+
+
+                        nwToolBox.bindingNavigatorProcessItem.Enable = true;
+                    }
+                    break;
+
+
+                //case "actbtnInquire":
+                //    js.ADD("func_ToolboxInquire();");
+                //    js.ADD("nwLoading_End('actInquire')");
+                //    break;
+
+                //case "actInquire":
+
+                //    string strFinal = "";
+                //    string strSQL = "";
+                //    string mouseDownFunc = "";
+                //    string mouseOverFunc = "";
+
+                //    strSQL = dal.inquireQuery();
+                //    strMethod = strMethod.Substring(3);
+                //    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+
+                //    js.ADD("nwLoading_End('actInquire')");
+                //    break;
+
+
+                //-----------------------
+
                 case "actBindCollection":
                     BindCollection();
                     break;
@@ -425,28 +607,42 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
 
                 case "actbtnRefresh":
-                    BindHeader();
+
+                    ShowHDR();
+
                     js.ADD("func_Refresh();");
                     js.ADD("nwLoading_End('actbtnRefresh')");
                     break;
 
                 case "actLoadRequest":
-                    DataTable hasQueue = new DataTable();
-                    hasQueue = dal.getQueue(WebApp.nwobjectText("refDocno"), WebApp.nwobjectText("unitC"));
-                    if (hasQueue.Rows.Count > 1) {  //has queue can't request
-                        Prompt.Error("Cannot Proceed. There is queue for this Unit.", based.Title);
-                    } else {    //has no queue, Proceed
-                        if (checkIsNewRow() && WebApp.nwobjectText("refDocno") == "")
-                        {
-                            LoadNew();
-                        }
-                        else
-                        {
-                            BindHeader();
-                            js.ADD("func_Refresh();");
-                        }
-                    }
-                    
+                    DataTable displaydoc = new DataTable();
+
+                    js.makeValueText("#txtDocDate", dal.txtDocDate_popup().ToString());
+
+                    //displaydoc = dal.displaydoc_popup(locaccforms);
+
+                    ShowHDR();
+
+                    js.ADD("func_Refresh();");
+
+                    //hasQueue = dal.getQueue(WebApp.nwobjectText("refDocno"), WebApp.nwobjectText("unitC"));
+                    //if (hasQueue.Rows.Count > 1)
+                    //{  //has queue can't request
+                    //    Prompt.Error("Cannot Proceed. There is queue for this Unit.", based.Title);
+                    //}
+                    //else
+                    //{    //has no queue, Proceed
+                    //    if (checkIsNewRow() && WebApp.nwobjectText("refDocno") == "")
+                    //    {
+                    //        LoadNew();
+                    //    }
+                    //    else
+                    //    {
+                    //BindHeader();
+                    //js.ADD("func_Refresh();");
+                    //    }
+                    //}
+
                     js.ADD("nwLoading_End('actLoadRequest')");
                     break;
 
@@ -455,14 +651,18 @@ namespace Noah_Web.forms_BusinessLayer
                     if (RecordOperationResult.Length <= 0)
                     {
                         isNewRow = checkIsNewRow();
-                        DataTable dtHDR = LoadSchema();
+                        DataTable dtHDR = LoadSchemaHDR();
                         RecordOperationResult = dal.SaveData(dtHDR, isNewRow, 1);
                     }
 
                     if (RecordOperationResult.ToLower().Contains("success"))
                     {
+                        var RowCounter_actProcess = Int32.Parse(dal.rowcounter());
+                        if (RowCounter_actProcess != 0)
+                        {
+                            HeaderToU();
+                        }
                         Prompt.Information("Process completed", based.Title);
-                        BindHeader();
                         js.ADD("func_Refresh();");
                     }
                     else
@@ -495,7 +695,18 @@ namespace Noah_Web.forms_BusinessLayer
                     strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(), this.UserDefinedConnectionString);
                     //strFinal = getToolBoxDataRet(tableName, dal.GetData(), this.UserDefinedConnectionString, "1", "50");
                     break;
+
+
+                //newly added
+                case "toolbox_popup":
+                    nwStandardBL standardBL_popup = new nwStandardBL(WebApp);
+                    standardBL_popup.PrimaryKey = "docno";
+                    strFinal = standardBL_popup.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator_popup", dal.GetData_popup(), this.UserDefinedConnectionString);
+                    //strFinal = getToolBoxDataRet(tableName, dal.GetData(), this.UserDefinedConnectionString, "1", "50");
+                    break;
             }
+
+
 
             return strFinal;
         }
@@ -503,8 +714,25 @@ namespace Noah_Web.forms_BusinessLayer
         //////////////////////// Common
         private void SetBindings()
         {
-            SFObject.SetControlBinding("#txtCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Code");
-            SFObject.SetControlBinding("#txtDescription", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Description");
+            //SFObject.SetControlBinding("#txtCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Code");
+            //SFObject.SetControlBinding("#txtDescription", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Description");
+
+            //added from submenu folder
+            SFObject.SetControlBinding("#idvallugLocAccForms", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "locform");
+            SFObject.SetControlBinding("#descvallugLocAccForms", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "locdesc");
+            SFObject.SetControlBinding("#idvallugReTranUnit", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "reasonfortransunit");
+            SFObject.SetControlBinding("#descvallugReTranUnit", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "resdesc");
+            SFObject.SetControlBinding("#idvallugNewUnit", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "newunit");
+            SFObject.SetControlBinding("#descvallugNewUnit", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "unitdesc");
+            SFObject.SetControlBinding("#descvallugRefHoldTrans", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "refholdtrans");
+
+            SFObject.SetControlBinding("#txtRemarks", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "remarks");
+            SFObject.SetControlBinding("#txtDocNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "docno");
+            SFObject.SetControlBinding("#txtDocStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "docstatdesc");
+            SFObject.SetControlBinding("#txtDocDate", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "docdate");
+            SFObject.SetControlBinding("#txtReasDis", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "reasonfordisapproval");
+            SFObject.SetControlBinding("#txtRemDis", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "remarksfordisapproval");
+
             //FOOTER
             SFObject.SetControlBinding("#nwtxt_RecUser", "text", "", "#noah-webui-Toolbox-BindingNavigator", "Recuser");
             SFObject.SetControlBinding("#nwtxt_RecDate", "text", "", "#noah-webui-Toolbox-BindingNavigator", "Recdate");
@@ -548,7 +776,7 @@ namespace Noah_Web.forms_BusinessLayer
 
         private void BindHeader()
         {
-            js.ADD("ClearFields();");
+            //js.ADD("ClearFields();");
             string nwDocno = WebApp.nwobjectText("refDocno");
 
             DataTable dtHDR = dal.LoadDataBind(WebApp.nwobjectText("txtRefDocno"), based.SecurityAccess.RecUser, nwDocno);
@@ -580,6 +808,7 @@ namespace Noah_Web.forms_BusinessLayer
                 else { js.ADD("$('.noah-webui-Footer-SubMod').css('display', 'none')"); }
                 js.ADD("EnableFieldsDone() ");
             }
+            //NOTE: not sure if need
             else
             {
                 if (dal.isExist(WebApp.nwobjectText("txtRefDocno"), based.SecurityAccess.RecUser, 0) == 1)
@@ -620,7 +849,7 @@ namespace Noah_Web.forms_BusinessLayer
             return errorResult;
         }
 
-        private DataTable LoadSchema()
+        private DataTable LoadSchemaHDR()
         {
             #region don't change
             DataTable dtHDR = new DataTable();
@@ -646,6 +875,8 @@ namespace Noah_Web.forms_BusinessLayer
             return dtHDR;
         }
 
+
+
         private void Main_Load()
         {
             if (based.isInterface == true) dal.UpdateVersion();
@@ -658,6 +889,8 @@ namespace Noah_Web.forms_BusinessLayer
             LoadComboBox();
 
             js.makeValueText("#txtServerlink", dal.getServerlink());
+
+            Data_Enable_popup();
         }
 
         private void LoadComboBox()
@@ -667,10 +900,17 @@ namespace Noah_Web.forms_BusinessLayer
 
         private void RefreshData()
         {
-            GenerateGrid(false);
+            GenerateGrid(true);
 
             DateTime currentDate = SFObject.GetServerDateTime(this.UserDefinedConnectionString);
             js.ADD("$('#srvrDt').text('" + currentDate.ToString("MM/dd/yyyy hh:mm:ss tt") + "')");
+
+            //added from submenu folder
+            js.ADD("ClearFields();");
+            js.ADD("func_Toolbox_Clear();");
+            js.ADD("func_ToolboxData(\"#noah-webui-Toolbox-Grid_popup\", \"toolbox_popup\")"); // goto: getToolBoxData
+
+            js.ADD("nwLoading_End('xLoading');");
         }
 
         public void GenerateGrid(bool isInitialize)
@@ -681,7 +921,7 @@ namespace Noah_Web.forms_BusinessLayer
 
             grid.Type = nwGridType.SpreadCanvas;
 
-            string nwDocno = WebApp.nwobjectText("refDocno");
+            string nwDocno = WebApp.nwobjectText("txtRefDocno");
 
             if (!isInitialize)
             {
@@ -715,8 +955,8 @@ namespace Noah_Web.forms_BusinessLayer
 
             grid.dataSource(dt);
 
-            grid.RowHeight(25);
-            grid.TableHeight(300);
+            grid.RowHeight(50);
+            grid.TableHeight(200);
 
             //Column Name
             grid.nwobject(SPR_ProjectCode - 1).ColumnName("Project Code");
@@ -726,9 +966,10 @@ namespace Noah_Web.forms_BusinessLayer
             grid.nwobject(SPR_Customer - 1).ColumnName("Customer");
             grid.nwobject(SPR_HoldingDate - 1).ColumnName("Holding Date");
             grid.nwobject(SPR_HoldingExpiryDate - 1).ColumnName("Holding Expiry Date");
+            //grid.nwobject(SPR_HoldingExpiryExt - 1).ColumnName("Holding Expiry Date (Extended)");
             grid.nwobject(SPR_QueueNo - 1).ColumnName("Queue No.");
             grid.nwobject(SPR_AgeinDays - 1).ColumnName("Age (in Days)");
-            grid.nwobject(SPR_Request - 1).ColumnName("Transfer of Unit");
+            grid.nwobject(SPR_Transfer - 1).ColumnName("Trasnfer Of Unit");
 
             //width
             grid.nwobject(SPR_ProjectCode - 1).Width(200);
@@ -742,13 +983,14 @@ namespace Noah_Web.forms_BusinessLayer
             grid.nwobject(SPR_QueueNo - 1).Width(75);
             grid.nwobject(SPR_AgeinDays - 1).Width(75);
             grid.nwobject(SPR_Docno - 1).Width(0);
-            grid.nwobject(SPR_Request - 1).Width(150);
+            grid.nwobject(SPR_Transfer - 1).Width(150);
             grid.nwobject(SPR_UnitCode - 1).Width(0);
+            //grid.nwobject(SPR_Status - 1).Width(0);
 
             //Text align
             grid.nwobject(SPR_QueueNo - 1).TextAlign("right");
             grid.nwobject(SPR_AgeinDays - 1).TextAlign("right");
-            grid.nwobject(SPR_Request - 1).TextAlign("center");
+            grid.nwobject(SPR_Transfer - 1).TextAlign("center");
 
             //Color
             grid.nwobject(SPR_ProjectCode - 1).BackgroundColor("gainsboro");
@@ -758,11 +1000,11 @@ namespace Noah_Web.forms_BusinessLayer
             grid.nwobject(SPR_Customer - 1).BackgroundColor("gainsboro");
             grid.nwobject(SPR_HoldingDate - 1).BackgroundColor("gainsboro");
             grid.nwobject(SPR_HoldingExpiryDate - 1).BackgroundColor("gainsboro");
-            grid.nwobject(SPR_HoldingExpiryExt - 1).BackgroundColor("gainsboro");
+            //grid.nwobject(SPR_HoldingExpiryExt - 1).BackgroundColor("gainsboro");
             grid.nwobject(SPR_QueueNo - 1).BackgroundColor("gainsboro");
             grid.nwobject(SPR_AgeinDays - 1).BackgroundColor("gainsboro");
 
-            grid.nwobject(SPR_Request - 1).Class("btnGray");
+            grid.nwobject(SPR_Transfer - 1).Class("btnGray");
 
             //## THEME FORMAT
             grid.HeaderBorderColor("#DEDEDE");
@@ -800,5 +1042,257 @@ namespace Noah_Web.forms_BusinessLayer
             }
         }
 
+        //added from submenu folder
+        private void ProcessData()
+        {
+            if (RecordOperationResult.Length <= 0)
+            {
+                string recuser = based.SecurityAccess.RecUser;
+                string LocAccForms = string.Empty;
+                string ReTranUnit = string.Empty;
+                string NewUnit = string.Empty;
+                string RefHoldTrans = string.Empty;
+                string Remarks = string.Empty;
+                string DocNo = string.Empty;
+                string DocDate = string.Empty;
+                string DocStatus = string.Empty;
+                string ReasDis = string.Empty;
+                string RemDis = string.Empty;
+
+                LocAccForms = WebApp.nwobjectText("idvallugLocAccForms");
+                ReTranUnit = WebApp.nwobjectText("idvallugReTranUnit");
+                NewUnit = WebApp.nwobjectText("idvallugNewUnit");
+                RefHoldTrans = WebApp.nwobjectText("descvallugRefHoldTrans");
+                Remarks = WebApp.nwobjectText("txtRemarks");
+                DocNo = WebApp.nwobjectText("txtDocNo");
+                DocDate = WebApp.nwobjectText("txtDocDate");
+                DocStatus = "1";//WebApp.nwobjectText("txtDocStatus");
+                ReasDis = WebApp.nwobjectText("txtReasDis");
+                RemDis = WebApp.nwobjectText("txtRemDis");
+
+                //DAL Connection
+                RecordOperationResult = dal.ProcessData_popup(DocNo);
+
+            }
+        }
+
+        private DataTable LoadSchema_popup()
+        {
+            #region don't change
+            DataTable dtHDR = new DataTable();
+            dtHDR = dal.LoadSchema_popup();
+            #endregion
+
+            string docno = "";
+            docno = WebApp.nwobjectText("idvallugLocAccForms") + "-STRNUN-" + dal.txtDocNo_popup().ToString();
+
+            DataRow dr = dtHDR.NewRow();
+            dr["locform"] = WebApp.nwobjectText("idvallugLocAccForms");
+            dr["locdesc"] = WebApp.nwobjectText("descvallugLocAccForms");
+            dr["reasonfortransunit"] = WebApp.nwobjectText("idvallugReTranUnit");
+            dr["resdesc"] = WebApp.nwobjectText("descvallugReTranUnit");
+            dr["newunit"] = WebApp.nwobjectText("idvallugNewUnit");
+            dr["unitdesc"] = WebApp.nwobjectText("descvallugNewUnit");
+            dr["refholdtrans"] = WebApp.nwobjectText("descvallugRefHoldTrans");
+            dr["remarks"] = WebApp.nwobjectText("txtRemarks");
+            dr["docno"] = docno;
+            dr["docstatus"] = "1"; // WebApp.nwobjectText("docstat");
+            dr["docdate"] = dal.txtDocDate_popup();
+            dr["reasonfordisapproval"] = WebApp.nwobjectText("txtReasDis");
+            dr["remarksfordisapproval"] = WebApp.nwobjectText("txtRemDis");
+            dr["recuser"] = based.SecurityAccess.RecUser;
+            //dr["recDate"] = null;
+            dr["moduser"] = based.SecurityAccess.RecUser;
+            //dr["modDate"] = null;
+            dtHDR.Rows.Add(dr);
+
+            #region don't change
+            dtHDR.AcceptChanges();
+            #endregion
+            return dtHDR;
+        }
+
+        private void InitializeValues_popup()
+        {
+            nwToolBox.bindingNavigatorSaveItem.Enable = true;
+            nwToolBox.bindingNavigatorAddNewItem.Enable =
+            nwToolBox.bindingNavigatorPrintItem.Enable =
+            nwToolBox.bindingNavigatorInquireItem.Enable =
+            nwToolBox.bindingNavigatorImportItem.Visible =
+            nwToolBox.bindingNavigatorDeleteItem.Visible = false;
+            nwToolBox.bindingNavigatorExportItem.Enable = false;
+
+            js.ADD("$(\"#lugReTranUnit\").focus();");
+            //LoadGrid(true, InitializeGrid());
+        }
+
+        private string ValidateData_popup()
+        {
+            string errorResult = String.Empty;
+
+            if (WebApp.nwobjectText("idvallugLocAccForms").Length <= 0)
+            {
+                errorResult += "Cannot be saved. Location with Accountable Forms is required.\n";
+            }
+
+            if (WebApp.nwobjectText("idvallugReTranUnit").Length <= 0)
+            {
+                errorResult += "Cannot be saved. Reason for Transfer of Unit is required.\n";
+            }
+
+            if (WebApp.nwobjectText("idvallugNewUnit").Length <= 0)
+            {
+                errorResult += "Cannot be saved. New Unit is required.\n";
+            }
+            return errorResult;
+        }
+
+        public void Data_Enable_popup()
+        {
+            nwToolBox.bindingNavigatorAddNewItem.Enable = true;
+            nwToolBox.bindingNavigatorSaveItem.Enable = false;
+            nwToolBox.bindingNavigatorPrintItem.Enable =
+            nwToolBox.bindingNavigatorInquireItem.Enable = false;
+            nwToolBox.bindingNavigatorDeleteItem.Visible = false;
+            nwToolBox.bindingNavigatorDeleteItem.Enable = true;
+            nwToolBox.bindingNavigatorExportItem.Enable = false;
+
+            nwToolBox.bindingNavigatorImportItem.Visible = false;
+            nwToolBox.bindingNavigatorProcessItem.Visible = true;
+            nwToolBox.bindingNavigatorAddNewItem.Visible = true;
+        }
+
+        private void HeaderToU()
+        {
+            DataTable getter = new DataTable();
+            getter = dal.displaydoc_popup(WebApp.nwobjectText("txtRefDocno"));
+
+            DataRow r = getter.Rows[0];
+
+            var docstat = r["docstatus"].ToString();
+            if (docstat != "")
+            {
+                if (docstat == "1")
+                {
+                    var docstatdesc = dal.docstatdesc(docstat);
+
+                    js.makeValueText("#idvallugLocAccForms", r["locform"].ToString());
+                    js.makeValueText("#descvallugLocAccForms", r["locdesc"].ToString());
+                    js.makeValueText("#idvallugReTranUnit", r["reasonfortransunit"].ToString());
+                    js.makeValueText("#descvallugReTranUnit", r["resdesc"].ToString());
+                    js.makeValueText("#idvallugNewUnit", r["newunit"].ToString());
+                    js.makeValueText("#descvallugNewUnit", r["unitdesc"].ToString());
+                    js.makeValueText("#descvallugRefHoldTrans", r["refholdtrans"].ToString());
+
+                    js.makeValueText("#txtRemarks", r["remarks"].ToString());
+                    js.makeValueText("#txtDocNo", r["docno"].ToString());
+                    js.makeValueText("#txtDocDate", r["docdate"].ToString());
+                    js.makeValueText("#txtDocStatus", docstatdesc);
+                    js.makeValueText("#txtReasDis", r["reasonfordisapproval"].ToString());
+                    js.makeValueText("#txtRemDis", r["remarksfordisapproval"].ToString());
+
+                    js.ADD("EnableFields_popup()");
+                }
+                else
+                {
+                    js.makeValueText("#idvallugLocAccForms", r["locform"].ToString());
+                    js.makeValueText("#descvallugLocAccForms", r["locdesc"].ToString());
+                    js.makeValueText("#idvallugReTranUnit", r["reasonfortransunit"].ToString());
+                    js.makeValueText("#descvallugReTranUnit", r["resdesc"].ToString());
+                    js.makeValueText("#idvallugNewUnit", r["newunit"].ToString());
+                    js.makeValueText("#descvallugNewUnit", r["unitdesc"].ToString());
+                    js.makeValueText("#descvallugRefHoldTrans", r["refholdtrans"].ToString());
+
+                    js.makeValueText("#txtRemarks", r["remarks"].ToString());
+                    js.makeValueText("#txtDocNo", r["docno"].ToString());
+                    js.makeValueText("#txtDocDate", r["docdate"].ToString());
+                    js.makeValueText("#txtDocStatus", r["docstatdesc"].ToString());
+                    js.makeValueText("#txtReasDis", r["reasonfordisapproval"].ToString());
+                    js.makeValueText("#txtRemDis", r["remarksfordisapproval"].ToString());
+                    js.ADD("DataProcessed_popup()");
+                }
+            }
+            else
+            {
+                js.makeValueText("#idvallugLocAccForms", r["locform"].ToString());
+                js.makeValueText("#descvallugLocAccForms", r["locdesc"].ToString());
+                js.makeValueText("#idvallugReTranUnit", r["reasonfortransunit"].ToString());
+                js.makeValueText("#descvallugReTranUnit", r["resdesc"].ToString());
+                js.makeValueText("#idvallugNewUnit", r["newunit"].ToString());
+                js.makeValueText("#descvallugNewUnit", r["unitdesc"].ToString());
+                js.makeValueText("#descvallugRefHoldTrans", r["refholdtrans"].ToString());
+
+                js.makeValueText("#txtRemarks", r["remarks"].ToString());
+                js.makeValueText("#txtDocNo", r["docno"].ToString());
+                js.makeValueText("#txtDocDate", r["docdate"].ToString());
+                js.makeValueText("#txtDocStatus", r["docstatdesc"].ToString());
+                js.makeValueText("#txtReasDis", r["reasonfordisapproval"].ToString());
+                js.makeValueText("#txtRemDis", r["remarksfordisapproval"].ToString());
+                js.ADD("DisableFields_popup()");
+            }
+
+
+
+            //js.ADD("$('idvallugLocAccForms').val('" + getter.Rows[0]["locform"] + "');");
+            //js.ADD("$('descvallugLocAccForms').val('" + getter.Rows[0]["locdesc"] + "');");
+            //js.ADD("$('idvallugReTranUnit').val('" + getter.Rows[0]["reasonfortransunit"] + "');");
+            //js.ADD("$('descvallugReTranUnit').val('" + getter.Rows[0]["resdesc"] + "');");
+            //js.ADD("$('idvallugNewUnit').val('" + getter.Rows[0]["newunit"] + "');");
+            //js.ADD("$('descvallugNewUnit').val('" + getter.Rows[0]["unitdesc"] + "');");
+            //js.ADD("$('descvallugRefHoldTrans').val('" + getter.Rows[0]["refholdtrans"] + "');");
+            //js.ADD("$('txtRemarks').val('" + getter.Rows[0]["remarks"] + "');");
+            //js.ADD("$('txtDocNo').val('" + getter.Rows[0]["docno"] + "');");
+            //js.ADD("$('txtDocDate').val('" + getter.Rows[0]["docdate"] + "');");
+            //js.ADD("$('txtDocStatus').val('" + getter.Rows[0]["docstatus"] + "');");
+            //js.ADD("$('txtReasDis').val('" + getter.Rows[0]["reasonfordisapproval"] + "');");
+            //js.ADD("$('txtRemDis').val('" + getter.Rows[0]["remarksfordisapproval"] + "');");
+        }
+
+        private void ShowHDR()
+        {
+            string locaccforms = "";
+            locaccforms = WebApp.nwobjectText("txtRefDocno");
+
+            //var txtidvallugLocAccForms = dal.txtidvalLugLocAccForms_popup(locaccforms);
+            //var txtdescvallugLocAccForms = dal.txtdescvalLugLocAccForms_popup(locaccforms);
+
+            //js.ADD("$('#idvallugLocAccForms').val('" + txtidvallugLocAccForms + "')");
+            //js.ADD("$('#descvallugLocAccForms').val('" + txtdescvallugLocAccForms + "')");
+            //js.ADD("$('#descvallugRefHoldTrans').val('" + locaccforms + "')");
+
+            //js.makeValueText("#idvallugLocAccForms", dal.txtidvalLugLocAccForms_popup(locaccforms));
+            //js.makeValueText("#descvallugLocAccForms", dal.txtdescvalLugLocAccForms_popup(locaccforms));
+            //js.makeValueText("#descvallugRefHoldTrans", locaccforms);
+
+            var RowCounter = Int32.Parse(dal.rowcounter());
+            if (RowCounter != 0)
+            {
+                HeaderToU();
+                //nwToolBox.bindingNavigatorDeleteItem.Enable = true;
+                //nwToolBox.bindingNavigatorProcessItem.Enable = true;
+                //nwToolBox.bindingNavigatorSaveItem.Enable = false;
+                //js.ADD("EnableFields_popup()");
+            }
+            else
+            {
+
+                var txtidvallugLocAccForms = dal.txtidvalLugLocAccForms_popup(locaccforms);
+                var txtdescvallugLocAccForms = dal.txtdescvalLugLocAccForms_popup(locaccforms);
+
+                js.ADD("$('#idvallugLocAccForms').val('" + txtidvallugLocAccForms + "')");
+                js.ADD("$('#descvallugLocAccForms').val('" + txtdescvallugLocAccForms + "')");
+                js.ADD("$('#descvallugRefHoldTrans').val('" + locaccforms + "')");
+
+                js.ADD("DisableFields_popup()");
+
+                //HeaderToU();
+                //js.ADD("DisableFields_popup()");
+                //nwToolBox.bindingNavigatorDeleteItem.Enable = false;
+                //nwToolBox.bindingNavigatorProcessItem.Enable = false;
+                //nwToolBox.bindingNavigatorSaveItem.Enable = true;
+            }
+        }
+
+        //end
     }
 }

@@ -28,6 +28,9 @@ let unitImgObj = [];
 
 
 function func_Reload() {
+
+    //nwTrustedLinks.push('https://fli.promptus8.com/'); // try
+
     crLnk = "Home_Gateway";
     crLnkGateKey = "Home";
     var isContinue = true;
@@ -35,11 +38,14 @@ function func_Reload() {
     ToolBoxGetData = false;
     cust_GetPara();
 
+    
+    //nwTrustedLinks.push('https://fli.promptus8.com/')
     return isContinue;
 }
 
 
 function cust_GetPara() {
+    nwParameter_Add("btnHomeTag", $("#btnHome").attr("tag"));
     nwParameter_Add("cmbPropertyType", $("#cmbPropertyType").val());
     nwParameter_Add("cmbLocation", $("#cmbLocation").val());
 }
@@ -62,11 +68,12 @@ $(document).on('click', '#btnInfo', function () {
     //$("#iFrame1").attr("src", "../../../BM/DataSetup/BMSellerInformation/BMSellerInformation.aspx?nwdev=p8dev&nwu=" + recuser + "");
 
     //WITHIN
-    $(document).find("#secLanding, .secProject, #secAvailabilityChart, #secBookingSummary, #secHoldingFrame,#secCommissionSummary").hide();
-    $("#iframeTransactions").attr("src", "../../../BM/DataSetup/BMSellerInformation/BMSellerInformation.aspx?nwdev=p8dev&nwu=" + recuser + "");
-    $("#iframeTransactions").css("height", "600px");
-    $("#mi-title").text("My Information");
-    $(document).find("#secTransactionSummary").fadeIn("fast");
+    //$(document).find("#secLanding, .secProject, #secAvailabilityChart, #secBookingSummary, #secHoldingFrame,#secCommissionSummary").hide();
+    //$("#iframeTransactions").attr("src", "../../../BM/DataSetup/BMSellerInformation/BMSellerInformation.aspx?nwdev=p8dev&nwu=" + recuser + "");
+    //$("#iframeTransactions").css("height", "600px");
+    //$("#mi-title").text("My Information");
+    //$(document).find("#secTransactionSummary").fadeIn("fast");
+    window.location.href = '../../../BMSellerInformation';
 });
 //ENTRIES
 var typecode = "", classcode = "", typedesc = "", classdesc = "", amountphp = "";
@@ -82,7 +89,35 @@ $(document).on('click', '#btnReseration', function () {
         isBulk = "1";
     else
         isBulk = "0";
-    $("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBReservationEntry/SBReservationEntry.aspx?nwdev=p8dev&nwu=" + recuser + "&nwUnitCode=" + unitcode + "&isBulk="+isBulk+"");
+    //$("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBReservationEntry/SBReservationEntry.aspx?nwdev=p8dev&nwu=" + recuser + "&nwUnitCode=" + unitcode + "&isBulk="+isBulk+"");
+    var params = "nwu=" + recuser + "&nwUnitCode=" + unitcode + "&nwTypeCode=" + typecode + "&nwClassCode=" + classcode + "&isBulk=" + isBulk + "";
+    //$("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBReservationEntry/SBReservationEntry.aspx?nwdev=p8dev&" + params + "");
+    window.location.href = '../../../SBReservationEntry?' + params;
+});
+//Virtual Tour per Unit Per Unit
+$(document).on('click', '#btnVirtualTour', function () {
+    //$(document).find(".side-popup.clicked-lvl").fadeOut();
+    unitcode = $("#ucode").text();
+    typecode = $("#typecode").text();
+    classcode = $("#clsscode").text();
+
+    $("#iframetitle").text("360 Virtual Tour");
+    nwParameter_Add('pcode', pcode);
+    nwParameter_Add('ptype', ptype);
+    nwParameter_Add('ucode', unitcode);
+    func_ActionDriven("actGetVRUnit", false);
+});
+//Virtual Tour All
+$(document).on('click', '#btnVirtualAll', function () {
+    $("#iframetitle2").text("360 Virtual Tour");
+    func_ActionDriven("actGetVRUnitAll", false);
+});
+//Virtual Tour per project
+$(document).on('click', '#btnVirtualProj', function () {
+    $("#iframetitle").text("360 Virtual Tour");
+    nwParameter_Add("pcode", pcode);
+    nwParameter_Add("ptype", ptype);
+    func_ActionDriven("actGetVRUnitProject", false);
 });
 //Reservation Entry Per Unit
 $(document).on('click', '#btnReserveNow', function () {
@@ -108,7 +143,8 @@ $(document).on('click', '#btnReserveNow', function () {
         else
             isBulk = "0";
         var params = "nwu=" + recuser + "&nwUnitCode=" + unitcode + "&nwTypeCode=" + typecode + "&nwClassCode=" + classcode + "&isBulk="+isBulk+"";
-        $("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBReservationEntry/SBReservationEntry.aspx?nwdev=p8dev&" + params + "");
+        //$("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBReservationEntry/SBReservationEntry.aspx?nwdev=p8dev&" + params + "");
+        window.location.href = '../../../SBReservationEntry?' + params;
     }
 });
 //Holding Entry (My Transactions)
@@ -124,7 +160,9 @@ $(document).on('click', '#btnHoldingUnit', function () {
         isBulk = "1";
     else
         isBulk = "0";
-    $("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBHoldingOfUnit/SBHoldingOfUnit.aspx?nwdev=p8dev&nwu=" + recuser + "&uc=" + unitcode + "&isBulk="+isBulk+"");
+    //$("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBHoldingOfUnit/SBHoldingOfUnit.aspx?nwdev=p8dev&nwu=" + recuser + "&uc=" + unitcode + "&isBulk="+isBulk+"");
+    var params = "nwu=" + recuser + "&uc=" + unitcode + "&nwTypeCode=" + typecode + "&nwClassCode=" + classcode + "&isBulk=" + isBulk + "";
+    window.location.href = '../../../SBHoldingOfUnit?' + params;
 });
 //Holding per unit
 $(document).on('click', '.btn-hold', function () {
@@ -150,27 +188,28 @@ $(document).on('click', '.btn-hold', function () {
         else
             isBulk = "0";
         var params = "nwu=" + recuser + "&uc=" + unitcode + "&nwTypeCode=" + typecode + "&nwClassCode=" + classcode + "&isBulk="+isBulk+"";
-        $("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBHoldingOfUnit/SBHoldingOfUnit.aspx?nwdev=p8dev&" + params + "");
+        //$("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBHoldingOfUnit/SBHoldingOfUnit.aspx?nwdev=p8dev&" + params + "");
+        window.location.href = '../../../SBHoldingOfUnit?' + params;
     }
 });
-//Holding request for extension
-$(document).on('click', '#btnHoldingExt', function () {
-    ViewProjectSelection(true);
+////Holding request for extension
+//$(document).on('click', '#btnHoldingExt', function () {
+//    ViewProjectSelection(true);
 
-    $("#iframetitle").text("Holding - Request for Extension");
-    $(document).find('#popup').fadeIn();
-    unitcode = "";
-    $("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBRequestForExtension/SBRequestForExtension.aspx?nwdev=p8dev&nwu=" + recuser + "");
-});
-//Client Registration Deactivation
-$(document).on('click', '#btnClientReg', function () {
-    ViewProjectSelection(true);
+//    $("#iframetitle").text("Holding - Request for Extension");
+//    $(document).find('#popup').fadeIn();
+//    unitcode = "";
+//    $("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBRequestForExtension/SBRequestForExtension.aspx?nwdev=p8dev&nwu=" + recuser + "");
+//});
+////Client Registration Deactivation
+//$(document).on('click', '#btnClientReg', function () {
+//    ViewProjectSelection(true);
 
-    $("#iframetitle").text("Client Registration Deactivation");
-    $(document).find('#popup').fadeIn();
-    unitcode = "";
-    $("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBClientRegDeactivation/SBClientRegDeactivation.aspx?nwdev=p8dev&nwu=" + recuser + "");
-});
+//    $("#iframetitle").text("Client Registration Deactivation");
+//    $(document).find('#popup').fadeIn();
+//    unitcode = "";
+//    $("#iFrame1").attr("src", "../../../SB/DocumentEntry/SBClientRegDeactivation/SBClientRegDeactivation.aspx?nwdev=p8dev&nwu=" + recuser + "");
+//});
 
 //REPORTS
 //my Commissions
@@ -185,30 +224,30 @@ $(document).on('click', '#btnCommissions', function () {
     RefreshCommissions();
     func_ActionDriven("actGenerateCommissionCombos", true);
 });
-//My Transactions Summary
-$(document).on('click', '#btnTransactionSummary', function () {
-    $(document).find("#secLanding, .secProject, #secAvailabilityChart, #secBookingSummary, #secHoldingFrame,#secCommissionSummary").hide();
-    $("#iframeTransactions").attr("src", "../../../RE/ReportsAndInquiry/REMyTransactionsSummary/REMyTransactionsSummary.aspx?nwdev=p8dev&nwu=" + recuser + "");
-    $("#iframeTransactions").css("height", "600px");
-    $("#mi-title").text("My Transactions Summary");
-    $(document).find("#secTransactionSummary").fadeIn("fast");
-});
-//Inventory Availability Summary
-$(document).on('click', '#btnInvAvailability', function () {
-    $(document).find("#secLanding, .secProject, #secAvailabilityChart, #secBookingSummary, #secHoldingFrame,#secCommissionSummary").hide();
-    $("#iframeTransactions").attr("src", "../../../RE/ReportsAndInquiry/REInvAvailabilitySummary/REInvAvailabilitySummary.aspx?nwdev=p8dev&nwu=" + recuser + "");
-    $("#iframeTransactions").css("height", "600px");
-    $("#mi-title").text("Inventory Availability Summary");
-    $(document).find("#secTransactionSummary").fadeIn("fast");
-});
-//Client Registration Deactivation Summary
-$(document).on('click', '#btnClientRegSummary', function () {
-    $(document).find("#secLanding, .secProject, #secAvailabilityChart, #secBookingSummary, #secHoldingFrame,#secCommissionSummary").hide();
-    $("#iframeTransactions").attr("src", "../../../SB/ReportsAndInquiry/SBDeactivatedClientRegSummRpt/SBDeactivatedClientRegSummRpt.aspx?nwdev=p8dev&nwu=" + recuser + "");
-    $("#iframeTransactions").css("height", "600px");
-    $("#mi-title").text("Client Registration Deactivation Summary");
-    $(document).find("#secTransactionSummary").fadeIn("fast");
-});
+////My Transactions Summary
+//$(document).on('click', '#btnTransactionSummary', function () {
+//    $(document).find("#secLanding, .secProject, #secAvailabilityChart, #secBookingSummary, #secHoldingFrame,#secCommissionSummary").hide();
+//    $("#iframeTransactions").attr("src", "../../../RE/ReportsAndInquiry/REMyTransactionsSummary/REMyTransactionsSummary.aspx?nwdev=p8dev&nwu=" + recuser + "");
+//    $("#iframeTransactions").css("height", "600px");
+//    $("#mi-title").text("My Transactions Summary");
+//    $(document).find("#secTransactionSummary").fadeIn("fast");
+//});
+////Inventory Availability Summary
+//$(document).on('click', '#btnInvAvailability', function () {
+//    $(document).find("#secLanding, .secProject, #secAvailabilityChart, #secBookingSummary, #secHoldingFrame,#secCommissionSummary").hide();
+//    $("#iframeTransactions").attr("src", "../../../RE/ReportsAndInquiry/REInvAvailabilitySummary/REInvAvailabilitySummary.aspx?nwdev=p8dev&nwu=" + recuser + "");
+//    $("#iframeTransactions").css("height", "600px");
+//    $("#mi-title").text("Inventory Availability Summary");
+//    $(document).find("#secTransactionSummary").fadeIn("fast");
+//});
+////Client Registration Deactivation Summary
+//$(document).on('click', '#btnClientRegSummary', function () {
+//    $(document).find("#secLanding, .secProject, #secAvailabilityChart, #secBookingSummary, #secHoldingFrame,#secCommissionSummary").hide();
+//    $("#iframeTransactions").attr("src", "../../../SB/ReportsAndInquiry/SBDeactivatedClientRegSummRpt/SBDeactivatedClientRegSummRpt.aspx?nwdev=p8dev&nwu=" + recuser + "");
+//    $("#iframeTransactions").css("height", "600px");
+//    $("#mi-title").text("Client Registration Deactivation Summary");
+//    $(document).find("#secTransactionSummary").fadeIn("fast");
+//});
 
 //same event on fx.js but for DB purposes here
 $(document).on('click', '.list-item.btn', function (e) {
@@ -312,7 +351,12 @@ $(document).on('click', '.btn-cancel', function () {
         ResetBulkUnits();
     }
 });
-
+////Refresh upon back
+$(document).on('click', '#cmbProject2', function () {
+    var val = $('option:selected', this).attr('lnk');
+    nwTrustedLinks.push(val);
+    ShowVRUnitAll(val);
+});
 //BACK button (from unit availability to landing page)
 $(document).on('click', '.secProject .btnReturn', function () {
     if (bunits != "")
@@ -810,7 +854,40 @@ $(document).on('focusout', '#txtCOFrom,#txtCOTo,#txtAsOfDate', function () {
     RefreshCommissions();
 });
 
+$(document).on('click', '.btnHomeTabs', function () {
+    $(".row-c.row-list-c").html("");
+    var tag = $(this).attr("tag");
+    if(tag == "1")
+    {
+        $("#buttonsLOI").hide();
+        $("#buttonsHome").show();
+    }
+    if (tag == "2") {
+        $("#buttonsHome").hide();
+        $("#buttonsLOI").show();
+    }
+
+    $("#btnHome").attr("tag", tag);
+    cust_GetPara();
+    nwLoading_Start("actLoadLanding", crLoadingHTML);
+    func_ActionDriven("actLoadLanding", false);
+});
+
+
 //FUNCTIONS
+function ShowVRUnit(lnk)
+{
+    $(document).find('#popup').fadeIn();
+    //var lnk2 = lnk.replaceAll("http://", "");
+   // lnk2 = lnk.replaceAll("https://", "");
+    //nwTrustedLinks.push(lnk);
+    nwTrustedLinks.push(lnk);
+    $("#iFrame1").attr("src", lnk);
+}
+function ShowVRUnitAll(lnk) {
+    $(document).find('#popup2').fadeIn();
+    $("#iFrame2").attr("src", lnk);
+}
 function GetDateToday()
 {
     var today = new Date();
@@ -835,6 +912,14 @@ function GenerateProperty(jsonprop)
     
 }
 //Project
+function GenerateProjectVR(jsonproj) {
+    //li-resi-tow-cavite-stt
+    for (var j = 1; j <= jsonproj.length ; j++) {
+        var valns = jsonproj[j - 1]["Link"].replace(/\s/g, '');
+        var projd = jsonproj[j - 1]["Project"].replace(/\s/g, '');
+        $("#cmbProject2").append("<option value='" + projd + "' lnk='"+valns+"'>" + jsonproj[j - 1]["ProjectDesc"] + "</option>");
+    }
+}
 function GenerateProject(jsonproj, isGenerate) {
     //li-resi-tow-cavite-stt
     for (var j = 1; j <= jsonproj.length ; j++) {

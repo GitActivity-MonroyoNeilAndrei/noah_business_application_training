@@ -75,11 +75,16 @@
 .nwCustomCol-4 {
     flex: 0 0 23.333333% !important
 }
+.nwCustomCol-5 {
+    min-width:200px!important;
+    max-width:200px!important;
+}
 
-#txtDesiredPropertyPI {
+
+/*#txtDesiredPropertyPI {
     max-width: 149px;
     margin-right: 5px;
-}
+}*/
 
 #btnAddDesiredProperty {
     margin: 0px 0px 0px 0px !important;
@@ -106,5 +111,36 @@
 
     min-height:500px;
     max-height:500px;
+}
+
+
+
+.nwcuzCustom-001 {
+    min-width:184px !important;
+    max-width:184px !important;
+}
+
+.nwcuzCustom-002 {
+    min-width:283px !important;
+    max-width:283px !important;
+    margin-top:2px !important;
+    margin-bottom:3px !important;
+}
+.nwcuzCustom-003 {
+    min-width:845px !important;
+    max-width:845px !important;
+    margin-left:28px !important;
+    margin-bottom:10px !important;
+}
+
+.nwCust1 {
+    width: 50px!important;
+}
+.nwCust2 {
+    min-width: 160px!important;
+     max-width: 160px!important;
+}
+.nwCust3 {
+    min-width: 160px!important; max-width: 160px!important;
 }
 

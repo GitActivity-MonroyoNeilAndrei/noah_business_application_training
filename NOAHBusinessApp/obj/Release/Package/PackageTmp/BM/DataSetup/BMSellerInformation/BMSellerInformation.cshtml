@@ -7,6 +7,9 @@
 <head>
     <script src="~/BM/DataSetup/BMSellerInformation/BMSellerInformation.js"></script>
     <link href="~/BM/DataSetup/BMSellerInformation/BMSellerInformation.css" rel="stylesheet" />
+
+
+
 </head>
 
 <div id="noah-webui-Toolbox" class="nk-toolbar-c">
@@ -322,7 +325,7 @@
         <div class="col col-6 col-parent">
 
             @*Seller Category*@
-            <div class="row">
+            <div class="row" >
                 <div class="col col-4">
                     <label class="lbltxt">Seller Category</label>
                 </div>
@@ -377,12 +380,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Seller Group</label>
                 </div>
-                <div id="lugSellergroup" class="col col-8 col-parent">
+                <div class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtSellergroupCode" type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtSellergroupDesc" type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -392,12 +395,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Seller Type</label>
                 </div>
-                <div id="lugSellerType" class="col col-8 col-parent adisabled">
+                <div  class="col col-8 col-parent ">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtSellerTypeCode" type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtSellerTypeDesc"type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -407,12 +410,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Seller Role</label>
                 </div>
-                <div id="lugSellerRole" class="col col-8 col-parent adisabled">
+                <div class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtSellerRoleCode" type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtSellerRoleDesc" type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -422,12 +425,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Seller Status</label>
                 </div>
-                <div id="lugSellerStatus" class="col col-8 col-parent adisabled">
+                <div class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtSellerStatusCode" type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtSellerStatusDesc"type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -493,12 +496,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Salutation/Title</label>
                 </div>
-                <div id="lugSalutation" class="col col-8 col-parent">
+                <div  class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtSalutationCode" type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtSalutationDesc" type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -567,12 +570,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Name Suffix</label>
                 </div>
-                <div id="lugNameSuffix" class="col col-8 col-parent">
+                <div  class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtNameSuffixCode"type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtNameSuffixDesc"type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -601,12 +604,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Gender</label>
                 </div>
-                <div id="lugGender" class="col col-8 col-parent">
+                <div  class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtGenderCode"type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtGenderDesc"type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -616,12 +619,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Civil Status</label>
                 </div>
-                <div id="lugCivilStatus" class="col col-8 col-parent">
+                <div  class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtCivilStatusCode"type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtCivilStatusDesc"type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -631,12 +634,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Nationality</label>
                 </div>
-                <div id="lugNationality" class="col col-8 col-parent">
+                <div  class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtNationalityCode"type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtNationalityDesc"type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -726,12 +729,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Default CWT Tax Code</label>
                 </div>
-                <div id="lugDefaultCWTTaxCode" class="col col-8 col-parent">
+                <div  class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtDefaultCWTTaxCodeCode"type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtDefaultCWTTaxCodeDesc"type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -840,12 +843,12 @@
                 <div class="col col-4">
                     <label class="lbltxt">Recruited By</label>
                 </div>
-                <div id="lugRecruitedBy" class="col col-8 col-parent">
+                <div  class="col col-8 col-parent">
                     <div class="col col-4">
-                        <input type="text" disabled name="" class="txtbox idval">
+                        <input id="txtRecruitedByCode"type="text" disabled name="" class="txtbox idval">
                     </div>
                     <div class="col col-8">
-                        <input type="text" disabled name="" class="txtbox descval">
+                        <input id="txtRecruitedByDesc"type="text" disabled name="" class="txtbox descval">
                     </div>
                 </div>
             </div>
@@ -863,3 +866,4 @@
     </div>
 
 </div>
+@*@RenderPage("~/BM/DataSetup/BMSellerInformationButtons/BMSellerInformationButtons.cshtml")*@

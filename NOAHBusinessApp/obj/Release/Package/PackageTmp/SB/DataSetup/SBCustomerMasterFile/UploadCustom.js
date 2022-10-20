@@ -1,5 +1,5 @@
 ﻿var vurl = "../SBCustomerMasterFile/Upload";
-
+var serverlink = "";
 
 function ClearUploadField() {
     $("#fileCon").val("");
@@ -34,6 +34,7 @@ function changeFile(ver) {
     }
 }
 
+
 function upload() {
 
     if ($("input[type = 'file']").val() == "") {
@@ -61,7 +62,13 @@ function upload() {
             var bar = $('.bar');
             var percent = $('.percent');
             var status = $('#status');
+            var filepath = $("#nwUploadCon .noahdriveID").text();
+            
+            var path = "";
+            serverlink = $('#txtServerLink').val();
 
+
+ 
             try {
 
 
@@ -97,6 +104,38 @@ function upload() {
                         var txtloadPath = $("#aagHRec .aagFiledir").text();//$(".aagFiledir").text(); //
 
 
+                        //added by rjjr.
+                        if ($btn == "attachIDPicture") {
+                            var filepath = $("#nwUploadCon .noahdriveID").text();
+                            var path = "";
+                            serverlink = $('#txtServerLink').val();
+
+                            path = "\\" + 'SBCustomerMasterFile' + "\\" + filepath;
+                           // path = "\\" + filepath;
+
+                            if (filepath != "") {
+                                linkcat = serverlink + path;
+                                cust_GetPara();
+                                nwParameter_Add("path", path);
+                                func_ActionDriven("actSaveCustomerImage", false);
+                                nwLoading_Start('actSaveCustomerImage');
+                            }
+                        }
+                        if ($btn == "attachSignature") {
+                            var filepath = $("#nwUploadCon .noahdriveID").text();
+                            var path = "";
+                            serverlink = $('#txtServerLink').val();
+
+                            path = "\\" + 'SBCustomerMasterFile' + "\\" + filepath;
+
+                            if (filepath != "") {
+                                linkcat = serverlink + path;
+                                cust_GetPara();
+                                nwParameter_Add("path", path);
+                                func_ActionDriven("actSaveSignature", false);
+                                nwLoading_Start('actSaveSignature');
+                            }
+                        }
                         console.log(txtloadPath);
                         console.log(noahdriveID);
 
@@ -110,3 +149,60 @@ function upload() {
         })();
     }
 }
+
+
+
+//function func_WindowCloseTrigger(verID) {
+//    if (verID == "nwUploadCon") {
+//        if ($btn == "attachIDPicture") {
+//            var filepath = $("#nwUploadCon .noahdriveID").text();
+//            var path = "";
+//            serverlink = $('#txtServerLink').val();
+
+//            path = "\\" + 'SBCustomerMasterFile' + "\\" + filepath;
+
+//            if (filepath != "") {
+//                linkcat = serverlink + path;
+//                cust_GetPara();
+//                nwParameter_Add("path", path);
+//                func_ActionDriven("actSaveCustomerImage", false);
+//                nwLoading_Start('actSaveCustomerImage');
+//            }
+//        }
+
+//        if ($btn == "attachSignature") {
+//            var filepath = $("#nwUploadCon .noahdriveID").text();
+//            var path = "";
+//            serverlink = $('#txtServerLink').val();
+
+//            path = "\\" + 'SBCustomerMasterFile' + "\\" + filepath;
+
+//            if (filepath != "") {
+//                linkcat = serverlink + path;
+//                cust_GetPara();
+//                nwParameter_Add("path", path);
+//                func_ActionDriven("actSaveSignature", false);
+//                nwLoading_Start('actSaveSignature');
+//            }
+//        }
+//    }
+//    if (verID == "nwPopWindow") {
+//        //if ($('#nwPopWindow .BoxTitle').text() == 'Customer Co-Borrower/Co-Buyer') {
+//        //    if (isView != 1) {
+//        //        console.log(isEdited);
+//        //        if (isEdited == true) {
+//        //            var err = "";
+//        //            var len = cntInvld.length -1;
+//        //            for (var x=0; x <= len ; x++){
+//        //                err+=  "Cannot proceed. Please select a Reference Spouse or remove data selected in the Married Status Tagging field in row "+ cntInvld[x] +".", "Customer Co-Borrower/Co-Buyer", "";
+//        //            }
+//        //            MessageBox(err, "Customer Co-Borrower/Co-Buyer");
+//        //            return false;
+//        //        }
+//        //    }
+//        //} else {
+//        nwPopupForm_HideModal("nwPopWindow");
+//        // }
+//    }
+//    return true;
+//}

@@ -280,37 +280,38 @@ namespace Noah_Web.forms_BusinessLayer
                     Prompt.Information(tempstr, based.Title);
                     break;
                 case eRecordOperation.Export:
-                    string curuser = based.SecurityAccess.RecUser;
-                    string SalesForceActList = WebApp.nwobjectText("SalesForceActivity");
-                    string ProspectCustList = WebApp.nwobjectText("ProspectCustomer");
-                    string startdate = getDate().Item1;
-                    string enddate = getDate().Item2;
+                    tempstr = "export";
+                    //string curuser = based.SecurityAccess.RecUser;
+                    //string SalesForceActList = WebApp.nwobjectText("SalesForceActivity");
+                    //string ProspectCustList = WebApp.nwobjectText("ProspectCustomer");
+                    //string startdate = getDate().Item1;
+                    //string enddate = getDate().Item2;
 
-                    DataTable dtExport = dal.GetDataLIN(curuser,
-                                                  SalesForceActList.Replace("'", ""),
-                                                  ProspectCustList.Replace("'", ""),
-                                                  startdate,
-                                                  enddate);
+                    //DataTable dtExport = dal.GetDataLIN(curuser,
+                    //                              SalesForceActList.Replace("'", ""),
+                    //                              ProspectCustList.Replace("'", ""),
+                    //                              startdate,
+                    //                              enddate);
 
-                    ListingAndPrint frmlist = new ListingAndPrint
-                                                           (ListingAndPrint.FormType.Listing, dal.LISTINGSTARTROW, dtExport, dal.LISTINGFILENAME + " Listing", UserDefinedConnectionString, SFObjects.returnText(dal.GETCOMPANY, UserDefinedConnectionString),
-                                                           based.SecurityAccess.RecUserName, dal.LISTINGFILENAME + " Listing");
-                    frmlist.m_Spread.PagerPerPage(50);
+                    //ListingAndPrint frmlist = new ListingAndPrint
+                    //                                       (ListingAndPrint.FormType.Listing, dal.LISTINGSTARTROW, dtExport, dal.LISTINGFILENAME + " Listing", UserDefinedConnectionString, SFObjects.returnText(dal.GETCOMPANY, UserDefinedConnectionString),
+                    //                                       based.SecurityAccess.RecUserName, dal.LISTINGFILENAME + " Listing");
+                    //frmlist.m_Spread.PagerPerPage(50);
 
-                    //## FOR EXPORTING ###
-                    Random rnd = new Random();
-                    string SessionID = DateTime.Now.ToString("yyyyddMMhhmmss") + rnd.Next(0, 9999).ToString().PadRight(4, '0');
-                    HttpContext.Current.Session["Config_" + SessionID] = frmlist.m_Spread.ExportConfig();
-                    HttpContext.Current.Session["Data_" + SessionID] = frmlist.m_Spread.GetDataSource();
-                    HttpContext.Current.Session["Filename_" + SessionID] = dal.LISTINGFILENAME + " Listing";
-                    HttpContext.Current.Session["Header_" + SessionID] = "0";
-                    js.ADD("ExportSessionID='" + SessionID + "'");
-                    //## END ##
+                    ////## FOR EXPORTING ###
+                    //Random rnd = new Random();
+                    //string SessionID = DateTime.Now.ToString("yyyyddMMhhmmss") + rnd.Next(0, 9999).ToString().PadRight(4, '0');
+                    //HttpContext.Current.Session["Config_" + SessionID] = frmlist.m_Spread.ExportConfig();
+                    //HttpContext.Current.Session["Data_" + SessionID] = frmlist.m_Spread.GetDataSource();
+                    //HttpContext.Current.Session["Filename_" + SessionID] = dal.LISTINGFILENAME + " Listing";
+                    //HttpContext.Current.Session["Header_" + SessionID] = "0";
+                    //js.ADD("ExportSessionID='" + SessionID + "'");
+                    ////## END ##
 
-                    //frmlist.m_Spread.nwobject(4).TextAlign("right");
+                    ////frmlist.m_Spread.nwobject(4).TextAlign("right");
 
-                    js.Show("#nwExportContainerMain", 0);
-                    js.ADD(frmlist.CreateScript());
+                    //js.Show("#nwExportContainerMain", 0);
+                    //js.ADD(frmlist.CreateScript());
                     break;
                 case eRecordOperation.Print:
                     tempstr = "print";
@@ -376,6 +377,9 @@ namespace Noah_Web.forms_BusinessLayer
                 case "actBindCollectionEmpty":
                     js.ADD("nwLoading_End('xLoading')");
                     break;
+                case "actSetDefVal":
+                    SetDefVal();
+                    break;
                 default:
                     Prompt.Information("act_Method not found: " + strMethod, "Error");
                     break;
@@ -433,6 +437,14 @@ namespace Noah_Web.forms_BusinessLayer
             if (based.isInterface == true) dal.UpdateVersion();
             LoadComboBox();
             GenerateReport(false, InitializeGrid());
+            string date1 = SFObject.GetServerDateTime(UserDefinedConnectionString).ToString("MM/dd/yyyy");
+            string year = Parser.ParseString(SFObject.GetServerDateTime(UserDefinedConnectionString).Year);
+
+            js.ADD($"$('#dpAnnually').val('{SFObject.GetServerDateTime(UserDefinedConnectionString).Year}');");
+            //js.ADD("$('#cboAnnual').trigger('change');");
+            js.ADD("ReloadMonth(); ReloadQuarter(); DisableFields(); ClearDateFilter();");
+            js.ADD($"currentDate='{date1}';");
+            js.ADD($"currentYear='{year}';");
         }
 
         private void RefreshData()
@@ -469,95 +481,20 @@ namespace Noah_Web.forms_BusinessLayer
 
         private void GenerateReport(bool enable, DataTable dtSource)
         {
-            //string gridID = "reportGrid"; // id
-            string gridCon = "conGrid"; //container
-            nwGrid nwspread = new nwGrid(gridCon);
-            nwspread.Type = nwGridType.SpreadCanvas;
-            nwspread.varSpreadBook = "nwGridMainCon_Book";
-            nwspread.varSpreadSheet = "nwGridMainCon_Sheet";
+            string LISTINGFILENAME = "";
+            if (dal.LISTINGFILENAME + " Listing" == "") LISTINGFILENAME = "Sheet 1";
+            else LISTINGFILENAME = dal.LISTINGFILENAME + " Listing";
 
-            setSortByColumns(dtSource);
-
-            //if (dtSource.Rows.Count <= 0)
-            //{
-            //    while (dtSource.Rows.Count < 10)
-            //    {
-            //        dtSource.Rows.Add();
-            //    }
-            //    nwspread.dataSource(dtSource);
-            //}
-            //else
-            //{
-            //    dtSource.Rows.Add();
-            //}
-
-            nwspread.dataSource(dtSource);
-
-            //nwspread buttons
-            //nwspread.buttonSaveColumn = true;
-            //nwspread.buttonResetColumn = true;
-            //nwspread.buttonSearchFind = true;
-
-            nwspread.minRow(10);
-            nwspread.RowHeight(25);
-            nwspread.TableHeight(250);
-
-            //pager 
-            nwspread.PagerDataEditable(true);
-            nwspread.PagerPerPage(30);
+            ListingAndPrint frmlist = new ListingAndPrint
+                                                   (ListingAndPrint.FormType.NOAH_Standard1, dal.LISTINGSTARTROW, dtSource,
+                                                   LISTINGFILENAME, UserDefinedConnectionString, SFObjects.returnText(dal.GETCOMPANY, UserDefinedConnectionString),
+                                                    based.SecurityAccess.RecUser, LISTINGFILENAME);
 
 
-            //column width
-            nwspread.nwobject(SPR_ProspectCust).Width(150);
-            nwspread.nwobject(SPR_Type).Width(100);
-            nwspread.nwobject(SPR_Location).Width(100);
-            nwspread.nwobject(SPR_Project).Width(100);
-            nwspread.nwobject(SPR_Tower).Width(100);
-            nwspread.nwobject(SPR_MobileNo).Width(100);
-            nwspread.nwobject(SPR_EmailAdd).Width(100);
-            nwspread.nwobject(SPR_StartDT).Width(100);
-            nwspread.nwobject(SPR_EndDT).Width(100);
-            nwspread.nwobject(SPR_NotifSched).Width(100);
-            nwspread.nwobject(SPR_NotifMan).Width(100);
-            nwspread.nwobject(SPR_Remarks).Width(150);
-            nwspread.nwobject(SPR_RecStats).Width(100);
-
-            //color for rows
-            for (int i = SPR_ProspectCust; i < dtSource.Columns.Count; i++)
-            {
-                nwspread.nwobject(i).BackgroundColor("Gainsboro");
-            }
-
-            // for saving column width
-            nwspread.GetSaveWith(this.UserDefinedConnectionString, dal.MenuItemCode + "-" + gridCon, based.SecurityAccess.RecUser);
-
-            //template 
-
-            //align
-
-            //required field
-
-            //CSS for nwspread
-            nwspread.HeaderBorderColor("#DEDEDE");
-            nwspread.rowBackground("#FFFFFF", "#FFFFFF");
-            nwspread.TableBorderColor("#BBB");
-            nwspread.BodyBorderColor("#BBB");
-            nwspread.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
-            nwspread.HeaderTextColor("#131313");
-            nwspread.HoverColor("#CAE1FF", "inherit");
-            nwspread.SelectedRowHover("#CAE1FF");
-
-            //Display nwspread
-            js.ADD(nwspread.createTable());
-            //js.makeHTML("#" + gridCon, nwspread.createTable());
-            //js.ADD("nwGrid_TableAdjust(\"" + gridCon + "\")");
-            //js.ADD("nwGrid_makeResize(\"" + gridCon + "\")");
-            //js.ADD("nwGrid_TableFreeze(\"" + gridCon + "\",0,0)");
-
-            // customize button
-
-            // enable / disable nwspread
-            js.ADD("$('#" + gridCon + "').enable(" + enable.ToString().ToLower() + ")");
+            frmlist.SetSpreadType(nwGridType.SpreadCanvas);
+            frmlist.m_Spread.ExportFileName = LISTINGFILENAME;
+            frmlist.MenuItemName = based.Title;
+            js.ADD(frmlist.CreateScript("conGrid", "conGrid"));
 
         }
 
@@ -608,6 +545,14 @@ namespace Noah_Web.forms_BusinessLayer
         private void LoadComboBox()
         {
             js.makeComboBox("#dpAnnually", dal.GetYearList());
+        }
+
+        private void SetDefVal()
+        {
+            string date2 = SFObject.GetServerDateTime(UserDefinedConnectionString).ToString("MM/dd/");
+            string yearly = WebApp.nwobjectText("dpAnnually");
+            js.ADD("$('#txtFrom').val('" + date2 + yearly + "');");
+            js.ADD("$('#txtTo').val('" + date2 + yearly + "');");
         }
 
         private Tuple<string, string> getDate()

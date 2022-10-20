@@ -313,7 +313,7 @@ namespace Noah_Web.forms_BusinessLayer
                 //    strFinal = nwObject.make_TableLookupList(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                 //    break;
 
-                case "getlugPaymentTerm":
+                case "getPaymentTerm":
                     strSQL = dal.getLookup();
                     strMethod = strMethod.Substring(3);
                     nwObject.ColumnHide(2);

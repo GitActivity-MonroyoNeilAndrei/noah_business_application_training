@@ -14,7 +14,7 @@ namespace DALComponent
         #region STANDARD
 
         public string MenuItemCode = "SBSalesCallSummary"; // This is default parameter  for version
-        public string MenuItemVersion = "8.0.0.3E"; // This is default parameter for version
+        public string MenuItemVersion = "10.0.0.1"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
             if (_MenuItemCode.Trim() != "") MenuItemCode = _MenuItemCode;

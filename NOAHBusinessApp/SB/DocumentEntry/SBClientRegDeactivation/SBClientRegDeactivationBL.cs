@@ -218,6 +218,8 @@ namespace Noah_Web.forms_BusinessLayer
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
+
+
                     //case "getCustomer":
                     //    strSQL = dal.InquireCustomerList(WebApp.nwobjectText("CustomerClassification"));
                     //    nwObject.ColumnSort("Code", "asc");
@@ -260,7 +262,7 @@ namespace Noah_Web.forms_BusinessLayer
                 case eRecordOperation.Process:
                     //tempstr = "Process";
                     //Prompt.Information(tempstr, based.Title);
-                    //ProcessData();
+                    ProcessData();
                     break;
 
                 case eRecordOperation.Refresh:
@@ -400,24 +402,45 @@ namespace Noah_Web.forms_BusinessLayer
             js.ADD("nwLoading_End('xLoading');");
         }
 
-        private string ValidateDataOnProcess(ref DataTable tmpDt, DataTable apprvlDt)
+        private string ValidateDataOnProcess(ref DataTable tmpDt, DataTable apprvlDt) //ValidateDataOnProcess(ref tmpDt=blanktable, dt=conGrid)
         {
             string errorresult = String.Empty;
             string finalApprover = string.Empty;
             int xrow = 0;
 
-            tmpDt = LoadSchema();
+            tmpDt = LoadSchema(); //load schema is used as reference
 
-            foreach (DataRow row in apprvlDt.Rows)
+
+
+            foreach (DataRow row in apprvlDt.Rows) // apprvlDt.Rows = rows of conGrid
             {
                 xrow++;
 
+                //var valdeact1 = row[SPR_Deactivate].ToString();
+
+                //if (row[SPR_Deactivate].ToString() == "1")
+                //{
+                //    row[SPR_Deactivate] = "true";
+                //    var valdeact1a = row[SPR_Deactivate].ToString();
+                //}
+                //else
+                //{
+                //    row[SPR_Deactivate] = "false";
+                //    var valdeact1b = row[SPR_Deactivate].ToString();
+                //}
+
                 if (row[SPR_Deactivate].ToString() == "true")
                 {
+
+
                     DataRow tmpDr = tmpDt.NewRow();
 
                     tmpDr["CustomerCode"] = row[SPR_CustomerCode];
                     tmpDr["Reason"] = row[SPR_RsnForDeactivation];
+
+                    var valdeact2 = row[SPR_Deactivate].ToString();
+
+
 
                     if (row[SPR_Deactivate].ToString() == "true")
                     {
@@ -431,7 +454,7 @@ namespace Noah_Web.forms_BusinessLayer
             }
 
             if (tmpDt.Rows.Count <= 0)
-                errorresult += "Cannot be continued. No document has been selected.";
+                errorresult += "Cannot be continued. No customer has been selected.";
 
             return errorresult;
         }
@@ -443,9 +466,71 @@ namespace Noah_Web.forms_BusinessLayer
             tmpDt.Columns.Add("Reason", typeof(string));
             tmpDt.Columns.Add("Status", typeof(string));
 
-            //DataTable dt = SpreadJSONToDataTable(WebApp.nwobjectText("conGrid"));
+            //string customerList = WebApp.nwobjectText("Customer");
+            //string custClassList = WebApp.nwobjectText("CustomerClassification");
+
+            //#region don't change
+            //DataTable tmpDt = new DataTable();
+            //tmpDt = dal.LoadSchema(customerList, custClassList);
+            //#endregion
+
+            //DataSet ds = WebApp.DataSet("conGrid");
+            //DataTable dt = new DataTable();
+            //try
+            //{
+            //    dt = ds.Tables[0];
+            //}
+            //catch { }
+
+            //int rownum = 0;
 
             return tmpDt;
+        }
+
+        private DataTable LoadSchemaLIN()
+        {
+            string customerList = WebApp.nwobjectText("Customer");
+            string custClassList = WebApp.nwobjectText("CustomerClassification");
+
+            #region don't change
+            DataTable tmpDtLIN = new DataTable();
+            tmpDtLIN = dal.LoadSchema(customerList, custClassList);
+            #endregion
+
+            DataSet ds = WebApp.DataSet("conGrid");
+            DataTable dt = ds.Tables[0];
+
+            if (tmpDtLIN.Rows.Count > 0)
+            {
+                tmpDtLIN.Rows.Clear();
+                foreach (DataRow dRow in dt.Rows)
+                {
+
+                    if (dRow[SPR_Deactivate].ToString() != string.Empty)
+                    {
+                        DataRow dr = tmpDtLIN.NewRow();
+                        dr["Deactivate"] = dRow[SPR_Deactivate].ToString();
+                        if (dRow[SPR_Deactivate].ToString() == "1")
+                        {
+                            dr["Deactivate"] = "true";
+                        }
+                        else
+                            dr["Deactivate"] = "false";
+
+                        dr["View Details"] = dRow[SPR_Details].ToString();
+                        dr["Reason for Deactivation"] = dRow[SPR_RsnForDeactivation].ToString();
+                        dr["Customer Code"] = dRow[SPR_CustomerCode].ToString();
+                        dr["Customer Name"] = dRow[SPR_CustomerName].ToString();
+                        dr["Customer Classification"] = dRow[SPR_CustomerClass].ToString();
+                        dr["Date Created"] = dRow[SPR_DateCreated].ToString();
+                        dr["Age in Days"] = dRow[SPR_AgeInDays].ToString();
+                        dr["Created By"] = dRow[SPR_CreatedBy].ToString();
+
+                        tmpDtLIN.Rows.Add(dr);
+                    }
+                }
+            }
+            return tmpDtLIN;
         }
 
         private void Main_Load()
@@ -461,7 +546,8 @@ namespace Noah_Web.forms_BusinessLayer
         {
             LoadGrid(false, GetDataLIN());
 
-            //DataTable dt = GetDataLIN();
+            DataTable dt = GetDataLIN();
+
             //if (dt.Rows.Count > 0)
             //{
             //    js.ADD("EnableFieldsDone();");
@@ -471,12 +557,19 @@ namespace Noah_Web.forms_BusinessLayer
             //    js.ADD("DisableFieldsEmpty();");
             //}
 
+            js.ADD("nwLoading_End('xLoading');");
+
+            if (dt.Rows.Count > 0)
+                nwToolBox.bindingNavigatorProcessItem.Enable = true;
+            else
+                nwToolBox.bindingNavigatorProcessItem.Enable = false;
+
             //js.ADD("ClearFields();");
             //js.ADD("func_Toolbox_Clear();");
             //js.ADD("func_ToolboxData(\"#noah-webui-Toolbox-Grid\", \"toolbox\")"); // goto: getToolBoxData
             //js.ADD("RefreshData()");
 
-            
+
         }
 
         private void LoadGrid(bool isInitialize, DataTable dtSource)
@@ -488,8 +581,7 @@ namespace Noah_Web.forms_BusinessLayer
 
             grid.Type = nwGridType.SpreadCanvas;
 
-            grid.varSpreadBook = "nwGridMainCon_Book";
-            grid.varSpreadSheet = "nwGridMainCon_Sheet";    
+
 
             grid.dataSource(dtSource);
 
@@ -516,6 +608,7 @@ namespace Noah_Web.forms_BusinessLayer
             //        nwToolBox.bindingNavigatorProcessItem.Enable = false;
             //}
 
+
             // grid buttons
             //grid.minRow(1);
             //grid.RowHeight(25);
@@ -523,8 +616,8 @@ namespace Noah_Web.forms_BusinessLayer
             //grid.RowNumber(false);
 
             //pager 
-            grid.PagerPerPage(20);
-            grid.PagerDataEditable(true);
+            //grid.PagerPerPage(20);
+            //grid.PagerDataEditable(true);
 
             //CSS for GRID
             grid.HeaderBorderColor("#DEDEDE");
@@ -560,7 +653,8 @@ namespace Noah_Web.forms_BusinessLayer
 
             //template 
             grid.nwobject(SPR_Deactivate).ObjectType("checkbox");
-            //grid.nwobject(SPR_RsnForDeactivation).Input(enable);
+            grid.nwobject(SPR_Deactivate).Enabled(true);
+            grid.nwobject(SPR_RsnForDeactivation).Input();
 
             //grid.nwobject(SPR_Deactivate).CheckBox(true);
             //grid.nwobject(SPR_Details).ObjectType("button");
@@ -573,7 +667,11 @@ namespace Noah_Web.forms_BusinessLayer
             grid.nwobject(SPR_Deactivate).HeaderFieldRequired(true);
             grid.nwobject(SPR_RsnForDeactivation).HeaderFieldRequired(true);
 
+            grid.SetTheme(nwGridTheme.Default);
+
             //Display Grid
+            grid.varSpreadBook = "nwGridMainCon_Book";
+            grid.varSpreadSheet = "nwGridMainCon_Sheet";
             js.ADD(grid.createTable());
             //js.ADD("CreatedGridDone()"); //for view details column
 
@@ -590,37 +688,42 @@ namespace Noah_Web.forms_BusinessLayer
             //js.ADD("$('#" + gridID + "').enable(" + isInitialize.ToString().ToLower() + ")");
         }
 
-        //private void ProcessData()
-        //{
-        //    DataTable dt = WebApp.nwGridDataWithID("conGrid");
-        //    DataTable tmpDt = new DataTable();
+        private void ProcessData()
+        {
+            DataTable dt = LoadSchemaLIN();
+            DataTable tmpDt = new DataTable();
 
-        //    RecordOperationResult = ValidateDataOnProcess(ref tmpDt, dt);
+            //string customerList = WebApp.nwobjectText("Customer");
+            //string custClassList = WebApp.nwobjectText("CustomerClassification");
 
-        //    if (RecordOperationResult.Length <= 0)
-        //    {
+            //dt = dal.LoadSchema(customerList, custClassList);
 
-        //        if (tmpDt.Rows.Count > 0)
-        //        {
-        //            RecordOperationResult = dal.ProcessData(tmpDt, based.SecurityAccess.RecUser);
+            RecordOperationResult = ValidateDataOnProcess(ref tmpDt, dt); //nag continue
 
-        //            if (RecordOperationResult.ToLower().IndexOf("success") >= 0)
-        //            {
-        //                LoadGrid(false, true);
-        //                Prompt.Information("Process Completed.", based.Title);
-        //            }
-        //            else
-        //            {
-        //                if (RecordOperationResult.IndexOf("Error") != 0)
-        //                    Prompt.Information(RecordOperationResult, based.Title);
-        //                else
-        //                    Prompt.Error(RecordOperationResult, based.Title);
-        //            }
-        //        }
-        //    }
-        //    else
-        //        Prompt.Information(RecordOperationResult, based.Title);
-        //}
+            if (RecordOperationResult.Length <= 0) //nag continue
+            {
+                if (tmpDt.Rows.Count > 0) //nag continue
+                {
+                    int numrow = tmpDt.Rows.Count;
+                    RecordOperationResult = dal.ProcessData(tmpDt, based.SecurityAccess.RecUser);
+                    Console.WriteLine("numrow: " + numrow);
+                    if (RecordOperationResult.ToLower().IndexOf("success") >= 0) //nag continue
+                    {
+                        LoadGrid(false, GetDataLIN());
+                        Prompt.Information("Process Completed.", based.Title);
+                    }
+                    else
+                    {
+                        if (RecordOperationResult.IndexOf("Error") != 0) //nag continue
+                            Prompt.Information(RecordOperationResult, based.Title);
+                        else
+                            Prompt.Error(RecordOperationResult, based.Title); //nag continue
+                    }
+                }
+            }
+            else
+                Prompt.Information(RecordOperationResult, based.Title); //di na umabot dito
+        }
 
         //new
 
@@ -643,10 +746,10 @@ namespace Noah_Web.forms_BusinessLayer
 
         private void InitializeValues()
         {
-            nwToolBox.bindingNavigatorRefreshItem.Enable = true;
-            nwToolBox.bindingNavigatorPrintItem.Enable = false;
+            //nwToolBox.bindingNavigatorRefreshItem.Enable = true;
             //nwToolBox.bindingNavigatorPrintItem.Enable = false;
-            LoadGrid(false, InitializeGrid());
+            //nwToolBox.bindingNavigatorPrintItem.Enable = false;
+            LoadGrid(true, InitializeGrid());
         }
 
         private DataTable GetDataLIN()
@@ -656,13 +759,12 @@ namespace Noah_Web.forms_BusinessLayer
             string customerList = WebApp.nwobjectText("Customer");
             string custClassList = WebApp.nwobjectText("CustomerClassification");
 
-            dt = dal.GetDataLIN(customerList.Replace("'", ""),
-                                custClassList.Replace("'", ""));
+            dt = dal.GetDataLIN(customerList, custClassList);
 
-            //if (dt.Rows.Count > 0)
-            //    nwToolBox.bindingNavigatorProcessItem.Enable = true;
-            //else
-            //    nwToolBox.bindingNavigatorProcessItem.Enable = false;
+            if (dt.Rows.Count > 0)
+                nwToolBox.bindingNavigatorProcessItem.Enable = true;
+            else
+                nwToolBox.bindingNavigatorProcessItem.Enable = false;
 
             return dt;
         }

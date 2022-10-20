@@ -873,7 +873,7 @@ namespace Noah_Web.forms_BusinessLayer
                 case "getlugCategory":
                     strSQL = dal.getlugCategory(WebApp.nwobjectText("idvallugFinancingType"), WebApp.nwobjectText("txtUnitCode"));
                     strMethod = strMethod.Substring(3);
-                    strFinal = nwObject.make_TableLookupList(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
                 case "getlugDiscountType":
                     strSQL = dal.getlugDiscountType();
@@ -5923,7 +5923,7 @@ namespace Noah_Web.forms_BusinessLayer
             nwGridCon.nwobject(SPR_PaymentTermDetails_PaymentCategory - 1).Width(0);
 
 
-            nwGridCon.nwobject(SPR_PaymentTermDetails_PaymentCategoryDesc - 1).LookUp("lugCategory", true,true );
+            nwGridCon.nwobject(SPR_PaymentTermDetails_PaymentCategoryDesc - 1).LookUp("lugCategory", true);
             nwGridCon.nwobject(SPR_PaymentTermDetails_PaymentCategoryDesc - 1).Enabled(true);
             nwGridCon.nwobject(SPR_PaymentTermDetails_PaymentCategoryDesc - 1).HeaderFieldRequired(true);
 

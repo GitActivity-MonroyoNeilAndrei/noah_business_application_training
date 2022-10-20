@@ -294,7 +294,7 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
 
                 case eRecordOperation.Delete:
-                    RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("transNo"), based.SecurityAccess.RecUser);
+                    RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("transNo"), based.SecurityAccess.RecUser, WebApp.nwobjectText("cmbReasonSelect"));
                     break;
 
                 case eRecordOperation.Process:
@@ -383,6 +383,7 @@ namespace Noah_Web.forms_BusinessLayer
                     RefreshData();
                     RecordOperationResult = Prompt.PromptToolBoxMessage(RecordOperationResult, i).TrimEnd('.');
                     if (i == eRecordOperation.Process) RecordOperationResult = "Process completed";
+                    else if (i == eRecordOperation.Save) RecordOperationResult = "Saved successfully. Queue number will be updated in system upon approval of Division Head.";
 
                     Prompt.Information(RecordOperationResult, based.Title);
                 }
@@ -461,6 +462,8 @@ namespace Noah_Web.forms_BusinessLayer
                 case "actRefBaseOn":
                     CreateGridRefBaseOn(true);
                     js.ADD("nwLoading_End('actRefBaseOnLoading')");
+                    js.ADD("nwGridMainCon_BookRBAO.ActiveSheet.SetText2(0, 0, " + dal.getUnitCode(WebApp.nwobjectText("unit")) + ");");
+                    js.ADD("nwGridMainCon_BookRBAO.ActiveSheet.SetText2(1, 0, " + dal.getUnitDesc(WebApp.nwobjectText("unit")) + ");");
                     break;
 
                 case "actHasRqrdCompli":
@@ -484,6 +487,24 @@ namespace Noah_Web.forms_BusinessLayer
                     //js.ADD("nwGridMainCon_BookRBAO.ActiveSheet.Refresh();");
                     CreateGridRefBaseOn(true);
                     js.ADD("nwLoading_End('actRefBaseOnLoading')");
+                    break;
+
+                case "actDeleteData":
+                    if (WebApp.nwobjectText("cmbReasonSelect") != "" || WebApp.nwobjectText("cmbReasonSelect") != " " && WebApp.nwobjectText("DeletePass") == "1")
+                    {
+                        RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtTransactionNo"), based.SecurityAccess.RecUser, WebApp.nwobjectText("cmbReasonSelect"));
+                        if (RecordOperationResult.ToString().ToLower().Contains("error"))
+                        {
+                            js.ADD("showDeletedMessage('" + RecordOperationResult + "')");
+                        }
+                        else
+                        {
+                            js.ADD("showDeletedMessage('Deleted successfully');");
+                        }
+                    }
+                    RefreshData();
+                    js.ADD("nwLoading_End('actRefBaseOnLoading')");
+                    //RefreshData();
                     break;
 
                 default:
@@ -775,6 +796,8 @@ namespace Noah_Web.forms_BusinessLayer
         private void Main_Load()
         {
             if (based.isInterface == true) dal.UpdateVersion();
+            loadCombo();
+            //based.SecurityAccess.RecUser
         }
 
         private void RefreshData()
@@ -991,6 +1014,11 @@ namespace Noah_Web.forms_BusinessLayer
                 js.ADD("$('#btnReqCompliance').removeClass('btnGreen');");
                 js.ADD("$('#btnReqCompliance').addClass('btnOrange');");
             }
+        }
+
+        private void loadCombo()
+        {
+            js.makeComboBox("#cmbReasonSelect", dal.cmbReasonSelect());
         }
 
     }

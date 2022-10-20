@@ -125,7 +125,8 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
      
                 case "actChangeFilter":
-                    RefreshProject(false);
+                    string tg = WebApp.nwobjectText("btnHomeTag");
+                    RefreshProject(false, tg);
                     break;
                 //Check Entry and Report Access
                 case "actCheckAccess":
@@ -525,6 +526,44 @@ namespace Noah_Web.forms_BusinessLayer
                     js.ADD("GenerateCommissionCombos('cmbProjectCOMM'," + cproject + ")");
                     js.ADD("GenerateCommissionCombos('cmbCustomerCOMM'," + ccustomer + ")");
                     break;
+                case "actGetVRUnit":
+                    string unt = WebApp.nwobjectText("ucode");
+                    string pcd = WebApp.nwobjectText("pcode");
+                    string ptp = WebApp.nwobjectText("ptype");
+                    DataTable dtVRU = dal.getUnitVR(pcd, ptp, unt);
+                    try
+                    {
+                        js.ADD("nwTrustedLinks.push('" + dtVRU.Rows[0][0].ToString() + "');");
+                        js.ADD("ShowVRUnit('" + dtVRU.Rows[0][0].ToString() + "')");
+                    }
+                    catch(Exception e) { }
+                    break;
+                case "actGetVRUnitAll":
+                    DataTable dtVRAll = dal.getVRRall();
+                    try
+                    {
+                        string jsn = nwSystem.GetDataTableToJSON(dtVRAll);
+                        js.ADD("GenerateProjectVR(" + jsn + ")");
+                        js.ADD("nwTrustedLinks.push('" + dtVRAll.Rows[0][2].ToString() + "');");
+                        js.ADD("ShowVRUnitAll('" + dtVRAll.Rows[0][2].ToString() + "')");
+                    }
+                    catch (Exception e) { }
+                    break;
+                case "actGetVRUnitProject":
+                    string pcod = WebApp.nwobjectText("pcode");
+                    string ptyp = WebApp.nwobjectText("ptype");
+                    DataTable dtVRProj = dal.getUnitVRProj(pcod, ptyp);
+                    try
+                    {
+                        js.ADD("nwTrustedLinks.push('" + dtVRProj.Rows[0][0].ToString() + "');");
+                        js.ADD("ShowVRUnit('" + dtVRProj.Rows[0][0].ToString() + "')");
+                    }
+                    catch (Exception e) { }
+                    break;
+                case "actLoadLanding":
+                    string tag = WebApp.nwobjectText("btnHomeTag");
+                    RefreshProject(true, tag);
+                    break;
                 default:
                     Prompt.Information("act_Method not found: " + strMethod, "Error");
                     break;
@@ -542,13 +581,13 @@ namespace Noah_Web.forms_BusinessLayer
             if (based.isInterface == true) dal.UpdateVersion();
             string server = nwSystem.GetServerLink(this.UserDefinedConnectionString);
 
-
             js.ADD($"$ServerLink='{server}'");
             js.ADD("recuser = '" + based.SecurityAccess.RecUser.ToUpper() + "'");
             js.ADD("maxbulkqueue='"+dal.getMaxQueue("BCHHLD") +"'");
 
             SetDefaults();
-            RefreshProject(true);
+            string tag = WebApp.nwobjectText("btnHomeTag");
+            RefreshProject(true, tag);
             CheckMenuItemAccess();
             CheckPortalConfig();
 
@@ -915,7 +954,7 @@ namespace Noah_Web.forms_BusinessLayer
         }
 
         //project
-        public void RefreshProject(bool isGenerate)
+        public void RefreshProject(bool isGenerate,string tag)
         {
             try
             {
@@ -929,7 +968,7 @@ namespace Noah_Web.forms_BusinessLayer
                 //js.ADD("document.getElementById('cmbPropertyType').innerHTML = '';");
                 //js.ADD("document.getElementById('cmbLocation').innerHTML = '';");
                 //Property
-                DataTable property = dal.getProperty(prop, loc);
+                DataTable property = dal.getProperty(prop, loc, tag);
                 if(isGenerate)
                 {
                     for (int i = 1; i <= property.Rows.Count; i++)
@@ -941,7 +980,7 @@ namespace Noah_Web.forms_BusinessLayer
                 }
                 
                 //Location
-                DataTable location = dal.getLocation(prop, loc);
+                DataTable location = dal.getLocation(prop, loc,tag);
                 if(isGenerate)
                 {
                     for (int i = 1; i <= location.Rows.Count; i++)
@@ -966,7 +1005,7 @@ namespace Noah_Web.forms_BusinessLayer
                 {
                     for (int i = 1; i <= property.Rows.Count; i++)
                     {
-                        DataTable project = dal.getProjectDtls(property.Rows[i - 1]["ProjectType"].ToString(), loc);
+                        DataTable project = dal.getProjectDtls(property.Rows[i - 1]["ProjectType"].ToString(), loc, tag);
                         string jsonproj = nwSystem.GetDataTableToJSON(project);
                         js.ADD("GenerateProject(" + jsonproj + ",'"+ isGenerate + "')");
 

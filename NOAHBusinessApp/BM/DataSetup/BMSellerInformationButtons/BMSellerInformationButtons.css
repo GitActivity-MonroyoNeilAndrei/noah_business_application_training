@@ -187,3 +187,9 @@
         .s26 {
             max-width: 100%; min-width:100%; max-height: 100%;
         }
+        .s27 {
+            min-width: 150px; max-width: 150px;
+        }
+        .s28{
+            -webkit-text-fill-color: white; width: 252px; max-width: 294px !important; margin-left:70px; margin-top: 0px; border-radius: 2px; border: 1px solid black; 
+        }

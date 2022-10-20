@@ -96,7 +96,7 @@ namespace DALComponent
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Transaction = tran;
                     cmd.Parameters.Clear();
-                    cmd.CommandText = "[PRT].[nsp_SBClientRegDeactivation_ENH]";
+                    cmd.CommandText = "[PRT].[nsp_SBClientRegDeactivation]";
                     cmd.Parameters.AddWithValue("@CustomerCode", row["CustomerCode"]);
                     cmd.Parameters.AddWithValue("@Reason", row["Reason"]);
                     cmd.Parameters.AddWithValue("@DocStatus", row["Status"]);
@@ -135,7 +135,7 @@ namespace DALComponent
         public System.Data.DataTable GetDataLIN(string customerList, string custClassList)
         {
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "[PRT].[nsp_SBClientRegDeactivation_ENH]";
+            cmd.CommandText = "[PRT].[nsp_SBClientRegDeactivation]";
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@CustomerList", customerList);
             cmd.Parameters.AddWithValue("@CustClassList", custClassList);
@@ -143,7 +143,7 @@ namespace DALComponent
 
             return base.ExecGetData(cmd, _ConnectionString);
 
-            string query = string.Format($@"EXEC [PRT].[nsp_SBDeactivatedClientRegSummRpt_ENH] @QueryType = 0, 
+            string query = string.Format($@"EXEC [PRT].[nsp_SBDeactivatedClientRegSummRpt] @QueryType = 0, 
                                                                                       @CustomerList = '{customerList}',
                                                                                       @CustClassList = '{custClassList}'");
 
@@ -162,12 +162,12 @@ namespace DALComponent
 
         //public string InquireCustomerList(string custClassList)
         //{
-        //    return string.Format($@"Exec [PRT].[nsp_SBClientRegDeactivation_ENH] @QueryType = 20, @CustClassList='{custClassList}'");
+        //    return string.Format($@"Exec [PRT].[nsp_SBClientRegDeactivation] @QueryType = 20, @CustClassList='{custClassList}'");
         //}
 
         //public string InquireCustClassList(string customerList)
         //{
-        //    return string.Format($@"Exec [PRT].[nsp_SBClientRegDeactivation_ENH] @QueryType = 21, @CustomerList='{customerList}'");
+        //    return string.Format($@"Exec [PRT].[nsp_SBClientRegDeactivation] @QueryType = 21, @CustomerList='{customerList}'");
         //}
 
         public string getNoahDate()
@@ -177,9 +177,28 @@ namespace DALComponent
 
         public string lugCustomer_aspx()
         {
-            return string.Format($@"Exec [PRT].[nsp_SBClientRegDeactivation_ENH] @QueryType = 20");
+            return string.Format($@"Exec [PRT].[nsp_SBClientRegDeactivation] @QueryType = 20");
         }
 
+        public DataTable LoadSchema(string customerList, string custClassList)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "[PRT].[nsp_SBClientRegDeactivation]";
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@CustomerList", customerList);
+            cmd.Parameters.AddWithValue("@CustClassList", custClassList);
+            cmd.Parameters.AddWithValue("@QueryType", 0);
+
+            return base.ExecGetData(cmd, _ConnectionString);
+
+            string query = string.Format($@"EXEC [PRT].[nsp_SBDeactivatedClientRegSummRpt] @QueryType = 0, 
+                                                                                      @CustomerList = '{customerList}',
+                                                                                      @CustClassList = '{custClassList}'");
+
+
+            return SFObjects.LoadDataTable(query, _ConnectionString);
+
+        }
 
     }
 }

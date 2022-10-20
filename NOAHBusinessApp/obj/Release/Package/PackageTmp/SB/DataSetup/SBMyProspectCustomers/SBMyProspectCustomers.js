@@ -3,8 +3,12 @@
 var dtls = [];
 var ctr1 = 0, ctr2 = 0, ctr3 = 0;
 function func_Reload() {
-    crLnk = "../SBMyProspectCustomers_Gateway.aspx";
+    //nwTrustedLinks.push("fli.promptus8.com");
+    crLnk = "../SBMyProspectCustomers/SBMyProspectCustomers_Gateway";
     crLnkGateKey = "SBMyProspectCustomers";
+
+    crnwTagSingleBind = true;
+
     nwPopupForm_Create("nwCaptureForm");
     //create frame form
     nwPopupForm_Create("nwFrameForm");
@@ -23,18 +27,21 @@ function func_Reload() {
     $("#noah-webui-Toolbox").bindingProcess().visible(false);
 
     func_ActionDriven("actDesiredProperty", false);
-
     SetDefaultIndividual();
+    trantype='PCSTMR';
     if (getParameterByName("nwCustno") != "") {
         Refresh();
+        
     }
-
+    
     return isContinue;
+    
 }
 
 
 function Refresh() {
     $('#noah-webui-default-Refresh').click();
+    
 }
 
 
@@ -125,12 +132,14 @@ function cust_GetPara() {
     nwParameter_Add("_url", getParameterByName("emp") || "");
     nwParameter_Add("nwCom", getParameterByName("nwCom"));
     nwParameter_Add("getCSD", $("#getCSD").val());
-
+    //appt = $("#txtAppointmentTime").val();
+    //var appttime = appt.toTimeString();
     var comp = "";
     var rname = "";
     var tname = ""; var fulladdress = "";
     var indiv = ""; var barangay = ""; var municipality = ""; var province = "";
     var zipcode = ""; var region = ""; var country = ""; var homeown = ""; var loctype = "";
+    var homephone = "";
     var landline = ""; var local = ''; var mobile = ''; var email = '';
     var isfull = false, reqbrgy = false;
 
@@ -138,29 +147,33 @@ function cust_GetPara() {
     {
         comp = false;
         indiv = true;
-        province = $("#cmbProvince").val(); zipcode = $("#txtZipCode").val(); region = $("#txtRegionCode").val();
+        province = $("#cmbProvince").val(); zipcode = $("#txtZip").val(); region = $("#txtRegion").val();
         municipality = $("#txtMunicipality").val() == "" ? $("#cmbMunicipality").val() : $("#txtMunicipality").val();
         barangay = $("#txtBarangay").val() == "" ? $("#cmbBarangay").val() : $("#txtBarangay").val();
-        rname = $("#txtFullName").val(); tname = $("#txtFullName").val();
-        landline = $("#txtLandlineNo").val(); local = $("#txtLocalNo").val();
+        rname = $("#txtFullName").val(); tname = $("#txtFullName").val();country = $("#txtCountry").val();
+        //landline = $("#txtLandlineNo").val();
+        //local = $("#txtLocalNo").val();
+        homephone = $("#txtHomePhoneNo").val();
         mobile = $("#txtMobileNo").val(); email = $("#txtEmail").val();
-        fulladdress = $("#txtFullAddress").val(); country = $("#txtCountryCode").val();
+        fulladdress = $("#txtFullAdd").val() == "" ? $("#txtFullAdd").val() : $("#cmbProvince").val() + " " + $("#cmbMunicipality").val() + " " + $("#cmbBarangay").val() + "" + $("#txtRegion").val() + " " + $("#txtCountry").val();
         homeown = $("#cmbHomeOwn").val(); loctype = $("#cmbLocType").val();
-        isfull = $("#chkFullAddress").prop("checked");
+        isfull = $("#chkFullAdd").prop("checked");
+        
     }
     if ($('#cbCompany').prop("checked") == true)//Corporate
     {
         comp = true;
         indiv = false;
-        province = $("#cmbProvinceCB").val(); zipcode = $("#txtZipCodeCB").val(); region = $("#txtRegionCodeCB").val();
+        province = $("#cmbProvinceCB").val(); zipcode = $("#txtZipCorpo").val(); region = $("#txtRegionCorpo").val();
         municipality = $("#txtMunicipalityCB").val() == "" ? $("#cmbMunicipalityCB").val() : $("#txtMunicipalityCB").val();
         barangay = $("#txtBarangayCB").val() == "" ? $("#cmbBarangayCB").val() : $("#txtBarangayCB").val();
-        rname = $("#txtRegNameCB").val(); tname = $("#txtTradeNameCB").val();
+        rname = $("#txtRegNameCB").val(); tname = $("#txtTradeNameCB").val();country = $("#txtCountryCorpo").val();
         landline = $("#txtLandlineNoCB").val(); local = $("#txtLocalNoCB").val();
         mobile = $("#txtMobileNoCB").val(); email = $("#txtEmailCB").val();
-        fulladdress = $("#txtFullAddressCB").val(); country = $("#txtCountryCodeCB").val();
+        fulladdress = $("#txtFullAddCorpo").val() == "" ? $("#txtFullAddCorpo").val() : $("#cmbProvinceCB").val() + " " + $("#cmbMunicipalityCB").val() + " " + $("#cmbBarangayCB").val() + "" + $("#txtRegionCorpo").val() + " " + $("#txtCountryCorpo").val();
+        
         homeown = $("#cmbHomeOwnCB").val(); loctype = $("#cmbLocTypeCB").val();
-        isfull = $("#chkFullAddressCB").prop("checked");
+        isfull = $("#chkFullAddCorpo").prop("checked");
     }
 
     if (isfull == true)
@@ -175,11 +188,13 @@ function cust_GetPara() {
     nwParameter_Add("cbNewReservation", $("#cbNewReservation").prop("checked"));
     nwParameter_Add("cbTransfer", $("#cbTransfer").prop("checked"));
     nwParameter_Add("txtCode", $("#txtCode").val());
+    nwParameter_Add("txtPCode", $("#txtPCode").val());
     nwParameter_Add("txtCodeCrossReference", $("#txtCodeCrossReference").val());
     nwParameter_Add("cmbCustClass", $("#cmbCustClass").val());
     nwParameter_Add("cmbVIPType", $("#cmbVIPType").val());
     nwParameter_Add("txtRecStatus", $("#txtRecStatus").val());
     nwParameter_Add("txtStatus", $("#txtStatus").val());
+    nwParameter_Add("chkWithClientApptSlip", $("#chkWithClientApptSlip").prop("checked"));
 
     //Individual / Corporate (Main)
     nwParameter_Add("cmbHomeOwn", homeown);
@@ -199,52 +214,56 @@ function cust_GetPara() {
     nwParameter_Add("txtMiddleName", $("#txtMiddleName").val());
     nwParameter_Add("txtmri", $("#txtmri").val());
     nwParameter_Add("cmbSuffix", $("#cmbSuffix").val());
-    nwParameter_Add("salute", $("#salute").val());
+    nwParameter_Add("cmbSalutation", $("#cmbSalutation").val());
     nwParameter_Add("cmbGender", $("#cmbGender").val());
     nwParameter_Add("txtMothersMaiden", $("#txtMothersMaiden").val());
-    nwParameter_Add("txtBday", $("#txtBday").val());
-    nwParameter_Add("txtAge", $("#txtStatus").val());
+    nwParameter_Add("txtIndivBday", $("#txtIndivBday").val());
+    nwParameter_Add("txtIndivAge", $("#txtIndivAge").val());
     nwParameter_Add("txtPlaceBirth", $("#txtPlaceBirth").val());
     nwParameter_Add("cmbCivilStatus", $("#cmbCivilStatus").val());
     nwParameter_Add("cmbNationality", $("#cmbNationality").val());
     nwParameter_Add("txtTIN", $("#txtTIN").val());
     nwParameter_Add("cmbOccupation", $("#cmbOccupation").val());
     nwParameter_Add("cmbPaymentOption", $("#cmbPaymentOption").val());
-    nwParameter_Add("txtLandlineNo", landline);
-    nwParameter_Add("txtLocalNo", local);
+    //nwParameter_Add("txtLandlineNo", landline);
+    //nwParameter_Add("txtLocalNo", local);
+    nwParameter_Add("txtHomePhoneNo", homephone);
     nwParameter_Add("txtMobileNo", mobile);
     nwParameter_Add("txtEmail", email);
-    nwParameter_Add("txtFullAddress", fulladdress);
-    nwParameter_Add("cmbProvince", province);
+    nwParameter_Add("txtFullAdd", fulladdress);
+    nwParameter_Add("cmbProvince", $("#cmbProvince").val());    
     nwParameter_Add("cmbBarangay", barangay);
     nwParameter_Add("cmbMunicipality", municipality);
     nwParameter_Add("txtZipCode", zipcode);
+    nwParameter_Add("txtZip", zipcode);
     nwParameter_Add("txtRegionCode", region);
+    nwParameter_Add("txtRegion", region);
     nwParameter_Add("txtCountryCode", country);
+    nwParameter_Add("txtCountry", country);
     nwParameter_Add("cmbNatureOfBusinessCB", $("#cmbNatureOfBusinessCB").val());
     nwParameter_Add("cmbBusinessTypeCB", $("#cmbBusinessTypeCB").val());
     nwParameter_Add("AllowNotifIndivYes", $("#rdbAllowNotitYes").prop("checked"));
-    nwParameter_Add("AllowNotifIndivNo", $("#rdbAllowNotitNo").prop("checked"));
+    nwParameter_Add("AllowNotifIndivNo", $("#rdbAllowNotifNo").prop("checked"));
     nwParameter_Add("AllowNotifCorpoYes", $("#rdbAllowNotitCorpoYes").prop("checked"));
     nwParameter_Add("AllowNotifCorpoNo", $("#rdbAllowNotitCorpoNo").prop("checked"));
-
+    
     //Spouse Info
     nwParameter_Add("txtLastNameSP", $("#txtLastNameSP").val());
     nwParameter_Add("txtFirstNameSP", $("#txtFirstNameSP").val());
     nwParameter_Add("txtMiddleNameSP", $("#txtMiddleNameSP").val());
     nwParameter_Add("txtmriSP", $("#txtmriSP").val());
     nwParameter_Add("cmbSuffixSP", $("#cmbSuffixSP").val());
-    nwParameter_Add("saluteSP", $("#saluteSP").val());
+    nwParameter_Add("saluteSP", $("#cmbSalutationSP").val());
     nwParameter_Add("cmbGenderSP", $("#cmbGenderSP").val());
-    nwParameter_Add("txtMothersMaidenSP", $("#txtMothersMaidenSP").val());
-    nwParameter_Add("txtBdaySP", $("#txtBdaySP").val());
+    //nwParameter_Add("txtMothersMaidenSP", $("#txtMothersMaidenS").val());
+    nwParameter_Add("txtSpouseBday", $("#txtSpouseBday").val());
     nwParameter_Add("txtAgeSP", $("#txtAgeSP").val());
     nwParameter_Add("txtTINSP", $("#txtTINSP").val());
     nwParameter_Add("txtDateMarriageSP", $("#txtDateMarriageSP").val());
     nwParameter_Add("cmbNationalitySP", $("#cmbNationalitySP").val());
     nwParameter_Add("cmbOccupationSP", $("#cmbOccupationSP").val());
     nwParameter_Add("txtCompanySP", $("#txtCompanySP").val());
-    nwParameter_Add("cmbNatureOfBusinessCB", $("#cmbNatureOfBusinessCB").val());
+    //nwParameter_Add("cmbNatureOfBusinessCB", $("#cmbNatureOfBusinessCB").val());
 
 
     //Employment Info
@@ -267,12 +286,12 @@ function cust_GetPara() {
     nwParameter_Add("cmbSuffixCO", $("#cmbSuffixCO").val());
     nwParameter_Add("cmbRelationshipCO", $("#cmbRelationshipCO").val());
     nwParameter_Add("cmbGenderCO", $("#cmbGenderCO").val());
-    nwParameter_Add("txtBdayCO", $("#txtBdayCO").val());
+    nwParameter_Add("txtCoownerBirthday", $("#txtCoownerBirthday").val());
     nwParameter_Add("txtAgeCO", $("#txtAgeCO").val());
     nwParameter_Add("txtPlaceBirthCO", $("#txtPlaceBirthCO").val());
     nwParameter_Add("cmbCivilStatusCO", $("#cmbCivilStatusCO").val());
     nwParameter_Add("cmbNationalityCO", $("#cmbNationalityCO").val());
-    nwParameter_Add("txtTINCO", $("#txtTINCO").val());
+    nwParameter_Add("txtCoownerTIN", $("#txtCoownerTIN").val());
     nwParameter_Add("txtResidentialAddressCO", $("#txtResidentialAddressCO").val());
     nwParameter_Add("txtProvincialAddressCO", $("#txtProvincialAddressCO").val());
     nwParameter_Add("txtLandlineNoCO", $("#txtLandlineNoCO").val());
@@ -292,9 +311,9 @@ function cust_GetPara() {
     nwParameter_Add("txtMiddleNameCOS", $("#txtMiddleNameCOS").val());
     nwParameter_Add("txtmriCOS", $("#txtmriCOS").val());
     nwParameter_Add("cmbSuffixCOS", $("#cmbSuffixCOS").val());
-    nwParameter_Add("saluteCOS", $("#saluteCOS").val());
-    nwParameter_Add("txtGenderCOS", $("#txtGenderCOS").val());
-    nwParameter_Add("txtBdayCOS", $("#txtBdayCOS").val());
+    nwParameter_Add("cmbSalutationCOS", $("#cmbSalutationCOS").val());
+    nwParameter_Add("cmbGenderCOS", $("#cmbGenderCOS").val());
+    nwParameter_Add("txtCoownerSpouseBday", $("#txtCoownerSpouseBday").val());
     nwParameter_Add("txtAgeCOS", $("#txtAgeCOS").val());
     nwParameter_Add("txtTINCOS", $("#txtTINCOS").val());
     nwParameter_Add("txtDateMarriageCOS", $("#txtDateMarriageCOS").val());
@@ -329,14 +348,25 @@ function cust_GetPara() {
     nwParameter_Add("txtOthersReasonPI", $("#txtOthersReasonPI").val());
     nwParameter_Add("txtDesiredPropertyPI", $("#txtDesiredPropertyPI").val());
     nwParameter_Add("txtOthersDesiredPI", $("#txtOthersDesiredPI").val());
-    nwParameter_Add("cmbSourceOfAwarenessPI", $("#cmbSourceOfAwarenessPI").val());
+    nwParameter_Add("cmbSourceOfAwarenessPI", $("#cmbSourceOfAwarenessPI").val());    
     nwParameter_Add("txtOthersSourceOfAwarenessPI", $("#txtOthersSourceOfAwarenessPI").val());
+    nwParameter_Add("cmbSalesActivityPI", $("#cmbSalesActivityPI").val());
+    nwParameter_Add("txtOthersSalesActivity", $("#txtOthersSalesActivity").val());
     nwParameter_Add("cmbPriceRangePI", $("#cmbPriceRangePI").val());
     nwParameter_Add("cbYes", $("#cbYes").prop("checked"));
     nwParameter_Add("cbNo", $("#cbNo").prop("checked"));
+    nwParameter_Add("cbYesNomi", $("#cbYesNomi").prop("checked"));
+    nwParameter_Add("cbNoNomi", $("#cbNoNomi").prop("checked"));
     nwParameter_Add("txtNamePI", $("#txtNamePI").val());
     nwParameter_Add("txtMobileNoPI", $("#txtMobileNoPI").val());
     nwParameter_Add("txtEmailPI", $("#txtEmailPI").val());
+
+    //  other details
+    nwParameter_Add("txtAppointmentDate", $("#txtAppointmentDate").val());
+    nwParameter_Add("txtDateSigned", $("#txtDateSigned").val());
+    nwParameter_Add("txtAppointmentTime", $("#txtAppointmentTime").val());
+    nwParameter_Add("txtTimeSigned", $("#txtTimeSigned").val());
+    nwParameter_Add("txtSubmissionDate", $("#txtSubmissionDate").val());
 }
 
 
@@ -362,6 +392,12 @@ function func_ToolboxNavigatorBind_Empty() {
 var temp_crnwTR = "";
 function Lookup_DoneFunction(idName, idNum) {
     if (idName == "toolboxInquire") {
+        $('.fsOtherDetails').enable(true);
+        $('.btn-tb-new').enable(true);
+        $('.btn-tb-save').enable(false);
+        //$('.btn-tb-delete').enable(true);
+        $('.btn-tb-inquire').enable(true);
+        $('.btn-tb-export').enable(true);
     }
     else if (idName == "lugCivilStatus") {
         func_checkCivilStatus();
@@ -392,6 +428,7 @@ function Lookup_DoneFunction(idName, idNum) {
 
         }
     }
+
 }
 
 
@@ -400,35 +437,98 @@ function EnableFields() {
 
     $(".btn-default").enable(true); //Buttons
     $(".fsMain").enable(true);
-    $(".fsSec.fsIndividual").enable(true);
-    $(".fsSec.fsSpouseInfo").enable(true);
-    $(".fsSec.fsEmploymentInfo").enable(true);
+    $(".fsIndividual").enable(true);
+    $(".fsSpouseInfo").enable(true);
+    $(".fsEmploymentInfo").enable(true);
     $(".fsCoownerInfo-dsbld").enable(true);
-    $(".fsSec.fsCoOwnerSpouseInfo").enable(true);
-    $(".fsSec.fsCorporate").enable(true);
-    $(".fsSec.fsAttyInfo").enable(true);
-    $(".fsSec.fsPreferenceInfo").enable(true);
+    $(".fsCoOwnerSpouseInfo").enable(true);
+    $(".fsCorporate").enable(true);
+    $(".fsAttyInfo").enable(true);
+    $(".fsPreferenceInfo").enable(true);
+    $(".fsOtherDetails").enable(true);
     $(".dsbld").enable(false);
     $("#lugSeller").enable(false);
     $("#btnReqCompliance").enable(false);
+    $("#btnHealthDec").enable(false);
+    $("#btnSLPC").enable(false);
+    $("#chkWithClientApptSlip").enable(false);
     $('#dtpTranDate').enable(false);
+
+    $("#grpSalesTag ").enable(true);
+    $("#grpCustomerTypes ").enable(true);
+    $("#cmbCustClass ").enable(true);
+    $("#cmbVIPType ").enable(true);
+
+
+    $("#txtLastName").enable(true)
+    $("#txtFirstName").enable(true)
+    $("#txtMiddleName").enable(true)
+    $("#cmbSalutation").enable(true)
+    $("#cmbGender").enable(true)
+    $("#chkCoowner").enable(true)
+    $("#chkFullAdd").enable(true)
+    $("#txtIndivBday").enable(true)
+    $("#cmbCivilStatus").enable(true)
+    $("#cmbNationality").enable(true)
+    $("#txtMobileNo").enable(true)
+    $("#cmbSuffix").enable(true)
+    $("#txtEmail").enable(true)
+
+    $("#cmbReasonForBuyingPI").enable(true)
+    $("#txtDesiredPropertyPI").enable(true)
+    $("#btnAddDesiredProperty").enable(true)
+    $("#cmbSourceOfAwarenessPI").enable(true)
+    $("#cmbSalesActivityPI").enable(true)
+    $("#cmbProvince").enable(true)
+    $("#cmbMunicipality").enable(true)
+    $("#cmbBarangay").enable(true)
+
+
+    $("#txtRegNameCB").enable(true)
+    $("#chkRepresentativeCB").enable(true)
+    $("#txtTradeNameCB").enable(true)
+    $("#txtLastNameAF").enable(true)
+    $("#txtFirstNameAF").enable(true)
+    $("#txtMiddleNameAF").enable(true)
+    $("#cmbSuffixAF").enable(true)
+    $("#txtEffectiveDateToAF").enable(true)
+    $("#cmbRelationshipAF").enable(true)
+    $("#cmbGenderAF").enable(true)
+    $("#cmbCivilStatusAF").enable(true)
+    $("#cmbNationalityAF").enable(true)
+
+    $("#txtAppointmentDate").enable(true)
+    $("#txtDateSigned").enable(true)
+    $("#txtAppointmentTime").enable(true)
+    $("#txtTimeSigned").enable(true)
+
+
 
 }
 
 function func_ChangeCustType(id, isClear) {
     if (isClear == true)
-        var sellerCode = $("#idvallugSeller").val();
+    var sellerCode = $("#idvallugSeller").val();
     var sellerDesc = $("#descvallugSeller").val();
+    var CustCode = $("#txtCode").val();
+    var ProsCustCode = $("#txtPCode").val();
     ClearFields();
     func_CustType();
     func_CheckIfVIP();
+    //func_CheckIfchkWithClientApptSlip();
     CheckIfOthers("cmbReasonForBuyingPI");
     CheckIfOthers("txtDesiredPropertyPI");
     CheckIfOthers("cmbSourceOfAwarenessPI");
+    CheckIfOthers("cmbSalesActivityPI");
+    CheckIfOthers("cmbProvince");
+    CheckIfOthers("cmbMunicipality");
+    CheckIfOthers("cmbBarangay");
     $(".chkDesiredProperty").prop("checked", false);
     $("#idvallugSeller").val(sellerCode);
     $("#descvallugSeller").val(sellerDesc);
-}
+    $("#txtCode").val(CustCode);
+    $("#txtPCode").val(ProsCustCode);
+} 
 
 function SetDefaultIndividual() {
     $(".fsIndividual").show();
@@ -438,6 +538,7 @@ function SetDefaultIndividual() {
     $(".fsCoOwnerSpouseInfo").hide();
     $(".fsCorporate").hide();
     $(".fsAttyInfo").hide();
+    //$(".fsOtherDetails").enable(true);
 }
 function SetDefaultCorporate() {
     $(".fsIndividual").hide();
@@ -448,6 +549,7 @@ function SetDefaultCorporate() {
     $(".fsCorporate").show();
     $(".fsCorporate").enable(true);
     $(".fsAttyInfo").hide();
+    //$(".fsOtherDetails").enable(true);
 
     func_VatRegType();
 }
@@ -462,13 +564,28 @@ function func_CheckIfVIP() {
         $("#cmbVIPType").val('');
     }
 }
+//function func_CheckIfchkWithClientApptSlip() {
+//    if ($("#chkWithClientApptSlip").prop("checked")) {
+//        $('.reqchkWithClientApptSlip').css("display", "inline");
+//        //$("#cmbVIPType").enable(true);
+//    }
+//    else {
+//        $('.reqchkWithClientApptSlip').css("display", "none");
+//        //$("#cmbVIPType").enable(false);
+//        //$("#cmbVIPType").val('');
+//    }
+//}
+
+
 function func_CustType() {
+        //$(".fsOtherDetails").enable(false);
     //Individual
     if ($("#cbIndividual").prop("checked")) {
         $('.reqVIP').css("display", "none");
         $("#cmbVIPType").enable(false);
         $("#cbVIP").enable(true);
         SetDefaultIndividual();
+        
     }
     //Corporate/Company
     if ($("#cbCompany").prop("checked")) {
@@ -482,15 +599,28 @@ function func_CustType() {
             $("#txtEffectiveDateToAF").val(date);
         }
     }
-    //$('.chkFullAddress').prop("checked",false);
+     var date = formatDate1($DateToday);
+     $("#txtSubmissionDate").val(date);
+    
+    //$('.chkFullAdd').prop("checked",false);
     //document.getElementById("cmbMunicipality").innerHTML = "";
     //document.getElementById("cmbBarangay").innerHTML = "";
-    $('.txtFullAddress').enable(false);
+    $('.txtFullAdd').enable(false);
     $('.cmbProvince').enable(true);
     $('.cmbMunicipality').enable(true);
     $('.cmbBarangay').enable(true);
     $('.cmbHomeOwn').enable(true);
     $('.cmbLocType').enable(true);
+
+   
+    $('.btn-tb-new').enable(true);
+    $('.btn-tb-save').enable(true);
+    $('.btn-tb-delete').enable(false);
+    $('.btn-tb-inquire').enable(true);
+    $('.btn-tb-export').enable(false);
+
+
+
 }
 
 function CheckIfWithRepresentative() {
@@ -507,6 +637,51 @@ function CheckIfWithCoowner() {
         $(".fsCoownerInfo").hide();
 
 }
+
+function CheckIfFullAdd() {
+    if ($("#chkFullAdd").prop("checked") == true) {
+        $('.cmbProvince').enable(false);
+        $('.cmbMunicipality').enable(false);
+        $('.cmbBarangay').enable(false);
+        $('.cmbProvince').val("");
+        $('.cmbMunicipality').val("");
+        $('.cmbBarangay').val("");
+        $('#txtRegion').val("");
+        $('#txtCountry').val("");
+        $('#txtFullAdd').enable(true);
+        
+    }
+    else {
+        $('.cmbProvince').enable(true);
+        $('.cmbMunicipality').enable(true);
+        $('.cmbBarangay').enable(true);
+        $('#txtFullAdd').enable(false);
+        
+    }
+}
+function CheckIfFullAddCorpo() {
+    if ($("#chkFullAddCorpo").prop("checked") == true) {
+        $('.cmbProvince').enable(false);
+        $('.cmbMunicipality').enable(false);
+        $('.cmbBarangay').enable(false);
+        $('.cmbProvince').val("");
+        $('.cmbMunicipality').val("");
+        $('.cmbBarangay').val("");
+        $('#txtRegionCorpo').val("");
+        $('#txtCountryCorpo').val("");
+        $('#txtFullAddCorpo').enable(true);
+
+    }
+    else {
+
+        $('.cmbProvince').enable(true);
+        $('.cmbMunicipality').enable(true);
+        $('.cmbBarangay').enable(true);
+        $('#txtFullAddCorpo').enable(false);
+
+    }
+}
+
 
 function func_VatRegType() {
 
@@ -544,42 +719,89 @@ function DisableFields() {
     $("#dtpTranDate").enable(false)
     $(".btn-default").enable(false);
     $(".fsMain").enable(false);
-    $(".fsSec.fsIndividual").enable(false);
-    $(".fsSec.fsSpouseInfo").enable(false);
-    $(".fsSec.fsEmploymentInfo").enable(false);
+    $(".fsIndividual").enable(false);
+    $(".fsSpouseInfo").enable(false);
+    $(".fsEmploymentInfo").enable(false);
     $(".fsCoownerInfo-dsbld").enable(false);
-    $(".fsSec.fsCoOwnerSpouseInfo").enable(false);
-    $(".fsSec.fsCorporate").enable(false);
-    $(".fsSec.fsAttyInfo").enable(false);
-    $(".fsSec.fsPreferenceInfo").enable(false);
+    $(".fsCoOwnerSpouseInfo").enable(false);
+    $(".fsCorporate").enable(false);
+    $(".fsAttyInfo").enable(false);
+    $(".fsPreferenceInfo").enable(false);
+    $(".fsOtherDetails").enable(false);
     $("#btnReqCompliance").enable(false);
+    $("#btnHealthDec").enable(false);
+    $("#btnSLPC").enable(false);
+    $("#chkWithClientApptSlip").enable(false);
+    
+
+    $('.btn-tb-new').enable(true);
+    $('.btn-tb-save').enable(false);
+    $('.btn-tb-delete').enable(false);
+    $('.btn-tb-inquire').enable(true);
+    $('.btn-tb-export').enable(false);    
+    
 }
 
 function EnableFieldsDone() {//Binding Done
 
-
-
+    $(".fsMain ").enable(true);
+    $("#cbIndividual").enable(false);  
+    $("#cbCompany").enable(false);
+    $("#cbVIP").enable(false);
+    $("#cbNewInquiry").enable(false);
+    $("#cbNewReservation").enable(false);
+    $("#cbTransfer").enable(false);
+    $("#grpSalesTag ").enable(false);
+    $("#grpCustomerTypes ").enable(false);
+    $("#cmbCustClass ").enable(false);
+    $("#cmbVIPType ").enable(false);
+    $("#txtCodeCrossReference").enable(false)
+    $("#idvallugSeller").enable(false)
+    $("#descvallugSeller").enable(false)
+    $("#txtPCode").enable(false)
+    $("#txtStatus").enable(false)
+    $("#dtpTranDate").enable(false)
+    $("#rdbAllowNotitYes").enable(false);
+    $("#rdbAllowNotifNo").enable(false);
+    $("#btnAddDesiredProperty").enable(false);
+    
+    $("#cmbPriceRangePI ").enable(false);
+    $("#cmbRefPartner ").enable(false);
+    $("#cbYesNomi").enable(false);
+    $("#cbNoNomi").enable(false);
+    $("#cbYes").enable(false);
+    $("#cbNo").enable(false);   
+    $("#txtAppointmentDate").enable(false)
+    $("#txtDateSigned").enable(false)
+    $("#txtAppointmentTime").enable(false)
+    $("#txtTimeSigned").enable(false)
+    $("#txtSubmissionDate").enable(false)
     $("#attachIDPicture").enable(true)
     $("#attachSignature").enable(true)
-
     $("#txtLastName").enable(false)
     $("#txtFirstName").enable(false)
     $("#txtMiddleName").enable(false)
     $("#cmbSalutation").enable(false)
     $("#cmbGender").enable(false)
     $("#chkCoowner").enable(false)
-    $("#txtBday").enable(false)
+    $("#chkFullAdd").enable(false)    
+    $("#txtIndivBday").enable(false)
     $("#cmbCivilStatus").enable(false)
     $("#cmbNationality").enable(false)
+    $("#txtTIN").enable(false)
+    $("#txtHomePhoneNo").enable(false)
     $("#txtMobileNo").enable(false)
     $("#cmbSuffix").enable(false)
     $("#txtEmail").enable(false)
-
     $("#cmbReasonForBuyingPI").enable(false)
     $("#txtDesiredPropertyPI").enable(false)
-    $("#btnAddDesiredProperty").enable(true)
+    //$("#btnAddDesiredProperty").enable(true)
     $("#cmbSourceOfAwarenessPI").enable(false)
-
+    $("#cmbSalesActivityPI").enable(false)
+    $("#cmbProvince").enable(false)
+    $("#cmbMunicipality").enable(false)
+    $("#cmbBarangay").enable(false)
+    $("#txtZip").enable(false)
     $("#txtRegNameCB").enable(false)
     $("#chkRepresentativeCB").enable(false)
     $("#txtTradeNameCB").enable(false)
@@ -594,18 +816,49 @@ function EnableFieldsDone() {//Binding Done
     $("#cmbNationalityAF").enable(false)
 
 
-
     $("#btnReqCompliance").enable(true);
+    $("#btnHealthDec").enable(true);
+    $("#btnSLPC").enable(false);
+    $("#chkWithClientApptSlip").enable(false);
 
-    $("#noah-webui-Toolbox").bindingNew().visible(true);
-    $("#noah-webui-Toolbox").bindingNew().enable(true);
-    $("#noah-webui-Toolbox").bindingExport().enable(true);
-    $("#noah-webui-Toolbox").bindingInquire().enable(true);
-    $("#noah-webui-Toolbox").bindingDelete().visible(true);
-    $("#noah-webui-Toolbox").bindingDelete().enable(true);
-    $("#noah-webui-Toolbox").bindingSave().enable(true);
-    $("#noah-webui-Toolbox").bindingProcess().visible(true);
-    $("#noah-webui-Toolbox").bindingExport().enable(true);
+    $("#txtLastNameCO").enable(false);
+    $("#txtFirstNameCO").enable(false);
+    $("#txtMiddleNameCO").enable(false);
+    $("#txtmriCO").enable(false);
+    $("#cmbSuffixCO").enable(false);
+    $("#cmbRelationshipCO").enable(false);
+    $("#cmbGenderCO").enable(false);
+    $("#txtCoownerBirthday").enable(false);
+    $("#txtAgeCO").enable(false);
+    $("#cmbCivilStatusCO").enable(false);
+    $("#cmbNationalityCO").enable(false);
+    $("#txtCoownerTIN").enable(false);
+    $("#txtResidentialAddressCO").enable(false);
+    $("#txtProvincialAddressCO").enable(false);
+    $("#txtLandlineNoCO").enable(false);
+    $("#txtLocalNoCO").enable(false);
+    $("#txtMobileNoCO").enable(false);
+    $("#txtEmailCO").enable(false);
+    $("#txtEmployerNameCO").enable(false);
+    $("#txtEmployerAddressCO").enable(false);
+    $("#txtEmployerContactCO").enable(false);
+    $("#cmbHomeOwnCO").enable(false);
+    $("#txtRowID").enable(false);
+    $("#txtPositionCO").enable(false);
+    
+
+    
+    //$("#noah-webui-Toolbox").bindingNew().enable(true);
+    //$("#noah-webui-Toolbox").bindingSave().enable(false);
+    //$("#noah-webui-Toolbox").bindingDelete().enable(false);
+    //$("#noah-webui-Toolbox").bindingInquire().enable(true);
+    //$("#noah-webui-Toolbox").bindingExport().enable(false);
+
+    $('.btn-tb-new').enable(true);
+    $('.btn-tb-save').enable(false);
+    $('.btn-tb-delete').enable(true);
+    $('.btn-tb-inquire').enable(true);
+    $('.btn-tb-export').enable(true);
 
 
 
@@ -617,15 +870,19 @@ function EnableFieldsDone() {//Binding Done
 function DisableFieldsEmpty() {
     DisableFields();
 
-    $("#noah-webui-Toolbox").bindingNew().visible(true);
-    $("#noah-webui-Toolbox").bindingNew().enable(true);
-    $("#noah-webui-Toolbox").bindingSave().enable(false);
-    $("#noah-webui-Toolbox").bindingDelete().enable(false);
-    $("#noah-webui-Toolbox").bindingDelete().visible(true);
-    $("#noah-webui-Toolbox").bindingRefresh().enable(true);
-    $("#noah-webui-Toolbox").bindingProcess().visible(false);
-    $("#noah-webui-Toolbox").bindingExport().enable(false);
-    $("#noah-webui-Toolbox").bindingInquire().enable(false);
+
+    //$("#noah-webui-Toolbox").bindingNew().enable(true);
+    //$("#noah-webui-Toolbox").bindingSave().enable(false);
+    //$("#noah-webui-Toolbox").bindingDelete().enable(false);
+    //$("#noah-webui-Toolbox").bindingInquire().enable(false);
+    //$("#noah-webui-Toolbox").bindingExport().enable(false);
+   
+
+    $('.btn-tb-new').enable(true);
+    $('.btn-tb-save').enable(false);
+    $('.btn-tb-delete').enable(false);
+    $('.btn-tb-inquire').enable(true);
+    $('.btn-tb-export').enable(false);
 }
 
 function RefreshData() {
@@ -678,7 +935,8 @@ function ClearFields() {
     $("#cbNewInquiry").prop('checked', false);
     $("#cbNewReservation").prop('checked', false);
     $("#cbTransfer").prop('checked', false);
-    $("#txtCode").val('');
+    //$("#txtCode").val('');
+    //$("#txtPCode").val('');
     $("#txtCodeCrossReference").val('');
     $("#cmbCustClass").val('');
     $("#cmbVIPType").val('');
@@ -688,10 +946,14 @@ function ClearFields() {
     $(".txtFullName").val('');
     $(".salute").val('');
     $(".cmbGender").val("");
+    $(".cmbSalutation").val("");
+    $(".txtBday").val("");
+    $(".cmbSalesActivityPI").val("");
     $("#chkCoowner").prop("checked", false);
+    $("#chkFullAdd").prop("checked", false);
     $(".txtMothersMaiden").val('');
-    $(".txtBday").val('');
-    $(".txtAge").val('');
+    $(".txtIndivBday").val('');
+    $(".txtIndivAge").val('');
     $(".txtPlaceBirth").val('');
     $(".cmbCivilStatus").val('');
     $(".cmbNationality").val('');
@@ -699,20 +961,24 @@ function ClearFields() {
     $(".cmbOccupation").val('');
     $("#cmbSourceOfIncome").val('');
     $("#cmbPaymentOption").val('');
-    $(".txtLandlineNo").val('');
-    $(".txtLocalNo").val('');
+    //$(".txtLandlineNo").val('');
+    //$(".txtLocalNo").val('');
+    $(".txtHomePhoneNo").val('');
     $(".txtMobileNo").val('');
     $(".txtEmail").val('');
-    $(".chkFullAddress").prop("checked", false);
-    $(".txtFullAddress").val('');
+    $(".chkFullAdd").prop("checked", false);
+    $(".txtFullAdd").val('');
     $(".cmbProvince").val('');
     $(".cmbMunicipality").val('');
     $(".cmbBarangay").val('');
     $(".txtZipCode").val('');
+    $(".txtZip").val('');
     $(".txtRegion").val('');
     $(".txtCountry").val('');
     $(".txtRegionCode").val('');
+    $(".txtRegion").val('');
     $(".txtCountryCode").val('');
+    $(".txtCountry").val('');
     $(".cmbHomeOwn").val('');
     $(".cmbLocType").val('');
     $(".txtDateMarriage").val('');
@@ -750,20 +1016,35 @@ function ClearFields() {
     $(".txtOthers").val('');
     $("#cbYes").prop("checked", false);
     $("#cbNo").prop("checked", false);
+    $("#cbYesNomi").prop("checked", false);
+    $("#cbNoNomi").prop("checked", false);
+    $("#rdbAllowNotitYes").prop("checked", false);
+    $("#rdbAllowNotifNo").prop("checked", false);
+    $("#btnAddDesiredProperty").enable(true);
     $("#txtNamePI").val('');
     $(".txtPosition").val('');
     $(".cmbBusinessType").val('');
 
+    $("#txtAppointmentDate").val('');
+    $("#txtDateSigned").val('');
+    $("#txtAppointmentTime").val('');
+    $("#txtTimeSigned").val('');
+
+
     CheckIfOthers("cmbReasonForBuyingPI");
     CheckIfOthers("txtDesiredPropertyPI");
     CheckIfOthers("cmbSourceOfAwarenessPI");
+    CheckIfOthers("cmbSalesActivityPI");
+    CheckIfOthers("cmbProvince");
+    CheckIfOthers("cmbMunicipality");
+    CheckIfOthers("cmbBarangay");
     $(".chkDesiredProperty").prop("checked", false);
 }
 
 
 
 let $btn = "";
-$(document).on("click", "#profile-box #attachIDPicture", function (e) {
+$(document).on("click", "#attachIDPicture", function (e) {
     $btn = "attachIDPicture";
     if ($("#txtCode").val() == '') {
         MessageBox("Cannot Proceed. Please save the record first.", "My Prospect Customers");
@@ -781,7 +1062,7 @@ $(document).on("click", "#profile-box #attachIDPicture", function (e) {
 });
 
 
-$(document).on("click", "#signature-box #attachSignature", function (e) {
+$(document).on("click", "#attachSignature", function (e) {
     $btn = "attachSignature";
     if ($("#txtCode").val() == '') {
         MessageBox("Cannot Proceed. Please save the record first.", "My Prospect Customers");
@@ -922,10 +1203,30 @@ function getAge(dateString) {
     return age;
 }
 
+function tConvert(time) {
+    // Check correct time format and split into components
+    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) { // If time format correct
+        time = time.slice(1);  // Remove full string match value
+        time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(''); // return adjusted time or original string
+}
+$(document).on("change", ".txtAppointmentTime", function (e) {
+    var id = $(this).attr("id");
+    //var age = $(this).attr("age");
+    var val = $("#" + id).val();
+    $("#" + val).val(tConvert(val));
+    
+});
+
 $(document).on("keypress", ".txtBday", function (e) {
     var id = $(this).attr("id");
     var age = $(this).attr("age");
     var val = $("#" + id).val();
+
     $("#" + age).val(getAge(val || new Date("01/01/1900")));
     if ($("#" + id).val() == '') {
         $("#" + age).val('');
@@ -961,6 +1262,13 @@ $(document).on("change", ".txtBday", function (e) {
 
 
 
+
+
+
+
+
+
+
 $(document).on('change', '.txtName', function () {
     var sec = $(this).attr("sec");
     var ln = $(".txtName#txtLastName" + sec).val();
@@ -981,7 +1289,7 @@ function ChangeCivilStatus(id) {
         if (value == "02")//Married
         {
             if (id == "cmbCivilStatus") {
-                //$(".fsSpouseInfo").show();
+                $(".fsSpouseInfo").show();
                 var gender = $("#cmbGender").val();
                 if (gender == "F")
                     $("#cmbGenderSP").val("M");
@@ -1044,23 +1352,76 @@ $(document).on('input', '.txtMiddleName', function (e) {
         $('#txtmri' + sec).val(res.join('. ').toUpperCase() + '.');
     //CombineName();
 });
+$(document).on('input', '.txtMiddleNameCO', function (e) {
+    var id = $(this).attr("id");
+    var sec = $(this).attr("sec");
+    var str = $('#' + id).val();
+    str = str.trim();
+    //var res = str.substring(1, 0)
+    var res = str.match(/\b(\w)/g);
+    if (res == null || res == "")
+        $('#txtmriCO' + sec).val('');
+    else
+        $('#txtmriCO' + sec).val(res.join('. ').toUpperCase() + '.');
+    //CombineName();
+});
+$(document).on('input', '.txtMiddleNameCOS', function (e) {
+    var id = $(this).attr("id");
+    var sec = $(this).attr("sec");
+    var str = $('#' + id).val();
+    str = str.trim();
+    //var res = str.substring(1, 0)
+    var res = str.match(/\b(\w)/g);
+    if (res == null || res == "")
+        $('#txtmriCOS' + sec).val('');
+    else
+        $('#txtmriCOS' + sec).val(res.join('. ').toUpperCase() + '.');
+    //CombineName();
+});
+$(document).on('input', '.txtMiddleNameSP', function (e) {
+    var id = $(this).attr("id");
+    var sec = $(this).attr("sec");
+    var str = $('#' + id).val();
+    str = str.trim();
+    //var res = str.substring(1, 0)
+    var res = str.match(/\b(\w)/g);
+    if (res == null || res == "")
+        $('#txtmriSP' + sec).val('');
+    else
+        $('#txtmriSP' + sec).val(res.join('. ').toUpperCase() + '.');
+    //CombineName();
+});
+$(document).on('input', '.txtMiddleNameAF', function (e) {
+    var id = $(this).attr("id");
+    var sec = $(this).attr("sec");
+    var str = $('#' + id).val();
+    str = str.trim();
+    //var res = str.substring(1, 0)
+    var res = str.match(/\b(\w)/g);
+    if (res == null || res == "")
+        $('#txtmriAF' + sec).val('');
+    else
+        $('#txtmriAF' + sec).val(res.join('. ').toUpperCase() + '.');
+    //CombineName();
+});
 
 //Province to Municipality
 $(document).on('change', '.cmbProvince', function (e) {
     var code = $(this).val();
     nwParameter_Add("code", code);
-    nwParameter_Add("qt", 12)
+    nwParameter_Add("qt", 12);
     if ($("#cbIndividual").prop("checked") == true) {
         document.getElementById("cmbMunicipality").innerHTML = "";
         document.getElementById("cmbBarangay").innerHTML = "";
-
         nwParameter_Add("cid", "#cmbMunicipality")
+        
     }
     if ($("#cbCompany").prop("checked") == true) {
         document.getElementById("cmbMunicipalityCB").innerHTML = "";
         document.getElementById("cmbBarangayCB").innerHTML = "";
         nwParameter_Add("cid", "#cmbMunicipalityCB")
-    }
+        
+    }   
     $(".txtZipCode ").val("");
     $(".txtRegionCode").val("");
     $(".txtRegion").val("");
@@ -1068,6 +1429,7 @@ $(document).on('change', '.cmbProvince', function (e) {
     $(".txtCountry").val("");
     nwParameter_Add("txtCode", $("#txtCode").val());
     func_ActionDriven("actSpecialCombo", false);
+    CheckIfOthers("cmbProvince")
 });
 //Municipality to Barangay
 $(document).on('change', '.cmbMunicipality', function (e) {
@@ -1223,7 +1585,7 @@ function upload() {
 }
 
 //Full Address
-$(document).on('change', '.chkFullAddress', function (e) {
+$(document).on('change', '.chkFullAdd', function (e) {
     var id = $(this).attr("id");
     CheckIfFullAddress(id, true);
 });
@@ -1235,6 +1597,7 @@ $(document).on('click', '#btnAddCoowner', function (e) {
     $(".dsbld").enable(false);
     $(".fsCoOwnerSpouseInfo").hide();
     $(".fsCoOwnerSpouseInfo").enable(true);
+    $('.btn-tb-save').enable(true);
 });
 $(document).on('click', '#btnViewCoowner', function (e) {
     //nwPopupForm_ShowModal("nwPopWindow");
@@ -1243,6 +1606,7 @@ $(document).on('click', '#btnViewCoowner', function (e) {
     nwPopupForm_ShowModal("nwViewAllRecordsModal");
     func_ActionDriven("actViewCoownerDetails", false);
 });
+
 
 function ClearCoowner() {
     $("#txtLastNameCO").val('');
@@ -1253,12 +1617,12 @@ function ClearCoowner() {
 
     $("#cmbRelationshipCO").val('');
     $("#cmbGenderCO").val('');
-    $("#txtBdayCO").val('');
+    $("#txtCoownerBirthday").val('');
     $("#txtAgeCO").val('');
     $("#txtPlaceBirthCO").val('');
     $("#cmbCivilStatusCO").val('');
     $("#cmbNationalityCO").val('');
-    $("#txtTINCO").val('');
+    $("#txtCoownerTIN").val('');
     $("#txtResidentialAddressCO").val('');
     $("#txtProvincialAddressCO").val('');
     $("#txtLandlineNoCO").val('');
@@ -1279,16 +1643,41 @@ function ClearCoowner() {
     $("#txtmriCOS").val('');
     $("#cmbSuffixCOS").val('');
 
-    $("#saluteCOS").val('');
+    $("#cmbSalutationCOS").val('');
     $("#cmbGenderCOS").val('');
     $("#txtMothersMaidenCOS").val('');
-    $("#txtBdayCOS").val('');
+    $("#txtCoownerSpouseBday").val('');
     $("#txtAgeCOS").val('');
     $("#txtTINCOS").val('');
     $("#txtDateMarriageCOS").val('');
     $("#cmbNationalityCOS").val('');
     $("#cmbOccupationCOS").val('');
     $("#txtCompanyCOS").val('');
+
+    $("#txtLastNameCO").enable(true);
+    $("#txtFirstNameCO").enable(true);
+    $("#txtMiddleNameCO").enable(true);
+    $("#txtmriCO").enable(true);
+    $("#cmbSuffixCO").enable(true);
+    $("#cmbRelationshipCO").enable(true);
+    $("#cmbGenderCO").enable(true);
+    $("#txtCoownerBirthday").enable(true);
+    $("#txtAgeCO").enable(true);
+    $("#cmbCivilStatusCO").enable(true);
+    $("#cmbNationalityCO").enable(true);
+    $("#txtCoownerTIN").enable(true);
+    $("#txtResidentialAddressCO").enable(true);
+    $("#txtProvincialAddressCO").enable(true);
+    $("#txtLandlineNoCO").enable(true);
+    $("#txtLocalNoCO").enable(true);
+    $("#txtMobileNoCO").enable(true);
+    $("#txtEmailCO").enable(true);
+    $("#txtEmployerNameCO").enable(true);
+    $("#txtEmployerAddressCO").enable(true);
+    $("#txtEmployerContactCO").enable(true);
+    $("#cmbHomeOwnCO").enable(true);
+    $("#txtRowID").enable(true);
+    $("#txtPositionCO").enable(true);
 }
 
 //get date today
@@ -1305,17 +1694,31 @@ function formatDate(date) {
 
     return [year, month, day].join('-');
 }
+
+function formatDate1(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [month, day, year].join('/');
+}
 //check if fill address is ticked
 function CheckIfFullAddress(id, isClear) {
     if ($("#" + id).prop("checked") == true) {
-        $('.txtFullAddress').enable(true);
+        $('.txtFullAdd').enable(true);
         $('.cmbProvince').enable(false);
         $('.cmbMunicipality').enable(false);
         $('.cmbBarangay').enable(false);
 
     }
     else {
-        $('.txtFullAddress').enable(false);
+        $('.txtFullAdd').enable(false);
         $('.cmbProvince').enable(true);
         $('.cmbMunicipality').enable(true);
         $('.cmbBarangay').enable(true);
@@ -1375,12 +1778,12 @@ function LoadCoowner(ix) {
 
     $("#cmbRelationshipCOD").val(dtls[ix - 1]["CoownerRelationship"]);
     $("#cmbGenderCOD").val(dtls[ix - 1]["CoownerGender"]);
-    $("#txtBdayCOD").val(dtls[ix - 1]["CoownerBirthday"]);
+    $("#txtCoownerBirthdayD").val(dtls[ix - 1]["CoownerBirthday"]);
     $("#txtAgeCOD").val(dtls[ix - 1]["CoownerAge"]);
     $("#txtPlaceBirthCOD").val(dtls[ix - 1]["CoownerPlaceOfBirth"]);
     $("#cmbCivilStatusCOD").val(dtls[ix - 1]["CoownerCivilStatus"]);
     $("#cmbNationalityCOD").val(dtls[ix - 1]["CoownerNationality"]);
-    $("#txtTINCOD").val(dtls[ix - 1]["CoownerTIN"]);
+    $("#txtCoownerTIND").val(dtls[ix - 1]["CoownerTIN"]);
     $("#txtResidentialAddressCOD").val(dtls[ix - 1]["CoownerPresentAddress"]);
     $("#txtProvincialAddressCOD").val(dtls[ix - 1]["CoownerProvincialAddress"]);
     $("#txtLandlineNoCOD").val(dtls[ix - 1]["CoownerLandline"]);
@@ -1402,16 +1805,17 @@ function LoadCoowner(ix) {
     $("#txtmriCOSD").val(dtls[ix - 1]["CSpouseMI"]);
     $("#cmbSuffixCOSD").val(dtls[ix - 1]["CSpouseSuffix"]);
 
-    $("#saluteCOSD").val(dtls[ix - 1]["CSpouseSalutation"]);
+    $("#cmbSalutationCOSD").val(dtls[ix - 1]["CSpouseSalutation"]);
     $("#cmbGenderCOSD").val(dtls[ix - 1]["CSpouseGender"]);
     $("#txtMothersMaidenCOSD").val(dtls[ix - 1]["CSpouseMothersMaidenName"]);
-    $("#txtBdayCOSD").val(dtls[ix - 1]["CSpouseBirthday"]);
+    $("#txtCoownerSpouseBdayD").val(dtls[ix - 1]["CSpouseBirthday"]);
     $("#txtAgeCOSD").val(dtls[ix - 1]["CSpouseAge"]);
     $("#txtTINCOSD").val(dtls[ix - 1]["CSpouseTIN"]);
     $("#txtDateMarriageCOSD").val(dtls[ix - 1]["CSpouseDateOfMarriage"]);
     $("#cmbNationalityCOSD").val(dtls[ix - 1]["CSpouseNationality"]);
     $("#cmbOccupationCOSD").val(dtls[ix - 1]["CSpouseOccupation"]);
     $("#txtCompanyCOSD").val(dtls[ix - 1]["CSpouseCompany"]);
+  
 
     if (dtls[ix - 1]["CSpouseLastName"] == null || dtls[ix - 1]["CSpouseLastName"] == "") {
         $(".fsCoOwnerSpouseInfoDet").hide();
@@ -1529,6 +1933,11 @@ $(document).on('change', '#txtEffectiveDateToAF', function () {
     }
 });
 
+$(document).on('change', '#txtSubmissionDate', function () {
+    var currServerDate = $('#txtSubmissionDate').val();
+        $('#txtSubmissionDate').val(currServerDate);    
+});
+
 function ShowPrintPreview(PDFUrl) {
     //  var docnoList = JSON.parse(DocnoJSON)
 
@@ -1550,19 +1959,7 @@ $(document).on("click", "#imgDesiredProperty", function (e) {
     nwPopupForm_ShowModal("nwDesiredProperty");
 });
 
-//Desired Property
-function GenerateDesiredProperty(vals) {
-    document.getElementById("fsDesired").innerHTML = "";
-    var br = "";
-    for (var i = 0; i < vals.length; i++) {
-        if (i == (vals.length - 1))
-            br = "<br/>"
-        $("#fsDesired").append("<div class='noah-webui-containerRow'><div class='noah-webui-containerRowItem'><input type='checkbox' class='chk chkDesiredProperty' id='chk" + (i + 1) + "' code='" + vals[i]["Code"] + "' desc='" + vals[i]["Description"] + "' /><label for='chk" + (i + 1) + "' id='lbl" + (i + 1) + "' class='lblchk'>" + vals[i]["Description"] + "</label></div></div>" + br + "");
-        if (vals[i]["isSelected"] == 1)
-            $("#chk" + (i + 1) + "").prop("checked", true);
 
-    }
-}
 
 //Check if "Others" is selected
 function CheckIfOthers(id) {
@@ -1604,8 +2001,48 @@ function CheckIfOthers(id) {
                 $("#txtOthersSourceOfAwarenessPI").val('');
             }
             break;
+        case "cmbSalesActivityPI":
+            var selectedText = "";
+            if (t.options[t.selectedIndex] == undefined)
+                selectedText = "";
+            else
+                selectedText = t.options[t.selectedIndex].text;
+            if (selectedText == "Others")
+                $("#txtOthersSalesActivity").enable(true);
+            else {
+                $("#txtOthersSalesActivity").enable(false);
+                $("#txtOthersSalesActivity").val('');
+            }
+            break;
+        case "cmbProvince":
+            var selectedText = "";
+            if (t.options[t.selectedIndex] == undefined)
+                selectedText = "";
+            else
+                selectedText = t.options[t.selectedIndex].text;            
+            break;
+        case "cmbMunicipality":
+            var selectedText = "";
+            if (t.options[t.selectedIndex] == undefined)
+                selectedText = "";
+            else
+                selectedText = t.options[t.selectedIndex].text;
+            break;
+        case "cmbBarangay":
+            var selectedText = "";
+            if (t.options[t.selectedIndex] == undefined)
+                selectedText = "";
+            else
+                selectedText = t.options[t.selectedIndex].text;
+            break;
     }
 }
+$(document).on('change', '#cmbMunicipality', function () {
+    CheckIfOthers("cmbMunicipality");
+});
+$(document).on('change', '#cmbBarangay', function () {
+    CheckIfOthers("cmbBarangay");
+});
 $(document).on('change', '#cmbReasonForBuyingPI', function () {
     CheckIfOthers("cmbReasonForBuyingPI");
 });
@@ -1614,6 +2051,9 @@ $(document).on('change', '#cmbReasonForBuyingPI', function () {
 //});
 $(document).on('change', '#cmbSourceOfAwarenessPI', function () {
     CheckIfOthers("cmbSourceOfAwarenessPI");
+});
+$(document).on('change', '#cmbSalesActivityPI', function () {
+    CheckIfOthers("cmbSalesActivityPI");
 });
 
 $(document).on('change', '.chkDesiredProperty', function () {
@@ -1661,6 +2101,29 @@ function func_ChangeRecommendation(res, isClear) {
         $(".dsbldRecomm").val('');
 }
 
+function func_ChangeNomination(nomi, isClear) {
+    switch (nomi) {
+        case "Y":
+            $(".reqrecom").show();
+            $(".dsbldRecomm").enable(true);
+            $("#lblEmailRecomm").css("margin-left", "28px");
+            break;
+        case "N":
+            $(".reqrecom").hide();
+            $(".dsbldRecomm").enable(false);
+            $("#lblEmailRecomm").css("margin-left", "33px");
+            break;
+        default:
+            $(".reqrecom").hide();
+            $(".dsbldRecomm").enable(false);
+            $("#lblEmailRecomm").css("margin-left", "33px");
+            break;
+    }
+    if (isClear == true)
+        $(".dsbldRecomm").val('');
+}
+
+
 
 $(document).on('click', '.rdoSalesTag', function () {
 
@@ -1697,7 +2160,7 @@ $(document).on('focusout', '.txtTIN', function () {
     if ($("#cbIndividual").prop("checked") == true) {
         tinvalues[0] = "txtTIN";
         tinvalues[1] = "txtTINSP";
-        tinvalues[2] = "txtTINCO";
+        tinvalues[2] = "txtCoownerTIN";
         tinvalues[3] = "txtTINCOS";
 
         for (var i = 0; i < tinvalues.length; i++) {
@@ -1738,29 +2201,74 @@ $(document).on('focusout', '.txtTIN', function () {
 
 });
 
+$(document).on("click", "#btnSLPC", function (e) {
+
+    var fullength = "SBMyProspectCustomers_SendLink?";
+   
+    nwPopupForm_Create("nwPopUpReqComp", true, fullength);
+    $('#nwPopUpReqComp .BoxTitle').text("Send Link to Prospect Customers");
+    nwPopupForm_ShowModal("nwPopUpReqComp");
+    nwLoading_End('btnSLPC');
+
+
+});
+//$(document).on('click', '#btnHealthDec', function (e) {
+//    //nwPopupForm_ShowModal("nwPopWindow");
+//    nwParameter_Add("code", $("#txtCode").val());
+//    $(".iframe_main").show();
+//    nwPopupForm_ShowModal("nwViewAllRecordsModal");
+//    func_ActionDriven("actViewHealthDec", false);
+//});
+$(document).on("click", "#btnHealthDec", function (e) {
+
+    //var docno = $('#txtReservationControlNo').val();
+    //var status = $('#txtRecStatus').val();
+    //nwDocno = getParameterByName('nwDocno');
+
+    //if (status == "3" || nwDocno != "") {
+    //    var fullength = "SBMyProspectCustomers_HealthDeclaration?TransactionNo=" + docno + "&isView=true";
+
+    //} else {
+    //    var fullength = "SBMyProspectCustomers_HealthDeclaration?TransactionNo=" + docno + "&isView=false";
+    //}
+
+    //nwPopupForm_Create("nwPopUpReqComp", true, fullength);
+    //$('#nwPopUpReqComp .BoxTitle').text("Health Declaration");
+    //nwPopupForm_ShowModal("nwPopUpReqComp");
+    //nwLoading_End('btnHealthDec');
+    //var code = WebApp.nwobjectText("#txtCode");
+    var fullength = "SBMyProspectCustomers_HealthDeclaration/?nwCus=" + $("#txtCode").val() + "&nwPCus=" + $("#txtPCode").val() + "";
+
+    nwPopupForm_Create("nwPopUpReqComp", true, fullength);
+    $('#nwPopUpReqComp .BoxTitle').text("Health Declaration");
+    nwPopupForm_ShowModal("nwPopUpReqComp");
+    nwLoading_End('btnHealthDec');
+
+
+});
 
 
 
 $(document).on("click", "#btnReqCompliance", function (e) {
 
-    var trantype = 'REPCST';
+    //var trantype = 'REPCST';
     var docno = $('#txtReservationControlNo').val();
     var status = $('#txtRecStatus').val();
     nwDocno = getParameterByName('nwDocno');
 
     if (status == "3" || nwDocno != "") {
-        var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&isView=true";
+        var fullength = "DCRequirementCompliance?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=true";
 
     } else {
-        var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&isView=false";
+        var fullength = "DCRequirementCompliance?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=false";
     }
 
 
-    nwLoading_Start('btnReqCompliance', crLoadingHTML);
+    //nwLoading_Start('btnReqCompliance', crLoadingHTML);
     nwPopupForm_Create("nwPopUpReqComp", true, fullength);
     $('#nwPopUpReqComp .BoxTitle').text("Requirements Compliance");
-    $("#nwPopUpReqComp").css({ "min-width": "98%" });
-    $("#nwPopUpReqComp").css({ "min-height": "98%" });
+    //$("#nwPopUpReqComp").css({ "min-width": "98%" });
+    //$("#nwPopUpReqComp").css({ "min-height": "98%" });
     nwPopupForm_ShowModal("nwPopUpReqComp");
     nwLoading_End('btnReqCompliance');
 
@@ -1870,5 +2378,37 @@ function checkCheckBoxLookupList() {
 
 }
 
+
+
+$(document).on("click", "#cbIndividual", function () {
+
+    func_ChangeCustType('cbIndividual', true)
+
+});
+
+$(document).on("click", "#cbCompany", function () {
+
+    func_ChangeCustType('cbCompany', true)
+
+});
+
+
+$(document).on("click", "#cbVIP", function () {
+
+    func_CheckIfVIP();
+
+});
+//$(document).on("click", "#chkWithClientApptSlip", function () {
+
+//    func_CheckIfchkWithClientApptSlip();
+
+//});
+
+$(document).on('click', '.btn-modal-back', function () {
+    //$('#RequirementCompliance').hide();
+    $(".modal-s").removeClass("_show");
+    $(".modal-box-s").removeClass("_slide-m");
+
+});
 
 

@@ -134,17 +134,17 @@ namespace DALComponent
         {
             return SFObjects.returnText($"SELECT SellerImage FROM RE.SellerInformation where SellerCode='" + user + "'", _ConnectionString);
         }
-        public DataTable getProperty(string projtype,string loc)
+        public DataTable getProperty(string projtype,string loc,string htag)
         {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=1,@ProjectType='" + projtype + "',@Location='" + loc + "'", _ConnectionString);
+            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=1,@ProjectType='" + projtype + "',@Location='" + loc + "',@HomeTag='"+htag+"'", _ConnectionString);
         }
-        public DataTable getLocation(string projtype,string loc)
+        public DataTable getLocation(string projtype,string loc,string htag)
         {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=2,@ProjectType='" + projtype + "',@Location='" + loc + "'", _ConnectionString);
+            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=2,@ProjectType='" + projtype + "',@Location='" + loc + "',@HomeTag='" + htag + "'", _ConnectionString);
         }
-        public DataTable getProjectDtls(string type, string loc)
+        public DataTable getProjectDtls(string type, string loc, string htag)
         {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=3,@ProjectType='" + type + "',@Location='" + loc + "'", _ConnectionString);
+            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=3,@ProjectType='" + type + "',@Location='" + loc + "',@HomeTag='" + htag + "'", _ConnectionString);
         }
         public DataTable getImage(string project,string type,string phtw)
         {
@@ -153,6 +153,18 @@ namespace DALComponent
         public DataTable getUnitImage(string project, string type, string unit)
         {
             return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=13,@Project='" + project + "',@ProjectType='" + type + "',@UnitCode='" + unit + "'", _ConnectionString);
+        }
+        public DataTable getUnitVR(string project, string type, string unit)
+        {
+            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=33,@Project='" + project + "',@ProjectType='" + type + "',@UnitCode='" + unit + "'", _ConnectionString);
+        }
+        public DataTable getVRRall()
+        {
+            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=34", _ConnectionString);
+        }
+        public DataTable getUnitVRProj(string project, string type)
+        {
+            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=35,@Project='" + project + "',@ProjectType='" + type + "'", _ConnectionString);
         }
         public DataTable getBookingSummary(string status,string user, string proj,int reopen)
         {

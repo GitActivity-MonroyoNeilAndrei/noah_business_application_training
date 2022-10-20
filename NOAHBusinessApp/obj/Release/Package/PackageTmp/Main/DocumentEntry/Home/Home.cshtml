@@ -17,21 +17,11 @@
             <div class="row-c row-welcome">
                 <div class="welcome-remarks">
                     <div class="welcome-remarks-sec left">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td style="width: 50px;">
-                                        <div class="welcome-user-img"></div>
-                                    </td>
-                                    <td>
-                                        <div class="welcome-text-c">
-                                            Welcome, <span class="welcome-username">...</span>
-                                            <span class="welcome-customtext">Select your preferred property now!</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="welcome-user-img"></div>
+                        <div class="welcome-text-c">
+                            Welcome, <span class="welcome-username">...</span>
+                            <span class="welcome-customtext">Select your preferred property now!</span>
+                        </div>
                     </div>
                     <div class="welcome-remarks-sec right">
                         <div class="hdr-tile tile-main" id="btnonhold">
@@ -57,30 +47,37 @@
                     </div>
                 </div>
             </div>
-            <div class="row-c lbl-hdr-row" style="">
-                <div class="col">
-                    <label class="lbl-hdr-text" style="">Property Type</label>
-                    <select id="cmbPropertyType" class="lbl-hdr-sel" style="">
-                        <option value="all">Any property</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <label class="lbl-hdr-text" style="">Select preferred location</label>
+            <div class="flex-row row-c lbl-hdr-row">
+                <div class="flex-col">
+                    <label class="lbl-hdr-text" style="">Location</label>
                     <select id="cmbLocation" class="lbl-hdr-sel" style="">
                         <option value="all">Any location</option>
                     </select>
                 </div>
-                <div class="divBulkRdo">
+                <div class="flex-col">
+                    <label class="lbl-hdr-text" style="">Project</label>
+                    <select id="cmbPropertyType" class="lbl-hdr-sel" style="">
+                        <option value="all">Any project</option>
+                    </select>
+                </div>
+                <div class="flex-col">
+                    <label class="lbl-hdr-text" style="">Tower/Phase</label>
+                    <select id="cmbTowerPhase" class="lbl-hdr-sel" style="">
+                        <option value="all">Any tower/phase</option>
+                    </select>
+                </div>
+                <div class="flex-col">
                     <input name="grp1" class="rdo" style="width: 50px" onclick="ChangeSelectionType('R')" id="cbRetail" type="radio" />
                     <label id="lblRetail" class="lblrdo" style="min-width: 50px;" for="cbRetail">Retail </label>
                     <input name="grp1" class="rdo" style="width: 50px" id="cbBulk" onclick="ChangeSelectionType('B')" type="radio" />
                     <label id="lblBulk" class="lblrdo" style="min-width: 50px;" for="cbBulk">Bulk </label>
                 </div>
             </div>
-            <div class="divBulkBtn">
+            <div class="flex-jus-content">
+                <div class="lbl-title-note-land">* Click on the image of the selected Project to view more details and access Unit Availability.</div>
                 <div class="btn btn-type1" id="btnProceedBulk">Proceed to Unit Availability</div>
             </div>
-            <div class="lbl-title-note-land">* Click on the image of the selected Project to view more details and access Unit Availability.</div>
+            
         
         </div>
 
@@ -89,6 +86,7 @@
             <div class="row-c row-hdr">
                 <div class="btn btnReturn">Back</div>
                 <div class="lbl-title-list" id="listTitle">. . .</div>
+                <div class="nav-virtmap-imgp" id="btnVirtualProj"></div>
             </div>
             <div class="row-c row-imgviewer-c">
                 <div class="nk-carousel nk-image-viewer">
@@ -254,8 +252,16 @@
                         </div>
                     </div>
                 </div>
-                <div id="btnHold" class="btn btn-type1 btn-hold">Hold</div>
-                <div id="btnReserveNow" class="btn btn-type1 btn-reserve">Reserve Now</div>
+                <div id="buttonsHome">
+                    <div id="btnVirtualTour" class="btn btn-type1">360 Virtual Tour</div>
+                    <div id="btnHold" class="btn btn-type1 btn-hold">Hold</div>
+                    <div id="btnReserveNow" class="btn btn-type1 btn-reserve">Reserve Now</div>
+                </div>
+                <div id="buttonsLOI">
+                    <div id="btnPaymentTerm" class="btn btn-type1">Payment Term</div>
+                    <div id="btnLOIEntry" class="btn btn-type1 btn-hold">Letter of Intent</div>
+                </div>
+
                 <div class="row-c-m" id="preview">
                     <div class="preview-info-c" id="secMultipleSP" style="display:none;">
                         <div class="SpFirst custPage"><<</div>
@@ -502,6 +508,26 @@
             </div>
             <div class="iframe-content">
                 <iframe id="iFrame1" src="" class="iframe_content"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup2" class="iframe_main" canbefullwidth="true" fw-state="normal" style="display: none;">
+        <div class="iframe_box">
+            <div class="iframe-actions">
+                <div class="btn btn-cancel">Back</div>
+            </div>
+            <div class="pdlg-hdr">
+                <div id="iframetitle2" class="pdlg-title">Title</div>
+                <div id="iframeBtnMaximize2" class="pdlg-btn-dlgactions" dlgact-type="resize" title="Maximize"></div>
+            </div>
+            <div class="iframe-content">
+                <div class="col colprj">
+                    <label class="lbl-hdr-text" style="">Project</label>
+                    <select id="cmbProject2" class="lbl-hdr-sel" style="width:220px">
+                    </select>
+                </div>
+                <iframe id="iFrame2" src="" class="iframe_content"></iframe>
             </div>
         </div>
     </div>

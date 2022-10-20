@@ -350,9 +350,8 @@ namespace Noah_Web.forms_BusinessLayer
                 case "gettoolboxInquire":
                     strSQL = dal.inquireQuery(based.SecurityAccess.RecUser);
                     strMethod = strMethod.Substring(3);
-                    nwObject.ColumnHide(1);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
-
+                    
 
 
                     break;
@@ -382,24 +381,39 @@ namespace Noah_Web.forms_BusinessLayer
                     nwToolBox.bindingNavigatorProcessItem.Visible =
                     nwToolBox.bindingNavigatorProcessItem.Enable =
                     nwToolBox.bindingNavigatorExportItem.Enable = false;
+                    
+                    //js.ADD("Refresh()");
                     js.Enable("#btnupdate", false);
+                    js.Enable("#btnSLPC", false);
+
+
 
                     js.ADD("$('#cbIndividual').prop('checked', true);");
                     js.ADD("$('#cbCompany').prop('checked', false); ");
                     js.ADD("$('#cbVIP').prop('checked', false); ");
+                    js.ADD("$('#chkWithClientApptSlip').prop('checked', false); ");
                     js.ADD("func_CustType();");
-                    js.ADD("$('#btnAddCoowner,#btnViewCoowner').enable(false);");
+                    js.ADD("$('#btnAddCoowner').enable(false);");
+                    js.ADD("$('#btnViewCoowner').enable(false);");
                     js.makeAttr("#profile-img", "style", "");
                     js.makeAttr("#profile-img-signature", "style", "");
+                    //js.makeHTML(".cmbSalutation", "");
                     js.makeHTML(".cmbMunicipality", "");
                     js.makeHTML(".cmbBarangay", "");
+                    //js.makeHTML(".cmbSalesActivityPI", "");
                     js.ADD("func_ChangeRecommendation('N',true)");
+                    js.ADD("func_ChangeNomination('N',true)");
                     dal.DeleteDesiredProperty(based.SecurityAccess.RecUser);
-                    GenerateDesiredProperty();
+
 
                     js.makeValueText("#idvallugSeller", based.SecurityAccess.RecUser);
                     js.makeValueText("#descvallugSeller", based.SecurityAccess.RecUserName);
-
+                    js.makeValueText("#txtCode", dal.GetNewCustCode());
+                    js.makeValueText("#txtPCode", dal.GetNewProsCustCode());
+                    js.Enable(".fsOtherDetails", true);
+                    js.Visible(".fsOtherDetails", true);
+                    js.Enable("#txtFullAdd", false);
+                    
                     break;
 
                 case eRecordOperation.Save:
@@ -424,6 +438,8 @@ namespace Noah_Web.forms_BusinessLayer
                         RecordOperationResult = "Saved successfully";
 
                     }
+                    //js.ADD("func_Reload()");
+
 
 
                     break;
@@ -588,11 +604,16 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
                 case "actBindCollectionEmpty":
                     js.ADD("DisableFieldsEmpty();");
-                    nwToolBox.bindingNavigatorSaveItem.Enable = false;
-                    nwToolBox.bindingNavigatorDeleteItem.Enable = false;
-                    nwToolBox.bindingNavigatorInquireItem.Enable = false;
-                    nwToolBox.bindingNavigatorProcessItem.Visible = false;
-                    nwToolBox.bindingNavigatorExportItem.Enable = false;
+                    //nwToolBox.bindingNavigatorSaveItem.Enable = false;
+                    //nwToolBox.bindingNavigatorDeleteItem.Enable = false;
+                    //nwToolBox.bindingNavigatorInquireItem.Enable = false;
+                    //nwToolBox.bindingNavigatorProcessItem.Visible = false;
+                    //nwToolBox.bindingNavigatorExportItem.Enable = false;
+                    js.ADD("$('.btn-tb-save').enable(false);");
+                    js.ADD("$('.btn-tb-delete').enable(false);");
+                    js.ADD("$('.btn-tb-inquire').enable(true);");
+                    js.ADD("$('.btn-tb-export').enable(false);");
+
                     js.ADD("nwLoading_End('actBindCollectionEmpty')");
                     break;
                 case "actSpecialCombo":
@@ -655,8 +676,10 @@ namespace Noah_Web.forms_BusinessLayer
                 case "actViewCoownerDetails":
                     GenerateCoownerDetails();
                     break;
+               
+        
                 case "actDesiredProperty":
-                    GenerateDesiredProperty();
+
                     break;
                 case "actInsertDesiredProperty": //delete
                     string cust = WebApp.nwobjectText("xxcustcode");
@@ -692,6 +715,8 @@ namespace Noah_Web.forms_BusinessLayer
             switch (getMethod)
             {
                 case "toolbox":
+                    string codevalue = WebApp.nwobjectText("codevalue"); // codevalue will be filter of primary key add these filter
+
                     nwStandardBL standardBL = new nwStandardBL(WebApp);
                     standardBL.PrimaryKey = "CustomerCode";
 
@@ -713,10 +738,10 @@ namespace Noah_Web.forms_BusinessLayer
 
                     if (nwCustno != null) // portal entry
                     {
-                        strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(based.SecurityAccess.RecUser, nwCustno), this.UserDefinedConnectionString);
+                        strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(based.SecurityAccess.RecUser, nwCustno,codevalue), this.UserDefinedConnectionString);
                     }
                     else //portal viewing
-                        strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(based.SecurityAccess.RecUser, nwCustno), this.UserDefinedConnectionString);
+                        strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(based.SecurityAccess.RecUser, nwCustno, codevalue), this.UserDefinedConnectionString);
                     break;
             }
 
@@ -735,13 +760,17 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#cbNewReservation", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "isNewReservation");
             SFObject.SetControlBinding("#cbTransfer", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "isTransfer");
             SFObject.SetControlBinding("#idvallugSeller", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerCode");
+            SFObject.SetControlBinding("#descvallugSeller", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SellerName");
+
             SFObject.SetControlBinding("#txtCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CustomerCode");
+            SFObject.SetControlBinding("#txtPCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "ProspectCustomerCode");
             SFObject.SetControlBinding("#txtCodeCrossReference", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CustomerCodeCrossReference");
             SFObject.SetControlBinding("#cmbCustClass", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CustomerClassification");
             SFObject.SetControlBinding("#cmbVIPType", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "VIPType");
             SFObject.SetControlBinding("#txtRecStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RecStatus");
             SFObject.SetControlBinding("#txtStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RecordStatus");
             SFObject.SetControlBinding("#dtpTranDate", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "OwnershipPeriod");
+            SFObject.SetControlBinding("#chkWithClientApptSlip", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "isCheck");
 
             //Individual
             SFObject.SetControlBinding("#txtFullName", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RegisteredName");
@@ -754,8 +783,8 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#cmbSalutation", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SalutationCode");
             SFObject.SetControlBinding("#cmbGender", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Gender");
             SFObject.SetControlBinding("#txtMothersMaiden", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "MothersMaidenName");
-            SFObject.SetControlBinding("#txtBday", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Birthday");
-            SFObject.SetControlBinding("#txtAge", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Age");
+            SFObject.SetControlBinding("#txtIndivBday", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Birthday");
+            SFObject.SetControlBinding("#txtIndivAge", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Age");
             SFObject.SetControlBinding("#txtPlaceBirth", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PlaceofBirth");
             SFObject.SetControlBinding("#cmbCivilStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CivilStatus");
             SFObject.SetControlBinding("#cmbNationality", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Nationality");
@@ -763,16 +792,19 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#cmbOccupation", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Occupation");
             SFObject.SetControlBinding("#cmbSourceOfIncome", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SourceofIncome");
             SFObject.SetControlBinding("#cmbPaymentOption", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PaymentOption");
-            SFObject.SetControlBinding("#txtLandlineNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "LandlineNo");
-            SFObject.SetControlBinding("#txtLocalNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "LocalNo");
+            //SFObject.SetControlBinding("#txtLandlineNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "LandlineNo");
+            //SFObject.SetControlBinding("#txtLocalNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "LocalNo");
+            SFObject.SetControlBinding("#txtHomePhoneNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "LandlineNo");
             SFObject.SetControlBinding("#txtMobileNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "MobileNo");
             SFObject.SetControlBinding("#txtEmail", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "EmailAdd");
-            SFObject.SetControlBinding("#chkFullAddress", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "isFullLocation");
-            SFObject.SetControlBinding("#txtFullAddress", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "FullLocationAddress");
-            SFObject.SetControlBinding("#cmbProvince", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Province");
-            SFObject.SetControlBinding("#txtMunicipality", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Municipality");
-            SFObject.SetControlBinding("#txtBarangay", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Barangay");
+            SFObject.SetControlBinding("#chkFullAdd", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "isFullLocation");
+            SFObject.SetControlBinding("#txtFullAdd", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "FullLocationAddress");
+            SFObject.SetControlBinding("#txtFullAdd", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "FullAdd");
+            SFObject.SetControlBinding("#cmbProvince", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Province Description");
+            SFObject.SetControlBinding("#txtMunicipality", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Municipality Description");
+            SFObject.SetControlBinding("#txtBarangay", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Barangay Description");
             SFObject.SetControlBinding("#txtZipCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "ZipCode");
+            SFObject.SetControlBinding("#txtZip", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "ZipCode");
             SFObject.SetControlBinding("#txtRegionCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RegionCode");
             SFObject.SetControlBinding("#txtCountryCode", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CountryCode");
             SFObject.SetControlBinding("#txtRegion", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RegionDesc");
@@ -780,7 +812,7 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#cmbHomeOwn", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "HomeOwnership");
             SFObject.SetControlBinding("#cmbLocType", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "LocationType");
             SFObject.SetControlBinding("#rdbAllowNotitYes", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "AllowNotifIndivYes");
-            SFObject.SetControlBinding("#rdbAllowNotitNo", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "AllowNotifIndivNo");
+            SFObject.SetControlBinding("#rdbAllowNotifNo", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "AllowNotifIndivNo");
             SFObject.SetControlBinding("#dtpTranDate", "text", "", "#noah-webui-Toolbox-BindingNavigator", "Recdate");
 
             //Spouse Info
@@ -791,7 +823,7 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#cmbSuffixSP", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SpouseSuffix");
             SFObject.SetControlBinding("#cmbSalutationSP", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SpouseSalutation");
             SFObject.SetControlBinding("#cmbGenderSP", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SpouseGender");
-            SFObject.SetControlBinding("#txtBdaySP", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SpouseBirthday");
+            SFObject.SetControlBinding("#txtSpouseBday", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SpouseBirthday");
             SFObject.SetControlBinding("#txtAgeSP", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SpouseAge");
             SFObject.SetControlBinding("#txtTINSP", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SpouseTIN");
             SFObject.SetControlBinding("#txtDateMarriageSP", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "SpouseDateOfMarriage");
@@ -822,12 +854,12 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#cmbSuffixCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerSuffix");
             SFObject.SetControlBinding("#cmbRelationshipCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerRelationship");
             SFObject.SetControlBinding("#cmbGenderCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerGender");
-            SFObject.SetControlBinding("#txtBdayCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerBirthday");
+            SFObject.SetControlBinding("#txtCoownerBirthday", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerBirthday");
             SFObject.SetControlBinding("#txtAgeCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerAge");
             SFObject.SetControlBinding("#txtPlaceBirthCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerPlaceOfBirth");
             SFObject.SetControlBinding("#cmbCivilStatusCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerCivilStatus");
             SFObject.SetControlBinding("#cmbNationalityCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerNationality");
-            SFObject.SetControlBinding("#txtTINCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerTIN");
+            SFObject.SetControlBinding("#txtCoownerTIN", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerTIN");
             SFObject.SetControlBinding("#txtResidentialAddressCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerPresentAddress");
             SFObject.SetControlBinding("#txtLandlineNoCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerLandline");
             SFObject.SetControlBinding("#txtLocalNoCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerLocal");
@@ -839,6 +871,31 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#txtRowID", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerRowID");
             SFObject.SetControlBinding("#txtPositionCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerPosition");
             SFObject.SetControlBinding("#cmbHomeOwnCO", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerHomeOwnership");
+            //Coowner Info VIEW ALL RECORDS
+            SFObject.SetControlBinding("#txtLastNameCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerLastName");
+            SFObject.SetControlBinding("#txtFirstNameCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerFirstName");
+            SFObject.SetControlBinding("#txtMiddleNameCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerMiddleName");
+            SFObject.SetControlBinding("#txtmriCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerMI");
+            SFObject.SetControlBinding("#cmbSuffixCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerSuffix");
+            SFObject.SetControlBinding("#cmbRelationshipCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerRelationship");
+            SFObject.SetControlBinding("#cmbGenderCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerGender");
+            SFObject.SetControlBinding("#txtCoownerBirthdayD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerBirthday");
+            SFObject.SetControlBinding("#txtAgeCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerAge");
+            SFObject.SetControlBinding("#txtPlaceBirthCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerPlaceOfBirth");
+            SFObject.SetControlBinding("#cmbCivilStatusCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerCivilStatus");
+            SFObject.SetControlBinding("#cmbNationalityCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerNationality");
+            SFObject.SetControlBinding("#txtCoownerTIND", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerTIN");
+            SFObject.SetControlBinding("#txtResidentialAddressCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerPresentAddress");
+            SFObject.SetControlBinding("#txtLandlineNoCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerLandline");
+            SFObject.SetControlBinding("#txtLocalNoCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerLocal");
+            SFObject.SetControlBinding("#txtMobileNoCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerMobile");
+            SFObject.SetControlBinding("#txtEmailCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerEmail");
+            SFObject.SetControlBinding("#txtEmployerNameCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerEmployerName");
+            SFObject.SetControlBinding("#txtEmployerAddressCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerEmployerAddress");
+            SFObject.SetControlBinding("#txtEmployerContactCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerEmployerContact");
+            SFObject.SetControlBinding("#txtRowID", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerRowID");
+            SFObject.SetControlBinding("#txtPositionCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerPosition");
+            SFObject.SetControlBinding("#cmbHomeOwnCOD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CoownerHomeOwnership");
 
             //Coowner Spouse
             SFObject.SetControlBinding("#txtspouseID", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseID");
@@ -848,21 +905,38 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#txtmriCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseMI");
             SFObject.SetControlBinding("#cmbSuffixCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseSuffix");
             SFObject.SetControlBinding("#cmbSalutationCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseSalutation");
-            SFObject.SetControlBinding("#txtGenderCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseGender");
+            SFObject.SetControlBinding("#cmbGenderCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseGender");
             SFObject.SetControlBinding("#txtMothersMaidenCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseMothersMaidenName");
-            SFObject.SetControlBinding("#txtBdayCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseBirthday");
+            SFObject.SetControlBinding("#txtCoownerSpouseBday", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseBirthday");
             SFObject.SetControlBinding("#txtAgeCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseAge");
             SFObject.SetControlBinding("#txtTINCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseTIN");
             SFObject.SetControlBinding("#txtDateMarriageCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseDateOfMarriage");
             SFObject.SetControlBinding("#cmbNationalityCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseNationality");
             SFObject.SetControlBinding("#cmbOccupationCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseOccupation");
             SFObject.SetControlBinding("#txtCompanyCOS", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseCompany");
+            //Coowner Spouse VIEW ALL RECORDS
+            SFObject.SetControlBinding("#txtspouseID", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseID");
+            SFObject.SetControlBinding("#txtLastNameCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseLastName");
+            SFObject.SetControlBinding("#txtFirstNameCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseFirstName");
+            SFObject.SetControlBinding("#txtMiddleNameCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseMiddleName");
+            SFObject.SetControlBinding("#txtmriCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseMI");
+            SFObject.SetControlBinding("#cmbSuffixCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseSuffix");
+            SFObject.SetControlBinding("#cmbSalutationCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseSalutation");
+            SFObject.SetControlBinding("#cmbGenderCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseGender");
+            SFObject.SetControlBinding("#txtMothersMaidenCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseMothersMaidenName");
+            SFObject.SetControlBinding("#txtCoownerSpouseBdayD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseBirthday");
+            SFObject.SetControlBinding("#txtAgeCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseAge");
+            SFObject.SetControlBinding("#txtTINCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseTIN");
+            SFObject.SetControlBinding("#txtDateMarriageCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseDateOfMarriage");
+            SFObject.SetControlBinding("#cmbNationalityCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseNationality");
+            SFObject.SetControlBinding("#cmbOccupationCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseOccupation");
+            //SFObject.SetControlBinding("#txtCompanyCOSD", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CSpouseCompany");
 
             //Corporate
             SFObject.SetControlBinding("#chkRepresentativeCB", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "withRepresentative");
             SFObject.SetControlBinding("#cbVATCB", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "CorpVatRegTypeVAT");
             SFObject.SetControlBinding("#cbNVatCB", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "CorpVatRegTypeNONVAT");
-            SFObject.SetControlBinding("#chkFullAddressCB", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "isFullLocation");
+            SFObject.SetControlBinding("#chkFullAddCorpo", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "isFullLocation");
             SFObject.SetControlBinding("#txtRegNameCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RegisteredName");
             SFObject.SetControlBinding("#txtTradeNameCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "TradeName");
             SFObject.SetControlBinding("#txtVatRegTinCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "VatREGTin");
@@ -871,15 +945,15 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#txtLocalNoCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "LocalNo");
             SFObject.SetControlBinding("#txtMobileNoCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "MobileNo");
             SFObject.SetControlBinding("#txtEmailCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "EmailAdd");
-            SFObject.SetControlBinding("#txtFullAddressCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "FullLocationAddress");
+            SFObject.SetControlBinding("#txtFullAddCorpo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "FullLocationAddress");
             SFObject.SetControlBinding("#cmbProvinceCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Province");
-            SFObject.SetControlBinding("#txtMunicipalityCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Municipality");
-            SFObject.SetControlBinding("#txtBarangayCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Barangay");
-            SFObject.SetControlBinding("#txtZipCodeCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "ZipCode");
+            SFObject.SetControlBinding("#cmbMunicipalityCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Municipality");
+            SFObject.SetControlBinding("#cmbBarangayCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Barangay");
+            SFObject.SetControlBinding("#txtZipCorpo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "ZipCode");
             SFObject.SetControlBinding("#txtRegionCodeCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RegionCode");
             SFObject.SetControlBinding("#txtCountryCodeCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CountryCode");
-            SFObject.SetControlBinding("#txtRegionCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RegionDesc");
-            SFObject.SetControlBinding("#txtCountryCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CountryDesc");
+            SFObject.SetControlBinding("#txtRegionCorpo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "RegionDesc");
+            SFObject.SetControlBinding("#txtCountryCorpo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "CountryDesc");
             SFObject.SetControlBinding("#cmbNatureOfBusinessCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "NatureOfBusiness");
             SFObject.SetControlBinding("#cmbBusinessTypeCB", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "BusinessType");
             SFObject.SetControlBinding("#rdbAllowNotitCorpoYes", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "AllowNotifCorpoYes");
@@ -915,12 +989,23 @@ namespace Noah_Web.forms_BusinessLayer
             SFObject.SetControlBinding("#txtOthersDesiredPI", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PrefDesiredPropertyOthers");
             SFObject.SetControlBinding("#cmbSourceOfAwarenessPI", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PrefSourceOfAwareness");
             SFObject.SetControlBinding("#txtOthersSourceOfAwarenessPI", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PrefSourceOfAwarenessOthers");
+            SFObject.SetControlBinding("#cmbSalesActivityPI", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PrefSalesActivity");
+            SFObject.SetControlBinding("#txtOthersSalesActivity", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PrefSalesActivityOthers");
             SFObject.SetControlBinding("#cmbPriceRangePI", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PrefPriceRange");
             SFObject.SetControlBinding("#cbYes", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "PrefYes");
             SFObject.SetControlBinding("#cbNo", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "PrefNo");
+            SFObject.SetControlBinding("#cbYesNomi", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "PrefYes1");
+            SFObject.SetControlBinding("#cbNoNomi", "prop", "checked", "#noah-webui-Toolbox-BindingNavigator", "PrefNo1");
             SFObject.SetControlBinding("#txtNamePI", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PrefName");
             SFObject.SetControlBinding("#txtMobileNoPI", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PrefMobileNo");
             SFObject.SetControlBinding("#txtEmailPI", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PrefEmail");
+
+            //Other Details
+            SFObject.SetControlBinding("#txtAppointmentDate", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "OtherdetConfirmedApptDate");
+            SFObject.SetControlBinding("#txtDateSigned", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "OtherdetDateSigned");
+            SFObject.SetControlBinding("#txtAppointmentTime", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "OtherdetTimeOfAppt");
+            SFObject.SetControlBinding("#txtTimeSigned", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "OtherdetTimeSigned");
+            SFObject.SetControlBinding("#txtSubmissionDate", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "OtherdetSubmissionDate");
 
             //FOOTER
             SFObject.SetControlBinding("#nwtxt_RecUser", "text", "", "#noah-webui-Toolbox-BindingNavigator", "Recuser");
@@ -934,7 +1019,7 @@ namespace Noah_Web.forms_BusinessLayer
         {
             SetDefaultMunicipalityBarangay();
             setCustomerImage();
-            GenerateDesiredProperty();
+
             string nwCustno = "";
             if (HttpContext.Current != null)
             {
@@ -943,17 +1028,23 @@ namespace Noah_Web.forms_BusinessLayer
             }
             if (nwCustno != "")
             {
-                nwToolBox.bindingNavigatorAddNewItem.Enable = false;
-                nwToolBox.bindingNavigatorProcessItem.Enable = false;
-                nwToolBox.bindingNavigatorInquireItem.Enable = false;
-                nwToolBox.bindingNavigatorRefreshItem.Enable = false;
+                //nwToolBox.bindingNavigatorAddNewItem.Enable = false;
+                //nwToolBox.bindingNavigatorProcessItem.Enable = false;
+                //nwToolBox.bindingNavigatorInquireItem.Enable = false;
+                //nwToolBox.bindingNavigatorRefreshItem.Enable = false;
+                js.ADD("$('.btn-tb-new').enable(false);");
+                //js.ADD("$('.btn-tb-delete').enable(true);");
+                js.ADD("$('.btn-tb-inquire').enable(true);");
+                //js.ADD("$('.btn-tb-delete').enable(true);");
             }
             else
             {
-                nwToolBox.bindingNavigatorAddNewItem.Enable = true;
-                nwToolBox.bindingNavigatorProcessItem.Enable = true;
-                nwToolBox.bindingNavigatorInquireItem.Enable = true;
-                nwToolBox.bindingNavigatorRefreshItem.Enable = true;
+                //nwToolBox.bindingNavigatorAddNewItem.Enable = true;
+                //nwToolBox.bindingNavigatorProcessItem.Enable = true;
+                //nwToolBox.bindingNavigatorInquireItem.Enable = true;
+                //nwToolBox.bindingNavigatorRefreshItem.Enable = true;
+                js.ADD("$('.btn-tb-new').enable(true);");
+                js.ADD("$('.btn-tb-inquire').enable(true);");
             }
 
             // js.ADD("$('#noah-webui-Toolbox').bindingProcess().visible(true);");
@@ -964,14 +1055,18 @@ namespace Noah_Web.forms_BusinessLayer
             if (status == 3 || status == 4)
             {
                 js.ADD("DisableFields()");
-                nwToolBox.bindingNavigatorSaveItem.Enable = false;
-                nwToolBox.bindingNavigatorProcessItem.Enable = false;
-                nwToolBox.bindingNavigatorInquireItem.Enable = true;
-                nwToolBox.bindingNavigatorExportItem.Enable = true;
-                nwToolBox.bindingNavigatorDeleteItem.Enable = false;
-                nwToolBox.bindingNavigatorPrintItem.Enable = true;
+                //nwToolBox.bindingNavigatorSaveItem.Enable = false;
+                //nwToolBox.bindingNavigatorProcessItem.Enable = false;
+                //nwToolBox.bindingNavigatorInquireItem.Enable = true;
+                //nwToolBox.bindingNavigatorExportItem.Enable = true;
+                //nwToolBox.bindingNavigatorDeleteItem.Enable = false;
+                //nwToolBox.bindingNavigatorPrintItem.Enable = true;
+                js.ADD("$('.btn-tb-save').enable(false);");
+                js.ADD("$('.btn-tb-inquire').enable(true);");
+                js.ADD("$('.btn-tb-delete').enable(false);");
                 if (nwCustno != "")
-                    nwToolBox.bindingNavigatorInquireItem.Enable = false;
+                    //nwToolBox.bindingNavigatorInquireItem.Enable = false;
+                    js.ADD("$('.btn-tb-inquire').enable(true);");
                 string isAllowed = dal.getUpdateAccess(based.SecurityAccess.RecUser);
                 if (isAllowed != "")
                     js.Enable("#btnupdate", true);
@@ -980,9 +1075,10 @@ namespace Noah_Web.forms_BusinessLayer
             }
             else
             {
-                nwToolBox.bindingNavigatorSaveItem.Enable = true;
-                nwToolBox.bindingNavigatorProcessItem.Enable = true;
-                nwToolBox.bindingNavigatorPrintItem.Enable = false;
+                //nwToolBox.bindingNavigatorSaveItem.Enable = true;
+                //nwToolBox.bindingNavigatorProcessItem.Enable = true;
+                //nwToolBox.bindingNavigatorPrintItem.Enable = false;
+                js.ADD("$('.btn-tb-save').enable(true);");
                 js.Enable("#btnupdate", false);
                 js.ADD("EnableFields()");
                 js.ADD("$('.fsMain').enable(false);");
@@ -993,7 +1089,7 @@ namespace Noah_Web.forms_BusinessLayer
             js.ADD("cust_GetPara();");
             string isindv = WebApp.nwobjectText("Individual");
             string iscomp = WebApp.nwobjectText("Company");
-
+            //string isCheck = WebApp.nwobject()
             if (isindv == "true")
             {
                 //js.ADD("ChangeCivilStatus('cmbCivilStatus');");
@@ -1007,17 +1103,22 @@ namespace Noah_Web.forms_BusinessLayer
             }
             js.ADD("CheckIfWithCoowner();");
             js.ADD("CheckIfWithRepresentative();");
-            js.ADD("$('#btnAddCoowner,#btnViewCoowner').enable(true);");
+            js.ADD("$('#btnAddCoowner').enable(true);");
+            js.ADD("$('#btnViewCoowner').enable(true);");
             js.ADD("RefreshData();");
             js.ADD("nwLoading_End('actBindCollection');");
 
             js.ADD("CheckIfOthers('cmbReasonForBuyingPI');");
             js.ADD("CheckIfOthers('txtDesiredPropertyPI');");
             js.ADD("CheckIfOthers('cmbSourceOfAwarenessPI');");
+            js.ADD("CheckIfOthers('cmbSalesActivityPI');");
+            js.ADD("CheckIfOthers('cmbProvince');");
+            js.ADD("CheckIfOthers('cmbMunicipality');");
+            js.ADD("CheckIfOthers('cmbBarangay');");
 
             //Check coowner count
-            DataTable dt = dal.GetCoownerDetails(WebApp.nwobjectText("txtCode"));
-            if (dt.Rows.Count > 1)
+            DataTable dt = dal.GetCoownerDetails(WebApp.nwobjectText("code"));
+            if (dt.Rows.Count >= 1)
             {
                 js.ADD("$('#btnViewCoowner').enable(true);");
             }
@@ -1030,6 +1131,13 @@ namespace Noah_Web.forms_BusinessLayer
                 js.ADD("func_ChangeRecommendation('Y',false)");
             else
                 js.ADD("func_ChangeRecommendation('N',false)");
+
+            if (WebApp.nwobjectBool("cbYesNomi") == true)
+                js.ADD("func_ChangeNomination('Y',false)");
+            else
+            { js.ADD("func_ChangeNomination('N',false)"); }
+
+            
 
             setRqmtCompProp();
         }
@@ -1081,10 +1189,11 @@ namespace Noah_Web.forms_BusinessLayer
             bool validateatty = WebApp.nwobjectBool("chkRepresentativeCB");
 
             string errorResult = string.Empty;
-
+            
             string refCode = WebApp.nwobjectText("txtCodeCrossReference");
             string tin = WebApp.nwobjectText("txtTIN");
-            string bday = WebApp.nwobjectText("txtBday");
+            string bday = WebApp.nwobjectText("txtIndivBday");
+            //string bdayCO = WebApp.nwobjectText("txtBdayCO");
             int isExisting = dal.ifExisting(refCode, tin, bday);
 
             if (validateindividual == false && validatecompany == false)
@@ -1125,8 +1234,10 @@ namespace Noah_Web.forms_BusinessLayer
                     errorResult += "Cannot be saved. Salutation is required in Individual Buyer.\n";
                 if (WebApp.nwobjectText("cmbGender").Length <= 0)
                     errorResult += "Cannot be saved. Gender is required in Individual Buyer.\n";
-                if (WebApp.nwobjectText("txtBday").Length <= 0)
+                if (WebApp.nwobjectText("txtIndivBday").Length <= 0)
                     errorResult += "Cannot be saved. Date of Birth is required in Individual Buyer.\n";
+                if (WebApp.nwobjectText("txtIndivAge").Length <= 0)
+                    errorResult += "Cannot be saved. Age is required in Individual Buyer.\n";
                 if (WebApp.nwobjectText("cmbCivilStatus").Length <= 0)
                     errorResult += "Cannot be saved. Civil status is required in Individual Buyer.\n";
                 if (WebApp.nwobjectText("cmbNationality").Length <= 0)
@@ -1135,6 +1246,10 @@ namespace Noah_Web.forms_BusinessLayer
                     errorResult += "Cannot be saved. Mobile No. is required in Individual Buyer.\n";
                 if (WebApp.nwobjectText("txtEmail").Length <= 0)
                     errorResult += "Cannot be saved. Email Address is required in Individual Buyer.\n";
+                if (Parser.ParseInt(WebApp.nwobjectText("txtIndivAge")) < 18)
+                    errorResult += "Cannot be saved. Age must be 18 above.\n";
+                if (WebApp.nwobjectText("txtFullAdd").Length <= 0 && WebApp.nwobjectText("cmbProvince").Length <= 0)
+                    errorResult += "Cannot be saved. Full Address is required in Individual Buyer.\n";
                 //if (WebApp.nwobjectText("txtTIN").Length <= 0)
                 //    errorResult += "Cannot be saved. Individual TIN is required in Individual Buyer.\n";
                 //else
@@ -1182,7 +1297,7 @@ namespace Noah_Web.forms_BusinessLayer
                         errorResult += "Cannot be saved. Relationship to the Customer is required in Co-Owner Information.\n";
                     if (WebApp.nwobjectText("cmbGenderCO").Length <= 0)
                         errorResult += "Cannot be saved. Gender is required in Co-Owner Information.\n";
-                    if (WebApp.nwobjectText("txtBdayCO").Length <= 0)
+                    if (WebApp.nwobjectText("txtCoownerBirthday").Length <= 0)
                         errorResult += "Cannot be saved. Date of Birth is required in Co-Owner Information.\n";
                     if (WebApp.nwobjectText("cmbCivilStatusCO").Length <= 0)
                         errorResult += "Cannot be saved. Civil status is required in Co-Owner Information.\n";
@@ -1190,8 +1305,8 @@ namespace Noah_Web.forms_BusinessLayer
                         errorResult += "Cannot be saved. Nationality is required in Co-Owner Information.\n";
                     //if (WebApp.nwobjectText("txtTINCO").Length <= 0)
                     //    errorResult += "Cannot be saved. TIN is required in Co-Owner Information.\n";
-                    validateTIN = dal.validateTIN(WebApp.nwobjectText("txtCode"), WebApp.nwobjectText("txtTINCO"));
-                    if (validateTIN == "1" && WebApp.nwobjectText("txtTINCO") != "")
+                    validateTIN = dal.validateTIN(WebApp.nwobjectText("txtCode"), WebApp.nwobjectText("txtCoownerTIN"));
+                    if (validateTIN == "1" && WebApp.nwobjectText("txtCoownerTIN") != "")
                         errorResult += "Cannot be saved. Individual TIN in Co-Owner Information already exists.\n";
                 }
                 string csco = WebApp.nwobjectText("cmbCivilStatusCO");
@@ -1203,8 +1318,8 @@ namespace Noah_Web.forms_BusinessLayer
                         errorResult += "Cannot be saved. First Name is required in Co-Owner Spouse Information.\n";
                     if (WebApp.nwobjectText("cmbSalutationCOS").Length <= 0)
                         errorResult += "Cannot be saved. Salutation is required in Co-Owner Spouse Information.\n";
-                    //if (WebApp.nwobjectText("txtBdayCOS").Length <= 0)
-                    //    errorResult += "Cannot be saved. Date of Birth is required in Co-Owner Spouse Information.\n";
+                    if (WebApp.nwobjectText("txtCoownerSpouseBday").Length <= 0)
+                        errorResult += "Cannot be saved. Date of Birth is required in Co-Owner Spouse Information.\n";
                     //if (WebApp.nwobjectText("txtTINCOS").Length <= 0)
                     //    errorResult += "Cannot be saved. TIN is required in Co-Owner Spouse Information.\n";
                     validateTIN = dal.validateTIN(WebApp.nwobjectText("txtCode"), WebApp.nwobjectText("txtTINCOS"));
@@ -1279,6 +1394,8 @@ namespace Noah_Web.forms_BusinessLayer
                 errorResult += "Cannot be saved. Reason for Buying is required in Preference Information.\n";
             if (WebApp.nwobjectText("cmbSourceOfAwarenessPI").Length <= 0)
                 errorResult += "Cannot be saved. Source of Awareness is required in Preference Information.\n";
+            if (WebApp.nwobjectText("cmbSalesActivityPI").Length <= 0)
+                errorResult += "Cannot be saved. Sales Activity is required in Preference Information.\n";
             //if (WebApp.nwobjectBool("cbYes") == true)
             //{
             //    if (WebApp.nwobjectText("txtNamePI").Length <= 0)
@@ -1293,6 +1410,18 @@ namespace Noah_Web.forms_BusinessLayer
             //{
             //    errorResult += "Cannot be saved. Customer Type is Required. \n";
             //}
+
+            //Other Details
+            if (WebApp.nwobjectText("txtAppointmentDate").Length <= 0)
+                errorResult += "Cannot be saved. Confirmed Appointment Date is required in Other Details.\n";
+            if (WebApp.nwobjectText("txtDateSigned").Length <= 0)
+                errorResult += "Cannot be saved. Date Signed is required in Other Details.\n";
+            if (WebApp.nwobjectText("txtAppointmentTime").Length <= 0)
+                errorResult += "Cannot be saved. Time of Appointment is required in Other Details.\n";
+            if (WebApp.nwobjectText("txtTimeSigned").Length <= 0)
+                errorResult += "Cannot be saved. Time Signed is required in Other Details.\n";
+            if (WebApp.nwobjectText("txtSubmissionDate").Length <= 0)
+                errorResult += "Cannot be saved. Submission Date is required in Other Details.\n";
 
             return errorResult;
         }
@@ -1326,7 +1455,7 @@ namespace Noah_Web.forms_BusinessLayer
                         dr["MI"] = WebApp.nwobjectText("txtmri");
                         dr["MothersMaidenName"] = WebApp.nwobjectText("txtMothersMaiden");
                         dr["nameSuffix"] = WebApp.nwobjectText("cmbSuffix");
-                        dr["Birthday"] = WebApp.nwobjectDate("txtBday");
+                        dr["Birthday"] = WebApp.nwobjectDate("txtIndivBday");
                         dr["PlaceofBirth"] = WebApp.nwobjectText("txtPlaceBirth");
                         dr["Gender"] = WebApp.nwobjectText("cmbGender");
                         dr["CivilStatus"] = WebApp.nwobjectText("cmbCivilStatus");
@@ -1353,15 +1482,25 @@ namespace Noah_Web.forms_BusinessLayer
                         dr["AllowNotifIndivNo"] = WebApp.nwobjectBool("AllowNotifIndivNo") == true ? 1 : 0;
                         dr["AllowNotifCorpoYes"] = WebApp.nwobjectBool("AllowNotifCorpoYes") == true ? 1 : 0;
                         dr["AllowNotifCorpoNo"] = WebApp.nwobjectBool("AllowNotifCorpoNo") == true ? 1 : 0;
+                        dr["ProspectCustomerCode"] = WebApp.nwobjectText("txtPCode");
+                        dr["FullAdd"] = WebApp.nwobjectText("txtFullAdd");
+                        dr["Province"] = WebApp.nwobjectText("cmbProvince");
+                        dr["Municipality"] = WebApp.nwobjectText("cmbMunicipality");
+                        dr["Barangay"] = WebApp.nwobjectText("cmbBarangay");
+                        dr["ZIPCode"] = WebApp.nwobjectText("txtZip");
+                        dr["Region"] = WebApp.nwobjectText("txtRegion");
+                        dr["Country"] = WebApp.nwobjectText("txtCountry");
+                        dr["isCheck"] = WebApp.nwobjectBool("chkWithClientApptSlip") == true ? 1 : 0;
                         break;
 
                     case 1: // contacts lin
                         dr["customerCode"] = WebApp.nwobjectText("txtCode");
-                        dr["LandlineNo"] = WebApp.nwobjectBool("Company") == true ? WebApp.nwobjectText("txtLandlineNoCB") : WebApp.nwobjectText("txtLandlineNo");
-                        dr["LocalNo"] = WebApp.nwobjectBool("Company") == true ? WebApp.nwobjectText("txtLocalNoCB") : WebApp.nwobjectText("txtLocalNo");
+                        dr["LandlineNo"] = WebApp.nwobjectBool("Company") == true ? WebApp.nwobjectText("txtLandlineNoCB") : WebApp.nwobjectText("txtHomePhoneNo");//WebApp.nwobjectText("txtLandlineNo");
+                        dr["LocalNo"] = WebApp.nwobjectBool("Company") == true ? WebApp.nwobjectText("txtLocalNoCB") : ""; //WebApp.nwobjectText("txtLocalNo");
                         dr["MobileNo"] = WebApp.nwobjectBool("Company") == true ? WebApp.nwobjectText("txtMobileNoCB") : WebApp.nwobjectText("txtMobileNo");
                         dr["EmailAdd"] = WebApp.nwobjectBool("Company") == true ? WebApp.nwobjectText("txtEmailCB") : WebApp.nwobjectText("txtEmail");
                         dr["EffectiveDate"] = DateTime.Now.ToShortDateString();//WebApp.nwobjectDate("getCSD");
+                        dr["ProspectCustomerCode"] = WebApp.nwobjectText("txtPCode");
                         break;
 
                     case 2://Coowner lin
@@ -1370,10 +1509,10 @@ namespace Noah_Web.forms_BusinessLayer
                         dr["LName"] = WebApp.nwobjectText("txtLastNameCO");//
                         dr["FName"] = WebApp.nwobjectText("txtFirstNameCO");//
                         dr["MName"] = WebApp.nwobjectText("txtMiddleNameCO");//
-                        dr["TIN"] = WebApp.nwobjectText("txtTINCO");//
+                        dr["TIN"] = WebApp.nwobjectText("txtCoownerTIN");//
                         dr["Gender"] = WebApp.nwobjectText("cmbGenderCO");//
                         dr["Nationality"] = WebApp.nwobjectText("cmbNationalityCO");//
-                        dr["DateofBirth"] = WebApp.nwobjectDate("txtBdayCO");//
+                        dr["DateofBirth"] = WebApp.nwobjectDate("txtCoownerBirthday");//
                         dr["Age"] = WebApp.nwobjectInt("txtAgeCO");//
                         dr["PlaceofBirth"] = WebApp.nwobjectText("txtPlaceBirthCO");//
                         dr["PresentAddress"] = WebApp.nwobjectText("txtResidentialAddressCO");//
@@ -1387,6 +1526,7 @@ namespace Noah_Web.forms_BusinessLayer
                         dr["myname"] = 0;
                         dr["spouses"] = WebApp.nwobjectText("txtLastNameCOS") != "" ? 1 : 0;
                         dr["namesuffix"] = WebApp.nwobjectText("cmbSuffixCO");//
+                        dr["ProspectCustomerCode"] = WebApp.nwobjectText("txtPCode");
                         break;
                     case 3://coowner contacts
                         dr["Customer"] = WebApp.nwobjectText("txtCode");
@@ -1398,6 +1538,7 @@ namespace Noah_Web.forms_BusinessLayer
                         dr["Rowno"] = 1;
                         dr["RefRownoLIN"] = 0;
                         dr["RowID"] = WebApp.nwobjectText("txtRowID");
+                        dr["ProspectCustomerCode"] = WebApp.nwobjectText("txtPCode");
                         break;
                     case 4://coowner spouse
                         dr["customerCode"] = WebApp.nwobjectText("txtCode");
@@ -1407,12 +1548,13 @@ namespace Noah_Web.forms_BusinessLayer
                         dr["mi"] = WebApp.nwobjectText("txtmriCOS");//
                         dr["salutationCode"] = WebApp.nwobjectText("cmbSalutationCOS");//
                         dr["genderCode"] = WebApp.nwobjectText("cmbGenderCOS");//
-                        dr["dateofBirth"] = WebApp.nwobjectDate("txtBdayCOS");//
+                        dr["dateofBirth"] = WebApp.nwobjectDate("txtCoownerSpouseBday");//
                         dr["tin"] = WebApp.nwobjectText("txtTINCOS");//
                         dr["dateOfMarriage"] = WebApp.nwobjectDate("txtDateMarriageCOS");//
                         dr["nationalityCode"] = WebApp.nwobjectText("cmbNationalityCOS");//
                         dr["occupationCode"] = WebApp.nwobjectText("cmbOccupationCOS");//
                         dr["spouseID"] = WebApp.nwobjectText("txtspouseID");
+                        dr["ProspectCustomerCode"] = WebApp.nwobjectText("txtPCode");
                         break;
 
                     case 5://attorney lin
@@ -1434,6 +1576,7 @@ namespace Noah_Web.forms_BusinessLayer
                         dr["CivilStatus_ENH"] = WebApp.nwobjectText("cmbCivilStatusAF");//
                         dr["chkRepresentative"] = WebApp.nwobjectBool("chkRepresentativeCB") == true ? 1 : 0;
                         dr["ROWNO"] = 1;
+                        dr["ProspectCustomerCode"] = WebApp.nwobjectText("txtPCode");
                         break;
                     case 6://atty in fact 
                         dr["ID"] = WebApp.nwobjectText("txtCode");
@@ -1442,6 +1585,7 @@ namespace Noah_Web.forms_BusinessLayer
                         dr["MobileNo"] = WebApp.nwobjectText("txtMobileNoAF");//
                         dr["EmailAddress"] = WebApp.nwobjectText("txtEmailAF");//
                         dr["ROWNO"] = 1;
+                        dr["ProspectCustomerCode"] = WebApp.nwobjectText("txtPCode");
                         break;
 
                     case 7://preference lin
@@ -1450,13 +1594,26 @@ namespace Noah_Web.forms_BusinessLayer
                         dr["ReasonForBuyingOthers"] = WebApp.nwobjectText("txtOthersReasonPI");
                         dr["DesiredProperty"] = WebApp.nwobjectText("txtDesiredPropertyPI");//
                         dr["DesiredPropertyOthers"] = WebApp.nwobjectText("txtOthersDesiredPI");
-                        dr["SourceOfAwareness"] = WebApp.nwobjectText("cmbSourceOfAwarenessPI");//
+                        dr["SourceOfAwareness"] = WebApp.nwobjectText("cmbSourceOfAwarenessPI");//                        
                         dr["SourceOfAwarenessOthers"] = WebApp.nwobjectText("txtOthersSourceOfAwarenessPI");//
+                        dr["SalesActivity"] = WebApp.nwobjectText("cmbSalesActivityPI");//
+                        dr["SalesActivityOthers"] = WebApp.nwobjectText("txtOthersSalesActivity");
                         dr["PriceRange"] = WebApp.nwobjectText("cmbPriceRangePI");//
+                        dr["isNomination"] = WebApp.nwobjectBool("cbYesNomi") == true ? 1 : 0;
                         dr["isRecommended"] = WebApp.nwobjectBool("cbYes") == true ? 1 : 0;
                         dr["Name"] = WebApp.nwobjectText("txtNamePI");//
                         dr["MobileNo"] = WebApp.nwobjectText("txtMobileNoPI");//
                         dr["Email"] = WebApp.nwobjectText("txtEmailPI");//
+                        dr["ProspectCustomerCode"] = WebApp.nwobjectText("txtPCode");
+                        break;
+                    case 8://other details lin
+                        dr["customerCode"] = WebApp.nwobjectText("txtCode");
+                        dr["ConfirmedApptDate"] = WebApp.nwobjectText("txtAppointmentDate");//
+                        dr["DateSigned"] = WebApp.nwobjectText("txtDateSigned");
+                        dr["TimeOfAppt"] = WebApp.nwobjectText("txtAppointmentTime");//
+                        dr["TimeSigned"] = WebApp.nwobjectText("txtTimeSigned");
+                        dr["SubmissionDate"] = WebApp.nwobjectText("txtSubmissionDate");//
+                        dr["ProspectCustomerCode"] = WebApp.nwobjectText("txtPCode");
                         break;
                 }
                 dt.Rows.Add(dr);
@@ -1481,6 +1638,7 @@ namespace Noah_Web.forms_BusinessLayer
             js.ADD("$('#txtServerLink').val('" + server + "')");
             js.ADD($"$DateToday='{dal.getNoahDate()}'");
             js.makeValueText("getCSD", DateTime.Now.ToShortDateString());
+            js.makeValueText("getCSDCO", DateTime.Now.ToShortDateString());
 
             js.ADD("SetDefaultIndividual()");
             js.Enable("#btnupdate", false);
@@ -1531,8 +1689,10 @@ namespace Noah_Web.forms_BusinessLayer
                     case 19: value = ".cmbRelationship"; break; //Relationship
                     case 20: value = ".cmbReasonForBuying"; break; //Reason for Buying
                     case 21: value = ".cmbSourceOfAwareness"; break; //Source of Awareness
-                    case 22: value = ".cmbPriceRange"; break; //Price Range
-                    case 23: value = ".cmbBusinessType"; break; //Business/Company Type
+                    case 22: value = ".cmbSalesActivityPI"; break; //Source of Awareness
+                    case 23: value = ".cmbPriceRange"; break; //Price Range
+                    case 24: value = ".cmbBusinessType"; break; //Business/Company Type
+                   
                 }
                 DataTable dt = dsData.Tables[i];
                 for (int j = 0; j < dt.Rows.Count; j++)
@@ -1611,17 +1771,7 @@ namespace Noah_Web.forms_BusinessLayer
 
 
         }
-        public void GenerateDesiredProperty()
-        {
-            string code = "";
-            if (WebApp.nwobjectText("txtCode") != "")
-                code = WebApp.nwobjectText("txtCode");
-            else
-                code = based.SecurityAccess.RecUser;
-            DataTable dtDP = dal.GetDesiredProperty(code);
-            string dpvals = nwSystem.GetDataTableToJSON(dtDP);
-            js.ADD("GenerateDesiredProperty(" + dpvals + ")");
-        }
+     
 
     }
 }

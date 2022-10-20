@@ -10306,17 +10306,6 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
         crnwTRtemp[SPR_RefAddon_Desc - 1] = desc;
 
     }
-    if (nwGridID == "nwGridPaymentTermDetails") {
-        var code = addtoListTableRec.find('tr:eq(' + index + ') td:eq(1)').text();
-        var desc = addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text();
-
-        crnwTRtemp[SPR_PaymentTermDetails_PaymentCategory - 1] = code;
-        crnwTRtemp[SPR_PaymentTermDetails_PaymentCategoryDesc - 1] = desc;
-
-        //
-
-    }
-
 
     return crnwTRtemp;
 }
@@ -10706,6 +10695,13 @@ function newSpreadErrorSolutionCustom() {
 
 
 }
+
+$(document).on('click', '.btn-modal-back', function () {
+    //$('#RequirementCompliance').hide();
+    $(".modal-s").removeClass("_show");
+    $(".modal-box-s").removeClass("_slide-m");
+
+});
 
 
 

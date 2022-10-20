@@ -60,10 +60,11 @@ var SPR_SRSellerRoleCode = 1,
                             SPR_SRSellerCode = 4,
                             SPR_SRSellerName = 5,
                             SPR_SRRowno = 6;
-
+var nwGridMainCon_Book;
+var nwGridMainCon_Sheet;
 function func_Reload() {
 
-    crLnk = "../BMSellerInformationButtons_Gateway.cshtml";
+    crLnk = "../BMSellerInformationButtons/BMSellerInformationButtons_Gateway";
     crLnkGateKey = "BMSellerInformationButtons";
     var isContinue = true;
     nwType = getParameterByName('nwType');
@@ -91,18 +92,25 @@ function func_Reload() {
         $("#noah-webui-default-Delete").visible(false);
         hideMenuButton();
         $('#noah-webui-Toolbox-BindingNavigator').visible(false);
+        $('#txtEffectiveDate').visible(false);
+        $('#lblEffectiveDate').visible(false);
+
     }
 
     else if (nwTranType == "ADAC") {
         nwtitle = "Account Details (As a Customer)";
         hideMenuButton();
         $('#noah-webui-Toolbox-BindingNavigator').visible(false);
+        $('#txtEffectiveDate').visible(false);
+        $('#lblEffectiveDate').visible(false);
     }
 
     else if (nwTranType == "SETD") {
         nwtitle = "Seminar/Trainings Details"
         hideMenuButton();
         $('#noah-webui-Toolbox-BindingNavigator').visible(false);
+        $('#txtEffectiveDate').visible(false);
+        $('#lblEffectiveDate').visible(false);
     }
 
     else if (nwTranType == "SELD") {
@@ -114,12 +122,16 @@ function func_Reload() {
         hideMenuButton();
         $('#txtEffectiveDate').css('display', 'none');
         $('#lblEffectiveDate').css('display', 'none');
+        $('#txtEffectiveDate').visible(false);
+        $('#lblEffectiveDate').visible(false);
     }
 
     else if (nwTranType == "VUPH") {
         nwtitle = "View Update History";
         hideMenuButton();
         $('#noah-webui-Toolbox').visible(false);
+        $('#txtEffectiveDate').visible(false);
+        $('#lblEffectiveDate').visible(false);
 
     }
 
@@ -268,7 +280,7 @@ function EnableFields() {
     cust_GetPara();
     $("#txtEffectiveDate").enable(true);
     $("#lugSellerRoleTo").enable(true);
-    $("#nwGridCon").enable(true);
+    $("#nwGridMainCon").enable(true);
 
 }
 
@@ -276,7 +288,7 @@ function DisableFields() {
     cust_GetPara();
     $("#txtEffectiveDate").enable(false);
     $("#lugSellerRoleTo").enable(false);
-    $("#nwGridCon").enable(false);
+    $("#nwGridMainCon").enable(false);
 
 }
 
@@ -322,10 +334,10 @@ function EnableFieldsDone() {//Binding Done
         $("#noah-webui-Toolbox").bindingInquire().visible(false);
         $("#noah-webui-Toolbox").bindingExport().enable(true);
 
-        $("#nwGridCon").enable(false);
+        $("#nwGridMainCon").enable(false);
 
         if (nwTranType == "DOCD") {
-            func_nwGrid_ColumnHide("#nwGridCon", 10);//hide attach
+            func_nwGridMainCon_ColumnHide("#nwGridMainCon", 10);//hide attach
         }
     }
     else {
@@ -338,7 +350,7 @@ function EnableFieldsDone() {//Binding Done
         $("#noah-webui-Toolbox").bindingDelete().enable(true);
         $("#noah-webui-Toolbox").bindingExport().enable(true);
 
-        $("#nwGridCon").enable(true);
+        $("#nwGridMainCon").enable(true);
     }
     //}
 
@@ -349,6 +361,7 @@ function Afterbinding() {
 
         $('#lblEffectiveDate').show();
         $('#txtEffectiveDate').show();
+        
 
         //currServerDate = $('#txtCurrentDate').val();
         //EffectivetyDate = $('#txtEffectiveDate').val();
@@ -357,10 +370,10 @@ function Afterbinding() {
         //        $("#txtEffectiveDate").enable(false);
         //        $("#noah-webui-Toolbox").bindingSave().enable(false);
         //        $("#noah-webui-Toolbox").bindingDelete().enable(false);
-        //        $("#nwGridCon").enable(false);
+        //        $("#nwGridMainCon").enable(false);
         //    } else {
         //        $("#txtEffectiveDate").enable(false);
-        //        $("#nwGridCon").enable(true);
+        //        $("#nwGridMainCon").enable(true);
         //    }
         //}
 
@@ -377,12 +390,12 @@ function Afterbinding() {
         //} else {
         //     $("#noah-webui-Toolbox").bindingNew().enable(false);
         //}
-        var cnt = nwLib.nwTempTable_Row_Count("nwGridCon");
+        var cnt = nwLib.nwTempTable_Row_Count("nwGridMainCon");
         for (var row = 0; row <= cnt; row++) {
-            if (($('#nwGridCon .tblGridBody tr:eq(' + row + ') td:eq(' + (SPR_DDDocumentControlCode) + ')').text() != '')
-                && ($('#nwGridCon .tblGridBody tr:eq(' + row + ') td:eq(' + (SPR_DDAttachment) + ')').text() == '1')) {
-                $("#nwGridCon tbody tr:eq(" + row + ") td:eq(" + SPR_DDView + ")").removeClass("nwGButton");
-                $("#nwGridCon tbody tr:eq(" + row + ") td:eq(" + SPR_DDView + ")").addClass("btnMaylaman");
+            if (($('#nwGridMainCon .tblGridBody tr:eq(' + row + ') td:eq(' + (SPR_DDDocumentControlCode) + ')').text() != '')
+                && ($('#nwGridMainCon .tblGridBody tr:eq(' + row + ') td:eq(' + (SPR_DDAttachment) + ')').text() == '1')) {
+                $("#nwGridMainCon tbody tr:eq(" + row + ") td:eq(" + SPR_DDView + ")").removeClass("nwGButton");
+                $("#nwGridMainCon tbody tr:eq(" + row + ") td:eq(" + SPR_DDView + ")").addClass("btnMaylaman");
             }
         }
         SetGridDownloadButtonProperty();
@@ -408,6 +421,7 @@ function Afterbinding() {
         //} else {
         //    $("#noah-webui-Toolbox").bindingNew().enable(false);
         // }
+        
     }
     else if (nwTranType == "ADAC") {
         //if ($('#txtID').val() == "") {
@@ -442,12 +456,12 @@ function Afterbinding() {
         //if (EffectivetyDate != "") {
         //    if (Date.parse(EffectivetyDate) < Date.parse(currServerDate)) {
         //        $("#txtEffectiveDate").enable(false);
-        //        $("#nwGridCon").enable(false);
+        //        $("#nwGridMainCon").enable(false);
         //        $("#noah-webui-Toolbox").bindingSave().enable(false);
         //        $("#noah-webui-Toolbox").bindingDelete().enable(false);
         //    } else {
         //        $("#txtEffectiveDate").enable(false);
-        //        $("#nwGridCon").enable(true);
+        //        $("#nwGridMainCon").enable(true);
         //    }
         //}
 
@@ -472,13 +486,13 @@ function Afterbinding() {
         //if (EffectivetyDate != "") {
         //    if (Date.parse(EffectivetyDate) < Date.parse(currServerDate)) {
         //        $("#txtEffectiveDate").enable(false);
-        //        $("#nwGridCon").enable(false);
+        //        $("#nwGridMainCon").enable(false);
         //        $("#noah-webui-Toolbox").bindingSave().enable(false);
         //        $("#noah-webui-Toolbox").bindingDelete().enable(false);
         //        $("#lugSellerRoleTo").addClass("adisabled");
         //    } else {
         //        $("#txtEffectiveDate").enable(false);
-        //        $("#nwGridCon").enable(true);
+        //        $("#nwGridMainCon").enable(true);
         //    }
         //}
 
@@ -501,7 +515,7 @@ function DisableFieldsEmpty() {
     cust_GetPara();
     $("#txtEffectiveDate").enable(false);
     $("#lugSellerRoleTo").enable(false);
-    $("#nwGridCon").enable(false);
+    $("#nwGridMainCon").enable(false);
     if (isView == "false") {
         if (nwTranType == "ADAC") {
             $("#noah-webui-Toolbox").bindingDelete().visible(false);
@@ -555,7 +569,7 @@ function nwGrdi_DblClick(nwobj, nwobjrow, nwobjitem) {
     var nwobjID = nwobj.attr('id');
     var col = crnwTD.index();
     cust_GetPara();
-    if (nwobjID == "nwGrid") {
+    if (nwobjID == "nwGridMainCon") {
         if ((col == SPR_ModeofCommissionReleaseCode) && (nwTranType == "MOCR")) {
             lookUpCustomize("lugModeofCommissionReleaseCode", 2);
         }
@@ -563,7 +577,7 @@ function nwGrdi_DblClick(nwobj, nwobjrow, nwobjitem) {
             lookUpCustomize("lugDDDocumentControlCode", 1);
         }
         else if ((col == SPR_DDDocumentSourceCode) && (nwTranType == "DOCD")) {
-            var DocumentControlCode = nwTempTable_RowData_Get("nwGridCon", crnwTR.index(), (SPR_DDDocumentControlCode - 1));
+            var DocumentControlCode = nwTempTable_RowData_Get("nwGridMainCon", crnwTR.index(), (SPR_DDDocumentControlCode - 1));
             if (DocumentControlCode == "") {
                 MessageBox("Cannot Proceed. Document Control Code is required. \n", nwtitle);
             }
@@ -572,7 +586,7 @@ function nwGrdi_DblClick(nwobj, nwobjrow, nwobjitem) {
             }
         }
         else if ((col == SPR_BABankCode) && (nwTranType == "BAAC")) {
-            lookUpCustomize("lugBankCode", 1);
+            lookUpCustomize("lugBankCode", 1);            
         }
         else if ((col == SPR_BAAccountTypeDesc) && (nwTranType == "BAAC")) {
             lookUpCustomize("lugAccountType", 1);
@@ -587,7 +601,7 @@ function nwGrdi_DblClick(nwobj, nwobjrow, nwobjitem) {
             //    lookUpCustomize("lugSellerRole", 2);
             //}
         else if ((col == SPR_SRSellerCode) && (nwTranType == "SELD")) {
-            var SellerRoleCode = nwTempTable_RowData_Get("nwGridCon", crnwTR.index(), (SPR_SRSellerRoleCode - 1));
+            var SellerRoleCode = nwTempTable_RowData_Get("nwGridMainCon", crnwTR.index(), (SPR_SRSellerRoleCode - 1));
             nwParameter_Add("SellerRoleCode", SellerRoleCode);
             if (SellerRoleCode == "") {
                 MessageBox("Cannot Proceed. Seller Role is required. \n", nwtitle);
@@ -601,9 +615,9 @@ function nwGrdi_DblClick(nwobj, nwobjrow, nwobjitem) {
 }
 
 
-function nwGrid_tdClick(nwobjID) {
+function nwGridMainCon_tdClick(nwobjID) {
     cust_GetPara();
-    if (nwobjID == "nwGrid") {
+    if (nwobjID == "nwGridMainCon") {
     }
 }
 
@@ -627,7 +641,7 @@ $(document).on('change', '#txtEffectiveDate', function (e) {
 });
 
 
-function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
+function nwGridMainCon_AddtoListDone(nwGridMainCon, crnwTRtemp, addtoListTableRec, index) {
 
 
     if (nwGridID == "nwGrid") {
@@ -637,7 +651,7 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
                 var Code = addtoListTableRec.find('tr:eq(' + index + ') td:eq(1)').text();
                 var Desc = addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text();
 
-                var isValid = nwLib.nwTempTable_Column_ValueExist("nwGridCon", SPR_ModeofCommissionReleaseCode, Code, false, "text", 0);
+                var isValid = nwLib.nwTempTable_Column_ValueExist("nwGridMainCon", SPR_ModeofCommissionReleaseCode, Code, false, "text", 0);
 
                 if (isValid == false) {
                     crnwTRtemp.find('td:eq(' + SPR_ModeofCommissionReleaseCode + ')').text(addtoListTableRec.find('tr:eq(' + index + ') td:eq(' + 1 + ')').text());
@@ -645,9 +659,9 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
                 } else
                     crnwTRtemp = null;
 
-                var cnt = nwTempTable_Row_Count("nwGridCon");
+                var cnt = nwTempTable_Row_Count("nwGridMainCon");
                 if (cnt == (crnwTR.index() + 1))
-                    nwGrid_AddRow("nwGridCon", 1);
+                    nwGrid_AddRow("nwGridMainCon", 1);
             }
         }
         else if (nwTranType == "SETD") {
@@ -658,9 +672,9 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
             crnwTRtemp.find('td:eq(' + SPR_SDSeminarTrainingDesc + ')').text(addtoListTableRec.find('tr:eq(' + index + ') td:eq(' + 2 + ')').text());
             crnwTRtemp.find('td:eq(' + SPR_SDDays + ')').text(addtoListTableRec.find('tr:eq(' + index + ') td:eq(' + 3 + ')').text());
 
-            var cnt = nwTempTable_Row_Count("nwGridCon");
+            var cnt = nwTempTable_Row_Count("nwGridMainCon");
             if (cnt == (crnwTR.index() + 1))
-                nwGrid_AddRow("nwGridCon", 1);
+                nwGrid_AddRow("nwGridMainCon", 1);
             func_ActionDriven("actAfterAddtolist", false);
 
 
@@ -670,7 +684,7 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
             var Desc = addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text();
             var Level = addtoListTableRec.find('tr:eq(' + index + ') td:eq(3)').text();
 
-            var isValid = nwLib.nwTempTable_Column_ValueExist("nwGridCon", SPR_SRSellerRoleCode, Code, false, "text", 0);
+            var isValid = nwLib.nwTempTable_Column_ValueExist("nwGridMainCon", SPR_SRSellerRoleCode, Code, false, "text", 0);
 
             if (isValid == false) {
                 crnwTRtemp.find('td:eq(' + SPR_SRSellerRoleCode + ')').text(addtoListTableRec.find('tr:eq(' + index + ') td:eq(' + 1 + ')').text());
@@ -679,9 +693,9 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
             } else
                 crnwTRtemp = null;
 
-            var cnt = nwTempTable_Row_Count("nwGridCon");
+            var cnt = nwTempTable_Row_Count("nwGridMainCon");
             if (cnt == (crnwTR.index() + 1))
-                nwGrid_AddRow("nwGridCon", 1);
+                nwGrid_AddRow("nwGridMainCon", 1);
         }
 
     }
@@ -703,10 +717,10 @@ function Lookup_DoneFunction(idName, idNum) {
         var modeofcommissionreleasecode = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(0)").text();
         var modeofcommissionreleasedesc = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(1)").text();
 
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_ModeofCommissionReleaseCode)(modeofcommissionreleasecode);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_ModeofCommissionReleaseDesc)(modeofcommissionreleasedesc);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_ModeofCommissionReleaseCode)(modeofcommissionreleasecode);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_ModeofCommissionReleaseDesc)(modeofcommissionreleasedesc);
 
-        nwGrid_AddRow("nwGridCon", 1);
+        nwGrid_AddRow("nwGridMainCon", 1);
 
     }
 
@@ -717,37 +731,37 @@ function Lookup_DoneFunction(idName, idNum) {
         var documenttypedesc = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(3)").text();
         var required = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(4)").text();
 
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_DDDocumentControlCode)(documentcontrolcode);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_DDDocumentControlDesc)(documentcontroldesc);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_DDDocumentTypeCode)(documenttypecode);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_DDDocumentTypeDesc)(documenttypedesc);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_DDRequired)(required);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_DDDocumentControlCode)(documentcontrolcode);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_DDDocumentControlDesc)(documentcontroldesc);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_DDDocumentTypeCode)(documenttypecode);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_DDDocumentTypeDesc)(documenttypedesc);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_DDRequired)(required);
 
-        nwGrid_AddRow("nwGridCon", 1);
+        nwGrid_AddRow("nwGridMainCon", 1);
     }
     else if (idName == 'lugDDDocumentSourceCode') {
         var documentsourcecode = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(0)").text();
         var documentsourcedesc = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(1)").text();
 
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_DDDocumentSourceCode)(documentsourcecode);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_DDDocumentSourceDesc)(documentsourcedesc);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_DDDocumentSourceCode)(documentsourcecode);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_DDDocumentSourceDesc)(documentsourcedesc);
 
     }
     else if (idName == 'lugBankCode') {
         var bankcode = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(0)").text();
         var bankname = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(1)").text();
 
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_BABankCode)(bankcode);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_BABankName)(bankname);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_BABankCode)(bankcode);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_BABankName)(bankname);
 
-        nwGrid_AddRow("nwGridCon", 1);
+        nwGrid_AddRow("nwGridMainCon", 1);
     }
     else if (idName == 'lugAccountType') {
         var accounttypecode = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(0)").text();
         var accounttypedesc = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(1)").text();
 
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_BAAccountTypeCode)(accounttypecode);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_BAAccountTypeDesc)(accounttypedesc);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_BAAccountTypeCode)(accounttypecode);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_BAAccountTypeDesc)(accounttypedesc);
 
     }
     else if (idName == 'lugProjectCode') {
@@ -756,26 +770,26 @@ function Lookup_DoneFunction(idName, idNum) {
         var developercode = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(2)").text();
         var developername = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(3)").text();
 
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_ADProjectCode)(projectcode);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_ADProjectName)(projectname);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_ADDeveloperCode)(developercode);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_ADDeveloperName)(developername);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_ADProjectCode)(projectcode);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_ADProjectName)(projectname);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_ADDeveloperCode)(developercode);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_ADDeveloperName)(developername);
 
-        nwGrid_AddRow("nwGridCon", 1);
+        nwGrid_AddRow("nwGridMainCon", 1);
     }
     else if (idName == 'lugSellerCode') {
         var sellercode = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(0)").text();
         var sellername = $("#menuCreatorContainer .tablecontainter table tr:eq(" + idNum + ")").find("td:eq(1)").text();
 
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_SRSellerCode)(sellercode);
-        nwLib.nwTempTable_RowData_Set("nwGridCon", crnwTR.index(), SPR_SRSellerName)(sellername);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_SRSellerCode)(sellercode);
+        nwLib.nwTempTable_RowData_Set("nwGridMainCon", crnwTR.index(), SPR_SRSellerName)(sellername);
 
     }
 
 }
 
 $(document).on("click", '.nwBtnAttach', function (e) {
-    var code = nwLib.nwTempTable_RowData_Get("nwGridCon", crnwTR.index(), SPR_DDDocumentControlCode - 1);
+    var code = nwLib.nwTempTable_RowData_Get("nwGridMainCon", crnwTR.index(), SPR_DDDocumentControlCode - 1);
 
     if (code != "") {
 
@@ -894,11 +908,11 @@ function func_WindowCloseTrigger(verID) {
 
         if (filepath != "") {
             linkcat = serverlink + path;
-            $("#nwGridCon tbody tr:eq(" + tempindex + ") td:eq(" + SPR_DDView + ") a").attr({ "href": linkcat, "title": "\'Download\'", "download": "" });
-            nwLib.nwTempTable_RowData_Set("nwGridCon", tempindex, SPR_DDAttachmentPath)(path);
-            nwLib.nwTempTable_RowData_Set("nwGridCon", tempindex, SPR_DDAttachment)(1);
-            $("#nwGridCon tbody tr:eq(" + tempindex + ") td:eq(" + SPR_DDView + ")").removeClass("nwGButton");
-            $("#nwGridCon tbody tr:eq(" + tempindex + ") td:eq(" + SPR_DDView + ")").addClass("btnMaylaman");
+            $("#nwGridMainCon tbody tr:eq(" + tempindex + ") td:eq(" + SPR_DDView + ") a").attr({ "href": linkcat, "title": "\'Download\'", "download": "" });
+            nwLib.nwTempTable_RowData_Set("nwGridMainCon", tempindex, SPR_DDAttachmentPath)(path);
+            nwLib.nwTempTable_RowData_Set("nwGridMainCon", tempindex, SPR_DDAttachment)(1);
+            $("#nwGridMainCon tbody tr:eq(" + tempindex + ") td:eq(" + SPR_DDView + ")").removeClass("nwGButton");
+            $("#nwGridMainCon tbody tr:eq(" + tempindex + ") td:eq(" + SPR_DDView + ")").addClass("btnMaylaman");
 
         } else {
         }
@@ -909,8 +923,8 @@ function func_WindowCloseTrigger(verID) {
 
 //$(document).on("click", ".nwBtnDownload", function () {
 
-//    var attach = nwLib.nwTempTable_RowData_Get("nwGridCon", crnwTR.index(), SPR_DDAttachmentPath - 1);
-//    var code = nwLib.nwTempTable_RowData_Get("nwGridCon", crnwTR.index(), SPR_DDDocumentControlCode - 1);
+//    var attach = nwLib.nwTempTable_RowData_Get("nwGridMainCon", crnwTR.index(), SPR_DDAttachmentPath - 1);
+//    var code = nwLib.nwTempTable_RowData_Get("nwGridMainCon", crnwTR.index(), SPR_DDDocumentControlCode - 1);
 
 //    if (code != "") {
 
@@ -926,19 +940,19 @@ function func_WindowCloseTrigger(verID) {
 //});
 
 function AfterAddtolist() {
-    var cnt = nwLib.nwTempTable_Row_Count("nwGridCon");
+    var cnt = nwLib.nwTempTable_Row_Count("nwGridMainCon");
     for (var row = 0; row <= cnt; row++) {
-        if (($('#nwGridCon .tblGridBody tr:eq(' + row + ') td:eq(' + (SPR_SDSeminarTrainingCode) + ')').text() != '')
-            && ($('#nwGridCon .tblGridBody tr:eq(' + row + ') td:eq(' + (SPR_SDDays) + ')').text() != '')) {
+        if (($('#nwGridMainCon .tblGridBody tr:eq(' + row + ') td:eq(' + (SPR_SDSeminarTrainingCode) + ')').text() != '')
+            && ($('#nwGridMainCon .tblGridBody tr:eq(' + row + ') td:eq(' + (SPR_SDDays) + ')').text() != '')) {
 
-            var Days = nwLib.nwTempTable_RowData_Get("nwGridCon", row, SPR_SDDays - 1);
-            var Rowno = nwLib.nwTempTable_RowData_Get("nwGridCon", row, SPR_SDRowno - 1);
+            var Days = nwLib.nwTempTable_RowData_Get("nwGridMainCon", row, SPR_SDDays - 1);
+            var Rowno = nwLib.nwTempTable_RowData_Get("nwGridMainCon", row, SPR_SDRowno - 1);
             nwParameter_Add("txtID", $('#txtID').val());
             nwParameter_Add("Days", Days);
             nwParameter_Add("Row", row);
             nwParameter_Add("Rowno", Rowno);
             func_ActionDriven("actDay", false);
-            nwLib.nwTempTable_RowData_Set("nwGridCon", row, SPR_SDDays)("");
+            nwLib.nwTempTable_RowData_Set("nwGridMainCon", row, SPR_SDDays)("");
 
         }
     }
@@ -970,29 +984,29 @@ $(document).on("click", "#AccountNo", function (e) {
 
 $(document).on("blur", "#AccountNo", function (e) {
     if (nwTranType == "BAAC") {
-        var BankCode = $('#nwGridCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BABankCode + ')').text();
+        var BankCode = $('#nwGridMainCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BABankCode + ')').text();
 
         if (BankCode != "") {
-            var tihs = $('#nwGridCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BAAccountNo + ') input').val();
+            var tihs = $('#nwGridMainCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BAAccountNo + ') input').val();
             var combination = BankCode + tihs;
-            $('#nwGridCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BACombine + ')').text(combination);
+            $('#nwGridMainCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BACombine + ')').text(combination);
 
-            var crnwTable = $("#nwGridCon .tblGridBody tbody");
+            var crnwTable = $("#nwGridMainCon .tblGridBody tbody");
             var len = crnwTable.length;
 
             for (var x = 0; x <= len ; x++) {
                 if (x != globalIndex) {
-                    var currentcombo = $('#nwGridCon .tblGridBody tr:eq(' + x + ') td:eq(' + SPR_BACombine + ')').text();
+                    var currentcombo = $('#nwGridMainCon .tblGridBody tr:eq(' + x + ') td:eq(' + SPR_BACombine + ')').text();
                     if (currentcombo == combination) {
-                        $('#nwGridCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BACombine + ')').text('');
-                        $('#nwGridCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BAAccountNo + ') input').val('');
+                        $('#nwGridMainCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BACombine + ')').text('');
+                        $('#nwGridMainCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BAAccountNo + ') input').val('');
                         MessageBox('Cannot Continue. Line details already exists.', 'Bank Account');
                     }
                 }
             }
         } else {
-            $('#nwGridCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BACombine + ')').text('');
-            $('#nwGridCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BAAccountNo + ') input').val('');
+            $('#nwGridMainCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BACombine + ')').text('');
+            $('#nwGridMainCon .tblGridBody tr:eq(' + globalIndex + ') td:eq(' + SPR_BAAccountNo + ') input').val('');
             MessageBox('Cannot Continue. Bank is required.', 'Bank Account')
         }
 
@@ -1007,7 +1021,7 @@ $(document).on("blur", "#AccountNo", function (e) {
 function hideMenuButton() {
 
     if (nwTranType == "MOCR" || nwTranType == "UPSR") {
-        $("#noah-webui-Toolbox").bindingInquire().enable(false);
+        $("#noah-webui-Toolbox").bindingInquire().enable(false);     
     }
 
     else if (nwTranType == "ADAC" || nwTranType == "DOCD" || nwTranType == "SETD") {
@@ -1020,6 +1034,14 @@ function hideMenuButton() {
         $("#noah-webui-Toolbox").bindingInquire().visible(false);
         $("#noah-webui-Toolbox").bindingDelete().visible(false);
         $("#noah-webui-default-Delete").visible(false);
+    }
+    else if (nwTranType == "DOCD") {
+        $("#noah-webui-Toolbox").bindingNew().visible(false);
+        $("#noah-webui-Toolbox").bindingSave().visible(true);
+        $("#noah-webui-Toolbox").bindingDelete().visible(false);
+        $("#noah-webui-Toolbox").bindingRefresh().visible(false);
+        $("#noah-webui-Toolbox").bindingInquire().visible(false);
+        $("#noah-webui-Toolbox").bindingExport().visible(false);
     }
 
     else {
@@ -1049,7 +1071,7 @@ function disableFieldsonLoad() {
 
 function SetGridDownloadButtonProperty() {
 
-    crnwTable = $("#nwGridCon .tblGridBody tbody");
+    crnwTable = $("#nwGridMainCon .tblGridBody tbody");
 
     var serverlink = $("#txtserverlink").val();
     var length = crnwTable.find("tr").length;
@@ -1067,7 +1089,7 @@ function SetGridDownloadButtonProperty() {
 
             if (fileType != 'png' && fileType != 'bmp' && fileType != 'jpg' && fileType != 'jpeg') {
 
-                $(`#nwGridCon-nwData tr:eq(${i})`).find(`td:eq(${SPR_DDView}) a`).attr({ "href": fullpath, "title": "\'Download\'", "download": "" });
+                $(`#nwGridMainCon-nwData tr:eq(${i})`).find(`td:eq(${SPR_DDView}) a`).attr({ "href": fullpath, "title": "\'Download\'", "download": "" });
 
             } else {
 
@@ -1087,7 +1109,7 @@ function SetGridDownloadButtonProperty() {
 
 $(document).on('click', '.nwBtnDownload', function () {
 
-    var filename = $("#nwGridCon tbody tr:eq(" + crnwTR.index() + ") td:eq(" + SPR_DDAttachmentPath + ")").text()
+    var filename = $("#nwGridMainCon tbody tr:eq(" + crnwTR.index() + ") td:eq(" + SPR_DDAttachmentPath + ")").text()
     var fileType = filename.slice((Math.max(0, filename.lastIndexOf(".")) || Infinity) + 1);
     var src = '';
     $('.op-img').attr('src', '');
@@ -1111,7 +1133,7 @@ $(document).on('click', '.nwBtnDownload', function () {
 
         if (fileType != 'png' && fileType != 'bmp' && fileType != 'jpg' && fileType != 'jpeg') {
 
-            $(`#nwGridCon-nwData tr:eq(${tempindex})`).find(`td:eq(${SPR_DDView}) a`).attr({ "href": linkcat, "title": "\'Download\'", "download": "" });
+            $(`#nwGridMainCon-nwData tr:eq(${tempindex})`).find(`td:eq(${SPR_DDView}) a`).attr({ "href": linkcat, "title": "\'Download\'", "download": "" });
 
         } else {
 

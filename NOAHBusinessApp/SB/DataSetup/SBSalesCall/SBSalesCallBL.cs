@@ -226,6 +226,13 @@ namespace Noah_Web.forms_BusinessLayer
 
             switch (strMethod)
             {
+                case "gettoolboxInquire":
+                    strSQL = dal.inquireQuery(based.SecurityAccess.RecUser);
+                    strMethod = strMethod.Substring(3);
+                    //nwObject.ColumnHide(1);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    //.dataGridView1.Columns["CustomerID"].Visible = false;
+                    break;
 
                 case "getlugProspectCust":
                     string filt = WebApp.nwobjectText("idvallugProspectCust");
@@ -269,14 +276,6 @@ namespace Noah_Web.forms_BusinessLayer
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
-                case "gettoolboxInquire":
-                    strSQL = dal.inquireQuery(based.SecurityAccess.RecUser);
-                    strMethod = strMethod.Substring(3);
-                    //nwObject.ColumnHide(1);
-                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
-                    //.dataGridView1.Columns["CustomerID"].Visible = false;
-                    break;
-
             }
 
             return strFinal;
@@ -285,15 +284,13 @@ namespace Noah_Web.forms_BusinessLayer
         private void InitializeValues()
         {
             nwToolBox.bindingNavigatorSaveItem.Enable = true;
-            nwToolBox.bindingNavigatorAddNewItem.Enable =
-            nwToolBox.bindingNavigatorPrintItem.Enable =
-            nwToolBox.bindingNavigatorInquireItem.Enable =
-            nwToolBox.bindingNavigatorDeleteItem.Enable =
+            nwToolBox.bindingNavigatorAddNewItem.Enable = false;
+            nwToolBox.bindingNavigatorInquireItem.Enable = true;
             nwToolBox.bindingNavigatorDeleteItem.Visible =
-            nwToolBox.bindingNavigatorExportItem.Enable =
+            nwToolBox.bindingNavigatorDeleteItem.Enable = false;
             nwToolBox.bindingNavigatorProcessItem.Enable = false;
-            nwToolBox.bindingNavigatorImportItem.Enable = true;
-            var serverdate = SFObject.GetServerDateTime(this.UserDefinedConnectionString);
+            nwToolBox.bindingNavigatorExportItem.Visible = false;
+            var serverdate = Parser.ParseDateTime(dal.getNoahDate(), Parser.DateTimeType.Min);
             //js.makeValueText("#txtTranDate", serverdate.ToString("MM/dd/yyyy"));
             js.ADD("$(\"#idvallugProspectCust\").focus();");
         }
@@ -309,10 +306,10 @@ namespace Noah_Web.forms_BusinessLayer
             {
                 case eRecordOperation.AddNew:
                     InitializeValues();
-                    var serverdate = SFObjects.GetServerDateTime(this.UserDefinedConnectionString);
-                    js.makeValueText("#txtServerDate", serverdate.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T"));
-                    js.makeValueText("#txtStartDate", serverdate.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T"));
-                    js.makeValueText("#txtEndDate", serverdate.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T"));
+                    var serverdate = Parser.ParseDateTime(dal.getNoahDate(), Parser.DateTimeType.Min);
+                    js.makeValueText("#txtServerDate", serverdate.ToString("MM/dd/yyyy HH:mm:ss"));
+                    js.makeValueText("#txtStartDate", serverdate.ToString("MM/dd/yyyy HH:mm:ss"));
+                    js.makeValueText("#txtEndDate", serverdate.ToString("MM/dd/yyyy HH:mm:ss"));
                     string curuser = based.SecurityAccess.RecUser;
                     js.makeValueText("#idvallugSeller", curuser);
                     DataTable dr2 = dal.GetUserName(curuser);
@@ -332,6 +329,10 @@ namespace Noah_Web.forms_BusinessLayer
                         dt = LoadSchema();
                         RecordOperationResult = dal.SaveData(dt, isNewRow, Trantype);
                     }
+
+                    //RefreshData();
+
+
                     break;
 
                 case eRecordOperation.Delete:
@@ -387,25 +388,7 @@ namespace Noah_Web.forms_BusinessLayer
                     Prompt.Information(tempstr, based.Title);
                     break;
                 case eRecordOperation.Export:
-
-                    //ListingAndPrint frmlist = new ListingAndPrint
-                    //                                       (ListingAndPrint.FormType.Listing, dal.LISTINGSTARTROW, dal.LISTINGQUERY(),
-                    //                                       dal.LISTINGFILENAME + " Listing", UserDefinedConnectionString, SFObjects.returnText(dal.GETCOMPANY, UserDefinedConnectionString),
-                    //                                       based.SecurityAccess.RecUserName, dal.LISTINGFILENAME + " Listing");
-
-                    ////## FOR EXPORTING ###
-                    //Random rnd = new Random();
-                    //string SessionID = DateTime.Now.ToString("yyyyddMMhhmmss") + rnd.Next(0, 9999).ToString().PadRight(4, '0');
-                    //HttpContext.Current.Session["Config_" + SessionID] = frmlist.m_Spread.ExportConfig();
-                    //HttpContext.Current.Session["Data_" + SessionID] = frmlist.m_Spread.GetDataSource();
-                    //HttpContext.Current.Session["Filename_" + SessionID] = dal.LISTINGFILENAME + " Listing";
-                    //HttpContext.Current.Session["Header_" + SessionID] = "0";
-                    //js.ADD("ExportSessionID='" + SessionID + "'");
-                    ////## END ##
-
-                    //js.Show("#nwExportContainerMain", 0);
-                    //js.ADD(frmlist.CreateScript());
-
+                    tempstr = "export";
                     break;
                 case eRecordOperation.Print:
                     tempstr = "print";
@@ -442,22 +425,6 @@ namespace Noah_Web.forms_BusinessLayer
                         RecordOperationResult = Prompt.PromptToolBoxMessage(RecordOperationResult, i);
                     }
 
-                    //if (RecordOperationResult.IndexOf("Cancel") == 0)
-                    //{
-                    //    RecordOperationResult = Prompt.PromptToolBoxMessage("A sales call has been cancelled.", i);
-                    //}
-                    //else if (RecordOperationResult.IndexOf("Rescheduled") == 0)
-                    //{
-                    //    RecordOperationResult = Prompt.PromptToolBoxMessage("A sales call has been rescheduled.", i);
-                    //}
-                    //else if (RecordOperationResult.IndexOf("Attended") == 0)
-                    //{
-                    //    RecordOperationResult = Prompt.PromptToolBoxMessage("A sales call has been attended.", i);
-                    //}
-                    //else
-                    //{
-                    //    RecordOperationResult = Prompt.PromptToolBoxMessage(RecordOperationResult, i);
-                    //}
 
                     Prompt.Information(RecordOperationResult, based.Title);
                 }
@@ -482,22 +449,6 @@ namespace Noah_Web.forms_BusinessLayer
                             RecordOperationResult = Prompt.PromptToolBoxMessage(RecordOperationResult, i);
                         }
 
-                        //if (RecordOperationResult.IndexOf("Cancel") == 0)
-                        //{
-                        //    RecordOperationResult = Prompt.PromptToolBoxMessage("A sales call has been cancelled.", i);
-                        //}
-                        //else if (RecordOperationResult.IndexOf("Rescheduled") == 0)
-                        //{
-                        //    RecordOperationResult = Prompt.PromptToolBoxMessage("A sales call has been rescheduled.", i);
-                        //}
-                        //else if (RecordOperationResult.IndexOf("Attended") == 0)
-                        //{
-                        //    RecordOperationResult = Prompt.PromptToolBoxMessage("A sales call has been attended.", i);
-                        //}
-                        //else
-                        //{
-                        //    RecordOperationResult = Prompt.PromptToolBoxMessage(RecordOperationResult, i);
-                        //}
 
                         Prompt.Information(RecordOperationResult, based.Title);
                     }
@@ -529,8 +480,10 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
 
                 case "actChangeServerDate":
-                    var serverdate = SFObjects.GetServerDateTime(this.UserDefinedConnectionString);
-                    js.makeValueText("#txtServerDate", serverdate.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T"));
+                    var serverdate = Parser.ParseDateTime(dal.getNoahDate(), Parser.DateTimeType.Min);
+                    //js.makeValueText("#txtServerDate", serverdate.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T"));
+                    js.makeValueText("#txtServerDate", serverdate.ToString("MM/dd/yyyy HH:mm:ss"));
+
                     break;
 
                 default:
@@ -545,17 +498,15 @@ namespace Noah_Web.forms_BusinessLayer
         {
             string strFinal = ""; string sql = "";
             WebApp = new WebApplib(strParameter, strValue);
-
-
-            string codevalue = WebApp.nwobjectText("codevalue"); // codevalue will be filter of primary key add these filter
-
             switch (getMethod)
             {
                 case "toolbox":
+                    string codevalue = WebApp.nwobjectText("codevalue"); // codevalue will be filter of primary key add these filter
+
                     string curusers = based.SecurityAccess.RecUser;
                     nwStandardBL standardBL = new nwStandardBL(WebApp);
                     standardBL.PrimaryKey = "Transaction Number";
-                    strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(curusers, codevalue), this.UserDefinedConnectionString);
+                    strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(curusers,codevalue), this.UserDefinedConnectionString);
                     break;
             }
 
@@ -616,8 +567,9 @@ namespace Noah_Web.forms_BusinessLayer
         private void BindCollection()
         {
             js.ADD("nwLoading_End('actBindCollection');");
-            DateTime serverdates = SFObject.GetServerDateTime(this.UserDefinedConnectionString);
-            string serverdatex = serverdates.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T");
+            DateTime serverdates = Parser.ParseDateTime(dal.getNoahDate(), Parser.DateTimeType.Min);
+            //string serverdatex = serverdates.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T");
+            string serverdatex = serverdates.ToString("MM/dd/yyyy HH:mm:ss");
 
             //new
             js.ADD($"$('#txtServerDate').val('{serverdatex}');");
@@ -626,13 +578,14 @@ namespace Noah_Web.forms_BusinessLayer
         public string ValidateEffectiveDate()
         {
             string errorResult = string.Empty;
-            DateTime serverdate1 = SFObject.GetServerDateTime(this.UserDefinedConnectionString);
+            DateTime serverdate1 = Parser.ParseDateTime(dal.getNoahDate(), Parser.DateTimeType.Min);
             DateTime serverdate = Parser.ParseDateTime(serverdate1, Parser.DateTimeType.Min);
             DateTime datepickfrom = Parser.ParseDateTime(WebApp.nwobjectText("datepickfrom"), Parser.DateTimeType.Min);
             DateTime datepickto = Parser.ParseDateTime(WebApp.nwobjectText("datepickto"), Parser.DateTimeType.Min);
-            string serverdatea = serverdate.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T");
-            string datepickfroma = datepickfrom.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T");
-
+            //string serverdatea = serverdate.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T");
+            //string datepickfroma = datepickfrom.ToString("MM/dd/yyyy HH:mm:ss").Replace(" ", "T");
+            string serverdatea = serverdate.ToString("MM/dd/yyyy HH:mm:ss");
+            string datepickfroma = datepickfrom.ToString("MM/dd/yyyy HH:mm:ss");
             if (WebApp.nwobjectText("datepickfrom").Length > 0)
             {
                 if (datepickfrom < serverdate)
@@ -677,6 +630,22 @@ namespace Noah_Web.forms_BusinessLayer
             {
                 errorResult += "Cannot be saved. End Date is required.\n";
             }
+
+            if (WebApp.nwobjectText("txtStartDate").Length > 0 && WebApp.nwobjectText("txtEndDate").Length > 0)
+            {
+                errorResult += ValidateEffectiveDate();
+            }
+
+            if (WebApp.nwobjectText("txtEmailAdd").Length <= 0 && WebApp.nwobjectText("ComboBox1").IndexOf("Email") >= 0)
+            {
+                errorResult += "Cannot be saved. Email is required.\n";
+            }
+
+            if (WebApp.nwobjectText("txtMobileNo").Length <= 0 && WebApp.nwobjectText("ComboBox1").IndexOf("SMS") >= 0)
+            {
+                errorResult += "Cannot be saved. Mobile No. is required.\n";
+            }
+            
 
             return errorResult;
         }
@@ -724,6 +693,7 @@ namespace Noah_Web.forms_BusinessLayer
         private void Main_Load()
         {
             if (based.isInterface == true) dal.UpdateVersion();
+            RefreshData();
         }
 
         private void RefreshData()
@@ -731,6 +701,7 @@ namespace Noah_Web.forms_BusinessLayer
             js.ADD("ClearFields();");
             js.ADD("func_Toolbox_Clear();");
             js.ADD("func_ToolboxData(\"#noah-webui-Toolbox-Grid\", \"toolbox\")"); // goto: getToolBoxData
+            js.ADD("RefreshData();");
         }
 
     }

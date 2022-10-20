@@ -39,9 +39,10 @@ var MaxDate = "";
 function func_Reload() {
 
     //crnwTagSingleBind = true;
-
+    nwTrustedLinks.push("fli.promptus8.com");//Kahit saan by CHOLO
     crLnk = "../SBHoldingOfUnit/SBHoldingOfUnit_Gateway";
     crLnkGateKey = "SBHoldingOfUnit";
+    //nwPopupForm_Create("nwPopWindow2");
 
     transno = getParameterByName("transno");
     uc = getParameterByName("uc");
@@ -82,8 +83,10 @@ function func_ToolboxSave(indef, enume) {
 
 function func_ToolboxDelete(indef, enume) {
     var isContinue = true;
+    $("#nwPopWindow2 .modal-box-s .modal-hdr .modal-hdr-title").text("Reason for deletion");
+    nwPopupForm_ShowModal("nwPopWindow2");
     cust_GetPara();
-    parent_MessageBoxQuestionToolBox("Do you want to delete the current record?", title, "", indef, enume);
+    //parent_MessageBoxQuestionToolBox("Do you want to delete the current record?", title, "", indef, enume);
     isContinue = false;
     return isContinue;
 }
@@ -277,6 +280,7 @@ function ClearFields() {
     $("div.dvinput input").val("");
     $("div.dvinput textarea").val("");
     $("div.lookups div.conval input").val("");
+    $('#cmbReasonSelect').val("");
 
     $('#btnReqCompliance').enable(false);
 
@@ -285,6 +289,11 @@ function ClearFields() {
     } catch (e) {
         //console.log(e.toString());
     }
+}
+
+function getLookupData(idname, idnum, index) {
+    var data = $("#menuCreatorContainer ." + idname + " #nkLookupCon table tbody tr:eq(" + (idnum - 1) + ") td:eq(" + index + ") span").text();
+    return data;
 }
 
 function onNewLoad() {
@@ -322,7 +331,7 @@ function Lookup_DoneFunction(idName, idNum) {
     let code, desc;
 
     if (idName === "lugCustClassification") {
-        code = $t.find("td:eq(0)").text();
+        code = getLookupData(idName,idNum,0);
 
         $("#idvallugCustomer").val("");
         $("#txtLastName").val("");
@@ -337,12 +346,12 @@ function Lookup_DoneFunction(idName, idNum) {
     }
 
     else if (idName === "lugCustomer") {
-        code = $t.find("td:eq(0)").text();
-        desc = $t.find("td:eq(1)").text();
-        let tradeName = $t.find("td:eq(2)").text();
-        let lastName = $t.find("td:eq(3)").text();
-        let firstName = $t.find("td:eq(4)").text();
-        let middleName = $t.find("td:eq(5)").text();
+        code = getLookupData(idName, idNum, 0);
+        desc = getLookupData(idName, idNum, 1);
+        let tradeName = getLookupData(idName, idNum, 2);
+        let lastName = getLookupData(idName, idNum, 3);
+        let firstName = getLookupData(idName, idNum, 4);
+        let middleName = getLookupData(idName, idNum, 5);
 
         $("#txtRegName").val(desc);
         $("#txtTradeName").val(tradeName);
@@ -352,13 +361,13 @@ function Lookup_DoneFunction(idName, idNum) {
     }
 
     else if (idName === "lugProsCustomer") {
-        code = $t.find("td:eq(0)").text();
+        code = getLookupData(idName, idNum, 0);
         $("#idvallugProsCustomer").val(code);
     }
 
     else if (idName === "lugRBAOUnitCode") {
-        code = $t.find("td:eq(0)").text();
-        desc = $t.find("td:eq(1)").text();
+        code = getLookupData(idName, idNum, 0);
+        desc = getLookupData(idName, idNum, 1);
 
         nwGridMainCon_BookRBAO.ActiveSheet.SetText(SPR_RBAOUnitCode, nwGridMainCon_BookRBAO.ActiveSheet.GetSelectedIndexes().row, code)
         nwGridMainCon_BookRBAO.ActiveSheet.SetText(SPR_RBAOUnitDesc, nwGridMainCon_BookRBAO.ActiveSheet.GetSelectedIndexes().row, desc)
@@ -394,6 +403,7 @@ function p8Spread_Click(canvasID, row, col) {
                 nwPopupForm_ShowModal("nwReferenceBaseAddOn");
                 cust_GetPara();
                 func_ActionDriven("actRefBaseOn", false);
+                nwGridMainCon_BookRBAO.ActiveSheet.SetText2(0, 0, unit);
             }
         }
     }
@@ -437,6 +447,33 @@ function func_WindowCloseTrigger(verID) {
     }
 
     return isContinue;
+}
+
+$(document).on("click", "#ReasonSelectbtn", function () {
+    if ($("#cmbReasonSelect").val() == "" || $("#cmbReasonSelect").val() == " " || $("#cmbReasonSelect").val() == null) {
+        MessageBox("Cannot proceed. Reason for Cancellation is required.", title, 'error');
+        return false;
+        nwParameter_Add("cmbReasonSelect", "");
+        nwParameter_Add("DeletePass", "0");
+    }
+    else {
+        nwParameter_Add("cmbReasonSelect", $("#cmbReasonSelect").val());
+        nwParameter_Add("DeletePass", "1");
+        func_ActionDriven("actDeleteData", false);
+        nwLoading_Start("actDeleteData", crLoadingHTML);
+    }
+});
+
+function showDeletedMessage(message) {
+    if (message.toLowerCase().includes("error")) {
+        MessageBox(message, title, 'error');
+        nwPopupForm_HideModal("nwPopWindow2");
+    }
+    else {
+        MessageBox(message, title, 'info');
+        nwPopupForm_HideModal("nwPopWindow2");
+    }
+    nwLoading_End('actDeleteData');
 }
 
 function msgBoxContainerQuestionF(genID, answer) {
@@ -526,14 +563,14 @@ $(document).on("click", "#btnReqCompliance", function (e) {
     var forView = $("#txtRecordStatus").val() == "3" ? true : false;
 
     if (docno == "") {
-        MessageBox("Cannot proceed. Data should be saved first.", baseTitle, "error");
+        MessageBox("Cannot proceed. Data should be saved first.", title, "error");
         return false;
     }
 
     if (nwDocno == "") {
-        var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=" + forView;
+        var fullength = "../DCRequirementCompliance/?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=" + forView;
     } else {
-        var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=true";
+        var fullength = "../DCRequirementCompliance/?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=true";
     }
 
     try {
@@ -546,7 +583,7 @@ $(document).on("click", "#btnReqCompliance", function (e) {
         nwLoading_End('btnReqCompliance');
     } catch (err) {
         nwLoading_End('btnReqCompliance');
-        MessageBox(err.toString(), Title, "error");
+        MessageBox(err.toString(), title, "error");
     }
 
     return false;

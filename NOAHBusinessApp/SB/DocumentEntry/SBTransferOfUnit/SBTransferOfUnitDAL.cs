@@ -9,8 +9,9 @@ namespace DALComponent
     {
         #region STANDARD
 
+        private string storedProcedureName = "[PRT].[nsp_SBTransferOfUnit]";
         public string MenuItemCode = "SBTransferOfUnit"; // This is default parameter  for version
-        public string MenuItemVersion = "10.0.0.0"; // This is default parameter for version
+        public string MenuItemVersion = "10.0.0.1"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
             if (_MenuItemCode.Trim() != "") MenuItemCode = _MenuItemCode;
@@ -18,7 +19,7 @@ namespace DALComponent
             return UpdateVersion();
         }
 
-        private SqlConnection conn;
+        private SqlConnection conn = new SqlConnection();
         private SqlTransaction tran;
         public string UpdateVersion()
         {
@@ -49,7 +50,7 @@ namespace DALComponent
                                 primaryKey = "Code";                                      //--column for searching
 
         //#FOR EXPORT
-        public string LISTINGFILENAME = "Inventory Class", GETCOMPANY = "Select CompanyName from SG.BIRCASConfig";
+        public string LISTINGFILENAME = "Transfer of Unit", GETCOMPANY = "Select CompanyName from SG.BIRCASConfig";
         public int LISTINGSTARTROW = 5;
         //# END
 
@@ -228,22 +229,202 @@ namespace DALComponent
 
         public string inquireQuery()
         {
-            return string.Format(@"EXEC [RE].[nsp_inventoryClass]@QueryType = 4");
+            return string.Format(@"EXEC [RE].[nsp_inventoryClass] @QueryType = 4");
         }
 
         public string LISTINGQUERY()
         {
-            return string.Format(@"EXEC [RE].[nsp_inventoryClass]@QueryType = 5");
+            return string.Format(@"EXEC [RE].[nsp_inventoryClass] @QueryType = 5");
         }
 
         public string hasSavedRqrdCompli(string docno)
         {
             return SFObjects.returnText($@"SELECT [DC].[fn_ChkIfHasReqComplianceAll]('{docno}')", _ConnectionString);
         }
-        
+
         public DataTable getQueue(string refdocno, string unitCode)
         {
             return SFObjects.LoadDataTable($"EXEC {spName} @Querytype =25, @refDocno = '{refdocno}', @unitCode = '{unitCode}'", _ConnectionString);
         }
+
+        //added from submenu folder
+        public string GetData_popup()
+        {
+            string a = string.Format(@"EXEC " + storedProcedureName + " @QueryType = 32");
+
+            //focusRecordPK = string.Empty;
+            //a = a.Replace(Environment.NewLine, " "); /*Do not Remove this*/
+
+            return a;
+        }
+
+        public DataTable LoadSchema_popup()
+        {
+            return SFObjects.LoadDataTable("SELECT * FROM [RE].[SBTransferOfUnitHDR] WHERE 1<>1", _ConnectionString);
+        }
+
+        public string SaveData_popup(DataTable dtHDR, bool IsNewRow, string Trantype)
+        {
+            try
+            {
+                conn.ConnectionString = _ConnectionString;
+                conn.Open();
+                tran = conn.BeginTransaction();
+
+                //var locform = dtHDR.Rows[0]["locform"].ToString();
+                //var reasonfortransunit = dtHDR.Rows[0]["reasonfortransunit"].ToString();
+                //var newunit = dtHDR.Rows[0]["newunit"].ToString();
+                //var refholdtrans = dtHDR.Rows[0]["locform"].ToString();
+                //var remarks = dtHDR.Rows[0]["locform"].ToString();
+                //var docno = dtHDR.Rows[0]["locform"].ToString();
+                //var docstatus = dtHDR.Rows[0]["locform"].ToString();
+                //var docdate = dtHDR.Rows[0]["locform"].ToString();
+                //var reasonfordisapproval = dtHDR.Rows[0]["locform"].ToString();
+                //var remarksfordisapproval = dtHDR.Rows[0]["locform"].ToString();
+
+
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Transaction = tran; // Need to specify for every command
+                cmd.Parameters.Clear();
+                cmd.CommandText = storedProcedureName;
+                cmd.Parameters.AddWithValue("@locform", dtHDR.Rows[0]["locform"].ToString());
+                cmd.Parameters.AddWithValue("@locdesc", dtHDR.Rows[0]["locdesc"].ToString());
+                cmd.Parameters.AddWithValue("@reasonfortransunit", dtHDR.Rows[0]["reasonfortransunit"].ToString());
+                cmd.Parameters.AddWithValue("@resdesc", dtHDR.Rows[0]["resdesc"].ToString());
+                cmd.Parameters.AddWithValue("@newunit", dtHDR.Rows[0]["newunit"].ToString());
+                cmd.Parameters.AddWithValue("@unitdesc", dtHDR.Rows[0]["unitdesc"].ToString());
+                cmd.Parameters.AddWithValue("@refholdtrans", dtHDR.Rows[0]["refholdtrans"].ToString());
+                cmd.Parameters.AddWithValue("@remarks", dtHDR.Rows[0]["remarks"].ToString());
+                cmd.Parameters.AddWithValue("@docno", dtHDR.Rows[0]["docno"].ToString());
+                cmd.Parameters.AddWithValue("@docstatus", dtHDR.Rows[0]["docstatus"].ToString());
+                cmd.Parameters.AddWithValue("@docdate", dtHDR.Rows[0]["docdate"].ToString());
+                cmd.Parameters.AddWithValue("@reasonfordisapproval", dtHDR.Rows[0]["reasonfordisapproval"].ToString());
+                cmd.Parameters.AddWithValue("@remarksfordisapproval", dtHDR.Rows[0]["remarksfordisapproval"].ToString());
+                cmd.Parameters.AddWithValue("@Recuser", dtHDR.Rows[0]["Recuser"].ToString());
+                cmd.Parameters.AddWithValue("@Moduser", dtHDR.Rows[0]["Moduser"].ToString());
+                cmd.Parameters.AddWithValue("@QueryType", IsNewRow ? 30 : 31);
+                cmd.ExecuteNonQuery();
+                //Query 30 for INSERT Data
+                //Query 31 for UPDATE Data
+            }
+            catch (SqlException sqlEx)
+            {
+                tran.Rollback();
+                conn.Close();
+                string result;
+                if (sqlEx.Number == 2627)
+                    result = String.Format(
+                        "Error [{0}]: \nSystem Cannot Save Data.\nDuplicate records are not allowed.", sqlEx.Number);
+                else if (sqlEx.Number == 547)
+                    result = String.Format("Error [{0}]: \nSystem Cannot perform action.\nData currently in use.",
+                        sqlEx.Number);
+                else
+                    result = String.Format("Error [{0}]: \n{1}", sqlEx.Number, sqlEx.Message);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                //tran.Rollback();
+                conn.Close();
+                return String.Format("Error: {0}\n", ex.Message);
+            }
+
+            tran.Commit();
+            conn.Close();
+            return "Process has successfully completed.";
+        }
+
+        public string ProcessData_popup(string DocNo)
+        {
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.CommandText = storedProcedureName;
+
+            cmd.Parameters.AddWithValue("@docNo", DocNo);
+
+            cmd.Parameters.AddWithValue("@QueryType", 4);
+
+            return base.ExecProcedure(cmd, _ConnectionString);
+
+            //return "Process has successfully completed.";
+        }
+
+        public string inquireQuery_popup()
+        {
+            //return string.Format($@"SELECT * FROM [RE].[SBTransferOfUnitHDR]");
+            return string.Format(@"EXEC " + storedProcedureName + " @QueryType = 5");
+        }
+
+        public string lugLocAccForms_popup()
+        {
+            return string.Format($@"Exec " + storedProcedureName + " @QueryType = 21");
+        }
+
+        public string deletedata_popup(string docno)
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = storedProcedureName;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@docno", docno);
+            cmd.Parameters.AddWithValue("@QueryType", 3);
+
+            return base.ExecProcedure(cmd, _ConnectionString);
+        }
+
+        public string lugReTranUnit_popup()
+        {
+            return string.Format($@"Exec " + storedProcedureName + " @QueryType = 28");
+        }
+        public string lugNewUnit_popup()
+        {
+            return string.Format($@"Exec " + storedProcedureName + " @QueryType = 25");
+        }
+
+        public string lugRefHoldTrans_popup()
+        {
+            return string.Format($@"SELECT LocForm, TransactionNo FROM re.HoldingUnitEntryHDR");
+        }
+
+        public string txtDocDate_popup()
+        {
+            return SFObjects.returnText(@"SELECT FORMAT(dbo.GetNoahDate() , 'MM/dd/yyyy')", _ConnectionString);
+        }
+
+        public string txtDocNo_popup()
+        {
+            return SFObjects.returnText($@"Exec " + storedProcedureName + " @QueryType = 27", _ConnectionString);
+        }
+
+        public string rowcounter()
+        {
+            return SFObjects.returnText($@"Exec " + storedProcedureName + " @QueryType = 36", _ConnectionString);
+        }
+
+        public string docstatdesc(string docstatus)
+        {
+            return SFObjects.returnText($@"Exec " + storedProcedureName + " @QueryType = 37, @docstatus = '"+ docstatus + "'", _ConnectionString);
+        }
+
+        public string txtidvalLugLocAccForms_popup(String transno)
+        {
+            return SFObjects.returnText($@"Exec " + storedProcedureName + " @QueryType = 33, @transno = '" + transno + "'", _ConnectionString);
+        }
+
+        public string txtdescvalLugLocAccForms_popup(String transno)
+        {
+            return SFObjects.returnText($@"Exec " + storedProcedureName + " @QueryType = 34, @transno = '" + transno + "'", _ConnectionString);
+        }
+
+        public DataTable displaydoc_popup(String locaccforms)
+        {
+            return SFObjects.LoadDataTable(@"EXEC " + storedProcedureName + " @QueryType = 35, @docno ='" + locaccforms + "'", _ConnectionString);
+        }
+
+
     }
 }

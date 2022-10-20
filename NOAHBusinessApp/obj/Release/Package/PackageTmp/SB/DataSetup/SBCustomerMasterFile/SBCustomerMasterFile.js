@@ -1,13 +1,19 @@
 ﻿let $DateToday = "";
-
+baseTitle = "Customer Information";
 var dtls = [];
 var ctr1 = 0, ctr2 = 0, ctr3 = 0;
+var nwGridMainCon_Book;
+var nwGridMainCon_Sheet;
+var nwGridMainCon_Book2;
+var nwGridMainCon_Sheet2;
 function func_Reload() {
+    nwTrustedLinks.push("fli.promptus8.com");
     crLnk = "../SBCustomerMasterFile/SBCustomerMasterFile_Gateway";
     crLnkGateKey = "SBCustomerMasterFile";
     nwPopupForm_Create("nwCaptureForm");
     //create frame form
     nwPopupForm_Create("nwFrameForm");
+    nwTrustedLinks.push("fli.promptus8.com");
 
     nwPopupForm_Create("nwUploadCon");
     nwPopupForm_Create("nwDesiredProperty");
@@ -19,15 +25,29 @@ function func_Reload() {
     init_request();
     ToolBoxGetData = false;
     DisableFields();
-    $("#noah-webui-Toolbox").bindingNew().visible(true);
-    $("#noah-webui-Toolbox").bindingProcess().visible(false);
 
+    //EnableFields();
+    //ClearFields();
+    //func_Toolbox_Clear();
+    //$("#noah-webui-Toolbox").bindingNew().visible(false);
+    $('.btn-tb-new').enable(true);
+
+    $('.btn-tb-delete').visible(false);
+    $('.btn-tb-refresh').visible(true); //go to gettoolbox data is not working so refresh is here
+    $('.btn-tb-inquire').enable(false); //when go to toolbox data is working this should be true
+    $('.btn-tb-export').enable(false);
+    $('.btn-tb-update').enable(false);
+    $('.btn-tb-save').enable(false);
+
+    $("#noah-webui-Toolbox").bindingProcess().visible(false);
     SetDefaultIndividual();
     func_ActionDriven("actDesiredProperty", false);
 
+    trantype = 'CSTMER';
     if (getParameterByName("nwCustno") != "") {
         Refresh();
     }
+
 
     return isContinue;
 }
@@ -42,6 +62,7 @@ function Refresh() {
 
 function func_ToolboxADD(indef, enume) {
     var isContinue = true;
+    
     EnableFields();
     ClearFields();
     func_Toolbox_Clear();
@@ -125,6 +146,7 @@ function cust_GetPara() {
     nwParameter_Add("_url", getParameterByName("emp") || "");
     nwParameter_Add("nwCom", getParameterByName("nwCom"));
     nwParameter_Add("getCSD", $("#getCSD").val());
+    nwParameter_Add("DesiredPropertyPI", $('#idvallugDesiredPropertyPI').val());
 
     var comp = "";
     var rname = "";
@@ -223,6 +245,12 @@ function cust_GetPara() {
     nwParameter_Add("txtCountryCode", country);
     nwParameter_Add("cmbNatureOfBusinessCB", $("#cmbNatureOfBusinessCB").val());
     nwParameter_Add("cmbBusinessTypeCB", $("#cmbBusinessTypeCB").val());
+    //added
+    nwParameter_Add("txtDateIssued", $("#txtDateIssued").val());
+
+    nwParameter_Add("txtCurrContractEndEMP", $("#txtCurrContractEndEMP").val());
+
+    
 
     //Spouse Info
     nwParameter_Add("txtLastNameSP", $("#txtLastNameSP").val());
@@ -241,7 +269,12 @@ function cust_GetPara() {
     nwParameter_Add("cmbOccupationSP", $("#cmbOccupationSP").val());
     nwParameter_Add("txtCompanySP", $("#txtCompanySP").val());
     nwParameter_Add("cmbNatureOfBusinessCB", $("#cmbNatureOfBusinessCB").val());
+    nwParameter_Add("txtDateIssuedSP", $("#txtDateIssuedSP").val());
 
+    //added
+    nwParameter_Add("txtContractEndSpS", $("#txtContractEndSpS").val());
+
+    
 
     //Employment Info
     nwParameter_Add("cmbEmpSubTypeEMP", $("#cmbEmpSubTypeEMP").val());
@@ -281,7 +314,11 @@ function cust_GetPara() {
     nwParameter_Add("cmbHomeOwnCO", $("#cmbHomeOwnCOD").val());
     nwParameter_Add("txtRowID", $("#txtRowID").val());
     nwParameter_Add("txtPositionCO", $("#txtPositionCO").val());
+    nwParameter_Add("txtDateIssuedCO", $("#txtDateIssuedCO").val());
+    nwParameter_Add("txtContractEndCO", $("#txtContractEndCO").val());
 
+    
+    
     //Coowner Spouse
     nwParameter_Add("txtLastNameCOS", $("#txtLastNameCOS").val());
     nwParameter_Add("txtFirstNameCOS", $("#txtFirstNameCOS").val());
@@ -333,6 +370,9 @@ function cust_GetPara() {
     nwParameter_Add("txtNamePI", $("#txtNamePI").val());
     nwParameter_Add("txtMobileNoPI", $("#txtMobileNoPI").val());
     nwParameter_Add("txtEmailPI", $("#txtEmailPI").val());
+    
+    nwParameter_Add_DataSet("nwGridMainCon");
+    nwParameter_Add_DataSet("nwGridMainCon2");
 }
 
 
@@ -353,7 +393,10 @@ function func_ToolboxNavigatorBind_Empty() {
     func_ActionDriven("actBindCollectionEmpty", false);
 }
 
-
+function getLookupData(idnum, index) {
+    var data = $("#menuCreatorContainer #nkLookupCon table tbody tr:eq(" + (idnum - 1) + ") td:eq(" + index + ") span").text();
+    return data;
+}
 ///////////////////////////////////////
 var temp_crnwTR = "";
 function Lookup_DoneFunction(idName, idNum) {
@@ -388,9 +431,25 @@ function Lookup_DoneFunction(idName, idNum) {
 
         }
     }
+    else if (idName == "lugLoadTypeOfAccount") {
+        nwGridMainCon_Book.ActiveSheet.SetText((2), getrow, getLookupData(idNum, 1));
+    }
+    else if (idName == "lugInstitution") {
+        nwGridMainCon_Book.ActiveSheet.SetText((0), getrow, getLookupData(idNum, 0));
+    }
+    else if (idName == "lugSpsLoadTypeOfAccount") {
+        nwGridMainCon_Book2.ActiveSheet.SetText((2), getrow, getLookupData(idNum, 1));
+    }
+    else if (idName == "lugSpsInstitution") {
+        nwGridMainCon_Book2.ActiveSheet.SetText((0), getrow, getLookupData(idNum, 0));
+    }
+
+  
 }
 
 function EnableFields() {
+    $('.btn-tb-save').enable(true);
+
     $(".btn-default").enable(true); //Buttons
     $(".fsMain").enable(true);
 
@@ -400,7 +459,11 @@ function EnableFields() {
     $("#cmbVIPType ").enable(true);
 
     $(".fsIndividual").enable(true);
+    $(".fsCurrAccBnk").enable(true);
     $(".fsSpouseInfo").enable(true);
+    $(".fsSpsEmploymentInfo").enable(true);
+    $(".fsSpsCurBnkAcc").enable(true);
+
     $(" .fsEmploymentInfo").enable(true);
     $(".fsCoownerInfo-dsbld").enable(true);
     $(".fsCoOwnerSpouseInfo").enable(true);
@@ -434,18 +497,28 @@ function func_ChangeCustType(id, isClear) {
 
 function SetDefaultIndividual() {
     $(".fsIndividual").show();
+    $(".fsCurrAccBnk").show();
     $(".fsSpouseInfo").hide();
+    $(".fsSpsEmploymentInfo").hide();
+    $(".fsSpsCurBnkAcc").hide();
+
     $(".fsEmploymentInfo").show();
     $(".fsCoownerInfo").hide();
+    $(".fsCoEmploymentInfo").hide();
     $(".fsCoOwnerSpouseInfo").hide();
     $(".fsCorporate").hide();
     $(".fsAttyInfo").hide();
 }
 function SetDefaultCorporate() {
     $(".fsIndividual").hide();
+    $(".fsCurrAccBnk").hide();
     $(".fsSpouseInfo").hide();
+    $(".fsSpsEmploymentInfo").hide();
+    $(".fsSpsCurBnkAcc").hide();
+
     $(".fsEmploymentInfo").hide();
     $(".fsCoownerInfo").hide();
+    $(".fsCoEmploymentInfo").hide();
     $(".fsCoOwnerSpouseInfo").hide();
     $(".fsCorporate").show();
     $(".fsAttyInfo").hide();
@@ -502,10 +575,18 @@ function CheckIfWithRepresentative() {
 }
 
 function CheckIfWithCoowner() {
-    if ($("#chkCoowner").prop("checked") == true && $("#cbIndividual").prop("checked") == true)
+    if ($("#chkCoowner").prop("checked") == true && $("#cbIndividual").prop("checked") == true) {
+
         $(".fsCoownerInfo").show();
+        $(".fsCoEmploymentInfo").show();
+    }
     else
+    {
+
         $(".fsCoownerInfo").hide();
+        $(".fsCoEmploymentInfo").hide();
+    }
+        
 
 }
 
@@ -558,6 +639,23 @@ function DisableFields() {
     $('#btnReqCompliance').removeClass('btnOrange');
     $('#btnReqCompliance').removeClass('btnGreen');
     $('#btnReqCompliance').addClass('btnGray');
+    //$('.btn-tb-delete').enable(false);
+    //$('.btn-tb-update').enable(false);
+    //$('.btn-tb-export').enable(false);
+    //$('.btn-tb-update').enable(false);
+    //$('.btn-tb-save').enable(false);
+    //$("#noah-webui-Toolbox").bindingNew().enable(true);
+    //$("#noah-webui-Toolbox").bindingExport().enable(false);
+    //$("#noah-webui-Toolbox").bindingInquire().enable(true);
+    //$("#noah-webui-Toolbox").bindingDelete().visible(true);
+    //$("#noah-webui-Toolbox").bindingDelete().enable(false);
+    //$("#noah-webui-Toolbox").bindingSave().enable(false);
+    //$("#noah-webui-Toolbox").bindingExport().enable(false);
+    //$("#noah-webui-Toolbox").bindingProcess().enable(false);
+    //$("#noah-webui-Toolbox").bindingUpdate().enable(false);
+ 
+
+
 }
 
 function EnableFieldsDone() {//Binding Done
@@ -612,32 +710,47 @@ function EnableFieldsDone() {//Binding Done
     $("#txtPositionEMP").enable(false)
 
     $("#btnReqCompliance").enable(true);
-    $("#noah-webui-Toolbox").bindingNew().visible(true);
-    $("#noah-webui-Toolbox").bindingNew().enable(true);
-    $("#noah-webui-Toolbox").bindingExport().enable(true);
-    $("#noah-webui-Toolbox").bindingInquire().enable(true);
-    $("#noah-webui-Toolbox").bindingDelete().visible(true);
-    $("#noah-webui-Toolbox").bindingDelete().enable(true);
-    $("#noah-webui-Toolbox").bindingSave().enable(true);
-    $("#noah-webui-Toolbox").bindingProcess().visible(true);
-    $("#noah-webui-Toolbox").bindingExport().enable(true);
+    //$("#noah-webui-Toolbox").bindingNew().visible(true);
+    //$("#noah-webui-Toolbox").bindingNew().enable(true);
+    //$("#noah-webui-Toolbox").bindingExport().enable(true);
+    //$("#noah-webui-Toolbox").bindingInquire().enable(true);
+    //$("#noah-webui-Toolbox").bindingDelete().visible(true);
+    //$("#noah-webui-Toolbox").bindingDelete().enable(true);
+    //$("#noah-webui-Toolbox").bindingSave().enable(true);
+    //$("#noah-webui-Toolbox").bindingProcess().visible(true);
+    //$("#noah-webui-Toolbox").bindingExport().enable(true);
 
+    //$('.btn-tb-delete').enable(true);
+    //$('.btn-tb-update').enable(true);
+    //$('.btn-tb-export').enable(true);
+    //$('.btn-tb-update').enable(true);
+    //$('.btn-tb-save').enable(true);
+    //$('.btn-tb-Process').enable(true); 
+    //$('.btn-tb-Inquire').enable(true);
+
+    $('.btn-tb-delete').visible(true);
+    $('.btn-tb-delete').enable(true);
+    $('.btn-tb-save').enable(true);
+
+    $('.btn-tb-inquire').enable(true); 
+    $('.btn-tb-export').enable(true);  
+    $('.btn-tb-update').enable(true);
 
 }
 
 
 function DisableFieldsEmpty() {
+
     DisableFields();
 
-    $("#noah-webui-Toolbox").bindingNew().visible(true);
-    $("#noah-webui-Toolbox").bindingNew().enable(true);
-    $("#noah-webui-Toolbox").bindingSave().enable(false);
-    $("#noah-webui-Toolbox").bindingDelete().enable(false);
-    $("#noah-webui-Toolbox").bindingDelete().visible(true);
-    $("#noah-webui-Toolbox").bindingRefresh().enable(true);
-    $("#noah-webui-Toolbox").bindingProcess().visible(false);
-    $("#noah-webui-Toolbox").bindingExport().enable(false);
-    $("#noah-webui-Toolbox").bindingInquire().enable(false);
+    //$("#noah-webui-Toolbox").bindingNew().enable(true);
+    //$("#noah-webui-Toolbox").bindingSave().enable(false);
+    //$("#noah-webui-Toolbox").bindingDelete().enable(false);
+    //$("#noah-webui-Toolbox").bindingUpdate().enable(true);
+    //$("#noah-webui-Toolbox").bindingExport().enable(false);
+    //$("#noah-webui-Toolbox").bindingInquire().enable(true);
+    //$("#noah-webui-Toolbox").bindingProcess().enable(false);
+
 }
 
 function RefreshData() {
@@ -764,6 +877,13 @@ function ClearFields() {
     $("#txtNamePI").val('');
     $(".txtPosition").val('');
     $(".cmbBusinessType").val('');
+    //added
+    $("#txtDateIssuedSP").val('');
+    $("#txtCurrContractEndEMP").val('');
+
+    
+    
+
 
     CheckIfOthers("cmbReasonForBuyingPI");
     CheckIfOthers("txtDesiredPropertyPI");
@@ -993,6 +1113,9 @@ function ChangeCivilStatus(id) {
         {
             if (id == "cmbCivilStatus") {
                 $(".fsSpouseInfo").show();
+                $(".fsSpsEmploymentInfo").show();
+                $(".fsSpsCurBnkAcc").show();
+
                 var gender = $("#cmbGender").val();
                 if (gender == "F")
                     $("#cmbGenderSP").val("M");
@@ -1012,6 +1135,9 @@ function ChangeCivilStatus(id) {
         else {
             if (id == "cmbCivilStatus")
                 $(".fsSpouseInfo").hide();
+                $(".fsSpsEmploymentInfo").hide();
+                $(".fsSpsCurBnkAcc").hide();
+
             if (id == "cmbCivilStatusCO")
                 $(".fsCoOwnerSpouseInfo").hide();
         }
@@ -1072,6 +1198,8 @@ $(document).on('change', '.cmbProvince', function (e) {
         document.getElementById("cmbBarangayCB").innerHTML = "";
         nwParameter_Add("cid", "#cmbMunicipalityCB")
     }
+
+
     $(".txtZipCode ").val("");
     $(".txtRegionCode").val("");
     $(".txtRegion").val("");
@@ -1079,6 +1207,30 @@ $(document).on('change', '.cmbProvince', function (e) {
     $(".txtCountry").val("");
     nwParameter_Add("txtCode", $("#txtCode").val());
     func_ActionDriven("actSpecialCombo", false);
+});
+
+
+//Province to Municipality Co Owner
+$(document).on('change', '.cmbProvinceCO', function (e) {
+    var codeCO = $(this).val();
+    nwParameter_Add("codeCO", codeCO);
+    nwParameter_Add("qtCO", 12)
+
+
+    if ($("#chkCoowner").prop("checked") == true) {
+        document.getElementById("cmbMunicipalityCO").innerHTML = "";
+        document.getElementById("cmbMunicipalityCO").innerHTML = "";
+        nwParameter_Add("cidCO", "#cmbMunicipalityCO")
+
+
+    }
+    $(".txtZipCodeCO").val("");
+    $(".txtRegionCodeCO").val("");
+    $(".txtRegionCO").val("");
+    $(".txtCountryCodeCO").val("");
+    $(".txtCountryCO").val("");
+    nwParameter_Add("txtCode", $("#txtCode").val());
+    func_ActionDriven("actSpecialComboCO", false);
 });
 //Municipality to Barangay
 $(document).on('change', '.cmbMunicipality', function (e) {
@@ -1092,6 +1244,12 @@ $(document).on('change', '.cmbMunicipality', function (e) {
     $(".txtRegion").val(rdesc);
     $(".txtCountryCode").val(ccode);
     $(".txtCountry").val(cdesc);
+    
+    $(".txtRegionCodeCB").val(rcode);
+    $(".txtRegionCB").val(rdesc);
+    $(".txtCountryCodeCB").val(ccode);
+    $(".txtCountryCB").val(cdesc);
+
 
     nwParameter_Add("code", code);
     nwParameter_Add("qt", 13)
@@ -1105,8 +1263,38 @@ $(document).on('change', '.cmbMunicipality', function (e) {
         $(".txtZipCode ").val("");
         nwParameter_Add("cid", "#cmbBarangayCB")
     }
+
     nwParameter_Add("txtCode", $("#txtCode").val());
     func_ActionDriven("actSpecialCombo", false);
+});
+
+
+//Municipality to Barangay CO owwer
+$(document).on('change', '.cmbMunicipalityCO', function (e) {
+    var codeCO = $(this).val();
+    var rcode = $('option:selected', this).attr('rcode');
+    var rdesc = $('option:selected', this).attr('rdesc');
+    var ccode = $('option:selected', this).attr('ccode');
+    var cdesc = $('option:selected', this).attr('cdesc');
+
+ 
+    $(".txtRegionCodeCO").val(rcode);
+    $(".txtRegionCO").val(rdesc);
+    $(".txtCountryCodeCO").val(ccode);
+    $(".txtCountryCO").val(cdesc);
+
+
+    nwParameter_Add("codeCO", codeCO);
+    nwParameter_Add("qtCO", 13)
+
+    if ($("#chkCoowner").prop("checked") == true) {
+        document.getElementById("cmbBarangayCO").innerHTML = "";
+        $(".txtZipCodeCO").val("");
+        nwParameter_Add("cidCO", "#cmbBarangayCO")
+    }
+
+    nwParameter_Add("txtCode", $("#txtCode").val());
+    func_ActionDriven("actSpecialComboCO", false);
 });
 //Municipality to Barangay
 //$(document).on('change', '.cmbBarangay', function (e) {
@@ -1238,9 +1426,19 @@ $(document).on('change', '.chkFullAddress', function (e) {
     var id = $(this).attr("id");
     CheckIfFullAddress(id, true);
 });
+$(document).on('change', '.chkFullAddressCO', function (e) {
+    var id = $(this).attr("id");
+    CheckIfFullAddressCO(id, true);
+});
 
+$(document).on('change', '.chkFullAddressCB', function (e) {
+    var id = $(this).attr("id");
+    CheckIfFullAddressCB(id, true);
+});
 $(document).on('click', '#btnAddCoowner', function (e) {
     $(".fsCoownerInfo-dsbld").enable(true);
+    $(".fsCoEmploymentInfo-dsbld").enable(true);
+
     $("#noah-webui-Toolbox").bindingSave().enable(true);
     ClearCoowner();
     $(".dsbld").enable(false);
@@ -1347,6 +1545,69 @@ function CheckIfFullAddress(id, isClear) {
     }
 
 }
+
+
+function CheckIfFullAddressCO(id, isClear) {
+    if ($("#" + id).prop("checked") == true) {
+        $('.txtFullAddressCO').enable(true);
+        $('.cmbProvinceCO').enable(false);
+        $('.cmbMunicipalityCO').enable(false);
+        $('.cmbBarangayCO').enable(false);
+
+    }
+    else {
+        $('.txtFullAddressCO').enable(false);
+        $('.cmbProvinceCO').enable(true);
+        $('.cmbMunicipalityCO').enable(true);
+        $('.cmbBarangayCO').enable(true);
+    }
+    if (isClear == true) {
+        document.getElementById("cmbMunicipalityCO").innerHTML = "";
+        document.getElementById("cmbBarangayCO").innerHTML = "";
+
+        $('.txtFullAddressCO').val('');
+        $('.cmbProvinceCO').val('');
+        $('.cmbMunicipalityCO').val('');
+        $('.cmbBarangayCO').val('');
+        $('.txtZipCodeCO').val('');
+        $('.txtRegionCO').val('');
+        $('.txtRegionCodeCO').val('');
+        $('.txtCountryCO').val('');
+        $('.txtCountryCodeCO').val('');
+    }
+
+}
+
+function CheckIfFullAddressCB(id, isClear) {
+    if ($("#" + id).prop("checked") == true) {
+        $('#txtFullAddressCB').enable(true);
+        $('#cmbProvinceCB').enable(false);
+        $('#cmbMunicipalityCB').enable(false);
+        $('#cmbBarangayCB').enable(false);
+
+    }
+    else {
+        $('#txtFullAddressCB').enable(false);
+        $('#cmbProvinceCB').enable(true);
+        $('#cmbMunicipalityCB').enable(true);
+        $('#cmbBarangayCB').enable(true);
+    }
+    if (isClear == true) {
+        document.getElementById("cmbMunicipalityCB").innerHTML = "";
+        document.getElementById("cmbBarangayCB").innerHTML = "";
+
+        $('#txtFullAddressCB').val('');
+        $('#cmbProvinceCB').val('');
+        $('#cmbMunicipalityCB').val('');
+        $('#cmbBarangayCB').val('');
+        $('#txtZipCodeCB').val('');
+        $('#txtRegionCB').val('');
+        $('#txtRegionCodeCB').val('');
+        $('#txtCountryCB').val('');
+        $('#txtCountryCodeCB').val('');
+    }
+
+}
 $(document).on('click', '.btn-cancel', function () {
     $(this).parents('.pdlg').fadeOut();
     $(this).parents('.iframe_main').fadeOut();
@@ -1432,6 +1693,8 @@ function LoadCoowner(ix) {
 
     $(".fsSecDet.fsCoOwnerSpouseInfoDet").enable(false);
     $(".fsSecDet.fsCoownerInfoDet").enable(false);
+    $(".fsSecDet.fsCoEmploymentInfoDet").enable(false);
+
 }
 
 //Pagination Custom Events
@@ -1723,16 +1986,16 @@ $(document).on('focusout', '.txtTIN', function () {
 
 $(document).on("click", "#btnReqCompliance", function (e) {
 
-    var trantype = 'REMCST';
+    //var trantype = 'REMCST';
     var docno = $('#txtCode').val();
     var status = $('#txtRecStatus').val();
     nwDocno = getParameterByName('nwDocno');
 
     if (status == "3" || nwDocno != "") {
-        var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&isView=true";
+        var fullength = "DCRequirementCompliance?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=true";
 
     } else {
-        var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&isView=false";
+        var fullength = "DCRequirementCompliance?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=false";
     }
 
 
@@ -1744,6 +2007,7 @@ $(document).on("click", "#btnReqCompliance", function (e) {
     nwPopupForm_ShowModal("nwPopUpReqComp");
     nwLoading_End('btnReqCompliance');
 
+    console.log(fullength);
 
 });
 
@@ -1832,4 +2096,67 @@ $(document).on("click", "#cbVIP", function () {
     func_CheckIfVIP();
 
 });
+
+
+$(document).on('click', '.btn-modal-back', function () {
+    $(".modal-s").removeClass("_show");
+    $(".modal-box-s").removeClass("_slide-m");
+
+});
+
+function p8Spread_Click(canvasID, row, col) {
+
+    if (canvasID == "nwGridMainCon") {
+        if (col == 0) {
+            var lugInstitution = nwGridMainCon_Book.ActiveSheet.GetText(col, row);
+            //if (nwGridMainCon_Book.ActiveSheet.GetEnabled(col, row)) {
+
+            getcol = col;
+            getrow = row;
+            nwParameter_Add("lugInstitution", lugInstitution);
+            lookUpCustomize("lugInstitution", 1);
+        }
+        else if (col == 2) {
+            var lugLoadTypeOfAccount = nwGridMainCon_Book.ActiveSheet.GetText(col, row);
+            //if (nwGridMainCon_Book.ActiveSheet.GetEnabled(col, row)) {
+
+            getcol = col;
+            getrow = row;
+            nwParameter_Add("lugLoadTypeOfAccount", lugLoadTypeOfAccount);
+            lookUpCustomize("lugLoadTypeOfAccount", 1);
+
+
+
+        }
+
+
+    }else if (canvasID == "nwGridMainCon2") {
+        if (col == 0) {
+            var lugSpsInstitution = nwGridMainCon_Book2.ActiveSheet.GetText(col, row);
+            //if (nwGridMainCon_Book.ActiveSheet.GetEnabled(col, row)) {
+
+            getcol = col;
+            getrow = row;
+            nwParameter_Add("lugSpsInstitution", lugSpsInstitution);
+            lookUpCustomize("lugSpsInstitution", 1);
+        }
+        else if (col == 2) {
+            var lugSpsLoadTypeOfAccount = nwGridMainCon_Book2.ActiveSheet.GetText(col, row);
+            //if (nwGridMainCon_Book.ActiveSheet.GetEnabled(col, row)) {
+
+            getcol = col;
+            getrow = row;
+            nwParameter_Add("lugSpsLoadTypeOfAccount", lugSpsLoadTypeOfAccount);
+            lookUpCustomize("lugSpsLoadTypeOfAccount", 1);
+
+
+
+        }
+
+
+    }
+    return true;
+}
+
+
 

@@ -1,7 +1,7 @@
 ﻿@inherits System.Web.Mvc.WebViewPage
 @{
-     ViewBag.Title = "Deactivated Client Registration Summary";
-     Layout =NoahWebLib.nwSystem.GetDefaultLayout();
+    ViewBag.Title = "Deactivated Client Registration Summary";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
 }
 
 <head>
@@ -10,17 +10,17 @@
 </head>
 
 <div id="noah-webui-Toolbox" class="nk-toolbar-c">
-        <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh">
-            <div class="_icon"></div>
-            <div class="_lbl">Refresh</div>
-        </div>
-        <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire">
-            <div class="_icon"></div>
-            <div class="_lbl">Inquire</div>
-        </div>
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+    <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export">
+        <div class="_icon"></div>
+        <div class="_lbl">Export</div>
+    </div>
 </div>
 
-<div class="container-flex">
+<div class="container-flex mainCon">
     <div class="row row-parent padding-10">
         <!-- Date Filter -->
         <div class="col col-4">
@@ -34,8 +34,7 @@
                                 <label class="lbl-rdo" for="rdMonthly">Monthly</label>
                             </div>
                             <div class="col col-8">
-                                <select id="dpMonthly" class="cmb fullwidth inputFilter" disabled="disabled">
-                                </select>
+                                <select id="dpMonthly" class="cmb fullwidth inputFilter" disabled="disabled"></select>
                             </div>
                         </div>
                         <div class="row">
@@ -44,8 +43,7 @@
                                 <label class="lbl-rdo" for="rdAnnually">Annually</label>
                             </div>
                             <div class="col col-8">
-                                <select id="dpAnnually" class="cmb fullwidth inputFilter">
-                                </select>
+                                <select id="dpAnnually" class="cmb fullwidth inputFilter"></select>
                             </div>
                         </div>
                         <div class="row">
@@ -54,8 +52,7 @@
                                 <label class="lbl-rdo" for="rdQuarterly">Quarterly</label>
                             </div>
                             <div class="col col-8">
-                                <select id="dpQuarterly" class="cmb fullwidth inputFilter" disabled="disabled">
-                                </select>
+                                <select id="dpQuarterly" class="cmb fullwidth inputFilter" disabled="disabled"></select>
                             </div>
                         </div>
 
@@ -67,7 +64,7 @@
                         </div>
                         <div class="row">
                             <div class="col col-1">
-                                
+
                             </div>
                             <div class="col col-3">
                                 <label class="lbltxt" for="txtFrom">From</label>
@@ -106,18 +103,19 @@
                 </div>
             </fieldset>
         </div>
-        <div class="col col-1">
-            
+
+
+
+        <div class="container-flex">
+            <div class="row row-parent padding-10">
+                <div class="col col-12" id="conGrid">
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
 
-<div class="container-flex">
-    <div class="row row-parent padding-10">
-        <div class="col col-12" id="conGrid">
-        </div>
-    </div>
-</div>
 
 
 <div class="nk-footer-c">

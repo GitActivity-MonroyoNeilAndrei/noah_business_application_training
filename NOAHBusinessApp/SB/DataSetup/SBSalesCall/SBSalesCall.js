@@ -27,13 +27,11 @@ function func_Reload() {
     LoadStringsCases();
     crLnk = "../SBSalesCall/SBSalesCall_Gateway";
     crLnkGateKey = "SBSalesCall";
+
+    crnwTagSingleBind = true;
     DisableFields();
     //nwPopupForm_Create("nwPopWindow", false);
 
-    $("#noah-webui-default-Inquire").enable(true);
-
-
-    crnwTagSingleBind = true;
 
    
     var isContinue = true;
@@ -41,7 +39,7 @@ function func_Reload() {
     ToolBoxGetData = false;
 
     //nwu = `nwu=${nwu}`;
-    url = `SBSalesCallSummary`;
+    url = `../SBSalesCallSummary/`;
     nwPopupForm_Create("SalesCallSumm", false, url);
 
     //nwPopupForm_Create("SalesCallSumm", true); 
@@ -69,7 +67,6 @@ function func_ToolboxADD(indef, enume) {
 function func_ToolboxSave(indef, enume) {
     var isContinue = true;
     cust_GetPara();
-
     parent_MessageBoxQuestionToolBox("Do you want to save the current record?", baseTitle, "", indef, enume);
     isContinue = false;
 
@@ -152,8 +149,9 @@ function func_ToolboxNavigatorBind(enume) {
 }
 
 function func_ToolboxNavigatorBind_Done() {
-    nwLoading_Start("actBindCollection", crLoadingHTML);
     cust_GetPara();
+    nwLoading_Start("actBindCollection", crLoadingHTML);
+    RefreshData();
     EnableFieldsDone();
     ChkBox_RDB_Checker();
     Done_Checker();
@@ -193,6 +191,9 @@ function EnableFields() {
     $("#rdbResched").enable(false);
     $("#rdbCancel").enable(false);
     $("#btnViewRecords").enable(true);
+
+    $("#noah-webui-Toolbox").bindingInquire().enable(true);
+
 }
 
 function DisableFields() {
@@ -223,7 +224,7 @@ function DisableFields() {
 
     $("#noah-webui-Toolbox").bindingNew().enable(true);
     $("#noah-webui-Toolbox").bindingExport().enable(false);
-    $("#noah-webui-Toolbox").bindingInquire().enable(false);
+    $("#noah-webui-Toolbox").bindingInquire().enable(true);
     $("#noah-webui-Toolbox").bindingDelete().visible(true);
     $("#noah-webui-Toolbox").bindingDelete().enable(false);
     $("#noah-webui-Toolbox").bindingSave().enable(false);
@@ -297,9 +298,9 @@ function DisableFieldsEmpty() {
     $("#noah-webui-Toolbox").bindingNew().enable(true);
     $("#noah-webui-Toolbox").bindingSave().enable(false);
     $("#noah-webui-Toolbox").bindingDelete().enable(false);
-    $("#noah-webui-Toolbox").bindingRefresh().enable(true);
+    //$("#noah-webui-Toolbox").bindingRefresh().enable(true);
     $("#noah-webui-Toolbox").bindingExport().enable(false);
-    $("#noah-webui-Toolbox").bindingInquire().enable(false);
+    $("#noah-webui-Toolbox").bindingInquire().enable(true);
     $("#noah-webui-Toolbox").bindingProcess().enable(false);
 }
 
@@ -385,25 +386,51 @@ $(document).on('change', '#idvallugTowerPhase', function (e) {
 });
 
 $(document).on('change', '#txtStartDate', function (e) {
-    var serverdate = $("#txtServerDate").val();
-    var datepickfrom = $("#txtStartDate").val();
-    var datepickto = $("#txtEndDate").val();
+    //var serverdate = $("#txtServerDate").val();
+    //var datepickfrom = $("#txtStartDate").val();
+    //var datepickto = $("#txtEndDate").val();
 
-    nwParameter_Add("serverdate", serverdate);
-    nwParameter_Add("datepickfrom", datepickfrom);
-    nwParameter_Add("datepickto", datepickto);
-    func_ActionDriven("actValidateEffectiveDate");
+    //nwParameter_Add("serverdate", serverdate);
+    //nwParameter_Add("datepickfrom", datepickfrom);
+    //nwParameter_Add("datepickto", datepickto);
+    //func_ActionDriven("actValidateEffectiveDate");
+
+    var date0 = new Date($("#txtServerDate").val());
+    var date1 = new Date($("#txtStartDate").val());
+    var date2 = new Date($("#txtEndDate").val());
+
+    if (date2 < date1) {
+        MessageBox("End Date should not be earlier than the Start date.", baseTitle);
+        $("#txtEndDate").val($("#txtStartDate").val());
+    }
+    else if (date1 < date0) {
+        MessageBox("Start Date should not be earlier than the current server date.", baseTitle);
+        $("#txtStartDate").val($("#txtServerDate").val());
+    }
 });
 
 $(document).on('change', '#txtEndDate', function (e) {
-    var serverdate = $("#txtServerDate").val();
-    var datepickfrom = $("#txtStartDate").val();
-    var datepickto = $("#txtEndDate").val();
+    //var serverdate = $("#txtServerDate").val();
+    //var datepickfrom = $("#txtStartDate").val();
+    //var datepickto = $("#txtEndDate").val();
 
-    nwParameter_Add("serverdate", serverdate);
-    nwParameter_Add("datepickfrom", datepickfrom);
-    nwParameter_Add("datepickto", datepickto);
-    func_ActionDriven("actValidateEffectiveDate");
+    //nwParameter_Add("serverdate", serverdate);
+    //nwParameter_Add("datepickfrom", datepickfrom);
+    //nwParameter_Add("datepickto", datepickto);
+    //func_ActionDriven("actValidateEffectiveDate");
+
+    var date0 = new Date($("#txtServerDate").val());
+    var date1 = new Date($("#txtStartDate").val());
+    var date2 = new Date($("#txtEndDate").val());
+
+    if (date2 < date1) {
+        MessageBox("End Date should not be earlier than the Start date.", baseTitle);
+        $("#txtEndDate").val($("#txtStartDate").val());
+    }
+    else if (date1 < date0) {
+        MessageBox("Start Date should not be earlier than the current server date.", baseTitle);
+        $("#txtStartDate").val($("#txtServerDate").val());
+    }
 });
 
 
@@ -679,6 +706,7 @@ $(document).on('click', '#rdbCancel', function () {
 
 $(document).on('click', '#btnViewRecords', function () {
     nwPopupForm_ShowModal("SalesCallSumm");
+    $("#SalesCallSumm .modal-hdr-title").text("Sales Call Summary");
 });
 
 function Lookup_DoneFunction(idName, idNum) {
@@ -689,7 +717,8 @@ function Lookup_DoneFunction(idName, idNum) {
     var blank = "";
 
     if (idName == 'toolboxInquire') {
-        cust_GetPara();
+        nwParameter_Add("txtTrasactionNo", getLookupData(idNum, 0));
+        //cust_GetPara();
     }
 
     if (idName == 'lugProspectCust') {
