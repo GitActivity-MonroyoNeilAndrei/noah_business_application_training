@@ -1,0 +1,76 @@
+﻿/**#nwGrid2 table.tblGridBody tr
+{
+	background-color:black !important;
+}
+
+
+#nwGrid2 table.tblGridBody tr
+{
+	background-color:red !important;
+}
+*/
+/*
+.PagerNum
+{
+	font-size:12;
+	font-weight:bold;
+	text-decoration:underline;
+	margin-right:6px;
+	cursor:pointer;
+
+}
+*/
+.armScreenName
+{
+	border: 1px solid #8D8D8D;
+	border-radius: 5px;
+	padding: 5px 5px;
+	background-color: rgb(236, 236, 236);
+	margin-right: 3px;
+	margin-bottom: 3px;
+	cursor:default;
+	font-family:Verdana;
+	    min-width: 150px;
+    width: 150px;
+    max-height: 15px;
+    display: inline-block;
+    overflow: hidden;
+        word-break: break-all;
+}
+}
+
+
+.armScreenName div
+{
+		float: right;
+	top: -10px;
+	font-size:10px;
+	/* position: absolute; */
+	margin-top: -8px;
+	visibility:hidden;
+}
+.ScreenNameClose {
+    float: right;
+    margin-top: -7;
+}
+
+.armScreenName:hover div
+{
+	visibility:visible;
+}
+
+
+.progress { margin-top:2px; position:relative; width: 100%; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+.bar { background-color: #0FC20F; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; display:inline-block; top:3px; left:48%; text-shadow: 0px 0px 3px #DEDEDE}
+
+.PagerNum.nwSelected
+{
+color: orange;
+}
+
+div.Version
+{
+background: rgb(255, 227, 116);
+font-weight: bold;
+}

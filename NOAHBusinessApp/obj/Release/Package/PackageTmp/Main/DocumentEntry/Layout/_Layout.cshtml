@@ -1,0 +1,390 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+
+    string rdefault = NOAHBusinessApp.Main.DocumentEntry.Layout.SetDefaults(User);
+    NOAHBusinessApp.Main.DocumentEntry.Layout.NKSystemDefault sdefault = NOAHBusinessApp.Main.DocumentEntry.Layout.SetSystemDefaults(Context, User);
+
+
+    //jsonMainData["UInfo"][0].Description
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    @*<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />*@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+  
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Basic Meta Tags -->
+
+    <!-- Local Resources -->
+    <link rel="stylesheet" type="text/css" href="~/materials/css/custom.css" />
+
+    <!-- Local Resources -->
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-screen.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style-set.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/theme.css">
+
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-main.css" />
+    <link rel="stylesheet" type="text/css" href="~/materials/fonts/new/fonts.css" />
+
+    <script type="text/javascript" src="~/materials/jslib/fpti.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fptiextra.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/noahwebAAGlib.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/noahweb_Format.js"></script>
+
+
+    <script type="text/javascript" src="~/materials/jslib/CanvasJS.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/CanvasJS-Excel.js"></script>
+
+    <script type="text/javascript" src="~/materials/jslib/fx.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fx-main.js"></script>
+
+    <script type="text/javascript" src="~/materials/jslib/umain.js"></script>
+    <!-- Local Resources -->
+
+    <script type="text/javascript" src="~/Main/DocumentEntry/Layout/Layout.js"></script>
+
+
+    <!-- Local Resources -->
+    <link rel="stylesheet" type="text/css" href="~/Main/PortalMaterials/materials_main/css/slr-p-style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Main/PortalMaterials/materials_main/css/slr-p-style_myspace.css" />
+    <link rel="stylesheet" type="text/css" href="~/Main/PortalMaterials/materials_main/css/slr-p-style_myspace_red.css" />
+    <link rel="stylesheet" type="text/css" href="~/Main/PortalMaterials/materials_main/css/slr-p-style_myspace_blue_orange.css" />
+    <link rel="stylesheet" type="text/css" href="~/Main/PortalMaterials/materials_main/css/PortalLayout.css" />
+
+</head>
+<body class="nw-ui nk _home _layout abtz slr-p new-np nk my-space" theme="blue_orange">
+
+    @{
+        if (sdefault.isPopup == true)
+        {
+           <div class="main-cpoup">
+                 @RenderBody()
+           </div>
+        }
+        else
+        {
+
+    
+    <div class="main-c">
+        <div class="hdr-c">
+            <div class="logo-c">
+                <a class="home-logo" href="">
+                    <img class="hdr-logo" src="" style="width: 170px;margin-left: 70px;" alt="NOAH Seller's Portal Header Logo | NOAH Business Applications" title="NOAH Seller's Portal Header Logo" />
+                </a>
+            </div>
+            <img class="hdr-bg" src="" alt="NOAH Seller Portal Header Banner | NOAH Business Applications" />
+        </div>
+        <div class="nav-menu">
+            <div class="nav-list">
+                <div id="btnHome" class="nav-li active" href="">Home</div>
+                <div id="btnCust" class="nav-li">My Customers</div>
+                <div id="btnInfo" class="nav-li">My Information</div>
+                <div id="btnTransaction" class="nav-li" style="">My Transactions</div>
+                <div id="btnMore" class="nav-li">Reports and Inquiries</div>
+
+
+                <div id="navMob_Cust" class="nav-mob-ddli">
+                    <div class="nav-selected-title">My Customer</div>
+                    <div class="closesable-wrapper">
+                        <div class="closeable-toggle-wrapper">
+                            <div class="closeable-toggle-button">
+                            </div>
+                        </div>
+                        <div id="btnProspectCust" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-square2-border.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-circle-and-curvedashedline.png" />
+                            <div class="nav-ddli-item-bg-img"></div>
+                            <div class="nav-ddli-item-title">My Prospect Customers</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                        <div id="btnCustomerInfo" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-square2-border.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-circle-and-curvedashedline.png" />
+                            <div class="nav-ddli-item-bg-img"></div>
+                            <div class="nav-ddli-item-title">My Customers</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                        <div id="btnSalesCall" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-square2-border.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-circle-and-curvedashedline.png" />
+                            <div class="nav-ddli-item-bg-img"></div>
+                            <div class="nav-ddli-item-title">Sales Call</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="navMob_Transaction" class="nav-mob-ddli">
+                    <div class="nav-selected-title">My Transactions</div>
+                    <div class="closesable-wrapper">
+                        <div class="closeable-toggle-wrapper">
+                            <div class="closeable-toggle-button">
+                            </div>
+                        </div>
+                        <div id="btnHoldingUnit" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-curve1.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-curve2.png" />
+                            <div class="nav-ddli-item-title">Holding of Unit</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                        <div id="btnReseration" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-double-circle.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-dashed-curve-line.png" />
+                            <div class="nav-ddli-item-bg-img"></div>
+                            <div class="nav-ddli-item-title">Reservation Entry</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                        <div id="btnHoldingExt" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-circle-border.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-square-border.png" />
+                            <div class="nav-ddli-item-title">Holding - Request for Extension</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                        <div id="btnClientReg" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-circle-border.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-square-border.png" />
+                            <div class="nav-ddli-item-title">Client Registration Deactivation</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="navMob_More" class="nav-mob-ddli">
+                    <div class="nav-selected-title">Reports and Inquiries</div>
+                    <div class="closesable-wrapper">
+                        <div class="closeable-toggle-wrapper">
+                            <div class="closeable-toggle-button">
+                            </div>
+                        </div>
+                        <div id="btnInvAvailability" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-square2-border.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-circle-and-curvedashedline.png" />
+                            <div class="nav-ddli-item-bg-img"></div>
+                            <div class="nav-ddli-item-title">Inventory Availability Summary</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                        <div id="btnBookingSummary" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-dashed-diagonal-line.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-double-slant-line.png" />
+                            <div class="nav-ddli-item-title">My Booking Summary</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                        <div id="btnTransactionSummary" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-square2-border.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-circle-and-curvedashedline.png" />
+                            <div class="nav-ddli-item-bg-img"></div>
+                            <div class="nav-ddli-item-title">My Transactions Summary</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                        <div id="btnCommissions" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-square2-border.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-circle-and-curvedashedline.png" />
+                            <div class="nav-ddli-item-bg-img"></div>
+                            <div class="nav-ddli-item-title">My Commissions</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                        <div id="btnClientRegSummary" style="display:none;" class="nav-mob-ddli-item">
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-square2-border.png" />
+                            <img class="img-bg" src="../../../materials_main/media/images/nav-menu/bg-glass-circle-and-curvedashedline.png" />
+                            <div class="nav-ddli-item-bg-img"></div>
+                            <div class="nav-ddli-item-title">Client Registration Deactivation Summary</div>
+                            <div class="nav-ddli-item-icon"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-user">
+                <div id="btnNavUser" class="nav-user-dd">
+                    <div class="nav-user-img"></div>
+                    <div class="nav-user-name">...</div>
+
+                    <div class="nav-user-ddli">
+                        <div id="btnLogoutF" class="nav-user-ddli-item">Change Password</div>
+                        <div id="btnLogoutF" class="nav-user-ddli-item"><a href="/account/LogOff/">Logout</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script id="sdefault">
+            @rdefault
+        </script>
+
+
+        <div class="content-c">
+            @RenderBody()
+        </div>
+    </div>
+
+
+        }
+    }
+
+
+    
+
+    <div class="alerts-parent">
+   
+        </div>
+    <!-- Lookup -->
+    <div id="menuCreatorContainer" class="modal-s">
+        <div class="modal-box-s">
+            <div class="modal-box-bg"></div>
+            <div class="modal-hdr">
+                <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                <!-- <div class="modal-hdr-icon"></div> -->
+                <div class="modal-hdr-title">Look up</div>
+                <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+            </div>
+            <div class="nk-modal-body">
+                <div class="row margin-y-10">
+                    <div class="col col-12 col-parent child-centered">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Column Filter</label>
+                            </div>
+                            <div class="col col-7">
+                                <select id="nkcmb-mainfilter" class="cmb fullwidth">
+                                    <option>Select</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col col-5">
+                                <label class="lbltxt">Search</label>
+                            </div>
+                            <div class="col col-7 col-parent">
+                                <div class="col col-12">
+                                    <input id="txtlookupsearchF" type="text" name="" class="search txtbox txtdesc txtlookup">
+                                    <div id="nkbtnsearch" class="btn btn-sm-default btn-sm-default-lookup"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="AddtolistCon" class="row">
+                            <div class="col col-12">
+                                <div  id="LookUpAddtoList" class="btn-action-tab btn-add-list"><div class="_btn-icon"></div>
+                                <div class="_lbl-txt btnGetlookupx">Add to list</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col col-12 col-parent">
+                        <div id="tblWithTabsWrapperSample3" class="table-tabs-wrapper rescale-ready">
+                            <div class="row">
+                                <div id="nkLookupCon" class="table-wrapper">
+                                    <table id="dimTableLookUpCon" class="table nwlookupgridList" sid="nkTable0">
+                                        <thead>
+                                            <tr>
+                                                @*<th data-type="num" scope="col" class="tbl-row-num asc">#</th>*@
+                                                <th data-type="str" scope="col" class="">Code</th>
+                                                <th data-type="str" scope="col">Description</th>
+                                            </tr>
+                                            <tr>
+                                                @*<th data-type="num" scope="col" class="tbl-row-num"></th>*@
+                                                <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                                <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                @*<th scope="row" class="tbl-row-num" row-th="#">1</th>*@
+                                                <td row-th="First First"></td>
+                                                <td row-th="Last Name"></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @*<div class="col col-6">
+                                    <div class="row">
+                                        <div class="col col-12 child-centered">
+                                            <div id="" class="pagination-n-c" sid="">
+                                                <div class="page-control page-control-prev">Prev</div>
+                                                <input type="text" name="" class="page-search" value="1" autocomplete="off">
+                                                <div class="page-of-txt">of</div>
+                                                <div class="page-count-total">1</div>
+                                                <div class="page-control page-control-next">Next</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
+                                <div class="col col-12 margin-y-5">
+                                    <div class="row">
+                                        <div class="col col-12 ">
+                                            <div class="found-record"><span>...</span> Record(s) Found</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="LookupID"></div>
+    </div>
+    <div id="nwExportContainerMain" class="modal-s">
+        <div class="modal-box-s">
+            <div class="modal-box-bg"></div>
+            <div class="modal-hdr">
+                <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                <div class="modal-hdr-title">Export to Excel</div>
+                <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+            </div>
+            <div class="nk-modal-body">
+                <div class="row margin-y-10">
+                    <div class="col col-12 col-parent child-centered">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="btnnwExport" class="btn btn-default">Export to Excel</div>
+                                <div id="btnnwExportCSV" class="btn btn-default">Export to CSV</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="nwExportContainer"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+   
+  <!-- Message Box -->
+<div id="mdlPrompt" class="mdl">
+    <div class="mdl-msg-c">
+        <div class="mdl-msg-wrapper">
+            @*<div class="mdl-msg-title">Title</div>*@
+            <div class="mdl-msg-logo _msg-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="nw-mdl-logout" viewBox="0 0 60 60" width="60px" height="60px">
+                    <path class="ae1dc0c9-d477-41d0-8c64-ec295bcebf73" d="M57.06,35.62l-6.82,3.94a1.87,1.87,0,0,1-2.8-1.62V36H35.55a2,2,0,0,1,0-4H47.44V30.06a1.87,1.87,0,0,1,2.8-1.62l6.82,3.94A1.87,1.87,0,0,1,57.06,35.62ZM40,24V20a2,2,0,0,0-2-2H32V50h6a2,2,0,0,0,2-2V44a2,2,0,0,1,4,0v4a6,6,0,0,1-6,6H30.49A6,6,0,0,1,26,56H5.65A3.64,3.64,0,0,1,2,52.35V13.89a3.66,3.66,0,0,1,2.82-3.55L24.69,5.71A6,6,0,0,1,32,11.51V14h6a6,6,0,0,1,6,6v4a2,2,0,0,1-4,0ZM27,34a4,4,0,1,0-4,4A4,4,0,0,0,27,34Z" />
+                </svg>
+            </div>
+            <div class="mdl-msg-title "></div>
+            <div class="mdl-msg-txt">Are you sure you want to quit all applications and log out now?</div>
+            <div class="mdl-btn-msg-c">
+                <div id="btnYes" class="btn btn-msg-y">Yes</div>
+                <div id="btnNo" class="btn btn-msg-n">No</div>
+                <div id="btnOk" class="btn btn-msg-o">Ok</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

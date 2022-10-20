@@ -1,0 +1,16 @@
+﻿<!--Add Trusted Sites-->
+<script>
+// nwTrustedLinks.push("www.w3schools.com"); // example of adding trust
+
+nwTrustedLinks.push("http://localhost:60222"); 
+nwTrustedLinks.push("103.100.100.253"); 
+nwTrustedLinks.push("http://103.100.100.253"); 
+nwTrustedLinks.push("103.100.100.25"); 
+nwTrustedLinks.push("http://localhost:80"); 
+nwTrustedLinks.push("http://localhost:80/"); 
+nwTrustedLinks.push("localhost"); 
+nwTrustedLinks.push("http://localhost/"); 
+
+
+</script>
+

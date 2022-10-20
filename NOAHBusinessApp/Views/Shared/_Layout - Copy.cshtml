@@ -1,0 +1,842 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - NOAH</title>
+  
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Basic Meta Tags -->
+
+    <!-- Local Resources -->
+    <link rel="stylesheet" type="text/css" href="~/materials/css/custom.css" />
+
+    <!-- Local Resources -->
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-screen.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style-set.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/theme.css">
+
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-main.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/materials/fonts/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="~/materials/fonts/new/fonts.css" />
+
+    <script src="~/materials/jslib/fpti.js"></script>
+    <script src="~/materials/jslib/fptiextra.js"></script>
+    <script src="~/materials/jslib/noahwebAAGlib.js"></script>
+
+    <script type="text/javascript" src="~/materials/jslib/fx.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fx-main.js"></script>
+    <!-- Local Resources -->
+
+</head>
+<body class="nw-ui nk _home _layout">
+    <div class="main-c">
+        <div class="hdr">
+            <div class="hdr_l">
+                <div class="btn btn-ham active" title="Main Menu"><div class="_topbun"></div><div class="_patty"></div><div class="_botbun"></div></div>
+                <div class="hdr-noah-c"><a href="/Home/Index">NOAH Business Applications</a></div>
+            </div>
+            @*<div class="frm-title-c _inithide">
+                <div class="frm-title-active">Item Master</div>
+                <div class="frm-state-c">
+                    <div class="frm-state frm-state-minimize" title="Minimize"></div>
+                    <div class="frm-state frm-state-restoredown" title="Restore Down"></div>
+                    <div class="frm-state frm-state-maximize" title="Maximize" style="display: none;"></div>
+                    <div class="frm-state frm-state-close" title="Close"></div>
+                </div>
+            </div>*@
+            <div class="hdr_r _inithide">
+                <div class="btn btn-hdr_r btn-notif" title="Notification"></div>
+                @*<div class="btn btn-hdr_r btn-company" title="Company"></div>
+                <div class="btn btn-hdr_r btn-settings" title="Settings"></div>
+                <div class="btn btn-hdr_r btn-help" title="Help"></div>*@
+                <div class="_ver-b"></div>
+                <div class="btn btn-hdr_r btn-user" title="User"></div>
+
+                <span class="_chbgclr"></span>
+            </div>
+            <div class="menu-user-f">
+                <div class="menu-user-greet-bg "> @*_night*@
+                </div>
+                <div class="menu-user-info-c">
+                    <div id="uInfoName" class="menu-user-name">Noah User</div>
+                    <div id="uInfoType" class="menu-user-type">Administrator</div>
+                </div>
+                <div class="menu-user-info-c child-centered">
+                    @*<div id="btnChangePassword" class="btn btn-user-menu-s" title="Change Password"></div>
+                    <div id="btnEmailAddresses" class="btn btn-user-menu-s" title="Email Addresses"></div>
+                    <div id="btnContactNumbers" class="btn btn-user-menu-s" title="Contact Numbers"></div>*@
+                    <div id="btnCompany" class="btn btn-user-menu-s" title="Company"></div>
+                    <div id="btnHelp" class="btn btn-user-menu-s" title="Help"></div>
+                    <div id="btnSettings" class="btn btn-user-menu-s" title="Settings"></div>
+                </div>
+                <div class="menu-user-info-c">
+                    <div class="menu-user-info">Company <span id="uInfoCompany">FPTI</span></div>
+                    @*<div class="menu-user-info">Location <span id="uInfoLocation">FPTI Facility</span></div>*@
+                    <div class="menu-user-info">Log Time <span id="uInfoLogTime">8/26/2020 • 08:00 AM</span></div>
+                    @*<div class="menu-user-info">Connection Status <span id="uInfoConStatus">Connected</span></div>*@
+                </div>
+                <div class="_hor-b"></div>
+                <div class="menu-user-info-c">
+                    <div id="btnChangeComp" class="btn btn-menu-m">Change Company</div>
+                </div>
+                <div class="_hor-b"></div>
+                <div class="menu-user-info-c">
+                    <div id="btnLogout" class="btn btn-menu-m">Log out</div>
+                </div>
+            </div>
+
+            <div class="menu-notif-f">
+                <div class="menu-notif-t _title">
+                    <div class="menu-notif-l _notif-title">My Notifications</div>
+                    <div class="meni-notif-r _notif-see-all">See All</div>
+                </div>
+                
+                <div class="menu-notif-cc">
+                    <div class="menu-notif-c _notif-c">
+                        <div class="menu-notif-cl">
+                            <div class="menu-notif-img _profile-c"></div>
+                        </div>
+                        <div class="menu-notif-cr">
+                            <div class="menu-notif-dt">
+                                <div class="menu-notif-name">Rico P. Buenviaje</div>
+                                <div class="menu-notif-time">03:53</div>
+                            </div>
+                            <div class="menu-notif-desc">
+                                Login details need to be update Login details need to be update Login details need to be update Login details need to be update
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-notif-c _notif-c">
+                        <div class="menu-notif-cl">
+                            <div class="menu-notif-img _profile-c"></div>
+                        </div>
+                        <div class="menu-notif-cr">
+                            <div class="menu-notif-dt">
+                                <div class="menu-notif-name">Rico P. Buenviaje</div>
+                                <div class="menu-notif-time">03:53</div>
+                            </div>
+                            <div class="menu-notif-desc">
+                                Login details need to be update
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-notif-c _notif-c">
+                        <div class="menu-notif-cl">
+                            <div class="menu-notif-img _profile-c"></div>
+                        </div>
+                        <div class="menu-notif-cr">
+                            <div class="menu-notif-dt">
+                                <div class="menu-notif-name">Rico P. Buenviaje</div>
+                                <div class="menu-notif-time">03:53</div>
+                            </div>
+                            <div class="menu-notif-desc">
+                                Login details need to be update
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-notif-c _notif-c">
+                        <div class="menu-notif-cl">
+                            <div class="menu-notif-img _profile-c"></div>
+                        </div>
+                        <div class="menu-notif-cr">
+                            <div class="menu-notif-dt">
+                                <div class="menu-notif-name">Rico P. Buenviaje</div>
+                                <div class="menu-notif-time">03:53</div>
+                            </div>
+                            <div class="menu-notif-desc">
+                                Login details need to be update
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-notif-c _notif-c">
+                        <div class="menu-notif-cl">
+                            <div class="menu-notif-img _profile-c"></div>
+                        </div>
+                        <div class="menu-notif-cr">
+                            <div class="menu-notif-dt">
+                                <div class="menu-notif-name">Rico P. Buenviaje</div>
+                                <div class="menu-notif-time">03:53</div>
+                            </div>
+                            <div class="menu-notif-desc">
+                                Login details need to be update
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="low-c">
+            <div class="left-pnl expand">
+                <div class="pnl_l">
+                    <div class="left-pnl_t">
+                        <div class="hdr-noah-c hrd-noah-mob">NOAH Business Applications</div>
+                        <div class="search-c">
+                            <input type="text" placeholder="" />
+                            <!-- [Module Code] \ [Menu Code] -->
+                            <div class="btn btn-search"></div>
+                        </div>
+                        <div class="_hor-b"></div>
+                        <div class="left-pnl-title">Modules<span class="left-pnl-title-ctr">9</span><div class="btn"></div></div>
+                        <div class="module-list-c">
+                            <div class="btn btn-modules selected">Advanced CRM</div>
+                            <div class="btn btn-modules">Account Drivers Budgeting</div>
+                            <div class="btn btn-modules">System Administration</div>
+                            <div class="btn btn-modules">Accounts Payable</div>
+                            <div class="btn btn-modules">Accounts Receivale</div>
+                            <div class="btn btn-modules">Accounts Receivale Trade</div>
+                            <div class="btn btn-modules">Billing and Collection Trade</div>
+                            <div class="btn btn-modules">Centralized Database</div>
+                            <div class="btn btn-modules">System Global</div>
+                        </div>
+                        <div class="btn btn-toggle-module"></div>
+                    </div>
+                    <div class="left-pnl_b">
+                        <div class="_hor-b"></div>
+                        @*<div class="btn btn-left-pnl_b btn-item-active" title="Active Items">Active</div>*@
+                        <div class="btn btn-left-pnl_b btn-item-favorite selected" title="Favorite Items">Favorites</div>
+                        <div class="btn btn-left-pnl_b btn-item-recent" title="Recent Items">Recent</div>
+                        <div class="btn btn-left-pnl-option" title="Left Panel Options"><div class="_dot"></div><div class="_dot"></div><div class="_dot"></div></div>
+                    </div>
+                    <div class="afr-c ">
+                        <div class="afr-closed" tite="Close"></div>
+                        <div class="afr-recent-icon _icon-cc"></div>
+                        <div class="afr-fobj-o"></div>
+                        <div class="afr-fobj-t"></div>
+                        <div class="afr-fobj-tr"></div>
+                        <div class="afr-fobj-ro"></div>
+                        <div class="afr-fobj-rt"></div>
+                        <div class="afr-fobj-rtr"></div>
+                        <div class="afr-title">Recent</div>
+                        @*<div class="afr-text">Please select your recent activity</div>*@
+                        @*<div class="_hor-b"></div>*@
+                        <div class="afr-li-c">
+                            <div class="afr-li">Account Drivers Budgeting Budgeting Budgeting</div>
+                            <div class="afr-li">System Administration</div>
+                            <div class="afr-li">Accounts Payable</div>
+                            <div class="afr-li">Accounts Receivable</div>
+                            <div class="afr-li">Accounts Received Trade</div>
+                            <div class="afr-li">Billing and Collection Trade</div>
+                            <div class="afr-li">Centralized Database</div>
+                            <div class="afr-li">System Global</div>
+                            <div class="afr-li">Account Drivers Budgeting</div>
+                            <div class="afr-li">System Administration</div>
+                        </div>
+                    </div>
+
+                    <div class="aff-c ">
+                        <div class="aff-closed" tite="Close"></div>
+                        <div class="aff-favorite-icon _icon-cc"></div>
+                        <div class="aff-fobj-o"></div>
+                        <div class="aff-fobj-t"></div>
+                        <div class="aff-fobj-tr"></div>
+                        <div class="aff-fobj-ro"></div>
+                        <div class="aff-fobj-rt"></div>
+                        <div class="aff-fobj-rtr"></div>
+                        <div class="aff-title">Favorites</div>
+                        @*<div class="afr-text">Please select your recent activity</div>*@
+                        @*<div class="_hor-b"></div>*@
+                        <div class="aff-li-c">
+                            <div class="aff-li">Account Drivers Budgeting Budgeting Budgeting</div>
+                            <div class="aff-li">System Administration</div>
+                            <div class="aff-li">Accounts Payable</div>
+                            <div class="aff-li">Accounts Receivable</div>
+                            <div class="aff-li">Accounts Received Trade</div>
+                            <div class="aff-li">Billing and Collection Trade</div>
+                            <div class="aff-li">Centralized Database</div>
+                            <div class="aff-li">System Global</div>
+                            <div class="aff-li">Account Drivers Budgeting</div>
+                            <div class="aff-li">System Administration</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pnl_r">
+                    <div class="btn-return-modules">Show Modules</div>
+                    <div class="menu-grp-c">
+                        <div class="selected-module"></div>
+                        <div class="menu-grp-ul">
+                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                <div class="menu-grp-lbl">Data Configuration</div>
+                                <div class="menu-grp-ul">
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl">A01 Transaction Type</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0101 Transaction Type">@Html.ActionLink("A0101 Transaction Type", "TransactionType")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0102 Transaction No. Configuration">@Html.ActionLink("A0102 Transaction No. Configuration", "TransactionNoConfig")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl">A02 Company</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0201 BIR CAS Configuration">@Html.ActionLink("A0201 BIR CAS Configuration", "BIRCasConfig")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0201 BIR CAS Permit">@Html.ActionLink("A0201 BIR CAS Permit", "BIRCasPermit")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0203 BIR Forms">@Html.ActionLink("A0203 BIR Forms", "BIRForms")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl">A03 Tax</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0301 Alphanumeric Tax Code">A0301 Alphanumeric Tax Code</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0302 Tax Type">@Html.ActionLink("A0302 Tax Type", "TaxType")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0303 Tax Code">@Html.ActionLink("A0303 Tax Type", "TaxCode")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0304 Generic Tax Code Mapping">@Html.ActionLink("A0304 Generic Tax Code Mapping", "GenericTaxCodeMapping")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="">A04 Account Type</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0401 Account Type">@Html.ActionLink("A0401 Account Type", "AccountType")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0402 Cash Account Type">@Html.ActionLink("A0402 Cash Account Type", "CashAccountType")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0403 Account Segment Configuration">@Html.ActionLink("A0403 Account Segment Configuration", "AccountSegmentConfig")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl">A05 List of Module</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0501 List of Module">@Html.ActionLink("A0501 List of Module", "ListofModule")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl">A06 NOAH Configuration</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0601 NOAH System Config">A0601 NOAH System Config</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="A0602 Email Sender Credentials">A0602 Email Sender Credentials</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="menuGrpDataSetup" class="menu-grp-li">
+                                <div class="menu-grp-lbl">Data Setup</div>
+                                <div class="menu-grp-ul">
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="B01 Account Segment Definition">B01 Account Segment Definition</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0101 Account Segment Main">@Html.ActionLink("B0101 Account Segment Main", "AccountSegmentMain")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0102 Account Segment Location">@Html.ActionLink("B0102 Account Segment Location", "AccountSegmentLocation")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0103 Account Segment Profit Center">@Html.ActionLink("B0103 Account Segment Profit Center", "AccountSegmentProfitCenter")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0104 Account Segment Cost Center">@Html.ActionLink("B0104 Account Segment Cost Center", "AccountSegmentCostCenter")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0105 Account Segment Market Center">@Html.ActionLink("B0105 Account Segment Market Center", "AccountSegmentMarketGroup")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0106 Account Segment Item Group">B0106 Account Segment Item Group</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0107 Common Segment">B0107 Common Segment</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menuGrpDocEntry" class="menu-grp-li">
+                                <div class="menu-grp-lbl">Document Entry</div>
+                                <div class="menu-grp-ul">
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="C01 Account Segment Deactivation/Reactivation">C01 Account Segment Deactivation/Reactivation</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="C01 Account Segment Deactivation/Reactivation">@Html.ActionLink("C01 Account Segment Deactivation/Reactivation", "AccountSegmentDecReac")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="C02 Details Modification Entry">C02 Details Modification Entry</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="C0201 Account Segment Details Modification Entry">@Html.ActionLink("C0201 Account Segment Details Modification Entry", "EmployeeDetailsModEntry")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="C0202 Employee Details Modification Entry">@Html.ActionLink("C0202 Employee Details Modification Entry", "EmployeeDetailsModEntry")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="C0203 Item Master Modification Entry">C0203 Item Master Modification Entry</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menuGrpPostUtilities" class="menu-grp-li">
+                                <div class="menu-grp-lbl">Posting and Utilities</div>
+                            </div>
+                            <div id="menuGrpRepInquiries" class="menu-grp-li">
+                                <div class="menu-grp-lbl">Reports and Inquiry</div>
+                                <div class="menu-grp-ul">
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E01 Account Segment Report">E01 Account Segment Report</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0101 Account Segment Report">E01 Account Segment Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E02 Account Segment Deactivation/Reactivation Entry Report">E02 Account Segment Deactivation/Reactivation Entry Report</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E201 Account Segment Deactivation/Reactivation Entry Report">E201 Account Segment Deactivation/Reactivation Entry Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E03 Details Modification Entry">E03 Details Modification Entry</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0301 Account Segment Details Modification Report">E0301 Account Segment Details Modification Report</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0302 Employee Details Modification Report">E0302 Employee Details Modification Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E04 Item Master Report">E04 Item Master Report</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0401 Item Master Report">E0401 Item Master Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E04 Item Master Report">E05 History Report</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0401 Item Master Report">SG Data Configuration and Setups History Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+         
+            
+            <!-- Form (Menu Item) Container -->
+            <div class="menuitem-container">
+                @RenderBody()
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="mdlSettings" class="mdl">
+            <div class="mdl-c">
+                <div class="mdl-h">
+                    <div class="btn btn-h-close" title="Close"><span></span><span></span></div>
+                    <div class="mdl-h-icon mdl-h-icon_settings"></div>
+                    <div class="mdl-h-title">Settings<span class="set-sel"></span></div>
+                </div>
+                <div class="mdl-b">
+                    <div class="mdl-b_l">
+                        <div id="btnMdlChangePass" class="btn btn-mdl-l btn-mdl-l-changepass selected" title="Change Password"></div>
+                        <div id="btnMdlEmailAdd" class="btn btn-mdl-l btn-mdl-l-emailaddresses" title="Email Addresses"></div>
+                        <div id="btnMdlContact" class="btn btn-mdl-l btn-mdl-l-contactnumbers" title="Contact Numbers"></div>
+                        <div id="btnMdlTheme" class="btn btn-mdl-l btn-mdl-l-themeapp" title="Theme Appearances"></div>
+                    </div>
+                    <div class="mdl-b_r">
+                        <!--  -->
+                        <div id="secMdlChangePass" class="mdl-b-sec mdl-b-sec-title">Change Password</div>
+                        <div class="mdl-b-sec mdl-b-sec-body">
+                            <div class="row">
+                                <div class="col col-10">
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">Username</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">Description</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">Password</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">New Password</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">Confirm Password</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt"></label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <div class="btn btn-default position-x-right fullwidth">Update Password</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div id="secMdlEmailAdd" class="mdl-b-sec mdl-b-sec-title">Email Addresses</div>
+                        <div class="mdl-b-sec mdl-b-sec-body">
+                            <div class="row">
+                                <div class="col col-8">
+                                    <div class="row sec-row-c sec-email-add">
+                                        <div class="row">
+                                            <div class="col col-10 border-none v-align-mid">
+                                                <input type="text" name="" class="txtbox" value="abenedicto@fpti.com.ph">
+                                            </div>
+                                            <div class="col col-2 v-align-mid">
+                                                <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-10 border-none v-align-mid">
+                                                <input type="text" name="" class="txtbox" value="">
+                                            </div>
+                                            <div class="col col-2 v-align-mid">
+                                                <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-8">
+                                    <div id="btnSettingsAddEmail" class="btn btn-default btn-default-add-input">Add more email</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div id="secMdlContact" class="mdl-b-sec mdl-b-sec-title">Contact Numbers</div>
+                        <div class="mdl-b-sec mdl-b-sec-body">
+                            <div class="row">
+                                <div class="col col-8">
+                                    <div class="row sec-row-c sec-contact-num">
+                                        <div class="row">
+                                            <div class="col col-10 border-none v-align-mid">
+                                                <input type="text" name="" class="txtbox" value="09123456789">
+                                            </div>
+                                            <div class="col col-2 v-align-mid">
+                                                <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-10 border-none v-align-mid">
+                                                <input type="text" name="" class="txtbox" value="">
+                                            </div>
+                                            <div class="col col-2 v-align-mid">
+                                                <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-8">
+                                    <div id="btnSettingsAddContacts" class="btn btn-default btn-default-add-input">Add more number</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div id="secMdlTheme" class="mdl-b-sec mdl-b-sec-title">Theme Appearance</div>
+                        <div class="mdl-b-sec mdl-b-sec-body">
+                            <div class="theme-c">
+                                <div class="theme-w _default-theme" value="_default-theme">
+                                    <div class="theme-overlay"></div>
+                                    <img src="../materials/media/icons/theme-default-version-128px-128px-filled.png" width="180">
+                                    <div class="theme-title">Default Version</div>
+                                </div>
+
+                                <div class="theme-w _red-theme" value="_red-theme">
+                                    <div class="theme-overlay"></div>
+                                    <img src="../materials/media/icons/theme-red-version-128px-128px-filled.png" width="180">
+                                    <div class="theme-title">Red Version</div>
+                                </div>
+
+                                <div class="theme-w _pink-theme" value="_pink-theme">
+                                    <div class="theme-overlay"></div>
+                                    <img src="../materials/media/icons/theme-pink-version-128px-128px-filled.png" width="180">
+                                    <div class="theme-title">Pink Version</div>
+                                </div>
+
+                                <div class="theme-w _green-theme" value="_green-theme">
+                                    <div class="theme-overlay"></div>
+                                    <img src="../materials/media/icons/theme-green-version-128px-128px-filled.png" width="180">
+                                    <div class="theme-title">Green Version</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+ 
+       
+
+        <!-- Do not remove -->
+        <div class="_white"></div>
+
+    </div>
+
+
+
+    <div class="alerts-parent">
+        <div class="alert" nk-alert-type="success">
+            <div class="alert-border"></div>
+            <div class="alert-icon"></div>
+            <div class="alert-text">
+                <div class="alert-title">Success</div>
+                <div class="alert-subtitle">
+                    Great! You have successfully processed the item. Great! You have
+                    successfully processed the item.
+                </div>
+            </div>
+            <div class="btn btn-alert-close"></div>
+        </div>
+        @*<div class="alert" nk-alert-type="info">
+            <div class="alert-border"></div>
+            <div class="alert-icon"></div>
+            <div class="alert-text">
+                <div class="alert-title">Information</div>
+                <div class="alert-subtitle">Indicates a neutral informative change or action.</div>
+            </div>
+            <div class="btn btn-alert-close"></div>
+        </div>
+        <div class="alert" nk-alert-type="warning">
+            <div class="alert-border"></div>
+            <div class="alert-icon"></div>
+            <div class="alert-text">
+                <div class="alert-title">Warning</div>
+                <div class="alert-subtitle">Sorry! There was a problem with your request.</div>
+            </div>
+            <div class="btn btn-alert-close"></div>
+        </div>
+        <div class="alert" nk-alert-type="error">
+            <div class="alert-border"></div>
+            <div class="alert-icon"></div>
+            <div class="alert-text">
+                <div class="alert-title">Error</div>
+                <div class="alert-subtitle">Oops! Something went wrong, please try again.</div>
+            </div>
+            <div class="btn btn-alert-close"></div>
+        </div>*@
+    </div>
+
+
+
+    <!-- Lookup -->
+    <div id="menuCreatorContainer" class="modal-s">
+        <div class="modal-box-s">
+            <div class="modal-box-bg"></div>
+            <div class="modal-hdr">
+                <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                <!-- <div class="modal-hdr-icon"></div> -->
+                <div class="modal-hdr-title">Look up</div>
+                <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+            </div>
+            <div class="nk-modal-body">
+                <div class="row margin-y-10">
+                    <div class="col col-12 col-parent child-centered">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Column Filter</label>
+                            </div>
+                            <div class="col col-7">
+                                <select class="cmb fullwidth">
+                                    <option>Select</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row with-label-lookup-single">
+                            <div class="col col-5">
+                                <label class="lbltxt">Search</label>
+                            </div>
+                            <div class="col col-7 col-parent">
+                                <div class="col col-12">
+                                    <input id="txtlookupsearch" type="text" name="" class="search txtbox txtdesc txtlookup">
+                                    <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col col-12 col-parent">
+                        <div id="tblWithTabsWrapperSample3" class="table-tabs-wrapper rescale-ready">
+                            <div class="row">
+                                <div class="col col-6">
+                                    <div class="row">
+                                        <div class="col col-12 child-centered">
+                                            <div id="" class="pagination-n-c" sid="">
+                                                <div class="page-control page-control-prev">Prev</div>
+                                                <input type="text" name="" class="page-search" value="1" autocomplete="off">
+                                                <div class="page-of-txt">of</div>
+                                                <div class="page-count-total">1</div>
+                                                <div class="page-control page-control-next">Next</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-6 margin-y-5">
+                                    <div class="row">
+                                        <div class="col col-12 ">
+                                            <div class="found-record"><span>9</span> Record(s) Found</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div id="nkLookupCon" class="table-wrapper">
+                                    <table class="table"  sid="nkTable0">
+                                        <thead>
+                                            <tr>
+                                                @*<th data-type="num" scope="col" class="tbl-row-num asc">#</th>*@
+                                                <th data-type="str" scope="col" class="">Code</th>
+                                                <th data-type="str" scope="col">Description</th>
+                                            </tr>
+                                            <tr>
+                                                @*<th data-type="num" scope="col" class="tbl-row-num"></th>*@
+                                                <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                                <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                @*<th scope="row" class="tbl-row-num" row-th="#">1</th>*@
+                                                <td row-th="First First"></td>
+                                                <td row-th="Last Name"></td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="LookupID"></div>
+    </div>
+
+    <div id="nwErrorHandlerCon" class="modal-s">
+        <div class="modal-box-s">
+            <div class="modal-box-bg"></div>
+            <div class="modal-hdr">
+                <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                <!-- <div class="modal-hdr-icon"></div> -->
+                <div class="modal-hdr-title">Error Details</div>
+                <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+            </div>
+            <div class="nk-modal-body">
+                <div class="row margin-y-10">
+                    <div class="col col-12 col-parent child-centered">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="nwErrorHandlerConText"></div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="nwErrorHandler"><ul></ul></div>
+    </div>
+    
+    <!-- Message Box -->
+    <div id="mdlPrompt" class="mdl">
+        <div class="mdl-msg-c">
+            <div class="mdl-msg-title">Title</div>
+            <div class="mdl-msg-logo _msg-icon"></div>
+            <div class="mdl-msg-txt">Message</div>
+            <div class="mdl-btn-msg-c">
+                <div id="btnYes" class="btn btn-msg-y">Yes</div>
+                <div id="btnNo" class="btn btn-msg-n">No</div>
+                <div id="btnOk" class="btn btn-msg-o">Ok</div>
+            </div>
+        </div>
+    </div>
+
+   
+</body>
+
+
+</html>

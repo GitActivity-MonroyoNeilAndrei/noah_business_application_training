@@ -1,0 +1,251 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Seller Information";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head id="Head1" runat="server">
+
+
+    <script src="~/BM/DataSetup/BMSellerInformation/BMSellerInformationButtons.js"></script>
+    <link href="~/BM/DataSetup/BMSellerInformation/BMSellerInformationButtons.css" rel="stylesheet" />
+
+
+</head>
+
+
+<body>
+    <form id="form1" runat="server">
+        <input id="txtserverlink" style="display: none;"/>
+          <input id="txtserverpath" style="display: none;"/>
+        <div id="main-container" class="noah-webui-Standard" style="background: #FEFEFE;">
+            <div id="noah-webui-Toolbox" class="noah-webui-Toolbox noah-webui-Color-Gray">
+                <div class="noah-webui-Toolbox-start"></div>
+
+                <div id="noah-webui-Toolbox-BindingNavigator" nwbind="noah-webui-Toolbox-Grid" class="noah-webui-Toolbox-BindingNavigator">
+                    <div id="noah-webui-default-first" class="noah-webui-Toolbox-Item-Icon BN-button">
+                        <div></div>
+                    </div>
+                    <div id="noah-webui-default-previous" class="noah-webui-Toolbox-Item-Icon BN-button">
+                        <div></div>
+                    </div>
+                    <div class="BN-record">
+                        <input id="noah-webui-default-currentRec" type="text" value="0" />
+                        <span>of 0</span>
+                    </div>
+                    <div id="noah-webui-default-next" class="noah-webui-Toolbox-Item-Icon BN-button">
+                        <div></div>
+                    </div>
+                    <div id="noah-webui-default-last" class="noah-webui-Toolbox-Item-Icon BN-button">
+                        <div></div>
+                    </div>
+                </div>
+
+                <div id="noah-webui-default-New" class="noah-webui-Toolbox-Item">
+                    <div class="noah-webui-Toolbox-Item-Icon"></div>
+                    <div class="noah-webui-Toolbox-Item-Title">New</div>
+                </div>
+
+                <div id="noah-webui-default-Save" class="noah-webui-Toolbox-Item">
+                    <div class="noah-webui-Toolbox-Item-Icon"></div>
+                    <div class="noah-webui-Toolbox-Item-Title">Save</div>
+                </div>
+
+                <div id="noah-webui-default-Delete" class="noah-webui-Toolbox-Item">
+                    <div class="noah-webui-Toolbox-Item-Icon"></div>
+                    <div class="noah-webui-Toolbox-Item-Title">Delete</div>
+                </div>
+
+                <div id="noah-webui-default-Refresh" class="noah-webui-Toolbox-Item" style="display: none">
+                    <div class="noah-webui-Toolbox-Item-Icon"></div>
+                    <div class="noah-webui-Toolbox-Item-Title">Refresh</div>
+                </div>
+
+                <div id="noah-webui-default-Inquire" class="noah-webui-Toolbox-Item">
+                    <div class="noah-webui-Toolbox-Item-Icon"></div>
+                    <div class="noah-webui-Toolbox-Item-Title">Inquire</div>
+                </div>
+
+                <div id="noah-webui-default-Process" class="noah-webui-Toolbox-Item" style="display: none">
+                    <div class="noah-webui-Toolbox-Item-Icon"></div>
+                    <div class="noah-webui-Toolbox-Item-Title">Process</div>
+                </div>
+
+                <div id="noah-webui-default-Import" class="noah-webui-Toolbox-Item">
+                    <div class="noah-webui-Toolbox-Item-Icon"></div>
+                    <div class="noah-webui-Toolbox-Item-Title">Import</div>
+                </div>
+
+                <div id="noah-webui-default-Export" class="noah-webui-Toolbox-Item">
+                    <div class="noah-webui-Toolbox-Item-Icon"></div>
+                    <div class="noah-webui-Toolbox-Item-Title">Export</div>
+                </div>
+
+                <div id="noah-webui-default-Print" class="noah-webui-Toolbox-Item">
+                    <div class="noah-webui-Toolbox-Item-Icon"></div>
+                    <div class="noah-webui-Toolbox-Item-Title">Print</div>
+                </div>
+
+            </div>
+
+              <div style="min-width: 150px; max-width: 150px;">
+                            <input id="txtID" disabled="disabled" style="width: 150px; display: none;" type="text" />
+              </div>
+
+
+            <div class="noah-webui-default-Content_Container" style="">
+
+                <div class="noah-webui-containerRow">
+                    <div class="noah-webui-containerRowItem" style="width: 500px;">
+                        <div id="lblseller" style="min-width: 216px;">
+                            Seller
+                        </div>
+                        <div style="min-width: 150px; max-width: 150px;">
+                            <input id="txtSellerCode" disabled="disabled" style="width: 150px;" type="text" />
+                        </div>
+                        <div style="min-width: 150px; max-width: 150px;">
+                            <input id="txtSellerName" disabled="disabled" style="width: 150px;" type="text" />
+                        </div>
+
+                        <div style="min-width: 150px; max-width: 150px;">
+                             <button class="cust bgcolor" id="btnViewHistoryDetails" type="button" style="-webkit-text-fill-color: white; width: 252px; max-width: 294px !important; margin-left:70px; margin-top: 0px; border-radius: 2px; border: 1px solid black; display: none;">VIEW HISTORY DETAILS</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="noah-webui-containerRow">
+                           <div class="noah-webui-containerRowItem">
+                               <div id="lblEffectiveDate" style="min-width: 190px; display: none;">Effective Date<span class="nwRequiredField effDate">*</span></div>
+                               <div style="min-width: 300px; max-width: 300px;">
+                                   <input id="txtEffectiveDate" class="nwDateField" type="text" disabled="disabled" style="width: 100%; max-width: 100%; margin-left: 26px; display: none;" />
+                               </div>
+                           </div>
+                       </div>
+
+                <div class="noah-webui-containerRow">
+                           <div class="noah-webui-containerRowItem" style="display: none">
+                               <div style="min-width: 190px;">Current Date<span class="nwRequiredField">*</span></div>
+                               <div style="min-width: 300px; max-width: 300px;">
+                                   <input id="txtCurrentDate" class="nwDateField" type="text" disabled="disabled" style="width: 100%; max-width: 100%; margin-left: 26px; text-align: right; display: none;" />
+                               </div>
+                           </div>
+                       </div>
+
+                <div class="noah-webui-containerRow">
+                    <div class="noah-webui-containerRowItem" style="width: 500px;">
+                        <div id="lblSellerRoleFrom" style="min-width: 216px; display: none;">
+                            Seller Role From
+                        </div>
+                        <div style="min-width: 150px; max-width: 150px;">
+                            <input id="txtSellerRoleFromCode" disabled="disabled" style="width: 150px; display: none;" type="text" />
+                        </div>
+                        <div style="min-width: 150px; max-width: 150px;">
+                            <input id="txtSellerRoleFromDesc" disabled="disabled" style="width: 150px; display: none;" type="text" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="noah-webui-containerRow">
+                    <div class="noah-webui-containerRowItem">
+                          <div id="lblSellerRoleTo" style="min-width:190px; display: none;">Seller Role To<span class="nwRequiredField">*</span></div>
+                          <div id="lugSellerRoleTo" class="lookups adisabled" style="min-width:302px;max-width: 302px; display: none;">
+                           <div class="conval">
+                               <input class="idval" type="text" style="width: 100%;max-width: 100%; margin-left:26px;" />
+                               <input class="descval" type="text" value=""/>
+                                   
+                           </div>
+                           <button class="LookUp" onclick="lookUp(this)"></button>
+                       </div>
+                    </div>
+                </div> 
+
+                <%--<div id="ConnwGrid" class="noah-webui-container" style="margin-top: 20px;">--%>
+                    <div class="noah-webui-containerRow">
+                        <div id="nwGridCon" style="height: 100%; width: 100%;">
+                        </div>
+                    </div>
+                <%--</div>--%>
+
+            </div>
+
+
+        </div>
+
+        <div id="nwViewHistoryDtl" title="View History Details" style="min-width: 80%; min-height: 83%">
+            <div id="ConViewHistoryDtl" class="noah-webui-container" style="overflow-y:hidden;padding-bottom: -10px;">
+                <div class="noah-webui-containerRow" style="margin-top:-10px;margin-bottom:-10px;" > 
+                    <div id="nwGridViewHistoryCon" style="width: 100%; height:300px; overflow-y:hidden !important; display: inline-block;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       <div id="noah-webui-Footer" class="noah-webui-Toolbox noah-webui-Color-Gray">
+            <div class="noah-webui-Footer-Sub">
+                <div class="noah-webui-Footer-SubRec">
+                    <div id="nwlbl_RecUser" class="noah-webui-FooterRowItem">Created By:</div>
+                    <div id="nwtxt_RecUser" class="noah-webui-FooterRowItem">&nbsp;</div>
+                    <div class="noah-webui-FooterRowItem">|</div>
+                    <div id="nwlbl_RecDate" class="noah-webui-FooterRowItem">&nbsp;</div>
+                    <div id="nwtxt_RecDate" class="noah-webui-FooterRowItem">&nbsp;</div>
+                </div>
+                <div class="noah-webui-FooterRowItem Split">&nbsp;</div>
+                <div class="noah-webui-Footer-SubMod">
+                    <div id="nwlbl_ModUser" class="noah-webui-FooterRowItem">Modified By:</div>
+                    <div id="nwtxt_ModUser" class="noah-webui-FooterRowItem">&nbsp;</div>
+                    <div class="noah-webui-FooterRowItem">|</div>
+                    <div id="nwlbl_ModDate" class="noah-webui-FooterRowItem">&nbsp;</div>
+                    <div id="nwtxt_ModDate" class="noah-webui-FooterRowItem">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+
+         <div id="nwUploadCon" title="Upload" style="width: 350px; height: 250px">
+            <div style="width: 80%; vertical-align: middle; margin: 0% auto; padding-top: 22px">
+                <div>
+                    <input id="fileCon" type="file" accept="image/*" name="myfile[]" onchange="changeFile(this)" /><br>
+                    <input type="submit" style="display: block" value="Upload" id="btnupload" onclick="upload();" />
+                    <div class="progress">
+                        <div class="bar" style="width: 0%;">
+                        </div>
+                        <div class="percent">
+                            0%
+                        </div>
+                    </div>
+                    <div id="status" style="height: 20px;">
+                    </div>
+                    <div>
+                        <i>Notes:<br />
+                             Acceptable file types include ZIP, RAR, pdf, png, bmp, jpg, up to 5mb only.
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="frmOPImage" title="Image Viewer" style="width: 700px; height: 420px; ">
+            <div class="main-container" style="padding: 5px;">
+                <div class="fixer-container">
+
+                    <div class="float-left">
+                        <%--<button id="change-img" class="btnQty">Change Image</button>
+                        <a id="download-img" title="Download" download class="btnQty">Download</a>--%>
+                    </div>
+
+                    <img src="./image/placeholder.png" alt="Image not found." class="op-img" style="max-width: 100%; min-width:100%; max-height: 100%;" />
+
+                    <div class="float-right">
+                        <%--<button id="Okay" class="btnQtyGreen">Done</button>--%>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</body>
+

@@ -1,0 +1,22 @@
+<config>
+
+<SystemType>0</SystemType>
+<SystemType>1</SystemType>
+
+  
+<SystemUploadType>1</SystemUploadType>
+<UploadInfoLock>0</UploadInfoLock>
+  
+
+
+  <GetUserDescription>SG</GetUserDescription> 
+
+
+  <SystemSecurityKey></SystemSecurityKey>
+ <key>noahpromptus</key>
+
+ <SystemDefaultLanguage></SystemDefaultLanguage>
+ <GoogleTranlator></GoogleTranlator>
+ <GoogleTranlatorDefault></GoogleTranlatorDefault> 
+
+</config>

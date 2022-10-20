@@ -1,0 +1,955 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - NOAH</title>
+  
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Basic Meta Tags -->
+
+    <!-- Local Resources -->
+    <link rel="stylesheet" type="text/css" href="~/materials/css/custom.css" />
+
+    <!-- Local Resources -->
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-screen.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style-set.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/theme.css">
+
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-main.css" />
+
+    @*<link rel="stylesheet" type="text/css" href="~/materials/fonts/fonts.css" />*@
+    <link rel="stylesheet" type="text/css" href="~/materials/fonts/new/fonts.css" />
+
+    
+
+    <script type="text/javascript" src="~/materials/jslib/fpti.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fptiextra.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/noahwebAAGlib.js"></script>
+
+    <script type="text/javascript" src="~/materials/jslib/CanvasJS.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/CanvasJS-Excel.js"></script>
+
+    <script type="text/javascript" src="~/materials/jslib/fx.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fx-main.js"></script>
+
+    <script type="text/javascript" src="~/materials/jslib/umain.js"></script>
+    <!-- Local Resources -->
+
+</head>
+<body class="nw-ui nk _home _layout">
+    <div class="main-c theme_secondary_default">
+        <div class="hdr">
+            <div class="hdr_l">
+                <div class="btn btn-ham active" title="Main Menu"><div class="_topbun"></div><div class="_patty"></div><div class="_botbun"></div></div>
+                <div class="hdr-noah-c"><a href="/Home/Index">NOAH Business Applications</a></div>
+            </div>
+            <div class="frm-title-c _inithide">
+                <div class="frm-title-active">Item Master</div>
+                @*<div class="frm-state-c">
+                    <div class="frm-state frm-state-minimize" title="Minimize"></div>
+                    <div class="frm-state frm-state-restoredown" title="Restore Down"></div>
+                    <div class="frm-state frm-state-maximize" title="Maximize" style="display: none;"></div>
+                    <div class="frm-state frm-state-close" title="Close"></div>
+                </div>*@
+            </div>
+            <div class="hdr_r _inithide">
+                <div class="btn btn-hdr_r btn-notif" title="Notification">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="nw-svg-bell" width="22px" height="22px" viewBox="0 0 22 22">
+                        <path class="nw-svg-bell-a" d="M15,14H7V8.71a4.1,4.1,0,0,1,3.17-4.07A4,4,0,0,1,15,8.56Z" />
+                        <path class="nw-svg-bell-b" d="M18.5,14A1.5,1.5,0,0,1,17,12.5V9A6,6,0,0,0,5,9v3.5A1.5,1.5,0,0,1,3.5,14H3v2H19V14ZM7,14V8.71a4.1,4.1,0,0,1,3.17-4.07A4,4,0,0,1,15,8.56V14Zm1.5,3h5a2.5,2.5,0,0,1-5,0Z" />
+                    </svg>
+                </div>
+                @*<div class="btn btn-hdr_r btn-company" title="Company"></div>
+                <div class="btn btn-hdr_r btn-settings" title="Settings"></div>
+                <div class="btn btn-hdr_r btn-help" title="Help"></div>*@
+                <div class="_ver-b"></div>
+                <div class="btn btn-hdr_r btn-user" title="User">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="nw-svg-user" width="22px" height="22px" viewBox="0 0 22 22">
+                        <path class="nw-svg-user-a" d="M15.94,6.21a5,5,0,1,0-5.73,5.73A5,5,0,0,0,15.94,6.21ZM11,10.5A3.5,3.5,0,1,1,14.5,7,3.5,3.5,0,0,1,11,10.5ZM19,20H17.5c0-3.59-2.91-5.5-6.5-5.5S4.5,16.41,4.5,20H3c0-4.42,3.58-7,8-7S19,15.58,19,20Z" />
+                        <path class="nw-svg-user-b" d="M14.5,7A3.5,3.5,0,1,1,11,3.5,3.5,3.5,0,0,1,14.5,7Zm3,13c0-3.59-2.91-5.5-6.5-5.5S4.5,16.41,4.5,20" />
+                    </svg>
+                </div>
+
+                <span class="_chbgclr"></span>
+            </div>
+            <div class="menu-user-f">
+                <div class="menu-user-greet-bg "> @*_night*@
+                </div>
+                <div class="menu-user-info-c">
+                    <div id="uInfoName" class="menu-user-name">Noah Rico</div>
+                    <div id="uInfoType" class="menu-user-type">Administrator</div>
+                </div>
+                <div class="menu-user-info-c child-centered">
+                    @*<div id="btnChangePassword" class="btn btn-user-menu-s" title="Change Password"></div>
+                    <div id="btnEmailAddresses" class="btn btn-user-menu-s" title="Email Addresses"></div>
+                    <div id="btnContactNumbers" class="btn btn-user-menu-s" title="Contact Numbers"></div>*@
+                    <div id="btnCompany" class="mdl-comp-user-menu" title="Company">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-company-icon" viewBox="0 0 22 22">
+                            <path d="M20,10.58V20H18V11.44a1,1,0,0,0-.5-.87l-4-2.29a1,1,0,0,0-1,0l-4,2.29a1,1,0,0,0-.5.87V20H6V10.58a1,1,0,0,1,.5-.87L9,8.29V5.11L4.52,7.6A1,1,0,0,0,4,8.48V20H2V7.59a1,1,0,0,1,.52-.88L9,3.11l.51-.28A1,1,0,0,1,11,3.7V7.14l1.51-.86a1,1,0,0,1,1,0l6,3.43A1,1,0,0,1,20,10.58ZM16,13H10v2h6Zm0,3H10v2h6Z"></path>
+                        </svg>
+                    </div>
+                    <div id="btnHelp" class="mdl-help-user-menu" title="Help">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-help-icon" viewBox="0 0 22 22">
+                            <path d="M14,20H8V18h6Zm4-10a7,7,0,1,1-7-7A7,7,0,0,1,18,10Zm-2,0a5,5,0,1,0-5,5A5,5,0,0,0,16,10Z" />
+                        </svg>
+                    </div>
+                    <div id="btnSettings" class="btn btn-user-menu-s" title="Settings">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-setting-icon" viewBox="0 0 22 22">
+                            <path d="M18,5.8,12,2.34a2,2,0,0,0-2,0L4,5.8A2,2,0,0,0,3,7.54v6.92A2,2,0,0,0,4,16.2l6,3.46a2,2,0,0,0,2,0l6-3.46a2,2,0,0,0,1-1.74V7.54A2,2,0,0,0,18,5.8Zm-.73,7.91a1.6,1.6,0,0,1-.78,1.37l-4.7,2.71a1.59,1.59,0,0,1-1.58,0l-4.7-2.71a1.6,1.6,0,0,1-.78-1.37V8.29a1.6,1.6,0,0,1,.78-1.37l4.7-2.71a1.59,1.59,0,0,1,1.58,0l4.7,2.71a1.6,1.6,0,0,1,.78,1.37ZM11,7.5A3.5,3.5,0,1,0,14.5,11,3.5,3.5,0,0,0,11,7.5ZM11,13a2,2,0,1,1,2-2A2,2,0,0,1,11,13Z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="menu-user-info-c">
+                    <div class="menu-user-info">Company<span id="uInfoCompany">FPTI</span></div>
+                    @*<div class="menu-user-info">Location <span id="uInfoLocation">FPTI Facility</span></div>*@
+                    <div class="menu-user-info">Log Time <span id="uInfoLogTime">8/26/2020 • 08:00 AM</span></div>
+                    @*<div class="menu-user-info">Connection Status <span id="uInfoConStatus">Connected</span></div>*@
+                </div>
+                @*<div class="_hor-b"></div>
+                <div class="menu-user-info-c">
+                    <div id="btnChangeComp" class="btn btn-menu-m">Change Company</div>
+                </div>*@
+                <div class="_hor-b"></div>
+                <div class="menu-user-info-c">
+                    <div id="btnLogout" class="btn btn-menu-m">Log out</div>
+                </div>
+            </div>
+
+            <div class="menu-notif-f">
+                <div class="menu-notif-hrd">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="nw-svg-bell" width="22px" height="22px" viewBox="0 0 22 22" style="animation-delay: 0s;">
+                        <path class="nw-svg-bell-a" d="M15,14H7V8.71a4.1,4.1,0,0,1,3.17-4.07A4,4,0,0,1,15,8.56Z"></path>
+                        <path class="nw-svg-bell-b" d="M18.5,14A1.5,1.5,0,0,1,17,12.5V9A6,6,0,0,0,5,9v3.5A1.5,1.5,0,0,1,3.5,14H3v2H19V14ZM7,14V8.71a4.1,4.1,0,0,1,3.17-4.07A4,4,0,0,1,15,8.56V14Zm1.5,3h5a2.5,2.5,0,0,1-5,0Z"></path>
+                    </svg>
+                    <div class="menu-notif-title">Notifications</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="rPb-svg" viewBox="0 0 22 22">
+                        <path class="rP-svg-sa" d="M16.49,6.92l-4.7-2.71a1.59,1.59,0,0,0-1.58,0L5.51,6.92a1.6,1.6,0,0,0-.78,1.37v5.42a1.6,1.6,0,0,0,.78,1.37l4.7,2.71a1.59,1.59,0,0,0,1.58,0l4.7-2.71a1.6,1.6,0,0,0,.78-1.37V8.29A1.6,1.6,0,0,0,16.49,6.92Z"></path>
+                        <path class="rP-svg-sb" d="M18,5.8,12,2.34a2,2,0,0,0-2,0L4,5.8A2,2,0,0,0,3,7.54v6.92A2,2,0,0,0,4,16.2l6,3.46a2,2,0,0,0,2,0l6-3.46a2,2,0,0,0,1-1.74V7.54A2,2,0,0,0,18,5.8Zm-.73,7.91a1.6,1.6,0,0,1-.78,1.37l-4.7,2.71a1.59,1.59,0,0,1-1.58,0l-4.7-2.71a1.6,1.6,0,0,1-.78-1.37V8.29a1.6,1.6,0,0,1,.78-1.37l4.7-2.71a1.59,1.59,0,0,1,1.58,0l4.7,2.71a1.6,1.6,0,0,1,.78,1.37ZM11,7.5A3.5,3.5,0,1,0,14.5,11,3.5,3.5,0,0,0,11,7.5ZM11,13a2,2,0,1,1,2-2A2,2,0,0,1,11,13Z"></path>
+                    </svg>
+                </div>
+                <div class="menu-notif-dtls-c">
+                    <div class="menu-notif-dtls">
+                        <div class="menu-notif-info">
+                            <div class="menu-notif-prof">
+                                <div class="menu-notif-prof-abbr"></div>
+                            </div>
+                            <div class="menu-notif-subInfo">
+                                <div class="menu-notif-subpara"><span>Rico P. Buenviaje</span> Login details need to update</div>
+                                <div class="menu-notif-min"><span>3</span>mins ago</div>
+                            </div>
+                        </div>
+
+                        <div class="menu-notif-info">
+                            <div class="menu-notif-prof"></div>
+                            <div class="menu-notif-subInfo">
+                                <div class="menu-notif-subpara"><span>Rico P. Buenviaje</span> Login details need to update</div>
+                                <div class="menu-notif-min"><span>3</span>mins ago</div>
+                            </div>
+                        </div>
+
+                        <div class="menu-notif-info">
+                            <div class="menu-notif-prof"></div>
+                            <div class="menu-notif-subInfo">
+                                <div class="menu-notif-subpara"><span>Rico P. Buenviaje</span> Login details need to update</div>
+                                <div class="menu-notif-min"><span>3</span>mins ago</div>
+                            </div>
+                        </div>
+
+                        <div class="menu-notif-info">
+                            <div class="menu-notif-prof"></div>
+                            <div class="menu-notif-subInfo">
+                                <div class="menu-notif-subpara"><span>Rico P. Buenviaje</span> Login details need to update</div>
+                                <div class="menu-notif-min"><span>3</span>mins ago</div>
+                            </div>
+                        </div>
+
+                        <div class="menu-notif-info-banner">
+                            <div class="menu-notif-banner-d">
+                                <div class="menu-notif-banner"></div>
+                                <div class="menu-notif-banner-text">No Notifications Found</div>
+                                <div class="menu-notif-banner-subtext">You have currently no notifications. We'll Notify you when something new arrives!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-notif-viewAllBtn">
+                    <div class="menu-notif-btn">See All Notification</div>
+                </div>
+            </div>
+        </div>
+        <div class="low-c">
+            <div class="left-pnl expand">
+                <div class="pnl_l">
+                    <div class="left-pnl_t">
+                        <div class="hdr-noah-c hrd-noah-mob">NOAH Business Applications</div>
+                        <div class="search-c">
+                            <input type="text" placeholder="" />
+                            <!-- [Module Code] \ [Menu Code] -->
+                            <div class="btn btn-search"></div>
+                        </div>
+                        <div class="_hor-b"></div>
+                        <div class="left-pnl-title">Modules<span class="left-pnl-title-ctr">9</span><div class="btn"></div></div>
+                        <div id="mainModList" class="module-list-c">
+                            @*<div class="btn btn-modules selected">Advanced CRM</div>
+                            <div class="btn btn-modules">Account Drivers Budgeting</div>
+                            <div class="btn btn-modules">System Administration</div>
+                            <div class="btn btn-modules">Accounts Payable</div>
+                            <div class="btn btn-modules">Accounts Receivale</div>
+                            <div class="btn btn-modules">Accounts Receivale Trade</div>
+                            <div class="btn btn-modules">Billing and Collection Trade</div>
+                            <div class="btn btn-modules">Centralized Database</div>
+                            <div class="btn btn-modules">System Global</div>*@
+                        </div>
+                        <div class="btn btn-toggle-module"></div>
+                    </div>
+                    <div class="left-pnl_b">
+                        <div class="_hor-b"></div>
+                        @*<div class="btn btn-left-pnl_b btn-item-active" title="Active Items">Active</div>*@
+                        <div class="btn btn-left-pnl_b btn-item-favorite selected" title="Favorite Items">Favorites</div>
+                        <div class="btn btn-left-pnl_b btn-item-recent" title="Recent Items">Recent</div>
+                        @*<div class="btn btn-left-pnl-option" title="Left Panel Options"><div class="_dot"></div><div class="_dot"></div><div class="_dot"></div></div>*@
+                    </div>
+                    @*=Pop Up of Recent and Favorites HTML code here*@
+                </div>
+                <div class="pnl_r">
+                    <div class="btn-return-modules">Show Modules</div>
+                    <div class="menu-grp-c">
+                        <div class="selected-module"></div>
+                        <div id="menu-grp-ul">
+                            <div class="menu-grp-ul">
+                                <div id="menuGrpDataConfig" class="menu-grp-li">
+                                    <div class="menu-grp-lbl">Data Configuration</div>
+                                    <div class="menu-grp-ul">
+
+                                        <div id="menuGrpDataConfig" class="menu-grp-li">
+                                            <div class="menu-grp-lbl">A01 Transaction Type</div>
+                                            <div class="menu-grp-ul">
+                                                <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                    <div class="menu-grp-lbl" title="A0101 Transaction Type">@Html.ActionLink("A0101 Transaction Type", "TransactionType")</div>
+                                                </div>
+                                                <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                    <div class="menu-grp-lbl" title="A0102 Transaction No. Configuration">@Html.ActionLink("A0102 Transaction No. Configuration", "TransactionNoConfig")</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="menuGrpDataConfig" class="menu-grp-li">
+                                            <div class="menu-grp-lbl">A02 Company</div>
+                                            <div class="menu-grp-ul">
+                                                <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                    <div class="menu-grp-lbl" title="A0201 BIR CAS Configuration">@Html.ActionLink("A0201 BIR CAS Configuration", "BIRCasConfig")</div>
+                                                </div>
+                                                <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                    <div class="menu-grp-lbl" title="A0201 BIR CAS Permit">@Html.ActionLink("A0201 BIR CAS Permit", "BIRCasPermit")</div>
+                                                </div>
+                                                <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                    <div class="menu-grp-lbl" title="A0203 BIR Forms">@Html.ActionLink("A0203 BIR Forms", "BIRForms")</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div id="menuGrpDataSetup" class="menu-grp-li">
+                                <div class="menu-grp-lbl">Data Setup</div>
+                                <div class="menu-grp-ul">
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="B01 Account Segment Definition">B01 Account Segment Definition</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0101 Account Segment Main">@Html.ActionLink("B0101 Account Segment Main", "AccountSegmentMain")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0102 Account Segment Location">@Html.ActionLink("B0102 Account Segment Location", "AccountSegmentLocation")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0103 Account Segment Profit Center">@Html.ActionLink("B0103 Account Segment Profit Center", "AccountSegmentProfitCenter")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0104 Account Segment Cost Center">@Html.ActionLink("B0104 Account Segment Cost Center", "AccountSegmentCostCenter")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0105 Account Segment Market Center">@Html.ActionLink("B0105 Account Segment Market Center", "AccountSegmentMarketGroup")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0106 Account Segment Item Group">B0106 Account Segment Item Group</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="B0107 Common Segment">B0107 Common Segment</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menuGrpDocEntry" class="menu-grp-li">
+                                <div class="menu-grp-lbl">Document Entry</div>
+                                <div class="menu-grp-ul">
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="C01 Account Segment Deactivation/Reactivation">C01 Account Segment Deactivation/Reactivation</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="C01 Account Segment Deactivation/Reactivation">@Html.ActionLink("C01 Account Segment Deactivation/Reactivation", "AccountSegmentDecReac")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="C02 Details Modification Entry">C02 Details Modification Entry</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="C0201 Account Segment Details Modification Entry">@Html.ActionLink("C0201 Account Segment Details Modification Entry", "EmployeeDetailsModEntry")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="C0202 Employee Details Modification Entry">@Html.ActionLink("C0202 Employee Details Modification Entry", "EmployeeDetailsModEntry")</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="C0203 Item Master Modification Entry">C0203 Item Master Modification Entry</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menuGrpPostUtilities" class="menu-grp-li">
+                                <div class="menu-grp-lbl">Posting and Utilities</div>
+                            </div>
+                            <div id="menuGrpRepInquiries" class="menu-grp-li">
+                                <div class="menu-grp-lbl">Reports and Inquiry</div>
+                                <div class="menu-grp-ul">
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E01 Account Segment Report">E01 Account Segment Report</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0101 Account Segment Report">E01 Account Segment Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E02 Account Segment Deactivation/Reactivation Entry Report">E02 Account Segment Deactivation/Reactivation Entry Report</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E201 Account Segment Deactivation/Reactivation Entry Report">E201 Account Segment Deactivation/Reactivation Entry Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E03 Details Modification Entry">E03 Details Modification Entry</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0301 Account Segment Details Modification Report">E0301 Account Segment Details Modification Report</div>
+                                            </div>
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0302 Employee Details Modification Report">E0302 Employee Details Modification Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E04 Item Master Report">E04 Item Master Report</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0401 Item Master Report">E0401 Item Master Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="menuGrpDataConfig" class="menu-grp-li">
+                                        <div class="menu-grp-lbl" title="E04 Item Master Report">E05 History Report</div>
+                                        <div class="menu-grp-ul">
+                                            <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                <div class="menu-grp-lbl" title="E0401 Item Master Report">SG Data Configuration and Setups History Report</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="menuGrpDemo" class="menu-grp-li">
+                                <div class="menu-grp-lbl"><a href="/Home/Demo">Demo</a></div>
+                            </div>*@
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+         
+            
+            <!-- Form (Menu Item) Container -->
+            <div class="menuitem-container">
+                @RenderBody()
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="mdlSettings" class="mdl">
+            <div class="mdl-c">
+                <div class="mdl-h">
+                    <div class="btn btn-h-close" title="Close"><span></span><span></span></div>
+                    <div class="mdl-h-icon mdl-h-icon_settings"></div>
+                    <div class="mdl-h-title">Settings<span class="set-sel"></span></div>
+                </div>
+                <div class="mdl-b">
+                    <div class="mdl-b_l">
+                        <div id="btnMdlChangePass" class="btn btn-mdl-l btn-mdl-l-changepass selected" title="Change Password"></div>
+                        <div id="btnMdlEmailAdd" class="btn btn-mdl-l btn-mdl-l-emailaddresses" title="Email Addresses"></div>
+                        <div id="btnMdlContact" class="btn btn-mdl-l btn-mdl-l-contactnumbers" title="Contact Numbers"></div>
+                        <div id="btnMdlTheme" class="btn btn-mdl-l btn-mdl-l-themeapp" title="Theme Appearances"></div>
+                    </div>
+                    <div class="mdl-b_r">
+                        <!--  -->
+                        <div id="secMdlChangePass" class="mdl-b-sec mdl-b-sec-title">Change Password</div>
+                        <div class="mdl-b-sec mdl-b-sec-body">
+                            <div class="row">
+                                <div class="col col-10">
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">Username</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">Description</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">Password</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">New Password</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">Confirm Password</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input type="text" name="" class="txtbox">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt"></label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <div class="btn btn-default position-x-right fullwidth">Update Password</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div id="secMdlEmailAdd" class="mdl-b-sec mdl-b-sec-title">Email Addresses</div>
+                        <div class="mdl-b-sec mdl-b-sec-body">
+                            <div class="row">
+                                <div class="col col-8">
+                                    <div class="row sec-row-c sec-email-add">
+                                        <div class="row">
+                                            <div class="col col-10 border-none v-align-mid">
+                                                <input type="text" name="" class="txtbox" value="abenedicto@fpti.com.ph">
+                                            </div>
+                                            <div class="col col-2 v-align-mid">
+                                                <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-10 border-none v-align-mid">
+                                                <input type="text" name="" class="txtbox" value="">
+                                            </div>
+                                            <div class="col col-2 v-align-mid">
+                                                <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-8">
+                                    <div id="btnSettingsAddEmail" class="btn btn-default btn-default-add-input">Add more email</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div id="secMdlContact" class="mdl-b-sec mdl-b-sec-title">Contact Numbers</div>
+                        <div class="mdl-b-sec mdl-b-sec-body">
+                            <div class="row">
+                                <div class="col col-8">
+                                    <div class="row sec-row-c sec-contact-num">
+                                        <div class="row">
+                                            <div class="col col-10 border-none v-align-mid">
+                                                <input type="text" name="" class="txtbox" value="09123456789">
+                                            </div>
+                                            <div class="col col-2 v-align-mid">
+                                                <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-10 border-none v-align-mid">
+                                                <input type="text" name="" class="txtbox" value="">
+                                            </div>
+                                            <div class="col col-2 v-align-mid">
+                                                <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-8">
+                                    <div id="btnSettingsAddContacts" class="btn btn-default btn-default-add-input">Add more number</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div id="secMdlTheme" class="mdl-b-sec mdl-b-sec-title">Theme Appearance</div>
+                        <div class="mdl-b-sec mdl-b-sec-body">
+                            <div class="theme-c">
+                                <div class="theme-w theme_secondary_default" value="theme_secondary_default">
+                                    <div class="_theme-color">
+                                        <div></div>
+                                    </div>
+                                    <div class="_theme-sub">Default Theme</div>
+                                </div>
+
+                                <div class="theme-w theme_secondary_red" value="theme_secondary_red">
+                                    <div class="_theme-color">
+                                        <div></div>
+                                    </div>
+                                    <div class="_theme-sub">Red Theme</div>
+                                </div>
+
+                                <div class="theme-w theme_secondary_pink" value="theme_secondary_pink">
+                                    <div class="_theme-color">
+                                        <div></div>
+                                    </div>
+                                    <div class="_theme-sub">Pink Theme</div>
+                                </div>
+
+                                <div class="theme-w theme_secondary_green" value="theme_secondary_green">
+                                    <div class="_theme-color">
+                                        <div></div>
+                                    </div>
+                                    <div class="_theme-sub">Green Theme</div>
+                                </div>
+
+                                <div class="theme-w theme_secondary_purple" value="theme_secondary_purple">
+                                    <div class="_theme-color">
+                                        <div></div>
+                                    </div>
+                                    <div class="_theme-sub">Purple Theme</div>
+                                </div>
+
+                                <div class="theme-w theme_secondary_dark" value="theme_secondary_dark">
+                                    <div class="_theme-color">
+                                        <div></div>
+                                    </div>
+                                    <div class="_theme-sub">Dark Theme</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Help Modals -->
+        <div class="pnlHelp-c">
+            <div class="spl-help-box">
+                <div class="spl-help-hrd">
+                    <div class="spl-hrd-grts">Welcome to NOAH Business Application</div>
+                    <div class="spl-hrd-guide">Here's a few quick ways to help you.</div>
+                    <div class="help-close-btn"></div>
+                </div>
+                <div class="spl-help-card">
+                    <div class="spl-card-box">
+                        <div class="spl-help-info">
+                            <div class="spl-svg-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="rPb_svg" width="44px" height="44px" viewBox="0 0 44 44">
+                                    <path class="be53e346-3eac-44f7-9888-e132d64f515f" d="M22,0A22,22,0,1,0,44,22,22,22,0,0,0,22,0ZM36.38,27.58A2.71,2.71,0,0,1,34,29.8l-.56.06a1.65,1.65,0,0,0-1.37,1l-.78,1.94a.44.44,0,0,1-.76.1l-1.54-2a1.64,1.64,0,0,0-1.35-.66A60.84,60.84,0,0,1,20,29.8a2.72,2.72,0,0,1-2.38-2.22c-.08-.47-.15-.92-.21-1.36H16.36a1.64,1.64,0,0,0-1.35.66l-1.54,2a.44.44,0,0,1-.76-.1l-.78-1.94a1.65,1.65,0,0,0-1.37-1L10,25.8a2.71,2.71,0,0,1-2.38-2.22,26.09,26.09,0,0,1,0-10A2.72,2.72,0,0,1,10,11.33a56.54,56.54,0,0,1,14,0,2.74,2.74,0,0,1,2.39,2.27c.07.45.14.88.2,1.3a60.89,60.89,0,0,1,7.41.43,2.72,2.72,0,0,1,2.38,2.21A26.09,26.09,0,0,1,36.38,27.58ZM14,18.5A1.5,1.5,0,1,1,12.5,17,1.5,1.5,0,0,1,14,18.5Zm5,0A1.5,1.5,0,1,1,17.5,17,1.5,1.5,0,0,1,19,18.5Zm5,0A1.5,1.5,0,1,1,22.5,17,1.5,1.5,0,0,1,24,18.5Z" />
+                                </svg>
+                            </div>
+                            <div class="spl-help-dtls">
+                                <div class="spl-help-title">Assistant</div>
+                                <div class="spl-help-subtxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                            </div>
+                        </div>
+                        <div class="spl-help-info">
+                            <div class="spl-svg-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="rPb_svg" width="44px" height="44px" id="a98372e6-fb60-4b6a-8c2a-2f6b86a32503" data-name="Layer 1" viewBox="0 0 44 44">
+                                    <path class="ecb58c98-31e3-41dd-9ff3-df903d5754a9" d="M22,0A22,22,0,1,0,44,22,22,22,0,0,0,22,0ZM34,31.84A2.71,2.71,0,0,1,31.84,34a46.63,46.63,0,0,1-19.68,0A2.71,2.71,0,0,1,10,31.84a46.63,46.63,0,0,1,0-19.68A2.71,2.71,0,0,1,12.16,10a46.63,46.63,0,0,1,19.68,0A2.71,2.71,0,0,1,34,12.16,46.63,46.63,0,0,1,34,31.84ZM24,30H20V20h4Zm0-15a2,2,0,1,1-2-2A2,2,0,0,1,24,15Z" />
+                                </svg>
+                            </div>
+                            <div class="spl-help-dtls">
+                                <div class="spl-help-title">Noah Business Application</div>
+                                <div class="spl-help-subtxt">8.6.1.33 About</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="spl-help-f">
+                    <div class="spl-f-text">Powered By: FPTI</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Modals -->
+        <div class="pnlCompany-c">
+            <div class="spl-company-box">
+                <div class="spl-company-txt">Select Company Type</div>
+                <div class="spl-company-select-box">
+                    <div class="spl-comp-select">
+                        <div class="spl-comp-border">
+                            <div class="comp-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="nw-svg-comp-dtls" viewBox="0 0 22 22">
+                                    <path class="nw-svg-comp-dtls-b" d="M20,10.58V20H18V11.44a1,1,0,0,0-.5-.87l-4-2.29a1,1,0,0,0-1,0l-4,2.29a1,1,0,0,0-.5.87V20H6V10.58a1,1,0,0,1,.5-.87L9,8.29V5.11L4.52,7.6A1,1,0,0,0,4,8.48V20H2V7.59a1,1,0,0,1,.52-.88L9,3.11l.51-.28A1,1,0,0,1,11,3.7V7.14l1.51-.86a1,1,0,0,1,1,0l6,3.43A1,1,0,0,1,20,10.58ZM16,13H10v2h6Zm0,3H10v2h6Z"></path>
+                                </svg>
+                            </div>
+                            <div class="comp-name">Forecasting and Planning Technologies Inc.</div>
+                            <div class="comp-abbr">FPTI</div>
+                        </div>
+                    </div>
+                    <div class="spl-comp-select">
+                        <div class="spl-comp-border">
+                            <div class="comp-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="nw-svg-comp-dtls" viewBox="0 0 22 22">
+                                    <path class="nw-svg-comp-dtls-b" d="M20,10.58V20H18V11.44a1,1,0,0,0-.5-.87l-4-2.29a1,1,0,0,0-1,0l-4,2.29a1,1,0,0,0-.5.87V20H6V10.58a1,1,0,0,1,.5-.87L9,8.29V5.11L4.52,7.6A1,1,0,0,0,4,8.48V20H2V7.59a1,1,0,0,1,.52-.88L9,3.11l.51-.28A1,1,0,0,1,11,3.7V7.14l1.51-.86a1,1,0,0,1,1,0l6,3.43A1,1,0,0,1,20,10.58ZM16,13H10v2h6Zm0,3H10v2h6Z"></path>
+                                </svg>
+                            </div>
+                            <div class="comp-name">Agricultural Produce Market Committee</div>
+                            <div class="comp-abbr">APMC</div>
+                        </div>
+                    </div>
+                    <div class="spl-comp-select">
+                        <div class="spl-comp-border">
+                            <div class="comp-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="nw-svg-comp-dtls" viewBox="0 0 22 22">
+                                    <path class="nw-svg-comp-dtls-b" d="M20,10.58V20H18V11.44a1,1,0,0,0-.5-.87l-4-2.29a1,1,0,0,0-1,0l-4,2.29a1,1,0,0,0-.5.87V20H6V10.58a1,1,0,0,1,.5-.87L9,8.29V5.11L4.52,7.6A1,1,0,0,0,4,8.48V20H2V7.59a1,1,0,0,1,.52-.88L9,3.11l.51-.28A1,1,0,0,1,11,3.7V7.14l1.51-.86a1,1,0,0,1,1,0l6,3.43A1,1,0,0,1,20,10.58ZM16,13H10v2h6Zm0,3H10v2h6Z"></path>
+                                </svg>
+                            </div>
+                            <div class="comp-name">Megaworld Corporation</div>
+                            <div class="comp-abbr">MEGAWORLD</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="spl-btn">
+                    <div class="spl-action-btn spl-back pnl-h-close">Back</div>
+                    <div class="spl-action-btn spl-change">Change Company</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Box -->
+        <div id="mdlPrompt" class="mdl">
+            <div class="mdl-msg-c">
+                <div class="mdl-msg-wrapper">
+                    @*<div class="mdl-msg-title">Title</div>*@
+                    <div class="mdl-msg-logo _msg-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="nw-mdl-logout" viewBox="0 0 60 60" width="60px" height="60px">
+                            <path class="ae1dc0c9-d477-41d0-8c64-ec295bcebf73" d="M57.06,35.62l-6.82,3.94a1.87,1.87,0,0,1-2.8-1.62V36H35.55a2,2,0,0,1,0-4H47.44V30.06a1.87,1.87,0,0,1,2.8-1.62l6.82,3.94A1.87,1.87,0,0,1,57.06,35.62ZM40,24V20a2,2,0,0,0-2-2H32V50h6a2,2,0,0,0,2-2V44a2,2,0,0,1,4,0v4a6,6,0,0,1-6,6H30.49A6,6,0,0,1,26,56H5.65A3.64,3.64,0,0,1,2,52.35V13.89a3.66,3.66,0,0,1,2.82-3.55L24.69,5.71A6,6,0,0,1,32,11.51V14h6a6,6,0,0,1,6,6v4a2,2,0,0,1-4,0ZM27,34a4,4,0,1,0-4,4A4,4,0,0,0,27,34Z" />
+                        </svg>
+                    </div>
+                    <div class="mdl-msg-title "></div>
+                    <div class="mdl-msg-txt">Are you sure you want to quit all applications and log out now?</div>
+                    <div class="mdl-btn-msg-c">
+                        <div id="btnYes" class="btn btn-msg-y">Yes</div>
+                        <div id="btnNo" class="btn btn-msg-n">No</div>
+                        <div id="btnOk" class="btn btn-msg-o">Ok</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <!-- Favorite Design Box -->
+        <div class="spl-fav">
+            <div class="spl-fav-box">
+                <div class="spl-fav-hrd">
+                    <div class="spl-fav-close" title="Close"></div>
+                    <div class="spl-fav-txt">Favorites</div>
+                    <div class="spl-fav-search">
+                        <input type="text" placeholder="Search" class="spl--input">
+                        <div class="spl-search-fav-icon" title="Search Favorite">
+                            <div class="spl-search-icon"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="spl-fav-menuitem">
+                    @*<div class="spl-fav-menuitem-wdgt">
+                        <div class="spl-fav-icon">
+                            <div class="spl-icon-fav _fav-icon"></div>
+                        </div>
+                        <div class="spl-fav-menu-dtls">
+                            <div class="_fav-title">DAE Consultant Viewer</div>
+                            <div class="_fav-subtitle">Menuitem</div>
+                        </div>
+                        <div class="spl-fav-open"></div>
+                    </div>
+                    <div class="spl-fav-menuitem-wdgt">
+                        <div class="spl-fav-icon">
+                            <div class="spl-icon-fav _fav-icon"></div>
+                        </div>
+                        <div class="spl-fav-menu-dtls">
+                            <div class="_fav-title">Daily Accomplishment Report</div>
+                            <div class="_fav-subtitle">Menuitem</div>
+                        </div>
+                        <div class="spl-fav-open"></div>
+                    </div>*@
+                    <div class="spl-fav-info-banner">
+                        <div class="spl-fav-banner-d">
+                            <div class="spl-fav-banner"></div>
+                            <div class="spl-fav-banner-text">No Favorites Yet</div>
+                            <div class="spl-fav-subtext">You have currently no favorites. Tap on the star to add favorites!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Design Box -->
+        <div class="spl-recent">
+            <div class="spl-recent-box">
+                <div class="spl-recent-hrd">
+                    <div class="spl-recent-close" title="Close"></div>
+                    <div class="spl-fav-txt">Recent</div>
+                    <div class="spl-recent-search">
+                        <input type="text" placeholder="Search" class="spl--input-r">
+                        <div class="spl-search-recent-icon" title="Search Favorite">
+                            <div class="spl-search-icon"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="spl-recent-menuitem">
+                    <div class="spl-recent-menuitem-wdgt">
+                        <div class="spl-recent-icon">
+                            <div class="spl-icon-recent _recent-icon"></div>
+                        </div>
+                        <div class="spl-recent-menu-dtls">
+                            <div class="_recent-title">DAE Consultant Viewer</div>
+                            <div class="_recent-subtitle">Menuitem</div>
+                        </div>
+                        <div class="spl-recent-open"></div>
+                    </div>
+                    <div class="spl-recent-menuitem-wdgt">
+                        <div class="spl-recent-icon">
+                            <div class="spl-icon-recent _recent-icon"></div>
+                        </div>
+                        <div class="spl-recent-menu-dtls">
+                            <div class="_recent-title">Daily Accomplishment Report</div>
+                            <div class="_recent-subtitle">Menuitem</div>
+                        </div>
+                        <div class="spl-recent-open"></div>
+                    </div>
+                    <div class="spl-recent-banner-m">
+                        <div class="spl-recent-banner-d">
+                            <div class="spl-recent-banner"></div>
+                            <div class="spl-recent-banner-text">Sorry, No Menuitem Found</div>
+                            <div class="spl-recent-banner-subtext">Any open menuitem will appear here!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Do not remove -->
+        <div class="_white"></div>
+
+    </div>
+
+
+
+    <div class="alerts-parent">
+        @*<div class="alert" nk-alert-type="success">
+            <div class="alert-border"></div>
+            <div class="alert-icon"></div>
+            <div class="alert-text">
+                <div class="alert-title">Success</div>
+                <div class="alert-subtitle">
+                    Great! You have successfully processed the item. Great! You have
+                    successfully processed the item.
+                </div>
+            </div>
+            <div class="btn btn-alert-close"></div>*@
+        </div>
+        @*<div class="alert" nk-alert-type="info">
+            <div class="alert-border"></div>
+            <div class="alert-icon"></div>
+            <div class="alert-text">
+                <div class="alert-title">Information</div>
+                <div class="alert-subtitle">Indicates a neutral informative change or action.</div>
+            </div>
+            <div class="btn btn-alert-close"></div>
+        </div>
+        <div class="alert" nk-alert-type="warning">
+            <div class="alert-border"></div>
+            <div class="alert-icon"></div>
+            <div class="alert-text">
+                <div class="alert-title">Warning</div>
+                <div class="alert-subtitle">Sorry! There was a problem with your request.</div>
+            </div>
+            <div class="btn btn-alert-close"></div>
+        </div>
+        <div class="alert" nk-alert-type="error">
+            <div class="alert-border"></div>
+            <div class="alert-icon"></div>
+            <div class="alert-text">
+                <div class="alert-title">Error</div>
+                <div class="alert-subtitle">Oops! Something went wrong, please try again.</div>
+            </div>
+            <div class="btn btn-alert-close"></div>
+        </div>*@
+    </div>
+
+
+    <!-- Lookup -->
+    <div id="menuCreatorContainer" class="modal-s">
+        <div class="modal-box-s">
+            <div class="modal-box-bg"></div>
+            <div class="modal-hdr">
+                <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                <!-- <div class="modal-hdr-icon"></div> -->
+                <div class="modal-hdr-title">Look up</div>
+                <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+            </div>
+            <div class="nk-modal-body">
+                <div class="row margin-y-10">
+                    <div class="col col-12 col-parent child-centered">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Column Filter</label>
+                            </div>
+                            <div class="col col-7">
+                                <select class="cmb fullwidth">
+                                    <option>Select</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row with-label-lookup-single">
+                            <div class="col col-5">
+                                <label class="lbltxt">Search</label>
+                            </div>
+                            <div class="col col-7 col-parent">
+                                <div class="col col-12">
+                                    <input id="txtlookupsearch" type="text" name="" class="search txtbox txtdesc txtlookup">
+                                    <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col col-12 col-parent">
+                        <div id="tblWithTabsWrapperSample3" class="table-tabs-wrapper rescale-ready">
+                            <div class="row">
+                                <div id="nkLookupCon" class="table-wrapper">
+                                    <table class="table" sid="nkTable0">
+                                        <thead>
+                                            <tr>
+                                                @*<th data-type="num" scope="col" class="tbl-row-num asc">#</th>*@
+                                                <th data-type="str" scope="col" class="">Code</th>
+                                                <th data-type="str" scope="col">Description</th>
+                                            </tr>
+                                            <tr>
+                                                @*<th data-type="num" scope="col" class="tbl-row-num"></th>*@
+                                                <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                                <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                @*<th scope="row" class="tbl-row-num" row-th="#">1</th>*@
+                                                <td row-th="First First"></td>
+                                                <td row-th="Last Name"></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-6">
+                                    <div class="row">
+                                        <div class="col col-12 child-centered">
+                                            <div id="" class="pagination-n-c" sid="">
+                                                <div class="page-control page-control-prev">Prev</div>
+                                                <input type="text" name="" class="page-search" value="1" autocomplete="off">
+                                                <div class="page-of-txt">of</div>
+                                                <div class="page-count-total">1</div>
+                                                <div class="page-control page-control-next">Next</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-6 margin-y-5">
+                                    <div class="row">
+                                        <div class="col col-12 ">
+                                            <div class="found-record"><span>9</span> Record(s) Found</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="LookupID"></div>
+    </div>
+
+    <div id="nwExportContainerMain" class="modal-s">
+        <div class="modal-box-s">
+            <div class="modal-box-bg"></div>
+            <div class="modal-hdr">
+                <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                <div class="modal-hdr-title">Export to Excel</div>
+                <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+            </div>
+            <div class="nk-modal-body">
+                <div class="row margin-y-10">
+                    <div class="col col-12 col-parent child-centered">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="btnnwExport" class="btn btn-default">Export to Excel</div>
+                                <div id="btnnwExportCSV" class="btn btn-default">Export to CSV</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="nwExportContainer"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+</body>
+
+
+</html>

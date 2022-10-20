@@ -1,0 +1,105 @@
+﻿.atlContainer {
+    width: 100%;
+    height: 70%;
+    margin-top: 5px;
+    border: 1px solid rgb(128, 128, 128);
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+    .atlContainer div.innertext {
+        padding: 5px;
+    }
+
+div.innertext div.spantext {
+    padding: 2px 7px 2px 7px;
+    background-color: #dedede;
+    display: inline-block;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    border-radius: 4px;
+}
+
+div.spantext span.classx {
+    position: relative;
+    top: -6px;
+    left: 3px;
+    font-size: 12px;
+    color: #de0f0f;
+    border-radius: 5px;
+    font-weight: bold;
+    visibility: hidden;
+}
+
+div.spantext:hover span.classx {
+    visibility: visible;
+    cursor: pointer;
+}
+
+.ui-tabs-panel {
+    background: black;
+    height: 60%;
+}
+
+body .ui-tabs .ui-tabs-active.ui-state-active .ui-tabs-anchor {
+    color: #FFFFFF;
+    cursor: default;
+    /*background-image: linear-gradient(#2e6da4, #3c8cd1);*/
+    background-image: linear-gradient(#2e6da4, #337ab7);
+}
+
+.ui-widget-header {
+    border: 1px gray;
+}
+
+body .ui-tabs .ui-tabs-anchor {
+    color: #265b88;
+    cursor: default;
+}
+
+.tabContainer {
+    min-height: 92% !important;
+    height: 92% !important;
+    border: none !important;
+}
+
+    .tabContainer button.btnGetlookup {
+        border: 1px solid #323232;
+        border-radius: 4px;
+        text-align: center;
+        width: 100px;
+        background-image: -webkit-linear-gradient(bottom, #003079, #1e52b1);
+        background-repeat: repeat-x;
+        color: White;
+        font-size: 12px;
+        height: 20px;
+        margin: 0px 5px 0px 0px;
+    }
+
+        .tabContainer button.btnGetlookup:hover:enabled, #settingstabs button.btnClearList:hover:enabled {
+            border: 1px solid orange;
+        }
+
+    .tabContainer button.btnClearList {
+        border: 1px solid #323232;
+        border-radius: 4px;
+        text-align: center;
+        width: 100px;
+        background-image: -webkit-linear-gradient(bottom, #fefefe, #cccccc);
+        background-repeat: repeat-x;
+        color: black;
+        font-size: 12px;
+        height: 20px;
+    }
+
+.lookupFilter fieldset {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    width: 510px;
+    min-width: 510px;
+    height: 130px;
+    min-height: 130px;
+    max-height: 180px;
+    overflow-y: hidden;
+}

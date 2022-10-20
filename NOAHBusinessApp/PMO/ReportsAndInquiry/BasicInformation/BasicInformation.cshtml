@@ -1,0 +1,169 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+     ViewBag.Title = "Basic Information";
+     Layout =NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/RE/ReportsAndInquiry/BasicInformation/BasicInformation.js"></script>
+    <link href="~/RE/ReportsAndInquiry/BasicInformation/BasicInformation.css" rel="stylesheet" />
+</head>
+
+@*<div id="noah-webui-Toolbox" class="nk-toolbar-c">
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+</div>*@
+
+<div class="container-flex">
+    <!-- Customer -->
+    <div class="row padding-10">
+        <div class="col col-4 col-parent">
+            <div class="col col-5">
+                <label class="lbltxt">Customer</label>
+            </div>
+            <div class="col col-7">
+                <input id="txtCustName" type="text" name="" class="txtbox">
+            </div>
+        </div>
+        <div class="col col-8">
+        </div>
+    </div>  
+    <div class="row row-parent padding-10">
+        <div class="col col-4 col-parent">
+            <div class="row">
+                <div class="col col-12">
+                    <label class="lbltxt nwCuzTxtBold">Contact Details</label>
+                </div>
+            </div>
+            <!-- Mobile No. -->
+            <div class="row">
+                <div class="col col-5">
+                    <div class="col col-1">
+                    </div>
+                    <div class="col col-11">
+                        <label class="lbltxt">Mobile No.</label>
+                    </div>
+                </div>
+                <div class="col col-7">
+                    <input id="txtMobileNo" type="text" name="" class="txtbox">
+                </div>
+            </div>
+            <!-- Email Address -->
+            <div class="row">
+                <div class="col col-5">
+                    <div class="col col-1">
+                    </div>
+                    <div class="col col-11">
+                        <label class="lbltxt">Email Address</label>
+                    </div>
+                </div>
+                <div class="col col-7">
+                    <input id="txtEmailAdd" type="text" name="" class="txtbox">
+                </div>
+            </div>
+            <!-- Phone No. -->
+            <div class="row">
+                <div class="col col-5">
+                    <div class="col col-1">
+                    </div>
+                    <div class="col col-11">
+                        <label class="lbltxt">Phone No.</label>
+                    </div>
+                </div>
+                <div class="col col-7">
+                    <input id="txtPhoneNo" type="text" name="" class="txtbox">
+                </div>
+            </div>
+        </div>
+        <div class="col col-4 col-parent">
+            <!-- Account Details -->
+            <div class="row">
+                <div class="col col-12">
+                    <label class="lbltxt nwCuzTxtBold">Account Details</label>
+                </div>
+            </div>
+            <!-- Account No. -->
+            <div class="row">
+                <div class="col col-5">
+                    <div class="col col-1">
+                    </div>
+                    <div class="col col-11">
+                        <label class="lbltxt">Account No.</label>
+                    </div>
+                    
+                </div>
+                <div class="col col-7">
+                    <select id="dpAccNo" class="cmb fullwidth">
+                    </select>
+                </div>
+            </div>
+            <!-- Account Status -->
+            <div class="row">
+                <div class="col col-5">
+                    <div class="col col-1">
+                    </div>
+                    <div class="col col-11">
+                        <label class="lbltxt">Account Status</label>
+                    </div>
+                </div>
+                <div class="col col-7">
+                    <input id="txtAccStats" type="text" name="" class="txtbox">
+                </div>
+            </div>
+        </div>
+        <div class="col col-4 col-parent">
+            <!-- Unit Details -->
+            <div class="row">
+                <div class="col col-12">
+                    <label class="lbltxt nwCuzTxtBold">Unit Details</label>
+                </div>
+            </div>
+            <!-- Base Unit -->
+            <div class="row">
+                <div class="col col-5">
+                    <div class="col col-1">
+                    </div>
+                    <div class="col col-11">
+                        <label class="lbltxt">Base Unit</label>
+                    </div>
+                </div>
+                <div class="col col-7">
+                    <input id="txtBaseUnit" type="text" name="" class="txtbox">
+                </div>
+            </div>
+            <!-- Base Unit Description -->
+            <div class="row">
+                <div class="col col-5">
+                    <div class="col col-1">
+                    </div>
+                    <div class="col col-11">
+                        <label class="lbltxt">Base Unit Description</label>
+                    </div>
+                </div>
+                <div class="col col-7">
+                    <textarea id="txtBaseUnitDesc" class="txtarea nwNonResizable" rows="2"></textarea>
+                </div>
+            </div>
+            <!-- Inventory Type -->
+            <div class="row">
+                <div class="col col-5">
+                    <div class="col col-1">
+                    </div>
+                    <div class="col col-11">
+                        <label class="lbltxt">Inventory Type</label>
+                    </div>
+                </div>
+                <div class="col col-7">
+                    <input id="txtInventType" type="text" name="" class="txtbox">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-parent padding-10">
+        <div id="AddOnUnitConGrid" class="col col-12">
+            
+        </div>
+    </div>
+</div>

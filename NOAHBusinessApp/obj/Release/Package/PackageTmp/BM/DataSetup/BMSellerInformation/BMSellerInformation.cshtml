@@ -1,0 +1,865 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Seller Information";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/BM/DataSetup/BMSellerInformation/BMSellerInformation.js"></script>
+    <link href="~/BM/DataSetup/BMSellerInformation/BMSellerInformation.css" rel="stylesheet" />
+</head>
+
+<div id="noah-webui-Toolbox" class="nk-toolbar-c">
+            <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh">
+                <div class="_icon"></div>
+                <div class="_lbl">Refresh</div>
+            </div>
+            <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+        </div>
+
+<div class="nwHide">
+    <input id="txtServerLink" style="display: none" />
+    <input id="Level2" disabled class="idval" type="text"  maxlength="80" />
+    <input id="txtUpdateButton" disabled class="idval" type="text"  maxlength="80" />
+    <input id="txtStatusCode" disabled class="idval" type="text"  maxlength="80" />
+    <input id="txtStatus" disabled class="idval" type="text"  maxlength="80" />
+    <div class="noah-webui-containerRow" style="display:none; margin-top: -10px;">
+        <fieldset style="width: 308px;" class="fourthFieldset">
+
+            <%-- Marketing Group --%>
+
+            <div class="noah-webui-containerSubRow" style="padding-top: 6px;">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Marketing Group<span class="nwRequiredField">*</span></div>
+                    <div id="lugMktgGrpCode" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/width: 100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width: 40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width: 58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Seller Type --%>
+
+            <%--<div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Seller Type</div>
+                    <div id="lugSellerType" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/ width:100%">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style=" width:40%" />
+                            <input class="descval loaded-field" type="text" value="" style=" width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>--%>
+
+            <br />
+
+            <div class="noah-webui-containerSubRow" style="min-height: initial;">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl" style="font-weight: bold; color: #111111 !important;">Level</div>
+                </div>
+            </div>
+
+            <%-- Seller Role --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl" id="lbllvl1">Level 1<span class="nwRequiredField">*</span></div>
+                    <div id="lugLvl1" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/ width:100%">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style=" width:40%" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <%-- Broker's Network Group --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl" id="lbllvl2">Level 2<span class="nwRequiredField">*</span></div>
+                    <div id="lugLvl2" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/ width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Origin of Sale --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl" id="lbllvl3">Level 3<span class="nwRequiredField">*</span></div>
+                    <div id="lugLvl3" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Level 4 --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Level 4</div>
+                    <div id="lugLvl4" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Level 5 --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Level 5</div>
+                    <div id="lugLvl5" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Level 6 --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Level 6</div>
+                    <div id="lugLvl6" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Level 7 --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Level 7</div>
+                    <div id="lugLvl7" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Level 8 --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Level 8</div>
+                    <div id="lugLvl8" class="lookups required-lookup adisabled" style="width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Level 9 --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Level 9</div>
+                    <div id="lugLvl9" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/ width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Level 10 --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Level 10</div>
+                    <div id="lugLvl10" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/ width:100%">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <%-- Location Segment --%>
+
+            <div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Location Segment<span class="nwRequiredField">*</span></div>
+                    <div id="lugLocSegment" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/ width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="min-width:unset; width:58%;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>
+
+            <%-- Seller Status --%>
+
+            <%--<div class="noah-webui-containerSubRow">
+                <div class="noah-webui-containerRowItem">
+                    <div class="lbl">Seller Status<span class="nwRequiredField">*</span></div>
+                    <div id="lugSellerStatus" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/width:100%;">
+                        <div class="conval">
+                            <input class="idval data-entry" type="text" style="width:40%;" />
+                            <input class="descval loaded-field" type="text" value="" style="min-width:unset; width:58%;" />
+                        </div>
+                        <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+                    </div>
+                </div>
+            </div>--%>
+
+
+        </fieldset>
+
+    </div>
+    <div class="noah-webui-containerSubRow" style="padding-top: 6px;display:none;">
+        <div class="noah-webui-containerRowItem" style="padding-top: 5px; padding-bottom: 5px;">
+            <div class="lbl">Default VAT Tax Code<span class="nwRequiredField">*</span></div>
+            <div id="lugDefaultVATCode" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/ width:100%;">
+                <div class="conval">
+                    <input class="idval data-entry" type="text" style="width:40%;" />
+                    <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                </div>
+                <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+            </div>
+        </div>
+    </div>
+    <div class="noah-webui-containerSubRow" style="display:none;">
+        <div class="noah-webui-containerRowItem" style="padding-top: 5px; padding-bottom: 5px;">
+            <div class="lbl">Passport ID Number</div>
+            <div style="width: 100%;">
+                <input id="txtPassportIDNumber" class="nwUpper" type="text" style="/*min-width: 308px; max-width: 308px;*/ width:100%;" maxlength="30" />
+            </div>
+        </div>
+    </div>
+    <div class="noah-webui-containerSubRow" style="padding-top: 6px;display:none;">
+        <div class="noah-webui-containerRowItem">
+            <div class="lbl">Seller Contract Type<span class="nwRequiredField">*</span></div>
+            <div id="lugSellerContractType" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/ width:100%;">
+                <div class="conval">
+                    <input class="idval data-entry" type="text" style="width:40%;" />
+                    <input class="descval loaded-field" type="text" value="" style="width:58%; min-width:unset;" />
+                </div>
+                <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+            </div>
+        </div>
+    </div>
+    <div class="noah-webui-containerSubRow" style="display:none;">
+        <div class="noah-webui-containerRowItem">
+            <div class="lbl">Contract Duration From<span class="nwRequiredField">*</span></div>
+            <div style="width: 100%;">
+                <input id="txtContractDurationFrom" class="nwDatePick txtbox" type="text" style="/*min-width: 12%; max-width: 100%;*/ width:100%;" maxlength="" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+    <div class="noah-webui-containerSubRow" style="display:none;">
+        <div class="noah-webui-containerRowItem">
+            <div class="lbl">Contract Duration To<span class="nwRequiredField">*</span></div>
+            <div style="width: 100%;;">
+                <input id="txtContractDurationTo" class="nwDatePick txtbox" type="text" style="/*min-width: 12%; max-width: 100%;*/ width:100%;" maxlength="" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+    <div class="noah-webui-containerSubRow" style="display:none;">
+        <div class="noah-webui-containerRowItem">
+            <div class="lbl">Seller's Contract Status<span class="nwRequiredField">*</span></div>
+            <div id="lugSellerCotractStatus" class="lookups required-lookup adisabled" style="/*min-width: 276px; max-width: 276px;*/ width:100%;">
+                <div class="conval">
+                    <input class="idval data-entry" type="text" style="width:40%;" />
+                    <input class="descval loaded-field" type="text" value="" style="width: 58%; min-width: unset;" />
+                </div>
+                <button class="LookUp" onclick="lookUp(this)" tabindex="1"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-flex">
+    <div class="row row-parent padding-10">
+        <div class="col col-6 col-parent">
+
+            @*Seller Category*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Category</label>
+                </div>
+                <div class="col col-8">
+                    <div class="col col-6">
+                        <div class="rdo-wrapper">
+                            <input id="rbIndividual" type="radio" name="SellerCategory" class="rdo nwSellerCategory" checked="checked">
+                            <label class="lbl-rdo" for="rbIndividual">Individual</label>
+                        </div>
+                    </div>
+                    <div class="col col-6">
+                        <div class="rdo-wrapper">
+                            <input id="rbCompany" type="radio" name="SellerCategory" class="rdo nwSellerCategory">
+                            <label class="lbl-rdo" for="rbCompany">Company</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Seller Code*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Code</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtSellerCode" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Seller Cross Reference Code*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Cross Reference Code</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtCrossReference" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Seller Name*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Name</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtSellername" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Seller Group*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Group</label>
+                </div>
+                <div id="lugSellergroup" class="col col-8 col-parent">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*Seller Type*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Type</label>
+                </div>
+                <div id="lugSellerType" class="col col-8 col-parent adisabled">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*Seller Role*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Role</label>
+                </div>
+                <div id="lugSellerRole" class="col col-8 col-parent adisabled">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*Seller Status*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Status</label>
+                </div>
+                <div id="lugSellerStatus" class="col col-8 col-parent adisabled">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*PRC License No.*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">PRC/HLURB License No.</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtPRCNo" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+        </div>
+
+
+        @*Profile Image and Signature*@
+        <div class="col col-3 col-parent">
+
+            <div class="card nwProfCardSize">
+                <div id="profile-img" class="card-image nwDefImgSize">
+                    @*<img src="../../materials/media/images/bg-theme/nature/photo-1496661415325-ef852f9e8e7c.jpg">*@
+                </div>
+            </div>
+
+            <div class="card nwSignCardSize">
+                <div id="profile-img-signature" class="card-image nwDefImgSize">
+                    @*<img src="../../materials/media/images/bg-theme/nature/photo-1496661415325-ef852f9e8e7c.jpg">*@
+                </div>
+            </div>
+        </div>
+
+
+        @*All Buttons*@
+        <div class="col col-3 col-parent">
+            <div class="col col-12 ">
+                <div id="btnModeofcommision" class="btn btn-default fullwidth">MODE OF COMMISSION RELEASE</div>
+            </div>
+            <div class="col col-12 ">
+                <div id="btnReqCom" class="btn btn-default fullwidth">REQUIREMENT COMPLIANCE</div>
+            </div>
+            <div class="col col-12 ">
+                <div id="btnBankAcct" class="btn btn-default fullwidth">BANK ACCOUNT</div>
+            </div>
+            <div class="col col-12 ">
+                <div id="btnSellerLevel" class="btn btn-default fullwidth">SELLER ROLE/LEVEL DETAILS</div>
+            </div>
+            <div class="col col-12 ">
+                <div id="btnSeminar" class="btn btn-default fullwidth">SEMINARS/TRAININGS ATTENDED</div>
+            </div>
+            <div class="col col-12 ">
+                <div id="btnAcctDetails" class="btn btn-default fullwidth">ACCOUNT DETAILS (AS A CUSTOMER)</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row row-parent padding-10">
+        <div class="col col-6 col-parent">
+
+            @*Salutation*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Salutation/Title</label>
+                </div>
+                <div id="lugSalutation" class="col col-8 col-parent">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*Last Name*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Last Name</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtLastName" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*First Name*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">First Name</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtFirstName" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Middle Name and Mid Initial*@
+            <div class="row">
+                @*Middle Name*@
+                <div class="col col-4">
+                    <label class="lbltxt">Middle Name</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtMiddleName" disabled type="text" name="" class="txtbox">
+                </div>
+
+                @*Middle Initial*@
+                <div class="col col-2">
+                    <label class="lbltxt">M.I.</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtMI" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Maiden Name*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Maiden Name</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtMaidenName" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Mother's Maiden Name*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Mother's Maiden Name</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtMotherMaidenName" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Name Suffix*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Name Suffix</label>
+                </div>
+                <div id="lugNameSuffix" class="col col-8 col-parent">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*Birth Date and Age*@
+            <div class="row">
+                @*Birth Date*@
+                <div class="col col-4">
+                    <label class="lbltxt">Birth Date</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtBirthdate" disabled type="text" name="" class="txtbox">
+                </div>
+
+                @*Age*@
+                <div class="col col-2">
+                    <label class="lbltxt">Age</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtAge" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Gender*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Gender</label>
+                </div>
+                <div id="lugGender" class="col col-8 col-parent">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*Civil Status*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Civil Status</label>
+                </div>
+                <div id="lugCivilStatus" class="col col-8 col-parent">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*Nationality*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Nationality</label>
+                </div>
+                <div id="lugNationality" class="col col-8 col-parent">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*Place of Birth*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Place of Birth</label>
+                </div>
+                <div class="col col-8">
+                    <textarea id="txtPlaceofBirth" disabled type="text" name="" class="txtarea autoresize noresize"></textarea>
+                </div>
+            </div>
+
+            @*Individual Tin*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Individual Tin</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtIndividualTIN" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-6 col-parent">
+
+            @*Seller Contact Details*@
+            <div class="row">
+                <div class="col">
+                    <label class="tabs-title">Seller Contact Details</label>
+                </div>
+            </div>
+
+            @*Mobile*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Mobile</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtMobile" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Telephone*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Telephone</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtTelephone" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Email*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Email</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtEmail" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Seller Address 1 (House/ Building No., Street, Barangay)*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Address 1 (House/ Building No., Street, Barangay)</label>
+                </div>
+                <div class="col col-8">
+                    <textarea id="txtsellerAdd1" disabled type="text" name="" class="txtarea autoresize noresize"></textarea>
+                </div>
+            </div>
+
+            @*Seller Address 2 (House/ Building No., Street, Barangay)*@
+            <div class="row margin-bottom-15">
+                <div class="col col-4">
+                    <label class="lbltxt">Seller Address 2 (House/ Building No., Street, Barangay)</label>
+                </div>
+                <div class="col col-8">
+                    <textarea id="txtSellerAdd2" disabled type="text" name="" class="txtarea autoresize noresize"></textarea>
+                </div>
+            </div>
+
+            @*Default CWT Tax Code*@
+            <div class="row margin-top-30">
+                <div class="col col-4">
+                    <label class="lbltxt">Default CWT Tax Code</label>
+                </div>
+                <div id="lugDefaultCWTTaxCode" class="col col-8 col-parent">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*SSS Number*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">SSS Number</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtSSSNumber" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Pag-IBIG Number*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Pag-IBIG Number</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtPagIBIGNumber" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*PhilHealth Number*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">PhilHealth Number</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtPhilHealthNo" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row row-parent padding-10">
+        <div class="col col-6 col-parent">
+            @*Registered Name*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Registered Name</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtRegisteredName" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Corporate VAT Registration Type*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Corporate VAT Registration Type</label>
+                </div>
+                <div class="col col-8">
+                    <div class="col col-6">
+                        <div class="rdo-wrapper">
+                            <input id="rbVAT" type="radio" name="VAT" class="rdo nwVAT" checked="checked">
+                            <label class="lbl-rdo" for="rbVAT">VAT</label>
+                        </div>
+                    </div>
+                    <div class="col col-6">
+                        <div class="rdo-wrapper">
+                            <input id="rbnonVAT" type="radio" name="VAT" class="rdo nwVAT">
+                            <label class="lbl-rdo" for="rbnonVAT">Non-VAT</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*VAT Reg. TIN*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">VAT Reg. TIN</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtVATRegTIN" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Non-VAT Reg. TIN*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Non-VAT Reg. TIN</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtNonVATRegTIN" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-6 col-parent">
+
+            @*Recruitment Date*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Recruitment Date</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtRecruitDate" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+
+            @*Recruited By*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Recruited By</label>
+                </div>
+                <div id="lugRecruitedBy" class="col col-8 col-parent">
+                    <div class="col col-4">
+                        <input type="text" disabled name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" disabled name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            @*First Sale Date*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">First Sale Date</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtFirstSaleDate" disabled type="text" name="" class="txtbox">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

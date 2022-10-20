@@ -1,0 +1,115 @@
+﻿Modified BY	    :EDM	
+Modified Date       : 06/22/2022
+Menu Item Version   : 10.0.0.0
+Reason              : v10 Conversion and Optimization
+
+
+Modified By			: KFB
+Modified Date       : 06/15/2022
+Menu Item Version   : 9.0.0.1E
+Reason              : Minor Adjustments
+
+Modified By			: KFB
+Modified Date       : 06/15/2022
+Menu Item Version   : 9.0.0.0E
+Reason              : Phase 1 for Portal Enhancement
+
+Modified By			: EME
+Modified Date       : 07/27/2020
+Menu Item Version   : 8.0.0.18
+Reason              : remove validation if docs grid is empty set to optional
+
+Modified By			: MAM
+Modified Date       : 07/17/2020
+Menu Item Version   : 8.0.0.17
+Reason              : Selling Price
+
+Modified By			: ADB/MAM
+Modified Date       : 06/19/2020
+Menu Item Version   : 8.0.0.16
+Reason              : Mobile Responsive (UI)
+
+Modified By			: EME
+Modified Date       : 06/15/2020
+Menu Item Version   : 8.0.0.15
+Reason              : add parameter recuser on method isUnitExist
+
+Modified By			: EME
+Modified Date       : 06/04/2020
+Menu Item Version   : 8.0.0.14
+Reason              : add note on header details
+
+Modified By			: EME
+Modified Date       : 05/21/2020
+Menu Item Version   : 8.0.0.13
+Reason              : add parameter recuser on GetDefLineUnitDtls method
+
+Modified By			: EME
+Modified Date       : 05/21/2020
+Menu Item Version   : 8.0.0.12
+Reason              : add parameter recuser on getHoldingExpiryDate method
+
+Modified By			: Edward
+Modified Date       : 05/09/2020
+Menu Item Version   : 8.0.0.11
+Reason              : add unit code filter on inquire
+
+Modified By			: Edward
+Modified Date       : 05/06/2020
+Menu Item Version   : 8.0.0.10
+Reason              : add method is unit exist for binding
+
+Modified By			: Edward
+Modified Date       : 05/05/2020
+Menu Item Version   : 8.0.0.9
+Reason              : addressed findings on bindings
+
+Modified By			: Edward
+Modified Date       : 05/04/2020
+Menu Item Version   : 8.0.0.8
+Reason              : addressed findings 
+                      -add customer classification filter on unit details grid
+
+Modified By			: Edward
+Modified Date       : 05/02/2020
+Menu Item Version   : 8.0.0.7
+Reason              : addressed findings 
+                      -add condition on DisableFieldsEmpty() if uc is not blank
+
+Modified By			: Edward
+Modified Date       : 05/02/2020
+Menu Item Version   : 8.0.0.6
+Reason              : addressed findings 
+                      -change total contract price to selling price(vatex) in unit details
+
+Modified By			: Edward
+Modified Date       : 05/01/2020
+Menu Item Version   : 8.0.0.5
+Reason              : addressed findings 
+                      -customer look up filter by classification 
+					  -change total contract price to selling price in unit details
+					  -requirment details to requirement details
+
+Modified By			: Edward
+Modified Date       : 05/01/2020
+Menu Item Version   : 8.0.0.4
+Reason              : change message on all prompts as per Benjie 
+
+Modified By			: Edward
+Modified Date       : 04/30/2020
+Menu Item Version   : 8.0.0.3
+Reason              : change logic in get initialize method on bl
+
+Modified By			: Edward
+Modified Date       : 04/29/2020
+Menu Item Version   : 8.0.0.2
+Reason              : remove new button, customer look up based on login seller
+
+Modified By			: Edward
+Modified Date       : 04/28/2020
+Menu Item Version   : 8.0.0.1
+Reason              : Change prompt from Cannot saved to Cannot be saved.
+
+Created By          : Edward
+Date Created        : 04/01/2020
+Menu Item Version	: 8.0.0.0

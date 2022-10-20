@@ -1,0 +1,57 @@
+﻿body[ver="2"][theme="light"] {
+    background: #67c0e2 !important;
+    background: linear-gradient(to bottom right, #8feaff, #67c0e2) !important;
+}
+
+body[ver="2"][theme="light"] .main-c {
+    background-color: transparent;
+}
+
+body[ver="2"][theme="light"] #img_default {
+    display: none;
+}
+
+body[ver="2"][theme="light"] #img_secondary {
+    display: inline-block;
+}
+
+body[ver="2"][theme="light"] .login-text-welcome > span:nth-of-type(2) {
+    color: #f18500;
+    text-shadow: 0 1px 2px #ffffff;
+}
+
+body[ver="2"][theme="light"] .login-text-welcome {
+    color: #000000;
+}
+
+body[ver="2"][theme="light"] .login-text-c,
+body[ver="2"][theme="light"] .login-text-welcome > span:nth-of-type(1) {
+    color: #003399;
+}
+
+body[ver="2"][theme="light"] .login-ft-lbl {
+    color: #f18500;
+    font-weight: 600;
+    text-shadow: 0 1px 2px #ffffff;
+}
+body[ver="2"][theme="light"] .login-ft:nth-of-type(2) .login-ft-img {
+    background-image: url('../../../images/login_menu_icon4.png');
+}
+
+body[ver="2"][theme="light"] .login-account-text-hdr {
+    background: linear-gradient(to right, #003399, #ffa500 130%);
+    color: #ffffff;
+    margin: 0;
+    border-radius: 0;
+}
+
+body[ver="2"][theme="light"] .center-box {
+    border: none;
+}
+
+@media only screen and (max-width: 800px) {
+    body[ver="2"][theme="light"] {
+        background: #67c0e2 !important;
+        background: linear-gradient(to bottom right, #8feaff, #67c0e2) !important;
+    }
+}

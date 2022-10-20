@@ -1,0 +1,5 @@
+﻿Modified BY       : JNB
+Date Modified     : 03/24/2020
+Menu Item Version : 9.0.0.2
+Reason			  : Removed .Template method in Grid to retain the correct format based on record
+

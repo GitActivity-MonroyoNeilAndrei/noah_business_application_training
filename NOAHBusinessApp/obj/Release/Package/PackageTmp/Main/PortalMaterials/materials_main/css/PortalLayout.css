@@ -1,0 +1,19 @@
+
+._layout .modal, ._layout .modal-s, ._layout .spinner-load-c, ._layout .screen-container, ._layout .mdl-cc, ._layout .pnlHelp-c, ._layout .pulse-fixed, ._layout .rescale-ready.fullscreen {
+top: 0px;
+
+}
+
+.nk-footer-c {
+    display: block;
+    border-bottom: 1px solid #e8edf3;
+    position: relative;
+}
+.content-c {
+    min-height: 70%;
+}
+
+#btnNavUser:hover .nav-user-ddli
+{
+    display:block;
+}

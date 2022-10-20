@@ -1,0 +1,39 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Reservation Entry";
+}
+<div id="nwReferenceBaseAddOn" class="modal-s">
+    <div class="modal-box-s">
+        <div class="modal-box-bg"></div>
+        <div class="modal-hdr">
+            <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+            <div class="modal-hdr-title">Reference Base / Add On</div>
+            <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+        </div>
+
+        <div class="nk-modal-body">
+
+            @*ToolBox*@
+            <div id="noah-webui-Toolbox_Refbase" class="nk-toolbar-c">
+                <div id="btnSaveRefBase" class="btn-tb-action btn-tb-save">
+                    <div class="_icon"></div>
+                    <div class="_lbl">Save</div>
+                </div>
+                <div id="btnRefreshRefBase" class="btn-tb-action btn-tb-refresh">
+                    <div class="_icon"></div>
+                    <div class="_lbl">Refresh</div>
+                </div>
+            </div>
+          
+            <div class="row row-parent padding-10">
+                <div class="col col-12">
+                    <div id="nwGridRefBaseOn" class="table-wrapper">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+

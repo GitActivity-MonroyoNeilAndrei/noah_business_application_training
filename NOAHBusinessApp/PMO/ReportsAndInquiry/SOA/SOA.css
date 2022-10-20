@@ -1,0 +1,28 @@
+﻿#frForms
+{
+    width: 88%;
+    height: 103%;
+    border: none;
+    position: absolute;
+    top: 269px;
+    right: 0;
+    bottom: 0;
+    left: 80px;
+}
+
+
+.content-c {
+    min-height: 121% !important;
+}
+
+
+/*RESPONSIVE*/
+@media only screen and (max-width:800px) {
+    #frForms
+    {
+        top: 250px !important;
+        left:0 !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+}

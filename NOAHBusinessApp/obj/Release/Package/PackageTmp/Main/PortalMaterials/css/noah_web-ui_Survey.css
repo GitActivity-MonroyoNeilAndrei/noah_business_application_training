@@ -1,0 +1,58 @@
+﻿body .noah-webui-containerRowItem div.nwQuestiontitle, div.nwQuestiontitle {
+font-weight:bold;
+display: block;
+}
+
+#header
+{
+font-size: 15px;
+font-weight:bold;
+margin: 0;
+padding: .1em .1em 0;
+padding-left: 0.05em;
+border-radius: 3;
+border: 1px solid rgba(73, 72, 72, 0.5);
+background-color: #727272;
+	background-image: -moz-linear-gradient(bottom,#CCCCCC, #EBEBEB);
+	background-image: -ms-linear-gradient(bottom, #CCCCCC, #EBEBEB);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from (#CCCCCC), to(#EBEBEB));
+	background-image: -webkit-linear-gradient(bottom, #CCCCCC, #EBEBEB);
+	background-image: -o-linear-gradient(bottom, #CCCCCC,#EBEBEB);
+	background-image: linear-gradient(bottom, #CCCCCC, #EBEBEB);
+	background-repeat: repeat-x;
+}
+.nwaddquestionhide
+{
+	display:none !important;	
+}
+
+
+body .noah-webui-containerRowItem div.nwQuestionAnswer>div,
+body .noah-webui-containerRowItem div.nwQuestionAnswer,
+div.nwQuestionAnswer>div
+{
+	display: block;
+}
+body .noah-webui-containerRowItem div.nwQuestionAnswer{
+margin-left:20px;
+}
+
+
+
+	
+.nqCollection
+{
+	
+	display:none;
+}
+
+.nqShow
+{
+	display:inherit;
+}
+
+
+.PagerNum.nwSelected
+{
+color: orange;
+}

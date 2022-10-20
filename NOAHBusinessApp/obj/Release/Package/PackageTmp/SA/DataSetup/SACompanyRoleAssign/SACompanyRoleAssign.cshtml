@@ -1,0 +1,149 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Company Roles Assignment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <script src="~/SA/DataSetup/SACompanyRoleAssign/SACompanyRoleAssign.js"></script>
+    <link href="~/SA/DataSetup/SACompanyRoleAssign/SACompanyRoleAssign.css" rel="stylesheet" />
+</head>
+
+<div id="noah-webui-Toolbox" class="nk-toolbar-c">
+    <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new">
+        <div class="_icon"></div>
+        <div class="_lbl">New</div>
+    </div>
+    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save">
+        <div class="_icon"></div>
+        <div class="_lbl">Save</div>
+    </div>
+
+    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-delete">
+        <div class="_icon"></div>
+        <div class="_lbl">Delete</div>
+    </div>
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+    <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire">
+        <div class="_icon"></div>
+        <div class="_lbl">Inquire</div>
+    </div>
+    <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export">
+        <div class="_icon"></div>
+        <div class="_lbl">Export</div>
+    </div>
+</div>
+
+
+
+<div class="container-flex">
+    <div class="row row-parent padding-10">
+        <div class="col col-5 col-parent">
+        
+
+
+            <div class="row with-label-lookup">
+                <div class="col col-3">
+                    <label class="lbltxt">Company</label>
+                </div>
+                <div class="col col-9 col-parent">
+                    <div class="col col-5">
+                        <input type="text" name="" class="txtbox txtcode" id="idvallugCode">
+                    </div>
+                    <div class="col col-7">
+                        <input type="text" name="" class="txtbox txtdesc txtlookup" id="descvallugCode">
+                        <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row with-label-lookup">
+                <div class="col col-3">
+                    <label class="lbltxt">Roles</label>
+                </div>
+                <div class="col col-9 col-parent">
+                    <div class="col col-5">
+                        <input type="text" name="" class="txtbox txtcode" id="idvallugCode2">
+                    </div>
+                    <div class="col col-7">
+                        <input type="text" name="" class="txtbox txtdesc txtlookup" id="descvallugCode2">
+                        <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col col-7 col-parent"></div>
+    </div>
+
+   
+        <div class="row">
+            <div class="col col-6 col-parent">
+                <div class="col col-5">
+                    <div class="btn btn-default fullwidth">Add Button</div>
+                </div>
+           
+
+
+                <div class="col col-7"></div>
+            </div>
+        </div>
+   
+
+
+
+    <div class="row row-parent">
+        <div class="col col-6 col-parent">
+            <div id="tblWithTabsWrapperSample2" class="table-tabs-wrapper rescale-ready" nk-table-style="2">
+                <div id="panelTblTabColSticky" class="table-wrapper">
+                    <table class="table" id="grid-sticky" sid="nkTable1">
+                        <thead>
+                            <tr>
+                                <th data-type="str" scope="col" class="tbl-row-num"></th>
+                                <th data-type="str" scope="col"></th>
+                                <th data-type="str" scope="col">Code</th>
+                                <th data-type="str" scope="col">Name</th>
+                               
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="tbl-row-num">1</th>
+                                <td row-th="">
+
+                                    <div class="btn-icon-action btn-icon-delete" title="Delete">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="nw-svg-d" viewBox="0 0 22 22">
+                                            <path class="nw-svg-d-a" d="M16,7h1V17a3,3,0,0,1-3,3H8a3,3,0,0,1-3-3V7H6V17a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2ZM10,9H9v7h1Zm3,0H12v7h1Zm1-5V2H8V4H3V5H19V4Z"></path>
+                                        </svg>
+                                    </div>
+
+
+                                </td>
+
+
+                                <td row-th=""></td>
+                                <td row-th=""></td>
+
+                          
+
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col col-6 col-parent"></div>
+    </div>
+
+
+</div>
+
+

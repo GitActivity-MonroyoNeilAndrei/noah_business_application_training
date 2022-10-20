@@ -1,0 +1,91 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+     ViewBag.Title = "SOA Viewing";
+     Layout =NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/PMO/ReportsAndInquiry/SOA/SOA.js"></script>
+    <link href="~/PMO/ReportsAndInquiry/SOA/SOA.css" rel="stylesheet" />
+</head>
+
+<div class="row-c">
+    <div class="btn btn-cancel">Back</div>
+    <div class="lbl-title-list" id="mi-title">SOA Viewing</div>
+</div>
+
+
+@*<div id="noah-webui-Toolbox" class="nk-toolbar-c">
+    <div id="noah-webui-Toolbox-BindingNavigator" class="nk-toolbar-pagination" nwbind="noah-webui-Toolbox-Grid">
+        <div id="noah-webui-default-first" class="tb-page-control tb-page-control-first">
+            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 22 22" height="22" width="22" class="svg-first-icon">
+                <path d="M19.11,5.25a1.83,1.83,0,0,0-1.81,0L15,6.57V5.8a2,2,0,0,0-3-1.74L3,9.26a2,2,0,0,0,0,3.48l9,5.2a2,2,0,0,0,1,.27,2,2,0,0,0,1-.27,2,2,0,0,0,1-1.74v-.77l2.28,1.32a1.88,1.88,0,0,0,.91.24A1.81,1.81,0,0,0,20,15.18V6.82A1.8,1.8,0,0,0,19.11,5.25ZM14,16.2a1,1,0,0,1-1.51.87l-9-5.2a1,1,0,0,1,0-1.74l9-5.2A1,1,0,0,1,14,5.8V16.2Zm5-1a.81.81,0,0,1-1.22.7L15,14.27V7.73L17.8,6.12a.81.81,0,0,1,1.22.7Z"></path>
+            </svg>
+        </div>
+        <div id="noah-webui-default-previous" class="tb-page-control tb-page-control-prev">
+            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 22 22" height="22" width="22" class="svg-prev-icon">
+                <path d="M16,4.06a2,2,0,0,0-2,0L5,9.26a2,2,0,0,0,0,3.48l9,5.2a2,2,0,0,0,1,.27,2,2,0,0,0,1-.27,2,2,0,0,0,1-1.74V5.8A2,2,0,0,0,16,4.06ZM16,16.2a1,1,0,0,1-1.51.87l-9-5.2a1,1,0,0,1,0-1.74l9-5.2A1,1,0,0,1,16,5.8Z"></path>
+            </svg>
+        </div>
+        <div class="tb-input">
+            <input id="noah-webui-default-currentRec" type="text" name="" class="tb-page-search" value="0">
+        </div>
+        <div class="tb-page-count-total BN-record"><span>of 0</span></div>
+        <div id="noah-webui-default-next" class="tb-page-control tb-page-control-next">
+            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 22 22" height="22" width="22" class="svg-next-icon">
+                <path d="M18,11a2,2,0,0,0-1-1.71L8,4.07A2,2,0,0,0,5,5.81V16.19a2,2,0,0,0,1,1.74,2,2,0,0,0,2,0l9-5.19A2,2,0,0,0,18,11Zm-1.48.89-9,5.2A1,1,0,0,1,6,16.2V5.8a1,1,0,0,1,1.51-.87l9,5.2A1,1,0,0,1,16.52,11.87Z"></path>
+            </svg>
+        </div>
+        <div id="noah-webui-default-last" class="tb-page-control tb-page-control-last">
+            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 22 22" width="22" height="22" class="svg-last-icon">
+                <path d="M19,9.26l-9-5.2A2,2,0,0,0,7,5.8v.77L4.72,5.25a1.83,1.83,0,0,0-1.81,0A1.8,1.8,0,0,0,2,6.82v8.36a1.81,1.81,0,0,0,.9,1.57,1.85,1.85,0,0,0,1.82,0L7,15.43v.77a2,2,0,0,0,1,1.74,2,2,0,0,0,1,.27,2,2,0,0,0,1-.27l9-5.2A2,2,0,0,0,20,11v0A2,2,0,0,0,19,9.26ZM4.22,15.88A.81.81,0,0,1,3,15.18V6.82a.81.81,0,0,1,1.22-.7L7,7.73v6.54Zm14.3-4-9,5.2A1,1,0,0,1,8,16.2V5.8a1,1,0,0,1,1.51-.87l9,5.2A1,1,0,0,1,18.52,11.87Z"></path>
+            </svg>
+        </div>
+    </div>
+
+    <div class="nk-toolbar-btn">
+        <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh">
+            <div class="_icon"></div>
+            <div class="_lbl">Refresh</div>
+        </div>
+        <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire">
+            <div class="_icon"></div>
+            <div class="_lbl">Inquire</div>
+        </div>
+    </div>
+</div>*@
+
+<div class="row row-parent child-centered row-parent-mob">
+    <div class="col col-6 col-parent padding-x-15">
+        <div class="row">
+            <div class="col col-5">
+                <label class="lbltxt">Account No.</label>
+            </div>
+            <div class="col col-7">
+                <select class="cmb fullwidth">
+                    <option>Select</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row row-parent child-centered row-parent-mob">
+    <div class="col col-6 col-parent padding-x-15">
+        <div class="row">
+            <div class="col col-3">
+                <label class="lbltxt">Billing No.</label>
+            </div>
+            <div class="col col-3">
+                <select class="cmb fullwidth">
+                    <option>Select</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-flex">
+    <div class="row row-parent padding-10">
+        <iframe id="frForms"></iframe>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+﻿table#conUnitDtlsGrid_vw_tbl.p8spread_content {
+    border: 1px solid rgb(127, 127, 127);
+    border-spacing: initial;
+    padding-right: 1px;
+    border-radius: 8px !important;
+}

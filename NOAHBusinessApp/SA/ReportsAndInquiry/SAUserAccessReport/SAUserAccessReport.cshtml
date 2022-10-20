@@ -1,0 +1,213 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+     ViewBag.Title = "Payment Request Entry";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <script src="~/SA/ReportsAndInquiry/SAUserAccessReport/SAUserAccessReport.js"></script>
+    <link href="~/SA/ReportsAndInquiry/SAUserAccessReport/SAUserAccessReport.css" rel="stylesheet" />
+</head>
+
+     <div id="noah-webui-Toolbox" class="nk-toolbar-c">
+         <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new">
+             <div class="_icon"></div>
+             <div class="_lbl">New</div>
+         </div>
+         @*<div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save">
+             <div class="_icon"></div>
+             <div class="_lbl">Save</div>
+         </div>
+     
+            <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-delete">
+                <div class="_icon"></div>
+                <div class="_lbl">Delete</div>
+            </div>*@
+            <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh">
+                <div class="_icon"></div>
+                <div class="_lbl">Refresh</div>
+            </div>
+            @*<div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire">
+                <div class="_icon"></div>
+                <div class="_lbl">Inquire</div>
+            </div>
+            <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>*@
+            <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+            @*<div id="noah-webui-default-Import" class="btn-tb-action btn-tb-import">
+                <div class="_icon"></div>
+                <div class="_lbl">Import</div>
+            </div>
+            <div id="noah-webui-default-Print" class="btn-tb-action btn-tb-print">
+                <div class="_icon"></div>
+                <div class="_lbl">Print</div>
+            </div>
+            <div class="btn-tb-action btn-tb-update">
+                <div class="_icon"></div>
+                <div class="_lbl">Update</div>
+            </div>*@
+        </div>
+
+
+
+<div class="container-flex padding-10">
+    <div class="row row-parent">
+        <div class="col col-4 col-parent">
+            <div class="row with-label-lookup">
+                <div class="col col-3">
+                    <label class="lbltxt">Company</label>
+                </div>
+                <div class="col col-9 col-parent">
+                    <div class="col col-5">
+                        <input type="text" name="" class="txtbox txtcode" id="idvallugCompany">
+                    </div>
+                    <div class="col col-7">
+                        <input type="text" name="" class="txtbox txtdesc txtlookup" id="descvallugCompany">
+                        <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row with-label-lookup">
+                <div class="col col-3">
+                    <label class="lbltxt">Username</label>
+                </div>
+                <div class="col col-9 col-parent">
+                    <div class="col col-5">
+                        <input type="text" name="" class="txtbox txtcode" id="idvallugUsername">
+                    </div>
+                    <div class="col col-7">
+                        <input type="text" name="" class="txtbox txtdesc txtlookup" id="descvallugUsername">
+                        <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row with-label-lookup">
+                <div class="col col-3">
+                    <label class="lbltxt">Module</label>
+                </div>
+                <div class="col col-9 col-parent">
+                    <div class="col col-5">
+                        <input type="text" name="" class="txtbox txtcode" id="idvallugModule">
+                    </div>
+                    <div class="col col-7">
+                        <input type="text" name="" class="txtbox txtdesc txtlookup" id="descvallugModule">
+                        <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row with-label-lookup">
+                <div class="col col-3">
+                    <label class="lbltxt">Menu Item</label>
+                </div>
+                <div class="col col-9 col-parent">
+                    <div class="col col-5">
+                        <input type="text" name="" class="txtbox txtcode" id="idvallugItem">
+                    </div>
+                    <div class="col col-7">
+                        <input type="text" name="" class="txtbox txtdesc txtlookup" id="descvallugItem">
+                        <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-8 col-parent"></div>
+    </div>
+
+    <div class="row row-parent">
+        <div class="col col-12 col-parent">
+            <div id="tblWithTabsWrapperSample2" class="table-tabs-wrapper rescale-ready" nk-table-style="2">
+                <div id="panelTblTabColSticky" class="table-wrapper">
+                    <table class="table" id="grid-sticky" sid="nkTable1">
+                        <thead>
+                            <tr>
+                                <th data-type="str" scope="col" class="tbl-row-num"></th>
+                                <th data-type="str" scope="col">Module</th>
+                                <th data-type="str" scope="col">Item</th>
+                                <th data-type="str" scope="col">Description</th>
+                                <th data-type="str" scope="col">Can Access</th>
+                                <th data-type="str" scope="col">Can Add</th>
+                                <th data-type="str" scope="col">Can Edit</th>
+                                <th data-type="str" scope="col">Can Delete</th>
+                                <th data-type="str" scope="col">Can Save</th>
+                                <th data-type="str" scope="col">Can Print</th>
+                                <th data-type="str" scope="col">Can Process</th>
+                                <th data-type="str" scope="col">Can Import</th>
+                                <th data-type="str" scope="col">Can Export</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="tbl-row-num">1</th>
+                                <td row-th=""></td>
+                                <td row-th=""></td>
+                                <td row-th=""></td>
+                                <td row-th="">
+                                    <div class="chk-wrapper chk-without-text child-centered">
+                                        <input id="chk1" type="checkbox" name="sampletbl1" class="chk chk-tbl">
+                                        <label class="lbl-chk" for="chk1">Text is hidden</label>
+                                    </div>
+                                </td>
+                                <td row-th="">
+                                    <div class="chk-wrapper chk-without-text child-centered">
+                                        <input id="chk2" type="checkbox" name="sampletbl1" class="chk chk-tbl">
+                                        <label class="lbl-chk" for="chk2">Text is hidden</label>
+                                    </div>
+                                </td>
+                                <td row-th="">
+                                    <div class="chk-wrapper chk-without-text child-centered">
+                                        <input id="chk3" type="checkbox" name="sampletbl1" class="chk chk-tbl">
+                                        <label class="lbl-chk" for="chk3">Text is test</label>
+                                    </div>
+                                </td>
+                                <td row-th="">
+                                    <div class="chk-wrapper chk-without-text child-centered">
+                                        <input id="chk4" type="checkbox" name="sampletbl1" class="chk chk-tbl">
+                                        <label class="lbl-chk" for="chk4">Text is test</label>
+                                    </div>
+                                </td>
+                                <td row-th="">
+                                    <div class="chk-wrapper chk-without-text child-centered">
+                                        <input id="chk5" type="checkbox" name="sampletbl1" class="chk chk-tbl">
+                                        <label class="lbl-chk" for="chk5">Text is hidden</label>
+                                    </div>
+                                </td>
+                                <td row-th="">
+                                    <div class="chk-wrapper chk-without-text child-centered">
+                                        <input id="chk6" type="checkbox" name="sampletbl1" class="chk chk-tbl">
+                                        <label class="lbl-chk" for="chk6">Text is hidden</label>
+                                    </div>
+                                </td>
+                                <td row-th="">
+                                    <div class="chk-wrapper chk-without-text child-centered">
+                                        <input id="chk7" type="checkbox" name="sampletbl1" class="chk chk-tbl">
+                                        <label class="lbl-chk" for="chk7">Text is hidden</label>
+                                    </div>
+                                </td>
+                                <td row-th="">
+                                    <div class="chk-wrapper chk-without-text child-centered">
+                                        <input id="chk8" type="checkbox" name="sampletbl1" class="chk chk-tbl">
+                                        <label class="lbl-chk" for="chk8">Text is hidden</label>
+                                    </div>
+                                </td>
+                                <td row-th="">
+                                    <div class="chk-wrapper chk-without-text child-centered">
+                                        <input id="chk9" type="checkbox" name="sampletbl1" class="chk chk-tbl">
+                                        <label class="lbl-chk" for="chk9">Text is hidden</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

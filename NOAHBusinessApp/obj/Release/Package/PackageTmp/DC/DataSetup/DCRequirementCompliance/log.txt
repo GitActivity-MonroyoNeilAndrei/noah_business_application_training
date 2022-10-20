@@ -1,0 +1,392 @@
+﻿Modified By       : BJV
+Date Modified     : 08/23/2022
+Menu Item Version : 10.0.0.1
+Reason			  : Conversion from v9 to v10
+
+Modified By       : NDB
+Date Modified     : 02/23/2022
+Menu Item Version : 9.0.0.85
+Reason			  : Addressing of findings
+					Comment file upload path on fileupload.aspx
+
+Modified By       : RJL
+Date Modified     : 02/15/2021
+Menu Item Version : 9.0.0.84
+Reason			  : Addressing of findings
+						1. Document Code Add to List window
+							For Require Document No., Date, Expiry Date, URL:
+							If 1 - display Yes
+							If 0- Display No
+						2. Document Code Add to List window
+							Rename Require Expiry into Require Expiry Date
+
+Modified By       : MSC
+Date Modified     : 01/30/2021
+Menu Item Version : 9.0.0.83
+Reason			  : Apply per department
+
+Modified By       : RJL
+Date Modified     : 01/26/2021
+Menu Item Version : 9.0.0.70
+Reason			  : Add lineID in retrieving data 
+
+Modified By       : RJL
+Date Modified     : 12/23/2020
+Menu Item Version : 9.0.0.69
+Reason			  : Add for confirmation of all levels column
+
+Modified By       : RJL
+Date Modified     : 12/18/2020
+Menu Item Version : 9.0.0.68
+Reason			  : Addressing of findings
+
+Modified By       : RJL
+Date Modified     : 12/18/2020
+Menu Item Version : 9.0.0.67
+Reason			  : Addressing of findings
+					a. Manually added work insctructions shouuld be auto complied too
+					b. Upon input of work instructions, add additional row
+
+Modified By       : RJL
+Date Modified     : 12/17/2020
+Menu Item Version : 9.0.0.66
+Reason			  : Addressing of findings
+					a. Incosisntent ticking and unticking of Complied
+					b. Once for viewing, manually added work instructions must also be colored gainsboro
+
+Modified By       : RJL
+Date Modified     : 12/15/2020
+Menu Item Version : 9.0.0.65
+Reason			  : Addressing of findings
+					a. Add Item Group Type, Order Type, and Department
+
+Modified By       : RJL
+Date Modified     : 12/15/2020
+Menu Item Version : 9.0.0.64
+Reason			  : Addressing of findings
+					a. Add expiry and docdate in autocomplied function
+
+Modified By       : RJL
+Date Modified     : 12/14/2020
+Menu Item Version : 9.0.0.63
+Reason			  : Addressing of findings
+					a. Add noOfDocsReq column
+
+Modified By       : RJL
+Date Modified     : 12/12/2020
+Menu Item Version : 9.0.0.62
+Reason			  : Addressing of findings
+					a. Added the ff. columns in the table: alternative, docGrp, isSetup, lineIDSetup, tagDocno, tagDocdate, tagExpdate, tagURL, tagAttach
+					b. Remove validation of "Cannot be saved. Please provide at least {noGrp} document for {docGrp}." upon saving.
+
+Modified By       : RJL
+Date Modified     : 12/11/2020
+Menu Item Version : 9.0.0.61
+Reason			  : Addressing of findings
+					a. Validate Document No., Document Date, Expiry Date, URL if manually added Work Instructions
+
+Modified By       : RJL
+Date Modified     : 12/03/2020
+Menu Item Version : 9.0.0.60
+Reason			  : Addressing of findings
+					a. Viewing of Request Entry > Requirements Compliance - Attach and Delete icons should be disabled
+					b. For View Entry Screen, Data Entry fields should be fully colored gainsboro	
+
+Modified By       : RJL
+Date Modified     : 12/02/2020
+Menu Item Version : 9.0.0.59
+Reason			  : Addressing of findings
+					a. Resize the grid height					
+
+Modified By       : RJL
+Date Modified     : 11/26/2020
+Menu Item Version : 9.0.0.58
+Reason			  : Addressing of findings
+					a. Change ID of Docno and URL into class
+					b. Change autocomplete=off to autocomplate=none
+
+Modified By       : RJL
+Date Modified     : 10/02/2020
+Menu Item Version : 9.0.0.57
+Reason			  : Remove View Attachment label 
+
+Modified By       : RJL
+Date Modified     : 10/01/2020
+Menu Item Version : 9.0.0.56
+Reason			  : a. Change Attachments buttons into icon
+
+Modified By       : MSC
+Date Modified     : 09/17/2020
+Menu Item Version : 9.0.0.55
+Reason			  : Apply NOAH Drive (Address findings)
+
+Modified By       : MSC
+Date Modified     : 09/17/2020
+Menu Item Version : 9.0.0.54
+Reason			  : Apply NOAH Drive (Address findings)
+
+Modified By       : MSC
+Date Modified     : 09/17/2020
+Menu Item Version : 9.0.0.53
+Reason			  : Apply NOAH Drive
+
+Modified By       : RJL
+Date Modified     : 09/11/2020
+Menu Item Version : 9.0.0.52
+Reason			  : Findings in Work Instructions when manually added
+
+Modified By       : RJL
+Date Modified     : 09/07/2020
+Menu Item Version : 9.0.0.51
+Reason			  : Should not auto tick complied if data is not from setup
+
+Modified By       : RJL
+Date Modified     : 09/05/2020
+Menu Item Version : 9.0.0.50
+Reason			  : nwGrid_AddtoListLoaded
+
+Modified By       : GG
+Date Modified     : 09/03/2020
+Menu Item Version : 9.0.0.49
+Reason			  : Added upload button in Attachment
+
+Modified By       : RJL
+Date Modified     : 09/02/2020
+Menu Item Version : 9.0.0.48
+Reason            : Addressing of findings in ANPI
+					a. Alternative checkbox will be disabled and loaded as unticked for manually-added Work Instruction and/or Document.
+					b. Complied checkbox will be disabled and loaded as unticked for manually-added Work Instruction and/or Document.
+					c. Required checkbox will be disabled and loaded as unticked for manually-added Work Instruction and/or Document.
+
+Modified By       : RJL
+Date Modified     : 08/28/2020
+Menu Item Version : 9.0.0.47
+Reason            : Add document details filter
+
+Modified By       : RJL
+Date Modified     : 07/29/2020
+Menu Item Version : 9.0.0.46
+Reason            : Enhancements in ANPI; Add department and order type, aligned in V9.
+
+Modified By       : SBL
+Date Modified     : 07/17/2020
+Menu Item Version : 9.0.0.45
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified By       : RJL
+Date Modified     : 07/10/2020
+Menu Item Version : 9.0.0.44
+Reason            : No validation in additional row when complied is ticked and no Work Instructions provided
+
+Modified By       : RJL
+Date Modified     : 07/08/2020
+Menu Item Version : 9.0.0.43
+Reason            : a. If new row, with Work Instructions provided, should save the data.
+					b. Remove alternative validation upon saving if one of input fields are provided.
+
+Modified By       : RJL
+Date Modified     : 07/02/2020
+Menu Item Version : 9.0.0.42
+Reason            : Addressing of findings in Work Instructions clearing
+
+Modified By       : RJL
+Date Modified     : 06/23/2020
+Menu Item Version : 9.0.0.41
+Reason            : Remove loaded data validation
+
+Modified By       : RJL
+Date Modified     : 06/22/2020
+Menu Item Version : 9.0.0.40
+Reason            : If no provided data in all input fields, do not save data
+
+Modified By       : RJL
+Date Modified     : 06/18/2020
+Menu Item Version : 9.0.0.39
+Reason            : Change Document Code lookup into add to list
+
+Modified By       : RJL
+Date Modified     : 06/09/2020
+Menu Item Version : 9.0.0.38
+Reason            : Add itemgroup in custGetPara for Reload Details button
+
+Modified By       : GG
+Date Modified     : 06/01/2020
+Menu Item Version : 9.0.0.37
+Reason            : Added saving of column details 
+
+Modified By       : RJL
+Date Modified     : 05/27/2020
+Menu Item Version : 9.0.0.36
+Reason            : Add recuser and recdate
+
+Modified By       : RJL
+Date Modified     : 05/05/2020
+Menu Item Version : 9.0.0.35
+Reason            : Enhancement: Add ApplyTo insertion
+
+Modified By       : RJL
+Date Modified     : 04/25/2020
+Menu Item Version : 9.0.0.34
+Reason            : a) Remove validation at least one line detail is required.
+					b) Adjust grid height
+					c) Expiry Date should not be equal or earlier than current date
+
+Modified By       : RJL
+Date Modified     : 04/25/2020
+Menu Item Version : 9.0.0.33
+Reason            : Validation of QC findings
+
+Modified By       : RJL
+Date Modified     : 04/23/2020
+Menu Item Version : 9.0.0.31
+Reason            : Addressing of QC findings (5 items)
+
+Modified By       : RJL
+Date Modified     : 04/06/2020
+Menu Item Version : 9.0.0.30
+Reason            : Change ENH column
+
+Modified By       : RJL
+Date Modified     : 04/06/2020
+Menu Item Version : 9.0.0.29
+Reason            : Add Loading icon upon click of reload details button
+
+Modified By       : RJL
+Date Modified     : 04/06/2020
+Menu Item Version : 9.0.0.28
+Reason            : Add Reload Details					
+
+Modified By       : RJL
+Date Modified     : 04/03/2020
+Menu Item Version : 9.0.0.27
+Reason            : Change Work Instructions to Work Instruction
+					Add Save & Reset Column Width					
+
+Modified By       : RJL
+Date Modified     : 04/01/2020
+Menu Item Version : 9.0.0.26
+Reason            : Hide upload button in Attachment
+					Change validation message to standard
+
+Modified By       : RJL
+Date Modified     : 03/21/2020
+Menu Item Version : 9.0.0.25
+Reason            : Addressing of findings in Refresh (Data) when has no setup/with setup/with save data
+
+Modified By       : RJL
+Date Modified     : 03/18/2020
+Menu Item Version : 9.0.0.24
+Reason            : Enable Grid Upon Save
+
+Modified By       : ocr
+Date Modified     : 03/05/2020
+Menu Item Version : 9.0.0.23
+Reason            : Addressing of findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=1799203622
+
+Modified By       : ocr
+Date Modified     : 03/03/2020
+Menu Item Version : 9.0.0.22
+Reason            : Addressing of findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=1799203622
+
+Modified By       : RJL
+Date Modified     : 02/27/2020
+Menu Item Version : 9.0.0.21
+Reason            : Change validation to Work Instruction from Document Code
+
+Modified By       : AGE
+Date Modified     : 02/25/2020
+Menu Item Version : 9.0.0.20
+Reason            : add js.add to return datatable as json for DCRequirementCompliance_Save(datatableJSON)
+
+Modified By       : DDD
+Date Modified     : 02/18/2020
+Menu Item Version : 9.0.0.19
+Reason            : Addressing of Findings based on Standard Testing
+
+Modified By       : RJL
+Date Modified     : 02/18/2020
+Menu Item Version : 9.0.0.18
+Reason            : Add maximize in View Attachments, Sorting of Data in Grid
+
+Modified By       : DDD
+Date Modified     : 02.18.2020
+Menu Item Version : 9.0.0.17
+Reason            : Addressing of Findings based on Standard Testing
+
+Modified By		: RJL
+Date Modified	: 02/17/2020
+Description		: Change prompt message and icon in Validation
+Version			: 9.0.0.16
+
+Modified By		: RJL
+Date Modified	: 02/17/2020
+Description		: Addtional Requirement: Add Alternative and Document Group in line details, Add validation for Alternative Docs
+Version			: 9.0.0.15
+
+Modified By		: GG
+Date Modified	: 02/11/2020
+Description		: Disable upon Viewing 
+Version			: 9.0.0.14
+
+Modified By		: GG
+Date Modified	: 01/29/2020
+Description		: Auto-Compiled 
+Version			: 9.0.0.13
+
+Modified By		: GG
+Date Modified	: 01/29/2020
+Description		: Addressing of findings
+Version			: 9.0.0.12
+
+Modified By		: RJL
+Date Modified	: 01/22/2020
+Description		: Comment Controls in Grid reported by GAB, RGN
+Version			: 9.0.0.11
+
+Modified By		: GG
+Date Modified	: 01/08/2019
+Description		: Adjustment of source code and script
+Version: 9.0.0.10
+
+Modified By: GG
+Date Modified: 01/06/2019
+Description : Added Document Code in Line Details
+Version: 9.0.0.9
+
+Modified By: GG
+Date Modified: 12/5/2019
+Version: 9.0.0.8
+
+Modified By: GG
+Date Modified: 11/23/2019
+Version: 9.0.0.7
+
+Modified By: GG
+Date Modified: 11/21/2019
+Version: 9.0.0.6
+
+Modified By: GG
+Date Modified: 11/19/2019
+Version: 9.0.0.5
+
+Updated By: DPA
+Date Created: 10/30/2019
+Version: 9.0.0.4
+
+Modified By		: DJSB
+Date Modified	: 09/19/2019
+Version			: 9.0.0.3_ENH
+Reason			: Add column field Work Instruction and Validation for Work Instructions 
+
+Updated By: DPA
+Date Created: 09/02/2019
+Version: 9.0.0.1
+
+Created By: DPA
+Date Created: 09/02/2019
+Version: 9.0.0.0
+
+
+
+

@@ -1,0 +1,245 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Payment Term Grouping Entry";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/IV/DocumentEntry/IVPaymentTermGroupingEntry/IVPaymentTermGroupingEntry.js"></script>
+    <link href="~/IV/DocumentEntry/IVPaymentTermGroupingEntry/IVPaymentTermGroupingEntry.css" rel="stylesheet" />
+</head>
+
+
+<body class="">
+
+        @*TOOLBOX*@
+        
+        <div id="noah-webui-Toolbox" class="nk-toolbar-c">
+
+            <div id="noah-webui-Toolbox-BindingNavigator" nwbind="noah-webui-Toolbox-Grid" class="noah-webui-Toolbox-BindingNavigator nwHide">
+                <div id="noah-webui-default-first" class="noah-webui-Toolbox-Item-Icon BN-button">
+                    <div></div>
+                </div>
+                <div id="noah-webui-default-previous" class="noah-webui-Toolbox-Item-Icon BN-button">
+                    <div></div>
+                </div>
+                <div class="BN-record">
+                    <input id="noah-webui-default-currentRec" type="text" value="0" />
+                    <span>of 0</span>
+                </div>
+                <div id="noah-webui-default-next" class="noah-webui-Toolbox-Item-Icon BN-button">
+                    <div></div>
+                </div>
+                <div id="noah-webui-default-last" class="noah-webui-Toolbox-Item-Icon BN-button">
+                    <div></div>
+                </div>
+            </div>
+
+            <div class="nk-toolbar-btn">
+                <div class="btn-tb-action btn-tb-new">
+                    <div class="_icon"></div>
+                    <div class="_lbl">New</div>
+                </div>
+                <div class="btn-tb-action btn-tb-save">
+                    <div class="_icon"></div>
+                    <div class="_lbl">Save</div>
+                </div>
+                <div class="btn-tb-action btn-tb-delete">
+                    <div class="_icon"></div>
+                    <div class="_lbl">Delete</div>
+                </div>
+                @*<div class="btn-tb-action btn-tb-refresh">
+                    <div class="_icon"></div>
+                    <div class="_lbl">Refresh</div>
+                </div>*@
+                <div class="btn-tb-action btn-tb-inquire">
+                    <div class="_icon"></div>
+                    <div class="_lbl">Inquire</div>
+                </div>
+                <div class="btn-tb-action btn-tb-process">
+                    <div class="_icon"></div>
+                    <div class="_lbl">Process</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-flex margin-y-20">
+            <div class="row row-parent">
+                <div class="col col-6 col-parent">
+
+                    @*LOCATION*@
+                    <div class="row">
+                        <div class="row with-label-lookup">
+                            <div class="col col-2">
+                                <label class="lbltxt">Location <span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div id="lugLocation" class="col col-7 col-parent adisabled lookups lookupsCust">
+                                <div class="col col-4">
+                                    <input id="idvallugLocation" type="text" name="" class="txtbox idval">
+                                </div>
+                                <div class="col col-8">
+                                    <input id="descvallugLocation" type="text" name="" class="txtbox txtdesc">
+                                    <div id="LookUplugLocation" class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*PROJECT*@
+                    <div class="row">
+                        <div class="row with-label-lookup">
+                            <div class="col col-2">
+                                <label class="lbltxt">Project <span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div id="lugProject" class="col col-7 col-parent adisabled lookups lookupsCust">
+                                <div class="col col-4">
+                                    <input id="idvallugProject" type="text" name="" class="txtbox idval">
+                                </div>
+                                <div class="col col-8">
+                                    <input id="descvallugProject" type="text" name="" class="txtbox txtdesc">
+                                    <div id="LookUplugProject" class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*REMARKS*@
+                    <div class="row">
+                        <div class="col col-2">
+                            <label class="lbltxt">Remarks</label>
+                        </div>
+                        <div class="col col-7">
+                            <textarea id="txtRemarks" class="txtarea autoresize" maxlength="500" rows="3" style="height: 70px;"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col col-6 col-parent">
+
+                    @*TRANSACTION NUMBER*@
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Document Number</label>
+                        </div>
+                        <div class="col col-7">
+                            <input type="text" id="txtTransactionNo" name="" class="txtbox" maxlength="50" disabled>
+                        </div>
+                    </div>
+
+                    @*DOCUMENT DATE*@
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Document Date</label>
+                        </div>
+                        <div class="col col-7">
+                            <input type="text" id="dtpTranDate" name="" class="txtbox" maxlength="12" disabled>
+                        </div>
+                    </div>
+
+                    @*DOCUMENT STATUS*@
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Document Status</label>
+                        </div>
+                        <div class="col col-7">
+                            <input type="text" id="txtStatus" name="" class="txtbox" disabled>
+                        </div>
+                    </div>
+
+                    @*DOCUMENT STATUS CODE*@
+                    <div class="row nwHide">
+                        <div class="col col-4">
+                            <label class="lbltxt">Document Status Code</label>
+                        </div>
+                        <div class="col col-7">
+                            <input type="text" id="txtStatusHidden" name="" class="txtbox" disabled>
+                        </div>
+                    </div>
+
+                    @*REASON FOR DISAPPROVAL*@
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Reason for Disapproval</label>
+                        </div>
+                        <div class="col col-7">
+                            <input type="text" id="txtReasonDissapprove" name="" class="txtbox" disabled> 
+                        </div>
+                    </div>
+
+                    @*REASON FOR DISAPPROVAL CODE*@
+                    <div class="row nwHide">
+                        <div class="col col-4">
+                            <label class="lbltxt">Reason for Disapproval Code</label>
+                        </div>
+                        <div class="col col-7">
+                            <input type="text" id="txtReasonDissapproveCode" name="" class="txtbox" disabled>
+                        </div>
+                    </div>
+
+                    @*REMARKS FOR DISAPPROVAL*@
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Remarks for Disapproval</label>
+                        </div>
+                        <div class="col col-7">
+                            <textarea id="txtRemarksDissapprove" class="txtarea autoresize" maxlength="500" rows="3" disabled></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-4">
+                           
+                        </div>
+                        <div class="col col-7">
+                            <div id="btnReqCompliance" class="btn btn-default fullwidth">Requirement Compliance</div>
+                        </div>
+
+                    </div>
+
+                </div>  
+                <div class="row row-parent">
+                    <div class="col col-12 sampleLight">
+                        <div id="nwGridCon" class="nwCuz004">
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+
+    <div class="nk-footer-c">
+        <div class="nk-footer-info">
+            <div class="nk-footer-create">
+                <div class="nkf nk-f-createBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
+                </div>
+                <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
+                <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
+            </div>
+            <div class="nk-footer-x"></div>
+            <div class="nk-footer-modified">
+                <div class="nkf nk-f-modifiedBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
+                </div>
+                <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
+                <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@RenderPage("~/IV/DocumentEntry/IVPaymentTermGroupingEntry/Popup/nwAddPaymentTermDTL.cshtml", "IVPaymentTermGroupingEntry")
+@*@RenderPage("~/DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.cshtml", "IVPaymentTermGroupingEntry")*@
+

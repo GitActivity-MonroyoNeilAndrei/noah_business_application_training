@@ -1,0 +1,38 @@
+﻿.noah-webui-Window
+{
+    display:none;
+}
+
+    .lgn-aSlider {
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
+
+    .lgn-sliderCon {
+        position: relative;
+        width: 70%;
+        height: 100%;
+        margin: 0 auto;
+    }
+
+    .lgn-slider-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        opacity: 0;
+        transition: 1s ease-in-out;
+        overflow: hidden;
+    }
+
+    .lgn-slider-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .noah-webui-Window {
+    display: none;
+}

@@ -1,0 +1,15 @@
+/* - - - - - - - - - - - */
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('hinted-Comfortaa-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('hinted-Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('hinted-OpenSans-Regular.ttf') format('truetype');
+}

@@ -1,0 +1,103 @@
+﻿.errmess
+{margin-left: 187px;
+ font-style: italic;
+ font-family: arial;
+ color: #FF800B;
+ font-size: 12px;
+ margin-top: -23px;}
+
+
+.userPassLblPanel.onload
+{ 
+	margin-top:7px;
+}
+
+.userPassBoxPanel.onload
+{
+	margin-top:0px;
+}
+
+.buttonLogin.onload
+{
+	margin-top:0px;
+}
+
+.errmess.wrongpass
+{
+	display:block !important;
+	margin-top:12px !important;
+}
+
+.buttonLogin.wrongpass
+{
+	margin-top:-16px !important;
+}
+	
+.xloginForm.wrongpass
+{
+	margin-top:-15px !important;
+		
+}
+
+.errmess.xpassLblPanelIsNotVisible
+{
+	display:block !important;
+	margin-top:-10px !important;
+}
+
+.buttonLogin.xpassLblPanelIsNotVisible
+{
+	margin-top:-11px !important;
+}
+
+.errmess.xpassLblPanelIsVisible
+{
+	display:block !important;
+	margin-top:10px !important;
+}
+
+.buttonLogin.xpassLblPanelIsVisible
+{
+	margin-top:-11px !important;
+}
+
+.errmess.textchange
+{
+	margin-top:-23px;
+	display:none;
+}
+
+.buttonLogin.textchange
+{
+	margin-top:0px;
+}	
+
+.buttonLogin.multiplecompany
+{
+	margin-top:0px;
+}	
+
+.buttonLogin.notmultiplecompany
+{
+	margin-top:-11px;
+}
+
+.buttonLogin.withcompanyandpoweruser
+{
+	margin-top:10px;
+}	
+
+.poweruserclass.withpoweruser
+{
+	display:block;
+}
+
+.cxpassLblPanel.withpoweruser
+{
+	margin-top:30px;
+}
+	
+.xloginForm.withpoweruser
+{
+	margin-top:-10px	
+}

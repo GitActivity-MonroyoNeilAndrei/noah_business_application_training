@@ -1,0 +1,127 @@
+﻿body[ver="3"][theme="dark"] .new-c #txtUsername,
+body[ver="3"][theme="dark"] .new-c #txtPassword {
+    background: #354154 !important;
+}
+
+body[ver="3"][theme="dark"] .new-txtlbl {
+    color: rgb(255 255 255 / 0.72);
+}
+
+body[ver="3"][theme="dark"] .new-feat-img {
+    background-color: transparent;
+    color: rgb(255 255 255 / 0.72);
+    font-weight: normal;
+}
+
+body[ver="3"][theme="dark"] .new-c #txtUsername:hover,
+body[ver="3"][theme="dark"] .new-c #txtPassword:hover,
+body[ver="3"][theme="dark"] .new-c #txtUsername:focus,
+body[ver="3"][theme="dark"] .new-c #txtPassword:focus {
+    border-color: #687a98;
+}
+
+body[ver="3"][theme="dark"] #Button1 {
+    background: #1c9e8c;
+}
+
+body[ver="3"][theme="dark"] a#forgotpass {
+    color: rgb(255 255 255 / 0.72);
+}
+
+body[ver="3"][theme="dark"] .sign-with > .__lblSignin {
+    color: rgb(255 255 255 / 0.72);
+}
+
+body[ver="3"][theme="dark"] .new-login-text-c {
+    color: #1c9e8c;
+    color: rgb(255 255 255 / 0.88);
+}
+
+body[ver="3"][theme="dark"] .txt-cont2 > label {
+    color: rgb(255 255 255 / 0.72);
+    font-weight: normal;
+}
+
+body[ver="3"][theme="dark"] .txt-cont2 > .login-sel:focus,
+body[ver="3"][theme="dark"] .txt-cont2 > .login-sel:hover {
+    border-color: #687a98;
+}
+
+body[ver="3"][theme="dark"] #captcha-cont {
+    background-color: transparent;
+    border: 2px dashed #687a98;
+}
+
+body[ver="3"][theme="dark"] #captcha-cont > span:nth-of-type(1) {
+    color: rgb(255 255 255 / 0.72);
+    font-weight: normal;
+}
+
+body[ver="3"][theme="dark"] #txtCaptcha {
+    background-color: #354154;
+    color: #fefefe;
+}
+
+body[ver="3"][theme="dark"] .new-upper-text {
+    color: #1c9e8c;
+}
+
+body[ver="3"][theme="dark"] .new-upper-text > div:nth-of-type(3) {
+    padding: 0;
+    background-color: transparent;
+    color: #f9a440;
+}
+
+body[ver="3"][theme="dark"] .new-hdr_l {
+    background-color: #354154;
+}
+
+body[ver="3"][theme="dark"],
+body[ver="3"][theme="dark"] .new-c {
+    background: #1f2432;
+}
+body[ver="3"][theme="dark"] .Login-version {
+    color: #1c9e8c;
+}
+
+body[ver="3"][theme="dark"] #img_primary {
+    display: none;
+}
+
+body[ver="3"][theme="dark"] #img_secondary {
+    display: block;
+}
+
+/* width */
+body[ver="3"][theme="dark"] *::-webkit-scrollbar,
+body[ver="3"][theme="dark"]::-webkit-scrollbar {
+    width: 13px;
+    height: 13px;
+}
+
+/* Track */
+body[ver="3"][theme="dark"] *::-webkit-scrollbar-track,
+body[ver="3"][theme="dark"]::-webkit-scrollbar-track {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+body[ver="3"][theme="dark"] *::-webkit-scrollbar-button,
+body[ver="3"][theme="dark"]::-webkit-scrollbar-button {
+    display: none;
+}
+ 
+/* Handle */
+body[ver="3"][theme="dark"] *::-webkit-scrollbar-thumb,
+body[ver="3"][theme="dark"]::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 16%);
+    box-shadow: none;
+    border: 3px solid #1f2432;
+    border-radius: 20px;
+}
+
+/* Handle on hover */
+body[ver="3"][theme="dark"] *::-webkit-scrollbar-thumb:hover,
+body[ver="3"][theme="dark"]::-webkit-scrollbar-thumb:hover {
+    background: rgb(255 255 255 / 24%);
+}

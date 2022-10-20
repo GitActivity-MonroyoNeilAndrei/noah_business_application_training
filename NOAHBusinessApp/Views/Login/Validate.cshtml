@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Validating...</title>
+
+</head>
+<body>
+    <a id="btnLink" href="@Url.Action("SignIn", "Login")" >click here</a>
+       @if (!Request.IsAuthenticated) {
+
+       } else {
+
+       }
+    <script>
+        document.getElementById('btnLink').click();
+    </script>
+</body>
+</html>

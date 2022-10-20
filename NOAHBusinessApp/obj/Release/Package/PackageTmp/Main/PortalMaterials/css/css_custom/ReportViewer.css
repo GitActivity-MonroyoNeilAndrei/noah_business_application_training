@@ -1,0 +1,23 @@
+﻿.isNumber
+{
+	text-align:left;
+}
+
+body .nwGrid td div.isAlert
+{
+	max-width:15px !important; max-height:15px !important;
+	width:15px !important;height:15px !important;
+	border-radius:15px;
+	margin-left: 40%;
+	box-shadow:0px 0px 5px #656565;
+	border:1px solid rgba(0,0,0,0.15);
+	
+	background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.4));
+	background-image: -ms-linear-gradient(top,  rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.4));
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from (rgba(0, 0, 0, 0.2)), to(rgba(255, 255, 255, 0.4)));
+	background-image: -webkit-linear-gradient(top,  rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.4));
+	background-image: -o-linear-gradient(top,  rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.4));
+	background-image: linear-gradient(top,   rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.4));
+	background-repeat: repeat-x;
+	
+}

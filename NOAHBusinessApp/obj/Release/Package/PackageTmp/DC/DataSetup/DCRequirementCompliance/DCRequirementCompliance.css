@@ -1,0 +1,204 @@
+﻿.noah-webui-containerRow>.noah-webui-containerRowItem:nth-child(1)
+ {
+ 	    padding-left: 12px;
+ }
+
+
+.SecDiv {
+  margin-left: 50px;
+}
+
+.btnAttach,
+.btnView,
+.btnRemove
+{
+   background: linear-gradient(to bottom, #dddfe4, #a1a0a7) !important;
+   color: white !important;
+}
+
+.hasData {
+    background: linear-gradient(to bottom, #00ff00 -10%, #009900 80%)  !important;
+}
+
+.downloadbuttoncss .noah-webui-Toolbox-Item-Icon {
+    background-image: url("icon_download.png");
+    margin-top: 1px;
+}
+
+.nwGrid table tr td.nwGButton {
+    background-repeat: repeat-x;
+    -webkit-transform: translatez(0);
+    -moz-transform: translatez(0);
+    -ms-transform: translatez(0);
+    -o-transform: translatez(0);
+    transform: translatez(0);
+    background-color: rgba(240, 240, 240, 1) !important;
+    background-image: -moz-linear-gradient(top,#FFFFFF, #DBDBDB) !important;
+    background-image: -ms-linear-gradient(top, #FFFFFF, #DBDBDB) !important;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from (#FFFFFF), to(#DBDBDB)) !important;
+    background-image: -webkit-linear-gradient(top, #FFFFFF, #DBDBDB) !important;
+    background-image: -o-linear-gradient(top, #FFFFFF,#DBDBDB) !important;
+    background-image: linear-gradient(top, #FFFFFF, #DBDBDB) !important;
+    background-repeat: repeat-x;
+    text-align: center !important;
+}
+
+a.btnAttach {
+    float: none;
+    display: block;
+    background-image: url('../../../materials/icons/attach-blue3.png') !important;
+    background-repeat: no-repeat !important; 
+    height: 25px !important;
+    min-height: 25px !important;
+    max-height: 25px !important;
+    width: 27px;
+    padding: 2px 1px;
+    background-size: 29px !important;
+}
+
+a.btnRemove{
+    float: none;
+    display: block;
+    /*background-image: url(../../../materials/images/delete-blue3.png) !important;*/
+    background-image: url('../../../materials/icons/delete-blue3.png') !important;
+    background-repeat: no-repeat !important; 
+    height: 25px !important;
+    min-height: 25px !important;
+    max-height: 25px !important;
+    width: 27px;
+    padding: 2px 1px;
+    background-size: 29px !important;
+}
+
+a.btnView {
+    float: none;
+    display: block;
+    /*background-image: url(materials/images/attach-view-blue3.png) !important;*/
+    background-image: url('../../../materials/icons/attach-view-blue3.png') !important;
+    background-repeat: no-repeat !important; 
+    height: 25px !important;
+    min-height: 25px !important;
+    max-height: 25px !important;
+    width: 27px;
+    padding: 2px 1px;
+    background-size: 29px !important;
+}
+
+.green {
+    color: #FFFFFF;
+    background-color: #089b08 !important;
+    background: -webkit-gradient(linear, left top, left bottom, from(#21FF21), to(#0A8A1B));
+    background: -moz-linear-gradient(top, #21FF21, #0A8A1B);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#21FF21', endColorstr='#0A8A1B');
+}
+
+.green:hover {
+    background: #00ba00;
+    background: -webkit-gradient(linear, left top, left bottom, from(#00ba00), to(#006E00));
+    background: -moz-linear-gradient(top, #00ba00, #006E00);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ba00', endColorstr='#006E00');
+}
+
+.green:active {
+    color: #007500;
+    background: -webkit-gradient(linear, left top, left bottom, from(#007500), to(#00DE00));
+    background: -moz-linear-gradient(top, #007500, #00DE00);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007500', endColorstr='#00DE00');
+}
+
+.disableColor {
+    background-color: gainsboro !important;
+}
+ 
+.disableInput {
+    background-color: gainsboro !important;
+    border: none !important;
+}
+
+.vwpdf {
+    display: none;
+}
+
+.nwCus03 {
+    width: 350px; 
+    height: 250px;
+     display:none;
+}
+
+.nwCus04 {
+    width: 80%; 
+    vertical-align: middle; 
+    margin: 0% auto; 
+    padding-top: 22px
+}
+
+.nwCus05 {
+    width: 268px; 
+    margin-bottom: 2px;
+}
+
+.nwCus06 {
+    cursor: pointer
+}
+
+.nwCus07 {
+    width: 0%;
+}
+
+.nwCus08 {
+    height: 20px; 
+    color: green;
+}
+
+.nwCus09 {
+    width: 50%; 
+    height: 77%; 
+    vertical-align: middle; 
+    min-height: 77%;
+    min-width: 50%;
+    display:none;
+}
+
+.nwCus10 {
+    width: 100%; 
+    vertical-align: middle; 
+    margin: 0% auto;
+}
+
+.nwCus11 {
+    width: 100%; 
+    height: 100%
+}
+
+.nwCenter {
+    text-align: center;
+}
+
+.nwCus12 {
+    text-align:center;
+    border:3px;
+    cursor:pointer;
+}
+
+.nwCus13 {
+    color:red;
+}
+
+.nwCus14 {
+    width: 100%; height: 100%
+}
+
+.nwGridFreezeScroll {
+    position: fixed !important;
+}
+
+
+/*#nwGrid2Data {
+    min-height: initial !important;
+    max-height: initial !important;
+}*/
+
+
+#nwGrid2Data {
+    height: 88% !important;
+}

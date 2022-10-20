@@ -1,0 +1,37 @@
+﻿#noah-webui-default-Save .noah-webui-Toolbox-Item-Icon 
+{
+	background-image:url(../../../icons/ico_people.ico) !important;
+	margin-top: 3px;
+}
+
+#noah-webui-default-Delete .noah-webui-Toolbox-Item-Icon
+{
+	background-image:url(../../../icons/email_attach.png) !important;
+	margin-top: 3px !important;
+}
+
+#noah-webui-default-Refresh .noah-webui-Toolbox-Item-Icon
+{
+	background-image:url(../../../icons/Mail-send.png) !important;
+	margin-top: 3px !important;
+	background-size: 100% !important;
+}
+
+.noah-webui-containerRowItem input[type="checkbox"]
+{
+	width: 15px;
+	height: 15px;
+	vertical-align: bottom;
+	position: relative;
+	top: 2px;
+}
+
+.nwHideGIF
+{
+	display:none;	
+}
+
+.nwShowGIF
+{
+	display:inline-block;
+}

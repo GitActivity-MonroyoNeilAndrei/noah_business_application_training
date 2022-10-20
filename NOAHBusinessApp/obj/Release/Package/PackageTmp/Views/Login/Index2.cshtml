@@ -1,0 +1,376 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @using Microsoft.AspNet.Identity
+    @{ 
+        //Session["noahwebUserID"] += "";
+        //string x_struser = Session["noahwebUserID"].ToString();
+
+        string x_struser = User.Identity.GetUserName();  
+        if (Request.IsAuthenticated && x_struser !="" )
+        {
+            Response.Redirect("\\default\\" + Request.Url.Query);
+        }
+
+        NoahWebLib.nwSFObjects SFObjects = new NoahWebLib.nwSFObjects();
+        string ConnectionString = System.Configuration.ConfigurationManager.AppSettings["NoahWebConnectARK"].ToString();
+        string ConnectionStringNOAH = System.Configuration.ConfigurationManager.AppSettings["NoahWebConnect"].ToString();
+        NoahWebLib.Security.nwConfiguration nwConfig = new NoahWebLib.Security.nwConfiguration();
+        try
+        {
+            nwConfig.Connection(ref ConnectionString);
+        }
+        catch { }
+    }
+    @{
+        string vargoogle = "";
+        try
+        {
+            vargoogle = System.Configuration.ConfigurationManager.AppSettings["google-signin-client_id"].ToString();
+        }
+        catch { }
+
+
+
+        string varazure = "";
+        try
+        {
+            varazure = System.Configuration.ConfigurationManager.AppSettings["ClientId"].ToString();
+        }
+        catch { }
+
+    }
+    @if (vargoogle != "")
+    {
+        string strnonce = NoahWebLib.NonceHelper.ScriptNonce();
+        <script src="https://apis.google.com/js/platform.js" async defer  nonce="@strnonce"></script>
+        <meta name="google-signin-client_id" content="@vargoogle">
+    }
+
+
+    @if (NoahWebLib.nwSystem.GetSystemConfig("SystemType") == "0")
+    {
+        Response.Redirect("\\default\\");
+    }
+
+    @{Session["noahwebUserID"] += "";
+        if (Session["noahwebUserID"].ToString().Trim() != "")
+        {
+            Layout = null;
+
+            Response.Redirect("\\home\\" + Request.Url.Query);
+        }
+    }
+    @if (!string.IsNullOrWhiteSpace(Request.QueryString["errormessage"]))
+    {
+        <div class="errorMessage" >Error: @Request.QueryString["errormessage"]</div>
+    }
+
+    <title>Welcome to NOAH Business Application</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#184688" />
+
+    <link rel="shortcut icon" href="custom_materials\materials\system_images\ThemeImage\logo40x40.png">
+    <script src="~/materials/jslib/fpti.js" nonce="@NoahWebLib.NonceHelper.ScriptNonce()"></script>
+    <script src="~/materials/jslib/fptiextra.js"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()"></script>
+    <script src="~/materials/jslib/fptistyle.js"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()"></script>
+    <script src="~/materials/jslib/noahwebAAGlib.js"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()"></script>
+    <script src="~/custom_materials/materials/js/CustomCompany.js"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()"></script>
+    
+    
+    <link href="~/materials_main/css/font/font-style/font-style.css" rel="stylesheet"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()" />
+    <link href="~/custom_materials/materials/css/CustomCompany.css" rel="stylesheet"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()">
+    <link href="~/materials_main/css/login.css" rel="stylesheet"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()">
+    <script type="text/javascript" src="~/materials_main/js/login.js"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()"></script>
+
+
+</head>
+<body>
+    
+        <div id="google_translate_element"></div>
+        @if (NoahWebLib.nwSystem.GetSystemConfig("GoogleTranlator") == "1")
+        {
+            <script type="text/javascript"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()">
+                 function googleTranslateElementInit() {
+                     new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL }, 'google_translate_element');
+                 }
+                 document.cookie = "googtrans=/en/@NoahWebLib.nwSystem.GetSystemConfig("GoogleTranlatorDefault")" ;
+            </script>
+            <script type="text/javascript" async src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()"></script>
+        }  
+        <asp:HiddenField ID="antiforgery" runat="server" />
+
+        <div id="bodyBG"></div>
+        <div id="center-box" class="center-box">
+
+          <div class="center-box-sub">
+
+                <div id="compLogo">
+                    <img id="logocompLogo" src="~/custom_materials/materials/system_images/login_logo.png">
+                </div>
+                <!--<div id="compName">Forecasting and Planning Technologies, Inc.</div>-->
+
+              @{
+
+                  string LoginTagLine = SFObjects.returnText(@"SELECT value FROM dbo.SystemConfig WHERE code = 'nwLogTagLine'", ConnectionStringNOAH);
+
+                  if (LoginTagLine != "")
+                  {
+                        <div id="tagline">@LoginTagLine</div>
+                  }
+                  else
+                  {
+                        <div id="tagline">Advancing the role of ERP.</div>
+                  }
+
+            }
+
+                <span id="top-line1"></span>
+                <!-- <div id="lbl-AccountLogin">Account Login</div> -->
+
+
+                <div class="txt-cont" >
+                    <input type="text" name="username" autocomplete="off" checked="" class="textLogin" ID="txtUsername" runat="server" ontextchanged="txtUsername_TextChanged" AutoPostBack="True" placeholder="USERNAME" />
+
+                    <!-- USERNAME ICON -->
+                    <div class="box" id="ico-user">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="xbtn"></div>
+                </div>
+
+
+
+                @{if (SFObjects.returnText(@"SELECT [value] FROM [dbo].[SystemConfig]  WHERE code = 'LOGPASS_V'", ConnectionString) != "1")
+                    {
+
+                    <div id="txt-contPassword" class="txt-cont">
+                        <input type="password" name="password" autocomplete="off" checked="" class="textLogin" ID="txtPassword" runat="server" ontextchanged="txtUsername_TextChanged" AutoPostBack="True" placeholder="PASSWORD" />
+
+                        <!-- PASSWORD ICON -->
+                        <div class="box" id="ico-pass">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+
+                        <a id="forgotpass" href="ForgotPassword">Forgot password? <b> Click here.</b></a>
+                    </div>
+                    }
+                    else
+                    {
+                        <script>$('#txtUsername').enable(false); $('#txtUsername').attr("placeholder", "");</script>
+                    }
+                }
+
+
+                <div id="conPow" class="txt-cont2 hide2">
+                    <select class="login-sel" id="poweruser">
+                        <option>Test</option>
+                        <option>Test</option>
+                        <option>Test</option>
+                    </select>
+                    <label for="poweruser">POWER USER</label>
+                </div>
+
+                <div id="conCompany" class="txt-cont2 hide2">
+                    <select class="login-sel" id="dpCombo">
+                        <option>-</option>
+                        @*<option>Test</option>
+                        <option>Test</option>
+                        <option>Test</option>*@
+
+                    </select>
+                    <label for="dpCombo">COMPANY</label>
+                </div>
+
+
+                <div id="conCapcha" class="captcha-main-cont hide2">
+                    <div id="captcha-cont" class="">
+                        <span>PLEASE ENTER THE TEXT FROM THE IMAGE</span>
+                        <span>
+                            <img src="" id="captcha-img">
+                        </span>
+                        <input type="text" name="" autocomplete="off" checked="" class="textLogin" ID="txtCaptcha" runat="server" ontextchanged="" AutoPostBack="True" placeholder="Enter text" />
+                    </div>
+                </div>
+
+                @if (SFObjects.returnText(@"SELECT value FROM [dbo].[SystemConfig] WHERE CODE ='WINAUTH_SHOW'", ConnectionString) == "1")
+                {
+                           <div><input id="nwWindowsAuth" type="checkbox">Active Directory</div>
+                }
+
+                <div id="conMessage">
+                    <div class="nwRed">
+                        <span id="errrormess"></span>
+                    </div>
+                </div>
+
+                <div class="btn-container" >
+                    <button id="Button1" class="" href="#popValidating">LOGIN</button>
+                </div>
+
+                @if (varazure != "" || vargoogle != "")
+                {
+                <div class="sign-with">
+                    <span class="__lblSignin">or Sign in using these account(s):</span>
+                    <hr/>
+                @if (varazure != "")
+                {
+
+                    <a href="Login/Validate" class="nwAtag" >
+                        <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100px" height="16px" viewBox="0 0 3278 522" class="SignInButton">
+                        <style type="text/css"  nonce="@NoahWebLib.NonceHelper.ScriptNonce()">
+                            .fil0:hover {
+                                fill: #4B4B4B;
+                            }
+
+                            .fnt0 {
+                                font-size: 260px;
+                                font-family: 'Segoe UI Semibold', 'Segoe UI';
+                                text-decoration: none;
+                            }
+                        </style>
+                        <rect class="fil0" x="2" y="2" width="3174" height="517" fill="black" /><rect x="150" y="129" width="122" height="122" fill="#F35325" /><rect x="284" y="129" width="122" height="122" fill="#81BC06" /><rect x="150" y="263" width="122" height="122" fill="#05A6F0" /><rect x="284" y="263" width="122" height="122" fill="#FFBA08" /><text x="470" y="357" fill="white" class="fnt0">Sign in with Microsoft</text>
+                        </svg>
+                    </a>
+                }
+                    @if (vargoogle != "")
+                    {
+                        <div class="g-signin2" data-onsuccess="GO_onSignIn"></div>
+                    }
+                </div>
+                }
+                
+
+               @{
+                   string check = "";
+                   try
+                   {
+                       check = Request.QueryString["nwdev"].ToString();
+                   }
+                   catch { }
+                   @*if (check == "p8dev")
+                   {
+                        <div class="Login-version">ver @typeof(NOAHBusinessApp).Assembly.GetName().Version.ToString()</div>
+                   }*@
+                }
+
+                <div class="shapes-cont nwHide">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div id="annContainer">
+            <div id="announcement-icon">
+                <img src="~/custom_materials/materials/system_images/login_Announce.png" alt="Announcement" />
+            </div>
+            <!--<div id="welcometext">Welcome to <span>NOAH</span></div>-->
+            <div id="welcometext">NOAH Business Applications</div>
+            <!--<div id="contenttext">login to access your account</div>-->
+
+            @{
+
+                string LoginContext = SFObjects.returnText(@"SELECT value FROM dbo.SystemConfig WHERE code = 'nwLogContext'", ConnectionStringNOAH);
+
+                if (LoginContext != "")
+                {
+                    <div id="contenttext">@LoginContext</div>
+                }
+                else
+                {
+                    <div id="contenttext">NOAH Business Applications can adapt and integrate with current IT infrastructure, data, and resources of a company thereby greatly enhancing business processes.</div>
+                }
+
+
+                string PrivacyContext = SFObjects.returnText(@"SELECT value FROM dbo.SystemConfig WHERE code = 'nwLogPrivacy'", ConnectionStringNOAH);
+
+                if (PrivacyContext != "")
+                {
+                    <div id="nwLogPrivacy" class="nwHide">@PrivacyContext</div>
+                }
+                else
+                {
+                    <div id="nwLogPrivacy" class="nwHide">NOAH Business Applications privacy practices are developed in accordance with Republic Act No. 10173 or the Data Privacy Act of 2012 and its implementing rules and regulations (collectively, the “DPA”).</div>
+                }
+
+                string PolicyLink = SFObjects.returnText(@"SELECT value FROM dbo.SystemConfig WHERE code = 'nwLogViewPolicy'", ConnectionStringNOAH);
+
+                if (PolicyLink != "")
+                {
+                    <div id="nwLogViewPolicy" class="nwHide">@PolicyLink</div>
+                }
+                else
+                {
+                    <div id="nwLogViewPolicy" class="nwHide">https://www.noahapplication.com/privacy-statement.html</div>
+                }
+
+
+            }
+            <span class="rounded-div" id="rd-big-left1"></span>
+            <span class="rounded-div" id="rd-small-left1"></span>
+
+            <span id="txt-pwrBy" class="hide2">Powered by</span>
+            <span id="txt-fpti" class="hide2"></span>
+        </div>
+
+        <!-- Button for Announcement (Mobile View) -->
+        <div id="btnTopNav">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Popup message notification -->
+        <div id="popValidating" class="pop-msg-cont hide">
+            <div class="pop-msg-box2">
+                <span></span>
+                <span></span>
+                <span></span>
+
+                <div class="b-box">
+                    <span id="b-ball1" class="b-ball"></span>
+                    <span id="b-ball2" class="b-ball"></span>
+                    <span id="ld-text">NOAH is validating..</span>
+                </div>
+
+
+                <div></div>
+            </div>
+        </div>
+        <div class="pop-msg-cont hide" >
+            <div class="pop-msg-box">
+                <span></span>
+                <span class="pop-x">
+                    <span></span>
+                    <span></span>
+                </span>
+                <span class="pop-top-label">System Message</span>
+                <div></div>
+            </div>
+        </div>
+
+        <div class="shapes-cont" id="shapes-cont-body">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+       
+</body>
+</html>

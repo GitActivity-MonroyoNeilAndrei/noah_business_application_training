@@ -1,0 +1,49 @@
+﻿.history-container {
+	        width: 632px;
+	        max-width: 632px;
+	        min-width: 632px;
+}
+
+        .hist-div {
+            margin-left: 210px;
+        }
+
+        #btnHistory {
+            margin-right: 20px;
+            min-width: 120px;
+            max-width: 120px;
+            border-radius: 5px;
+            color: white;
+            background: linear-gradient(to bottom, #dcdcdc -10%, #2d2a26 100%);
+        }
+
+.nwCuz-001 {
+
+    width:150px; margin-left: 20px;
+
+}
+
+.nwCuz-002 {
+
+    width:275px;
+
+}
+
+.nwCuz-003 {
+
+    background:#DEDEDE;
+
+}
+
+.nwCuz-004 {
+
+    max-width:100%; width:100%;    overflow: hidden;
+
+}
+
+.nwCuz-005 {
+
+    font-weight:bold;
+
+}
+

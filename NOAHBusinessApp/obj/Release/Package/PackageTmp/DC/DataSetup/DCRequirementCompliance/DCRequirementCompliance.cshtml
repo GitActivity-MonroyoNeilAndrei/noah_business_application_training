@@ -1,0 +1,59 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Requirements Compliance";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.js"></script>
+    <link href="~/DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.css" rel="stylesheet" />
+
+    <script src="~/DC/DataSetup/DCRequirementCompliance/UploadCustom.js"></script>
+</head>
+
+
+<body class="">
+
+        @*TOOLBOX*@
+        <div id="noah-webui-Toolbox" class="nk-toolbar-c">
+            <div class="nk-toolbar-btn">
+                <div class="btn-tb-action btn-tb-save">
+                    <div class="_icon"></div>
+                    <div class="_lbl">Save</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-flex">
+                <div class="row row-parent">
+                    <div class="row">
+                        <div class="col col-6 col-parent">
+                            <input type="text" id="txtserverlink" class="nwHide" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-6 col-parent">
+                            <input type="text" id="txtLineID" class="nwHide" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-6 col-parent">
+                            <input type="text" id="txtRownum" class="nwHide" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-6 col-parent">
+                            <input type="text" id="txtServerDate" class="nwHide" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div id="nwGrid2"></div>
+                    </div>
+                </div>
+                
+         </div>
+            
+
+</body>
+@RenderPage("~/DC/DataSetup/DCRequirementCompliance/Popups/docattview.cshtml", "DCRequirementCompliance")
+@RenderPage("~/Views/Form_Standards/Uploading.cshtml", "DCRequirementCompliance")

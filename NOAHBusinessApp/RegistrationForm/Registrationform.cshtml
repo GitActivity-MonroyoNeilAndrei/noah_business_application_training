@@ -1,0 +1,248 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "RegistrationForm";
+    //Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+@*<head>
+    <script type="text/javascript" src="~/materials/jslib/fx-demo.js"></script>
+</head>*@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="~/RegistrationForm/Registrationform.css" rel="stylesheet" />
+<link href="~/RegistrationForm/css/nk-style.css" rel="stylesheet" />
+<link href="~/RegistrationForm/css/nk-screen.css" rel="stylesheet" />
+<link href="~/RegistrationForm/css/nk-style-set.css" rel="stylesheet" />
+
+<script type="text/javascript" src="~/materials/jslib/fpti.js"></script>
+<script type="text/javascript" src="~/materials/jslib/noahwebAAGlib.js"></script>
+<script type="text/javascript" src="~/RegistrationForm/RegistrationForm.js"></script>
+
+<!-- Local Resources -->
+@*<link rel="stylesheet" type="text/css" href="~/materials/css/nk-style.css" />
+<link rel="stylesheet" type="text/css" href="~/materials/css/nk-screen.css">
+<link rel="stylesheet" type="text/css" href="~/materials/css/nk-style-set.css">
+<link rel="stylesheet" type="text/css" href="~/materials/css/theme.css">
+<link rel="stylesheet" type="text/css" href="~/materials/css/nk-main.css" />*@
+
+<link rel="stylesheet" type="text/css" href="~/materials/fonts/new/fonts.css" />
+
+<body class="nw-ui nk _home _layout">
+    <div class="container-flex">
+        <div class="registration-form-c">
+            <div class="registration-welcome-c">
+                <div class="registration-content">
+                    <div class="banner-img">
+                        <img src="../RegistrationForm/form-registration-icon/finex-banner.jpg" alt="Finex Image"> 
+                    </div>
+                    <div class="row padding-20">
+                        <div class="col col-12">
+                            <div class="rgt-welcome-text">
+                                Welcome to NOAH Business Applications
+                            </div>
+                        </div>
+                        <div class="col col-12">
+                            <div class="rgt-subtext">NOAH Business Applications can adapt and integrate with current IT infrastructure, data, and resources of a company thereby greatly enhancing business processes.</div>
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <div class="col col-12">
+                            <div class="rgt-alreadytext">Already have an account?</div>
+                        </div>
+                    </div>
+                    <div class="row margin-top-10">
+                        <div class="col col-12">
+                            <div class="btn btn-default" id="login">Log in</div>
+                        </div>
+                    </div>*@
+                </div>
+                <div class="bg-bottom-misc"></div>
+            </div>
+
+            <div class="registration-form-wrapper padding-20">
+
+                <div class="row margin-bottom-15">
+                    <div class="col col-12">
+                        <div class="registration-form fullwidth textalign-center">Registration Form</div>
+                        @*<div class="subtext-form fullwidth textalign-center">Create your account. It's free and only takes a minute</div>*@
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon companyname"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Company Name" id="txtCompanyName">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon companyaddress"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Company Address" id="txtCompanyAddress">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon prodserprovided"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Product/Service Provided"  id="txtProduct">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon subcategory"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Industry Sub Category" id="txtIndustry">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-4">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon lname"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Lastname" id="txtLastname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-4">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon fname"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Firstname" id="txtFirstname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-4">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon mname"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Middlename" id="txtMiddlename">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon designation"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Designation" id="txtDesignation">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon contactnumber"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Contact Number" id="txtContactNumber">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon email"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Email" id="txtEmail">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon demoschedule"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Preferred Demo Schedule" id="txtDemoSchedule">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon giveaway"></div>
+                                <input type="text" name="" class="txtbox" placeholder="Giveaway" id="txtGiveaway">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon password"></div>
+                                <input type="password" name="" class="txtbox" placeholder="Password">
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+                @*<div class="row margin-bottom-5">
+                    <div class="col col-12">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div class="registration-icon cPassword"></div>
+                                <input type="password" name="" class="txtbox" placeholder="Confirm Password">
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+                <div class="row margin-top-20">
+                    <div class="col col-12">
+                        <div id="btnSubmit" class="btn btn-default fullwidth">Submit</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Box -->
+    <div id="mdlPrompt" class="mdl">
+        <div class="mdl-msg-c">
+            <div class="mdl-msg-wrapper">
+                @*<div class="mdl-msg-title">Title</div>*@
+                <div class="mdl-msg-logo _msg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="nw-mdl-logout" viewBox="0 0 60 60" width="60px" height="60px">
+                        <path class="ae1dc0c9-d477-41d0-8c64-ec295bcebf73" d="M57.06,35.62l-6.82,3.94a1.87,1.87,0,0,1-2.8-1.62V36H35.55a2,2,0,0,1,0-4H47.44V30.06a1.87,1.87,0,0,1,2.8-1.62l6.82,3.94A1.87,1.87,0,0,1,57.06,35.62ZM40,24V20a2,2,0,0,0-2-2H32V50h6a2,2,0,0,0,2-2V44a2,2,0,0,1,4,0v4a6,6,0,0,1-6,6H30.49A6,6,0,0,1,26,56H5.65A3.64,3.64,0,0,1,2,52.35V13.89a3.66,3.66,0,0,1,2.82-3.55L24.69,5.71A6,6,0,0,1,32,11.51V14h6a6,6,0,0,1,6,6v4a2,2,0,0,1-4,0ZM27,34a4,4,0,1,0-4,4A4,4,0,0,0,27,34Z" />
+                    </svg>
+                </div>
+                <div class="mdl-msg-title "></div>
+                <div class="mdl-msg-txt">Are you sure you want to quit all applications and log out now?</div>
+                <div class="mdl-btn-msg-c">
+                    <div id="btnYes" class="btn btn-msg-y">Yes</div>
+                    <div id="btnNo" class="btn btn-msg-n">No</div>
+                    <div id="btnOk" class="btn btn-msg-o">Ok</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

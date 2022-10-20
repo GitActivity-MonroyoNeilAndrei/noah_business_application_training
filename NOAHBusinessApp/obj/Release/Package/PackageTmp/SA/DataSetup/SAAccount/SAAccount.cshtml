@@ -1,0 +1,181 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+     ViewBag.Title = "Account";
+     Layout =NoahWebLib.nwSystem.GetDefaultLayout();
+
+}
+
+<head>
+    <script src="~/SA/DataSetup/SAAccount/SAAccount.js"></script>
+    <link href="~/SA/DataSetup/SAAccount/SAAccount.css" rel="stylesheet" />
+</head>
+
+<div id="noah-webui-Toolbox" class="nk-toolbar-c">
+         <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new">
+             <div class="_icon"></div>
+             <div class="_lbl">New</div>
+         </div>
+         <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save">
+             <div class="_icon"></div>
+             <div class="_lbl">Save</div>
+         </div>
+     
+            <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete">
+                <div class="_icon"></div>
+                <div class="_lbl">Delete</div>
+            </div>
+            <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh">
+                <div class="_icon"></div>
+                <div class="_lbl">Refresh</div>
+            </div>
+            <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire">
+                <div class="_icon"></div>
+                <div class="_lbl">Inquire</div>
+            </div>
+            <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+        </div>
+
+<div class="container-flex">
+    <div class="row row-parent padding-10">
+        <div class="col col-6 col-parent">
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt">Code</label>
+                </div>
+                <div class="col col-9">
+                    <input type="text" name="" id="inCode" class="txtbox nwCode nwUpper">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt">Description</label>
+                </div>
+                <div class="col col-9">
+                    <input type="text" name="" id="inDesc" class="txtbox nwCode nwUpper">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt">Password</label>
+                </div>
+                <div class="col col-9">
+                    <input type="password" name="" id="inPassword" class="txtbox nwCode nwUpper">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt hide">Textbox</label>
+                </div>
+                <div class="col col-9">
+                    <div class="chk-wrapper">
+                        <input id="inCheck1" type="checkbox" name="sample1" class="chk">
+                        <label class="lbl-chk" for="inCheck1">Allow Access To Utility Forms</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt hide">Textbox</label>
+                </div>
+                <div class="col col-9">
+                    <div class="chk-wrapper">
+                        <input id="inCheck3" type="checkbox" name="inCheck3" class="chk">
+                        <label class="lbl-chk" for="inCheck3">Account Disabled/Locked</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt hide">Textbox</label>
+                </div>
+                <div class="col col-9">
+                    <div class="chk-wrapper">
+                        <input id="inCheck4" type="checkbox" name="inCheck4" class="chk">
+                        <label class="lbl-chk" for="inCheck4">User Must Change Password at Next Logon</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt hide">Power User</label>
+                </div>
+                <div class="col col-9">
+                    <div class="chk-wrapper">
+                        <input id="inCheck2" type="checkbox" name="sample2" class="chk">
+                        <label class="lbl-chk" for="inCheck2">Power User</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt hide">System Administrator</label>
+                </div>
+                <div class="col col-9">
+                    <div class="chk-wrapper">
+                        <input id="chksysadmin" type="checkbox" name="sample2" class="chk">
+                        <label class="lbl-chk" for="chksysadmin">System Administrator</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-6 col-parent">
+        </div>
+    </div>
+    <div  id="frmPowerUser" class="row row-parent padding-10">
+        <div class="col col-12 col-parent">
+            <div class="row">
+                <div class="col col-3">
+                    <div id="nwp-newuser" class="btn btn-default">Add User</div>
+                </div>
+                <div class="col col-9">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-12">
+                    <div id="nwGrid1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="nk-footer-c">
+    <div class="nk-footer-info">
+        <div class="nk-footer-create">
+            <div class="nkf nk-f-createBy">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                    <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                    </path>
+                </svg>
+                <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
+            </div>
+            <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
+            <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
+            <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
+        </div>
+        <div class="nk-footer-x"></div>
+        <div class="nk-footer-modified">
+            <div class="nkf nk-f-modifiedBy">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                    <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                    </path>
+                </svg>
+                <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
+            </div>
+            <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
+            <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
+            <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
+        </div>
+    </div>
+</div>
