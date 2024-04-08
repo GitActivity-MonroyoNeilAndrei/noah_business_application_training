@@ -3,7 +3,7 @@ var nwaccess = "";
 
 function func_Reload() {
 
-    crLnk = "../SAUserAccessLog/SAUserAccessLog_Gateway";
+    crLnk = GetCurrentURL() +  "SAUserAccessLog_Gateway";
     crLnkGateKey = "SAUserAccessLog";
      
   var currentDate = new Date()

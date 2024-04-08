@@ -2,532 +2,229 @@
 @{
     ViewBag.Title = "Home Page";
     Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+    
 }
 <head>
-    <script src="~/Main/DocumentEntry/Home/lib/pagination.js"></script>
+    @*<script src="~/Main/DocumentEntry/Home/lib/pagination.js"></script>*@
     <script src="~/Main/DocumentEntry/Home/Home.js"></script>
-    <script src="~/materials/jslib/P8-Objects.js"></script>
-
     <link href="~/Main/DocumentEntry/Home/lib/magnific-popup/magnific-popup.css" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="~/Main/PortalMaterials/system_images/ThemeImage/logo40x40.png" />
 </head>
 
-<body class="abtz slr-p new-np nk my-space" theme="blue_orange">
-        <div id="secLanding" class="content-c">
-            <div class="row-c row-welcome">
-                <div class="welcome-remarks">
-                    <div class="welcome-remarks-sec left">
-                        <div class="welcome-user-img"></div>
-                        <div class="welcome-text-c">
-                            Welcome, <span class="welcome-username">...</span>
-                            <span class="welcome-customtext">Select your preferred property now!</span>
-                        </div>
-                    </div>
-                    <div class="welcome-remarks-sec right">
-                        <div class="hdr-tile tile-main" id="btnonhold">
-                            <div class="hdr-tiles-icon"></div>
-                            <div class="hdr-tile-count" id="cntHold">..</div>
-                            <div class="hdr-tile-title">On-Hold</div>
-                        </div>
-                        <div class="hdr-tile tile-main" id="btnreserved">
-                            <div class="hdr-tiles-icon"></div>
-                            <div class="hdr-tile-count" id="cntReserved">..</div>
-                            <div class="hdr-tile-title">Reserved</div>
-                        </div>
-                        <div class="hdr-tile tile-main" id="btnreopened">
-                            <div class="hdr-tiles-icon"></div>
-                            <div class="hdr-tile-count" id="cntreopened">..</div>
-                            <div class="hdr-tile-title">Re-Opened</div>
-                        </div>
-                        <div class="hdr-tile tile-main" id="btnsold">
-                            <div class="hdr-tiles-icon"></div>
-                            <div class="hdr-tile-count" id="cntSold">..</div>
-                            <div class="hdr-tile-title">Sold/Booked</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-row row-c lbl-hdr-row">
-                <div class="flex-col">
-                    <label class="lbl-hdr-text" style="">Location</label>
-                    <select id="cmbLocation" class="lbl-hdr-sel" style="">
-                        <option value="all">Any location</option>
-                    </select>
-                </div>
-                <div class="flex-col">
-                    <label class="lbl-hdr-text" style="">Project</label>
-                    <select id="cmbPropertyType" class="lbl-hdr-sel" style="">
-                        <option value="all">Any project</option>
-                    </select>
-                </div>
-                <div class="flex-col">
-                    <label class="lbl-hdr-text" style="">Tower/Phase</label>
-                    <select id="cmbTowerPhase" class="lbl-hdr-sel" style="">
-                        <option value="all">Any tower/phase</option>
-                    </select>
-                </div>
-                <div class="flex-col">
-                    <input name="grp1" class="rdo" style="width: 50px" onclick="ChangeSelectionType('R')" id="cbRetail" type="radio" />
-                    <label id="lblRetail" class="lblrdo" style="min-width: 50px;" for="cbRetail">Retail </label>
-                    <input name="grp1" class="rdo" style="width: 50px" id="cbBulk" onclick="ChangeSelectionType('B')" type="radio" />
-                    <label id="lblBulk" class="lblrdo" style="min-width: 50px;" for="cbBulk">Bulk </label>
-                </div>
-            </div>
-            <div class="flex-jus-content">
-                <div class="lbl-title-note-land">* Click on the image of the selected Project to view more details and access Unit Availability.</div>
-                <div class="btn btn-type1" id="btnProceedBulk">Proceed to Unit Availability</div>
-            </div>
-            
-        
+<body class="nw-ui nk _home _layout">
+    <!--Switch Container-->
+    <div class="switch-container">
+        <div class="spl-switch spl-switch-dashboard-c spl-hide" title="Show Dashboard">
+            <div class="spl-dashboard"></div>
         </div>
-
-        <!-- Project / Units-->
-        <div id="secProject" class="content-c secProject with-back-btn" style="display: none;">
-            <div class="row-c row-hdr">
-                <div class="btn btnReturn">Back</div>
-                <div class="lbl-title-list" id="listTitle">. . .</div>
-                <div class="nav-virtmap-imgp" id="btnVirtualProj"></div>
-            </div>
-            <div class="row-c row-imgviewer-c">
-                <div class="nk-carousel nk-image-viewer">
-                    <div class="nk-carousel-slider" id="nkSlider1" style="">
-                        <!-- Slides -->
-                        <!-- Navigation Arrows -->
-                        <!-- Navigation Dots -->
-                        <div class="btn-carousel-dotnav-cont"></div>
-                        <!-- <div class="nk-carousel-slide-title autohide">Asiera Homes Pampanga</div> -->
-                    </div>
-                    <div class="btn btn-carousel-actnav btn-carousel-actnav-prev show"></div>
-                    <div class="btn btn-carousel-actnav btn-carousel-actnav-next show"></div>
-                    <div class="nk-carousel-thumb-cont" style="width: 600px;"><div class="nk-carousel-thumb-cont-wrap"></div></div>
-                </div>
-            </div>
-
-   
+        <div class="spl-switch spl-switch-profile" title="Show Profile">
+            <div class="spl-profile"></div>
         </div>
+    </div>
 
-        <!-- Availability Chart -->
-
-        <div id="secAvailabilityChart" class="content-c with-back-btn" style="display: none; min-height: 500px;">
- 
-            <div class="row-c">
-                <div class="lbl-title-list-center">Unit Inventory Availability</div>
-                <div class="lbl-title-note"></div>
+    @*NOTIF POP UP*@
+    <div class="spl-sys-psntf">
+        <div class="spl-sys-psntf-wrap">
+            <div class="spl-sys-psntf-hrd">
+                <div class="spl-sys-psntf-title"></div>
+                <div class="spl-sys-psntf-close btnPopup"></div>
             </div>
-            <div class="row-c">
-                <div class="leg-note-c">
-                    <div class="leg-note left">
-                        <div class="leg-note-hdr">Status Legend</div>
-                        <div class="leg-note-ul">
-                            <div class="leg-note-li">
-                                <span class="leg-note-color" id="boxlegavail"></span>
-                                <span class="leg-note-lbl">Available for Sale</span>
-                                <span id="cntgreen" class="leg-note-ctr">...</span>
+
+            <div class="spl-sys-psntf-content">
+                @*content will show here*@
+            </div>
+
+            <div class="spl-sys-psntf-date">
+                @*Date will show here*@
+            </div>
+        </div>
+    </div>
+
+    @*NOTIF POP UP*@
+
+    <!-- Splashboard Container -->
+    <div class="container-flex _spl-container-mob">
+        <div class="row _spl-row-container">
+            <div class="col col-9 col-parent _spl-right padding-5">
+                @*<div class="spl-ms-lbl margin-bottom-10">Home</div>*@
+
+                <!-- Row Container: Greetings and header widgets-->
+                <div class="row _spl-row-gHrd">
+                    <div class="col col-12 with-spacing-4">
+                        <div class="spl-ms-col spl-ms-col_msg">
+                            <div class="spl-ms-subcol">
+                                <div class="_logo"></div>
+                                <div class="_greetings">Hi, <span id="gtFname">-</span>!</div> 
+                                <div class="_greetings_sub">@NoahWebLib.nwSystem.GetAppSettings("LayoutSubWelcomeText","")</div>
+                                <span class="spl-misc-bg"></span>
                             </div>
-                            <div class="leg-note-li">
-                                <span class="leg-note-color" id="boxlegreopened"></span>
-                                <span class="leg-note-lbl">Re-Opened</span>
-                                <span id="cntgreen2" class="leg-note-ctr">...</span>
-                            </div>
-                            <div class="leg-note-li">
-                                <span class="leg-note-color" id="boxlegonhold"></span>
-                                <span class="leg-note-lbl">On-Hold</span>
-                                <span id="cntblue" class="leg-note-ctr">...</span>
-                            </div>
-                            <div class="leg-note-li">
-                                <span class="leg-note-color" id="boxlegreserved"></span>
-                                <span class="leg-note-lbl">Reserved</span>
-                                <span id="cntred" class="leg-note-ctr">...</span>
-                            </div>
-                            <div class="leg-note-li">
-                                <span class="leg-note-color" id="boxlegsold"></span>
-                                <span class="leg-note-lbl">Sold</span>
-                                <span id="cntyellow" class="leg-note-ctr">...</span>
-                            </div>
+                            @*<div class="spl-ms-subcol _img">
+                                </div>*@
                         </div>
                     </div>
-                    <div class="leg-note right">
-                        <div class="leg-note-hdr">Notes</div>
-                        <div class="leg-note-ul">
-                            <ol>
-                                <li id="holdingprdl">Holding period for Local buyers is up to .. day(s) only.</li>
-                                <li id="holdingprdi">Holding period for International buyers is up to .. day(s) only.</li>
-                                <li>Exchange rate used is based from the daily published BSP rates.</li>
-                            </ol>
-                        </div>
-                    </div>
+
                 </div>
-            </div>
-            <div class="row-c" style="">
-                <div id="btnSelectProject" class="btn btn-type1">Select another Project/Phase/Tower</div>
-            </div>
-            <div class="row-c unit-avl-c">
-                <div class="avl-c">
-                    <fieldset class="select-radio" style="">
-                        <div class="leftua-con">
-                            <ul>
-                                <li>
-                                    <div class="lbl-title-list-center __style2">
-                                        <a data-detail="Contact Information" id="comRelease" data-valid="yes" class="btnlink">Blk/Floor No.</a>
+
+                <!-- Row Container: Overview-->
+                <div class="spl-ms-row-leg margin-y-10">Overview</div> @*aagedit*@
+                <div class="row _spl-row-overview"> @*aagedit*@
+                    <div class="row _spl-row-overview" id="overviewBoard">
+                        @*<div class="col col-3 with-spacing-4 col-mob">
+                            <a href="PMOBasicInformation" class="no-urderline fullwidth">
+                                <div class="spl-ms-widget2">
+                                    <div class="spl-ms-widget-icon-wrap pd"></div>
+                                    <div class="_details">
+                                        <div class="spl-ms-widget2-count">15</div>
+                                        <div class="spl-ms-widget2-lbl">Profile Details</div>
                                     </div>
-                                </li>
-                            </ul>
-                            <ul id="listFloor"></ul>
+                                </div>
+                            </a>
                         </div>
-
-                        <div class="rightua-con" style="">
-                            <div class="lbl-title-list-center __style2">Inventory Details (<i>Select your preferred inventory here</i>)</div>
-                            <div class="lbl-title-note-land">* Green ribbon on Blocks/Floors indicates unit availability.</div>
-                            <iframe id="unitMap" style=""></iframe>
-                            <div class="lvl-b-box" style="display:none;">
-                                <div class="lvl-c-box" id="boxcont" style="">
+                        <div class="col col-3 with-spacing-4 col-mob">
+                            <a href="PMONoticeHistory" class="no-urderline fullwidth">
+                                <div class="spl-ms-widget2 ">
+                                    <div class="spl-ms-widget-icon-wrap nt"></div>
+                                    <div class="_details">
+                                        <div class="spl-ms-widget2-count">8</div>
+                                        <div class="spl-ms-widget2-lbl">Notices</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col col-3 with-spacing-4 col-mob">
+                            <a href="PMOTransaction_History" class="no-urderline fullwidth">
+                                <div class="spl-ms-widget2 ">
+                                    <div class="spl-ms-widget-icon-wrap srt"></div>
+                                    <div class="_details">
+                                        <div class="spl-ms-widget2-count">6</div>
+                                        <div class="spl-ms-widget2-lbl">Service Request Tracker</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col col-3 with-spacing-4 col-mob">
+                            <a href="PMORequestEntry" class="no-urderline fullwidth">
+                                <div class="spl-ms-widget2 ">
+                                    <div class="spl-ms-widget-icon-wrap se"></div>
+                                    <div class="_details">
+                                        <div class="spl-ms-widget2-count">10</div>
+                                        <div class="spl-ms-widget2-lbl">Service Entry</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col col-3 with-spacing-4 col-mob">
+                            <a href="PMOPaymentHistory" class="no-urderline fullwidth">
+                                <div class="spl-ms-widget2 ">
+                                    <div class="spl-ms-widget-icon-wrap pyh"></div>
+                                    <div class="_details">
+                                        <div class="spl-ms-widget2-count">15</div>
+                                        <div class="spl-ms-widget2-lbl">Payment History</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col col-3 with-spacing-4 col-mob">
+                            <a href="PMOBillingHistory" class="no-urderline fullwidth">
+                                <div class="spl-ms-widget2 ">
+                                    <div class="spl-ms-widget-icon-wrap bl"></div>
+                                    <div class="_details">
+                                        <div class="spl-ms-widget2-count">8</div>
+                                        <div class="spl-ms-widget2-lbl">Billings</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col col-3 with-spacing-4 col-mob">
+                            <a href="PMOOtherRequest" class="no-urderline fullwidth">
+                                <div class="spl-ms-widget2 ">
+                                    <div class="spl-ms-widget-icon-wrap otr"></div>
+                                    <div class="_details">
+                                        <div class="spl-ms-widget2-count">6</div>
+                                        <div class="spl-ms-widget2-lbl">Other Requests</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col col-3 with-spacing-4 col-mob ds">
+                            <div class="spl-ms-widget2 ">
+                                <div class="spl-ms-widget-icon-wrap fq"></div>
+                                <div class="_details">
+                                    <div class="spl-ms-widget2-count">10</div>
+                                    <div class="spl-ms-widget2-lbl">FAQ</div>
                                 </div>
                             </div>
-                            <div class="row-c"></div>
-                            <div class="row-c" id="divBulkDtls" style="">
-                                <div class="BulkDtls-c">
-                                    <div class="leg-note left">
-                                        <div id="btnViewBulkDtls" class="btn btn-type1">View Bulk Unit Details</div>
+                        </div>
+                        <div class="col col-3 with-spacing-4 col-mob margin-x-0 ds">
+                            <div class="spl-ms-widget2 ">
+                                <div class="spl-ms-widget-icon-wrap pn"></div>
+                                <div class="_details">
+                                    <div class="spl-ms-widget2-count">10</div>
+                                    <div class="spl-ms-widget2-lbl">Pay Now</div>
+                                </div>
+                            </div>
+                        </div>*@
+
+                    </div>
+
+                </div> @*aagedit*@
+
+            </div>
+
+            <div class="col col-3 col-parent _spl-left padding-5">
+                <div class="col col-12 with-spacing-4 _spl-col-left">
+                    <div class="spl-sys-menu-c">
+                        <div class="spl-sys-user-c">
+                            <div class="spl-sys-user-profile">
+                                <div class="spl-sys-user-inner-photo">
+                                    <img src="materials/media/icons/_overview/user-profile-from-freepik-photo.png" /> @*aagedit*@
+                                </div>
+                            </div>
+                            <div id="uInfoNameF" class="menu-user-name menu-user-name-r" style="text-align: center;">-</div> @*aagedit*@
+                            <div id="uInfoTypeF" class="menu-user-type menu-user-type-r" style="text-align: center;">-</div> @*aagedit*@
+
+                            <div class="spl-sys-btn-c">
+                                <div class="spl-sys-btn fav-btn" data-content="favorites">Push Notifications</div>
+                                @*<div class="spl-sys-btn recebt-btn" data-content="recent">Recent</div>*@
+                            </div>
+
+                            <div class="spl-sys-content"> @*aagedit*@
+                                <div class="spl-sys-container show" >
+                                    <div id="conNotif" class="spl-sys-container-r">
+
+                                        @*<div class="spl-sys-r-banner">
+                                            <div class="spl-sys-r-wrapper favorites">
+                                                <div class="spl-sys-banner-icon"></div>
+                                                <div class="spl-sys-banner-text">No Notification</div>
+                                            </div>
+                                        </div>*@
                                     </div>
-                                    <div class="leg-note right">
-                                        <div class="leg-note-ul bulkul">
-                                            <div class="leg-note-li">
-                                                <span class="leg-note-lbl bulkcnt">Total No. of Units Selected: </span>
-                                                <span id="cntUnits" class="leg-note-ctr bulkcnt">0</span>
+                                </div>
+
+                                <div class="spl-sys-container" id="recent">
+                                    <div class="spl-sys-container-r">
+                                        @*<div class="spl-sys-r-c">
+                                                <div class="spl-sys-r-icon recent"></div>
+                                                <div class="spl-sys-r-text">
+                                                    <div class="spl-sys-r-title">E0101 Daily Accomplishment Report</div>
+                                                    <div class="spl-sys-r-subtitle">Menuitem</div>
+                                                </div>
+                                                <div class="spl-sys-r-btn recent-btn"></div>
+                                            </div>*@
+
+                                        <div class="spl-sys-r-banner">
+                                            <div class="spl-sys-r-wrapper recent">
+                                                <div class="spl-sys-banner-icon"></div>
+                                                <div class="spl-sys-banner-text">Sorry, no menuitem found</div>
+                                                <div class="spl-sys-banner-subtext">Any open menuitem will appear here!</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row-c" style="">
-                                <div id="btnGenAvailability" class="btn btn-type1">Generate Availability Summary</div>
-                            </div>
-                            <div class="row-c" id="secAvailSumUA">
-                                <div class="lbl-title-list">Inventory Availability Summary</div>
-                                <div class="btn btn-type1" id="btnExport">Export to Excel</div>
-                                <br />
-                                <table id="tblAvlSum" class="tbl-tmp1 --has-width">
-                                    <tr>
-                                        <th>Project</th>
-                                        <th>Block/Floor</th>
-                                        <th>Lot/Unit/Slot</th>
-                                        <th>Type</th>
-                                        <th>Class</th>
-                                        <th>Total Area</th>
-                                        <th>Selling Price</th>
-                                        <th>Reservation Amount</th>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="--currency"></td>
-                                        <td class=" --currency"></td>
+                            </div> @*aagedit*@
 
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-
- 
-            <div class="side-popup clicked-lvl">
-                <div class="clicked-lvl-preview">
-                    <div class="nk-carousel nk-image-viewer">
-                        <div class="nk-carousel-slider" id="nkSlider2" style="">
-                            <!-- Slides -->
-                            <!-- Navigation Arrows -->
-                            <!-- Navigation Dots -->
-                            <div class="btn-carousel-dotnav-cont"></div>
-                            <!-- <div class="nk-carousel-slide-title autohide">Asiera Homes Pampanga</div> -->
-                        </div>
-                        <div class="btn btn-carousel-actnav btn-carousel-actnav-prev show"></div>
-                        <div class="btn btn-carousel-actnav btn-carousel-actnav-next show"></div>
-                        <div class="nk-carousel-thumb-cont" style="width: 600px;">
-                            <div class="nk-carousel-thumb-cont-wrap"></div>
                         </div>
                     </div>
                 </div>
-                <div id="buttonsHome">
-                    <div id="btnVirtualTour" class="btn btn-type1">360 Virtual Tour</div>
-                    <div id="btnHold" class="btn btn-type1 btn-hold">Hold</div>
-                    <div id="btnReserveNow" class="btn btn-type1 btn-reserve">Reserve Now</div>
-                </div>
-                <div id="buttonsLOI">
-                    <div id="btnPaymentTerm" class="btn btn-type1">Payment Term</div>
-                    <div id="btnLOIEntry" class="btn btn-type1 btn-hold">Letter of Intent</div>
-                </div>
-
-                <div class="row-c-m" id="preview">
-                    <div class="preview-info-c" id="secMultipleSP" style="display:none;">
-                        <div class="SpFirst custPage"><<</div>
-                        <div class="SpPrev custPage"><</div>
-                        <div class="SpCnt"><input id='curCnt' value="1" /> of ..</div>
-                        <div class="SpLast custPage">>></div>
-                        <div class="SpNext custPage">></div>
-                    </div>
-                    <div class="preview-info-c">
-                        <div class="preview-info-list-hdr">Unit Details</div>
-                        <ul>
-                            <li>
-                                <div>Unit/Lot</div>
-                                <div id="unitno">...</div>
-                                <div id="ucode" style="display:none"></div>
-                            </li>
-                            <li>
-                                <div>Type</div>
-                                <div id="type">...</div>
-                                <div id="typecode" style="display:none"></div>
-                            </li>
-                            <li class="grptotarea">
-                                <div>Total Area</div>
-                                <div id="totarea">...</div>
-                            </li>
-                            <li class="grplotarea">
-                                <div>Lot Area</div>
-                                <div id="lotarea">...</div>
-                            </li>
-                            <li class="grpunitarea">
-                                <div>Unit Area</div>
-                                <div id="unitarea">...</div>
-                            </li>
-                            <li>
-                                <div>Class</div>
-                                <div id="clss">...</div>
-                                <div id="clsscode" style="display:none"></div>
-                            </li>
-                            <li>
-                                <div>Reservation Amount</div>
-                                <div id="rsrvamt">...</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="preview-info-c">
-                        <div class="preview-info-list-hdr">Selling Price</div>
-                        <ul>
-                            <li>
-                                <div>PHP</div>
-                                <div id="amtp">0.00</div>
-                                <div id="amtphp" style="display:none"></div>
-                            </li>
-                            <li>
-                                <div>USD</div>
-                                <div id="amtu">0.00</div>
-                            </li>
-                            <li>
-                                <div>EUR</div>
-                                <div id="amte">0.00</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Booking Summary -->
-    <div id="secBookingSummary" class="content-c" style="display: none;">
-        <div class="row-c row-booksum">
-            <div class="summary-header">
-                <div class="summary-header-sec left">
-                    <div class="summary-hdr-title">MY BOOKING SUMMARY</div>
-                </div>
-                <div class="summary-header-sec right">
-                    <div class="hdr-tile">
-                        <div class="hdr-tile-title">On-Hold</div>
-                        <div class="hdr-tile-count" id="cntHoldbs">..</div>
-                    </div>
-                    <div class="hdr-tile">
-                        <div class="hdr-tile-title">Reserved</div>
-                        <div class="hdr-tile-count" id="cntReservedbs">..</div>
-                    </div>
-                    <div class="hdr-tile">
-                        <div class="hdr-tile-title">Re-Opened</div>
-                        <div class="hdr-tile-count" id="cntReopenedbs">..</div>
-                    </div>
-                    <div class="hdr-tile">
-                        <div class="hdr-tile-title">Sold/Booked</div>
-                        <div class="hdr-tile-count" id="cntSoldbs">..</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row-c row-custom-note">
-            <div class="col">
-                <label class="lbl-hdr-text" style="">Project</label>
-                <select id="cmbProject" class="lbl-hdr-sel" style="width:220px">
-                    <option value="all">All projects</option>
-                </select>
-            </div>
-            <br />
-            <b><i>Note:	Click on LOT/UNIT/SLOT column to view the booking details.</i></b>
-            <br />
-            <br />
-        </div>
-        <div class="row-c row-tbl-c row-tbl-onhold row-lastborder-c" id="onhold">
-            <div class="lbl-title-list" id="cntHoldtbl">On-Hold - ..</div>
-            <div class="lbl-title-list lbl-title-list-sub" id="cntHoldtcp">TCP - ..</div>
-            <table id="tblBookSumOnHold" class="tbl-tmp1"></table>
-        </div>
-        <div class="row-c row-tbl-c row-tbl-reserved" id="reserved">
-            <div class="lbl-title-list" id="cntReservedtbl">Reserved - ..</div>
-            <div class="lbl-title-list lbl-title-list-sub" id="cntReservedtcp">TCP - ..</div>
-            <table id="tblBookSumReserved" class="tbl-tmp1"></table>
-        </div>
-        <div class="row-c row-tbl-c row-tbl-reopened" id="reopened">
-            <div class="lbl-title-list" id="cntReopenedtbl">Re-Opened - ..</div>
-            <div class="lbl-title-list lbl-title-list-sub" id="cntReopenedtcp">TCP - ..</div>
-            <table id="tblBookSumReopened" class="tbl-tmp1"></table>
-        </div>
-        <div class="row-c row-tbl-c row-tbl-booked" id="sold">
-            <div class="lbl-title-list" id="cntSoldtbl">Sold/Booked - ..</div>
-            <div class="lbl-title-list lbl-title-list-sub" id="cntSoldtcp">TCP - ..</div>
-            <table id="tblBookSumSold" class="tbl-tmp1"></table>
-        </div>
-    </div>
-    <!-- Commission Summary -->
-    <div id="secCommissionSummary" class="content-c" style="display: none;">
-        <div class="row-c">
-            <div class="lbl-title-list">My Commissions</div>
-        </div>
-        <div class="row-c">
-            <input name="grp1" class="rdo" style="width: 50px" id="cbAsOfDate" onclick="ChangeCommisionDate('1')" type="radio" />
-            <label id="lblAsOfDate" class="lblrdo lbl-hdr-text" style="min-width: 50px;" for="cbAsOfDate">As of Date </label>
-            <div class="commdates">
-                <input id="txtAsOfDate" class="txtFull txtbox txtbox-date txtAsOfDate" type="date" style="min-width: 180px; max-width: 180px;" />
-            </div>
-            <div class="commright">
-                <label class="lbl-hdr-text" style="">Project</label>
-                <select id="cmbProjectCOMM" class="lbl-hdr-sel" style="width:220px">
-                    <option value="all">All projects</option>
-                </select>
-            </div>
-        </div>
-        <div class="row-c">
-            <input name="grp1" class="rdo" style="width: 50px" id="cbCutoffDate" onclick="ChangeCommisionDate('2')" type="radio" />
-            <label id="lblCutoffDate" class="lblrdo lbl-hdr-text" style="min-width: 50px;" for="cbCutoffDate">Cut-off Date </label>
-            <div class="commright">
-                <label class="lbl-hdr-text" style="">Customer</label>
-                <select id="cmbCustomerCOMM" class="lbl-hdr-sel" style="width:220px">
-                    <option value="all">All customers</option>
-                </select>
-            </div>
-        </div>
-        <div class="row-c">
-            <div class="commdates">
-                <label class="lbl-hdr-text" id="commfrom" style="">From</label>
-                <input id="txtCOFrom" class="txtFull txtbox txtbox-date txtCOFrom" type="date" style="min-width: 180px; max-width: 180px;" />
-            </div>
-        </div>
-        <div class="row-c">
-            <div class="commdates">
-                <label class="lbl-hdr-text" id="commto" style="">To</label>
-                <input id="txtCOTo" class="txtFull txtbox txtbox-date txtCOTo" type="date" style="min-width: 180px; max-width: 180px;" />
-            </div>
-        </div>
-        <div class="row-c">
-            <div class="lbl-title-list">Commission Ledger - Summary</div>
-            <div class="list-items-c">
-                <div class="summary-c">
-                    <div class="row">
-                        <div class="col">Total no. of Accounts</div>
-                        <div class="col" id="commTotalNo">0</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">Total Commission Amount</div>
-                        <div class="col" id="commTotalAmt">0.00</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">Total Commission Received</div>
-                        <div class="col" id="commTotalRcvd">0.00</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">Total Commission for Pick-up</div>
-                        <div class="col" id="commTotalForPickup">0.00</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">Balance</div>
-                        <div class="col" id="commBalance">0.00</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row-c">
-            <div class="lbl-title-list">Commission Ledger - Detailed</div>
-            <table id="tblComSum" class="tbl-tmp1 --has-width"></table>
-        </div>
-    </div>
-    <!-- Transaction Summary -->
-    <div id="secTransactionSummary" class="content-c" style="display: none;">
-        <div class="row-c">
-            <div class="btn btn-cancel">Back</div>
-            <div class="lbl-title-list" id="mi-title">My Transactions Summary</div>
-        </div>
-        <div class="row-c">
-            <iframe id="iframeTransactions" src="" class="f-loader"></iframe>
-        </div>
-    </div>
-
-    <!-- Menu Item: Holding-->
-    <div id="secHoldingFrame" class="content-c f-loader-c" style="display: none;">
-        <iframe id="iframeHolding" src="" class="f-loader"></iframe>
-    </div>
-
-    <!-- Floaters -->
-    <div id="pdlgProject" class="pdlg" style="display: none;">
-        <div class="pdlg-box">
-            <div class="pdlg-hdr">
-                <div class="pdlg-title">Select another Project/Phase/Tower</div>
-            </div>
-            <div class="pdlg-content">
-                <div class="pdlg-ul" id="pdlg-container">
-                </div>
-                <div class="pdlg-ul" id="pdlg-msg" style="display:none">
-                    <div class="messagecont" style="white-space:pre-wrap;">...</div>
-                </div>
-            </div>
-            <div class="pdlg-actions">
-                <div class="btn btn-cancel">Back</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- iFrames -->
-    <div id="popup" class="iframe_main" canbefullwidth="true" fw-state="normal" style="display: none;">
-        <div class="iframe_box">
-            <div class="iframe-actions">
-                <div class="btn btn-cancel">Back</div>
-            </div>
-            <div class="pdlg-hdr">
-                <div id="iframetitle" class="pdlg-title">Title</div>
-                <div id="iframeBtnMaximize" class="pdlg-btn-dlgactions" dlgact-type="resize" title="Maximize"></div>
-            </div>
-            <div class="iframe-content">
-                <iframe id="iFrame1" src="" class="iframe_content"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <div id="popup2" class="iframe_main" canbefullwidth="true" fw-state="normal" style="display: none;">
-        <div class="iframe_box">
-            <div class="iframe-actions">
-                <div class="btn btn-cancel">Back</div>
-            </div>
-            <div class="pdlg-hdr">
-                <div id="iframetitle2" class="pdlg-title">Title</div>
-                <div id="iframeBtnMaximize2" class="pdlg-btn-dlgactions" dlgact-type="resize" title="Maximize"></div>
-            </div>
-            <div class="iframe-content">
-                <div class="col colprj">
-                    <label class="lbl-hdr-text" style="">Project</label>
-                    <select id="cmbProject2" class="lbl-hdr-sel" style="width:220px">
-                    </select>
-                </div>
-                <iframe id="iFrame2" src="" class="iframe_content"></iframe>
             </div>
         </div>
     </div>

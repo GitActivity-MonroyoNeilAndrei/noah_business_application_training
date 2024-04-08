@@ -75,7 +75,7 @@ var nwGridMainCon_Sheet;
 
 
 function func_Reload() {
-    crLnk = "../PMOCustomerLedger/PMOCustomerLedger_Gateway";
+    crLnk = GetCurrentURL() + "PMOCustomerLedger_Gateway";
     crLnkGateKey = "PMOCustomerLedger";
     var isContinue = true;
     ToolBoxGetData = false;

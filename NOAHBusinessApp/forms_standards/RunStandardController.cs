@@ -16,7 +16,7 @@ namespace NOAHBusinessApp.forms_standards
             isCompanyGet = true;
             #endregion
 
-            RunStandard_Start();
+            RunStandard_Start(User, this);
             if (DLLAutoGateway == false) // for redirecting of BL (4 tier)
             {
                 try

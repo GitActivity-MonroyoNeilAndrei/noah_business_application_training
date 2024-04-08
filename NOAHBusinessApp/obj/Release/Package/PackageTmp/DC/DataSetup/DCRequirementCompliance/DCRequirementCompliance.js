@@ -45,11 +45,12 @@ var globalRow;
 
 var nwGrid_Book;
 var nwGrid_Sheet;
+var currentRow;
 
 function func_Reload() {
     LoadStringsCases();
 
-    crLnk = "../DCRequirementCompliance/DCRequirementCompliance_Gateway";
+    crLnk = GetCurrentURL() + "DCRequirementCompliance_Gateway";
     crLnkGateKey = "DCRequirementCompliance";
 
     DisableFields();
@@ -239,6 +240,23 @@ function func_ToolboxNavigatorBind_Empty() {
 }
 ///////////////////////////////////////
 
+
+function CreatedGridDone() {
+    setTimeout(function () {
+        //SPR_ATTACHHDR = 12,
+        //SPR_REMOVEHDR = 14,
+
+        //nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, Spread_ALLROW, "#1974D1");
+
+        nwGrid_Book.ActiveSheet.RenderStatus = false;
+        nwGrid_Book.ActiveSheet.SetText2(SPR_VIEWHDR - 1, Spread_ALLROW, "View");
+        nwGrid_Book.ActiveSheet.SetTextAlign(SPR_VIEWHDR - 1, Spread_ALLROW, "CENTER");
+        nwGrid_Book.SetThemes(P8Themes.FANCY);
+        nwGrid_Book.ActiveSheet.SetObjectType(SPR_VIEWHDR - 1, Spread_ALLCOL, "buttonflat");
+        nwGrid_Book.ActiveSheet.RenderStatus = true;
+    }, 100);
+}
+
 var temp_crnwTR = "";
 
 function EnableFields() {
@@ -388,9 +406,9 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
         crnwTRtemp[SPR_TAGURLHDR - 1] = reqURL;
         crnwTRtemp[SPR_WORKINSTRUCTIONS - 1] = workIns_;
 
-        if (cnt == (nwGrid_Book.ActiveSheet.CellSelected.row - 1)) {
+        if (cnt == nwGrid_Book.ActiveSheet.CellSelected.row ) {
 
-            nwGrid_Book.ActiveSheet.RowAdd();
+            //nwGrid_Book.ActiveSheet.RowAdd();
             GridValidation();
         }
         // nwGrid_AddRow("nwGrid2", 1);
@@ -604,9 +622,9 @@ function GridValidation() {
             nwGrid_Book.ActiveSheet.SetEnable(SPR_WORKINSTRUCTIONS - 1, i, false);
             nwGrid_Book.ActiveSheet.SetEnable(SPR_REQUIREDHDR - 1, i, false);
             nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDETAILSCODEHDR - 1, i, false);
-            nwGrid_Book.ActiveSheet.SetBackground(SPR_DOCDETAILSCODEHDR - 1, i,"gainsboro");
-            nwGrid_Book.ActiveSheet.SetBackground(SPR_WORKINSTRUCTIONS - 1, i, "gainsboro");
-            nwGrid_Book.ActiveSheet.SetBackground(SPR_WORKINSTRUCTIONS - 1, i, "gainsboro");
+            //nwGrid_Book.ActiveSheet.SetBackground(SPR_DOCDETAILSCODEHDR - 1, i,"gainsboro");
+            //nwGrid_Book.ActiveSheet.SetBackground(SPR_WORKINSTRUCTIONS - 1, i, "gainsboro");
+            //nwGrid_Book.ActiveSheet.SetBackground(SPR_WORKINSTRUCTIONS - 1, i, "gainsboro");
 
 
         }
@@ -628,14 +646,35 @@ function GridValidation() {
 
         if (filepath != "") {
             //crnwTable.find("tr:eq(" + i + ")").find("td:eq(" + SPR_VIEWHDR + ") a").addClass("green");
-            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, i, "green")
+            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, i, "green");
+            nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, i, "white");
+
         }
         else {
             //crnwTable.find("tr:eq(" + i + ")").find("td:eq(" + SPR_VIEWHDR + ") a").removeClass("green");
-            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, i, "white")
+            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, i, "white");
+            nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, i, "black");
+
         }
     }
+    nwGrid_Book.ActiveSheet.SetBackground(SPR_ATTACHHDR - 1, Spread_ALLROW, "#1974D1");
+    nwGrid_Book.ActiveSheet.SetTextColor(SPR_ATTACHHDR - 1, Spread_ALLROW, "white");
+    nwGrid_Book.ActiveSheet.SetTextAlign(SPR_ATTACHHDR - 1, Spread_ALLROW, "CENTER");
+    nwGrid_Book.ActiveSheet.SetObjectType(SPR_ATTACHHDR - 1, Spread_ALLCOL, "buttonflat");
+    nwGrid_Book.ActiveSheet.SetText2(SPR_ATTACHHDR - 1, Spread_ALLROW, "Attach");
 
+
+    nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, Spread_ALLROW, "#1974D1");
+    nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, Spread_ALLROW, "#EDEDED");
+    nwGrid_Book.ActiveSheet.SetTextAlign(SPR_VIEWHDR - 1, Spread_ALLROW, "CENTER");
+    nwGrid_Book.ActiveSheet.SetObjectType(SPR_VIEWHDR - 1, Spread_ALLCOL, "buttonflat");
+    nwGrid_Book.ActiveSheet.SetText2(SPR_VIEWHDR - 1, Spread_ALLROW, "View");
+
+    nwGrid_Book.ActiveSheet.SetBackground(SPR_REMOVEHDR - 1, Spread_ALLROW, "#1974D1");
+    nwGrid_Book.ActiveSheet.SetTextColor(SPR_REMOVEHDR - 1, Spread_ALLROW, "white");
+    nwGrid_Book.ActiveSheet.SetTextAlign(SPR_REMOVEHDR - 1, Spread_ALLROW, "CENTER");
+    nwGrid_Book.ActiveSheet.SetObjectType(SPR_REMOVEHDR - 1, Spread_ALLCOL, "buttonflat");
+    nwGrid_Book.ActiveSheet.SetText2(SPR_REMOVEHDR - 1, Spread_ALLROW, "Remove");
 
     nwGrid_Book.ActiveSheet.RenderStatus = true;
 
@@ -667,23 +706,25 @@ function GridValidation() {
     $("#nwGrid2Data .gvHeaderStyle").hide();
 
     $("#btnReloadDtls").addClass("btnBlue");
+
+    AttViewDelete();
 }
 
 function AutoCompiled(row) {
-    var isTag = getGridData(`nwGrid2`, '', SPR_TAG, row);
-    var isTagDocno = getGridData(`nwGrid2`, '', SPR_TAGDOCNOHDR, row);
-    var isTagDocDate = getGridData(`nwGrid2`, '', SPR_TAGDOCDATEHDR, row);
-    var isTagExpDate = getGridData(`nwGrid2`, '', SPR_TAGEXPIRYDATEHDR, row);
-    var isTagURL = getGridData(`nwGrid2`, '', SPR_TAGURLHDR, row);
-    var isTagAttach = getGridData(`nwGrid2`, '', SPR_TAGATTACHHDR, row);
+    var isTag = getGridData(`nwGrid2`, '', SPR_TAG - 1, row);
+    var isTagDocno = getGridData(`nwGrid2`, '', SPR_TAGDOCNOHDR - 1, row);
+    var isTagDocDate = getGridData(`nwGrid2`, '', SPR_TAGDOCDATEHDR - 1, row);
+    var isTagExpDate = getGridData(`nwGrid2`, '', SPR_TAGEXPIRYDATEHDR - 1, row);
+    var isTagURL = getGridData(`nwGrid2`, '', SPR_TAGURLHDR - 1, row);
+    var isTagAttach = getGridData(`nwGrid2`, '', SPR_TAGATTACHHDR - 1, row);
     var value;
     var isAuto = true;
-    var docCode = getGridData(`nwGrid2`, '', SPR_DOCDETAILSCODEHDR, row);
-    var workIns = getGridData(`nwGrid2`, 'input', SPR_WORKINSTRUCTIONS, row);
+    var docCode = getGridData(`nwGrid2`, '', SPR_DOCDETAILSCODEHDR - 1, row);
+    var workIns = getGridData(`nwGrid2`, 'input', SPR_WORKINSTRUCTIONS - 1, row);
 
     //if (isTag == "1") {
         if (isTagDocno == "1") {
-            value = getGridData(`nwGrid2`, 'input', SPR_DOCNOHDR, row);
+            value = getGridData(`nwGrid2`, 'input', SPR_DOCNOHDR - 1, row);
 
             if (value == "") {
                 isAuto = false;
@@ -691,7 +732,7 @@ function AutoCompiled(row) {
         }
 
         if (isTagDocDate == "1") {
-            value = getGridData(`nwGrid2`, 'input', SPR_DOCDATEHDR, row);
+            value = getGridData(`nwGrid2`, 'input', SPR_DOCDATEHDR - 1, row);
 
             if (value == "") {
                 isAuto = false;
@@ -699,7 +740,7 @@ function AutoCompiled(row) {
         }
 
         if (isTagExpDate == "1") {
-            value = getGridData(`nwGrid2`, 'input', SPR_EXPIRYDATEHDR, row);
+            value = getGridData(`nwGrid2`, 'input', SPR_EXPIRYDATEHDR - 1, row);
 
             if (value == "") {
                 isAuto = false;
@@ -707,7 +748,7 @@ function AutoCompiled(row) {
         }
 
         if (isTagURL == "1") {
-            value = getGridData(`nwGrid2`, 'input', SPR_URLHDR, row);
+            value = getGridData(`nwGrid2`, 'input', SPR_URLHDR - 1, row);
 
             if (value == "") {
                 isAuto = false;
@@ -715,7 +756,7 @@ function AutoCompiled(row) {
         }
 
         if (isTagAttach == "1") {
-            value = getGridData(`nwGrid2`, '', SPR_FILEPATH, row);
+            value = getGridData(`nwGrid2`, '', SPR_FILEPATH - 1, row);
 
             if (value == "") {
                 isAuto = false;
@@ -853,35 +894,35 @@ function func_WindowCloseTrigger(verID) {
     var isContinue = true;
     var errorResult = "";
     var ICode = "";
-    var currentRow = nwGrid_Book.ActiveSheet.CellIndexes.Row;
-    var serverlink = $("#txtserverlink").val();
+    //var currentRow = nwGrid_Book.ActiveSheet.CellIndexes.Row;
+    //var serverlink = $("#txtserverlink").val();
 
-    if (verID == "nwUploadCon") {
+    //if (verID == "nwUploadCon") {
 
-        if (curupload != undefined) {
-            MessageBox("Uploading still in Progress.");
-            return false;
-        }
+    //    if (curupload != undefined) {
+    //        MessageBox("Uploading still in Progress.");
+    //        return false;
+    //    }
 
-        //For Button Item Specification Attach
+    //    //For Button Item Specification Attach
 
-        if (attachclick == "attachFile") {
+    //    if (attachclick == "attachFile") {
 
-            var filepath = $("#nwUploadCon .noahdriveID").text();
-            var path = filepath;
+    //        var filepath = $("#nwUploadCon .noahdriveID").text();
+    //        var path = filepath;
 
-            if (filepath != "") {
-                link = serverlink + path; //uncomment this replace add by EME
+    //        if (filepath != "") {
+    //            link = serverlink + path; //uncomment this replace add by EME
 
-                //nwLib.nwTempTable_RowData_Set("nwGrid2", crnwTR.index(), SPR_FILEPATH)(path);
-                nwLib.nwTempTable_RowData_Set("nwGrid2", currentRow, SPR_FILEPATH)(path);
-                //$('.btnview').text('').prepend('<a>View Attachment</a>');
-                //$("#nwGrid2-nwData tbody").find("tr:eq(" + crnwTR.index() + ") td:eq(" + SPR_VIEWHDR + ") a").addClass('green');
-                nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, currentRow, 'green')
-            }
+    //            //nwLib.nwTempTable_RowData_Set("nwGrid2", crnwTR.index(), SPR_FILEPATH)(path);
+    //            nwLib.nwTempTable_RowData_Set("nwGrid2", currentRow, SPR_FILEPATH)(path);
+    //            //$('.btnview').text('').prepend('<a>View Attachment</a>');
+    //            //$("#nwGrid2-nwData tbody").find("tr:eq(" + crnwTR.index() + ") td:eq(" + SPR_VIEWHDR + ") a").addClass('green');
+    //            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, currentRow, 'green')
+    //        }
 
-        }
-    }
+    //    }
+    //}
 
     return isContinue;
 }
@@ -1044,9 +1085,10 @@ function msgBoxContainerQuestionF(genID, answer) {
         if (answer == "Yes") {
             var row = nwGrid_Book.ActiveSheet.CellIndexes.Row;
             //crnwTR.find("td:eq(" + SPR_FILEPATH + ")").text('');
-            nwGrid_Book.ActiveSheet.SetText(SPR_FILEPATH - 1, row, "")
+            nwGrid_Book.ActiveSheet.SetText(SPR_FILEPATH - 1, row, "");
             //$("#nwGrid2-nwData tbody").find("tr:eq(" + crnwTR.index() + ") td:eq(" + SPR_VIEWHDR + ") a").removeClass("green");
-            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, row, 'white')
+            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, row, 'white');
+            nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, row, "black");
             AutoCompiled(globalRow);
         }
     }
@@ -1086,10 +1128,11 @@ function ChkIfHasAttachment() {
 
         if (nwGrid_Book.ActiveSheet.GetValue(SPR_FILEPATH - 1, $row) != "") {
             nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, $row, 'green')
+            nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, $row, "white");
         }
         else {
             nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, $row, 'white')
-
+            nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, $row, "black");
         }
         
     });
@@ -1133,24 +1176,27 @@ function func_nwGrid_InsertDone() {
 }
 
 function DocdateAndExpDateValidation(row) {
-    var docdate = getGridData(`nwGrid2`, 'input', SPR_DOCDATEHDR, row);
-    var expDate = getGridData(`nwGrid2`, 'input', SPR_EXPIRYDATEHDR, row);
+    var docdate = nwGrid_Book.ActiveSheet.GetValue(SPR_DOCDATEHDR - 1, row);
+    var expDate = nwGrid_Book.ActiveSheet.GetValue(SPR_EXPIRYDATEHDR - 1, row);
     var curDate = $("#txtServerDate").val();
+
+    
 
     if (expDate != "" && docdate != "") {
         if (Date.parse(expDate) < Date.parse(docdate)) {
             MessageBox("Cannot proceed. Expiry Date should not be earlier than Document Date.", "Requirements Compliance", 'error');
-            setGridData(`nwGrid2`, 'input', SPR_EXPIRYDATEHDR, row, "");
+            nwGrid_Book.ActiveSheet.SetText(SPR_EXPIRYDATEHDR - 1, row, "");
         }
     }
 
     if (Date.parse(docdate) > Date.parse(curDate)) {
         MessageBox("Cannot proceed. Document Date should not be later than the current server date.", "Requirements Compliance", 'error');
-        setGridData(`nwGrid2`, 'input', SPR_DOCDATEHDR, row, "");
+        nwGrid_Book.ActiveSheet.SetText(SPR_DOCDATEHDR - 1, row, "");
     }
     if (Date.parse(expDate) <= Date.parse(curDate)) {
         MessageBox("Cannot proceed. Expiry Date should not be earlier or equal to the current server date.", "Requirements Compliance", 'error');
-        setGridData(`nwGrid2`, 'input', SPR_EXPIRYDATEHDR, row, "");
+        nwGrid_Book.ActiveSheet.SetText(SPR_EXPIRYDATEHDR - 1, row, "");
+
     }
 }
 
@@ -1158,10 +1204,12 @@ function getGridData(nwGrid, type, col, row) {
     var data = '';
 
     if (type == 'input')
-        data = $(`#${nwGrid}-nwData tr:eq(${row})`).find(`td:eq(${col}) input`).val();
+        data = nwGrid_Book.ActiveSheet.GetValue(col, row);
+        //data = $(`#${nwGrid}-nwData tr:eq(${row})`).find(`td:eq(${col}) input`).val();
     else
-        data = $(`#${nwGrid}-nwData tr:eq(${row})`).find(`td:eq(${col})`).text();
-
+       data = nwGrid_Book.ActiveSheet.GetValue(col, row);
+       //data = $(`#${nwGrid}-nwData tr:eq(${row})`).find(`td:eq(${col})`).text();
+    
     return data;
 }
 
@@ -1309,7 +1357,7 @@ function p8Spread_Click(canvasID, row, col) {
 
 
     if (col == SPR_ATTACHHDR - 1) {
-
+        currentRow = nwGrid_Book.ActiveSheet.CellIndexes.Row;
         globalRow = row;
         nwPopupForm_ShowModal("nwUploadCon");
 
@@ -1393,3 +1441,23 @@ function p8Spread_Focus(canvasID, row, col) {
 
 }
 
+function AttViewDelete() {
+
+    nwGrid_Book.ActiveSheet.RenderStatus = false;
+
+    var len = nwGrid_Book.ActiveSheet.Data.length;
+
+    for (var i = 0; i < len ; i++) {
+        
+        nwGrid_Book.ActiveSheet.SetText(SPR_ATTACHHDR - 1, i, "Attach");
+        nwGrid_Book.ActiveSheet.SetText(SPR_VIEWHDR - 1, i, "View");
+        nwGrid_Book.ActiveSheet.SetText(SPR_REMOVEHDR - 1, i, "Remove");
+
+        nwGrid_Book.ActiveSheet.SetTextAlign(SPR_ATTACHHDR - 1, i, "Center")
+        nwGrid_Book.ActiveSheet.SetTextAlign(SPR_VIEWHDR - 1, i, "Center")
+        nwGrid_Book.ActiveSheet.SetTextAlign(SPR_REMOVEHDR - 1, i, "Center")
+    }
+
+    nwGrid_Book.ActiveSheet.RenderStatus = true;
+
+}

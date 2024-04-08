@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<svg height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    :root {
+    --nwdarkblue: #354578;
+    --nworange: #f99746;
+    }
+  </style>
+
+  <!-- No dashes nor gaps -->
+  <line stroke="var(--nwdarkblue)" fill="var(--nwdarkblue)" x1="2" y1="6" x2="20" y2="6" stroke-width="4" />
+
+  <!-- Dashes and gaps of the same size -->
+  <line stroke="var(--nworange)" fill="var(--nworange)" x1="2" y1="11" x2="20" y2="11" stroke-dasharray="8 2" stroke-width="3" />
+
+  <!-- Dashes and gaps of different sizes -->
+  <line stroke="var(--nwdarkblue)" fill="var(--nwdarkblue)" x1="2" y1="15" x2="20" y2="15" stroke-dasharray="5 1.5" stroke-width="3" />
+
+  <!-- Dashes and gaps of various sizes with an odd number of values -->
+  <line stroke="var(--nwdarkblue)" fill="var(--nwdarkblue)" x1="2" y1="19" x2="20" y2="19" stroke-dasharray="2 2" stroke-width="3" />
+</svg>

@@ -21,7 +21,19 @@ namespace NOAHBusinessApp.Controllers.RE
 
 
             mainDataAccess main = new mainDataAccess();
-            main.MenuAccess(User, this);
+            bool isvalid = false;
+            try
+            {
+                if (Request.QueryString["nwtk"].ToString() != "")
+                {
+                    isvalid = true;
+                }
+            }
+            catch { }
+            //if (isvalid == false)
+            //{
+            //    main.MenuAccess(User, this);
+            //}
             return View(@"~\DC\DataSetup\DCRequirementCompliance\DCRequirementCompliance.cshtml");
         }
 

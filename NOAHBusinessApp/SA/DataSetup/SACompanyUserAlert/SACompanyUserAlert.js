@@ -1,7 +1,7 @@
 ﻿
 function func_Reload() {
 
-    crLnk = "../SACompanyUserAlert/SACompanyUserAlert_Gateway";
+    crLnk = GetCurrentURL() + "SACompanyUserAlert_Gateway";
     crLnkGateKey = "SACompanyUserAlert";
 
           var isContinue = true;

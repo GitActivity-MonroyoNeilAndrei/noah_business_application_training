@@ -2,7 +2,7 @@
 var nwaccess = "";
 
 function func_Reload() {
-    crLnk = "../SAUserAccess/SAUserAccess_Gateway";
+    crLnk = GetCurrentURL() + "SAUserAccess_Gateway";
     crLnkGateKey = "SAUserAccess";
 
  //DataAutoComputeGrid = false;

@@ -1,0 +1,171 @@
+﻿
+
+.menuitem-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #3a3a3a;
+}
+
+.menuitem-df {
+    font-size: 16px;
+    font-weight: 600;
+    color: #6d6d6d;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.nk .lbltxt, .nk label {
+    color: #6d6d6d;
+}
+
+.nk .txtbox, .nk .txtbox-date, .nk .txtbox-time, .nk .txtarea, .nk input[type="text"], .nk input[type="date"], .nk input[type="time"], .nk textarea {
+    border: 1px solid #e0dfE4;
+}
+
+.nk .cmb {
+    background: transparent;
+    border: 1px solid #E0DFE4;
+    color: #6d6d6d;
+}
+
+input#descvallugPayment {
+    background-color: #ffffff;
+}
+
+input#descvallugMOP {
+    background-color: #ffffff;
+}
+
+.modal-box-s {
+    padding: 0px !important;
+}
+
+.modal-hdr {
+    background-color: #133561 !important;
+    border-radius: 0px !important;
+    border: none !important;
+}
+
+.btn.btn-modal-back {
+    background: rgb(255 255 255 / 23%);
+}
+
+div.found-record {
+    background-color: transparent;
+    color: #000;
+    text-align: right;
+        font-size: 11px;
+}
+
+.nk .nk-modal-body .table-tabs-wrapper .table-wrapper {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: auto !important;
+}
+
+@media (max-width: 800px) {
+
+    /*/table CSS/*/
+
+    .nk .table td:first-of-type {
+        display: none;
+    }
+
+    .nk .table td[scope="col"][row-th="View"]:before {
+        display: none;
+    }
+
+    .nk .table td[scope="col"][row-th="View"] .wrap-td {
+        width: 100%;
+        padding: 0px;
+    }
+
+    th.tbl-row-num {
+    display: none !important;
+}
+
+    .nk .table td[row-th="Description"]::before {
+    display: none !important;
+}
+
+    .nk .table .tbl-row-num:before, .nk .table td:before {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+        padding-top: 0px !important;
+        font-weight: 500 !important;
+        font-size: 12px !important;
+        color: #848484 !important;
+    }
+
+    .nk .table td .wrap-td, .nk .table th .wrap-td {
+        font-weight: 600;
+        color: #000000;
+    }
+
+    .nk .table-wrapper {
+        background: #ffffff;
+    }
+
+    .nk .table tr {
+        padding: 6px !important;
+    }
+
+
+    .nk .table td, .nk .table th {
+        border: transparent;
+    }
+
+    .nk .table .tbl-row-num, .nk .table td {
+        padding: 0px !important;
+    }
+
+    .btn.btn-modal-rescale-s {
+    display: none;
+}
+
+}
+
+@media only screen and (max-width: 800px) {
+
+    .menuitem-title {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .menuitem-df {
+        font-size: 13px;
+        margin-bottom: 0px;
+        margin-top: 0;
+    }
+
+    .nkListViewRow {
+        margin: 3px 0px;
+    }
+
+    div#conGrid {
+        height: auto !important;
+        width: 100% !important;
+        margin-bottom: 0px !important;
+    }
+
+    .nkListViewTitle {
+        font-size: 12px;
+    }
+
+    .nkListViewValue {
+        font-size: 12px;
+    }
+
+    .row.row-parent {
+        margin-bottom: 0px !important;
+    }
+
+    label.lbltxt {
+        padding: 0px 2px !important;
+    }
+
+    .row.margin-bottom-5 {
+        margin-bottom: 0px !important;
+    }
+
+}

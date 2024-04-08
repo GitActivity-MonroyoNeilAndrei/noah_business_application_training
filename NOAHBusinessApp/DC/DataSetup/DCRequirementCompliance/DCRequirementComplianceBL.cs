@@ -483,7 +483,9 @@ namespace Noah_Web.forms_BusinessLayer
             {
                 foreach (DataRow dr in dt.Rows)
                 {
-                    dr[SPR_COMPILEDHDR - 1] = dr[SPR_COMPILEDHDR - 1].ToString() == "" ? "false" : dr[SPR_COMPILEDHDR - 1];
+                    dr[SPR_COMPILEDHDR - 1] = dr[SPR_COMPILEDHDR - 1].ToString() == "" || dr[SPR_COMPILEDHDR - 1].ToString() == "0" || dr[SPR_COMPILEDHDR - 1].ToString().ToLower() == "false" ? "false" : "true";
+
+
                     if ((bool.Parse(dr[SPR_COMPILEDHDR - 1].ToString()) && string.IsNullOrWhiteSpace(dr[SPR_WORKINSTRUCTIONS - 1].ToString())) || (dr[SPR_WORKINSTRUCTIONS - 1].ToString() == string.Empty && (dr[SPR_TAG - 1].ToString() == string.Empty || dr[SPR_TAG - 1].ToString() == "0")
                          && (dr[SPR_DOCNOHDR - 1].ToString() != string.Empty || dr[SPR_DOCDATEHDR - 1].ToString() != string.Empty || dr[SPR_EXPIRYDATEHDR - 1].ToString() != string.Empty
                          || dr[SPR_FILEPATH - 1].ToString() != string.Empty || dr[SPR_URLHDR - 1].ToString() != string.Empty || dr[SPR_DOCDETAILSCODEHDR - 1].ToString() != string.Empty)))
@@ -558,8 +560,8 @@ namespace Noah_Web.forms_BusinessLayer
                 foreach (DataRow dr in dt.Rows)
                 {
                     if (!string.IsNullOrWhiteSpace(dr[SPR_WORKINSTRUCTIONS - 1].ToString()))
-                    {                                                
-                        bool complied = bool.Parse(dr[SPR_COMPILEDHDR - 1].ToString());
+                    {
+                        bool complied = bool.Parse(dr[SPR_COMPILEDHDR - 1].ToString() == "" || dr[SPR_COMPILEDHDR - 1].ToString() == "0" || dr[SPR_COMPILEDHDR - 1].ToString().ToLower() == "false" ? "false" : "true");
                         string workins = dr[SPR_WORKINSTRUCTIONS - 1].ToString();
                         string docno = dr[SPR_DOCNOHDR - 1].ToString();
                         string docdate = dr[SPR_DOCDATEHDR - 1].ToString();
@@ -593,7 +595,7 @@ namespace Noah_Web.forms_BusinessLayer
 
             //m_spread.RowHeight(5);
             m_spread.CreateExcelGrid(5, SPR_FORCONFALL);
-            m_spread.TableHeight(400);
+            m_spread.TableHeight(300);
             m_spread.minRow(5);
            
 
@@ -734,9 +736,9 @@ namespace Noah_Web.forms_BusinessLayer
             m_spread.nwobject(SPR_DOCDATEHDR - 1).Width(120);
             m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).Width(120);
             m_spread.nwobject(SPR_URLHDR - 1).Width(300);
-            m_spread.nwobject(SPR_ATTACHHDR - 1).Width(33);
-            m_spread.nwobject(SPR_VIEWHDR - 1).Width(33);
-            m_spread.nwobject(SPR_REMOVEHDR - 1).Width(33);
+            m_spread.nwobject(SPR_ATTACHHDR - 1).Width(60);
+            m_spread.nwobject(SPR_VIEWHDR - 1).Width(60);
+            m_spread.nwobject(SPR_REMOVEHDR - 1).Width(60);
             m_spread.nwobject(SPR_DELETEROW - 1).Width(0);
             m_spread.nwobject(SPR_TAGDOCNOHDR - 1).Width(0);
             m_spread.nwobject(SPR_TAGDOCDATEHDR - 1).Width(0);
@@ -756,25 +758,25 @@ namespace Noah_Web.forms_BusinessLayer
 
             m_spread.nwobject(SPR_COMPILEDHDR - 1).BackgroundColor("white");
             m_spread.nwobject(SPR_REQUIREDHDR - 1).BackgroundColor("white");
-            m_spread.nwobject(SPR_ALTERNATIVE - 1).BackgroundColor("Gainsboro");
-            m_spread.nwobject(SPR_DOCUMENTGRP - 1).BackgroundColor("Gainsboro");
+            //m_spread.nwobject(SPR_ALTERNATIVE - 1).BackgroundColor("Gainsboro");
+            //m_spread.nwobject(SPR_DOCUMENTGRP - 1).BackgroundColor("Gainsboro");
             m_spread.nwobject(SPR_REQUIREDHDR - 1).BackgroundColor("white");
-            m_spread.nwobject(SPR_DOCDETAILSCODEHDR - 1).BackgroundColor("cyan");
+            //m_spread.nwobject(SPR_DOCDETAILSCODEHDR - 1).BackgroundColor("cyan");
             m_spread.nwobject(SPR_DOCNOHDR - 1).BackgroundColor("white");
             m_spread.nwobject(SPR_DOCDATEHDR - 1).BackgroundColor("white");
             m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).BackgroundColor("white");
             m_spread.nwobject(SPR_URLHDR - 1).BackgroundColor("white");
-            m_spread.nwobject(SPR_ATTACHHDR - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_VIEWHDR - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_REMOVEHDR - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_ATTACHHDR - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_VIEWHDR - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_REMOVEHDR - 1).BackgroundColor("gainsboro");
 
-            m_spread.nwobject(SPR_DOCDETAILSHDR - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_TAGDOCNOHDR - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_TAGDOCDATEHDR - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_TAGEXPIRYDATEHDR - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_TAGATTACHHDR - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_TAGURLHDR - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_FILEPATH - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_DOCDETAILSHDR - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_TAGDOCNOHDR - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_TAGDOCDATEHDR - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_TAGEXPIRYDATEHDR - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_TAGATTACHHDR - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_TAGURLHDR - 1).BackgroundColor("gainsboro");
+            //m_spread.nwobject(SPR_FILEPATH - 1).BackgroundColor("gainsboro");
 
             #endregion
 
@@ -813,6 +815,7 @@ namespace Noah_Web.forms_BusinessLayer
 
             //js.makeHTML("#nwGrid2", m_spread.createTable());
             js.ADD(m_spread.createTable());
+            js.ADD("CreatedGridDone()");
 
 
             //js.ADD("nwGrid_TableAdjust(\"" + gridID + "\")");
@@ -865,8 +868,27 @@ namespace Noah_Web.forms_BusinessLayer
                 if ((dr_details[SPR_WORKINSTRUCTIONS - 1].ToString() != string.Empty))
                 {
                     dr["docno"] = WebApp.nwobjectText("TransactionNo");
-                    dr["complied"] = dr_details[SPR_COMPILEDHDR - 1].ToString();
-                    dr["required"] = dr_details[SPR_REQUIREDHDR - 1].ToString() == ""? "false": dr_details[SPR_REQUIREDHDR - 1].ToString();
+                    //dr["complied"] = Parser.ParseInt(dr_details[SPR_COMPILEDHDR - 1].ToString());
+                    //dr["required"] = dr_details[SPR_REQUIREDHDR - 1].ToString() == ""? "false": dr_details[SPR_REQUIREDHDR - 1].ToString();
+
+                    if(dr_details[SPR_COMPILEDHDR - 1].ToString() == "1" || dr_details[SPR_COMPILEDHDR - 1].ToString().ToLower() == "true")
+                    {
+                        dr["complied"] = "True";
+                    }
+                    else
+                    {
+                        dr["complied"] = "False";
+                    }
+
+                    if (dr_details[SPR_REQUIREDHDR - 1].ToString() == "1" || dr_details[SPR_REQUIREDHDR - 1].ToString().ToLower() == "true")
+                    {
+                        dr["required"] = "True";
+                    }
+                    else
+                    {
+                        dr["required"] = "False";
+                    }
+
                     dr["workInstructions"] = dr_details[SPR_WORKINSTRUCTIONS - 1].ToString();
                     dr["docDetail"] = dr_details[SPR_DOCDETAILSCODEHDR - 1].ToString();
                     dr["documentNo"] = dr_details[SPR_DOCNOHDR - 1].ToString();

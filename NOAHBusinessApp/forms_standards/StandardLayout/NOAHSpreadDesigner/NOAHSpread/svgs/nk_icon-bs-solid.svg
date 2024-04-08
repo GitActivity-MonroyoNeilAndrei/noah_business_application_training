@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" height="30" width="300">
+  <style>
+    line {
+    stroke: #354578;
+    }
+  </style>
+  <!-- No dashes nor gaps -->
+  <line x1="50" y1="14" x2="300" y2="14" stroke-width="4" />
+</svg>

@@ -1,0 +1,31 @@
+﻿Modified by			: Kyla Rizelle Valenton
+Modified Date		: 03/04/2024
+Menu Item Version	: 10.0.0.2
+Updates				: Addressing: Date field upon change should be date only
+								  Fix the Uploading Validations
+								  Functionality of Screenshot Button
+					 
+
+Modified by			: Kyla Rizelle Valenton
+Modified Date		: 03/04/2024
+Menu Item Version	: 10.0.0.1
+Updates: Development of Dynamic Grid
+		 Development of Dynamic Columns
+		 Development of Dynamic Lookup
+		 Development of Dynamic Filter
+		 Development of Dynamic Retrieve
+
+
+
+Created by			: Kyla Rizelle Valenton
+Created Date		: 02/06/2024
+Menu Item Version	: 10.0.0.0
+
+
+
+
+
+
+
+
+	

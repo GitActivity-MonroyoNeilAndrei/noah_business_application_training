@@ -1,0 +1,19 @@
+﻿<!--Custom Library-->
+<script>
+
+if(crLnkGateKey=='aagUserAccess')
+	$('#version').hide();
+
+
+
+$('.notif-sub-cont.notif-notif').css('display', 'none');
+
+
+function Meg_ChangeCOlor(){
+ $('body').prepend("<style>#menuCreatorContainer th { background:#85b1c7 !important}</style>");
+}
+ Meg_ChangeCOlor();
+
+</script>
+
+

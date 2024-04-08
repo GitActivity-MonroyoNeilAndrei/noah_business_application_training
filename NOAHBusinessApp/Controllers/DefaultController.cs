@@ -54,11 +54,15 @@ namespace NOAHBusinessApp.Controllers
 
                     pass = nwSystem.StringDecrypt(pass);
 
+                    pass = "Az1#@$%" + pass;
+                    //pass = "Az1#" + pass;
+
                     var result = await SignInManager.PasswordSignInAsync(UName, pass, false, shouldLockout: false);
 
                     //UName = nwSystem.StringDecrypt(UName);
                     FormsAuthentication.RedirectFromLoginPage(UName, false);
 
+                    string code = SFObjects.returnText("Select code from [fpti].[user] where code = '" + UName + "'", nwSystem.ARKDB_ConnectionString());
 
                 }
                 catch { }

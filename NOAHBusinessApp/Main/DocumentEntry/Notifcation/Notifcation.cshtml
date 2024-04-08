@@ -1,0 +1,92 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Push Notifications";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+    
+}
+<head>
+    @*<script src="~/Main/DocumentEntry/Home/lib/pagination.js"></script>*@
+    <script src="~/Main/DocumentEntry/Home/Home.js"></script>
+    <link href="~/Main/DocumentEntry/Home/lib/magnific-popup/magnific-popup.css" rel="stylesheet" />
+</head>
+
+<body class="nw-ui nk _home _layout">
+
+    @*NOTIF POP UP*@
+    <div class="spl-sys-psntf">
+        <div class="spl-sys-psntf-wrap">
+            <div class="spl-sys-psntf-hrd">
+                <div class="spl-sys-psntf-title"></div>
+                <div class="spl-sys-psntf-close btnPopup"></div>
+            </div>
+
+            <div class="spl-sys-psntf-content">
+                @*content will show here*@
+            </div>
+
+            <div class="spl-sys-psntf-date">
+                @*Date will show here*@
+            </div>
+        </div>
+    </div>
+
+    @*NOTIF POP UP*@
+
+    <!-- Splashboard Container -->
+    <div class="container-flex _spl-container-mob-notif">
+        <div class="row _spl-row-container">
+         
+            <div class="col col-12 col-parent _spl-left">
+                <div class="col col-12 with-spacing-4 _spl-col-left">
+                    <div class="spl-sys-menu-c">
+                        <div class="spl-sys-user-c">
+
+                            @*<div id="uInfoNameF" class="menu-user-name menu-user-name-r" style="text-align: center;">-</div> 
+                            <div id="uInfoTypeF" class="menu-user-type menu-user-type-r" style="text-align: center;">-</div>*@ 
+
+                            <div class="spl-sys-btn-c">
+                                <div class="spl-sys-btn fav-btn" data-content="favorites">Push Notifications</div>
+                            </div>
+
+                            <div class="spl-sys-content"> @*aagedit*@
+                                <div class="spl-sys-container show" >
+                                    <div id="conNotif" class="spl-sys-container-r">
+
+                                        @*<div class="spl-sys-r-banner">
+                                            <div class="spl-sys-r-wrapper favorites">
+                                                <div class="spl-sys-banner-icon"></div>
+                                                <div class="spl-sys-banner-text">No Notification</div>
+                                            </div>
+                                        </div>*@
+                                    </div>
+                                </div>
+
+                                <div class="spl-sys-container" id="recent">
+                                    <div class="spl-sys-container-r">
+                                        @*<div class="spl-sys-r-c">
+                                                <div class="spl-sys-r-icon recent"></div>
+                                                <div class="spl-sys-r-text">
+                                                    <div class="spl-sys-r-title">E0101 Daily Accomplishment Report</div>
+                                                    <div class="spl-sys-r-subtitle">Menuitem</div>
+                                                </div>
+                                                <div class="spl-sys-r-btn recent-btn"></div>
+                                            </div>*@
+
+                                        <div class="spl-sys-r-banner">
+                                            <div class="spl-sys-r-wrapper recent">
+                                                <div class="spl-sys-banner-icon"></div>
+                                                <div class="spl-sys-banner-text">Sorry, no menuitem found</div>
+                                                <div class="spl-sys-banner-subtext">Any open menuitem will appear here!</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> @*aagedit*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

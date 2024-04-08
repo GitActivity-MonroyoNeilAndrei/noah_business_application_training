@@ -29,8 +29,9 @@ function fnMenuGroupTreeView() {
     });
 }
 
+
 $(document).ready(function () {
-    nk_GetUInfo();
+    //nk_GetUInfo();
 
     var $doc = $(document);
     var $body = $(document).find("body");
@@ -60,26 +61,31 @@ $(document).ready(function () {
     });
     $(window).resize();
 
-    $doc.on("click", ".btn-ham", function () {
-        var $this = $(this), $el = $doc.find(".left-pnl");
-        $this.toggleClass("active");
-        $this.hasClass("active") ? $el.addClass("expand") : $el.removeClass("expand");
-    });
+    //$doc.on("click", ".btn-ham", function () {
+    //    var $this = $(this), $el = $doc.find(".left-pnl");
+    //    $this.toggleClass("active");
+    //    $this.hasClass("active") ? $el.addClass("expand") : $el.removeClass("expand");
+    //});
 
     $doc.on("click", ".btn-modules", function (e) {
         var $this = $(this), $el = $doc.find(".btn-modules");
 
         if (!$this.hasClass("selected")) {
-            $doc.find(".menu-grp-ul").animate({ height: 0 }, 120,
-				function () { $(this).css("height", ""); });
-            $doc.find(".menu-grp-li").removeClass("collapse");
-            $doc.find(".menu-grp-lbl").removeClass("selected");
+                $doc.find(".menu-grp-ul").animate({ height: 0 }, 120,
+                    function () { $(this).css("height", ""); });
+                $doc.find(".menu-grp-li").removeClass("collapse");
+                $doc.find(".menu-grp-lbl").removeClass("selected");
         }
 
         $el.not(this).removeClass("selected");
         $this.addClass("selected");
-        $this.parents(".left-pnl").addClass("extended expand");
-        $doc.find(".btn-ham").addClass("active");
+        //if (!$this.hasClass("btn-menuitem")) {
+        //    $this.parents(".left-pnl").addClass("extended expand");
+        //    $doc.find(".btn-ham").addClass("active");
+        //}
+        //else {
+        //    $this.parents(".left-pnl").removeClass("extended expand");
+        //}
     });
 
     $doc.on("click", ".btn-left-pnl_b", function () {
@@ -87,7 +93,7 @@ $(document).ready(function () {
         $el.not(this).removeClass("selected");
         $this.addClass("selected");
         if (winSize < 768) return;
-        //$this.parents(".left-pnl").addClass("extended expand");
+        $this.parents(".left-pnl").addClass("extended expand");
         $doc.find(".btn-ham").addClass("active");
     });
 
@@ -105,23 +111,23 @@ $(document).ready(function () {
     //    $doc.find(".btn-ham").addClass("active");
     //});
 
-    $doc.on("click", ".mdl-b-sec-body .btn-default-add-input", function () {
-        var $this = $(this);
-        var str = `<div class="row">
-			<div class="col col-10 border-none v-align-mid">
-			<input type="text" name="" class="txtbox" value="">
-			</div>
-			<div class="col col-2 v-align-mid">
-			<div class="btn btn-sm-default btn-sm-delete"></div>
-			</div>
-			</div>`;
+    //$doc.on("click", ".mdl-b-sec-body .btn-default-add-input", function () {
+    //    var $this = $(this);
+    //    var str = `<div class="row">
+	//		<div class="col col-10 border-none v-align-mid">
+	//		<input type="text" name="" class="txtbox" value="">
+	//		</div>
+	//		<div class="col col-2 v-align-mid">
+	//		<div class="btn btn-sm-default btn-sm-delete"></div>
+	//		</div>
+	//		</div>`;
 
-        $this.parents(".mdl-b-sec").find(".sec-row-c").append(str);
-        var $sec = $this.parents(".mdl-b-sec-body");
-        $sec.animate({
-            scrollTop: $sec.get(0).scrollHeight,
-        }, 320);
-    });
+    //    $this.parents(".mdl-b-sec").find(".sec-row-c").append(str);
+    //    var $sec = $this.parents(".mdl-b-sec-body");
+    //    $sec.animate({
+    //        scrollTop: $sec.get(0).scrollHeight,
+    //    }, 320);
+    //});
 
     $doc.on("click", ".btn-h-close", function () {
         $(this).parents(".mdl").fadeOut();
@@ -144,15 +150,15 @@ $(document).ready(function () {
         $doc.find(".pnlHelp-c").fadeOut("fast");
         $doc.find(".btn-hdr_r.btn-user").removeClass("selected");
         $doc.find(".btn-hdr_r.btn-settings").addClass("selected");
-        fnSettingsStickyHeaders();
+        //fnSettingsStickyHeaders();
     });
 
-    $doc.on("click", ".btn.btn-menu-m", function () {
-        $doc.find("#mdlPrompt").fadeIn("fast");
-        $doc.find(".menu-user-f").fadeOut("fast");
-        $doc.find(".btn-hdr_r.btn-user").removeClass("selected");
-        //fnLogoutMsg();
-    });
+    //$doc.on("click", ".btn.btn-menu-m", function () {
+    //    $doc.find("#mdlPrompt").fadeIn("fast");
+    //    $doc.find(".menu-user-f").fadeOut("fast");
+    //    $doc.find(".btn-hdr_r.btn-user").removeClass("selected");
+    //    //fnLogoutMsg();
+    //});
 
     $doc.on("click", "#btnPrompMsgOne", function () {
         $doc.find(".mdl-cc").fadeIn("2500");
@@ -240,7 +246,7 @@ $(document).ready(function () {
         $(".spl-recent").fadeOut("fast");
     });
 
-    $doc.on("click", ".help-close-btn", function () {
+    $doc.on("click", ".spl-hrd-closeBtn", function () {
         $(".pnlHelp-c").fadeOut("fast");
     });
 
@@ -293,65 +299,13 @@ $(document).ready(function () {
     //    $(".spl-user-chatbox").removeClass("_spl-chatbox")
     //});
 
-    $doc.on("click", ".spl-msg-chatbox", function () {
-        $(".spl-msg-fList").toggleClass("active");
-        $(".spl-user-aNoteForm").removeClass("active");
-        $(".spl-user-sNoteForm").removeClass("active");
-    })
-
-    $doc.on("click", ".spl-user-aNoteBtn", function () {
-        $(".spl-user-aNoteForm").toggleClass("active");
-        $(".spl-msg-fList").removeClass("active");
-        $(".spl-user-sNoteForm").removeClass("active");
-    })
-
-    $doc.on("click", ".spl-user-sNoteBtn", function () {
-        $(".spl-user-sNoteForm").toggleClass("active");
-        $(".spl-msg-fList").removeClass("active");
-        $(".spl-user-aNoteForm").removeClass("active");
-    })
-
     //CompanyPanelJS
     $doc.on("click", ".spl-comp-select", function () {
         $(".spl-comp-select").removeClass("active");
         $(this).addClass("active");
     });
 
-    //Fav Recent adjust width input JS
-    $doc.on("click", ".spl-search-fav-icon", function () {
-        $(".spl--input").toggleClass("active");
-    });
-
-    $doc.on("click", ".spl-search-recent-icon", function () {
-        $(".spl--input-r").toggleClass("active");
-    });
-
-    //add class theme active
-    $doc.on("click", ".theme-w", function () {
-        $(".theme-w").removeClass("active");
-        $(this).addClass("active");
-    })
-
-
     // Functions
-
-    fnAniHDRRC();
-    function fnAniHDRRC() {
-        setTimeout(() => {
-            $doc.find(".hdr_r").fadeIn().removeClass("_inithide");
-        }, 500, clearTimeout );
-        $doc.find(".btn-hdr_r svg").each(function (a) {
-            var $this = $(this);
-            $this.css({
-                "animation-delay": 0.3 * (a) + "s",
-            });
-        });
-        setTimeout(() => {
-            $doc.find(".frm-title-c").removeClass("_inithide");
-            $doc.find(".hdr_r").css("display", "");
-        }, 2200, clearTimeout);
-    }
-
     fnMenuGroupTreeView();
     //function fnMenuGroupTreeView() {
     //    var $el = $doc.find(".menu-grp-lbl");
@@ -380,15 +334,15 @@ $(document).ready(function () {
     fnSetModuleIcon();
     function fnSetModuleIcon() {
         var $el = $doc.find(".btn-modules");
-        $el.each(function (i) {
-            var $this = $el.eq(i),
-                abbr = $this.attr("cabv");
-				//str = $this.text(),
-				//matches = str.match(/\b(\w)/g),
-				//abbr = matches.join("").substring(0, 3);
+        //$el.each(function (i) {
+        //    var $this = $el.eq(i),
+        //        abbr = $this.attr("cabv");
+		//		//str = $this.text(),
+		//		//matches = str.match(/\b(\w)/g),
+		//		//abbr = matches.join("").substring(0, 3);
 
-            $this.append(`<div class="mod-abbr">${abbr}</div>`);
-        });
+        //   // $this.append(`<div class="mod-abbr">${abbr}</div>`);
+        //});
 
         var $abbr = $doc.find(".mod-abbr");
         $abbr.each(function (i) {
@@ -404,47 +358,32 @@ $(document).ready(function () {
         });
     }
 
-    fnSettingsStickyHeaders();
-    function fnSettingsStickyHeaders() {
-        var $sectitle = $doc.find(".mdl-b-sec-title"), $secbody = $doc.find(".mdl-b-sec-body");
-
-        $secbody.each(function (i) {
-            var $this = $(this);
-            $this.css("height", $this.parent().outerHeight() - $sectitle.outerHeight());
-        });
-
-        $sectitle.each(function (i) {
-            var $this = $(this);
-            $this.attr("scroll-top", $this.position().top)
-        });
-    }
 
     fnSettingsLeftBtns();
     function fnSettingsLeftBtns() {
-        var $el = $doc.find(".mdl-b_r");
-        var $btn = $doc.find(".btn-mdl-l");
-        var $close = $doc.find(".btn-h-close");
+        const btnSettings = document.querySelectorAll(".btn.btn-mdl-l")
+        const contentSettings = document.querySelectorAll(".mdl-b-sec.mdl-b-sec-body")
+        //const btn = $doc.find(".btn-mdl-l")
 
-        $doc.on("click", ".btn-mdl-l", function (e) {
-            var id = $(this).attr("id");
-            var $sec = $doc.find("#" + id.replace("btn", "sec"));
+        btnSettings.forEach(function (btns) {
+            btns.addEventListener("click", function (btn) {
+                const btnSetting = btn.currentTarget
+                const contentSettingID = document.getElementById(btnSetting.dataset.id)
 
-            $btn.removeClass("selected");
-            $(this).addClass("selected");
+                contentSettings.forEach(function (items) {
+                    items.classList.remove("show")
+                })
 
-            $el.animate({
-                scrollTop: $sec.attr("scroll-top"),
-            }, 320);
-
-            //$el.animate({ scrollTop: 0 }, 300);
+                btnSettings.forEach(function (selected) {
+                    selected.classList.remove("selected")
+                })
+                contentSettingID.classList.add("show")
+                btnSetting.classList.add("selected")
+            })
         });
 
-        $doc.on("click", ".btn-h-close", function () {
-
-            $el.animate({ scrollTop: 0 }, 100);
-            $btn.removeClass("selected");
-        });
     }
+
 
 
 
@@ -461,12 +400,26 @@ $(document).ready(function () {
     }
 
 
-    fnAbbrProg();
-    function fnAbbrProg() {
-        var $abbrName = $("#uInfoName").text();
-        var $getInitials = $abbrName.charAt(0) + $abbrName.charAt(5);
-        var $abbrProfile = $(".menu-notif-prof-abbr").text($getInitials);
-    }
+   // fnShowHideContainer();
+    //function fnShowHideContainer() {
+    //    const btns = document.querySelectorAll(".spl-sys-btn")
+    //    const container = document.querySelectorAll(".spl-sys-container")
+
+    //    btns.forEach(btn => {
+    //        btn.addEventListener("click", (e) => {
+    //            const selectedBtn = e.currentTarget
+    //            const showContainer = document.getElementById(selectedBtn.dataset.content)
+
+    //            container.forEach(containers => {
+    //                if (containers !== showContainer) {
+    //                    containers.classList.remove("show")
+    //                }
+    //            })
+
+    //            showContainer.classList.add("show")
+    //        })
+    //    })
+    //}
 
     function isNotNull(str) {
         if (str !== '' || str !== null || str !== undefined || typeof str !== 'undefined' || typeof str !== 'object' || str.length !== 0) return true;
@@ -489,6 +442,14 @@ $(document).ready(function () {
             localStorage.setItem('company', abbr);
             $("#uInfoCompany").html(localStorage.getItem('company'));
         })
+    }
+
+    fnChangeBgLvl();
+    function fnChangeBgLvl() {
+        $doc.on("click", ".lvl-c", function () {
+            $('.lvl-c').removeClass('active');
+            $(this).addClass('active');
+        });
     }
 
     //ShowonReload
@@ -541,16 +502,6 @@ $(document).ready(function () {
 
 
 
-//THEME JS RICS
-
-
-//$(document).ready(function () {
-//    $('#checkbox').on('change', function () {
-//        $('.splashboard-container').toggleClass('active');
-//    })
-//})
-
-
 $(document).ready(function () {
     $(".theme-w").on("click", function () {
         localStorage.setItem('active-theme', $(this).attr('value'));
@@ -569,6 +520,50 @@ $(document).ready(function () {
     }
 });
 
+$(document).ready(function () {
 
+    $(window).scroll(function () {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 150) {
+            $(".nk-toolbar-c").addClass("fixed");
+        } else {
+            $(".nk-toolbar-c").removeClass("fixed");
+        }
+    });
+
+});
+$(document).on("click", ".btn-ham", function () {
+    var $this = $(this), $el = $(document).find(".left-pnl");
+    $this.toggleClass("active");
+    if ($this.hasClass("active")) {
+        fx_ExplorerTitleHide();
+        
+    } else {
+        fx_ExplorerTitleShow();
+    }
+
+    $this.hasClass("active") ? $el.addClass("expand") : $el.removeClass("expand");
+
+
+});
+
+function fx_ExplorerTitleShow() {
+    var $el2 = $(document).find(".btn-modules");
+    $el2.each(function (i) {
+        var $_this = $el2.eq(i);
+        $_this.attr("title", $_this.attr("nwtitle"));
+        $_this.attr("nwtitle", "");
+    });
+}
+
+function fx_ExplorerTitleHide() {
+    var $el2 = $(document).find(".btn-modules");
+    $el2.each(function (i) {
+        var $_this = $el2.eq(i);
+        $_this.attr("nwtitle", $_this.attr("title"));
+        $_this.attr("title", "");
+    });
+}
 
 

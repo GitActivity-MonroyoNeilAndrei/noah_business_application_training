@@ -183,6 +183,8 @@ namespace Noah_Web.forms_BusinessLayer
             DataTable dtLookupConfig = WebApp.get_LookupConfig();
             nwObject.LookupConfig(dtLookupConfig);
 
+            string recuser = based.SecurityAccess.RecUser.ToUpper();
+
             string strFinal = "";
             string strSQL = "";
             string mouseDownFunc = "";
@@ -193,7 +195,8 @@ namespace Noah_Web.forms_BusinessLayer
             switch (strMethod)
             {
                 case "gettoolboxInquire":
-                    strSQL = dal.inquireQuery();
+
+                    strSQL = dal.inquireQuery(recuser);
                     strMethod = strMethod.Substring(3);
                     nwObject.ColumnSort("Transaction No.", "ASC");
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
@@ -208,6 +211,7 @@ namespace Noah_Web.forms_BusinessLayer
         public void RecordOperation(eRecordOperation i, int Position)
         {
             string result = "", tempstr = "";
+            string recuser = based.SecurityAccess.RecUser.ToUpper();
 
             switch (i)
             {
@@ -220,12 +224,10 @@ namespace Noah_Web.forms_BusinessLayer
                     nwToolBox.bindingNavigatorDeleteItem.Enable =
                     nwToolBox.bindingNavigatorExportItem.Enable = false;
 
-                    Prompt.Information("add", based.Title);
-                    
+                    js.makeValueText("#txtAccNumber", recuser);
                     js.makeValueText("#txtPropDate", SFObjects.GetServerDateTime(this.UserDefinedConnectionString).ToString("MM/dd/yyyy"));
                     js.ADD("cust_GetPara()");
                     loadFromAccNoCMB();
-                    loadFromReqCMB();
                     break;
 
                 case eRecordOperation.Save:
@@ -240,18 +242,18 @@ namespace Noah_Web.forms_BusinessLayer
                         RecordOperationResult = RecordOperationResult.Insert(0, "");
 
 
-                    Prompt.Information("save", based.Title);
+                    Prompt.Information("Saved Successfully", based.Title);
                     break;
 
                 case eRecordOperation.Delete:
-                    RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtTranNo"), based.SecurityAccess.RecUser);
+                    RecordOperationResult = dal.DeleteData(WebApp.nwobjectText("txtTranNo"), recuser);
                     break;
 
                 case eRecordOperation.Process:
                     RecordOperationResult = AreValidEntries();
                     if (RecordOperationResult == string.Empty)
                     {
-                        RecordOperationResult = dal.Process(WebApp.nwobjectText("txtTranNo"));
+                        //RecordOperationResult = dal.Process(WebApp.nwobjectText("txtTranNo"),WebApp.nwobjectText("cmbTranAct"));
                     }
 
                     Prompt.Information("Process", based.Title);
@@ -278,7 +280,7 @@ namespace Noah_Web.forms_BusinessLayer
                     ListingAndPrint frmlist = new ListingAndPrint
                                                            (ListingAndPrint.FormType.Listing, dal.LISTINGSTARTROW, dal.LISTINGQUERY(),
                                                            LISTINGFILENAME, UserDefinedConnectionString, SFObjects.returnText(dal.GETCOMPANY, UserDefinedConnectionString),
-                                                           based.SecurityAccess.RecUserName, LISTINGFILENAME);
+                                                           recuser, LISTINGFILENAME);
                     
 
                     //## FOR EXPORTING ###
@@ -353,37 +355,167 @@ namespace Noah_Web.forms_BusinessLayer
                 case "actBindCollectionEmpty":
                     js.ADD("nwLoading_End('xSample')");
                     break;
-                    
+
+                case "actGetRequests":
+                    cmbGetRequests();
+                    break;
+
                 case "actHasRqrdCompli":
                     setRqmtCompProp();
                     js.ADD("nwLoading_End('actHasRqrdCompli')");
                     break;
 
-                case "load_defaults":
-                    loadFromAccNoCMB();
+                case "actLoadDefaults":
+                    bool viewing = WebApp.nwobjectBool("fromHist");
+
+                    if (viewing == true)
+                    {
+                        loadSavedTransaction();
+                    }
+                    else
+                    {
+                        loadFromAccNoCMB();
+                    }
                     break;
 
-                case "load_defaultsX":
+                case "actFromAmt":
+                    loadFromAmt();
+                    js.ADD("nwLoading_End('actFromAmt', crLoadingHTML);");
+                    break;
+
+                case "actGetDataDetails":
                     loadFromReqCMB();
-                    loadFromAmt();
                     break;
 
-                case "load_fromAmt":
-                    loadFromAmt();
+                case "actLoadBindings":
+                    loadDatawtDocno();
                     break;
 
-                case "saveBtn_func":
+                case "actSave":
+                    RecordOperationResult = AreValidEntries();
+
+                    //To condition isNewRow
+                    string tranType = WebApp.nwobjectText("cmbTranAct");
+                    string dDocno = WebApp.nwobjectText("txtTranNo");
+
+                    isNewRow = dDocno == "" ? true : false;
+
+                    if (dDocno.Contains(tranType) || dDocno == "")
+                    {
+                        if (RecordOperationResult.Length <= 0)
+                        {
+                            DataTable dt = LoadSchema();
+                            RecordOperationResult = dal.SaveData(dt, isNewRow);
+
+                            js.ADD("nwLoading_End('actSave', crLoadingHTML);");
+                            if (isNewRow)
+                            {
+                                js.ADD("disableTranTypeSelection();");
+                                Prompt.Information(RecordOperationResult, based.Title);
+                            }
+                            else
+                            {
+                                js.ADD("showTransactionNo();");
+                            }
+                        }
+                        else
+                        {
+                            RecordOperationResult = RecordOperationResult.Insert(0, "");
+                        }
+
+                        
+                    } else {
+                        if (RecordOperationResult.Length <= 0)
+                        {
+                            DataTable dt = LoadSchema();
+                            RecordOperationResult = dal.SaveData(dt, true);
+                            //DataTable dt = LoadSchema();
+                            //RecordOperationResult = dal.UpdateOldTransaction(dt);
+                            js.ADD("nwLoading_End('actSave', crLoadingHTML);");
+                            js.ADD("showTransactionNo();");
+                        }
+                        else
+                        {
+                            RecordOperationResult = RecordOperationResult.Insert(0, "");
+                            Prompt.Information(RecordOperationResult, based.Title);
+                        }
+                    }
+                    
+                    GetLoadedData(1);
+                    break;
+
+                case "actOnlyProcess":
                     RecordOperationResult = AreValidEntries();
 
                     if (RecordOperationResult.Length <= 0)
                     {
                         DataTable dt = LoadSchema();
-                        RecordOperationResult = dal.SaveData(dt, isNewRow);
+                        RecordOperationResult = dal.SaveData(dt, true);
                     }
                     else
+                    {
                         RecordOperationResult = RecordOperationResult.Insert(0, "");
+                    }
+
+                    string Ptran = WebApp.nwobjectText("cmbTranAct");
+                    Ptran = dal.getDocno(Ptran);
+
+                    DataTable dtPSaveOnly = LoadSchema();
+                    dal.Process(Ptran);
                     
-                    Prompt.Information("save", based.Title);
+                    GetLoadedData(2);
+                    js.ADD("nwLoading_End('actOnlyProcess', crLoadingHTML);");
+                    js.makeValueText("#txtTranNo", Ptran + "");
+                    js.ADD("changeButton();");
+                    break;
+
+                case "actProcess":
+                    tranType = WebApp.nwobjectText("cmbTranAct");
+                    dDocno = WebApp.nwobjectText("txtTranNo");
+                    RecordOperationResult = AreValidEntries();
+
+                    if (dDocno.Contains(tranType) || dDocno == "")
+                    {
+                        if (RecordOperationResult == string.Empty)
+                        {
+                            string pDocno = WebApp.nwobjectText("txtTranNo");
+                            RecordOperationResult = dal.Process(pDocno);
+
+                        }
+                        GetLoadedData(2);
+                        js.ADD("nwLoading_End('actProcess', crLoadingHTML);");
+                        js.ADD("changeButton();");
+                    }
+                    else
+                    {
+                        DataTable dt = LoadSchema();
+                        RecordOperationResult = dal.SaveData(dt, true);
+
+                        if (RecordOperationResult.Contains("Saved"))
+                        {
+                            string getDocno = dal.getDocno(tranType);
+                            RecordOperationResult = dal.Process(getDocno);
+
+                            GetLoadedData(2);
+                            js.ADD("nwLoading_End('actProcess', crLoadingHTML);");
+                            js.ADD("changeButton();");
+                        }
+                        else
+                        {
+                            Prompt.Information(RecordOperationResult, based.Title);
+                        }
+                    }
+                        //RecordOperationResult = AreValidEntries();
+                        
+                    
+                    break;
+                case "actCancelRequest":
+                    string recuser = based.SecurityAccess.RecUser.ToUpper();
+                    string cancelDocno = WebApp.nwobjectText("txtTranNo");
+                    string result = dal.DeleteData(cancelDocno, recuser);
+                    js.ADD("nwLoading_End('actCancelRequest', crLoadingHTML);");
+                    GetLoadedData(2);
+                    js.ADD("cancelDone();");
                     break;
 
                 default:
@@ -391,6 +523,154 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
             }
             return js.makeJSPostScript(execute());
+        }
+
+        private void loadSavedTransaction()
+        {
+            string docno = WebApp.nwobjectText("fromDocno");
+            string docStat = "";
+
+            DataTable dtLoad = dal.GetSavedData(docno);
+            if (dtLoad.Rows.Count > 0)
+            {
+                string TranType = dtLoad.Rows[0]["trantype"].ToString();
+                string ReqType = dtLoad.Rows[0]["request"].ToString();
+
+                DataTable dtA = dal.getcmbTran();
+                js.makeComboBox("#cmbTranAct", dtA);
+                
+                DataTable dt = dal.getReqsFromType(TranType);
+                js.makeComboBox("#cmbRequest", dt);
+
+                string tmpDate = dtLoad.Rows[0]["proposedDate"].ToString();
+                string[] tmpSplit = tmpDate.Split(' ');
+                DateTime oDate = DateTime.Parse(tmpSplit[0]);
+
+                string formatDate = oDate.ToString("MM/dd/yyyy");
+
+                js.ADD("$('#cmbTranAct').val('" + TranType + "');");
+                js.ADD("$('#cmbRequest').val('" + ReqType + "');");
+
+                js.makeValueText("#txtPropDate", formatDate + "");
+                js.makeValueText("#txtBasisDesc", dtLoad.Rows[0]["basisForBill"].ToString() + "");
+                js.makeValueText("#txtNoConsumption", dtLoad.Rows[0]["noOfConsump"].ToString() + "");
+                js.makeValueText("#txtRemarks", dtLoad.Rows[0]["remarks"].ToString() + "");
+
+                loadChargesRates(ReqType);
+
+                js.makeValueText("#txtAccNumber", dtLoad.Rows[0]["accntNo"].ToString().ToUpper() + "");
+                js.makeValueText("#txtLocation", dtLoad.Rows[0]["locForm"] + "");
+                js.makeValueText("#txtUnitNo", dtLoad.Rows[0]["unitNo"] + "");
+                
+                js.makeValueText("#txtPropdateDesc", formatDate + "");
+
+                js.makeValueText("#txtBasisBill", dtLoad.Rows[0]["basisForBill"] + "");
+                js.makeValueText("#txtConsumptionNo", dtLoad.Rows[0]["noOfConsump"] + "");
+                js.makeValueText("#txtAmount", dtLoad.Rows[0]["amt"] + "");
+                js.makeValueText("#txtVATAmount", dtLoad.Rows[0]["vatAmt"] + "");
+                js.makeValueText("#txtEWTAmount", dtLoad.Rows[0]["ewtAmt"] + "");
+                js.makeValueText("#txtNETAmount", dtLoad.Rows[0]["netAmt"] + "");
+                js.makeValueText("#txtTranNo", docno);
+                js.makeValueText("#txtTranDate", dtLoad.Rows[0]["docdate"] + "");
+                js.makeValueText("#txtDateSub", dtLoad.Rows[0]["dateSubmit"] + "");
+                js.makeValueText("#txtDatePosted", dtLoad.Rows[0]["postDate"] + "");
+                js.makeValueText("#txtDocStatus", getStatusDesc(dtLoad.Rows[0]["statusCode"].ToString()) + "");
+                js.makeValueText("#txtDocStatCode", dtLoad.Rows[0]["statusCode"] + "");
+                js.makeValueText("#txtDocRemarks", dtLoad.Rows[0]["remarks"] + "");
+
+                string userCancelled = dtLoad.Rows[0]["isCompleted"] + "";
+
+                if (userCancelled == "0" || userCancelled == "")
+                {
+                    string statDesc = getStatusDesc(dtLoad.Rows[0]["statusCode"].ToString());
+                    js.makeValueText("#txtDocStatus", statDesc + "");
+                }
+                else
+                {
+                    if (userCancelled == "1")
+                    {
+                        js.makeValueText("#txtDocStatus", "Completed");
+                    }
+
+                    if (userCancelled == "2")
+                    {
+                        js.makeValueText("#txtDocStatus", "Cancelled");
+
+                    }
+                }
+
+                js.ADD("hideOkButton();");
+
+                docStat = dtLoad.Rows[0]["statusCode"].ToString();
+            }
+            else
+            {
+                js.makeValueText("#txtAccNumber", "");
+                js.makeValueText("#txtLocation", "");
+                js.makeValueText("#txtUnitNo", "");
+                js.makeValueText("#txtBasisBill", "");
+                js.makeValueText("#txtConsumptionNo", "");
+                js.makeValueText("#txtAmount", "");
+                js.makeValueText("#txtVATAmount", "");
+                js.makeValueText("#txtEWTAmount", "");
+                js.makeValueText("#txtNETAmount", "");
+                js.makeValueText("#txtTranNo", "");
+                js.makeValueText("#txtTranDate", "");
+                js.makeValueText("#txtDateSub", "");
+                js.makeValueText("#txtDatePosted", "");
+                js.makeValueText("#txtDocStatus", "");
+                js.makeValueText("#txtDocStatCode", "");
+                js.makeValueText("#txtDocRemarks", "");
+            }
+
+            
+            js.ADD("manageTranButtons('" + docStat + "')");
+        }
+
+        private void loadChargesRates(string reqType)
+        {
+            string recuser = based.SecurityAccess.RecUser;
+            js.makeValueText("#txtAccNumber", recuser.ToString().ToUpper());
+
+            DataTable dtLoadX = dal.GetDefLoadedX(reqType);
+
+            if (dtLoadX.Rows.Count > 0)
+            {
+                js.makeValueText("#txtBasisDesc", dtLoadX.Rows[0]["BasisForBilling"] + "");
+                js.makeValueText("#txtBasisBill", dtLoadX.Rows[0]["BasisForBilling"] + "");
+                js.makeValueText("#txtSQM", dtLoadX.Rows[0]["RegularRate"] + "");
+                js.makeValueText("#txtVAT", dtLoadX.Rows[0]["VAT"] + "");
+                js.makeValueText("#txtCWT", dtLoadX.Rows[0]["CWT"] + "");
+                js.makeValueText("#txtConsump", dtLoadX.Rows[0]["consumption"] + "");
+            }
+            else
+            {
+                js.makeValueText("#txtBasisDesc", "");
+                js.makeValueText("#txtBasisBill", "");
+                js.makeValueText("#txtSQM", "");
+                js.makeValueText("#txtVAT", "");
+                js.makeValueText("#txtCWT", "");
+                js.makeValueText("#txtConsump", "");
+            }
+        }
+
+        public String getStatusDesc(string status)
+        {
+            switch (status)
+            {
+                case "1":
+                    return "Saved as Draft";
+                case "2":
+                    return "For Approval";
+                case "3":
+                    return "Ongoing";
+                case "6":
+                    return "Disapproved";
+                case "7":
+                    return "Declined";
+                default:
+                    return "";
+            }
         }
 
         public string getToolBoxData(string tableName, string getMethod, string strParameter, string strValue)
@@ -401,12 +681,11 @@ namespace Noah_Web.forms_BusinessLayer
             {
                 case "toolbox":
                     string codevalue = WebApp.nwobjectText("codevalue"); // codevalue will be filter of primary key add these filter
-                   
+                    string Sdocno = dal.getDocno(WebApp.nwobjectText("cmbTranAct"));
                     nwStandardBL standardBL = new nwStandardBL(WebApp);
                     standardBL.PrimaryKey = "docno";
                  
-                    //strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(), this.UserDefinedConnectionString);
-                    strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", sql, based.SecurityAccess.ConnectionString);
+                    strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(Sdocno), this.UserDefinedConnectionString);
                     break;
             }
 
@@ -419,7 +698,7 @@ namespace Noah_Web.forms_BusinessLayer
             //getcmbSaved();
 
             SFObject.SetControlBinding("#txtLocation", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "locForm");
-            SFObject.SetControlBinding("#txtAccountNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "accntNo");
+            SFObject.SetControlBinding("#txtAccNumber", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "accntNo");
             SFObject.SetControlBinding("#txtUnitNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "unitNo");
             SFObject.SetControlBinding("#txtPropDate", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "proposedDate");
             SFObject.SetControlBinding("#txtBasisBill", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "basisForBill");
@@ -450,8 +729,13 @@ namespace Noah_Web.forms_BusinessLayer
 
         private void BindCollection()
         {
+            setRqmtCompProp();
             js.ADD("RefreshData();");
-            
+            string docno = WebApp.nwobjectText("txtTranNo");
+            DataTable dtA = dal.getcmbTran();
+            DataTable dtB = dal.getcmbReq();
+            js.makeComboBox("#cmbTranAct", dtA);
+            js.makeValueText("#cmbTranAct", dal.getTrantypeForBind(docno));
             js.ADD("nwLoading_End('xSample');");
         }
 
@@ -459,7 +743,7 @@ namespace Noah_Web.forms_BusinessLayer
         {
             string errorResult = String.Empty;
 
-            if (WebApp.nwobjectText("cmbTranAct_code").Length <= 0)
+            if (WebApp.nwobjectText("cmbTranAct").Length <= 0)
             {
                 errorResult += "Cannot be saved. Transaction/Type of Activity is required.\n";
             }
@@ -469,7 +753,7 @@ namespace Noah_Web.forms_BusinessLayer
                 errorResult += "Cannot be saved. Location is required.\n";
             }
 
-            if (WebApp.nwobjectText("cmbRequest_code").Length <= 0)
+            if (WebApp.nwobjectText("cmbRequest").Length <= 0)
             {
                 errorResult += "Cannot be saved. Request is required.\n";
             }
@@ -479,6 +763,7 @@ namespace Noah_Web.forms_BusinessLayer
         
         private DataTable LoadSchema()
         {
+            string recuser = based.SecurityAccess.RecUser.ToUpper();
             #region don't change
             DataTable dtHDR = new DataTable();
             dtHDR = dal.LoadSchema();
@@ -486,7 +771,7 @@ namespace Noah_Web.forms_BusinessLayer
 
             DataRow dr = dtHDR.NewRow();
             dr["trantype"] = WebApp.nwobjectText("cmbTranAct");
-            dr["accntNo"] = WebApp.nwobjectText("cmbAccNo");
+            dr["accntNo"] = recuser;
             dr["request"] = WebApp.nwobjectText("cmbRequest");
             dr["locForm"] = WebApp.nwobjectText("txtLocation");
             dr["unitNo"] = WebApp.nwobjectText("txtUnitNo");
@@ -501,10 +786,10 @@ namespace Noah_Web.forms_BusinessLayer
             dr["docno"] = WebApp.nwobjectText("txtTranNo");
             dr["docdate"] = WebApp.nwobjectDate("txtTranDate").Equals("") ? (object)DBNull.Value : WebApp.nwobjectDate("txtTranDate");
             dr["remarks"] = WebApp.nwobjectText("txtRemarks");
-            dr["status"] = WebApp.nwobjectText("txtStatusCode");
+            dr["status"] = WebApp.nwobjectInt("txtDocStatCode");
 
-            dr["recuser"] = based.SecurityAccess.RecUser;
-            dr["moduser"] = based.SecurityAccess.RecUser;
+            dr["recuser"] = recuser;
+            dr["moduser"] = recuser;
             dtHDR.Rows.Add(dr);
 
             #region don't change
@@ -529,24 +814,13 @@ namespace Noah_Web.forms_BusinessLayer
 
         private void Main_Load()
         {
-
-            based.SecurityAccess.RecUser = WebApp.nwobjectText("txtRecuser");
+            string recuser = based.SecurityAccess.RecUser.ToUpper();
 
             if (based.isInterface == true) dal.UpdateVersion();
             
             DataTable dtA = dal.getcmbTran();
             js.makeComboBox("#cmbTranAct", dtA);
-
-            string user = "O0000000003";
-            DataTable dtC = dal.getcmbAcc(user);
-            if (dtC.Rows.Count <= 1)
-            {
-                dtC.Rows.Add();
-            }
-            js.makeComboBox("#cmbAccNo", dtC);
-
-            DataTable dtB = dal.getcmbReq();
-            js.makeComboBox("#cmbRequest", dtB);
+            js.makeValueText("#txtAccNumber", recuser);
         }
 
         private void RefreshData()
@@ -557,12 +831,95 @@ namespace Noah_Web.forms_BusinessLayer
 
         }
 
-        private void getcmbSaved() {
+        private void loadDatawtDocno()
+        {
+            string tranNo = WebApp.nwobjectText("txtDocno");
+            dal.GetData(tranNo);
+        }
 
+        private void GetLoadedData(int button) {
+            DataTable dtLoadX = new DataTable();
+            //string docno = WebApp.nwobjectText("txtTranNo");
+
+            string savedTranType = WebApp.nwobjectText("cmbTranAct");
+            string getDocno = dal.getDocno(savedTranType);
+
+            dtLoadX = dal.GetLoadedData(getDocno);
+
+            string tmpDate = dtLoadX.Rows[0]["proposedDate"].ToString();
+            string[] tmpSplit = tmpDate.Split(' ');
+            DateTime oDate = DateTime.Parse(tmpSplit[0]);
+
+            string formatDate = oDate.ToString("MM/dd/yyyy");
+
+            js.makeValueText("#txtAccNumber", dtLoadX.Rows[0]["accntNo"].ToString().ToUpper() + "");
+            js.makeValueText("#txtLocation", dtLoadX.Rows[0]["locForm"] + "");
+            js.makeValueText("#txtUnitNo", dtLoadX.Rows[0]["unitNo"] + "");
+
+            js.makeValueText("#txtPropdateDesc", formatDate + "");
+
+            js.makeValueText("#txtBasisBill", dtLoadX.Rows[0]["basisForBill"] + "");
+            js.makeValueText("#txtConsumptionNo", dtLoadX.Rows[0]["noOfConsump"] + "");
+            js.makeValueText("#txtAmount", dtLoadX.Rows[0]["amt"] + "");
+            js.makeValueText("#txtVATAmount", dtLoadX.Rows[0]["vatAmt"] + "");
+            js.makeValueText("#txtEWTAmount", dtLoadX.Rows[0]["ewtAmt"] + "");
+            js.makeValueText("#txtNETAmount", dtLoadX.Rows[0]["netAmt"] + "");
+            js.makeValueText("#txtTranNo", getDocno);
+            js.makeValueText("#txtTranDate", dtLoadX.Rows[0]["docdate"] + "");
+            js.makeValueText("#txtDateSub", dtLoadX.Rows[0]["dateSubmit"] + "");
+            js.makeValueText("#txtDatePosted", dtLoadX.Rows[0]["postDate"] + "");
+            js.makeValueText("#txtDocStatCode", dtLoadX.Rows[0]["statusCode"] + "");
+            js.makeValueText("#txtDocRemarks", dtLoadX.Rows[0]["remarks"] + "");
+
+            string userCancelled = dtLoadX.Rows[0]["isCompleted"] + "";
+
+            if (userCancelled == "0" || userCancelled == "")
+            {
+                string statDesc = getStatusDesc(dtLoadX.Rows[0]["statusCode"].ToString());
+                js.makeValueText("#txtDocStatus", statDesc + "");
+            }
+            else
+            {
+                if (userCancelled == "1")
+                {
+                    js.makeValueText("#txtDocStatus", "Completed");
+                }
+
+                if (userCancelled == "2")
+                {
+                    js.makeValueText("#txtDocStatus", "Cancelled");
+
+                }
+            }
+
+            //if (button == 1)
+            //{
+            //    dtLoadX = dal.GetLoadedData(docno);
+
+            //    js.makeValueText("#txtTranNo", dtLoadX.Rows[0]["docno"] + "");
+            //    js.makeValueText("#txtDocStatus", dtLoadX.Rows[0]["statusDesc"] + "");
+            //    js.makeValueText("#txtDocStatCode", dtLoadX.Rows[0]["statusCode"] + "");
+            //}
+
+            //else if (button == 2)
+            //{
+            //    dtLoadX = dal.GetLoadedData(docno);
+
+            //    js.makeValueText("#txtTranNo", dtLoadX.Rows[0]["docno"] + "");
+            //    js.makeValueText("#txtDocStatus", dtLoadX.Rows[0]["statusDesc"] + "");
+            //    js.makeValueText("#txtDocStatCode", dtLoadX.Rows[0]["statusCode"] + "");
+            //    js.makeValueText("#txtTranDate", dtLoadX.Rows[0]["docdate"] + "");
+            //    js.makeValueText("#txtDateSub", dtLoadX.Rows[0]["dateSubmit"] + "");
+            //    js.makeValueText("#txtDatePosted", dtLoadX.Rows[0]["postDate"] + "");
+            //}
         }
 
         private void loadFromAccNoCMB() {
-            DataTable dtLoad = dal.GetDefLoaded(WebApp.nwobjectText("cmbAccNo"));
+            string recuser = based.SecurityAccess.RecUser;
+
+            js.makeValueText("#txtAccNumber", recuser.ToString().ToUpper());
+
+            DataTable dtLoad = dal.GetDefLoaded(recuser);
             if (dtLoad.Rows.Count > 0)
             {
                 js.makeValueText("#txtLocation", dtLoad.Rows[0]["LocForm"] + "");
@@ -575,18 +932,36 @@ namespace Noah_Web.forms_BusinessLayer
             }
         }
 
-        private void loadFromReqCMB() {
-            DataTable dtLoadX = dal.GetDefLoadedX(WebApp.nwobjectText("cmbRequest"));
+        private void cmbGetRequests()
+        {
+            string TranType = WebApp.nwobjectText("cmbTranSelected");
+            DataTable dt = dal.getReqsFromType(TranType);
+            js.makeComboBox("#cmbRequest", dt);
+            js.ADD("$('#cmbRequest').val('');");
+        }
+
+        private void loadFromReqCMB()
+        {
+            string recuser = based.SecurityAccess.RecUser;
+             js.makeValueText("#txtAccNumber", recuser.ToString().ToUpper());
+
+            DataTable dtLoadX = dal.GetDefLoadedX(WebApp.nwobjectText("cmbReq"));
+
             if (dtLoadX.Rows.Count > 0)
             {
+                js.makeValueText("#txtBasisDesc", dtLoadX.Rows[0]["BasisForBilling"] + "");
                 js.makeValueText("#txtBasisBill", dtLoadX.Rows[0]["BasisForBilling"] + "");
                 js.makeValueText("#txtSQM", dtLoadX.Rows[0]["RegularRate"] + "");
                 js.makeValueText("#txtVAT", dtLoadX.Rows[0]["VAT"] + "");
                 js.makeValueText("#txtCWT", dtLoadX.Rows[0]["CWT"] + "");
                 js.makeValueText("#txtConsump", dtLoadX.Rows[0]["consumption"] + "");
+
+                js.ADD("LoadfromReq()");
+                js.ADD("compAMT()");
             }
             else
             {
+                js.makeValueText("#txtBasisDesc", "");
                 js.makeValueText("#txtBasisBill", "");
                 js.makeValueText("#txtSQM", "");
                 js.makeValueText("#txtVAT", "");
@@ -594,17 +969,25 @@ namespace Noah_Web.forms_BusinessLayer
                 js.makeValueText("#txtConsump", "");
             }
 
-            js.ADD("LoadfromReq()");
+           js.ADD("LoadfromReq()");
         }
 
         private void loadFromAmt()
         {
-            DataTable dtAmt = dal.GetFromAmt(WebApp.nwobjectText("amt"), WebApp.nwobjectText("vat"), WebApp.nwobjectText("cwt"));
+            string valAmt = WebApp.nwobjectText("amt");
+            string valVat = WebApp.nwobjectText("vat");
+            string valCwt = WebApp.nwobjectText("cwt");
+
+            DataTable dtAmt = dal.GetFromAmt(valAmt, valVat, valCwt);
             if (dtAmt.Rows.Count > 0)
             {
-                js.makeValueText("#txtVATAmount", dtAmt.Rows[0]["VATamt"] + "");
-                js.makeValueText("#txtEWTAmount", dtAmt.Rows[0]["EWTamt"] + "");
-                js.makeValueText("#txtNETAmount", dtAmt.Rows[0]["NETamt"] + "");
+                string txtVATAmount = dtAmt.Rows[0]["VATamt"].ToString();
+                string txtEWTAmount = dtAmt.Rows[0]["EWTamt"].ToString();
+                string txtNETAmount = dtAmt.Rows[0]["NETamt"].ToString();
+
+                js.makeValueText("#txtVATAmount", txtVATAmount + "");
+                js.makeValueText("#txtEWTAmount", txtEWTAmount + "");
+                js.makeValueText("#txtNETAmount", txtNETAmount + "");
             }
             else
             {
@@ -617,7 +1000,6 @@ namespace Noah_Web.forms_BusinessLayer
         private void setRqmtCompProp()
         {
             if (dal.hasSavedRqrdCompli(WebApp.nwobjectText("txtTranNo")) == "True")
-
             {
                 js.ADD("$('#btnReqCompliance').removeClass('btnGray');");
                 js.ADD("$('#btnReqCompliance').removeClass('btnOrange');");

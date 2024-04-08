@@ -1,0 +1,1048 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "P8-FORW";
+    Layout = "~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpreadDesigner.cshtml";
+}
+<head>
+    <script src="~/P8/DataSetup/P8FORW/P8FORW.js"></script>
+    @*<link rel="stylesheet" href="~/P8/DataSetup/P8FORW/NOAHSpread_Page.css">*@
+    <link href="~/P8/DataSetup/P8FORW/P8FORW.css" rel="stylesheet" />
+
+    <script src="~/P8/DataSetup/P8FORW/P8FORW_DataSource.js"></script>
+    <script src="~/P8/DataSetup/P8FORW/P8FORW_Sidebar.js"></script>
+    <script src="~/P8/DataSetup/P8FORW/P8FORW_SubMenu.js"></script>
+</head>
+
+<!-- LOADING ANIMATION -->
+@*<div class="p8icon-ani-box" style="display: block;">
+    <div class="p8i-wrap">
+        <div class="p8i-p">
+            <div class="p8bg-c1"></div>
+            <div class="p8bg-c2"></div>
+            <div class="p8i-1p">
+                <div class="p8i-1p_1"></div>
+                <div class="p8i-1p_2"></div>
+                <div class="p8i-1p_3"></div>
+                <div class="p8i-1p_4"></div>
+            </div>
+            <div class="p8_p">P</div>
+            <div class="p8_8">8</div>
+            <div class="p8l_1"></div>
+            <div class="p8l_2"></div>
+            <div class="p8l_3"></div>
+        </div>
+    </div>
+
+</div>*@
+
+<!-- Popup Dialog -->
+<!-- INITIAL LOAD -->
+<!--<div id="pdlgHomeLoad" class="pdlg _full pdlgHomeLoad" style="display: none;">
+    <div class="hdr-big">
+        <div class="nclsr">
+            <div class="hdr-sub-l">
+                <img class="logo" src="~/P8/DataSetup/P8FORW/icons/icon_p8-doc-creator-yellow_48x48_300px.png" alt="New P8 Document Creator Icon" />
+                <div class="title">
+                    P8 FORW
+                </div>
+            </div>
+            <div class="hdr-sub-r">
+                <div class="m-searchbar">
+                    <div class="btn btn-i-s btnHomeSearch btnsearch">
+                        <span class="s"></span>
+                        <span class="s"></span>
+                    </div>
+                    <input id="txtHomeSearch" class="searchhome" type="text" name="" placeholder="Filename, template, etc." />
+                </div>
+                <div class="btn btn-m btnHomeOpenDoc">Serach</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ctr-top">
+        <div class="nclsr">
+            <div class="upper">
+                <div class="title tmpl">
+                    Create a new document or use a template
+                    <span class="inner-title">
+                        CREATE USING:
+                        <span class="inner-title-file"></span>
+                    </span>
+                </div>
+                <div class="pagination">
+                    <div id="btnPrevPage" class="btn btn-paging btnPrevPage"><span class="s"></span></div>
+                    <div id="btnNextPage" class="btn btn-paging btnNextPage"><span class="s"></span></div>
+                </div>
+            </div>
+            <div id="createCardParentCont" class="card-parent">
+
+                <div onclick="ToolNewDocument()" class="card tmpl tmpl_blank">
+                    <div class="box">
+                        <span class="m plus_icon">
+                            <span class="s"></span>
+                            <span class="s"></span>
+                            <span class="s"></span>
+                            <span class="s"></span>
+                        </span>
+                    </div>
+                    <div class="title">Blank Document</div>
+                </div>
+                <%-- <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 1</div>
+                </div>
+                <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 2</div>
+                </div>
+                <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 3</div>
+                </div>
+                <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 4</div>
+                </div>
+                <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 5</div>
+                </div>
+                <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 6</div>
+                </div>
+                <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 7</div>
+                </div>
+                <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 8</div>
+                </div>
+                <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 9</div>
+                </div>
+                <div class="card tmpl">
+                    <div class="box"></div>
+                    <div class="title">Template 10</div>
+                </div>--%>
+            </div>
+        </div>
+    </div>
+
+    <div class="ctr-bot">
+        <div class="nclsr">
+            <div class="upper">
+                <div class="title docx">
+                    Documents
+                    <span class="inner-title">
+                        OPEN:
+                        <span class="inner-title-file"></span>
+                    </span>
+                    <button class="cl_btnSharedDocuments" style="float: right;">Shared Documents</button>
+                </div>
+
+            </div>
+            <div class="card-parent" id="card-parentRecent">-->
+
+                <!-- It'll appear when there's no document/s found. -->
+                <!--<div class="blank_msg">No document/s found. Create new Blank Document or use a Template.</div>
+                <div class="errIcon">
+                </div>
+
+            </div>
+
+            <div class="lower">
+                <div class="cl_LoadMoreDocuments nwHide">
+                    <img src="materials/images/P8.gif" class="cl_imgLoadMoreDocuments" />
+                    <%--<button class="cl_btnLoadMoreDocuments">Load More Documents</button>--%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+
+
+
+
+<div class="p8forw-sidebar hide" id="p8forw-sidebar">
+
+    <div class="row rx header-custom">
+        <div class="p8forw-sidebar-label-container">
+            <div class="p8forw-sidebar-label">SB</div>
+            <div class="p8forw-sidebar-close p8forw-close-icon">✕</div>
+        </div>
+        <div class="col col-12">
+            <div class="nwe-flex-c">
+                <div class="nwe-cb-main">
+                    <div class="nwe-cb-btn ed nwe-algs">
+                        <div id="p8forw-sidebar-toolbox" class="nwe-cb-multi-icon-c">
+                            <div class="nwe-sel-dd-with-icon" id="p8forwbtnsbsave">
+                                <div class="nwe-sel-icon sve"></div>
+                                <div class="nwe-sel-txt awd">Save</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row rx detail-custom">
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div id="p8forw-sidebar-rowdata" class="col col-12 margin-x-0">
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Object Type</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtsbobjecttype" type="text" class="txtbox txtcode" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row nwHide">
+                        <div class="col col-12">
+                            <label class="lbltxt">Col(hide)</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtsbcolindex" type="text" class="txtbox txtcode txtclrsb" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row nwHide">
+                        <div class="col col-12">
+                            <label class="lbltxt">Row(hide)</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtsbrowindex" type="text" class="txtbox txtcode txtclrsb" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Cell</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtsbcell" type="text" class="txtbox txtcode txtclrsb" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    @*<div class="row sbf sbf_table">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridCon_sbevent"></div>
+                </div>
+            </div>
+        </div>*@
+
+
+
+
+                    <!-- Component: Fieldset -->
+                    <div class="row row-parent child-centered sbf sbf_table sbf_dc sbf_dr">
+                        <div class="col col-10 col-parent child-centered">
+                            <div class="col col-12">
+                                <fieldset class="fieldset">
+                                    <legend>Refresh Event</legend>
+                                    <div class="row">
+                                        <div class="col col-11">
+
+                                            <div class="row">
+                                                <div class="nwe-tbl-content">
+                                                    <div id="nwGridCon_sbevent"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row sbf sbf_table sbf_dc sbf_lu">
+                        <div class="col col-12">
+                            <label class="lbltxt">Data Source<span class="nwOptionalField">*</span></label>
+                        </div>
+                        <div id="lugsbsource" class="col col-12 lookups lugclrsb">
+                            <div class="col col-5 conval nwHide">
+                                <input type="text" name="" class="txtbox txtcode idval nwCuz001" autocomplete="off" disabled>
+                            </div>
+                            <div class="col col-12 conval">
+                                <input type="text" name="" class="txtbox txtdesc txtlookup descval" autocomplete="off">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row nwHide">
+                        <div class="col col-12">
+                            <label class="lbltxt">Data Source ID(hide)</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtsbdatasourceid" type="text" class="txtbox txtcode txtclrsb" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row nwHide">
+                        <div class="col col-12">
+                            <label class="lbltxt">Type(hide)</label>
+                        </div>
+                        <div class="col col-12 nwHide">
+                            <input id="txtsbType" type="text" class="txtbox txtcode txtclrsb" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row sbf sbf_table sbf_dc sbf_lu">
+                        <div class="col col-12">
+                            <label class="lbltxt">Data Source Type<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugsbdatasourcetype" class="col col-12 lookups lugclrsb">
+                            <div class="col col-5 conval nwHide">
+                                <input type="text" name="" class="txtbox txtcode idval nwCuz001" autocomplete="off" disabled>
+                            </div>
+                            <div class="col col-12 conval">
+                                <input type="text" name="" class="txtbox txtdesc txtlookup descval" autocomplete="off">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col col-12 col-parent padding-x-5">
+                            <div class="nk-accordion col-12" nk-style-accordion="1">
+                                <div class="nk-ul">
+                                    <div class="nk-li sbf sbf_table sbf_dc sbf_lu">
+                                        <div id="sbf_title_column" class="nk-li-title">Column</div>
+                                        <div class="nk-li-content">
+                                            <div id="sbcolumn" class="p8forwgrid">
+                                                <div class="row sbf sbf_table nwHide">
+                                                    <div class="col col-12">
+                                                        <input id="chksbhidecolumnheader" type="checkbox" class="chk chkclrsb">
+                                                        <label class="lbl-chk" for="chksbhidecolumnheader">Hide Column Header</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row sbf sbf_dc">
+                                                    <div class="col col-12">
+                                                        <input id="chkaggregatesum" type="checkbox" class="chk chkclrsb">
+                                                        <label class="lbl-chk" for="chkaggregatesum">Aggregate(SUM)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="nk-li sbf sbf_table sbf_dc sbf_lu">
+                                        <div id="sbf_title_filter" class="nk-li-title">Filter</div>
+                                        <div class="nk-li-content">
+                                            <div class="row">
+                                                <div class="col col-12">
+                                                    <div class="nwe-tbl-content">
+                                                        <div id="nwGridCon_sbf"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nk-li sbf sbf_table sbf_dc sbf_lu">
+                                        <div id="sbf_title_param" class="nk-li-title">Parameter</div>
+                                        <div class="nk-li-content">
+                                            <div class="row">
+                                                <div class="col col-12">
+                                                    <div class="nwe-tbl-content">
+                                                        <div id="nwGridCon_sbp"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*<div class="row">
+                                    <div class="col col-12">
+                                        <div class="nwe-tbl-content">
+                                            <div id="nwGridCon_sbpfixed"></div>
+                                        </div>
+                                    </div>
+                                </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="nk-li sbf sbf_table sbf_lu">
+                                        <div id="sbf_title_sort" class="nk-li-title">Sort</div>
+                                        <div class="nk-li-content">
+                                            <div id="sbsort" class="p8forwgrid">
+                                            </div>
+                                            @*<div class="row">
+                                    <div class="col col-12">
+                                        <div class="nwe-tbl-content">
+                                            <div id="nwGridCon_sbsort"></div>
+                                        </div>
+                                    </div>
+                                </div>*@
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div id="sqlcommand" class="row row-parent child-centered sbf sbf_table sbf_dc sbf_lu">
+                        <div class="col col-11 col-parent child-centered">
+                            <div class="col col-12">
+                                <fieldset class="fieldset">
+                                    <legend>SQL Command</legend>
+                                    <div class="row">
+                                        <div class="col col-12">
+
+                                            <div class="row" id="misoverwrite">
+                                                <div class="col col-12">
+                                                    <input id="chksbisoverwrite" type="checkbox" class="chk chkclrsb" columnname="isoverwrite">
+                                                    <label class="lbl-chk" for="chksbisoverwrite">Overwrite Query</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-12">
+                                                    <label class="lbltxt">SQL Query</label>
+                                                </div>
+                                                <div class="col col-12">
+                                                    <textarea id="txtsbsqlsyntax" rows="5" cols="50" type="text" class="txtbox txtcode txtclrsb" autocomplete="off"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-12">
+                                                    <label class="lbltxt">SQL Column</label>
+                                                </div>
+                                                <div class="col col-12">
+                                                    <textarea id="txtsbsqlcolumn" rows="5" cols="50" type="text" class="txtbox txtcode txtclrsb" autocomplete="off"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-12">
+                                                    <label class="lbltxt">SQL Filter</label>
+                                                </div>
+                                                <div class="col col-12">
+                                                    <textarea id="txtsbsqlfilter" rows="5" cols="50" type="text" class="txtbox txtcode txtclrsb" autocomplete="off"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-12">
+                                                    <label class="lbltxt">SQL Sort</label>
+                                                </div>
+                                                <div class="col col-12">
+                                                    <textarea id="txtsbsqlsort" rows="5" cols="50" type="text" class="txtbox txtcode txtclrsb" autocomplete="off"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row sbf sbf_dr">
+                        <div class="col col-12">
+                            <label class="lbltxt">Template<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugsbtemplate" class="col col-12 lookups lugclrsb">
+                            <div class="col col-5 conval">
+                                <input type="text" name="" class="txtbox txtcode idval nwCuz001" autocomplete="off" disabled>
+                            </div>
+                            <div class="col col-7 conval">
+                                <input type="text" name="" class="txtbox txtdesc txtlookup descval" autocomplete="off">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-parent child-centered sbf sbf_dr">
+                        <div class="col col-10 col-parent child-centered">
+                            <div class="col col-12">
+                                <fieldset class="fieldset">
+                                    <legend>Drill</legend>
+                                    <div class="row">
+                                        <div class="col col-11">
+
+                                            <div class="row">
+                                                <div class="nwe-tbl-content">
+                                                    <div id="nwGridCon_sbdrill"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*hidden*@
+<input id="txt-p8forw-code" type="hidden" name="" class="txtbox txtcode" autocomplete="off">
+<input id="txt-p8forw-desc" type="hidden" name="" class="txtbox txtcode" autocomplete="off">
+
+<div class="nwe-flex-c">
+    <div class="nwe-cb-main">
+        <div class="nwe-cb-btn ed nwe-algs">
+            <div class="nwe-cb-sf-c" id="p8forw-vwdatasource">
+                <div class="nwe-ed-icon-m dts"></div>
+                <div class="nwe-ed-icontext">Data Source</div>
+            </div>
+        </div>
+        <div class="nwe-title">Data Sources</div>
+    </div>
+</div>
+<div class="nwe-flex-c">
+    <div class="nwe-cb-main">
+        <div class="nwe-cb-btn ed nwe-algs">
+            <div class="nwe-cb-multi-icon-c">
+
+                <div class="nwe-sel-dd-with-icon p8forwobject" id="p8forw-btndatacondition">
+                    <div class="nwe-sel-icon dc"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Data Condition</div>
+                </div>
+                <div class="nwe-sel-dd-with-icon p8forwobject" id="p8forw-btnlookup">
+                    <div class="nwe-sel-icon lk"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Lookup</div>
+                </div>
+
+                <div class="nwe-sel-dd-with-icon p8forwobject" id="p8forw-btnaddtolist">
+                    <div class="nwe-sel-icon atl"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Add to list</div>
+                </div>
+            </div>
+
+            <div class="nwe-cb-multi-icon-c">
+                <div class="nwe-sel-dd-with-icon p8forwobject" id="p8forw-btntable">
+                    <div class="nwe-sel-icon lk"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Table</div>
+                </div>
+                <div class="nwe-sel-dd-with-icon" id="p8forw-btndrill">
+                    <div class="nwe-sel-icon lk"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Drill</div>
+                </div>
+
+                <div class="nwe-sel-dd-with-icon" id="p8forw-btnmakecheckbox">
+                    <div class="nwe-sel-icon lk"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Make Checkbox</div>
+                </div>
+
+            </div>
+            <div class="nwe-cb-multi-icon-c">
+
+                <div class="nwe-sel-dd-with-icon" id="p8forw-btnmakebutton">
+                    <div class="nwe-sel-icon lk"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Make Button</div>
+                </div>
+                <div class="nwe-sel-dd-with-icon" id="p8forw-btnaddrefreshbutton">
+                    <div class="nwe-sel-icon atl"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Make Refresh Button</div>
+                </div>
+                <div class="nwe-sel-dd-with-icon" id="p8forw-btnmakeremarks">
+                    <div class="nwe-sel-icon lk"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Make Remarks</div>
+                </div>
+            </div>
+            <div class="nwe-cb-multi-icon-c">
+
+                <div class="nwe-sel-dd-with-icon" id="p8forw-btnmakedate">
+                    <div class="nwe-sel-icon lk"></div>
+                    <div class="nwe-sel-txt awd p8forw-title">Make Date</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="nwe-title">Components</div>
+    </div>
+</div>
+
+<div class="nwe-flex-c">
+    <div class="nwe-cb-main">
+        <div class="nwe-cb-btn ed nwe-algs">
+            <div class="nwe-cb-sf-c" id="p8forw-btnPreview">
+                <div class="nwe-ed-icon-m prev"></div>
+                <div class="nwe-ed-icontext">Preview</div>
+            </div>
+        </div>
+        <div class="nwe-title">Preview</div>
+    </div>
+</div>
+
+<div class="nwe-flex-c" id="p8forw-Properties">
+    <div class="nwe-cb-main">
+        <div class="nwe-cb-btn ed nwe-algs">
+            <div class="nwe-cb-sf-c" id="p8forw-btnProperties">
+                <div class="nwe-ed-icon-m prop"></div>
+                <div class="nwe-ed-icontext">Properties</div>
+            </div>
+        </div>
+        <div class="nwe-title">Properties</div>
+    </div>
+</div>
+<div id="frm-popup-p8forw-vwdatasource">
+    <div id="nwe-hrd" class="nwe-hrd">
+        <div class="nwe-hrd-content">
+            <div>
+                <div class="nwe-fn-c">
+                    <div class="nwe-flex-c mq">
+
+                        <div class="nwe-cb-main">
+                            <div class="nwe-cb-btn ed nwe-algs">
+                                @*<div class="nwe-cb-sf-c" id="p8forw-datasource-save">
+                                        <div class="nwe-ed-icon-m nor"></div>
+                                        <div class="nwe-ed-icontext">Save</div>
+                                    </div>*@
+                                <div class="nwe-cb-sf-c" id="p8forw-datasource-refresh">
+                                    <div class="nwe-ed-icon-m nor"></div>
+                                    <div class="nwe-ed-icontext">Refresh</div>
+                                </div>
+                            </div>
+                            <div class="nwe-title"></div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row rx">
+        <div class="col col-12">
+            <div class="cst-container active">
+
+                <div class="row row-parent">
+
+                    <div class="col col-12">
+
+
+                        <div class="row">
+                            <div class="nwe-tbl-content">
+                                <div id="nwGridCon_datasource"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @*<div class="col col-6">
+                            <div class="row margin-bottom-5">
+                                <div class="col col-5">
+                                    <label class="lbltxt">Data Source ID</label>
+                                </div>
+                                <div class="col col-7">
+                                    <input id="txtDataSourceID" type="text" name="" class="txtbox txtcode" autocomplete="off" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="row margin-bottom-5">
+                                <div class="col col-5">
+                                    <label class="lbltxt">Has Update</label>
+                                </div>
+                                <div class="col col-7">
+                                    <input id="txtDataSourceHasUpdate" type="text" name="" class="txtbox txtcode" autocomplete="off" disabled="disabled">
+                                </div>
+                            </div>
+
+                            <div class="row margin-bottom-5">
+                                <div class="nwe-tbl-content">
+                                    <div id="nwGridCon_datasourcecolumn"></div>
+                                </div>
+                            </div>
+
+                        </div>*@
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    @*<div class="nwe-tbl-content">
+            <div id="nwGridCon_datasource"></div>
+        </div>*@
+    @*<div class="row">
+            <div class="col col-12">
+                <label class="lbltxt">Data Source ID</label>
+            </div>
+            <div class="col col-12">
+                <input id="txtDataSourceID" type="text" class="txtbox txtcode" autocomplete="off" disabled="disabled">
+            </div>
+        </div>
+        <div class="nwe-tbl-content">
+            <div id="nwGridCon_datasourcecolumn"></div>
+        </div>*@
+</div>
+
+
+<div id="frm-popup-p8forw-vwdatasource-adddata">
+
+    <div id="nwe-hrd" class="nwe-hrd header-custom-1">
+        <div class="nwe-hrd-content nwe-hrd-height-1">
+            <div class="col col-12">
+                <div class="nwe-flex-c">
+                    <div class="nwe-cb-main">
+                        <div class="nwe-cb-btn ed nwe-algs">
+                            <div id="p8forw-toolbox" class="nwe-cb-multi-icon-c">
+                                <div class="nwe-sel-dd-with-icon" id="p8forwbtndatasourceadddatasave">
+                                    <div class="nwe-sel-icon sve"></div>
+                                    <div class="nwe-sel-txt awd">Save</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row rx detail-custom-1">
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div class="col col-12 margin-x-0">
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Data Source ID</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourceadddatadatasourceid" type="text" class="txtbox txtcode txtclrluad" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Name<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourceadddataname" type="text" class="txtbox txtcode txtclrluad" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Connectivity<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugdatasourceadddataconnectivity" class="col col-12 lookups lugclrluad">
+                            <div class="col col-5 conval nwHide">
+                                <input type="text" name="" class="txtbox txtcode idval nwCuz001" autocomplete="off" disabled>
+                            </div>
+                            <div class="col col-12 conval">
+                                <input type="text" name="" class="txtbox txtdesc txtlookup descval" autocomplete="off">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Source Type<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugdatasourceadddatasourcetype" class="col col-12 lookups lugclrluad">
+                            <div class="col col-5 conval nwHide">
+                                <input type="text" name="" class="txtbox txtcode idval nwCuz001" autocomplete="off" disabled>
+                            </div>
+                            <div class="col col-12 conval">
+                                <input type="text" name="" class="txtbox txtdesc txtlookup descval" autocomplete="off">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Source<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugdatasourceadddatasource" class="col col-12 lookups lugclrluad">
+                            <div class="col col-5 conval nwHide">
+                                <input type="text" name="" class="txtbox txtcode idval nwCuz001" autocomplete="off" disabled>
+                            </div>
+                            <div class="col col-12 conval">
+                                <input type="text" name="" class="txtbox txtdesc txtlookup descval" autocomplete="off">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div id="frm-popup-p8forw-vwdatasource-ps">
+    <div class="row rx">
+
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div class="col col-4 margin-x-0">
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Data Source ID</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcepsdatasourceid" type="text" class="txtbox txtcode txtclrlups" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Data Source Name</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcepsname" type="text" class="txtbox txtcode txtclrlups" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row nwHide">
+                        <div class="col col-12">
+                            <label class="lbltxt">Data Source</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcepsdatasource" type="text" class="txtbox txtcode txtclrlups" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row nwHide">
+                        <div class="col col-12">
+                            <label class="lbltxt">Type</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcepstype" type="text" class="txtbox txtcode txtclrlups" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row nwHide">
+                        <div class="col col-12">
+                            <label class="lbltxt">Source</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcepssource" type="text" class="txtbox txtcode txtclrlups" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-10 margin-x-0">
+                </div>
+            </div>
+        </div>
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div class="col col-12 margin-x-0">
+                    <div class="row">
+                        <div class="col col-12">
+                            <div class="nwe-tbl-content">
+                                <div id="nwGridCon_datasourcepsh"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="frm-popup-p8forw-vwdatasourceps-adddata">
+
+    <div id="nwe-hrd" class="nwe-hrd header-custom-1">
+        <div class="nwe-hrd-content nwe-hrd-height-1">
+            <div class="col col-12">
+                <div class="nwe-flex-c">
+                    <div class="nwe-cb-main">
+                        <div class="nwe-cb-btn ed nwe-algs">
+                            <div id="p8forw-toolbox" class="nwe-cb-multi-icon-c">
+                                <div class="nwe-sel-dd-with-icon" id="p8forwbtndatasourcepsadddatasave">
+                                    <div class="nwe-sel-icon sve"></div>
+                                    <div class="nwe-sel-txt awd">Save</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row rx detail-custom-1">
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div class="col col-12 margin-x-0">
+                    <div class="row nwHide">
+                        <div class="col col-12">
+                            <label class="lbltxt">Sub Type</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcepsadddatasubtype" type="text" class="txtbox txtcode txtclrlupsad" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row p8forw_psf p8forw_psf_v p8forw_psf_u p8forw_psf_fn p8forw_psf_p">
+                        <div class="col col-12">
+                            <label class="lbltxt">Name<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcepsadddataname" type="text" class="txtbox txtcode txtclrlupsad" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row p8forw_psf p8forw_psf_fn p8forw_psf_p">
+                        <div class="col col-12">
+                            <label class="lbltxt">Main Parameter</label>
+                        </div>
+                        <div id="lugdatasourceadddatamainparam" class="col col-12 lookups lugclrlupsad">
+                            <div class="col col-5 conval nwHide">
+                                <input type="text" name="" class="txtbox txtcode idval nwCuz001" autocomplete="off" disabled>
+                            </div>
+                            <div class="col col-12 conval">
+                                <input type="text" name="" class="txtbox txtdesc txtlookup descval" autocomplete="off">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p8forw_psf p8forw_psf_fn p8forw_psf_p">
+                        <div class="col col-12">
+                            <label class="lbltxt">Main Parameter Value<span class="nwOptionalField">*</span></label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcepsadddatamainparamvalue" type="text" class="txtbox txtcode txtclrlupsad" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div class="col col-12 margin-x-0">
+                    <div class="row p8forw_psf p8forw_psf_fn p8forw_psf_p">
+                        <div class="col col-12">
+                            <div class="nwe-tbl-content">
+                                <div id="nwGridCon_datasourcepsl"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div id="frm-popup-p8forw-vwdatasource-psc">
+
+    <div id="nwe-hrd" class="nwe-hrd header-custom-1">
+        <div class="nwe-hrd-content nwe-hrd-height-1">
+            <div class="col col-12">
+                <div class="nwe-flex-c">
+                    <div class="nwe-cb-main">
+                        <div class="nwe-cb-btn ed nwe-algs">
+                            <div id="p8forw-toolbox" class="nwe-cb-multi-icon-c">
+                                <div class="nwe-sel-dd-with-icon" id="p8forwbtndatasourcepscsave">
+                                    <div class="nwe-sel-icon sve"></div>
+                                    <div class="nwe-sel-txt awd">Save</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row rx detail-custom-1">
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div class="col col-12 margin-x-0">
+                    <div class="row nwHide">
+                        <div class="col col-12">
+                            <label class="lbltxt">Sub Type</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcepscsubtype" type="text" class="txtbox txtcode txtclrlur" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col col-10 margin-x-0">
+                    </div>*@
+            </div>
+        </div>
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div class="col col-12 margin-x-0">
+                    <div class="row">
+                        <div class="col col-12">
+                            <div class="nwe-tbl-content">
+                                <div id="nwGridCon_datasourcepsc"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="frm-popup-p8forw-vwdatasource-r">
+
+    <div id="nwe-hrd" class="nwe-hrd header-custom-1">
+        <div class="nwe-hrd-content nwe-hrd-height-1">
+            <div class="col col-12">
+                <div class="nwe-flex-c">
+                    <div class="nwe-cb-main">
+                        <div class="nwe-cb-btn ed nwe-algs">
+                            <div id="p8forw-toolbox" class="nwe-cb-multi-icon-c">
+                                <div class="nwe-sel-dd-with-icon" id="p8forwbtndatasourcersave">
+                                    <div class="nwe-sel-icon sve"></div>
+                                    <div class="nwe-sel-txt awd">Save</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row rx detail-custom-1">
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div class="col col-12 margin-x-0">
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Data Source ID</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcerdatasourceid" type="text" class="txtbox txtcode txtclrlur" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-12">
+                            <label class="lbltxt">Data Source Name</label>
+                        </div>
+                        <div class="col col-12">
+                            <input id="txtdatasourcername" type="text" class="txtbox txtcode txtclrlur" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-10 margin-x-0">
+                </div>
+            </div>
+        </div>
+        <div class="col col-12">
+            <div class="row row-parent">
+                <div class="col col-12 margin-x-0">
+                    <div class="row">
+                        <div class="col col-12">
+                            <div class="nwe-tbl-content">
+                                <div id="nwGridCon_datasourcer"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

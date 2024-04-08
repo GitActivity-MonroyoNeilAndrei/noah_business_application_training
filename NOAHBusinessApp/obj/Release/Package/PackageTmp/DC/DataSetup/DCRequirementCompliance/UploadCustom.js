@@ -1,4 +1,5 @@
-﻿var vurl = "../DCRequirementCompliance/Upload";
+﻿var vurl = GetCurrentURL() +
+    "../DCRequirementCompliance/Upload";
 
 
 function ClearUploadField() {
@@ -9,7 +10,7 @@ function ClearUploadField() {
 }
 
 $(document).on("click", "#btnupload", function () {
-    upload();
+    return upload();
 });
 
 //For Uploading of Attachment
@@ -55,7 +56,7 @@ function upload() {
                 }
             });
         })();
-
+        return false;
     } else {
         (function () {
             var bar = $('.bar');
@@ -96,11 +97,28 @@ function upload() {
                         var noahdriveID = $("#status .noahdriveID").text();
                         var txtloadPath = $("#aagHRec .aagFiledir").text();//$(".aagFiledir").text(); //
 
+                        var filepath = $("#nwUploadCon .noahdriveID").text();
+                        var path = filepath;
 
-                        console.log(txtloadPath);
-                        console.log(noahdriveID);
+                        var serverlink = $("#txtserverlink").val();
 
+                        if (path != "") {
+                            link = serverlink + path; //uncomment this replace add by EME
 
+                            //nwLib.nwTempTable_RowData_Set("nwGrid2", crnwTR.index(), SPR_FILEPATH)(path);
+                            //nwLib.nwTempTable_RowData_Set("nwGrid2", currentRow, SPR_FILEPATH - 1)(path);
+                            nwGrid_Book.ActiveSheet.SetText(SPR_FILEPATH - 1, currentRow, path);
+                            //$('.btnview').text('').prepend('<a>View Attachment</a>');
+                            //$("#nwGrid2-nwData tbody").find("tr:eq(" + crnwTR.index() + ") td:eq(" + SPR_VIEWHDR + ") a").addClass('green');
+                            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, currentRow, 'green');
+                            nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, currentRow, "white");
+
+                        }
+                        //Close Popup Upload
+                        $('#nwUploadCon .btn.btn-modal-back').click();
+
+                        //console.log(txtloadPath);
+                        //console.log(noahdriveID);
                     }
                 });
             } catch (err) {
@@ -108,5 +126,6 @@ function upload() {
                 console.error(err);
             }
         })();
+        return true;
     }
 }

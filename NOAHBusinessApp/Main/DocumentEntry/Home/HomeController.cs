@@ -20,6 +20,11 @@ namespace InterfaceV3.Controllers
         public DataSet dsData = new DataSet();
         public ActionResult Index()
         {
+            if (!Request.Url.AbsolutePath.ToLower().Contains("/home")) {
+                Response.Redirect("home?");
+            }
+           
+
 
             string title = nwSystem.GetAppSettings("PageTitle");
             if(title.Trim() =="" )
@@ -31,6 +36,21 @@ namespace InterfaceV3.Controllers
 
             return View(@"~\Main\DocumentEntry\Home\Home.cshtml");
 
+        }
+        public ActionResult checktoken(string id)
+        {
+            try {
+                nwSystem.TokenKeyValue tk = nwSystem.GetGeneralTokenKeyValue(id);
+
+                Response.Write(tk.key.ToString() + "<br>");
+                Response.Write(tk.datetime.ToString() + "<br>");
+                Response.Write(tk.randomString.ToString() + "<br>");
+                Response.Write(tk.user.ToString() + "<br>");
+            } catch(Exception err)
+            {
+                Response.Write(err.ToString());
+            }
+            return null;
         }
 
 

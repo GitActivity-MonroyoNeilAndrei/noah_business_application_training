@@ -1,10 +1,10 @@
-﻿/* # NoahWeb JS Library 3.1.0.4
+﻿/* # NoahWeb JS Library 3.1.0.8
 # Company Owner: Forecasting and Planning Technologies Inc. / Promptus8 Inc.
 # Developers : Angelo Carlo A. Gonzales
 : Ma. Edgarda A. Malvar
 
 # Date Created : May 2021
-# Date Modified : August 03 2022 / 01:32 PM  - before: 06-24-2022
+# Date Modified : January 17 ,2024 11:56 AM  - before: 10-31-2023
 
 For  NoahWeb Application and Promptus8 Modules used only. 
 
@@ -23,10 +23,10 @@ var isDataLookup = true;
 var isContinuePress = false;
 
 var crLnk = "forms_GateWay/noahweb_Gateway";
-var crExportLnk = '../forms_standards/ExportToExcel';
+var crExportLnk = GetCurrentURL() + '../forms_standards/ExportToExcel';
 var crExportPrintLnk = '../forms_standards/Standard/ExportPrint/default.aspx';
-var crSTDLnk = "../RunStandard";
-var crSTDImageEditor = "../forms_standards/ImageEditor/index.html";
+var crSTDLnk = GetCurrentURL() + "../RunStandard";
+var crSTDImageEditor = GetCurrentURL() + "../forms_standards/ImageEditor/index.html";
 
 var nwMenuID = "";
 
@@ -122,6 +122,9 @@ var nwGridExport_Sheet;
 
 var nwIsGetGridData = true;
 var nwIsGetSpreadData = false;
+
+
+var nwsessionticker;
 
 
 function DetectMobile() {
@@ -303,8 +306,9 @@ function requestForm_Post(rdata, rurl, requestID, requestType) {
 
             data = data.replaceAll(">$(function(){", ">").replaceAll("});</script>", "</script>");
 
-
-            $('#noahwebSedit').append(data);
+            try {
+                $('#noahwebSedit').append(data);
+            } catch (err) { }
 
             if (requestID == "nwdontclearparams") {
                 clear_parametersResource();
@@ -385,14 +389,15 @@ function getParameterByName(name) {
 
 
 var crLoadingIDnum = 0;
-var crLoadingHTML = "<div class=\"nwLoadingMid\"><div class=\"nwLoadingInfo\">&nbsp; Loading...</div><div class=\"nwLoadingInfoCustom\">process</div></div>";
-crLoadingHTML = "<div class=\"nwLoadingMid\"><div class=\"nwLoadingImage\" ></div><div class=\"nwLoadingInfo\">Loading...</div></div>";
-crLoadingHTML = "<div class='nwLoadingMid'><div class='nwLoadingImage' ></div><div class='nwLoadingInfo'>Loading...</div><div class='loading'><div class='loadingball'></div><div class='loadingball'></div> <div class='loadingball'></div></div></div>";
+//var crLoadingHTML = "<div class=\"nwLoadingMid\"><div class=\"nwLoadingInfo\">&nbsp; Loading...</div><div class=\"nwLoadingInfoCustom\">process</div></div>";
+//crLoadingHTML = "<div class=\"nwLoadingMid\"><div class=\"nwLoadingImage\" ></div><div class=\"nwLoadingInfo\">Loading...</div></div>";
+//crLoadingHTML = "<div class='nwLoadingMid'><div class='nwLoadingImage' ></div><div class='nwLoadingInfo'>Loading...</div><div class='loading'><div class='loadingball'></div><div class='loadingball'></div> <div class='loadingball'></div></div></div>";
+var crLoadingHTML = "<div class='dot-spin'><div class='dot-spin-dot'></div><div class='dot-spin-dot'></div><div class='dot-spin-dot'></div><div class='dot-spin-dot'></div><div class='dot-spin-dot'></div><div class='dot-spin-dot'></div><div class='dot-spin-dot'></div><div class='dot-spin-dot'></div></div><div class='shadow'></div><div class='ldfx'><div class='txt'>Loading</div><div class='dtfrog'><div class='dtfrog-dot'></div><div class='dtfrog-dot'></div><div class='dtfrog-dot'></div></div></div>";
+
 
 
 var nwLoadingDefault = false;
 function nwLoading_Start(nwLoadingID, nwContainer, nwClass) {
-
 
     var isContinue = true;
 
@@ -415,13 +420,9 @@ function nwLoading_Start(nwLoadingID, nwContainer, nwClass) {
         $("#aagLoadingN" + nwLoadingID).show();
     }, 10);
 
-
-
 }
 function nwLoading_End(nwLoadingID) {
-
     $("#aagLoadingN" + nwLoadingID + ".nwLoading").fadeOut().remove();
-
     try {
         if ($('#nwLoadingContainer').find(".nwLoading").length <= 0)
             $("#main-container").removeClass("backgroundblur");
@@ -429,6 +430,22 @@ function nwLoading_End(nwLoadingID) {
     catch (err) { }
 }
 
+var crLoadingSpinnerHTML = "<div class='show-loading'><div class='nwLoading loading-container'> <div class='dot-spin size'> <div class='dot-spin-dot'></div> <div class='dot-spin-dot'></div> <div class='dot-spin-dot'></div> <div class='dot-spin-dot'></div> <div class='dot-spin-dot'></div> <div class='dot-spin-dot'></div> <div class='dot-spin-dot'></div> <div class='dot-spin-dot'></div> </div> </div> </div>";
+function nwLoading_SpinnerAppend(elemcontainer) {
+    setTimeout(function () {
+        $('#' + elemcontainer).append(crLoadingSpinnerHTML);
+    }, 1);
+}
+function nwLoading_SpinnerPrepend(elemcontainer) {
+    setTimeout(function () {
+        $('#' + elemcontainer).prepend(crLoadingSpinnerHTML);
+    }, 1);
+}
+function nwLoading_SpinnerEnd(elemcontainer) {
+    setTimeout(function () {
+        $('#' + elemcontainer).find('.show-loading').remove();
+    }, 1);
+}
 
 function requestForm_Ajax(data, rurl) {
 
@@ -530,6 +547,16 @@ function func_addQLink(strUrl, requestID) {
         strUrl = strUrl.replace() + "&nwpu=" + getParameterByName("nwpu");
 
 
+    if (!(strUrl.indexOf("nwtku=") >= 0))
+        strUrl = strUrl.replace() + "&nwtku=" + getParameterByName("nwtku");
+    if (!(strUrl.indexOf("nsc=") >= 0))
+        strUrl = strUrl.replace() + "&nsc=" + getParameterByName("nsc");
+    if (!(strUrl.indexOf("nsu=") >= 0))
+        strUrl = strUrl.replace() + "&nsu=" + getParameterByName("nsu");
+
+
+
+
     //  || (strUrl.indexOf("nwcomc=&")>=0)
 
 
@@ -545,6 +572,15 @@ function func_addQLink(strUrl, requestID) {
         strUrl = strUrl.replace("&nwcomc=&", "&nwcomc=" + getParameterByName("nwcomc") + "&");
 
 
+    if ((strUrl.indexOf("&nwtku=&") >= 0))
+        strUrl = strUrl.replace("&nwtku=&", "&nwtku=" + getParameterByName("nwtku") + "&");
+
+
+    if ((strUrl.indexOf("&nsc=&") >= 0))
+        strUrl = strUrl.replace("&nsc=&", "&nsc=" + getParameterByName("nsc") + "&");
+
+    if ((strUrl.indexOf("&nsu=&") >= 0))
+        strUrl = strUrl.replace("&nsu=&", "&nsu=" + getParameterByName("nsu") + "&");
 
 
 
@@ -917,6 +953,8 @@ function func_CreateConfig(datax, conid, instanceID, totalcount, index, perpage,
         nwLoading_Start("actLoadSpreadPageData", crLoadingHTML);
         //paramencrypt =false;
         func_ActionDriven("actLoadSpreadPageData", false, crSTDLnk);
+
+
     }
 }
 
@@ -1323,17 +1361,17 @@ function LoadToolBoxFunc(isInit) {
 
             verID = $(this).index('.btn-tb-action');
             try {
-                if ($(this).hasClass("btn-tb-new")) { verID = 0; _ToolBoxClicked = "1"; }
-                else if ($(this).hasClass("btn-tb-save")) { verID = 1; _ToolBoxClicked = "2"; }
-                else if ($(this).hasClass("btn-tb-delete")) { verID = 2; _ToolBoxClicked = "3"; }
+                if ($(this).hasClass("btn-tb-new")) { verID = 0; _ToolBoxClicked = "1"; crlateststdbutton = "New"; }
+                else if ($(this).hasClass("btn-tb-save")) { verID = 1; _ToolBoxClicked = "2"; crlateststdbutton = "Save"; }
+                else if ($(this).hasClass("btn-tb-delete")) { verID = 2; _ToolBoxClicked = "3"; crlateststdbutton = "Delete"; }
                 else if ($(this).hasClass("btn-tb-refresh")) {
                     verID = 3;
                     crinquireval = "";
                 }
                 else if ($(this).hasClass("btn-tb-inquire")) verID = 4;
-                else if ($(this).hasClass("btn-tb-process")) { verID = 5; _ToolBoxClicked = "4"; }
-                else if ($(this).hasClass("btn-tb-import")) { verID = 6; _ToolBoxClicked = "6"; }
-                else if ($(this).hasClass("btn-tb-export")) { verID = 7; _ToolBoxClicked = "5"; }
+                else if ($(this).hasClass("btn-tb-process")) { verID = 5; _ToolBoxClicked = "4"; crlateststdbutton = "Process"; }
+                else if ($(this).hasClass("btn-tb-import")) { verID = 6; _ToolBoxClicked = "6"; crlateststdbutton = "Import"; }
+                else if ($(this).hasClass("btn-tb-export")) { verID = 7; _ToolBoxClicked = "5"; crlateststdbutton = "Export"; }
                 else if ($(this).hasClass("btn-tb-print")) verID = 8;
                 else if ($(this).hasClass("btn-tb-closing")) verID = 9;
                 else if ($(this).hasClass("btn-tb-search")) verID = 10;
@@ -1376,6 +1414,8 @@ function func_ToolBox_Continue() {
 
 function func_reloadinit() {
     var isContinue = true;
+
+    nwLoading_Start("nwFirstLoadDataAzie", crLoadingHTML);
     try {
         isContinue = func_Reload();
 
@@ -2341,11 +2381,11 @@ $(function () {  // nwinitial  initial first load / mainload
 
     $('body').append("<div id=\"noahwebSedit\" class=\"nwHide\"></div>");
     $('body').append("<div id=\"nwExportContainerMainBut\" nwTitle=\"Export\" ><div><input id='nwExportContainerMainText'><button id=\"btnnwExportBut\" value\"Export\">Export to Excel</button>&nbsp;&nbsp;<button id=\"btnnwExportCSVBut\"  value\"Export\">Export to CSV</button> &nbsp;&nbsp;<button id=\"btnnwExportPrintBut\"  value=\"Print\">Print</button></div></div>");
-
+    $('body').append("<div id='nwSnackbar'></div>");
 
 
     nwPopupForm_Create("nwExportContainerMainBut", false);
-
+    $('body').append("<div id=\"nwLoadingContainer\"></div>");
 
     if (getParameterByName("nwdev") == "p8dev") {
         var xsec = $('#nwseckey').text();
@@ -2391,6 +2431,23 @@ $(function () {  // nwinitial  initial first load / mainload
     nwCallInitializeWithUI();
 
     isLibraryObject = false;
+
+
+    //setInterval(function () {
+    //    try {
+    //        nwsessionticker = new Date(CookieGet("nwsessionticker"));
+    //    } catch (er) { }
+
+    //    if (nwsessionticker == undefined) {
+    //        func_ActionDriven("actLoadSession", false, crSTDLnk, "nwdontclearparams");
+    //    }
+    //    else {
+    //        const diffTime = Math.abs(new Date() - nwsessionticker);
+    //        if (diffTime > 300000) {
+    //            func_ActionDriven("actLoadSession", false, crSTDLnk, "nwdontclearparams");
+    //        }
+    //    }
+    //}, 300010); //300
 });
 
 var nwcontainerhandle = false;
@@ -2579,7 +2636,11 @@ $(window).resize(function () {
     //    } catch (err) { }
     //}
 
-
+    if ($("body").width() <= 550) {
+        $("body").addClass('modal-mobile');
+    } else {
+        $("body").removeClass('modal-mobile');
+    }
 
 
 });
@@ -2670,6 +2731,7 @@ function Message_Yes() {
     var isnewLib = false;
     if (MessageBoxID_AAG != undefined) {
         var isright = MessageBoxID_AAG.buttonYes();
+        if (isright == undefined) isright = true;
         isValid = isright || true;
         isnewLib = true;
     }
@@ -2717,7 +2779,8 @@ function Message_No() {
     var isnewLib = false;
     if (MessageBoxID_AAG != undefined) {
         var isright = MessageBoxID_AAG.buttonNo();
-        isValid = isright || true;
+        if (isright == undefined) isright = true;
+        isValid = isright;
         isnewLib = true;
     }
     MessageBoxID_AAG = undefined;
@@ -2760,26 +2823,32 @@ function Message_Ok() {
     var isnewLib = false;
     if (MessageBoxID_AAG != undefined) {
         var isright = MessageBoxID_AAG.buttonOk();
-        isValid = isright || true;
+        if (isright == undefined) isright = true;
+        isValid = isright;
         isnewLib = true;
     }
-    MessageBoxID_AAG = undefined;
-    if (isValid == false) return false;
 
+    if (isValid == false) return false;
+    MessageBoxID_AAG = undefined;
 
 
     try { Message_OkF(); }
     catch (err) { }
+    //Message_close();
+    if (isValid == true || isValid == undefined) Message_close();
+}
+
+$(document).on("click", "#mdlPrompt #btnCancel", function () {
     Message_close();
+    return false;
+});
 
+
+function MessageBox(message, title, icon, focusObject, isInput) {
+    parent_MessageBox(message, title, icon, focusObject, isInput);
 }
-
-
-function MessageBox(message, title, icon, focusObject) {
-    parent_MessageBox(message, title, icon, focusObject);
-}
-function MessageBoxQuestion(message, title, icon, focusObject) {
-    parent_MessageBoxQuestion(message, title, icon, focusObject);
+function MessageBoxQuestion(message, title, icon, focusObject, isInput) {
+    parent_MessageBoxQuestion(message, title, icon, focusObject, isInput);
 }
 
 function parent_UILoadAlerts() {
@@ -2796,13 +2865,28 @@ function parent_UILoadAlerts() {
 $(document).on("click", ".btn.btn-alert-close", function () {
     $(this).parents(".alert").fadeOut().delay(300).remove();
 });
-function parent_MessageBox(message, title, icon, focusObject) {
+function parent_MessageBox(message, title, icon, focusObject, isInput) {
     message = MessageBox_Replace(message);
+    title = MessageBoxTitle_Replace(title);
 
     if (title == undefined) title = baseTitle;
     message = message.replaceAll("\n", "<br>");
 
     if (icon == "" || icon == undefined) icon = "info";
+
+
+    if (isInput == true) {
+        $("#mdlPrompt").find(".mdl-msg-input").show();
+        $("#mdlPrompt").find("#btnCancel").show();
+        $("#mdlPrompt").find(".mdl-msg-label").show();
+        $("#mdlPrompt").find("#txt-msg-msgvalue").val("");
+        $("#mdlPrompt").find("#txt-msg-msgvalue").focus();
+
+    } else {
+        $("#mdlPrompt").find(".mdl-msg-input").hide();
+        $("#mdlPrompt").find("#btnCancel").hide();
+        $("#mdlPrompt").find(".mdl-msg-label").hide();
+    }
 
     $("#mdlPrompt").removeClass("question");
     $("#mdlPrompt").removeClass("error");
@@ -2819,9 +2903,25 @@ function parent_MessageBox(message, title, icon, focusObject) {
 }
 
 var MessageBoxID_AAG = undefined;
-function parent_MessageBoxQuestion(message, title, icon, focusObject) {
+function parent_MessageBoxQuestion(message, title, icon, focusObject, isInput) {
     message = MessageBox_Replace(message);
+    title = MessageBoxTitle_Replace(title);
     message = message.replaceAll("\n", "<br>");
+
+
+    if (isInput == true) {
+        $("#mdlPrompt").find(".mdl-msg-input").show();
+        $("#mdlPrompt").find("#btnCancel").show();
+        $("#mdlPrompt").find(".mdl-msg-label").show();
+        $("#mdlPrompt").find(".mdl-msg-label").text("");
+        $("#mdlPrompt").find("#txt-msg-msgvalue").val("");
+        $("#mdlPrompt").find("#txt-msg-msgvalue").focus();
+
+    } else {
+        $("#mdlPrompt").find(".mdl-msg-input").hide();
+        $("#mdlPrompt").find("#btnCancel").hide();
+        $("#mdlPrompt").find(".mdl-msg-label").hide();
+    }
 
 
     $("#mdlPrompt").addClass("question");
@@ -2841,6 +2941,7 @@ function parent_MessageBoxQuestion(message, title, icon, focusObject) {
 
 function parent_MessageBoxQuestionToolBox(message, title, icon, indef, enume) {
     message = MessageBox_Replace(message);
+    title = MessageBoxTitle_Replace(title);
     crFunc = indef;
     crPos = enume;
     isMessageQuestionToolBox = true;
@@ -2855,9 +2956,18 @@ function parent_MessageBoxQuestionToolBox(message, title, icon, indef, enume) {
     msgBox.Show();
 
 }
+function MessageBoxTitle_Replace(title) {
+    title = title.replaceAll("Error [1205]:", "");
+    return title;
+}
 
-
+var crlateststdbutton = "Process";
 function MessageBox_Replace(msg) {
+    if (msg.indexOf("deadlock victim") >= 0) {
+        msg = "Your request has been submitted. Please click 'Ok' then click the '" + crlateststdbutton + "' button to complete the transaction.";
+        crlateststdbutton = "Process";
+    }
+
     msg = msg.replaceAll("Error(s) Found:\n", "");
 
     msg = msg.replaceAll("Saved successfully.", "Saved successfully");
@@ -2906,7 +3016,7 @@ function lookUpLoadDataSetupRuntime() {
     var svalue = $("#txtlookupsearchF").val();
     var curdata;
     if (svalue.trim() != "") {
-        var mainfilter =$("#nkcmb-mainfilter").val();
+        var mainfilter = $("#nkcmb-mainfilter").val();
         if (mainfilter == "") {
             for (var i = 0; i < nkcrLookupArryData2.length; i++) {
                 optionfilter.push({ "field": nkcrLookupArryData2[i]["Column1"], "value": svalue });
@@ -2932,17 +3042,18 @@ function lookUpLoadDataSetupRuntime() {
     if (optionfilter.length >= 1) {
         curdata = nwJsonContains(curdata, optionfilter, "", false);
     }
-    
 
-    lookUpLoadDataSetup(nkcrLookupdimP, curdata, nkcrLookupArryData2, nkcrLookuptag,false);
+
+    lookUpLoadDataSetup(nkcrLookupdimP, curdata, nkcrLookupArryData2, nkcrLookuptag, false);
 
 }
 
-function lookUpLoadDataSetup(dimP, data, data2, tag,isnitial) {
-    //  if (tag == "list")
-    //    $("#AddtolistCon").show();
-    //else
-    //    $("#AddtolistCon").hide();
+function lookUpLoadDataSetup(dimP, data, data2, tag, isnitial) {
+    if (tag == "list")
+        $("#AddtolistCon").show();
+    else
+        $("#AddtolistCon").hide();
+
 
     if (isnitial == undefined)
         isnitial = true;
@@ -2996,7 +3107,7 @@ function lookUpLoadDataSetup(dimP, data, data2, tag,isnitial) {
     if (tag == "list")
         lookupHeaderhtml += "<th data-type='num' scope='col' class='tbl-row-num'></th>";
 
-   
+
 
     for (var i = 0; i < data2.length; i++) {
         lookupHeaderhtml += "<th data-type='str' scope='col' class=''><input type='text' name='' class='lookupcolSearch txtbox'></th>";
@@ -3009,7 +3120,7 @@ function lookUpLoadDataSetup(dimP, data, data2, tag,isnitial) {
         lookupBodyhtml += "<tr class='lookuprow'>";
 
         lookupBodyhtml += "<th scope='row' class='tbl-row-num' row-th='#'><span class='wrap-td'>" + "</span></th>";
-        if (tag == "list"){
+        if (tag == "list") {
             lookupBodyhtml += "<td class='chklist' row-th=''><input  class='nwlookupgridcheck' type='checkbox'></td>";
 
         }
@@ -3027,10 +3138,10 @@ function lookUpLoadDataSetup(dimP, data, data2, tag,isnitial) {
         lookupBodyhtml += "<tr class='nwLookup-Nodata'><td colspan='" + totalcol + "' class='nwLookup-Nodata'>No Data Found!</td></tr>";
     }
 
-    if (isnitial==true) $("#nkLookupCon").find("table thead").html(lookupHeaderhtml);
+    if (isnitial == true) $("#nkLookupCon").find("table thead").html(lookupHeaderhtml);
     $("#nkLookupCon").find("table tbody").html(lookupBodyhtml);
 
-  
+
 
     setTimeout(function () {
         lookupDataLoadList($('#' + dimP));
@@ -3043,7 +3154,7 @@ $(document).on("mousedown", "#nkLookupCon .lookuprow", function () {
         lookUpSelect(vindex);
     }
     else {
-        
+
     }
 })
 
@@ -4161,7 +4272,8 @@ function nwGrid_AddtoListDoneCustomF(verID) {
     var addtoListTableRec = $('#dimTableLookUpCon tbody');
     var crnwTRtemp;
     for (var i = 0; i < addtoListTableCount; i++) {
-        crnwTRtemp = nwGrid_AddtoListDoneCustom(verID, addtoListTableRec, i);
+        if ($('#dimTableLookUpCon tbody tr:eq(' + i + ') td:eq(0) input').prop("checked") == true)
+            crnwTRtemp = nwGrid_AddtoListDoneCustom(verID, addtoListTableRec, i);
     }
 
     try {
@@ -4358,11 +4470,13 @@ function Lookup_AddToListChecks() {
 
 
 //aagedit
-$(document).on("mousedown", "table.nwlookupgridList tr td", function () {
+$(document).on("click", "table.nwlookupgridList tr td", function () {
     // if ($(this).index() > 1) return false;
     //alert($(this).index());
 
-    if ($(this).index() == 0) return false;
+    //if ($(this).index() == 0) return false;
+    if ($(this).find("input.nwlookupgridcheck").val() != undefined) return true;
+
 
     if ($(this).parents("table.nwlookupgridList tr").find("td:eq(0) input").prop("checked") == false) {
 
@@ -5388,6 +5502,18 @@ function func_ExportGrid(gridID) {
 
     $('#nwExportContainerMainText').attr("gridtype", "");
 
+    try {
+        if (p8Spread_JSPrint == true) {
+            $("#btnnwExportPrintBut").show();
+            $("#nwExportContainerMainBut").width(385);
+        } else {
+            $("#btnnwExportPrintBut").hide();
+            $("#nwExportContainerMainBut").width(0);
+        }
+    } catch (err) { }
+
+
+
     if ($("#" + gridID).hasClass("P8Spread")) {
 
         if (func_ExportisClient()) {
@@ -6345,16 +6471,16 @@ function func_nwRandomString(count) {
     return text;
 }
 
-/// once element created 
-$(document).bind("DOMSubtreeModified", function (evt) {
-    var eTarget = evt.target;
-    //  alert(jQuery(eTarget).hasClass('isNumber'))
-    //  $(eTarget).addClass("nwObjects");
-    if (jQuery(eTarget).hasClass('isNumber')) {
-        ;
-        func_isnumber_makenumeric(eTarget);
-    }
-});
+///// once element created 
+//$(document).bind("DOMSubtreeModified", function (evt) {
+//    var eTarget = evt.target;
+//    //  alert(jQuery(eTarget).hasClass('isNumber'))
+//    //  $(eTarget).addClass("nwObjects");
+//    if (jQuery(eTarget).hasClass('isNumber')) {
+//        ;
+//        func_isnumber_makenumeric(eTarget);
+//    }
+//});
 
 
 
@@ -6872,11 +6998,16 @@ function crete_WindowBox(verID, isResize, link) {
         else
             link = link + "" + document.location.search;
 
-        if (link.indexOf("?") >= 0){
+        try {
+            link = link.replace("&nkpop=y", "");
+            link = link.replace("?nkpop=y", "");
+        } catch (err) { }
+
+        if (link.indexOf("?") >= 0) {
             link = link + "&nkpop=y";
         }
         else
-            link = "?nkpop=y";
+            link = link + "?nkpop=y";
 
 
         tempCon = "<iframe class='nwmenuFrame' src=" + link + " ></iframe>";
@@ -6885,7 +7016,7 @@ function crete_WindowBox(verID, isResize, link) {
 
 
     var strTitle = $('#' + verID).attr("nwTitle");
-    var verclass = $('#' + verID).attr("class")|| "";
+    var verclass = $('#' + verID).attr("class") || "";
     //var verstyle = $('#' + verID).attr("style");
 
     $('#' + verID).attr("class", "noah-webui-Window  " + verclass);
@@ -6925,7 +7056,7 @@ function crete_WindowBox(verID, isResize, link) {
     var strF = "<div class='modal-box-s'>" +
          "<div class='modal-box-bg'></div>" +
           "<div class='modal-hdr'>" +
-             "<div class='btn btn-modal-back' nk-fx-click='press' title='Back'><span></span></div>" +
+             "<div class='btn btn-modal-back' nk-fx-click='press' ><span></span></div>" +
              "<div class='modal-hdr-title'>" + strTitle + "</div>" +
              strResize +
            "</div>" +
@@ -13864,15 +13995,16 @@ function func_ExportToCSV(GridInstance, gridtype) {
     } catch (err) { }
 }
 function func_ExportToPrint(GridInstance, gridtype) {
+    var filename = $("#" + GridInstance).attr("p8title");
     try {
-        var xGridInstance = "";
-        if (gridtype == "spread") {
-            xGridInstance = GridInstance;
+        if (p8Spread_JSPrint == true) {
+            nwLoading_Start("SpreadPrint", crLoadingHTML);
+            setTimeout(function () {
+                var book = p8Spread_Book(GridInstance);
+                p8Spread_Print(book, filename);
+                nwLoading_End("SpreadPrint");
+            }, 100);
         }
-        else
-            xGridInstance = $("#" + GridInstance.replace("#", "")).find(".tblGridBody").parents(".nwGrid").attr("nwinstance");
-        var xlink = crExportPrintLnk;
-        var win = window.open(xlink + '?SessionID=' + xGridInstance + "");
     } catch (err) { }
 }
 
@@ -15510,6 +15642,8 @@ nwTrustedLinks.push("dev.noahapplication.com");
 nwTrustedLinks.push("apps.noahapplication.com");
 nwTrustedLinks.push("app.noahapplication.com");
 nwTrustedLinks.push("globe.moreforme.net");
+nwTrustedLinks.push("fonts.googleapis.com");
+
 
 
 
@@ -15518,6 +15652,9 @@ nwTrustedLinks.push("ff.kis.v2.scr.kaspersky-labs.com");
 
 nwTrustedLinks.push("apis.google.com");
 nwTrustedLinks.push("accounts.google.com");
+
+nwTrustedLinks.push("fli.promptus8.com");
+nwTrustedLinks.push("bit.ly");
 
 
 var crsecTempVar = "";
@@ -16725,7 +16862,13 @@ function func_SpreadExport(varID) {
 
 }
 function func_SpreadCreated(spreadID) {
-    var isclass = $("#" + spreadID).parents(".noah-webui-container").hasClass("noah-webui-container")
+    var isclass = $("#" + spreadID).parents(".noah-webui-container").hasClass("noah-webui-container");
+    try {
+        p8Spread_Created(spreadID);
+    } catch (err) {
+
+    }
+
     if (isclass) {
         setTimeout(function () {
             func_SpreadResizeonContainer($("#" + spreadID).parents(".noah-webui-container"));
@@ -16855,29 +16998,67 @@ var Parser = {
 })();
 
 
-function ShowDocWriterPreview(url, dtPreviewJson, filename) {
+var DW_PreviewJson = "";
+var DW_URL = "";
+function ShowDocWriterPreview(url, dtPreviewJson, filename, isModal) {
     var title = "";
     var fullength = "";
     title = "Document Writer Viewer";
-    PreviewJson = JSON.stringify(dtPreviewJson);
+    DW_PreviewJson = JSON.stringify(dtPreviewJson);
+    DW_URL = url;
     fullength += url;
 
     if (fullength.indexOf("forms_standards/retrieve") <= 0)
-        fullength += "forms_standards/retrieve/DocumentWriterViewer/index.html";
-    //?url=" + encodeURIComponent(url);// + "&frmlistParam=" + encodeURIComponent(PreviewJson);
+        fullength += "forms_standards/retrieve/DocumentWriterViewer/index.html?";
+
+    var frmlistParamSessionName = makeid(10);
+    fullength += "&url=" + encodeURIComponent(url);
+    fullength += "&frmlistParamSessionName=" + encodeURIComponent(frmlistParamSessionName);
 
     if (filename == undefined) filename = "Document";
-    CookieSet("frmlistParam", PreviewJson, 1);
-    CookieSet("frmlistParamName", filename, 1);
-
-
+    CookieSet(frmlistParamSessionName, filename, 1);
 
     nwPopupForm_Create("nwPopWindow", true, fullength);
     $('#nwPopWindow .BoxTitle').text(title);
-    $("#nwPopWindow").css({ "min-width": "90%" });
-    $("#nwPopWindow").css({ "min-height": "90%" });
+    $("#nwPopWindow").css({ "width": "90%" });
     $("#nwPopWindow").css({ "height": "90%" });
-    nwPopupForm_ShowModal("nwPopWindow");
+    $('#nwPopWindow').find(".nwmenuFrame").attr("id", "framenwPopWindow");
+    $('#nwPopWindow').find(".nwmenuFrame").attr("onload", "OnLoadDowWriter()");
+
+    if (isModal == false) {
+        nwPopupForm_Show("nwPopWindow");
+        nwPopupForm_Modal("nwPopWindow");
+    }
+    else {
+        nwPopupForm_ShowModal("nwPopWindow");
+    }
+}
+function OnLoadDowWriter() {
+    var receiverwindow = document.getElementById('framenwPopWindow').contentWindow;
+    //DW_URL = DW_URL.replace("../../../..", origin);
+    receiverwindow.postMessage(DW_PreviewJson, "*");
+}
+function en(c) {
+    var x = 'charCodeAt', b, e = {}, f = c.split(""), d = [], a = f[0], g = 256; for (b = 1; b < f.length; b++) c =
+
+    f[b], null != e[a + c] ? a += c : (d.push(1 < a.length ? e[a] : a[x](0)), e[a + c] = g, g++, a = c); d.push(1 < a.length ? e[a] :
+
+    a[x](0)); for (b = 0; b < d.length; b++) d[b] = String.fromCharCode(d[b]); return d.join("")
+}
+function de(b) {
+    var a, e = {}, d = b.split(""), c = f = d[0], g = [c], h = o = 256; for (b = 1; b < d.length; b++) a = d
+
+    [b].charCodeAt(0), a = h > a ? d[b] : e[a] ? e[a] : f + c, g.push(a), c = a.charAt(0), e[o] = f + c, o++, f = a; return g.join("")
+
+}
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }
 
 function DocumentWriter_Show(PDFUrl, DocnoJSON) {
@@ -16936,6 +17117,29 @@ GenLib.MessageBox.prototype.Show = function () {
     MessageBoxID_AAG = this;
     MessageBox(this.message, this.title, this.icon);
 }
+
+GenLib.MessageBoxInput = function (ID, message, title, icon) {
+    this.id = ID;
+    this.message = message || "";
+    this.title = title || "";
+    this.icon = icon || "info";
+
+    this.buttonOk = function () { console.log(this.id + " ok") };
+    this.buttonClose = function () { console.log(this.id + " close") };
+}
+GenLib.MessageBoxInput.prototype.Show = function () {
+    MessageBoxID_AAG = this;
+    MessageBox(this.message, this.title, this.icon, undefined, true);
+}
+GenLib.MessageBoxInput.prototype.InputValue = function () {
+    return $("#txt-msg-msgvalue").val();
+}
+GenLib.MessageBoxInput.prototype.LabelText = function (value) {
+    $("#mdlPrompt").find(".mdl-msg-label").hide();
+    $("#mdlPrompt").find(".mdl-msg-label").text(value);
+    $("#mdlPrompt").find(".mdl-msg-label").fadeIn(100);
+}
+
 
 
 
@@ -17004,13 +17208,16 @@ function func_nwfixedUI() {
 }
 
 
-function GOTOURL(url)
-{
+function GOTOURL(url) {
     var spec = window.location.origin + window.location.pathname;
     if (spec.lastIndexOf("/") + 1 == spec.length)
         window.location = window.location.origin + window.location.pathname + url;//'../default/'
     else
-        window.location = window.location.origin + window.location.pathname + '/' + url ;//../default/'
+        window.location = window.location.origin + window.location.pathname + '/' + url;//../default/'
+}
+
+function GetCurrentURL() {
+    return window.location.protocol + "//" + window.location.host + (window.location.pathname + "/").replaceAll("//", "/");
 }
 
 
@@ -17072,7 +17279,7 @@ $(function ($) {
             $("#" + def.id).find(".tabs-lbl:eq(0)").click();
         });
 
-       
+
     };
 
 }(jQuery));
@@ -17080,7 +17287,7 @@ $(function ($) {
 $(document).on("click", ".btn-del-list", function () {
     $(this).parents(".tabs-text").find(".innertext").html("");
 });
-	
+
 
 $(document).on("keypress", "#txtlookupsearchF", function (e) {
     if (e.which == 13) {
@@ -17088,8 +17295,74 @@ $(document).on("keypress", "#txtlookupsearchF", function (e) {
         return false;
     }
 });
-$(document).on("change", "#nkcmb-mainfilter", function (e) {
-        lookUpLoadDataSetupRuntime();
-        return false;
+$(document).on("click", "#nkbtnsearch", function (e) {
+    var svalue = $("#txtlookupsearchF").val();
+    lookUpLoadDataSetupRuntime();
+    setTimeout(function () { $("#txtlookupsearchF").val(svalue); }, 100);
+    return false;
 });
+
+$(document).on("change", "#nkcmb-mainfilter", function (e) {
+    lookUpLoadDataSetupRuntime();
+    return false;
+});
+
+function nk_ChangeParam(key, value) {
+    const url = new URL(window.location);
+    url.searchParams.set(key, value);
+    window.history.pushState(null, '', url.toString());
+}
+
+function func_nwkInquire(primarykey) {
+    if (primarykey == undefined || primarykey == "")
+        primarykey = crinquireval;
+
+    func_Toolbox_Clear();
+    crnwcodevalue = primarykey;
+    func_ToolboxData("#noah-webui-Toolbox-Grid", "toolbox");
+    isNewRow = false;
+}
+function func_nwSTDButton(buttype) {
+
+    if (buttype == "save") {
+        $('#noah-webui-default-Save').enable(true);
+        $('#noah-webui-default-Delete').enable(true);
+        $('#noah-webui-default-Process').enable(true);
+    }
+    else if (buttype == "delete") {
+        $('#noah-webui-default-Save').enable(false);
+        $('#noah-webui-default-Delete').enable(false);
+        $('#noah-webui-default-Process').enable(false);
+    }
+    else if (buttype == "process") {
+        $('#noah-webui-default-Save').enable(false);
+        $('#noah-webui-default-Delete').enable(false);
+        $('#noah-webui-default-Process').enable(false);
+    }
+}
+
+function func_nwsrcConvert(tkey) {
+    return "url(" + crExportLnk + "?tct=ck&tck=" + tkey + ")";
+}
+
+$(document).tooltip({
+    track: true
+    , position: { my: "left+25 center", at: "right center" }
+
+});
+
+
+var curMouseoverIDLE = 0;
+var MaxSessionMin = 60;
+var MaxSessionSec = 60 * MaxSessionMin;
+$(document).on("mouseover","body",function(){
+    curMouseoverIDLE = 0;
+});
+
+setInterval(function(){
+    curMouseoverIDLE +=1;
+    if(curMouseoverIDLE >= MaxSessionSec){
+        window.location = GetCurrentURL() + "../logout";
+    }
+}, 1000);
 

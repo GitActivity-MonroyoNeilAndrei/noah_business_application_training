@@ -1,0 +1,41 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Document Attachment";
+}
+
+
+<div id="docattview" nwTitle="Document Attachment">
+
+    <div id="noah-webui-Toolbox" class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="docattviewdownload" class="btn-tb-action downloadbuttoncss">
+                <div class="_icon"></div>
+                <div class="_lbl">Download</div>
+            </div>
+            <a id="aDownload" target="_blank" href="#"></a>
+
+        </div>
+    </div>
+
+    <div class="container-flex">
+        <div class="row row-parent">
+            <div class="row">
+                <div class="col col-12 col-parent">
+                    <div id="vwImage" class="h_iframe">
+                        <!-- a transparent image is preferable -->
+                        <img id="docattviewimg" class="ratio" src="" />
+                        <iframe id="docattviewlink" src="" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-12 col-parent">
+                    <object id="docattviewpdfobjectlink" data="" type="application/pdf">
+                        <embed id="docattviewpdfembedlink" src="" type="application/pdf" />
+                    </object>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

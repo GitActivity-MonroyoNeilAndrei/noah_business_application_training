@@ -16,7 +16,14 @@ namespace NOAHBusinessApp.Controllers.RE
         public ActionResult Index()
         {
             mainDataAccess main = new mainDataAccess();
-            main.MenuAccess(User, this);
+            string nwtk = "";
+            try
+            {
+                nwtk = Request.QueryString["nwtk"].ToString();
+            }
+            catch { }
+            if (nwtk == "")
+                main.MenuAccess(User, this); //security
             return View(@"~\PMO\ReportsAndInquiry\SOA\SOA.cshtml");
         }
 

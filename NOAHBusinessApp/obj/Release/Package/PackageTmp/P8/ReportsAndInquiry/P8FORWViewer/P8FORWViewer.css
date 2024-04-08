@@ -1,0 +1,61 @@
+﻿
+
+
+.nwe-btn.logo::after {
+    content: '';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: url(/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/media/icons/p8-icon.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    top: 2px;
+    left: 2px;
+}
+
+#p8forwviewer-Toolbox .nwe-cl-icon-m.cviewer::after {
+    content: '';
+    width: 36px;
+    height: 36px;
+    background: url(/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/media/icons/icon-nw_v2_eclear_colored_22x22_24px.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 36px;
+}
+
+#p8forwviewer-Toolbox .nwe-cl-icon-m.exportviewer::after {
+    content: '';
+    width: 36px;
+    height: 36px;
+    background: url(/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/media/icons/icon-nw_fileexport_22x22_24px.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 36px;
+}
+
+#p8forwviewer-Toolbox .nwe-cl-icon-m.refreshviewer::after {
+    content: '';
+    width: 36px;
+    height: 36px;
+    background: url(/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/media/icons/icon-nw_fileexport_22x22_24px.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 36px;
+}
+
+#p8forwviewer-Formula .nwe-cl-icon-m.shf::after {
+    content: '';
+    width: 36px;
+    height: 36px;
+    background: url(/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/media/icons/icon-nw_v2_frshow_34x34_36px.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 36px;
+}

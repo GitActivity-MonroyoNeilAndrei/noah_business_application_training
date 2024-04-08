@@ -13,7 +13,7 @@ function func_Reload()
 {
 
     crnwTagSingleBind = true;
-    crLnk = "../SAAccount/SAAccount_Gateway";
+    crLnk = GetCurrentURL() + "SAAccount_Gateway";
     crLnkGateKey = "SAAccount";
 
     $("#noah-webui-default-Delete").enable(false);

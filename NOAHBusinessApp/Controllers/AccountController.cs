@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InterfaceV3.Models;
+using System.Text.RegularExpressions;
+using NoahWebLib;
 
 namespace InterfaceV3.Controllers
 {
@@ -397,6 +399,14 @@ namespace InterfaceV3.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+           
+            string x_struser = User.Identity.GetUserName();
+            nwSFObjects SFObject = new nwSFObjects();
+            //SFObject.returnText($@"update  FPTI_NW.noahweb_UserLogStatus set userLoginOut = dbo.GetNoahDate() where [userID] = '{x_struser}'",NoahWebLib.nwSystem.ARKDB_ConnectionString());
+
+            SFObject.returnText($@"delete  FPTI_NW.noahweb_UserLogStatus  where [userID] = '{x_struser}'", NoahWebLib.nwSystem.ARKDB_ConnectionString());
+
+
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Login");
         }
@@ -429,8 +439,95 @@ namespace InterfaceV3.Controllers
             base.Dispose(disposing);
         }
 
+        [AllowAnonymous]
+        //  [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPasswordUser(string toks, string s)
+        {
+            string token = toks;
+            string salt = s;
+
+            string tokenstring = NoahWebLib.nwSystem.StringDecryptAES(token, true);
+            string[] tokenstring_Array = Regex.Split(tokenstring, "#@#");
+
+            if (tokenstring_Array.Length >= 4)
+            {
+                string ran = tokenstring_Array[0].ToString();
+
+                if (ran == salt)
+                {
+                    string UserName = tokenstring_Array[1].ToString();
+                    string OldPassword = tokenstring_Array[2].ToString();
+                    string Password = tokenstring_Array[3].ToString();
+
+                    //OldPassword = DateTime.Now.ToString("yyyy_MM_dd_HHmmssfff") + "_azie_" + Email;
+
+                    //var user = new ApplicationUser { UserName = UserName, Email = Email };
+
+                    OldPassword = "Az1#@$%" + OldPassword;
+                    //OldPassword = "Az1#" + OldPassword;
+                    Password = "Az1#@$%" + Password;
+
+                    var userx = await UserManager.FindByNameAsync(UserName);
+                    if (userx == null)
+                    {
+                        NoahWebLib.nwSFObjects SFObjects = new NoahWebLib.nwSFObjects();
+                        string email = DateTime.Now.ToString("yyyy_MM_dd_HHmmssfff") + "_azie_" + "_loaded@noah.com.ph";
+                        string code = SFObjects.returnText($"Select code from [fpti].[user] where code = '{UserName.Replace("''", "").Replace("--", "")}'", NoahWebLib.nwSystem.ARKDB_ConnectionString());
+                        if (code != "")
+                        {
+                            var userX = new ApplicationUser { UserName = UserName, Email = email };
+                            var resultF = await UserManager.CreateAsync(userX, Password);
+                            if (resultF.Succeeded)
+                            {
+                                bool isPersistent = false;
+
+                                if (NoahWebLib.nwSystem.GetAppSettings("AppUserLoginRetain") == "true")
+                                    isPersistent = true;
+
+                                await SignInManager.SignInAsync(userX, isPersistent: isPersistent, rememberBrowser: false);
+                                Response.Write("200");
+                                //await SignInManager.SignInAsync(userX, isPersistent: false, rememberBrowser: false);
+                                //Response.Write("200");
+                                return null;
+                            }
+                            else
+                            {
+                                Response.Write("400");
+                                return null;
+                            }
+                        }
+                        else
+                        {
+                            Response.Write("400");
+                            return null;
+                        }
+                    }
+
+
+
+
+                    var result = await UserManager.ChangePasswordAsync(userx.Id, OldPassword, Password);
+                    //var result = await UserManager.ResetPasswordAsync(userx.Id, token, Password);
+                    if (result.Succeeded)
+                    {
+                        Response.Write("200");
+                        return null;
+                    }
+
+
+                }
+
+            }
+
+            Response.Write("400");
+            // If we got this far, something failed, redisplay form
+            return null;
+       }
+
+
+
         #region Helpers
-        // Used for XSRF protection when adding external logins
+            // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
         private IAuthenticationManager AuthenticationManager

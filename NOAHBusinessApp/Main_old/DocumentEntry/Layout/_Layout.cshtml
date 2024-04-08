@@ -1,0 +1,754 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+
+    string rdefault = NOAHBusinessApp.Main.DocumentEntry.Layout.SetDefaults(User);
+    NOAHBusinessApp.Main.DocumentEntry.Layout.NKSystemDefault sdefault = NOAHBusinessApp.Main.DocumentEntry.Layout.SetSystemDefaults(Context, User);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    @*<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />*@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+  
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Basic Meta Tags -->
+
+    <!-- Standard -->
+    <link rel="stylesheet" type="text/css" href="~/materials/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style.css" />
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-screen.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style-set.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-main.css" />
+    <link rel="stylesheet" type="text/css" href="~/materials/fonts/new/fonts.css" />
+
+    <script type="text/javascript" src="~/materials/jslib/fpti.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fptiextra.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/noahwebAAGlib.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/noahweb_Format.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/CanvasJS.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/CanvasJS-Excel.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fx.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fx-main.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/umain.js"></script>
+    <!-- Standard -->
+
+
+
+
+
+    <!-- Template Specific -->
+   
+    <!-- Template Specific -->
+
+</head>
+<body class="nw-ui nk _home _layout">
+
+    @{
+        if (sdefault.isPopup == true)
+        {
+           <div class="menuitem-container">
+                 @RenderBody()
+           </div>
+        }
+        else
+        {
+
+             <!-- Template Specific -->
+            <div class="main-c theme_secondary_default">
+                <div class="hdr">
+                    <div class="hdr_l">
+                        <div class="btn btn-ham active" title="Main Menu"><div class="_topbun"></div><div class="_patty"></div><div class="_botbun"></div></div>
+                        <div class="hdr-noah-c"><a href="/Home/Index">NOAH Business Applications</a></div>
+                    </div>
+
+                    <div class="hdr_r">
+                        <div class="btn btn-hdr_r btn-notif" title="Notification">
+                            <div class="hrd-notif-icon"></div>
+                        </div>
+                        @*<div class="btn btn-hdr_r btn-company" title="Company"></div>
+                            <div class="btn btn-hdr_r btn-settings" title="Settings"></div>
+                            <div class="btn btn-hdr_r btn-help" title="Help"></div>*@
+                        <div class="_ver-b"></div>
+                        <div class="btn btn-hdr_r btn-user" title="User">
+                            <div class="hrd-user-icon"></div>
+                        </div>
+
+                        <span class="_chbgclr"></span>
+                    </div>
+                    <div class="menu-user-f">
+                        <div class="menu-user-greet-bg ">
+                            @*_night*@
+                        </div>
+                        <div class="menu-user-info-c">
+                            <div id="uInfoName" class="menu-user-name">Noah Rico</div>
+                            <div id="uInfoType" class="menu-user-type">Administrator</div>
+                        </div>
+                        <div class="menu-user-info-c child-centered">
+                            @*<div id="btnChangePassword" class="btn btn-user-menu-s" title="Change Password"></div>
+                                <div id="btnEmailAddresses" class="btn btn-user-menu-s" title="Email Addresses"></div>
+                                <div id="btnContactNumbers" class="btn btn-user-menu-s" title="Contact Numbers"></div>*@
+                            <div id="btnCompany" class="mdl-comp-user-menu" title="Company">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-company-icon" viewBox="0 0 22 22">
+                                    <path d="M20,10.58V20H18V11.44a1,1,0,0,0-.5-.87l-4-2.29a1,1,0,0,0-1,0l-4,2.29a1,1,0,0,0-.5.87V20H6V10.58a1,1,0,0,1,.5-.87L9,8.29V5.11L4.52,7.6A1,1,0,0,0,4,8.48V20H2V7.59a1,1,0,0,1,.52-.88L9,3.11l.51-.28A1,1,0,0,1,11,3.7V7.14l1.51-.86a1,1,0,0,1,1,0l6,3.43A1,1,0,0,1,20,10.58ZM16,13H10v2h6Zm0,3H10v2h6Z"></path>
+                                </svg>
+                            </div>
+                            <div id="btnHelp" class="mdl-help-user-menu" title="Help">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-help-icon" viewBox="0 0 22 22">
+                                    <path d="M14,20H8V18h6Zm4-10a7,7,0,1,1-7-7A7,7,0,0,1,18,10Zm-2,0a5,5,0,1,0-5,5A5,5,0,0,0,16,10Z" />
+                                </svg>
+                            </div>
+                            <div id="btnSettings" class="btn btn-user-menu-s" title="Settings">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-setting-icon" viewBox="0 0 22 22">
+                                    <path d="M18,5.8,12,2.34a2,2,0,0,0-2,0L4,5.8A2,2,0,0,0,3,7.54v6.92A2,2,0,0,0,4,16.2l6,3.46a2,2,0,0,0,2,0l6-3.46a2,2,0,0,0,1-1.74V7.54A2,2,0,0,0,18,5.8Zm-.73,7.91a1.6,1.6,0,0,1-.78,1.37l-4.7,2.71a1.59,1.59,0,0,1-1.58,0l-4.7-2.71a1.6,1.6,0,0,1-.78-1.37V8.29a1.6,1.6,0,0,1,.78-1.37l4.7-2.71a1.59,1.59,0,0,1,1.58,0l4.7,2.71a1.6,1.6,0,0,1,.78,1.37ZM11,7.5A3.5,3.5,0,1,0,14.5,11,3.5,3.5,0,0,0,11,7.5ZM11,13a2,2,0,1,1,2-2A2,2,0,0,1,11,13Z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="menu-user-info-c">
+                            <div class="menu-user-info">Company<span id="uInfoCompany">FPTI</span></div>
+                            @*<div class="menu-user-info">Location <span id="uInfoLocation">FPTI Facility</span></div>*@
+                            <div class="menu-user-info">Log Time <span id="uInfoLogTime">8/26/2020 • 08:00 AM</span></div>
+                            @*<div class="menu-user-info">Connection Status <span id="uInfoConStatus">Connected</span></div>*@
+                        </div>
+                        @*<div class="_hor-b"></div>
+                            <div class="menu-user-info-c">
+                                <div id="btnChangeComp" class="btn btn-menu-m">Change Company</div>
+                            </div>*@
+                        <div class="_hor-b"></div>
+                        <div class="menu-user-info-c">
+                            <div id="btnLogout" class="btn btn-menu-m">Log out</div>
+                        </div>
+                    </div>
+
+                    <div class="menu-notif-f">
+                        <div class="menu-notif-wrapper">
+                            <div class="menu-notif-hrd">Notifications</div>
+                            <div class="menu-notif-c">
+                                <div class="notif-dtls">
+                                    @*<div class="user-avatar">
+                                        <img src="../materials/images/test.jpg" alt="profile-pic">
+                                    </div>*@
+                                    <div class="notif-dtls-w">
+                                        <div class="notif-status">For Approval</div>
+                                        <div class="notif-subtext">You have <span>57</span> item for approval listed</div>
+                                    </div>
+                                </div>
+
+                                <div class="notif-dtls">
+                                    @*<div class="user-avatar">
+                                        <img src="../materials/images/test.jpg" alt="profile-pic">
+                                    </div>*@
+                                    <div class="notif-dtls-w">
+                                        <div class="notif-status">For Cancellation</div>
+                                        <div class="notif-subtext">You have <span>57</span> item for approval listed</div>
+                                    </div>
+                                </div>
+
+                                <div class="notif-dtls">
+                                    @*<div class="user-avatar">
+                                        <img src="../materials/images/test.jpg" alt="profile-pic">
+                                    </div>*@
+                                    <div class="notif-dtls-w">
+                                        <div class="notif-status">Saved</div>
+                                        <div class="notif-subtext">You have <span>57</span> item for approval listed</div>
+                                    </div>
+                                </div>
+
+                                <div class="notif-dtls">
+                                    @*<div class="user-avatar">
+                                        <img src="../materials/images/test.jpg" alt="profile-pic">
+                                    </div>*@
+                                    <div class="notif-dtls-w">
+                                        <div class="notif-status">For Approval</div>
+                                        <div class="notif-subtext">You have <span>57</span> item for approval listed</div>
+                                    </div>
+                                </div>
+
+                                <div class="notif-dtls">
+                                    @*<div class="user-avatar">
+                                        <img src="../materials/images/test.jpg" alt="profile-pic">
+                                    </div>*@
+                                    <div class="notif-dtls-w">
+                                        <div class="notif-status">For Approval</div>
+                                        <div class="notif-subtext">You have <span>57</span> item for approval listed</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="menu-notif-footer">See All Notifications</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="low-c">
+                    <div class="left-pnl expand">
+                        <div class="pnl_l">
+                            <div class="left-pnl_t">
+                                <div class="hdr-noah-c hrd-noah-mob">NOAH Business Applications</div>
+                                <div class="search-c">
+                                    <input type="text" placeholder="" />
+                                    <!-- [Module Code] \ [Menu Code] -->
+                                    <div class="btn btn-search"></div>
+                                </div>
+                                <div class="_hor-b"></div>
+                                <div class="left-pnl-title">Modules<span class="left-pnl-title-ctr">9</span><div class="btn"></div></div>
+                                <div id="mainModList" class="module-list-c">
+                                    @*<div class="btn btn-modules selected">Advanced CRM</div>
+                                        <div class="btn btn-modules">Account Drivers Budgeting</div>
+                                        <div class="btn btn-modules">System Administration</div>
+                                        <div class="btn btn-modules">Accounts Payable</div>
+                                        <div class="btn btn-modules">Accounts Receivale</div>
+                                        <div class="btn btn-modules">Accounts Receivale Trade</div>
+                                        <div class="btn btn-modules">Billing and Collection Trade</div>
+                                        <div class="btn btn-modules">Centralized Database</div>
+                                        <div class="btn btn-modules">System Global</div>*@
+                                </div>
+                                <div class="btn btn-toggle-module"></div>
+                            </div>
+                            @*<div class="left-pnl_b">
+                                    <div class="_hor-b"></div>
+                                    <div class="btn btn-left-pnl_b btn-item-active" title="Active Items">Active</div>
+                                    <div class="btn btn-left-pnl_b btn-item-favorite" title="Favorite Items">Favorites</div>
+                                    <div class="btn btn-left-pnl_b btn-item-recent" title="Recent Items">Recent</div>
+                                    <div class="btn btn-left-pnl-option" title="Left Panel Options"><div class="_dot"></div><div class="_dot"></div><div class="_dot"></div></div>
+                                </div>*@
+                            @*=Pop Up of Recent and Favorites HTML code here*@
+                        </div>
+                        <div class="pnl_r">
+                            <div class="btn-return-modules">Show Modules</div>
+                            <div class="menu-grp-c">
+                                <div class="selected-module"></div>
+                                <div id="menu-grp-ul">
+                                    <div class="menu-grp-ul">
+                                        <div id="menuGrpDataConfig" class="menu-grp-li">
+                                            <div class="menu-grp-lbl">Data Configuration</div>
+                                            <div class="menu-grp-ul">
+
+                                                <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                    <div class="menu-grp-lbl">A01 Transaction Type</div>
+                                                    <div class="menu-grp-ul">
+                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                            <div class="menu-grp-lbl" title="A0101 Transaction Type"></div>
+                                                        </div>
+                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                            <div class="menu-grp-lbl" title="A0102 Transaction No. Configuration"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                    <div class="menu-grp-lbl">A02 Company</div>
+                                                    <div class="menu-grp-ul">
+                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                            <div class="menu-grp-lbl" title="A0201 BIR CAS Configuration"></div>
+                                                        </div>
+                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                            <div class="menu-grp-lbl" title="A0201 BIR CAS Permit"></div>
+                                                        </div>
+                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
+                                                            <div class="menu-grp-lbl" title="A0203 BIR Forms"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Form (Menu Item) Container -->
+                    <div class="menuitem-container">
+                        @RenderBody()
+                    </div>
+
+                </div>
+
+                <!-- Modals -->
+                <div id="mdlSettings" class="mdl">
+                    <div class="mdl-c">
+                        <div class="mdl-h">
+                            <div class="btn btn-h-close" title="Close"><span></span><span></span></div>
+                            <div class="mdl-h-icon mdl-h-icon_settings"></div>
+                            <div class="mdl-h-title">Settings<span class="set-sel"></span></div>
+                        </div>
+                        <div class="mdl-b">
+                            <div class="mdl-b_l">
+                                <div data-id="btnMdlChangePass" class="btn btn-mdl-l btn-mdl-l-changepass selected" title="Change Password"></div>
+                                <div data-id="btnMdlEmailAdd" class="btn btn-mdl-l btn-mdl-l-emailaddresses" title="Email Addresses"></div>
+                                <div data-id="btnMdlContact" class="btn btn-mdl-l btn-mdl-l-contactnumbers" title="Contact Numbers"></div>
+                                <div data-id="btnMdlTheme" class="btn btn-mdl-l btn-mdl-l-themeapp" title="Theme Appearances"></div>
+                            </div>
+                            <div class="mdl-b_r">
+                                <!--  -->
+                                <div class="mdl-b-sec mdl-b-sec-body show" id="btnMdlChangePass">
+                                    <div class="mdl-b-sec mdl-b-sec-title">Change Password</div>
+                                    <div class="row">
+                                        <div class="col col-10">
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Username</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Description</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Password</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">New Password</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Confirm Password</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt"></label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <div class="btn btn-default position-x-right fullwidth">Update Password</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <div class="mdl-b-sec mdl-b-sec-body" id="btnMdlEmailAdd">
+                                    <div class="mdl-b-sec mdl-b-sec-title">Email Addresses</div>
+                                    <div class="row">
+                                        <div class="col col-8">
+                                            <div class="row sec-row-c sec-email-add">
+                                                <div class="row">
+                                                    <div class="col col-10 border-none v-align-mid">
+                                                        <input type="text" name="" class="txtbox" value="abenedicto@fpti.com.ph">
+                                                    </div>
+                                                    <div class="col col-2 v-align-mid">
+                                                        <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-10 border-none v-align-mid">
+                                                        <input type="text" name="" class="txtbox" value="">
+                                                    </div>
+                                                    <div class="col col-2 v-align-mid">
+                                                        <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-8">
+                                            <div id="btnSettingsAddEmail" class="btn btn-default btn-default-add-input">Add more email</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <div class="mdl-b-sec mdl-b-sec-body" id="btnMdlContact">
+                                    <div class="mdl-b-sec mdl-b-sec-title">Contact Numbers</div>
+                                    <div class="row">
+                                        <div class="col col-8">
+                                            <div class="row sec-row-c sec-contact-num">
+                                                <div class="row">
+                                                    <div class="col col-10 border-none v-align-mid">
+                                                        <input type="text" name="" class="txtbox" value="09123456789">
+                                                    </div>
+                                                    <div class="col col-2 v-align-mid">
+                                                        <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-10 border-none v-align-mid">
+                                                        <input type="text" name="" class="txtbox" value="">
+                                                    </div>
+                                                    <div class="col col-2 v-align-mid">
+                                                        <div class="btn btn-sm-default btn-sm-delete" title="Remove"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-8">
+                                            <div id="btnSettingsAddContacts" class="btn btn-default btn-default-add-input">Add more number</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <div class="mdl-b-sec mdl-b-sec-body" id="btnMdlTheme">
+                                    <div class="mdl-b-sec mdl-b-sec-title">Theme Appearance</div>
+                                    <div class="theme-c">
+                                        <div class="theme-w theme_secondary_default" value="theme_secondary_default">
+                                            <div class="_theme-color">
+                                                <div></div>
+                                            </div>
+                                            <div class="_theme-sub">Light Theme</div>
+                                        </div>
+
+                                        @*<div class="theme-w theme_secondary_red" value="theme_secondary_red">
+                                                <div class="_theme-color">
+                                                    <div></div>
+                                                </div>
+                                                <div class="_theme-sub">Red Theme</div>
+                                            </div>
+
+                                            <div class="theme-w theme_secondary_pink" value="theme_secondary_pink">
+                                                <div class="_theme-color">
+                                                    <div></div>
+                                                </div>
+                                                <div class="_theme-sub">Pink Theme</div>
+                                            </div>
+
+                                            <div class="theme-w theme_secondary_green" value="theme_secondary_green">
+                                                <div class="_theme-color">
+                                                    <div></div>
+                                                </div>
+                                                <div class="_theme-sub">Green Theme</div>
+                                            </div>
+
+                                            <div class="theme-w theme_secondary_purple" value="theme_secondary_purple">
+                                                <div class="_theme-color">
+                                                    <div></div>
+                                                </div>
+                                                <div class="_theme-sub">Purple Theme</div>
+                                            </div>*@
+
+                                        <div class="theme-w theme_secondary_dark" value="theme_secondary_dark">
+                                            <div class="_theme-color">
+                                                <div></div>
+                                            </div>
+                                            <div class="_theme-sub">Dark Theme</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Help Modals -->
+                <div class="pnlHelp-c">
+                    <div class="spl-help-c">
+                        <div class="spl-hrd">
+                            <div class="spl-hrd-c">
+                                <div class="spl-hrd-icon"></div>
+                                <div class="spl-hrd-title">Help Center</div>
+                            </div>
+                            <div class="spl-hrd-closeBtn"></div>
+                        </div>
+
+                        <div class="spl-content-c">
+                            <div class="spl-content-w">
+                                <div class="spl-content-icon"></div>
+                                <div class="spl-content-title">Assistant</div>
+                                <div class="spl-content-subtext">Here's the instruction on how to use NOAH Business Application.</div>
+                                <div class="spl-content-btn assistant-btn">View More</div>
+                            </div>
+
+                            <div class="spl-content-w">
+                                <div class="spl-content-icon"></div>
+                                <div class="spl-content-title">About NOAH</div>
+                                <div class="spl-content-subtext">NOAH Business Applications can adapt and integrate with current IT infrastructure</div>
+                                <div class="spl-content-btn about-btn">View More</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Modals -->
+                <div class="pnlCompany-c">
+                    <div class="spl-company-box">
+                        <div class="spl-company-c">
+                            <div class="spl-company-icon">
+                                @*<svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="nw-svg-comp-dtls" viewBox="0 0 22 22">
+                                        <path class="nw-svg-comp-dtls-b" d="M20,10.58V20H18V11.44a1,1,0,0,0-.5-.87l-4-2.29a1,1,0,0,0-1,0l-4,2.29a1,1,0,0,0-.5.87V20H6V10.58a1,1,0,0,1,.5-.87L9,8.29V5.11L4.52,7.6A1,1,0,0,0,4,8.48V20H2V7.59a1,1,0,0,1,.52-.88L9,3.11l.51-.28A1,1,0,0,1,11,3.7V7.14l1.51-.86a1,1,0,0,1,1,0l6,3.43A1,1,0,0,1,20,10.58ZM16,13H10v2h6Zm0,3H10v2h6Z"></path>
+                                    </svg>*@
+                            </div>
+                            <div class="spl-company-title">Select Company Type</div>
+                        </div>
+                        <div class="spl-company-select-box">
+                            <div class="spl-comp-select">
+                                <div class="spl-comp-border">
+                                    <div class="comp-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="nw-svg-comp-dtls" viewBox="0 0 22 22">
+                                            <path class="nw-svg-comp-dtls-b" d="M20,10.58V20H18V11.44a1,1,0,0,0-.5-.87l-4-2.29a1,1,0,0,0-1,0l-4,2.29a1,1,0,0,0-.5.87V20H6V10.58a1,1,0,0,1,.5-.87L9,8.29V5.11L4.52,7.6A1,1,0,0,0,4,8.48V20H2V7.59a1,1,0,0,1,.52-.88L9,3.11l.51-.28A1,1,0,0,1,11,3.7V7.14l1.51-.86a1,1,0,0,1,1,0l6,3.43A1,1,0,0,1,20,10.58ZM16,13H10v2h6Zm0,3H10v2h6Z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="comp-name">Forecasting and Planning Technologies Inc.</div>
+                                    <div class="comp-abbr">FPTI</div>
+                                </div>
+                            </div>
+                            <div class="spl-comp-select">
+                                <div class="spl-comp-border">
+                                    <div class="comp-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="nw-svg-comp-dtls" viewBox="0 0 22 22">
+                                            <path class="nw-svg-comp-dtls-b" d="M20,10.58V20H18V11.44a1,1,0,0,0-.5-.87l-4-2.29a1,1,0,0,0-1,0l-4,2.29a1,1,0,0,0-.5.87V20H6V10.58a1,1,0,0,1,.5-.87L9,8.29V5.11L4.52,7.6A1,1,0,0,0,4,8.48V20H2V7.59a1,1,0,0,1,.52-.88L9,3.11l.51-.28A1,1,0,0,1,11,3.7V7.14l1.51-.86a1,1,0,0,1,1,0l6,3.43A1,1,0,0,1,20,10.58ZM16,13H10v2h6Zm0,3H10v2h6Z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="comp-name">Agricultural Produce Market Committee</div>
+                                    <div class="comp-abbr">APMC</div>
+                                </div>
+                            </div>
+                            <div class="spl-comp-select">
+                                <div class="spl-comp-border">
+                                    <div class="comp-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="nw-svg-comp-dtls" viewBox="0 0 22 22">
+                                            <path class="nw-svg-comp-dtls-b" d="M20,10.58V20H18V11.44a1,1,0,0,0-.5-.87l-4-2.29a1,1,0,0,0-1,0l-4,2.29a1,1,0,0,0-.5.87V20H6V10.58a1,1,0,0,1,.5-.87L9,8.29V5.11L4.52,7.6A1,1,0,0,0,4,8.48V20H2V7.59a1,1,0,0,1,.52-.88L9,3.11l.51-.28A1,1,0,0,1,11,3.7V7.14l1.51-.86a1,1,0,0,1,1,0l6,3.43A1,1,0,0,1,20,10.58ZM16,13H10v2h6Zm0,3H10v2h6Z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="comp-name">Megaworld Corporation</div>
+                                    <div class="comp-abbr">MEGAWORLD</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spl-btn">
+                            <div class="spl-action-btn spl-back pnl-h-close">Back</div>
+                            <div class="spl-action-btn spl-change">Change Company</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Box -->
+                <div id="mdlPrompt" class="mdl logout">
+                    <div class="mdl-msg-c">
+                        <div class="mdl-msg-wrapper">
+                            @*<div class="mdl-msg-title">Title</div>*@
+                            <div class="mdl-msg-logo _msg-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 60 60" class="mdl-msg-info" width="60" height="60">
+                                    <path class="mdl-msg-info-a" d="M56,30A26,26,0,1,1,30,4,26,26,0,0,1,56,30Z" />
+                                    <path class="mdl-msg-info-b" d="M30,7A23,23,0,1,0,53,30,23,23,0,0,0,30,7Zm0,43A20,20,0,1,1,50,30,20,20,0,0,1,30,50Zm3-23.61V41.61A1.39,1.39,0,0,1,31.61,43H28.39A1.39,1.39,0,0,1,27,41.61V26.39a1.34,1.34,0,0,1,.05-.35A5,5,0,0,0,33,26,1.34,1.34,0,0,1,33,26.39ZM30,23a3,3,0,1,1,3-3A3,3,0,0,1,30,23Z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="mdl-msg-logout" viewBox="0 0 60 60" width="60px" height="60px">
+                                    <path class="ae1dc0c9-d477-41d0-8c64-ec295bcebf73" d="M57.06,35.62l-6.82,3.94a1.87,1.87,0,0,1-2.8-1.62V36H35.55a2,2,0,0,1,0-4H47.44V30.06a1.87,1.87,0,0,1,2.8-1.62l6.82,3.94A1.87,1.87,0,0,1,57.06,35.62ZM40,24V20a2,2,0,0,0-2-2H32V50h6a2,2,0,0,0,2-2V44a2,2,0,0,1,4,0v4a6,6,0,0,1-6,6H30.49A6,6,0,0,1,26,56H5.65A3.64,3.64,0,0,1,2,52.35V13.89a3.66,3.66,0,0,1,2.82-3.55L24.69,5.71A6,6,0,0,1,32,11.51V14h6a6,6,0,0,1,6,6v4a2,2,0,0,1-4,0ZM27,34a4,4,0,1,0-4,4A4,4,0,0,0,27,34Z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 60 60" class="mdl-msg-question" width="60" height="60">
+                                    <path class="mdl-msg-question-a" d="M56,30A26,26,0,1,1,30,4,26,26,0,0,1,56,30Z" />
+                                    <path class="mdl-msg-question-b" d="M30,7A23,23,0,1,0,53,30,23,23,0,0,0,30,7Zm0,43A20,20,0,1,1,50,30,20,20,0,0,1,30,50Zm1.86-14.34h-4c0-.57,0-.92,0-1a6.94,6.94,0,0,1,.64-3.19,9.78,9.78,0,0,1,2.56-2.81,19.46,19.46,0,0,0,2.3-2.05,2.77,2.77,0,0,0,.58-1.69,2.82,2.82,0,0,0-1-2.19,4,4,0,0,0-2.75-.92,4.16,4.16,0,0,0-2.8,1,5,5,0,0,0-1.55,2.9l-4-.5a6.73,6.73,0,0,1,2.38-4.75A8.47,8.47,0,0,1,30,18.43a8.73,8.73,0,0,1,6,2A6,6,0,0,1,38.22,25a5,5,0,0,1-.82,2.75,18.32,18.32,0,0,1-3.51,3.53,6.75,6.75,0,0,0-1.73,1.86A6.34,6.34,0,0,0,31.86,35.66Zm-4,5.91V37.18h4.39v4.39Z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mdl-msg-error" data-name="Layer 1" viewBox="0 0 60 60" width="60" height="60">
+                                    <path class="mdl-msg-error-a" d="M56,30A26,26,0,1,1,30,4,26,26,0,0,1,56,30Z" />
+                                    <path class="mdl-msg-error-b" d="M30,7A23,23,0,1,0,53,30,23,23,0,0,0,30,7Zm0,43A20,20,0,1,1,50,30,20,20,0,0,1,30,50Zm8.41-14.41a2,2,0,1,1-2.82,2.82L30,32.83l-5.59,5.58a2,2,0,0,1-2.82-2.82L27.17,30l-5.58-5.59a2,2,0,0,1,2.82-2.82L30,27.17l5.59-5.58a2,2,0,0,1,2.82,2.82L32.83,30Z" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 60 60" class="mdl-msg-warning" width="60" height="60">
+                                    <path class="mdl-msg-warning-a" d="M56,30A26,26,0,1,1,30,4,26,26,0,0,1,56,30Z" />
+                                    <path class="mdl-msg-warning-b" d="M30,7A23,23,0,1,0,53,30,23,23,0,0,0,30,7Zm0,43A20,20,0,1,1,50,30,20,20,0,0,1,30,50Zm3-9a3,3,0,1,1-3-3A3,3,0,0,1,33,41Zm-3-7h0a2.11,2.11,0,0,1-2.11-2l-.77-13.78A2.12,2.12,0,0,1,29.23,16h1.54a2.12,2.12,0,0,1,2.11,2.23L32.11,32A2.11,2.11,0,0,1,30,34Z" />
+                                </svg>
+                            </div>
+                            <div class="mdl-title">Modal Title Dynamic</div>
+                            <div class="mdl-msg-txt">Are you sure you want to quit all applications and log out now?</div>
+                            <div class="mdl-btn-msg-c">
+                                <div id="btnYes" class="btn btn-msg-y">Yes</div>
+                                <div id="btnNo" class="btn btn-msg-n">No</div>
+                                <div id="btnOk" class="btn btn-msg-o">Ok</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Do not remove -->
+                <div class="_white"></div>
+
+            </div>
+             <!-- Template Specific -->
+
+        }
+    }
+
+
+    
+    <!-- Standard -->
+    <div class="alerts-parent">
+    </div>
+    <!-- Lookup -->
+    <div id="menuCreatorContainer" class="modal-s">
+        <div class="modal-box-s">
+            <div class="modal-box-bg"></div>
+            <div class="modal-hdr">
+                <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                <!-- <div class="modal-hdr-icon"></div> -->
+                <div class="modal-hdr-title">Look up</div>
+                <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+            </div>
+            <div class="nk-modal-body">
+                <div class="row margin-y-10">
+                    <div class="col col-12 col-parent child-centered">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Column Filter</label>
+                            </div>
+                            <div class="col col-7">
+                                <select id="nkcmb-mainfilter" class="cmb fullwidth">
+                                    <option>Select</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col col-5">
+                                <label class="lbltxt">Search</label>
+                            </div>
+                            <div class="col col-7 col-parent">
+                                <div class="col col-12">
+                                    <input id="txtlookupsearchF" type="text" name="" class="search txtbox txtdesc txtlookup">
+                                    <div id="nkbtnsearch" class="btn btn-sm-default btn-sm-default-lookup"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="AddtolistCon" class="row">
+                            <div class="col col-12">
+                                <div  id="LookUpAddtoList" class="btn-action-tab btn-add-list"><div class="_btn-icon"></div>
+                                <div class="_lbl-txt btnGetlookupx">Add to list</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col col-12 col-parent">
+                        <div id="tblWithTabsWrapperSample3" class="table-tabs-wrapper rescale-ready">
+                            <div class="row">
+                                <div id="nkLookupCon" class="table-wrapper">
+                                    <table id="dimTableLookUpCon" class="table nwlookupgridList" sid="nkTable0">
+                                        <thead>
+                                            <tr>
+                                                @*<th data-type="num" scope="col" class="tbl-row-num asc">#</th>*@
+                                                <th data-type="str" scope="col" class="">Code</th>
+                                                <th data-type="str" scope="col">Description</th>
+                                            </tr>
+                                            <tr>
+                                                @*<th data-type="num" scope="col" class="tbl-row-num"></th>*@
+                                                <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                                <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                @*<th scope="row" class="tbl-row-num" row-th="#">1</th>*@
+                                                <td row-th="First First"></td>
+                                                <td row-th="Last Name"></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @*<div class="col col-6">
+                                    <div class="row">
+                                        <div class="col col-12 child-centered">
+                                            <div id="" class="pagination-n-c" sid="">
+                                                <div class="page-control page-control-prev">Prev</div>
+                                                <input type="text" name="" class="page-search" value="1" autocomplete="off">
+                                                <div class="page-of-txt">of</div>
+                                                <div class="page-count-total">1</div>
+                                                <div class="page-control page-control-next">Next</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
+                                <div class="col col-12 margin-y-5">
+                                    <div class="row">
+                                        <div class="col col-12 ">
+                                            <div class="found-record"><span>...</span> Record(s) Found</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="LookupID"></div>
+    </div>
+    <div id="nwExportContainerMain" class="modal-s">
+        <div class="modal-box-s">
+            <div class="modal-box-bg"></div>
+            <div class="modal-hdr">
+                <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                <div class="modal-hdr-title">Export to Excel</div>
+                <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+            </div>
+            <div class="nk-modal-body">
+                <div class="row margin-y-10">
+                    <div class="col col-12 col-parent child-centered">
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="btnnwExport" class="btn btn-default">Export to Excel</div>
+                                <div id="btnnwExportCSV" class="btn btn-default">Export to CSV</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="nwExportContainer"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+    <!-- Message Box -->
+    <div id="mdlPrompt" class="mdl">
+        <div class="mdl-msg-c">
+            <div class="mdl-msg-wrapper">
+                @*<div class="mdl-msg-title">Title</div>*@
+                <div class="mdl-msg-logo _msg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="nw-mdl-logout" viewBox="0 0 60 60" width="60px" height="60px">
+                        <path class="ae1dc0c9-d477-41d0-8c64-ec295bcebf73" d="M57.06,35.62l-6.82,3.94a1.87,1.87,0,0,1-2.8-1.62V36H35.55a2,2,0,0,1,0-4H47.44V30.06a1.87,1.87,0,0,1,2.8-1.62l6.82,3.94A1.87,1.87,0,0,1,57.06,35.62ZM40,24V20a2,2,0,0,0-2-2H32V50h6a2,2,0,0,0,2-2V44a2,2,0,0,1,4,0v4a6,6,0,0,1-6,6H30.49A6,6,0,0,1,26,56H5.65A3.64,3.64,0,0,1,2,52.35V13.89a3.66,3.66,0,0,1,2.82-3.55L24.69,5.71A6,6,0,0,1,32,11.51V14h6a6,6,0,0,1,6,6v4a2,2,0,0,1-4,0ZM27,34a4,4,0,1,0-4,4A4,4,0,0,0,27,34Z" />
+                    </svg>
+                </div>
+                <div class="mdl-msg-title "></div>
+                <div class="mdl-msg-txt">Are you sure you want to quit all applications and log out now?</div>
+                <div class="mdl-btn-msg-c">
+                    <div id="btnYes" class="btn btn-msg-y">Yes</div>
+                    <div id="btnNo" class="btn btn-msg-n">No</div>
+                    <div id="btnOk" class="btn btn-msg-o">Ok</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Standard -->
+
+
+</body>
+
+
+</html>

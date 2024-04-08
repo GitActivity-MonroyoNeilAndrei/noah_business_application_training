@@ -1,0 +1,2150 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "NOAH Spread Designer";
+    Layout = null;// NoahWebLib.nwSystem.GetDefaultLayout();
+
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Basic Meta Tags -->
+
+    <link rel="shortcut icon" href="~/custom_materials/materials/system_images/ThemeImage/logo40x40.png" />
+    <link rel="stylesheet" type="text/css" href="~/materials/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-screen.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style-set.css">
+    <link rel="stylesheet" type="text/css" href="~/materials/css/theme.css">
+
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-main.css" />
+    <link rel="stylesheet" type="text/css" href="~/materials/fonts/new/fonts.css" />
+
+    <script type="text/javascript" src="~/materials/jslib/fpti.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fptiextra.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fptistyle.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/noahwebAAGlib.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/noahweb_Format.js"></script>
+
+
+    <script type="text/javascript" src="~/materials/jslib/CanvasJS.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/CanvasJS-Excel.js"></script>
+
+    <script type="text/javascript" src="~/materials/jslib/fx.js"></script>
+    <script type="text/javascript" src="~/materials/jslib/fx-main.js"></script>
+
+
+
+    <!-- Local Resources -->
+    <link rel="stylesheet" href="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/css/NOAHSpread_Page.css">
+    <link rel="stylesheet" href="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/css/NOAHSpread.css">
+
+    <link rel="stylesheet" href="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/fonts/new/fonts.css">
+    <script src="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/js/NOAHSpread.js"></script>
+
+    <link rel="stylesheet" href="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/colorpicker/spectrum.css">
+    <script type="text/javascript" src="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/colorpicker/spectrum.js"></script>
+
+    <script src="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpreadDesigner.js"></script>
+    <script src="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpreadDesigner_Toolbar.js"></script>
+    <script src="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpreadDesigner_Table.js"></script>
+    <link href="~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpreadDesigner.css" rel="stylesheet" />
+</head>
+<body class="nw-ui nk">
+
+    <!-- LOADING ANIMATION -->
+    <div id="p8icon-ani-box" class="p8icon-ani-box">
+        <div class="p8i-wrap">
+            <div class="p8i-p">
+                <div class="p8bg-c1"></div>
+                <div class="p8bg-c2"></div>
+                <div class="p8i-1p">
+                    <div class="p8i-1p_1"></div>
+                    <div class="p8i-1p_2"></div>
+                    <div class="p8i-1p_3"></div>
+                    <div class="p8i-1p_4"></div>
+                </div>
+                <div class="p8_p">P</div>
+                <div class="p8_8">8</div>
+                <div class="p8l_1"></div>
+                <div class="p8l_2"></div>
+                <div class="p8l_3"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Popup Dialog -->
+    <!-- INITIAL LOAD -->
+    <div id="pdlgHomeLoad" class="pdlg _full pdlgHomeLoad" style="display: none;">
+        <div class="hdr-big">
+            <div class="nclsr">
+                <div class="hdr-sub-l">
+                    <img class="logo" id="logohome" src="forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpread/media/icons/icon_p8-doc-creator-yellow_48x48_300px.png" alt="New P8 Document Creator Icon" />
+                    <div class="title" id="titlehome">
+                        P8
+                    </div>
+                </div>
+                <div class="hdr-sub-r">
+                    <div class="m-searchbar">
+                        <div class="btn btn-i-s btnHomeSearch btnsearch">
+                            <span class="s"></span>
+                            <span class="s"></span>
+                        </div>
+                        <input id="txtHomeSearch" class="searchhome" type="text" name="" placeholder="Filename, template, etc." />
+                    </div>
+                    <div class="btn btn-m btnHomeOpenDoc">Serach</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ctr-top">
+            <div class="nclsr">
+                <div class="upper">
+                    <div class="title tmpl">
+                        Create a new document or use a template
+                        <span class="inner-title">
+                            CREATE USING:
+                            <span class="inner-title-file"></span>
+                        </span>
+                    </div>
+                    <div class="pagination">
+                        <div id="btnPrevPage" class="btn btn-paging btnPrevPage"><span class="s"></span></div>
+                        <div id="btnNextPage" class="btn btn-paging btnNextPage"><span class="s"></span></div>
+                    </div>
+                </div>
+                <div id="createCardParentCont" class="card-parent">
+                    <div id="tmpl_blank" class='card tmpl tmpl_blank' style='display: inline-block;'>
+                    <div class='box'><span class='m plus_icon'>
+                        <span class='s'></span>
+                        <span class='s'></span>
+                        <span class='s'></span>
+                        <span class='s'></span></span></div>
+                    <div class='title'>Blank Document</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ctr-bot">
+            <div class="nclsr">
+                <div class="upper">
+                    <div class="title docx">
+                        Documents
+                        <span class="inner-title">
+                            OPEN:
+                            <span class="inner-title-file"></span>
+                        </span>
+                        <button class="cl_btnSharedDocuments" style="float: right;">Shared Documents</button>
+                    </div>
+
+                </div>
+                <div class="card-parent" id="card-parentRecent">
+
+                    <!-- It'll appear when there's no document/s found. -->
+                    <div class="blank_msg">No document/s found. Create new Blank Document or use a Template.</div>
+                    <div class="errIcon">
+                    </div>
+
+                </div>
+
+                <div class="lower">
+                    <div class="cl_LoadMoreDocuments nwHide">
+                        @*<img src="materials/images/P8.gif" class="cl_imgLoadMoreDocuments" />*@
+                        <%--<button class="cl_btnLoadMoreDocuments">Load More Documents</button>--%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nwe-container">
+        <div id="nwe-hrd" class="nwe-hrd">
+
+            <div class="nwe-hrd-bottom show">
+                <div class="nwe-hrd-btn-c">
+                    <div id="sd-headerbuttons" class="nwe-hrd-btn-l">
+                        <div id="mt_file" class="nwe-btn file" data-content="file">File</div>
+                        <div id="mt_home" class="nwe-btn home selected" data-content="home">Home</div>
+                        <div id="mt_insert" class="nwe-btn insert" data-content="insert">Insert</div>
+                        <div id="mt_pLayout" class="nwe-btn pLayout" data-content="pLayout">Page Layout</div>
+                        <div id="mt_formulas" class="nwe-btn formulas" data-content="formulas">Formulas</div>
+                        <div id="mt_data" class="nwe-btn data" data-content="data">Data</div>
+                        <div id="mt_review" class="nwe-btn review" data-content="review">Review</div>
+                        <div id="mt_view" class="nwe-btn view" data-content="view">View</div>
+                        <div id="mt_tabledesign" class="nwe-btn tabledesign" data-content="tabledesign">Table Design</div>
+                    </div>
+                    <div class="nwe-hrd-btn-r">
+
+                        <div class="nwe-btn-profile" >
+                            <div class="nwe-hrd-r">
+                                <div class="nwe-hrd-profile">
+                                    <div class="nwe-profile-img">
+                                        <img src="materials/media/icons/_overview/user-profile-from-freepik-photo.png" alt="">
+                                    </div>
+                                    <div class="nwe-hrd-profile-dt">
+                                        <div id="nwe-profile-name" class="nwe-profile-name"></div>
+                                        <div id="nwe-profile-comp" class="nwe-profile-comp"></div>
+                                    </div>
+                                </div>
+                                <div class="nwe-hrd-lg">
+                                    <div class="nwe-info-c">
+
+                                        @*<div class="nwe-lg-c" id="st">
+                                            <div class="nwe-lg-icon st"></div>
+                                            <div class="nwe-lg-txt">Settings</div>
+                                        </div>*@
+
+                                        <div class="nwe-lg-c" id="lg">
+                                            <div class="nwe-lg-icon lgo"></div>
+                                            <div class="nwe-lg-txt">Logout</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nwe-btn-tgc" title="Hide control panel"></div>
+                    </div>
+                </div>
+
+                <div class="nwe-hrd-content">
+                    <div class="nwe-content" id="file">
+                        <div class="nwe-fn-c">
+                            <div class="nwe-flex-c mq">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-fl-c" title="Home" id="fhm">
+                                            <div class="nwe-cb-icon-m fhm"></div>
+                                            <div class="nwe-cb-icontext">Home</div>
+                                        </div>
+
+                                        <div class="nwe-cb-fl-c" title="New" id="fnw">
+                                            <div class="nwe-cb-icon-m fnw"></div>
+                                            <div class="nwe-cb-icontext">New</div>
+                                        </div>
+
+                                        <div class="nwe-cb-fl-c" title="Open" id="fop">
+                                            <div class="nwe-cb-icon-m fop"></div>
+                                            <div class="nwe-cb-icontext">Open</div>
+                                        </div>
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-sel-dd-with-icon" id="inf">
+                                                <div class="nwe-sel-icon inf"></div>
+                                                <div class="nwe-sel-txt awd">Info</div>
+                                            </div>
+
+                                            <div class="nwe-sel-dd-with-icon" id="sve">
+                                                <div class="nwe-sel-icon sve"></div>
+                                                <div class="nwe-sel-txt awd">Save</div>
+                                            </div>
+
+                                            <div class="nwe-sel-dd-with-icon" id="svea">
+                                                <div class="nwe-sel-icon svea"></div>
+                                                <div class="nwe-sel-txt awd">Save as</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-sel-dd-with-icon" id="htr">
+                                                <div class="nwe-sel-icon htr"></div>
+                                                <div class="nwe-sel-txt awd">History</div>
+                                            </div>
+
+                                            <div class="nwe-sel-dd-with-icon" id="prt">
+                                                <div class="nwe-sel-icon prt"></div>
+                                                <div class="nwe-sel-txt awd">Print</div>
+                                            </div>
+
+                                            <div class="nwe-sel-dd-with-icon" id="shr">
+                                                <div class="nwe-sel-icon shr"></div>
+                                                <div class="nwe-sel-txt awd">Share</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-sel-dd-with-icon" id="exp">
+                                                <div class="nwe-sel-icon exp"></div>
+                                                <div id="nsbExport" class="nwe-sel-txt awd">Export</div>
+                                            </div>
+
+                                            <div class="nwe-sel-dd-with-icon" id="pub">
+                                                <div class="nwe-sel-icon pub"></div>
+                                                <div class="nwe-sel-txt awd">Publish</div>
+                                            </div>
+
+                                            <!-- <div class="nwe-sel-dd-with-icon">
+                                <div class="nwe-sel-icon cls"></div>
+                                <div class="nwe-sel-txt awd">Close</div>
+                            </div> -->
+                                        </div>
+
+                                    </div>
+                                    <div class="nwe-title">File Control</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nwe-content show" id="home">
+                        <div class="nwe-fn-c">
+                            <div class="nwe-flex-c" id="hcb">
+
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn">
+                                        <div class="nwe-cb-paste-c" title="Paste" id="paste">
+                                            <div class="nwe-cb-icon-m paste"></div>
+                                            <div class="nwe-cb-icontext">Paste</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-cb-icon-s cut" title="Cut" id="cut" data-value="cut"></div>
+                                            <div class="nwe-cb-icon-s copy" title="Copy" id="copy" data-value="copy"></div>
+                                            <div class="nwe-cb-icon-s fp" title="Format Painter" id="fp"></div>
+                                            <textarea id="fpData" class="nwHide"></textarea>
+
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Clipboard</div>
+                                </div>
+
+                            </div>
+                            <div class="nwe-flex-c" id="hff">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <select class="nwe-g-ctrls" name="fonts" id="nwe-fonts-style">
+
+
+                                                <option value="Algerian">Algerian</option>
+                                                <option selected value="Arial">Arial</option>
+                                                <option value="Arial Black">Arial Black</option>
+                                                <option value="Bahnschrift">Bahnschrift</option>
+                                                <option value="Comic Sans MS">Comic Sans MS</option>
+                                                <option value="Cooper Black">Cooper Black</option>
+                                                <option value="Georgia">Georgia</option>
+                                                <option value="monospace">Monospace</option>
+                                                <option value="Monotype Corsiva">Monotype Corsiva</option>
+
+
+                                                <option value="Roboto">Roboto</option>
+                                                <option value="Roboto San">Roboto San</option>
+                                                <option value="Times New Roman"> Times New Roman</option>
+
+                                                <option value="Verdana">Verdana</option>
+
+                                            </select>
+
+                                            <select class="nwe-size-ctrls" name="font-size" id="nwe-font-size">
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option selected value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="13">13</option>
+                                                <option value="14">14</option>
+                                                <option value="15">15</option>
+                                                <option value="16">16</option>
+                                                <option value="17">17</option>
+                                                <option value="18">18</option>
+                                                <option value="19">19</option>
+                                                <option value="20">20</option>
+                                                <option value="21">21</option>
+                                                <option value="22">22</option>
+                                                <option value="23">23</option>
+                                                <option value="24">24</option>
+                                                <option value="25">25</option>
+                                                <option value="26">26</option>
+                                                <option value="27">27</option>
+                                                <option value="28">28</option>
+                                                <option value="29">29</option>
+                                                <option value="30">30</option>
+                                                <option value="31">31</option>
+                                                <option value="32">32</option>
+                                                <option value="33">33</option>
+                                                <option value="34">34</option>
+                                                <option value="35">35</option>
+                                                <option value="36">36</option>
+                                                <option value="37">37</option>
+                                                <option value="38">38</option>
+                                                <option value="39">39</option>
+                                                <option value="40">40</option>
+                                            </select>
+
+                                            <div class="nwe-f-icon-s ifs" title="Increase font size" id="ifs"></div>
+
+                                            <div class="nwe-f-icon-s dfs" title="Decrease font size" id="dfs"></div>
+                                        </div>
+
+                                        <div class="nwe-g-style-c">
+                                            <div id="nsbBold" class="nwe-f-icon-s b" title="Bold"></div>
+                                            <div id="nsbItalic" class="nwe-f-icon-s i" title="Italic"></div>
+                                            <div id="nsbUnderline" class="nwe-f-icon-s u" title="Underline"></div>
+                                            <div class="nwe-divider"></div>
+                                            <div id="bbrm" class="nwe-f-icon-s bbrm" title="Bottom Border">
+                                                <div class="nwe-f-border-container">
+                                                    <div class="nwe-f-border-ch">
+                                                        <div class="nwe-f-border-btn abr" id="abr" title="All Borders"></div>
+                                                        <div class="nwe-f-border-btn ibr" id="ibr" title="Inner Borders"></div>
+                                                        <div class="nwe-f-border-btn hbr" id="hbr" title="Horizontal Borders"></div>
+                                                        <div class="nwe-f-border-btn vbr" id="vbr" title="Vertical Borders"></div>
+                                                        <div class="nwe-f-border-btn obr" id="obr" title="Outer Borders"></div>
+
+                                                        <div class="nwe-f-border-btn brc" id="brc" title="Border Color"></div>
+
+                                                        <div class="nwe-f-border-btn lbr" id="lbr" title="Left Borders"></div>
+                                                        <div class="nwe-f-border-btn tbr" id="tbr" title="Top Borders"></div>
+                                                        <div class="nwe-f-border-btn rbr" id="rbr" title="Right Borders"></div>
+                                                        <div class="nwe-f-border-btn bbr" id="bbr" title="Bottom Borders"></div>
+                                                        <div class="nwe-f-border-btn cbr" id="cbr" title="Clear Borders"></div>
+
+                                                        <div id="brsm" class="nwe-f-icon-s brsm" title="Bottom Style">
+                                                            <div class="nwe-f-borderstyle-container">
+                                                                <div class="nwe-f-borderstyle-ch">
+                                                                    <div class="nwe-f-borderstyle-btn bss" id="bss" value="solid" title="Solid"></div>
+                                                                    <div class="nwe-f-borderstyle-btn bdt" id="bdt" value="dotted" title="Dotted"></div>
+                                                                    <div class="nwe-f-borderstyle-btn bds" id="bds" value="dashed" title="Dashed"></div>
+                                                                    <div class="nwe-f-borderstyle-btn bdb" id="bdb" value="double" title="Double Border"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @*<div class="nwe-f-border-btn brs" id="brs" title="Border Style">
+                                            <div class="nwe-f-border-container">
+                                            </div>
+
+                                            </div>*@
+                                                    </div>
+                                                    <div class="nwe-f-border-ch">
+
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="nwe-divider"></div>
+                                            <div id="nsbTextBGColor" class="nwe-f-icon-s fc" title="Fill color"></div>
+                                            <div id="nsbTextColor" class="nwe-f-icon-s ftc" title="Font color">A</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Font</div>
+                                </div>
+                            </div>
+                            <div class="nwe-flex-c" id="halm">
+                                <div class="nwe-align-main">
+                                    <div class="nwe-align-btn">
+                                        <div class="nwe-align-c">
+                                            <div class="nwe-align-top">
+                                                <div class="nwe-a-icon-s ta" id="ta" title="Top Align"></div>
+                                                <div class="nwe-a-icon-s ma" id="ma" title="Middle Align"></div>
+                                                <div class="nwe-a-icon-s ba" id="ba" title="Bottom Align"></div>
+                                                <div class="nwe-divider"></div>
+                                                <div class="nwe-a-icon-s o" id="ofz" title="Orientation font size"></div>
+                                            </div>
+                                            <div class="nwe-align-bot">
+                                                <div class="nwe-a-icon-s al" id="al" title="Align left"></div>
+                                                <div class="nwe-a-icon-s c" id="c" title="Center"></div>
+                                                <div class="nwe-a-icon-s ar" id="ar" title="Align right"></div>
+                                                <div class="nwe-a-icon-s di" id="di" title="Decrease increment"></div>
+                                                <div class="nwe-a-icon-s ii" id="ii" title="Increase increment"></div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="nwe-align-c">
+                                            <div class="nwe-align-r">
+                                                <div class="nwe-align-tw" id="wt">
+                                                    <div class="nwe-a-icon-s wt" title="Wrap Text"></div>
+                                                    <div class="nwe-a-txt">Text wrap</div>
+                                                </div>
+                                                <div class="nwe-dropdown" id="mc">
+                                                    <div class="nwe-select-c">
+
+                                                        <div class="nwe-default-opt">
+                                                            <div class="nwe-li">
+                                                                <div class="nwe-opt" data-value="nf-mc">
+                                                                    <div class="nwe-icon mc"></div>
+                                                                    <div class="nwe-p">Merge & Center</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="nwe-opt-ul">
+                                                            <div class="nwe-opt-c">
+                                                                <div class="nwe-li" id="mrc" data-value="nwe-mc" title="Merge & Center">
+                                                                    <div class="nwe-opt">
+                                                                        <div class="nwe-icon mc"></div>
+                                                                        <div class="nwe-p">Merge & Center</div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="nwe-li" id="mra" data-value="nwe-mca" title="Merge Across">
+                                                                    <div class="nwe-opt">
+                                                                        <div class="nwe-icon mca"></div>
+                                                                        <div class="nwe-p">Merge Across</div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="nwe-li" id="mre" data-value="nwe-mce" title="Merge Cells">
+                                                                    <div class="nwe-opt">
+                                                                        <div class="nwe-icon mce"></div>
+                                                                        <div class="nwe-p">Merge Cells</div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="nwe-li" id="umr" data-value="nwe-umce" title="Unmerge Cells">
+                                                                    <div class="nwe-opt">
+                                                                        <div class="nwe-icon umce"></div>
+                                                                        <div class="nwe-p">Unmerge Cells</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Alignment</div>
+                                </div>
+                            </div>
+                            <div class="nwe-flex-c" id="hnb">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <select class="nwe-g-ctrls nwe-fullwidth" name="fonts" id="nwe-g-style">
+                                                <option value="accounting">Accounting</option>
+                                                <option value="date">Date</option>
+                                                <option value="number">Number</option>
+                                                <option value="currency">Number(with comma)</option>
+                                                <option selected value="text">Text</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="nwe-g-style-c">
+                                            <div class="nwe-f-icon-s anf nwe-content-item nwe-select-item" id="anf" title="Account number format">
+                                                <div class="nwe-f-is-container nwe-content-itemlist nwe-content-itemlist-s">
+                                                    <div class="nwe-f-is-ch">
+                                                        @*<div class="nwe-f-menu-item" id="en_ph" title="Philippines Peso - Currency">
+                                                <div class="item-container">
+                                                    <div class="nwe-f-icon-s"></div>
+                                                    <div class="nwe-st-icontext">English (Philippines)</div>
+                                                </div>
+                                            </div>
+                                            <div class="nwe-f-menu-item" id="chf_fr_ch" title="Switzerland - Currency">
+                                                <div class="item-container">
+                                                    <div class="nwe-f-icon-s"></div>
+                                                    <div class="nwe-st-icontext">CHF French (Switzerland)</div>
+                                                </div>
+                                            </div>*@
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="nwe-f-icon-s ps" id="ps" title="Percentage style"></div>
+                                            <div class="nwe-f-icon-s cm" id="cm" title="Comma style"></div>
+                                            <div class="nwe-divider"></div>
+                                            <div class="nwe-f-icon-s id" id="idc" title="Increase decimal"></div>
+                                            <div class="nwe-f-icon-s dd" id="dd" title="Decrease decimal"></div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Numbers</div>
+                                </div>
+                            </div>
+                            <div class="nwe-flex-c" id="hst">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div id="cf" class="nwe-st-c">
+                                                <div class="nwe-st-icon-m cf"></div>
+                                                <div class="nwe-st-icontext">Conditional Formatting</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                            <div id="ft" class="nwe-st-c nwe-content-item nwe-select-item">
+                                                <div class="nwe-st-icon-m ft"></div>
+                                                <div class="nwe-st-icontext">Format as Table</div>
+                                                <div class="nwe-st-ed-container nwe-content-itemlist">
+
+                                                    @*<div class="nwe-f-table-btn" data-value="light1" id="tbltemplate2" title="Black, Light 1">
+                                            <svg id="table-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+
+                                                <rect x="0" y="0" width="100" height="100" fill="none" stroke="black" stroke-width="1" />
+                                            </svg>
+
+                                        </div>
+                                        <div class="nwe-f-table-btn" data-value="light2" id="tbltemplate3" title="Blue, Light 2"></div>
+                                        <div class="nwe-f-table-btn" data-value="light3" id="tbltemplate4" title="Orange, Light 3"></div>
+                                        <div class="nwe-f-table-btn" data-value="light4" id="tbltemplate5" title="Gray, Light 4"></div>
+                                        <div class="nwe-f-table-btn" data-value="light5" id="tbltemplate5" title="Yellow, Light 5"></div>
+                                        <div class="nwe-f-table-btn" data-value="light6" id="tbltemplate5" title="Light Blue, Light 6"></div>
+                                        <div class="nwe-f-table-btn" data-value="light7" id="tbltemplate1" title="Green, Light 7"></div>
+
+                                        <div class="nwe-f-table-btn" data-value="light1" id="tbltemplate2" title="Black, Light 1"></div>
+                                        <div class="nwe-f-table-btn" data-value="light2" id="tbltemplate3" title="Blue, Light 2"></div>
+                                        <div class="nwe-f-table-btn" data-value="light3" id="tbltemplate4" title="Orange, Light 3"></div>
+                                        <div class="nwe-f-table-btn" data-value="light4" id="tbltemplate5" title="Gray, Light 4"></div>
+                                        <div class="nwe-f-table-btn" data-value="light5" id="tbltemplate5" title="Yellow, Light 5"></div>
+                                        <div class="nwe-f-table-btn" data-value="light6" id="tbltemplate5" title="Light Blue, Light 6"></div>
+                                        <div class="nwe-f-table-btn" data-value="light7" id="tbltemplate1" title="Green, Light 7"></div>*@
+                                                    @*</div>*@
+                                                </div>
+                                                @*<div class="nwe-st-ot-crtls">
+                                        B
+                                    </div>*@
+                                            </div>
+                                            <div id="cs" class="nwe-st-c">
+                                                <div class="nwe-st-icon-m cs"></div>
+                                                <div class="nwe-st-icontext">Cell Styles</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Styles</div>
+                                </div>
+                            </div>
+                            <div class="nwe-flex-c" id="hcs">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div id="nsbInsert" class="nwe-cl-c nwe-content-item nwe-select-item" title="Insert">
+                                                <div class="nwe-cl-icon-m is"></div>
+                                                <div class="nwe-st-icontext">Insert</div>
+                                                <div class="nwe-f-is-container nwe-content-itemlist">
+                                                    <div class="nwe-f-is-ch">
+                                                        <div class="nwe-f-menu-item has-subm nwe-st-icontext" id="insertcells" title="Cells">
+                                                            <div class="subm">
+                                                                <div id="icellasr" class="nwe-f-menu-item">Insert cells and shift right</div>
+                                                                <div id="icellasd" class="nwe-f-menu-item">Insert cells and shift down</div>
+                                                            </div>
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s inscells"></div>
+                                                                <div>Cells</div>
+                                                                <div class="arrow"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item has-subm nwe-st-icontext" id="insertrows" title="Rows">
+                                                            <div class="subm">
+                                                                <div id="irowa" class="nwe-f-menu-item" data-format="Insert {row} above">Insert 1 row above</div>
+                                                                <div id="irowb" class="nwe-f-menu-item" data-format="Insert {row} below">Insert 1 row below</div>
+                                                            </div>
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s insrows"></div>
+                                                                <div title="Rows">Rows</div>
+                                                                <div class="arrow"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item has-subm nwe-st-icontext" id="insertcols" title="Cols">
+                                                            <div class="subm">
+                                                                <div id="icoll" class="nwe-f-menu-item" data-format="Insert {col} left">Insert 1 column left</div>
+                                                                <div id="icolr" class="nwe-f-menu-item" data-format="Insert {col} right">Insert 1 column right</div>
+                                                            </div>
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s inscols"></div>
+                                                                <div title="Columns">Columns</div>
+                                                                <div class="arrow"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*</div>*@
+                                            <div id="nsbDelete" class="nwe-cl-c nwe-content-item nwe-select-item" title="Delete">
+                                                @*<div class="nwe-cl-icon-m dl"></div>
+                                    <div class="nwe-st-icontext">Delete</div>
+                                    <div class="nwe-cl-ot-ctrls">
+                                        B
+                                    </div>*@
+                                                <div class="nwe-cl-icon-m dl"></div>
+                                                <div class="nwe-st-icontext">Delete</div>
+                                                <div class="nwe-f-dl-container nwe-content-itemlist">
+                                                    <div class="nwe-f-dl-ch">
+                                                        <div class="nwe-f-menu-item has-subm nwe-st-icontext" id="deletecells">
+                                                            <div class="subm">
+                                                                <div id="dlcellasu" class="nwe-f-menu-item">Delete cells and shift up</div>
+                                                                <div id="dlcellasl" class="nwe-f-menu-item">Delete cells and shift left</div>
+                                                            </div>
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s delcells"></div>
+                                                                <div title="Cells">Cells</div>
+                                                                <div class="arrow"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item" id="deleterows">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s delrows"></div>
+                                                                <div class="nwe-st-icontext" title="Delete row" data-format="Delete {row}">Delete row 1</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item" id="deletecols">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s delcols"></div>
+                                                                <div class="nwe-st-icontext" title="Delete column" data-format="Delete {col}">Delete column A</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="nsbFormat" class="nwe-cl-c">
+                                                <div class="nwe-cl-icon-m fm"></div>
+                                                <div class="nwe-st-icontext">Format</div>
+                                                <div class="nwe-cl-ot-ctrls">
+                                                    C
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Cells</div>
+                                </div>
+                            </div>
+                            <div class="nwe-flex-c" id="het">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s as nwe-content-item nwe-select-item" id="autosum" title="AutoSum">
+                                                <div class="nwe-f-is-container nwe-content-itemlist nwe-content-itemlist-s">
+                                                    <div class="nwe-f-is-ch">
+                                                        <div class="nwe-f-menu-item nwe-f-menu-item-s ass" data-value="SUM" id="assum" title="Sum">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s"></div>
+                                                                <div class="nwe-st-icontext">Sum</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item nwe-f-menu-item-s ass" data-value="AVERAGE" id="asave" title="Average">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s"></div>
+                                                                <div class="nwe-st-icontext">Average</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item nwe-f-menu-item-s ass" data-value="COUNT" id="ascnt" title="Count Numbers">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s"></div>
+                                                                <div class="nwe-st-icontext">Count Numbers</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item nwe-f-menu-item-s ass" data-value="MAX" id="asmax" title="Max">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s"></div>
+                                                                <div class="nwe-st-icontext">Max</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item nwe-f-menu-item-s ass" data-value="MIN" id="asmin" title="Min">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s"></div>
+                                                                <div class="nwe-st-icontext">Min</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="nwe-ed-icon-s f" id="fill" title="Fill"></div>
+                                            <div class="nwe-ed-icon-s c  nwe-content-item nwe-select-item" id="clear" title="Clear">
+                                                <div class="nwe-f-is-container nwe-content-itemlist nwe-content-itemlist-s">
+                                                    <div class="nwe-f-is-ch">
+                                                        <div class="nwe-f-menu-item nwe-f-menu-item-s" id="clrall" title="Clear All">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s"></div>
+                                                                <div class="nwe-st-icontext">Clear All</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item nwe-f-menu-item-s" id="clrvalue" title="Clear Value">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s"></div>
+                                                                <div class="nwe-st-icontext">Clear Value</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nwe-f-menu-item nwe-f-menu-item-s" id="clrformat" title="Clear Format">
+                                                            <div class="item-container">
+                                                                <div class="nwe-f-icon-s"></div>
+                                                                <div class="nwe-st-icontext">Clear Format</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="nwe-cb-sf-c" id="sortfilter">
+                                            <div class="nwe-ed-icon-m sf"></div>
+                                            <div class="nwe-ed-icontext">Sort & Filter</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="findselect">
+                                            <div class="nwe-ed-icon-m fs"></div>
+                                            <div class="nwe-ed-icontext">Find & Select</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Editing</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nwe-content" id="insert">
+                        <div class="nwe-fn-c">
+                            <div id="itable" class="nwe-flex-c">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c nwe-fxt">
+                                            <div id="pvt" class="nwe-st-c nwe-cw">
+                                                <div class="nwe-st-icon-m pvt"></div>
+                                                <div class="nwe-st-icontext">Pivot Table</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                            <div id="rpvt" class="nwe-st-c nwe-cw">
+                                                <div class="nwe-st-icon-m rvt"></div>
+                                                <div class="nwe-st-icontext">Recommended PivotTable</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    B
+                                                </div>
+                                            </div>
+                                            <div id="tb" class="nwe-st-c">
+                                                <div class="nwe-st-icon-m tb"></div>
+                                                <div class="nwe-st-icontext">Table</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Tables</div>
+                                </div>
+                            </div>
+                            <div id="iilust" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="pictures">
+                                            <div class="nwe-ed-icon-m pct"></div>
+                                            <div class="nwe-ed-icontext">Pictures</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s sp" title="Shapes" id="shapes"></div>
+                                            <div class="nwe-ed-icon-s sat" title="SmartArt" id="smartart"></div>
+                                            <div class="nwe-ed-icon-s ss" title="Screenshot" id="screenshot"></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="nwe-title">Illustrations</div>
+                                </div>
+                            </div>
+                            <div id="iaddins" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s gai" title="Get Add-ins" id="gAddins"></div>
+                                            <div class="nwe-ed-icon-s mai" title="My Add-ins" id="mAddins"></div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Add-ins</div>
+                                </div>
+                            </div>
+                            <div id="icharts" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c nwe-cw" id="rcharts">
+                                            <div class="nwe-ed-icon-m rch"></div>
+                                            <div class="nwe-ed-icontext">Recommended Charts</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s ibr" title="Insert Column or Bar Chart" id="insertBC"></div>
+                                            <div class="nwe-ed-icon-s iar" title="Insert Line or Area Chart" id="insertAC"></div>
+                                            <div class="nwe-ed-icon-s ipdc" title="Insert Pie or Doughnut Chart" id="insertDC"></div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s ihc" title="Insert Hierarchy Chart" id="insertHR"></div>
+                                            <div class="nwe-ed-icon-s isc" title="Insert Static Chart" id="insertSC"></div>
+                                            <div class="nwe-ed-icon-s ist" title="Insert Scatters" id="insertST"></div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s iwfs" title="Insert Waterfall, Funnel, Stock" id="insertWFS"></div>
+                                            <div class="nwe-ed-icon-s icc" title="Insert Combo Chart" id="insertCC"></div>
+                                        </div>
+                                        <div class="nwe-cb-sf-c" id="pivChart">
+                                            <div class="nwe-ed-icon-m pivc"></div>
+                                            <div class="nwe-ed-icontext">Pivot Chart</div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="nwe-title">Charts</div>
+                                </div>
+                            </div>
+                            <div id="itours" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="TdMap">
+                                            <div class="nwe-ed-icon-m dmp"></div>
+                                            <div class="nwe-ed-icontext">3D Map</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Tours</div>
+                                </div>
+                            </div>
+                            <div id="isparkl" class="nwe-flex-c">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div class="nwe-st-c nwe-cw" id="sLines">
+                                                <div class="nwe-st-icon-m ln"></div>
+                                                <div class="nwe-st-icontext">Line</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="sColumn">
+                                                <div class="nwe-st-icon-m cln"></div>
+                                                <div class="nwe-st-icontext">Column</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    B
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="sWinLoss">
+                                                <div class="nwe-st-icon-m wl"></div>
+                                                <div class="nwe-st-icontext">Win/Loss</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Sparklines</div>
+                                </div>
+                            </div>
+                            <div id="ifilters" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="fslicer">
+                                            <div class="nwe-ed-icon-m slc"></div>
+                                            <div class="nwe-ed-icontext">Slicer</div>
+                                        </div>
+                                        <div class="nwe-cb-sf-c" id="ftimeline">
+                                            <div class="nwe-ed-icon-m tml"></div>
+                                            <div class="nwe-ed-icontext">Timeline</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Filters</div>
+                                </div>
+                            </div>
+                            <div id="ilinks" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="links">
+                                            <div class="nwe-ed-icon-m lks"></div>
+                                            <div class="nwe-ed-icontext">Links</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Links</div>
+                                </div>
+                            </div>
+                            <div id="itext" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s txb" title="Text Box" id="textbox"></div>
+                                            <div class="nwe-ed-icon-s hf" title="Header & Footer" id="headerFooter"></div>
+                                            <div class="nwe-ed-icon-s wat" title="Word Art" id="wordArt"></div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s sigl" title="Signature Line" id="signatureLine"></div>
+                                            <div class="nwe-ed-icon-s obj" title="Object" id="object"></div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Text</div>
+                                </div>
+                            </div>
+                            <div id="isymbols" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="eqt">
+                                            <div class="nwe-ed-icon-m eqt"></div>
+                                            <div class="nwe-ed-icontext">Equation</div>
+                                        </div>
+                                        <div class="nwe-cb-sf-c" id="sym">
+                                            <div class="nwe-ed-icon-m sym"></div>
+                                            <div class="nwe-ed-icontext">Symbol</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Symbols</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nwe-content" id="pLayout">
+                        <div class="nwe-fn-c">
+                            <div id="lthemes" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="themes">
+                                            <div class="nwe-ed-icon-m themes"></div>
+                                            <div class="nwe-ed-icontext">Themes</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s clr" title="Colors" id="colors"></div>
+                                            <div class="nwe-ed-icon-s fnt" title="Fonts" id="fonts"></div>
+                                            <div class="nwe-ed-icon-s eff" title="Effects" id="effects"></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="nwe-title">Themes</div>
+                                </div>
+                            </div>
+                            <div id="lps" class="nwe-flex-c mq">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c nwe-fxt">
+                                            <div id="margins" class="nwe-st-c nwe-cw">
+                                                <div class="nwe-st-icon-m mg"></div>
+                                                <div class="nwe-st-icontext">Margins</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c nwe-cw ort" id="orientation">
+                                                <div class="nwe-st-icon-m ort"></div>
+                                                <div class="nwe-st-icontext">Orientation</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    B
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="size">
+                                                <div class="nwe-st-icon-m sz"></div>
+                                                <div class="nwe-st-icontext">Size</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="printArea">
+                                                <div class="nwe-st-icon-m pa"></div>
+                                                <div class="nwe-st-icontext">Print Area</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="breaks">
+                                                <div class="nwe-st-icon-m bk"></div>
+                                                <div class="nwe-st-icontext">Breaks</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c nwe-cw" id="background">
+                                                <div class="nwe-st-icon-m bg"></div>
+                                                <div class="nwe-st-icontext">Background</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+
+                                            <div class="nwe-st-c" id="printtitles">
+                                                <div class="nwe-st-icon-m pt"></div>
+                                                <div class="nwe-st-icontext">Print Titles</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Page Setup</div>
+                                </div>
+                            </div>
+                            <div id="lstf" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div id="nwe-selwo" class="nwe-sel-dd-with-icon">
+                                                <div class="nwe-sel-icon wd"></div>
+                                                <div class="nwe-sel-txt">Width</div>
+                                                <select class="nwe-sel-ctrls" name="width" id="nwe-selw">
+                                                    <option value="">Automatic</option>
+                                                    <option value="">Page 1</option>
+                                                    <option value="">Page 2</option>
+                                                    <option value="">Page 3</option>
+                                                </select>
+                                            </div>
+
+                                            <div id="nwe-selho" class="nwe-sel-dd-with-icon">
+                                                <div class="nwe-sel-icon ht"></div>
+                                                <div class="nwe-sel-txt">Height</div>
+                                                <select class="nwe-sel-ctrls" name="height" id="nwe-selh">
+                                                    <option value="">Automatic</option>
+                                                    <option value="">Page 1</option>
+                                                    <option value="">Page 2</option>
+                                                    <option value="">Page 3</option>
+                                                </select>
+                                            </div>
+
+                                            <div id="nwe-selso" class="nwe-sel-dd-with-icon">
+                                                <div class="nwe-sel-icon sl"></div>
+                                                <div class="nwe-sel-txt">Scale</div>
+                                                <select class="nwe-sel-ctrls" name="scale" id="nwe-sels">
+                                                    <option value="">Automatic</option>
+                                                    <option value="">Page 1</option>
+                                                    <option value="">Page 2</option>
+                                                    <option value="">Page 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="nwe-title">Scale to Fit</div>
+                                </div>
+                            </div>
+                            <div id="lso" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div id="nwe-chk-ggl" class="nwe-chk-txt">Gridlines</div>
+                                            <div class="nwe-chk-c">
+                                                <div id="nwe-chk-gglvw" class="nwe-chkbox-c">
+                                                    <input type="checkbox" id="nwe-chk-gvw" name="" value="">
+                                                    <label for="nwe-chk-gvw">View</label>
+                                                </div>
+                                                <div id="nwe-chk-gglpr" class="nwe-chkbox-c">
+                                                    <input type="checkbox" id="nwe-chk-gpr" name="" value="">
+                                                    <label for="nwe-chk-gpr">Print</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div id="nwe-chk-hhd" class="nwe-chk-txt">Headings</div>
+                                            <div class="nwe-chk-c">
+                                                <div id="nwe-chk-hhdvw" class="nwe-chkbox-c">
+                                                    <input type="checkbox" id="nwe-chk-hvw" name="" value="">
+                                                    <label for="nwe-chk-hvw">View</label>
+                                                </div>
+                                                <div id="nwe-chk-hhdpr" class="nwe-chkbox-c">
+                                                    <input type="checkbox" id="nwe-chk-hpr" name="" value="">
+                                                    <label for="nwe-chk-hpr">Print</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Sheet Options</div>
+                                </div>
+                            </div>
+                            <div id="larr" class="nwe-flex-c mq">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c nwe-fxt">
+                                            <div id="arBringForward" class="nwe-st-c nwe-cw">
+                                                <div class="nwe-st-icon-m bf"></div>
+                                                <div class="nwe-st-icontext">Bring Forward</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    Bring Forward
+                                                </div>
+                                            </div>
+                                            <div id="arSendBackward" class="nwe-st-c nwe-cw sb">
+                                                <div class="nwe-st-icon-m sb"></div>
+                                                <div class="nwe-st-icontext">Send Backward</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    Send Backward
+                                                </div>
+                                            </div>
+                                            <div id="arSelectionPane" class="nwe-st-c">
+                                                <div class="nwe-st-icon-m sp"></div>
+                                                <div class="nwe-st-icontext">Selection Pane</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    Selection Pane
+                                                </div>
+                                            </div>
+                                            <div id="arAlign" class="nwe-st-c">
+                                                <div class="nwe-st-icon-m al"></div>
+                                                <div class="nwe-st-icontext">Align</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    Align
+                                                </div>
+                                            </div>
+                                            <div id="arGroup" class="nwe-st-c">
+                                                <div class="nwe-st-icon-m gp"></div>
+                                                <div class="nwe-st-icontext">Group</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    Group
+                                                </div>
+                                            </div>
+                                            <div id="arRotate" class="nwe-st-c">
+                                                <div class="nwe-st-icon-m rt"></div>
+                                                <div class="nwe-st-icontext">Rotate</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    Rotate
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Arrange</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nwe-content" id="formulas">
+                        <div class="nwe-fn-c">
+                            <div id="ffl" class="nwe-flex-c mq">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c nwe-fxt">
+                                            <div class="nwe-st-c nwe-cw" id="flInsertFunc">
+                                                <div class="nwe-st-icon-m if"></div>
+                                                <div class="nwe-st-icontext">Insert Function</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="flAutoSum">
+                                                <div class="nwe-st-icon-m aus"></div>
+                                                <div class="nwe-st-icontext">Auto Sum</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    B
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="flRused">
+                                                <div class="nwe-st-icon-m rcu"></div>
+                                                <div class="nwe-st-icontext">Recently Used</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="flfinancial">
+                                                <div class="nwe-st-icon-m fnc"></div>
+                                                <div class="nwe-st-icontext">Financial</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="flLogical">
+                                                <div class="nwe-st-icon-m lg"></div>
+                                                <div class="nwe-st-icontext">Logical</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                            <div class="nwe-st-c" id="flTxt">
+                                                <div class="nwe-st-icon-m tx"></div>
+                                                <div class="nwe-st-icontext">Text</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+
+                                            <div class="nwe-st-c" id="flDatetime">
+                                                <div class="nwe-st-icon-m dt"></div>
+                                                <div class="nwe-st-icontext">Date & Time</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+
+                                            <div class="nwe-st-c" id="fllookupref">
+                                                <div class="nwe-st-icon-m lur"></div>
+                                                <div class="nwe-st-icontext">Lookup & Reference</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+
+                                            <div class="nwe-st-c" id="flMathTrig">
+                                                <div class="nwe-st-icon-m mt"></div>
+                                                <div class="nwe-st-icontext">Math & Trig</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+
+                                            <div class="nwe-st-c" id="flMorefunc">
+                                                <div class="nwe-st-icon-m mrf"></div>
+                                                <div class="nwe-st-icontext">More Functions</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Function Library</div>
+                                </div>
+                            </div>
+                            <div id="fdn" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="dnName">
+                                            <div class="nwe-ed-icon-m nm"></div>
+                                            <div class="nwe-ed-icontext">Name Manager</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s df" title="Define Name" id="dnDefname"></div>
+                                            <div class="nwe-ed-icon-s uif" title="Use in Formula" id="dnUsefor"></div>
+                                            <div class="nwe-ed-icon-s cfs" title="Create from Selection" id="dnCreatesel"></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="nwe-title">Defined Names</div>
+                                </div>
+                            </div>
+                            <div id="ffa" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-sel-dd-with-icon" id="faTrace">
+                                                <div class="nwe-sel-icon tp"></div>
+                                                <div class="nwe-sel-txt awd">Trace Precedent</div>
+                                            </div>
+
+                                            <div class="nwe-sel-dd-with-icon" id="faDependents">
+                                                <div class="nwe-sel-icon td"></div>
+                                                <div class="nwe-sel-txt awd">Trace Dependents</div>
+                                            </div>
+
+                                            <div class="nwe-sel-dd-with-icon" id="faArrows">
+                                                <div class="nwe-sel-icon ra"></div>
+                                                <div class="nwe-sel-txt awd">Remove Arrows</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-sel-dd-with-icon" id="faFormulas">
+                                                <div class="nwe-sel-icon shf"></div>
+                                                <div class="nwe-sel-txt awd">Show Formulas</div>
+                                            </div>
+
+                                            <div class="nwe-sel-dd-with-icon" id="faError">
+                                                <div class="nwe-sel-icon erc"></div>
+                                                <div class="nwe-sel-txt awd">Error Checking</div>
+                                            </div>
+
+                                            <div class="nwe-sel-dd-with-icon" id="faEvaluate">
+                                                <div class="nwe-sel-icon evf"></div>
+                                                <div class="nwe-sel-txt awd">Evaluate Formulas</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="nwe-title">Formula Auditing</div>
+                                </div>
+                            </div>
+                            <div id="fps" class="nwe-flex-c">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c nwe-fxt">
+                                            <div id="wtw" class="nwe-st-c nwe-cw">
+                                                <div class="nwe-st-icon-m wtw"></div>
+                                                <div class="nwe-st-icontext">Watch Window</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title opa">Page Setup</div>
+                                </div>
+                            </div>
+                            <div id="fca" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c nwe-awd" id="cOptionsCal">
+                                            <div class="nwe-ed-icon-m co"></div>
+                                            <div class="nwe-ed-icontext">Calculation Options</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s cn" title="Calculate Now" id="cNowCal"></div>
+                                            <div class="nwe-ed-icon-s cs" title="Calculate Sheet" id="cSheetCal"></div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="nwe-title">Calculation</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nwe-content" id="data">
+                        <div class="nwe-fn-c">
+                            <div id="dts" class="nwe-flex-c">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div class="nwe-st-c" id="getExternal">
+                                                <div class="nwe-st-icon-m gedt"></div>
+                                                <div class="nwe-st-icontext">Get External Data</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Tables</div>
+                                </div>
+                            </div>
+
+                            <div id="dgt" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="gtNewQuery">
+                                            <div class="nwe-ed-icon-m nq"></div>
+                                            <div class="nwe-ed-icontext">New Query</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s sq" title="Show Queries" id="gtShowQueries"></div>
+                                            <div class="nwe-ed-icon-s ft" title="From Table" id="gtFromTable"></div>
+                                            <div class="nwe-ed-icon-s rcs" title="Recent Sources" id="gtRecent"></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="nwe-title">Get & Transform</div>
+                                </div>
+                            </div>
+
+                            <div id="dcn" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="cnRefAll">
+                                            <div class="nwe-ed-icon-m ref"></div>
+                                            <div class="nwe-ed-icontext">Refresh All</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s ct" title="Connections" id="cnConnections"></div>
+                                            <div class="nwe-ed-icon-s prt" title="Properties" id="cnProperties"></div>
+                                            <div class="nwe-ed-icon-s etl" title="Edit Links" id="cnEditLinks"></div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Connections</div>
+                                </div>
+                            </div>
+
+                            <div id="dsf" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s az" title="A to Z" id="sfAZ"></div>
+                                            <div class="nwe-ed-icon-s za" title="Z to A" id="sfZA"></div>
+                                        </div>
+                                        <div class="nwe-cb-sf-c" id="sfSort">
+                                            <div class="nwe-ed-icon-m so"></div>
+                                            <div class="nwe-ed-icontext">Sort</div>
+                                        </div>
+                                        <div class="nwe-cb-sf-c" id="sfFilter">
+                                            <div class="nwe-ed-icon-m fi"></div>
+                                            <div class="nwe-ed-icontext">Filter</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s ce" title="Clear" id="sfClear"></div>
+                                            <div class="nwe-ed-icon-s rpy" title="Reapply" id="sfReapply"></div>
+                                            <div class="nwe-ed-icon-s adv" title="Advanced" id="sfAdvanced"></div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Sort & Filter</div>
+                                </div>
+                            </div>
+
+                            <div id="ddt" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="dtTxtCol">
+                                            <div class="nwe-ed-icon-m ttc"></div>
+                                            <div class="nwe-ed-icontext">Text to Columns</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s ff" title="Flash Fill" id="dtFlash"></div>
+                                            <div class="nwe-ed-icon-s rvd" title="Remove Duplicates" id="dtRemoveDup"></div>
+                                            <div class="nwe-ed-icon-s dtv" title="Data Validation" id="dtValidates"></div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s cdt" title="Consolidate" id="dtConso"></div>
+                                            <div class="nwe-ed-icon-s rts" title="Relationships" id="dtRelations"></div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Data Tools</div>
+                                </div>
+                            </div>
+
+                            <div id="dfc" class="nwe-flex-c">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div id="wia" class="nwe-st-c">
+                                                <div class="nwe-st-icon-m wia"></div>
+                                                <div class="nwe-st-icontext">What if Analysis</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+
+                                            <div id="frs" class="nwe-st-c">
+                                                <div class="nwe-st-icon-m frs"></div>
+                                                <div class="nwe-st-icontext">Forecast Sheet</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    B
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Forecast</div>
+                                </div>
+                            </div>
+
+                            <div id="dol" class="nwe-flex-c">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s gr" title="Group" id="otGroup"></div>
+                                            <div class="nwe-ed-icon-s ugr" title="Ungroup" id="otUngroup"></div>
+                                            <div class="nwe-ed-icon-s stl" title="Subtotal" id="otSubtotal"></div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Outline</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nwe-content" id="review">
+                        <div class="nwe-fn-c">
+                            <div class="nwe-flex-c" id="rtb">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div class="nwe-st-c" id="tbSpellin">
+                                                <div class="nwe-st-icon-m spe"></div>
+                                                <div class="nwe-st-icontext">Spelling</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+
+                                            <div class="nwe-st-c" id="tbThesaurus">
+                                                <div class="nwe-st-icon-m the"></div>
+                                                <div class="nwe-st-icontext">Thesaurus</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    B
+                                                </div>
+                                            </div>
+
+                                            <div class="nwe-st-c" id="tbWorkbook">
+                                                <div class="nwe-st-icon-m wks"></div>
+                                                <div class="nwe-st-icontext">Workbook Statistics</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    C
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Tables</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="rcc">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div class="nwe-st-c" id="acAccessibility">
+                                                <div class="nwe-st-icon-m chka"></div>
+                                                <div class="nwe-st-icontext">Check Accessibility</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Accessibility</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="rin">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed" id="igSmartLookup">
+                                        <div class="nwe-cb-sf-c">
+                                            <div class="nwe-ed-icon-m slu"></div>
+                                            <div class="nwe-ed-icontext">Smart Lookup</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Insights</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="rla">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed" id="lgTranslate">
+                                        <div class="nwe-cb-sf-c">
+                                            <div class="nwe-ed-icon-m trl"></div>
+                                            <div class="nwe-ed-icontext">Translate</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Language</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="rco">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed nwe-algs">
+                                        <div class="nwe-cb-sf-c" id="cmNew">
+                                            <div class="nwe-ed-icon-m new"></div>
+                                            <div class="nwe-ed-icontext">New Comment</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="cmDelete">
+                                            <div class="nwe-ed-icon-m del"></div>
+                                            <div class="nwe-ed-icontext">Delete</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="cmPrev">
+                                            <div class="nwe-ed-icon-m prev"></div>
+                                            <div class="nwe-ed-icontext">Previous</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="cmNext">
+                                            <div class="nwe-ed-icon-m nxt"></div>
+                                            <div class="nwe-ed-icontext">Next</div>
+                                        </div>
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s shc" title="Show/Hide Comment" id="cmHide"></div>
+                                            <div class="nwe-ed-icon-s sac" title="Show All Comment" id="cmShowAll"></div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Comments</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="rpr">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="ptSheet">
+                                            <div class="nwe-ed-icon-m prs"></div>
+                                            <div class="nwe-ed-icontext">Protect Sheet</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="ptWorkBook">
+                                            <div class="nwe-ed-icon-m prw"></div>
+                                            <div class="nwe-ed-icontext">Protect Workbook</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="ptAllowEdit">
+                                            <div class="nwe-ed-icon-m aer"></div>
+                                            <div class="nwe-ed-icontext">Allow Edit</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="ptUnshare">
+                                            <div class="nwe-ed-icon-m ush"></div>
+                                            <div class="nwe-ed-icontext">Unshare Workbook</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Protect</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="rhi">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div class="nwe-st-c" id="hi">
+                                                <div class="nwe-st-icon-m hi"></div>
+                                                <div class="nwe-st-icontext">Hide Ink</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Ink</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nwe-content" id="view">
+                        <div class="nwe-fn-c">
+                            <div class="nwe-flex-c" id="vvw">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed nwe-algs">
+                                        <div class="nwe-cb-sf-c" id="wvNormal">
+                                            <div class="nwe-ed-icon-m nor"></div>
+                                            <div class="nwe-ed-icontext">Normal</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="wvPagebreak">
+                                            <div class="nwe-ed-icon-m pbp"></div>
+                                            <div class="nwe-ed-icontext">Page Break</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="wvPagelayout">
+                                            <div class="nwe-ed-icon-m pgl"></div>
+                                            <div class="nwe-ed-icontext">Page Layout</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="wvCustomview">
+                                            <div class="nwe-ed-icon-m cuv"></div>
+                                            <div class="nwe-ed-icontext">Custom View</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Workbook Views</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="vsh">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-chk-c">
+                                                <div class="nwe-chkbox-c" id="shRuler">
+                                                    <input type="checkbox" id="nwe-chk-rlr" name="" value="">
+                                                    <label for="nwe-chk-rlr">Ruler</label>
+                                                </div>
+                                                <div class="nwe-chkbox-c" id="shGridlines">
+                                                    <input type="checkbox" id="nwe-chk-gls" name="" value="">
+                                                    <label for="nwe-chk-gls">Gridlines</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-chk-c">
+                                                <div class="nwe-chkbox-c" id="shBar">
+                                                    <input type="checkbox" id="nwe-chk-fbar" name="" value="">
+                                                    <label for="nwe-chk-fbar">Formula Bar</label>
+                                                </div>
+                                                <div class="nwe-chkbox-c" id="shPrint">
+                                                    <input type="checkbox" id="nwe-chk-hdg" name="" value="">
+                                                    <label for="nwe-chk-hdg">Print</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Show</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="vzo">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed nwe-algs">
+                                        <div class="nwe-cb-sf-c" id="zmZoom">
+                                            <div class="nwe-ed-icon-m zm"></div>
+                                            <div class="nwe-ed-icontext">Zoom</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="zm100">
+                                            <div class="nwe-ed-icon-m hrdp"></div>
+                                            <div class="nwe-ed-icontext">100%</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="zmSec">
+                                            <div class="nwe-ed-icon-m zms"></div>
+                                            <div class="nwe-ed-icontext">Zoom to Sec</div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Zoom</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="vwi">
+                                <div class="nwe-cb-main">
+                                    <div class="nwe-cb-btn ed">
+                                        <div class="nwe-cb-sf-c" id="wdNewwindows">
+                                            <div class="nwe-ed-icon-m nww"></div>
+                                            <div class="nwe-ed-icontext">New Window</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c" id="wdArrangeall">
+                                            <div class="nwe-ed-icon-m arr"></div>
+                                            <div class="nwe-ed-icontext">Arrange All</div>
+                                        </div>
+
+                                        <div class="nwe-cb-sf-c nwe-st-c nwe-content-item nwe-select-item" id="wdFreezepanes">
+                                            <div class="nwe-ed-icon-m fre"></div>
+                                            <div class="nwe-ed-icontext">Freeze Panes</div>
+                                            <div class="nwe-f-ed-container nwe-content-itemlist">
+                                                <div class="nwe-f-ed-ch">
+
+                                                    <div class="nwe-f-menu-item" id="wfcp">
+                                                        <div class="item-container">
+                                                            <div class="nwe-f-icon-s freezecurrcell"></div>
+                                                            <div>
+                                                                <div class="nwe-st-icontext" title="Freeze Current Cell">Freeze Current Cell</div>
+                                                                <div class="nwe-st-icontext-2">Select a cell to remain visible while scrolling in the NOAH Spreadsheet.</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="nwe-f-menu-item" id="wfcr">
+                                                        <div class="item-container">
+                                                            <div class="nwe-f-icon-s freezecurrrow"></div>
+                                                            <div>
+                                                                <div class="nwe-st-icontext" title="Freeze Current Row">Freeze Current Row</div>
+                                                                <div class="nwe-st-icontext-2">Keep the current row visible at the top of the NOAH Spreadsheet.</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="nwe-f-menu-item" id="wfcc">
+                                                        <div class="item-container">
+                                                            <div class="nwe-f-icon-s freezecurrcol"></div>
+                                                            <div>
+                                                                <div class="nwe-st-icontext" title="Freeze Current Column">Freeze Current Column</div>
+                                                                <div class="nwe-st-icontext-2">Maintain the current column on the left side of the NOAH Spreadsheet.</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="nwe-cb-sf-c nwe-st-c nwe-content-item" id="wdUnFreezepanes">
+                                            <div class="nwe-ed-icon-m ufre"></div>
+                                            <div class="nwe-ed-icontext">Unfreeze Panes</div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s spt" title="Split" id="wdSplit"></div>
+                                            <div class="nwe-ed-icon-s hd" title="Hide" id="wdHide"></div>
+                                            <div class="nwe-ed-icon-s uhd" title="Unhide" id="wdUnhide"></div>
+                                        </div>
+                                        <div class="nwe-cb-multi-icon-c">
+                                            <div class="nwe-ed-icon-s sby" title="View Side by Side" id="wdView"></div>
+                                            <div class="nwe-ed-icon-s syns" title="Synchronous Scrolling" id="wdSync"></div>
+                                            <div class="nwe-ed-icon-s rtwp" title="Reset Window Position" id="wdReset"></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="nwe-title">Windows</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="vsw">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div class="nwe-st-c" id="stw">
+                                                <div class="nwe-st-icon-m stw"></div>
+                                                <div class="nwe-st-icontext">Switch Windows</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title nwe-opae">Tables</div>
+                                </div>
+                            </div>
+
+                            <div class="nwe-flex-c" id="vma">
+                                <div class="nwe-g-main">
+                                    <div class="nwe-g-btn">
+                                        <div class="nwe-g-c">
+                                            <div class="nwe-st-c" id="mac">
+                                                <div class="nwe-st-icon-m mac"></div>
+                                                <div class="nwe-st-icontext">Macros</div>
+                                                <div class="nwe-st-ot-crtls">
+                                                    A
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nwe-title">Macros</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="nwe-content" id="tabledesign">
+                        <div class="nwe-fn-c">
+                            <div class="nwe-flex-c" id="tds">
+                                    <div class="nwe-cb-main">
+                                        <div class="nwe-cb-btn ed">
+
+                                            <div class="nwe-cb-multi-icon-c">
+                                                <div class="nwe-chk-c">
+                                                    <div class="nwe-chkbox-c" id="tdsshowcolumn">
+                                                        <input type="checkbox" id="chkshowcolumn" name="" value="">
+                                                        <label for="chkshowcolumn">Show Column</label>
+                                                    </div>
+                                                    <div class="nwe-chkbox-c" id="tdsshowrowbanded">
+                                                        <input type="checkbox" id="chkshowrowbanded" name="" value="">
+                                                        <label for="chkshowrowbanded">Show Row Banded</label>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="nwe-cb-multi-icon-c">
+                                                <div class="nwe-chk-c">
+                                                    <div class="nwe-chkbox-c" id="tdsshowcolumnbanded">
+                                                        <input type="checkbox" id="chkshowcolumnbanded" name="" value="">
+                                                        <label for="chkshowcolumnbanded">Show Column Banded</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="nwe-title">Table Style Options</div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="nwe-content" id="customToolbox">
+                        <div class="nwe-fn-c">
+                            @RenderBody()
+                        </div>
+                    </div>
+                    <!-- <div class="nwe-content" id="addins">addins</div>
+    <div class="nwe-content" id="help">help</div>
+    <div class="nwe-content" id="team">team</div> -->
+                </div>
+            </div>
+        </div>
+        <div id="nwe-bar" class="nwe-bar">
+            <div class="nwe-fbar">
+                <div class="nwe-fbar-l">
+                    <input id="txtSelectBar" class="txtbox fullwidth">
+                    @*<select  class="nwe-fullwidth">
+                            <option value="A11">A11</option>
+                            <option value="A12">A12</option>
+                            <option value="A13">A13</option>
+                            <option value="A55">A55</option>
+                        </select>*@
+                </div>
+
+                <div class="nwe-fbar-icons">
+                    <div class="nwe-fbar-icon xx" id="xx" title="X"></div>
+                    <div class="nwe-fbar-icon ck" id="ck" title="CK"></div>
+                    <div class="nwe-fbar-icon fx" id="fx" title="FX"></div>
+                </div>
+
+                <div class="nwe-fbar-r">
+                    <input id="txtFomulaBar" class="txtbox fullwidth">
+                    @*<select class="nwe-fullwidth">
+                            <option value="A11">A11</option>
+                            <option value="A12">A12</option>
+                            <option value="A13">A13</option>
+                            <option value="A55">A55</option>
+                        </select>*@
+                </div>
+            </div>
+        </div>
+        <div class="nwe-tbl-content">
+            <div id="mSpread" class="nwe-content-item nwe-content-item-noaction" p8title="NOAH Business Applications Export"></div>
+        </div>
+        <div id="nwe-footer" class="nwe-footer"></div>
+        @*This is a footer*@
+
+
+
+
+
+        <!-- Message Box -->
+        <div id="mdlPrompt" class="mdl logout">
+            <div class="mdl-msg-c">
+                <div class="mdl-msg-wrapper">
+
+                    <div class="mdl-msg-logo _msg-icon">
+                        @*<svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 60 60" class="mdl-msg-info" width="60" height="60">
+                                <path class="mdl-msg-info-a" d="M56,30A26,26,0,1,1,30,4,26,26,0,0,1,56,30Z" />
+                                <path class="mdl-msg-info-b" d="M30,7A23,23,0,1,0,53,30,23,23,0,0,0,30,7Zm0,43A20,20,0,1,1,50,30,20,20,0,0,1,30,50Zm3-23.61V41.61A1.39,1.39,0,0,1,31.61,43H28.39A1.39,1.39,0,0,1,27,41.61V26.39a1.34,1.34,0,0,1,.05-.35A5,5,0,0,0,33,26,1.34,1.34,0,0,1,33,26.39ZM30,23a3,3,0,1,1,3-3A3,3,0,0,1,30,23Z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="mdl-msg-logout" viewBox="0 0 60 60" width="60px" height="60px">
+                                <path class="ae1dc0c9-d477-41d0-8c64-ec295bcebf73" d="M57.06,35.62l-6.82,3.94a1.87,1.87,0,0,1-2.8-1.62V36H35.55a2,2,0,0,1,0-4H47.44V30.06a1.87,1.87,0,0,1,2.8-1.62l6.82,3.94A1.87,1.87,0,0,1,57.06,35.62ZM40,24V20a2,2,0,0,0-2-2H32V50h6a2,2,0,0,0,2-2V44a2,2,0,0,1,4,0v4a6,6,0,0,1-6,6H30.49A6,6,0,0,1,26,56H5.65A3.64,3.64,0,0,1,2,52.35V13.89a3.66,3.66,0,0,1,2.82-3.55L24.69,5.71A6,6,0,0,1,32,11.51V14h6a6,6,0,0,1,6,6v4a2,2,0,0,1-4,0ZM27,34a4,4,0,1,0-4,4A4,4,0,0,0,27,34Z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 60 60" class="mdl-msg-question" width="60" height="60">
+                                <path class="mdl-msg-question-a" d="M56,30A26,26,0,1,1,30,4,26,26,0,0,1,56,30Z" />
+                                <path class="mdl-msg-question-b" d="M30,7A23,23,0,1,0,53,30,23,23,0,0,0,30,7Zm0,43A20,20,0,1,1,50,30,20,20,0,0,1,30,50Zm1.86-14.34h-4c0-.57,0-.92,0-1a6.94,6.94,0,0,1,.64-3.19,9.78,9.78,0,0,1,2.56-2.81,19.46,19.46,0,0,0,2.3-2.05,2.77,2.77,0,0,0,.58-1.69,2.82,2.82,0,0,0-1-2.19,4,4,0,0,0-2.75-.92,4.16,4.16,0,0,0-2.8,1,5,5,0,0,0-1.55,2.9l-4-.5a6.73,6.73,0,0,1,2.38-4.75A8.47,8.47,0,0,1,30,18.43a8.73,8.73,0,0,1,6,2A6,6,0,0,1,38.22,25a5,5,0,0,1-.82,2.75,18.32,18.32,0,0,1-3.51,3.53,6.75,6.75,0,0,0-1.73,1.86A6.34,6.34,0,0,0,31.86,35.66Zm-4,5.91V37.18h4.39v4.39Z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mdl-msg-error" data-name="Layer 1" viewBox="0 0 60 60" width="60" height="60">
+                                <path class="mdl-msg-error-a" d="M56,30A26,26,0,1,1,30,4,26,26,0,0,1,56,30Z" />
+                                <path class="mdl-msg-error-b" d="M30,7A23,23,0,1,0,53,30,23,23,0,0,0,30,7Zm0,43A20,20,0,1,1,50,30,20,20,0,0,1,30,50Zm8.41-14.41a2,2,0,1,1-2.82,2.82L30,32.83l-5.59,5.58a2,2,0,0,1-2.82-2.82L27.17,30l-5.58-5.59a2,2,0,0,1,2.82-2.82L30,27.17l5.59-5.58a2,2,0,0,1,2.82,2.82L32.83,30Z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 60 60" class="mdl-msg-warning" width="60" height="60">
+                                <path class="mdl-msg-warning-a" d="M56,30A26,26,0,1,1,30,4,26,26,0,0,1,56,30Z" />
+                                <path class="mdl-msg-warning-b" d="M30,7A23,23,0,1,0,53,30,23,23,0,0,0,30,7Zm0,43A20,20,0,1,1,50,30,20,20,0,0,1,30,50Zm3-9a3,3,0,1,1-3-3A3,3,0,0,1,33,41Zm-3-7h0a2.11,2.11,0,0,1-2.11-2l-.77-13.78A2.12,2.12,0,0,1,29.23,16h1.54a2.12,2.12,0,0,1,2.11,2.23L32.11,32A2.11,2.11,0,0,1,30,34Z" />
+                            </svg>*@
+
+                        <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="nw-mdl-logout" viewBox="0 0 60 60" width="60px" height="60px">
+                            <path class="ae1dc0c9-d477-41d0-8c64-ec295bcebf73" d="M57.06,35.62l-6.82,3.94a1.87,1.87,0,0,1-2.8-1.62V36H35.55a2,2,0,0,1,0-4H47.44V30.06a1.87,1.87,0,0,1,2.8-1.62l6.82,3.94A1.87,1.87,0,0,1,57.06,35.62ZM40,24V20a2,2,0,0,0-2-2H32V50h6a2,2,0,0,0,2-2V44a2,2,0,0,1,4,0v4a6,6,0,0,1-6,6H30.49A6,6,0,0,1,26,56H5.65A3.64,3.64,0,0,1,2,52.35V13.89a3.66,3.66,0,0,1,2.82-3.55L24.69,5.71A6,6,0,0,1,32,11.51V14h6a6,6,0,0,1,6,6v4a2,2,0,0,1-4,0ZM27,34a4,4,0,1,0-4,4A4,4,0,0,0,27,34Z" />
+                        </svg>
+                    </div>
+
+                    <div class="mdl-msg-title"></div>
+                    <div class="mdl-msg-txt">Are you sure you want to quit all applications and log out now?</div>
+                    <div class="mdl-msg-input"><input id="txt-msg-msgvalue" class="txtbox fullwidth"></div>
+                    <div class="mdl-msg-label"></div>
+                    <div class="mdl-btn-msg-c">
+                        <div id="btnYes" class="btn btn-msg-y">Yes</div>
+                        <div id="btnNo" class="btn btn-msg-n">No</div>
+                        <div id="btnOk" class="btn btn-msg-o">Ok</div>
+                        <div id="btnCancel" class="btn btn-msg-c">Cancel</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Lookup -->
+        <div id="menuCreatorContainer" class="modal-s">
+            <div class="modal-box-s">
+                <div class="modal-box-bg"></div>
+                <div class="modal-hdr">
+                    <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                    <!-- <div class="modal-hdr-icon"></div> -->
+                    <div class="modal-hdr-title">Look up</div>
+                    <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+                </div>
+                <div class="nk-modal-body">
+                    <div class="row">
+                        <div class="col col-12">
+                            @*<div class="row">
+                                    <div class="col col-5">
+                                        <label class="lbltxt">Column Filter</label>
+                                    </div>
+                                    <div class="col col-7">
+                                        <select id="nkcmb-mainfilter" class="cmb fullwidth">
+                                            <option>Select</option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                </div>*@
+                            <div class="row margin-bottom-10">
+                                <div class="col col-5">
+                                    <label class="lbltxt">Search</label>
+                                </div>
+                                <div class="col col-7">
+                                    <div class="col col-12">
+                                        <input id="txtlookupsearchF" type="text" name="" class="search txtbox txtdesc txtlookup">
+                                        <div id="nkbtnsearch" class="btn btn-sm-default btn-sm-default-lookup"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="AddtolistCon" class="row">
+                                <div class="col col-12">
+                                    <div id="LookUpAddtoList" class="btn-action-tab btn-add-list">
+                                        <div class="_btn-icon"></div>
+                                        <div class="_lbl-txt btnGetlookupx">Add to list</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<hr />*@
+                    <div class="row">
+                        <div class="col col-12 col-parent">
+                            <div id="tblWithTabsWrapperSample3" class="table-tabs-wrapper rescale-ready">
+                                <div class="row">
+                                    <div id="nkLookupCon" class="table-wrapper">
+                                        <table id="dimTableLookUpCon" class="table nwlookupgridList" sid="nkTable0">
+                                            <thead>
+                                                <tr>
+                                                    @*<th data-type="num" scope="col" class="tbl-row-num asc">#</th>*@
+                                                    <th data-type="str" scope="col" class="">Code</th>
+                                                    <th data-type="str" scope="col">Description</th>
+                                                </tr>
+                                                <tr>
+                                                    @*<th data-type="num" scope="col" class="tbl-row-num"></th>*@
+                                                    <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                                    <th data-type="str" scope="col" class=""><input type="text" name="" class="txtbox"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    @*<th scope="row" class="tbl-row-num" row-th="#">1</th>*@
+                                                    <td row-th="First First"></td>
+                                                    <td row-th="Last Name"></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    @*<div class="col col-6">
+                                            <div class="row">
+                                                <div class="col col-12 child-centered">
+                                                    <div id="" class="pagination-n-c" sid="">
+                                                        <div class="page-control page-control-prev">Prev</div>
+                                                        <input type="text" name="" class="page-search" value="1" autocomplete="off">
+                                                        <div class="page-of-txt">of</div>
+                                                        <div class="page-count-total">1</div>
+                                                        <div class="page-control page-control-next">Next</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    <div class="col col-12 margin-y-5">
+                                        <div class="row">
+                                            <div class="col col-12 ">
+                                                <div class="found-record"><span>...</span> Record(s) Found</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="LookupID"></div>
+        </div>
+        <!-- Export -->
+        <div id="nwExportContainerMain" class="modal-s">
+            <div class="modal-box-s">
+                <div class="modal-box-bg"></div>
+                <div class="modal-hdr">
+                    <div class="btn btn-modal-back" nk-fx-click="press" title="Back"><span></span></div>
+                    <div class="modal-hdr-title">Export to Excel</div>
+                    <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
+                </div>
+                <div class="nk-modal-body">
+                    <div class="row margin-y-10">
+                        <div class="col col-12 col-parent child-centered">
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div id="btnnwExport" class="btn btn-default">Export to Excel</div>
+                                    <div id="btnnwExportCSV" class="btn btn-default">Export to CSV</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div id="nwExportContainer"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Message Box -->
+        <div id="mdlPrompt" class="mdl">
+            <div class="mdl-msg-c">
+                <div class="mdl-msg-wrapper">
+                    <div class="mdl-hrd">
+                        <div class="mdl-msg-title ">Service Entry</div>
+                        <div class="mdl-cl">
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    @*<div class="mdl-msg-logo _msg-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="nw-mdl-logout" viewBox="0 0 60 60" width="60px" height="60px">
+                                <path class="ae1dc0c9-d477-41d0-8c64-ec295bcebf73" d="M57.06,35.62l-6.82,3.94a1.87,1.87,0,0,1-2.8-1.62V36H35.55a2,2,0,0,1,0-4H47.44V30.06a1.87,1.87,0,0,1,2.8-1.62l6.82,3.94A1.87,1.87,0,0,1,57.06,35.62ZM40,24V20a2,2,0,0,0-2-2H32V50h6a2,2,0,0,0,2-2V44a2,2,0,0,1,4,0v4a6,6,0,0,1-6,6H30.49A6,6,0,0,1,26,56H5.65A3.64,3.64,0,0,1,2,52.35V13.89a3.66,3.66,0,0,1,2.82-3.55L24.69,5.71A6,6,0,0,1,32,11.51V14h6a6,6,0,0,1,6,6v4a2,2,0,0,1-4,0ZM27,34a4,4,0,1,0-4,4A4,4,0,0,0,27,34Z" />
+                            </svg>
+                        </div>*@
+                    @*<div class="mdl-msg-title "></div>*@
+                    <div class="mdl-ctx">
+                        <div class="mdl-msg-txt">Are you sure you want to quit all applications and log out now?</div>
+                        <div class="mdl-btn-msg-c">
+                            <div id="btnYes" class="btn btn-msg-y">Yes</div>
+                            <div id="btnNo" class="btn btn-msg-n">No</div>
+                            <div id="btnOk" class="btn btn-msg-o">Ok</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="alerts-parent"></div>
+
+
+
+
+    </div>
+
+</body>

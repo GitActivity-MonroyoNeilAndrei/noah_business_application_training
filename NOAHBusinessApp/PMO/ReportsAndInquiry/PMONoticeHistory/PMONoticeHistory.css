@@ -1,0 +1,75 @@
+﻿
+
+.menuitem-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #3a3a3a;
+}
+
+.menuitem-df {
+    font-size: 16px;
+    font-weight: 600;
+    color: #6d6d6d;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.nk .lbltxt, .nk label {
+    color: #6d6d6d;
+}
+
+.nk .txtbox, .nk .txtbox-date, .nk .txtbox-time, .nk .txtarea, .nk input[type="text"], .nk input[type="date"], .nk input[type="time"], .nk textarea {
+    border: 1px solid #e0dfE4;
+}
+
+.nk .cmb {
+    background: transparent;
+    border: 1px solid #E0DFE4;
+    color: #6d6d6d;
+}
+
+
+@media only screen and (max-width: 800px) {
+
+    .menuitem-title {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .menuitem-df {
+        font-size: 13px;
+        margin-bottom: 0px;
+        margin-top: 0;
+    }
+
+    .nkListViewRow {
+        margin: 3px 0px;
+    }
+
+    div#conGrid {
+        height: auto !important;
+        width: 100% !important;
+        margin-bottom: 0px !important;
+    }
+
+    .nkListViewTitle {
+        font-size: 12px;
+    }
+
+    .nkListViewValue {
+        font-size: 12px;
+    }
+
+.row.row-parent {
+    margin-bottom: 0px !important;
+}
+
+label.lbltxt {
+    padding: 0px 2px !important;
+}
+
+.row.margin-bottom-5 {
+    margin-bottom: 0px !important;
+}
+
+}

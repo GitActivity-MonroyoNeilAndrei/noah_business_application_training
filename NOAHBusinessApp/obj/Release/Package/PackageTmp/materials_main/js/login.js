@@ -164,11 +164,11 @@ window.onload = function () {
     function popupCookies() {
         var body = $('body');
 
-        //body.append("<style>.popupCookies { position: fixed; display: block; width: 88%; height: auto; padding: 14px 6%; background-color: #00204f;background-color: #171717;bottom: 0; z-index: 9999; color: #fafafa; font-family: 'Segoe UI'; font-size: 15px; opacity: .98; -webkit-animation: toastbottom 2s; -moz-animation: toastbottom 2s; animation: toastbottom 2s; -webkit-box-shadow: 0 -6px 12px rgba(0,0,0,.16); -moz-box-shadow: 0 -6px 12px rgba(0,0,0,.16); box-shadow: 0 -6px 12px rgba(0,0,0,.16); -webkit-box-sizing: initial; -moz-box-sizing: initial; box-sizing: initial; } .popupCookies.hidden2 { -webkit-animation: toasthide 2s; -moz-animation: toasthide 2s; animation: toasthide 2s; } .popupCookies > div { display: inline-block; height: 100%; margin: 0 auto; vertical-align: middle; } .cookies-content { width: 70%; } .cookies-cont-button { width: 28%; text-align: center; } .btn-cookies { display: block; margin: 2px auto; padding: 10px 14px; width: 160px; border: 2px solid #2267bb; background-color: #2267bb; border-radius: 3px; font-size: 13px; text-align: center; color: #fafafa; font-family: 'Century Gothic'; cursor: pointer; font-weight: bold; -webkit-transition: .2s ease-out all; -moz-transition: .2s ease-out all; transition: .2s ease-out all; } .btn-cookies#btnViewPolicy { border-color: transparent; border: 2px solid transparent; background-color: transparent; opacity: .7; -webkit-transition: .2s ease-out all; -moz-transition: .2s ease-out all; transition: .2s ease-out all; } .btn-cookies#btnViewPolicy:hover { opacity: 1; } .btn-cookies#btnViewPolicy > a { text-decoration: none; color: #dddddd !important; } .btn-cookies#btnAcceptPolicy { text-transform: uppercase; } .btn-cookies#btnAcceptPolicy:hover { color: #efefef !important; border: 2px solid #efefef; background-color: #041732; } a { -webkit-user-select: none; -moz-user-select: none; user-select: none; } .content-title-container { display: block; padding: 20px 0; margin: 20px auto; position: relative; } .content-title { font-family: 'Century Gothic', Calibri; font-size: 20px; color: #2f2f2f; display: block; padding: 2px 20px; text-align: center; font-weight: bold; } .content-sub-title { font-family: 'Century Gothic', Calibri; font-size: 18px; color: #2f2f2f; display: block; padding: 0 20px; text-align: center; font-weight: bold; } .content-text { margin: 0 auto; margin-top: 20px; padding: 20px; width: 70%; color: #3f3f3f; font-size: 15px; font-family: 'Segoe UI', Calibri; text-align: justify; word-spacing: .1em; } .content-text h4 { text-transform: uppercase; text-decoration: underline; display: block; text-align: left; margin: 0; margin-bottom: 10px; font-size: 16px; font-family: 'Arial', Calibri; } .content-text p { margin: 20px 0; display: block; font-size: 15px; line-height: 20px; } .content-text ul, .content-text ol { margin: unset; padding-left: 30px; margin-bottom: 30px; margin-top: 20px; } .content-text li { margin: 4px 0; list-style: inherit; display: list-item; } .content-text li span { margin: 0 !important; font-weight: bold; } .text-blue { color: mediumblue; } .spacer-40 { display: block; margin: 50px 0; } .content-title-container:before { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; width: 60%; background: -webkit-linear-gradient(to right, #cc9308, #0015d0); background: -moz-linear-gradient(to right, #cc9308, #0015d0); background: linear-gradient(to right, #cc9308, #0015d0); -webkit-transform: translateX(-50%); -moz-transform: translateX(-50%); transform: translateX(-50%); } .header .Title, .header .logo { cursor: pointer !important; } @keyframes toastbottom { 0% { bottom: -100%; opacity: 0; } 80% { opacity: .56; } 100% { bottom: 0; opacity: .98; } } @keyframes toasthide { 0% { bottom: 0; } 100% { opacity: 0; bottom: -100%; display: none; } } @media (max-width: 480px) { .popupCookies > div { display: block; width: 100%; text-align: justify; } .btn-cookies#btnAcceptPolicy { margin-top: 12px; } .btn-cookies { width: 70%; } }</style>");
+        body.append("<style>.popupCookies { position: fixed; display: block; width: 88%; height: auto; padding: 14px 6%; background-color: #00204f;background-color: #171717;bottom: 0; z-index: 9999; color: #fafafa; font-family: 'Segoe UI'; font-size: 15px; opacity: .98; -webkit-animation: toastbottom 2s; -moz-animation: toastbottom 2s; animation: toastbottom 2s; -webkit-box-shadow: 0 -6px 12px rgba(0,0,0,.16); -moz-box-shadow: 0 -6px 12px rgba(0,0,0,.16); box-shadow: 0 -6px 12px rgba(0,0,0,.16); -webkit-box-sizing: initial; -moz-box-sizing: initial; box-sizing: initial; } .popupCookies.hidden2 { -webkit-animation: toasthide 2s; -moz-animation: toasthide 2s; animation: toasthide 2s; } .popupCookies > div { display: inline-block; height: 100%; margin: 0 auto; vertical-align: middle; } .cookies-content { width: 70%; } .cookies-cont-button { width: 28%; text-align: center; } .btn-cookies { display: block; margin: 2px auto; padding: 10px 14px; width: 160px; border: 2px solid #2267bb; background-color: #2267bb; border-radius: 3px; font-size: 13px; text-align: center; color: #fafafa; font-family: 'Century Gothic'; cursor: pointer; font-weight: bold; -webkit-transition: .2s ease-out all; -moz-transition: .2s ease-out all; transition: .2s ease-out all; } .btn-cookies#btnViewPolicy { border-color: transparent; border: 2px solid transparent; background-color: transparent; opacity: .7; -webkit-transition: .2s ease-out all; -moz-transition: .2s ease-out all; transition: .2s ease-out all; } .btn-cookies#btnViewPolicy:hover { opacity: 1; } .btn-cookies#btnViewPolicy > a { text-decoration: none; color: #dddddd !important; } .btn-cookies#btnAcceptPolicy { text-transform: uppercase; } .btn-cookies#btnAcceptPolicy:hover { color: #efefef !important; border: 2px solid #efefef; background-color: #041732; } a { -webkit-user-select: none; -moz-user-select: none; user-select: none; } .content-title-container { display: block; padding: 20px 0; margin: 20px auto; position: relative; } .content-title { font-family: 'Century Gothic', Calibri; font-size: 20px; color: #2f2f2f; display: block; padding: 2px 20px; text-align: center; font-weight: bold; } .content-sub-title { font-family: 'Century Gothic', Calibri; font-size: 18px; color: #2f2f2f; display: block; padding: 0 20px; text-align: center; font-weight: bold; } .content-text { margin: 0 auto; margin-top: 20px; padding: 20px; width: 70%; color: #3f3f3f; font-size: 15px; font-family: 'Segoe UI', Calibri; text-align: justify; word-spacing: .1em; } .content-text h4 { text-transform: uppercase; text-decoration: underline; display: block; text-align: left; margin: 0; margin-bottom: 10px; font-size: 16px; font-family: 'Arial', Calibri; } .content-text p { margin: 20px 0; display: block; font-size: 15px; line-height: 20px; } .content-text ul, .content-text ol { margin: unset; padding-left: 30px; margin-bottom: 30px; margin-top: 20px; } .content-text li { margin: 4px 0; list-style: inherit; display: list-item; } .content-text li span { margin: 0 !important; font-weight: bold; } .text-blue { color: mediumblue; } .spacer-40 { display: block; margin: 50px 0; } .content-title-container:before { content: ''; position: absolute; left: 50%; bottom: 0; height: 1px; width: 60%; background: -webkit-linear-gradient(to right, #cc9308, #0015d0); background: -moz-linear-gradient(to right, #cc9308, #0015d0); background: linear-gradient(to right, #cc9308, #0015d0); -webkit-transform: translateX(-50%); -moz-transform: translateX(-50%); transform: translateX(-50%); } .header .Title, .header .logo { cursor: pointer !important; } @keyframes toastbottom { 0% { bottom: -100%; opacity: 0; } 80% { opacity: .56; } 100% { bottom: 0; opacity: .98; } } @keyframes toasthide { 0% { bottom: 0; } 100% { opacity: 0; bottom: -100%; display: none; } } @media (max-width: 480px) { .popupCookies > div { display: block; width: 100%; text-align: justify; } .btn-cookies#btnAcceptPolicy { margin-top: 12px; } .btn-cookies { width: 70%; } }</style>");
 
-
+        var str = "NOAH Business Applications' privacy practices are developed in accordance with Republic Act No. 10173 or the Data Privacy Act of 2012 and its implementing rules and regulations (collectively, the “DPA”).";
         // It will append the container popup of data privacy terms and the setCookies() & getCookies() function
-        body.append('<div class="popupCookies" id="popupCookies"> <div class="cookies-content">' + $('#nwLogPrivacy').text() + '</div><div class="cookies-cont-button"> <div id="btnAcceptPolicy" class="btn-cookies">I Accept the terms</div> <div id="btnViewPolicy" class="btn-cookies"><a>View Privacy Policy</a></div> </div></div>');
+        body.append('<div class="popupCookies" id="popupCookies"> <div class="cookies-content">' + str + '</div><div class="cookies-cont-button"> <div id="btnAcceptPolicy" class="btn-cookies">I Accept the terms</div> <div id="btnViewPolicy" class="btn-cookies"><a>View Privacy Policy</a></div> </div></div><script type="text/javascript">$(document).ready(function () { getCookies(); }); function setCookies() { var acceptcookie = "1"; var popupCookies = $(".popupCookies"); var timer; localStorage.setItem("nwcookie", JSON.stringify(acceptcookie)); popupCookies.addClass("hidden2"); clearTimeout(timer); timer = setTimeout(function () { document.getElementById("popupCookies").style.display = "none"; }, 1800); } function getCookies() { let lscookie = localStorage.getItem("nwcookie"), cookieObj = JSON.parse(lscookie); if (cookieObj != null) { document.getElementById("popupCookies").style.display = "none"; } } </script>');
     }
 
     $(document).ready(function () { getCookies(); }); function setCookies() { var acceptcookie = "1"; var popupCookies = $(".popupCookies"); var timer; localStorage.setItem("nwcookie", JSON.stringify(acceptcookie)); popupCookies.addClass("hidden2"); clearTimeout(timer); timer = setTimeout(function () { document.getElementById("popupCookies").style.display = "none"; }, 1800); } function getCookies() { let lscookie = localStorage.getItem("nwcookie"), cookieObj = JSON.parse(lscookie); if (cookieObj != null) { document.getElementById("popupCookies").style.display = "none"; } }
@@ -177,7 +177,8 @@ window.onload = function () {
     });
     $(document).on('click', '#btnViewPolicy', function () {
         try {
-            window.location.href = $('#nwLogViewPolicy').text();
+            //window.location.href = $('#nwLogViewPolicy').text();
+            window.location.href = 'https://federalland.ph/privacy-policy/';
         } catch (err) {
 
         }
@@ -283,3 +284,35 @@ function googleLogout() {
    // alert("googleLogout done.");
 }
 
+
+
+
+//$(document).on('#registrationpass', function () {
+//    console.log('clicked');
+//    var userAgent = navigator.userAgent.toLowerCase();
+//    if (userAgent.indexOf('android') > -1) {
+
+//        //window.location.href = 'market://details?id=your.package.name';
+//        console.log('android');
+//    } else if (userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipod') > -1 || userAgent.indexOf('ipad') > -1) {
+
+//        //window.location.href = 'https://apps.apple.com/app/your-app-id';
+//        console.log('ios');
+//    }
+//});
+
+
+
+$(document).ready(function () {
+    $('#registrationpass').on('click', function () {
+        console.log('clicked');
+        var userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.indexOf('android') > -1) {
+            //window.location.href = 'market://details?id=your.package.name';
+            console.log('android');
+        } else if (userAgent.indexOf('iphone') > -1 || userAgent.indexOf('ipod') > -1 || userAgent.indexOf('ipad') > -1) {
+            //window.location.href = 'https://apps.apple.com/app/your-app-id';
+            console.log('ios');
+        }
+    });
+});

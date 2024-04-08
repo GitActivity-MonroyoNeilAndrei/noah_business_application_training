@@ -1,0 +1,618 @@
+/*
+    # DASHBOARD DESIGN
+    # Company Owner: Forecasting and Planning Technologies Inc. | NOAH Business Applications | PROMPTUS 8
+    # Developer : Rico P. Buenviaje
+    # Designer : Rico P. Buenviaje
+    # Date Created : September 05, 2023
+    # Date Modified : September 05, 2023 | RPB
+*/
+
+/* Delcare global variables here */
+
+:root {
+    --nktransition: 0.3s ease all;
+    --nkprimarycolor: #28396f;
+    --nkwhite: #fff;
+    --nkprimarycolor2: #f4a74b;
+    --nksecondarycolor: #e9eeff;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins-Regular', sans-serif;
+    font-weight: normal;
+    /*Fonts Setting*/
+    -moz-font-feature-settings: "kern" 1; 
+    -ms-font-feature-settings: "kern" 1; 
+    -o-font-feature-settings: "kern" 1; 
+    -webkit-font-feature-settings: "kern" 1; 
+    font-feature-settings: "kern" 1;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+
+    line-height: 1.16;
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    color: #222222;
+}
+
+
+::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+    cursor: default;
+}
+::-webkit-scrollbar-thumb {
+    cursor: default;
+    background: #a9b6c2;
+    border-radius: 20px;
+    border: 2px solid #eaeaea;
+    -webkit-transition: .14s ease-in-out all;
+    -moz-transition: .14s ease-in-out all;
+    transition: .14s ease-in-out all;
+}
+::-webkit-scrollbar-track {
+    background-color: #eaeaea;
+    border-radius: 0;
+    background-color: rgba(0,0,0,.08);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #8ca0b2;
+}
+
+
+.app-layout {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: rgb(248, 248, 248);
+    transition: var(--nktransition);     
+
+    /* HRD */
+    .app-hrd {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background-color: #06214D;
+        flex: 0 0 40px;
+        padding: 0px 10px;
+        box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px inset;  
+
+        .app-hrd-tx {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--nkwhite);
+            white-space: nowrap;
+        }
+
+        .app-hrd-controls {
+
+            .app-btn-hide-sb {
+                width: 28px;
+                height: 28px;
+                background: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                cursor: pointer;
+
+                &:after {
+                    content: '';
+                    width: 24px;
+                    height: 24px;
+                    background: url(../../materials/media/icons/sidebar-icon-close-design-white-24x24px-20obg.png);
+                    background-size: 24px;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    display: block;
+                    transition: var(--nksecondarytrans);
+                }
+            }
+
+        }
+
+    }
+
+    /* HRD */
+
+    /* SIDEBAR */
+
+    .app-sidebar {
+        position: fixed;
+        top: 40px;
+        left: 0;
+        width: 40px;
+        display: flex;
+        flex-direction: column;
+        transition: var(--nktransition);
+        z-index: 100;
+        height: calc(100% - 40px);
+        background: #ffffff;
+        box-shadow: rgba(27, 31, 35, 0.04) 1px 1px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
+
+        &.hide {
+            left: -40px;
+        }
+
+        &.hide ~ .app-main {
+            left: 0;
+            width: 100%;
+        }
+    
+        .app-wrapper {
+            flex: 1;
+            padding: 10px 0px;
+            background: #06214D;
+            overflow: auto;
+            overflow-x: hidden;
+
+            .app-btns {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                position: relative;
+
+                .app-icons {
+
+                    width: 40px;
+                    height: 40px;
+                    background: transparent;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    cursor: pointer;
+                    border-radius: 30px 0px 0px 30px;
+
+                        &.selected {
+                            background-color: #f5f9ff;
+                        }
+
+                        &.selected span.misc-curve::before {
+                            content: '';
+                            display: block;
+                            width: 10px;
+                            height: 10px;
+                            position: absolute;
+                            border-radius: 50%;
+                            bottom: -10px;
+                            right: 0;
+                            background: transparent;
+                            box-shadow: 3px -3px 0px -2px #f5f9ff;
+                            pointer-events: none;
+                        }
+
+                        &.selected span.misc-curve::after {
+                            content: '';
+                            display: block;
+                            width: 10px;
+                            height: 10px;
+                            position: absolute;
+                            border-radius: 50%;
+                            top: -10px;
+                            right: 0;
+                            background: transparent;
+                            box-shadow: 4px 4px 0px -2px #f5f9ff;
+                            pointer-events: none;
+                        }
+
+
+                        &:hover {
+                            background: #f5f9ff;
+                        }
+
+                        &:hover span.misc-curve::before {
+                            content: '';
+                            display: block;
+                            width: 10px;
+                            height: 10px;
+                            position: absolute;
+                            border-radius: 50%;
+                            bottom: -10px;
+                            right: 0;
+                            background: transparent;
+                            box-shadow: 3px -3px 0px -2px #ffffff;
+                            pointer-events: none;
+                        }
+
+                        &:hover span.misc-curve::after {
+                            content: '';
+                            display: block;
+                            width: 10px;
+                            height: 10px;
+                            position: absolute;
+                            border-radius: 50%;
+                            top: -10px;
+                            right: 0;
+                            background: transparent;
+                            box-shadow: 4px 4px 0px -2px #ffffff;
+                            pointer-events: none;
+                        }
+
+
+                        &.lib::after {
+                            content: '';
+                            width: 24px;
+                            height: 24px;
+                            background: url('../../materials/media/icons/library-icon-design-white-24x24px-22obj.png');
+                            background-size: 24px;
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            display: block;                        
+                        }
+
+                            &.lib.selected::after {
+                                content: '';
+                                width: 24px;
+                                height: 24px;
+                                background: url(../../materials/media/icons/library-icon-design-white-24x24px-22obj-colored.png);
+                                background-size: 24px;
+                                background-repeat: no-repeat;
+                                background-position: center;
+                                display: block;
+                            }
+
+
+                                &:hover.lib::after {
+                                    content: '';
+                                    width: 24px;
+                                    height: 24px;
+                                    background: url(../../materials/media/icons/library-icon-design-white-24x24px-22obj-colored.png);
+                                    background-size: 24px;
+                                    background-repeat: no-repeat;
+                                    background-position: center;
+                                    display: block;
+                                }
+
+                        &.com::after {
+                            content: '';
+                            width: 24px;
+                            height: 24px;
+                            background: url('../../materials/media/icons/component-icon-design-white-24x24px-22obj.png');
+                            background-size: 24px;
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            display: block;                        
+                        }
+
+                            &.com.selected::after {
+                                content: '';
+                                width: 24px;
+                                height: 24px;
+                                background: url(../../materials/media/icons/component-icon-design-white-24x24px-22obj-colored.png);
+                                background-size: 24px;
+                                background-repeat: no-repeat;
+                                background-position: center;
+                                display: block;                                
+                            }
+                        
+                                &:hover.com::after {
+                                    content: '';
+                                    width: 24px;
+                                    height: 24px;
+                                    background: url(../../materials/media/icons/component-icon-design-white-24x24px-22obj-colored.png);
+                                    background-size: 24px;
+                                    background-repeat: no-repeat;
+                                    background-position: center;
+                                    display: block;
+                                }
+
+                        &.bot::after {
+                            content: '';
+                            width: 24px;
+                            height: 24px;
+                            background: url(../../materials/media/icons/businessrules-icon-design-white-24x24px-22obj.png);
+                            background-size: 24px;
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            display: block;
+                        }   
+
+                            &.bot.selected::after {
+                                content: '';
+                                width: 24px;
+                                height: 24px;
+                                background: url(../../materials/media/icons/businessrules-icon-design-white-24x24px-22obj-colored.png);
+                                background-size: 24px;
+                                background-repeat: no-repeat;
+                                background-position: center;
+                                display: block;
+                            }
+                        
+                                &:hover.bot::after {
+                                    content: '';
+                                    width: 24px;
+                                    height: 24px;
+                                    background: url(../../materials/media/icons/businessrules-icon-design-white-24x24px-22obj-colored.png);
+                                    background-size: 24px;
+                                    background-repeat: no-repeat;
+                                    background-position: center;
+                                    display: block;
+                                }
+
+                                &.rig::after {
+                                    content: '';
+                                    width: 24px;
+                                    height: 24px;
+                                    background: url('../../materials/media/icons/library-icon-design-white-24x24px-22obj.png');
+                                    background-size: 24px;
+                                    background-repeat: no-repeat;
+                                    background-position: center;
+                                    display: block;                        
+                                }
+        
+                                    &.rig.selected::after {
+                                        content: '';
+                                        width: 24px;
+                                        height: 24px;
+                                        background: url(../../materials/media/icons/library-icon-design-white-24x24px-22obj-colored.png);
+                                        background-size: 24px;
+                                        background-repeat: no-repeat;
+                                        background-position: center;
+                                        display: block;
+                                    }
+        
+        
+                                        &:hover.rig::after {
+                                            content: '';
+                                            width: 24px;
+                                            height: 24px;
+                                            background: url(../../materials/media/icons/library-icon-design-white-24x24px-22obj-colored.png);
+                                            background-size: 24px;
+                                            background-repeat: no-repeat;
+                                            background-position: center;
+                                            display: block;
+                                        }
+        
+                                &.top::after {
+                                    content: '';
+                                    width: 24px;
+                                    height: 24px;
+                                    background: url('../../materials/media/icons/component-icon-design-white-24x24px-22obj.png');
+                                    background-size: 24px;
+                                    background-repeat: no-repeat;
+                                    background-position: center;
+                                    display: block;                        
+                                }
+        
+                                    &.top.selected::after {
+                                        content: '';
+                                        width: 24px;
+                                        height: 24px;
+                                        background: url(../../materials/media/icons/component-icon-design-white-24x24px-22obj-colored.png);
+                                        background-size: 24px;
+                                        background-repeat: no-repeat;
+                                        background-position: center;
+                                        display: block;                                
+                                    }
+                                
+                                        &:hover.top::after {
+                                            content: '';
+                                            width: 24px;
+                                            height: 24px;
+                                            background: url(../../materials/media/icons/component-icon-design-white-24x24px-22obj-colored.png);
+                                            background-size: 24px;
+                                            background-repeat: no-repeat;
+                                            background-position: center;
+                                            display: block;
+                                        }
+        
+
+                }
+
+            }
+
+        }
+    
+    }
+
+    /* SIDEBAR */    
+
+    /* ASIDE */
+
+    .app-aside {
+        
+        .app-aside-container {
+            position: absolute;
+            top: 40px;
+            bottom: 0;
+            background: #f5f9ff;
+            width: 300px;
+            left: 40px;
+            padding: 10px;
+            min-width: 300px;
+            display: none;
+            transition: var(--nksecondarytrans);
+            z-index: 11;
+            overflow: auto;
+            padding-right: 0px;
+            box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+
+            &::-webkit-scrollbar {
+                width: 2px;
+            }
+
+            &#bot {
+                width: 300px;
+                top: 40px;
+                /* background: #ffffff; */
+                padding: 10px;
+                right: 0;
+                left: initial;
+            }
+            
+            &::-webkit-scrollbar-thumb {
+                background: #b7b7b7;
+                /* border: none; */
+            }
+
+            &.show {
+                display: block;
+                transition: var(--nksecondarytrans);
+            }   
+                
+                .app-aside-tx {
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: var(--nkprimarycolor);
+                    white-space: nowrap;
+                }
+
+                .app-aside-stx {
+                    font-size: 11px;
+                    font-weight: 600;
+                    color: #535252;
+                    margin-top: 6px;
+                } 
+
+                .app-dgdr-components {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    margin-top: 10px;
+
+                    .app-dgdr-items {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+
+                            .app-dgdr-item-tx {
+                                font-size: 14px;
+                                font-weight: 600;
+                                color: var(--nkprimarycolor);
+                                white-space: nowrap;
+                                    margin-top: 13px;
+                            }
+
+                            .app-dgdr-item-components {
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 5px;
+
+                                    .app-box {
+                                        width: calc(50% - 5px);
+                                        height: 100px;
+                                        background: #ffffff;
+                                        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+                                        border-radius: 2px;
+                                    }    
+
+                                     .app-box-list {
+                                        border: 1px solid #d0d0d0;
+                                        border-radius: 4px;
+                                        padding: 5px;
+                                        display: block;
+                                        width: 98%;
+                                        height: 23px;
+                                        cursor:pointer;
+                                    }  
+
+
+                            }
+
+                    }
+
+
+                }
+        }
+
+    }
+
+    /* ASIDE */    
+
+
+    /* MAIN */
+
+    .app-main {
+        position: relative;
+        left: 40px;
+        width: calc(100% - 40px);
+        /* height: 100vh; */
+        /* display: flex; */
+        /* flex-direction: column; */
+        /* padding: 10px; */
+        flex: 1;
+        transition: var(--nktransition);
+        background: #f8f8f8;
+        overflow: auto;
+
+            .app-dashboard {
+                /* flex: 1; */
+                padding: 10px;
+
+                .app-form:last-child {
+                    margin-bottom: 0px;
+                }
+
+                .app-form {
+                    margin-top: 20px;
+                    overflow: hidden;
+                    margin-bottom: 20px;
+                    max-width: 100%;
+                    min-height: 1056px;
+                    min-width: 100%;
+                    max-height: 1056px;
+                    margin: 0 auto;
+                    background: #ffffff;
+                    margin-bottom: 10px;
+                    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+                }                
+            }    
+
+    } 
+
+
+    /* MAIN */    
+}
+
+
+
+/*AAG**/
+ .ui-state-highlight { height: 1.5em; line-height: 1.2em; background-color: #ffffcf; }
+ .app-form {
+    background-color: #ffffff !important;
+}
+ .app-dashboard {
+    background-color: #ededed;
+}
+
+ div.row.rowParent:empty:before{
+   content:attr(data-text)
+}
+ .nk .row,
+ .nk .row.row-parent,
+ .nk .col.col-parent,
+ .nk .col
+ {
+     min-height:20px;
+     /*overflow-x:hidden;*/
+ }
+.nk .row:hover {
+   background-color: #4aa14a38;
+}
+/*.nk .col.col-parent:hover {
+      background-color: #ffff0052;
+}*/
+.nk .row.row-parent:hover {
+   background-color: #ff000017;
+}
+
+
+
+.container-flex.ui-sortable {
+    height: 100%;
+}
+
+.splitter {
+    min-width: 99% !important;
+    width: 99% !important;
+    min-height: 2px;
+    background-color: #e5e5e5;
+}

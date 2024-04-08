@@ -1,9 +1,10 @@
-﻿/* # Canvas JS Library 1.10.1.67
+﻿/* # Canvas JS Library 1.10.1.78
 # Company Owner: Forecasting and Planning Technologies Inc. / Promptus8 Inc.
 # Developers : Angelo Carlo A. Gonzales
-Omar B. Credito
+Karl Angelo S. Gamayo
+
 # Date Created : March 2018
-# Date Modified : September 30 2022 / 12:17 PM  - before: 08-22-2022
+# Date Modified : March 07 2024 / 01:33 PM  - before: 03-06-2024
 
 For  NoahWeb Application and Promptus8 Modules used only. 
 
@@ -15,6 +16,13 @@ Modification of this Library is Prohibited.
 
 var p8Spread_JSExport = false;
 var p8Spread_CurBook = "";
+
+var iscurCellSelect;
+
+$(function(){
+    window.NOAH_SpreadCanvas = {"version":"1.10.1.78"}
+    console.log("NOAH_SpreadCanvas: " + window.NOAH_SpreadCanvas.version);
+});
 
 createHiDPICanvas = function (c, w, h, ratio) {
 
@@ -130,6 +138,125 @@ P8.Spread = function (canvasID, sheetcount) {
     //sheet tab
 
 };
+
+P8.Spread.prototype.SetSpreadConfig = function (jsonData) {
+    var canvasID =this.ActiveSheet.canvasID;
+
+    //var json = JSON.parse(jsonData);
+    //for(var i = 0 ; i < this.Sheet.length; i ++){
+    //    this.Sheet[i].Book = this;   
+    //}
+
+    //this.Sheet = [];
+    var json = JSON.parse(jsonData);
+    for(var i = 0 ; i < json.length; i ++){
+        //this.Sheet[i] = json[i].sheetconfig;
+        var item = json[i];
+        this.Sheet[i].Data = item.Data;
+        this.Sheet[i].ColumnConfig = item.ColumnConfig;
+        this.Sheet[i].RowConfig = item.RowConfig;
+        try{
+            var SheetConfig = item.SheetConfig;
+            this.Sheet[i].SheetName = SheetConfig.SheetName;
+            this.Sheet[i].backgroundColor = SheetConfig.backgroundColor;
+            this.Sheet[i].FreezeCol = SheetConfig.FreezeCol;
+            this.Sheet[i].FreezeRow = SheetConfig.FreezeRow;
+            this.Sheet[i].FreezeColor = SheetConfig.FreezeColor;   
+            this.Sheet[i].mergeList = SheetConfig.mergeList;
+            try {
+                this.Sheet[i].TableList = SheetConfig.TableList;
+            } catch (ex) { }
+            
+        }catch(ex){}
+    }
+
+
+}
+P8.Spread.prototype.GetSpreadConfig = function () {
+    var jsonData = [];
+    for(var i = 0 ; i < this.Sheet.length; i ++){
+        //this.Sheet[i].Book = null;   
+        //jsonData.push({ 
+        //    "sheetindex": i 
+        //    ,"sheetconfig" : this.Sheet[i]
+        //});
+        jsonData.push({ 
+            "sheetindex": i 
+            , Data:this.Sheet[i].Data 
+            , ColumnConfig:this.Sheet[i].ColumnConfig 
+            , RowConfig:this.Sheet[i].RowConfig 
+            , SheetConfig:{
+                SheetName:this.Sheet[i].SheetName,
+                backgroundColor:this.Sheet[i].backgroundColor,
+                FreezeCol:this.Sheet[i].FreezeCol,
+                FreezeRow:this.Sheet[i].FreezeRow,
+                FreezeColor:this.Sheet[i].FreezeColor,
+                mergeList: this.Sheet[i].mergeList,
+                TableList: this.Sheet[i].TableList
+            }
+        });
+    }
+
+    //jsonData = JSON.stringify(this);
+    return JSON.stringify(jsonData);
+}
+
+
+P8.Spread.prototype.SetThemes = function (theme) {
+    if(P8Themes.FANCY == theme){
+        
+        var canvasID=this.ActiveSheet.canvasID;
+
+        this.ActiveSheet.Theme = theme;
+        this.ActiveSheet.backgroundColor = "#ECECEC";
+        this.ActiveSheet.gridlLineColor = "#ECECEC";
+        this.ActiveSheet.HeaderBackround = "white";
+        this.ActiveSheet.HeaderFontFamily = "Poppins-Regular,Arial,Tahoma";
+        this.ActiveSheet.HeaderFontSize = 12;
+        this.ActiveSheet.HeaderColor = "#1974D1";
+        this.ActiveSheet.VHeaderBackround = "white";
+        this.ActiveSheet.VHeaderFontFamily = "Poppins-Regular,Arial,Tahoma";
+        this.ActiveSheet.VHeaderFontSize = 12;
+        this.ActiveSheet.VHeaderColor = "#000000";
+        this.ActiveSheet.HeaderNumText= "#";
+
+
+        //FPMC aagedit
+        //$("#" + canvasID+" .P8Spread_SheetVScroll").css("visibility","hidden");
+        //$("#" + canvasID+" .P8Spread_SheetVScroll").css("position","fixed");
+        //$("#" + canvasID+" .P8Spread_SheetHScroll").css("visibility","hidden");
+        //$("#" + canvasID+" .P8Spread_SheetHScroll").css("position","fixed");
+
+    }
+    else {
+        //default;
+        this.ActiveSheet.Theme = theme;
+        this.ActiveSheet.backgroundColor = "#E2E2E2";
+        this.ActiveSheet.gridlLineColor = "#E2E2E2";
+        this.ActiveSheet.HeaderBackround = "#e4ecf7";
+        this.ActiveSheet.HeaderFontFamily = "Arial,Tahoma";
+        this.ActiveSheet.HeaderFontSize = 12;
+        this.ActiveSheet.HeaderColor = "#212121";
+        this.ActiveSheet.VHeaderBackround = "#e4ecf7";
+        this.ActiveSheet.VHeaderFontFamily = "Arial,Tahoma";
+        this.ActiveSheet.VHeaderFontSize = 12;
+        this.ActiveSheet.VHeaderColor = "#212121";
+        this.ActiveSheet.HeaderNumText= "";
+         
+        //$("#" + canvasID+" .P8Spread_SheetVScroll").show();
+        //$("#" + canvasID+" .P8Spread_SheetHScroll").show();
+
+        $("#" + canvasID+" .P8Spread_SheetVScroll").css("visibility","");
+        $("#" + canvasID+" .P8Spread_SheetVScroll").css("position","");
+        $("#" + canvasID+" .P8Spread_SheetHScroll").css("visibility","");
+        $("#" + canvasID+" .P8Spread_SheetHScroll").css("position","");
+    }
+
+    this.ActiveSheet.Refresh();
+    return theme;
+}
+
+
 P8.Spread.prototype.GetColumnToLetter = function (columnorig) {
     var column = columnorig + 1;
     var counter = 0;
@@ -220,6 +347,7 @@ function _sfInitialize(obj, canvasID, data) {
 
     obj.backgroundColor = "#E2E2E2"; //"red";//
     obj.gridlLineColor = "#E2E2E2";
+    
 
     //obj.backgroundColor = "green";//"#E2E2E2";
     //obj.gridlLineColor =  "red" ;//"#E2E2E2";
@@ -242,6 +370,8 @@ function _sfInitialize(obj, canvasID, data) {
 
     obj.ColumnDataTypeStart = 0;
 
+    //obj.RecordText = "Row no. ";
+    obj.RecordText = "aagempty";
 
     obj.HeadertColumnHeight = 26;
     obj.HeadertGroupHeight = 26;
@@ -249,12 +379,39 @@ function _sfInitialize(obj, canvasID, data) {
     obj.FreezeWidth = "1px";
     obj.FreezeColor = "rgba(0,0,0,0.0)";
 
+    obj.HeaderBackround = "#e4ecf7";
+    obj.HeaderFontFamily = "Arial,Tahoma";
+    obj.HeaderFontSize = 12;
+    obj.HeaderColor = "#212121";
+    obj.HeaderNumText= "";
+
+    obj.ListViewRowLoaderCount= 1000;
+
+
+    obj.VHeaderBackround = "#e4ecf7";
+    obj.VHeaderFontFamily = "Arial,Tahoma";
+    obj.VHeaderFontSize = 12;
+    obj.VHeaderColor = "#212121";
+
+    //obj.Theme= P8Themes.DEFAULT;
+    obj.Theme= P8Themes.FANCY;
+
+    obj.ColumnHeaderIndex = -1;
+    //var tlVBG = "#e4ecf7";
+    //var tlVFont = "Arial,Tahoma";
+    //var tlVFontSize = 12;
+    //var tlVColor = "#212121";
+
+    obj.ShowFormula = false;
+
+
 
     obj.haveLog = haveLog;
 
     obj.CellIndexes = { Col: -1, Row: -1, Col2: -1, Row2: -1 };
     obj.CellSelHover = false;
     obj.CellSelValue = { col: -1, row: -1 };
+    obj.CellClickTime = new Date();
 
     obj.CellSelected = {};
     obj.currentCells = [];
@@ -263,6 +420,9 @@ function _sfInitialize(obj, canvasID, data) {
     obj.RowConfig = [];
     obj.Events = [];
     obj.CellFomulaList = [];
+
+    obj.CellConditionalID = 1;
+    obj.CellConditionalList = [];
 
     obj.CellRowMaxAdd = 4;
     obj.CellRowMax = 18;
@@ -279,6 +439,8 @@ function _sfInitialize(obj, canvasID, data) {
     obj.AutoWrap = false;
     obj.AutoWrapRender = false;
 
+    obj.ReportHeader = false;
+
 
     obj.Enabled = true;
 
@@ -289,7 +451,15 @@ function _sfInitialize(obj, canvasID, data) {
 
     obj.Format_SelHeadBG = "rgba(0, 117, 255, 0.19)";
 
+
+    obj.IsDesigner = false;
+
     //obj.ActiveSheet = obj;
+
+    if (getParameterByName("nkmob") == "y") {
+        obj.backgroundColor = "#FFFFFF";
+        obj.gridlLineColor = "#FFFFFF";
+    }
 
     return obj;
 }
@@ -342,7 +512,7 @@ function _sfCreateStyle(config) {
 }
 
 //tablesToExcel(['tbl1','tbl2'], ['ProductDay1','ProductDay2'], 'TestBook.xls', 'Excel')"
-var tablesToExcel = (function () {
+var tablesToExcel = (function() {
     var uri = 'data:application/vnd.ms-excel;base64,'
     , tmplWorkbookXML = '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
       + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"><Author>Promptus8</Author><Created>{created}</Created></DocumentProperties>'
@@ -495,32 +665,32 @@ ActiveSheet.prototype.SetTextActive = function (text) {
 
 function _sfDefaultSettingsColumn() {
     return {
-            Attribute: null
-            ,CheckBox: null
-            ,Class: null
-            ,ColumName: ""
-            ,ColumnTemplate: ""
-            ,ColumnTemplateEmpty: "aagdefault"
-            ,ColumnTemplateObject: ""
-            ,ColumnWidth: "150"
-            ,Enabled: true
-            ,FontFamily: ""
-            ,FontSize: ""
-            ,FontStyle: ""
-            ,FontWeight: ""
-            ,HeaderColumnReq: null
-            ,MergeRow: null
-            ,ObjectType: ""
-            ,Precision: 2
-            ,Protected: null
-            ,TextAlign: ""
-            ,TextColor: ""
-            ,TextDecoration: null
-            ,ThousandSeparator: null
-            ,VerticalAlign: null
-            ,backgroundColor: null
-            ,dataType: null
-        };
+        Attribute: null
+            , CheckBox: null
+            , Class: null
+            , ColumName: ""
+            , ColumnTemplate: ""
+            , ColumnTemplateEmpty: "aagdefault"
+            , ColumnTemplateObject: ""
+            , ColumnWidth: "150"
+            , Enabled: true
+            , FontFamily: ""
+            , FontSize: ""
+            , FontStyle: ""
+            , FontWeight: ""
+            , HeaderColumnReq: null
+            , MergeRow: null
+            , ObjectType: ""
+            , Precision: 2
+            , Protected: null
+            , TextAlign: ""
+            , TextColor: ""
+            , TextDecoration: null
+            , ThousandSeparator: null
+            , VerticalAlign: null
+            , backgroundColor: null
+            , dataType: null
+    };
 }
 
 function _sfDefaultSettings() {
@@ -562,6 +732,8 @@ function _sfDefaultSettings() {
 
         , prevEvenRow: -1
         , prevEvenCol: -1
+
+
     };
 }
 
@@ -592,13 +764,50 @@ function _sfCreateConfigData(config, _id, value) {
     return config;
 }
 
+function _sfCreateConfigDataCondition(config, _id, value) {
+
+    var valueX = undefined;
+    if (config == undefined) config = [];
+
+
+    for (var i = 0; i < config.length; i++) {
+        var formatID = config[i].id;
+        if (formatID == _id) {
+            try {
+                valueX = "";
+                valueX = config[i]["element"].value;
+            } catch (err) { }
+            break;
+        }
+    }
+
+    if (valueX != undefined) {
+        config[i]["element"].value = value;
+    }
+    else {
+        config.push({ id: _id, element: { value: value } });
+    }
+
+    return config;
+}
+
+
+
 // SetFormat
-function _sfSetFormat(obj, icol, irow, format, data) {
+function _sfSetFormat(obj, icol, irow, format, data, icol2, irow2) {
     if (icol == undefined) icol = obj.CellIndexes.Col;
     if (irow == undefined) irow = obj.CellIndexes.Row;
+
+    if (icol2 < icol) icol2 = obj.CellIndexes.Col2;
+    if (irow2 < irow) irow2 = obj.CellIndexes.Row2;
+
+    //if (icol2 == undefined) icol2 = obj.CellIndexes.Col2;
+    //if (irow2 == undefined) irow2 = obj.CellIndexes.Row2;
+
     try {
         if (irow == Spread_ALLROW) {
             _sfCreateConfigDataColumn(obj.ColumnConfig[icol], format, data);
+
         }
         else if (icol == Spread_ALLCOL) {
             //for (var i = 0; i < obj.ColumnConfig.length; i++) {
@@ -608,9 +817,17 @@ function _sfSetFormat(obj, icol, irow, format, data) {
 
         }
         else {
-            _sfCreateConfigData(obj.Data[irow][_sfGetCellName(obj, icol)].Config, format, data);
-        }
+            if (icol != icol2 || irow != irow2) {
+                for (var ic = icol; ic <= icol2; ic++) {
+                    for (var ir = irow; ir <= irow2; ir++) {
+                        _sfCreateConfigData(obj.Data[ir][_sfGetCellName(obj, ic)].Config, format, data);
+                    }
+                }
+            } else {
+                _sfCreateConfigData(obj.Data[irow][_sfGetCellName(obj, icol)].Config, format, data);
+            }
 
+        }
 
         obj.ScrollActive = true;
         obj.RenderNoEvent();
@@ -685,10 +902,22 @@ P8.SpreadSheet.prototype.DataBind = function (data) {
 }
 
 P8.SpreadSheet.prototype.RowDelete = function (index) {
+    //if (index == undefined) index = obj.CellIndexes.Row;
+
     if (index == undefined) { }
     else {
         _sfJsonDelete(this.Data, index);
         _sfSpreadDeleteRowAdjustConfig(this, index);
+
+
+        try{
+            var jsonupdatecell = func_RowDelete(index);
+            if(jsonupdatecell.length > 0){
+                this.JSONUpdateCell(-1,index,0,-1,jsonupdatecell)
+            }
+        }catch(ex){}
+        this.UpdateFormula(Spread_ALLCOL, index, 0, -1);
+
         this.ScrollActive = true;
         this.RenderNoEvent();
     }
@@ -724,33 +953,39 @@ P8.SpreadSheet.prototype.RowAdd = function (atbegin) {
     return index;
 }
 
-P8.SpreadSheet.prototype.RowInsert = function (index, isbottom, norender) {
-
+P8.SpreadSheet.prototype.RowInsert = function (index, isbottom, norender, hasfreeze) {
+     
     if (isbottom == undefined) isbottom = true;
-
-    if ((index < this.FreezeRow && isbottom == false)
-        ||
-        (index < this.FreezeRow && isbottom == true)
+    if (hasfreeze == undefined) hasfreeze = true;
+    if (hasfreeze) {
+        if ((index < this.FreezeRow && isbottom == false)
+            ||
+            (index < this.FreezeRow && isbottom == true)
         ) {
-        try {
-            ToastMessage("Insert Row is Invalid for Freeze Panes");
-        } catch (err) {
-            console.log("Insert Row is Invalid for Freeze Panes");
+            try {
+                ToastMessage("Insert Row is Invalid for Freeze Panes");
+            } catch (err) {
+                console.log("Insert Row is Invalid for Freeze Panes");
+            }
+            return false;
         }
-        return false;
     }
-
 
     var arry = _sfSpreadAddRow(this);
-
+    var row = index;
     if (isbottom) {
-        this.Data.splice(index + 1, 0, arry);
-        _sfSpreadInsertRowAdjustConfig(this, index + 1);
+        row += 1;
     }
-    else {
-        this.Data.splice(index, 0, arry);
-        _sfSpreadInsertRowAdjustConfig(this, index);
-    }
+
+    this.Data.splice(row, 0, arry);
+    _sfSpreadInsertRowAdjustConfig(this, row);
+    this.UpdateFormula(Spread_ALLCOL, row, 0, 1);
+    try{
+        var jsonupdatecell = func_RowInsert(index, isbottom);
+        if(jsonupdatecell.length > 0){
+            this.JSONUpdateCell(-1, row,0,1,jsonupdatecell)
+        }
+    }catch(ex){}
 
 
 
@@ -829,9 +1064,11 @@ P8.SpreadSheet.prototype.CallAutoWrapRow = function (r) {
 P8.SpreadSheet.prototype.SetColumnWidth = function (c, data) {
     return this.ColumnWidth(c, data);
 }
+
+
 P8.SpreadSheet.prototype.ColumnWidth = function (c, data) {
     if (data == undefined) {
-        try{
+        try {
             data = this.ColumnConfig[c].width;
         } catch (err) {
             data = 120;
@@ -845,6 +1082,19 @@ P8.SpreadSheet.prototype.ColumnWidth = function (c, data) {
     return data;
 }
 
+P8.SpreadSheet.prototype.SetColumnToolTip = function (c, data) {
+    if (data == undefined) {
+        try {
+            data = this.ColumnConfig[c].tooltip;
+        } catch (err) {
+            data = "";
+        }
+    }
+    else {
+        this.ColumnConfig[c].tooltip = data;
+    }
+    return data;
+}
 
 
 
@@ -898,6 +1148,10 @@ P8.SpreadSheet.prototype.DataTypeCol = function (c, data) {
 
 
 P8.SpreadSheet.prototype.FreezePane = function (c, r) {
+
+    if (c <= 0) c = 0;
+    if (r <= 0) r = 0;
+
     this.FreezeRow = r;
     this.FreezeCol = c;
 
@@ -906,37 +1160,37 @@ P8.SpreadSheet.prototype.FreezePane = function (c, r) {
     return true;
 }
 
-P8.SpreadSheet.prototype.SetPrecision = function (c, r, data) {
-    var irow = r; icol = c;
+P8.SpreadSheet.prototype.SetPrecision = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
     if (data == undefined) data = data;
     else {
-        _sfSetFormat(this, icol, irow, "Precision", data);
+        _sfSetFormat(this, icol, irow, "Precision", data, icol2, irow2);
     }
     return data;
 }
 
-P8.SpreadSheet.prototype.SetDataType = function (c, r, data) {
-    var irow = r; icol = c;
+P8.SpreadSheet.prototype.SetDataType = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
     if (data == undefined) data = data;
     else {
-        _sfSetFormat(this, icol, irow, "dataType", data);
+        _sfSetFormat(this, icol, irow, "dataType", data, icol2, irow2);
     }
     return data;
 }
 
-P8.SpreadSheet.prototype.DataType = function (c, r, data) {
-    var irow = r; icol = c;
+P8.SpreadSheet.prototype.DataType = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
     if (data == undefined) data = data;
     else {
-        _sfSetFormat(this, icol, irow, "dataType", data);
+        _sfSetFormat(this, icol, irow, "dataType", data, icol2, irow2);
     }
     return data;
 }
-P8.SpreadSheet.prototype.DataStyle = function (c, r, data) {
-    var irow = r; icol = c;
+P8.SpreadSheet.prototype.DataStyle = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
     if (data == undefined) data = data;
     else {
-        _sfSetFormat(this, icol, irow, "dataStyle", data);
+        _sfSetFormat(this, icol, irow, "dataStyle", data, icol2, irow2);
     }
     return data;
 }
@@ -951,13 +1205,13 @@ P8.SpreadSheet.prototype.SetSheetName = function (data) {
 
 
 
-P8.SpreadSheet.prototype.SetTag = function (c, r, tagname, data) {
+P8.SpreadSheet.prototype.SetTag = function (c, r, tagname, data, icol2, irow2) {
     if (tagname == undefined) {
         console.error("tagname is required");
         return;
     }
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "tag-" + tagname, data);
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "tag-" + tagname, data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.GetTag = function (c, r, tagname) {
     if (tagname == undefined) return undefined;
@@ -973,25 +1227,25 @@ P8.SpreadSheet.prototype.GetTag = function (c, r, tagname) {
 
 
 
-P8.SpreadSheet.prototype.SetTextColor = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "textColor", data);
+P8.SpreadSheet.prototype.SetTextColor = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "textColor", data, icol2, irow2);
 }
 
-P8.SpreadSheet.prototype.SetFontSize = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "fontSize", data);
+P8.SpreadSheet.prototype.SetFontSize = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "fontSize", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetFontFamily = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "fontFamily", data);
+P8.SpreadSheet.prototype.SetFontFamily = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "fontFamily", data, icol2, irow2);
 }
 
-P8.SpreadSheet.prototype.SetBold = function (c, r, data) {
-    var irow = r; icol = c;
+P8.SpreadSheet.prototype.SetBold = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
     if (data === true) data = "bold";
     if (data === false) data = "normal";
-    _sfSetFormat(this, icol, irow, "bold", data);
+    _sfSetFormat(this, icol, irow, "bold", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.GetBold = function (c, r) {
     if (c == undefined) c = this.CellIndexes.Col;
@@ -1006,6 +1260,20 @@ P8.SpreadSheet.prototype.GetBold = function (c, r) {
     else if (stringV == "normal") stringV = false;
     else stringV = false;
 
+    return stringV;
+}
+P8.SpreadSheet.prototype.SetTextIndent = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "textindent", data, icol2, irow2);
+}
+P8.SpreadSheet.prototype.GetTextIndent = function (c, r) {
+    if (c == undefined) c = this.CellIndexes.Col;
+    if (r == undefined) r = this.CellIndexes.Row;
+    var stringV;
+    try {
+        stringV = _sfCheckConfigType(this, r, c, "textindent", 0);;
+    } catch (err) {
+    }
     return stringV;
 }
 P8.SpreadSheet.prototype.GetItalic = function (c, r) {
@@ -1040,146 +1308,196 @@ P8.SpreadSheet.prototype.GetUnderline = function (c, r) {
     return stringV;
 }
 
-P8.SpreadSheet.prototype.SetItalic = function (c, r, data) {
-    var irow = r; icol = c;
+P8.SpreadSheet.prototype.SetItalic = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
     if (data === true) data = "italic";
     if (data === false) data = "normal";
-    _sfSetFormat(this, icol, irow, "italic", data);
+    _sfSetFormat(this, icol, irow, "italic", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetUnderline = function (c, r, data) {
-    var irow = r; icol = c;
+P8.SpreadSheet.prototype.SetUnderline = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
     if (data === true) data = "underline";
     if (data === false) data = "none";
-    _sfSetFormat(this, icol, irow, "underline", data);
+    _sfSetFormat(this, icol, irow, "underline", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetTextAlign = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "textAlignment", data);
+P8.SpreadSheet.prototype.SetTextAlign = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "textAlignment", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetVerticalAlign = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "textVertical", data);
-}
-
-
-P8.SpreadSheet.prototype.SetBackground = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "backgroundColor", data);
-}
-P8.SpreadSheet.prototype.SetBackgroundPercent = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "backgroundColorPercent", data);
-}
-P8.SpreadSheet.prototype.SetBackgroundPercentValue = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "backgroundColorPercentValue", data);
+P8.SpreadSheet.prototype.SetVerticalAlign = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "textVertical", data, icol2, irow2);
 }
 
-P8.SpreadSheet.prototype.SetCurrencyCode = function (c, r, data) {
+
+P8.SpreadSheet.prototype.SetBackground = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "backgroundColor", data, icol2, irow2);
+}
+P8.SpreadSheet.prototype.SetBackgroundPercent = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "backgroundColorPercent", data, icol2, irow2);
+}
+P8.SpreadSheet.prototype.SetBackgroundPercentValue = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "backgroundColorPercentValue", data, icol2, irow2);
+}
+
+P8.SpreadSheet.prototype.SetCurrencyCode = function (c, r, data, icol2, irow2) {
     if (c == undefined) c = this.CellIndexes.Col;
     if (r == undefined) r = this.CellIndexes.Row;
-    _sfSetFormat(this, c, r, "currencyCode", data);
+
+    if (icol2 == undefined) icol2 = this.CellIndexes.Col2;
+    if (irow2 == undefined) irow2 = this.CellIndexes.Row2;
+    //icol2 = icol2 | c; irow2 = irow2 | r;
+
+    _sfSetFormat(this, c, r, "currencyCode", data, icol2, irow2);
+    try {
+        var precision = P8Spread_Currency[data.toLowerCase()].precision;
+        this.SetPrecision(c, r, precision, icol2, irow2);
+    } catch (err) { }
     return data;
 }
 
-P8.SpreadSheet.prototype.SetEnable = function (c, r, data) {
+P8.SpreadSheet.prototype.SetEnable = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "Enabled", data, icol2, irow2);
+};
+
+P8.SpreadSheet.prototype.SetMaxLength = function (c, r, data) {
     var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "Enabled", data);
+    _sfSetFormat(this, icol, irow, "MaxLength", data);
 };
 
 
-P8.SpreadSheet.prototype.SetObjectType = function (c, r, data,data2,data3) {
-    var irow = r; icol = c;
+
+P8.SpreadSheet.prototype.SetObjectType = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
 
     if (data == undefined || data == "") data = "celltext";
 
     if (data == "checkboxtext")
         this.SetText2(c, r, this.GetText(c, r));
 
-    if (data == "button") {
-        this.SetTextAlign(c, r, "center");
-        this.SetVerticalAlign(c, r, "middle");
-       
-        _sfSetFormat(this, icol, irow, "ButtonBG", (data2 || "gray"));
-        _sfSetFormat(this, icol, irow, "ButtonText", (data3 || ""));
-    }
-
-
-    _sfSetFormat(this, icol, irow, "ObjectType", data);
+    _sfSetFormat(this, icol, irow, "ObjectType", data, icol2, irow2);
 
     //if (type == "checkbox")
     //    _sfSetFormat(this, icol, irow, "Checked", data);
 };
 
+P8.SpreadSheet.prototype.SetTemplate = function (c, r, Type, option , icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    if (Type == "button") {
+        this.SetObjectType(c, r, "button", icol2, irow2);
+        this.SetBackground(c, r, (option.BackgroundColor || ""), icol2, irow2);
+        this.SetText2(c, r, (option.Text || ""), icol2, irow2);
+        this.SetTextColor(c, r, (option.TextColor || ""));
+
+        this.SetTextAlign(c, r, "center");
+        this.SetFontSize(c, r, "12");
+        this.SetBold(c, r, false);
+        this.SetVerticalAlign(c, r, "middle");
+    }
+    else if (Type == "remarks") {
+        this.SetObjectType(c, r, "remarks", icol2, irow2);
+        this.SetBackground(c, r, (option.BackgroundColor || ""), icol2, irow2);
+        this.SetText2(c, r, (option.Text || "Remarks"), icol2, irow2);
+        this.SetTextColor(c, r, (option.TextColor || ""));
+
+        this.SetTextAlign(c, r, "center");
+        this.SetFontSize(c, r, "12");
+        this.SetBold(c, r, false);
+        this.SetVerticalAlign(c, r, "middle");
+    }
+    else {
+        this.SetObjectType(c, r, Type, icol2, irow2);
+    }
+}
 
 
 var mergeList = [];
 P8.SpreadSheet.prototype.SetMerge = function (c, r, c2, r2, data) {
     var irow = r; icol = c;
     var irow2 = r2; icol2 = c2;
+
+    if (irow == undefined) irow = this.CellIndexes.Row;
+    if (irow2 == undefined) irow2 = this.CellIndexes.Row2;
+
+    if (icol == undefined) icol = this.CellIndexes.Col;
+    if (icol2 == undefined) icol2 = this.CellIndexes.Col2;
+
     var data = { col: icol, row: irow, col2: icol2, row2: irow2 };
 
-    this.mergeList.push(data);
+    var isexists = false;
+    for (var i = 0; i < this.mergeList.length; i++) {
+        if (this.mergeList[i].col == icol && this.mergeList[i].row == irow) {
+            this.mergeList.splice(i, 1);
+            //isexists = true;
+        }
+    }
+
+    if (isexists == false)
+        this.mergeList.push(data);
 
 
-    _sfSetFormat(this, icol, irow, "merge", [data]);
+    _sfSetFormat(this, icol, irow, "merge", [data], icol2, irow2);
 }
 
 
 
-P8.SpreadSheet.prototype.SetBorderColorTop = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderColorTop", data);
+P8.SpreadSheet.prototype.SetBorderColorTop = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderColorTop", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetBorderColorBottom = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderColorBottom", data);
+P8.SpreadSheet.prototype.SetBorderColorBottom = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderColorBottom", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetBorderColorLeft = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderColorLeft", data);
+P8.SpreadSheet.prototype.SetBorderColorLeft = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderColorLeft", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetBorderColorRight = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderColorRight", data);
-}
-
-
-
-P8.SpreadSheet.prototype.SetBorderStyleTop = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderStyleTop", data);
-}
-P8.SpreadSheet.prototype.SetBorderStyleBottom = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderStyleBottom", data);
-}
-P8.SpreadSheet.prototype.SetBorderStyleLeft = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderStyleLeft", data);
-}
-P8.SpreadSheet.prototype.SetBorderStyleRight = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderStyleRight", data);
+P8.SpreadSheet.prototype.SetBorderColorRight = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c;icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderColorRight", data, icol2, irow2);
 }
 
 
 
-P8.SpreadSheet.prototype.SetBorderWidthTop = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderWidthTop", data);
+P8.SpreadSheet.prototype.SetBorderStyleTop = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderStyleTop", data, icol2, irow2);
+}
+P8.SpreadSheet.prototype.SetBorderStyleBottom = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderStyleBottom", data, icol2, irow2);
+}
+P8.SpreadSheet.prototype.SetBorderStyleLeft = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderStyleLeft", data, icol2, irow2);
+}
+P8.SpreadSheet.prototype.SetBorderStyleRight = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderStyleRight", data, icol2, irow2);
+}
+
+
+
+P8.SpreadSheet.prototype.SetBorderWidthTop = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderWidthTop", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBorderWidthBottom = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderWidthBottom", data);
+    var irow = r; icol = c;icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderWidthBottom", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetBorderWidthLeft = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderWidthLeft", data);
+P8.SpreadSheet.prototype.SetBorderWidthLeft = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c;icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderWidthLeft", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetBorderWidthRight = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "borderWidthRight", data);
+P8.SpreadSheet.prototype.SetBorderWidthRight = function (c, r, data, icol2, irow2) {
+    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    _sfSetFormat(this, icol, irow, "borderWidthRight", data, icol2, irow2);
 }
 
 P8.SpreadSheet.prototype.SetBorder = function (c, r, data) {
@@ -1251,6 +1569,11 @@ function _sfSetBorder(obj, c, r, data, tag) {
 
 P8.SpreadSheet.prototype.SetText2 = function (c, r, text) {
     _sfStartTime();
+    if (r == Spread_ALLROW && c >= 0) {
+        try {
+            this.ColumnConfig[c].Text2 = text;
+        } catch (err) { }
+    }
     _sfSetText(this, c, r, text, "text2");
 };
 
@@ -1274,13 +1597,24 @@ P8.SpreadSheet.prototype.SetSelectedIndexes = function (option) {
     return this.GetSelectedIndexes();
 };
 
+
 P8.SpreadSheet.prototype.SetText = function (c, r, text, type, librarybase) {
     _sfStartTime();
     if (text == undefined) text = "";
     text += "";
-    if (text.trim().indexOf("=") == 0) {
+    if (this.IsDesigner == false && text.trim().indexOf("=") == 0) {
         text = text.replace("=", "");
     }
+  
+    //if (this.IsDesigner == true) {
+    //    if (this.IsDesigner == true && text.trim().indexOf("=") == 0) {
+    //        this.SetDataType(c, r, "currency");
+    //    }
+    //    if (isNaN(text)) {
+    //        this.SetDataType(c, r, "currency");
+    //    }
+    //}
+
     _sfSetText(this, c, r, text, type, librarybase);
 };
 
@@ -1293,6 +1627,42 @@ P8.SpreadSheet.prototype.SetFormula = function (c, r, text, type, librarybase) {
     }
 };
 
+//aagedit
+P8.SpreadSheet.prototype.AddConditionalFormatting = function (type,range) {
+    
+    var col = 2;
+    var row = 2;
+    var col2 = 4;
+    var row2 = 4;
+    this.CellConditionalList.push({
+        id:this.CellConditionalID
+        ,type:type
+        ,range:range
+        ,col: col
+        ,row: row
+        ,col2: col2
+        ,row2: row2
+        ,format: [{
+            
+        }]
+    });
+
+    this.CellConditionalID += 1;
+};
+
+P8.SpreadSheet.prototype.SetValue = function (c, r, text) {
+
+    if (c == undefined) c = this.CellIndexes.Col;
+    if (r == undefined) r = this.CellIndexes.Row;
+    var stringV = text;
+    try {
+        this.Data[r][_sfGetCellName(this, c)].value = stringV;
+    } catch (err) {
+
+    }
+    this.Refresh();
+    return stringV;
+};
 
 function _sfIsDate(date) {
     return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
@@ -1382,7 +1752,9 @@ function _sfSetText(obj, c, r, text, type, librarybase, isformula) {
         //CanvasTextWrapper(canvasSheet, "Calculating...", option);
         */
 
-        _sfAutoWrapRow(obj, r);
+        if (obj.RenderStatus == true) 
+            _sfAutoWrapRow(obj, r);
+
 
         if (isformula == true) {
             var searchVal = c + ":" + r + ":";
@@ -1522,8 +1894,8 @@ function _sfSetFormulaChange(obj, c, r) {
 
 }
 function _sfSetFormulaRemove(obj, c, r) {
-   
-    for (var i = obj.CellFomulaList.length-1; i >=0 ; i--) {
+
+    for (var i = obj.CellFomulaList.length - 1; i >= 0 ; i--) {
         if (obj.CellFomulaList[i].acol == c && obj.CellFomulaList[i].arow == r) {
             obj.CellFomulaList.splice(i, 1);
         }
@@ -1763,7 +2135,6 @@ function _sfLoadFormulaRef(obj, cell, col, row, c, r, text) {
     if (xindex < 0)
         obj.CellFomulaList.push({ id: col + ":" + row + ":" + c + ":" + r, cellID: col + ":" + row + ":", cell: cell, col: col, row: row, acol: c, arow: r, aid: c + ":" + r, formula: text });
 
-
 }
 
 function _sfJsonDelete(json, rowIndex) {
@@ -1952,6 +2323,12 @@ P8.SpreadSheet.prototype.GetText2 = function (c, r) {
         stringV = this.Data[r][_sfGetCellName(this, c)].text2;
     } catch (err) {
     }
+    try {
+        if (stringV == undefined)
+            stringV = this.ColumnConfig[c].Text2;
+    } catch (err) {
+        stringV == undefined;
+    }
     return stringV;
 };
 
@@ -2066,6 +2443,21 @@ P8.SpreadSheet.prototype.GetEnabled = function (c, r) {
     return stringV;
 };
 
+P8.SpreadSheet.prototype.GetMaxLength = function (c, r) {
+
+    if (c == undefined) c = this.CellIndexes.Col;
+    if (r == undefined) r = this.CellIndexes.Row;
+    var stringV;
+    try {
+        stringV = _sfCheckConfigType(this, r, c, "MaxLength",-1);
+    } catch (err) {
+
+    }
+    //try { stringV = (stringV + "").replace("!important", ""); } catch (err) { }
+
+    return stringV;
+};
+
 P8.SpreadSheet.prototype.GetObjectType = function (c, r) {
     if (c == undefined) c = this.CellIndexes.Col;
     if (r == undefined) r = this.CellIndexes.Row;
@@ -2113,6 +2505,12 @@ P8.SpreadSheet.prototype.GetText = function (c, r) {
 
     try {
         stringV = this.Data[r][_sfGetCellName(this, c)].text2;
+    } catch (err) {
+        stringV == undefined;
+    }
+    try {
+        if (stringV == undefined )
+            stringV = this.ColumnConfig[c].Text2;
     } catch (err) {
         stringV == undefined;
     }
@@ -2189,7 +2587,18 @@ function _sfScrollChecking(obj) {
 
     return true;
 }
+function _sfScrollUpdatePositionList(obj) {
+    //obj.RenderNoEvent();
+    console.log("render");
+}
 function _sfScrollUpdatePosition(obj) {
+    var isresponsive = false;
+    if ($("body").width() <= 550) isresponsive = true;
+    if (isresponsive) {
+        _sfScrollUpdatePositionList(obj);
+        return;
+    }
+
     // var canvasID = nwGridMainCon_Book.ActiveSheet.canvasID;
     //var obj = P8DataList[canvasID][0].sheet.ActiveSheet;
     var canvasID = obj.canvasID;
@@ -2201,6 +2610,8 @@ function _sfScrollUpdatePosition(obj) {
     var currow = obj.startRow - 1;
     var curcol = obj.startCol - 1;
 
+    //if (currow <= 0) { currow = 1; obj.startRow = 1; }
+    //if (curcol <= 0) { curcol = 1; obj.startRow = 1; }
     //if (maxcolumn >= curcol) {
     //    return;
     //}
@@ -2278,7 +2689,7 @@ P8.SpreadSheet.prototype.ScrollRight = function (c) {
     _sfStartTime();
 
     if (c == undefined) c = this.ScrollCounterH;
-    while (this.ColumnWidth(c-1) == "0" && this.startCol < this.ColumnConfig.length) {
+    while (this.ColumnWidth(c - 1) == "0" && this.startCol < this.ColumnConfig.length) {
         c += 1;
     }
 
@@ -2296,13 +2707,13 @@ P8.SpreadSheet.prototype.ScrollLeft = function (c) {
 
     if (c == undefined) c = this.ScrollCounterH;
     var latec = 0; var colx = this.startCol - 1;
-    try{
-        latec = this.ColumnWidth(colx-1);
-    }catch(err){}
+    try {
+        latec = this.ColumnWidth(colx - 1);
+    } catch (err) { }
     while (latec == "0" && this.startCol > 1) {
         this.startCol -= 1;
         colx -= 1;
-        try{
+        try {
             latec = this.ColumnWidth(colx);
         } catch (err) { }
     }
@@ -2326,14 +2737,15 @@ function _sfModifyScrollBar() {
 
 }
 
-var P8RendeVar;
+var P8RendeVar=[];
 var P8RendeVarSub;
 function _sfRenderFunction(_this) {
-
+    console.log("test");
+   
     if (_this.Book.ActiveSheet.startCol == _this.Book.ActiveSheet.prevstartCol
      && _this.Book.ActiveSheet.startRow == _this.Book.ActiveSheet.prevstartRow
      && _this.ScrollActiveStat) {
-        
+
         return;
     }
     if (_this.Book.ActiveSheet.ColumnWidth(_this.Book.ActiveSheet.startCol) == "0"
@@ -2347,25 +2759,30 @@ function _sfRenderFunction(_this) {
         _this.Book.ActiveSheet.prevstartRow = _this.Book.ActiveSheet.startRow;
         _this.Book.ActiveSheet.prevstartCol = _this.Book.ActiveSheet.startCol;
 
-        try { clearTimeout(P8RendeVar); } catch (err) { }
-        P8RendeVar = setTimeout(function () {
+        try { clearTimeout(P8RendeVar[_this.canvasID]); } catch (err) {  console.log("error:" + err); }
+        P8RendeVar[_this.canvasID] = setTimeout(function () {
             //_this.havelistner = false;
-            console.log("start:" + renderID + " | col:" + _this.Book.ActiveSheet.startCol + " | row:" + _this.Book.ActiveSheet.startRow);
+            //console.log("start:" + renderID + " | col:" + _this.Book.ActiveSheet.startCol + " | row:" + _this.Book.ActiveSheet.startRow);
             canvasCreate(_this.canvasID, _this.Book.ActiveSheet);
-            console.log("End:" + renderID + " | col:" + _this.Book.ActiveSheet.startCol + " | row:" + _this.Book.ActiveSheet.startRow);
+            //console.log("End:" + renderID + " | col:" + _this.Book.ActiveSheet.startCol + " | row:" + _this.Book.ActiveSheet.startRow);
             _this.Book.ActiveSheet.ScrollActiveStat = false;
-        }, 0);
+        }, 10);
 
         // resolve issue on load no click event
-        try { clearTimeout(P8RendeVarSub); } catch (err) { }
-        P8RendeVarSub = setTimeout(function () {
-            if (P8DataList[_this.canvasID][0].sheet.ActiveSheet.Events.length <= 0) {
-                P8DataList[_this.canvasID][0].sheet.ActiveSheet.Render();
-            }
-        }, 0);
+        // remove cause  unli loops
+        //try { clearTimeout(P8RendeVarSub); } catch (err) { }
+        //P8RendeVarSub = setTimeout(function () {
+        //    if (P8DataList[_this.canvasID][0].sheet.ActiveSheet.Events.length <= 0) {
+        //        P8DataList[_this.canvasID][0].sheet.ActiveSheet.Render();
+        //    }
+        //}, 0);
     }
     else {
-        canvasCreate(_this.canvasID, _this.Book.ActiveSheet);
+        //canvasCreate(_this.canvasID, _this.Book.ActiveSheet);
+        try { clearTimeout(P8RendeVar[_this.canvasID]); } catch (err) { console.log("error:" + err); }
+        P8RendeVar[_this.canvasID] = setTimeout(function () {
+            canvasCreate(_this.canvasID, _this.Book.ActiveSheet);
+        }, 10);
     }
     _this.Book.ActiveSheet.ScrollActiveStat = false;
 }
@@ -2427,6 +2844,33 @@ P8.SpreadSheet.prototype.Refresh = function () {
     //_sfRenderFunction(this);
 };
 
+
+P8.SpreadSheet.prototype.RefreshSpecialConfig = function () {
+  
+    _sfRefreshSpecialConfig(this);
+  
+    this.RenderNoEvent();
+};
+function _sfRefreshSpecialConfig(_this) {
+  
+    try {
+        var ccID = _this.canvasID;
+        var nwcolumnhideconfig = $("#" + ccID).attr("nwcolumnhideconfig");
+        var nwcolumnhideconfig_list = nwcolumnhideconfig.split("|");
+        for (var i = 0; i < nwcolumnhideconfig_list.length - 1; i++) {
+            try {
+                if (nwcolumnhideconfig_list[i] == 0) {
+                    _this.ColumnWidth(i, 0);
+                }
+                else {
+                    _this.ColumnWidth(i, parseInt(_this.ColumnConfig[i].ColumnWidth));
+                }
+            } catch (err) { }
+        }
+    } catch (err) {
+        // console.log(err);
+    }
+}
 
 
 P8.SpreadSheet.prototype.Refresh = function () {
@@ -2799,7 +3243,7 @@ function _sfCreateData(col, row, text, c) {
             if (iscolumn == false) {
                 _column.push(_sfDefaultSettingsColumn());
                 _column[_column.length - 1].width = def_Width;
-                _column[_column.length - 1].ColumnWidth = def_Width+"";
+                _column[_column.length - 1].ColumnWidth = def_Width + "";
 
                 _column[_column.length - 1].name = p8_NumberToCell(i2);
                 _column[_column.length - 1].ColumName = p8_NumberToCell(i2);
@@ -2807,10 +3251,10 @@ function _sfCreateData(col, row, text, c) {
                 _column[_column.length - 1].config = {};
                 _column[_column.length - 1].dataType = "text"
 
-               // _column.push({ width: def_Width, name: p8_NumberToCell(i2), config: {}, dataType: "text" });
+                // _column.push({ width: def_Width, name: p8_NumberToCell(i2), config: {}, dataType: "text" });
 
             }
-               
+
         }
         iscolumn = true;
         var tempRow = {};
@@ -2943,9 +3387,9 @@ function _sfSpreadInputShow(obj, clearText) {
     if (obj.Book.FormulaField == true) {
         $("#" + obj.canvasID + "").find(".formulafield").val(valueformula);
     }
-    if (valueformula.trim().indexOf("=") == 0) {
+    if (obj.IsDesigner == false && valueformula.trim().indexOf("=") == 0) {
         _sfPromptMessage("This cell has Formula");
-        return false;
+        return true;
     }
 
 
@@ -2958,6 +3402,10 @@ function _sfSpreadInputShow(obj, clearText) {
     $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "visible");
 
     var valuex = obj.Book.ActiveSheet.GetValue();
+    if (obj.IsDesigner){
+        valuex = obj.Book.ActiveSheet.GetFormula();
+    }
+
     var xdataType = obj.Book.ActiveSheet.GetDataType(obj.CellIndexes.Col, obj.CellIndexes.Row);
     var xprecision = obj.Book.ActiveSheet.GetPrecision(obj.CellIndexes.Col, obj.CellIndexes.Row);
 
@@ -2966,7 +3414,7 @@ function _sfSpreadInputShow(obj, clearText) {
          || xdataType == "percentvalue"
          || xdataType == "percent") {
 
-        if (xdataType == "percentvalue") valuex * 100;
+        if (xdataType == "percentvalue") valuex = valuex * 100;
 
         valuex = _sfFormartNumber(valuex, xprecision);
 
@@ -2975,7 +3423,9 @@ function _sfSpreadInputShow(obj, clearText) {
         if (valuex == NaN || valuex == "NaN" || valuex == undefined || valuex == "undefined") valuex = "";
     }
     else {
-        $('#' + obj.canvasID + '_vw_inp').unmask();
+        try {
+            $('#' + obj.canvasID + '_vw_inp').unmask();
+        } catch (err) { }
         $("#" + obj.canvasID + "_vw_inp").removeClass("isNumber");
         $("#" + obj.canvasID + "_vw_inp").removeClass("numC");
         $("#" + obj.canvasID + "_vw_inp").removeClass("nwPercentValue");
@@ -3022,7 +3472,7 @@ function _sfScrollUpdateSizing(containerID) {
 
 
     total = obj.ColumnConfig.length;
-    var xtotal =0;
+    var xtotal = 0;
     for (var i = 0; i < obj.ColumnConfig.length; i++) {
         if (obj.ColumnWidth(i) != "0") xtotal += 1;
     }
@@ -3035,7 +3485,7 @@ function _sfScrollUpdateSizing(containerID) {
     if (percH >= 0.95) percH = 0.95;
 
     scrollDrag = scrollH * percH;
-    
+
     if (scrollDrag <= 4) scrollDrag = 4;
     $(objScrolH).find('.P8Spread_ScrollH_handler').css('min-width', scrollDrag);
     $(objScrolH).find('.P8Spread_ScrollH_handler').css('max-width', scrollDrag);
@@ -3051,7 +3501,7 @@ function _sfScrollUpdateSizing(containerID) {
     $(objScrolH).parents("td").find('.P8Spread_ScrollH').css("max-width", xwidth);
 
     //}, 600);
-    
+
 }
 
 
@@ -3119,9 +3569,9 @@ function _sfResizeScroll(containerID) {
         $('#' + containerID).find(".P8Spread_ScrollBar.Vr").css("min-height", "initial");
         $('#' + containerID).find(".P8Spread_ScrollBar.Vr").css("max-height", "initial");
 
-        
+
         _sfScrollUpdateSizing(containerID);
-     
+
 
         //$('#' + containerID).find(".P8Spread_ScrollBar").css("min-height", scheight);
     }, 10);
@@ -3159,7 +3609,10 @@ function _sfResizeScroll(containerID) {
     }, 10);
 }
 
-function _sfnwGridButtons(objBook) {
+function _sfnwGridButtons(objBook,rclass) {
+    if(rclass==undefined)rclass="";
+
+
     var strAddButton = "";
     try {
         var index = 0;
@@ -3167,13 +3620,13 @@ function _sfnwGridButtons(objBook) {
         var obj = objBook.Buttons[index];
 
 
-        strAddButton = "<div class=\"nwgridButtons\" p8style='{0}'>";
+        strAddButton = "<div class=\"nwgridButtons "+rclass+"\" p8style='{0}'>";
 
         if (!obj._isAddNew) {
             strAddButton += "";
         }
         else {
-            strAddButton += "<div class=\"nwgrid_buttonsCon\"><button class=\"nwgrid_AddNew nwgrid_buttons\"  >Add Row</button></div>";
+            strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><button class=\"nwgrid_AddNew nwgrid_buttons "+rclass+"\"  >Add Row</button></div>";
         }
         if (obj.dataTableButtons.length >= 1
             || obj.buttonInsert || obj.buttonCopyRow || obj.buttonDelete || obj._isAddNew
@@ -3195,16 +3648,23 @@ function _sfnwGridButtons(objBook) {
 
         //<div class="nwgridButtons" p8style="height:20px;">
 
-        if (obj.buttonInsert) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_Insert nwgrid_buttons\"  >Insert Row</button></div>";
-        if (obj.buttonCopyRow) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_CopyRow nwgrid_buttons\"    >Copy Row</button></div>";
-        if (obj.buttonDelete) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_Delete nwgrid_buttons\"  >Delete Row</button></div>";
+        if (obj.buttonInsert) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_Insert nwgrid_buttons\"  >Insert Row</button></div>";
+        if (obj.buttonCopyRow) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_CopyRow nwgrid_buttons\"    >Copy Row</button></div>";
+        if (obj.buttonDelete) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_Delete nwgrid_buttons\"  >Delete Row</button></div>";
 
 
-        if (obj.buttonSaveColumn) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_SaveWidth nwgrid_buttons\"  >Save Column Width</button></div>";
-        if (obj.buttonResetColumn) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_ResetWidth nwgrid_buttons\"  >Reset Column Width</button></div>";
+        if (obj.buttonSaveColumn) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_SaveWidth nwgrid_buttons\"  >Save Column Width</button></div>";
+        if (obj.buttonResetColumn) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_ResetWidth nwgrid_buttons\"  >Reset Column Width</button></div>";
+
+        //aagGridColHide 09-07-2022
+        try {
+            if (obj.hide_column_but == true) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_HideColumn nwgrid_buttons\" onclick=\" return false;\" style=\"\">Show/Hide Column</button></div>";
+        }
+        catch (err) { }
+
 
         if (obj.buttonReport) {
-            strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_HeaderShowHide nwgrid_buttons\"  buttonstatus='true' buttonindex ='" + obj.buttonReportIndex + "'  txthide='" + obj.buttonReportTextHide.replaceAll("'", "\'") + "' txtshow='" + obj.buttonReportTextShow.replaceAll("'", "\'") + "' >" + obj.buttonReportTextHide + "</button></div>";
+            strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_HeaderShowHide nwgrid_buttons\"  buttonstatus='true' buttonindex ='" + obj.buttonReportIndex + "'  txthide='" + obj.buttonReportTextHide.replaceAll("'", "\'") + "' txtshow='" + obj.buttonReportTextShow.replaceAll("'", "\'") + "' >" + obj.buttonReportTextHide + "</button></div>";
 
             //strAddButton += "<style>";
 
@@ -3217,9 +3677,9 @@ function _sfnwGridButtons(objBook) {
         }
 
         if (obj.buttonSearchFind)
-            strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><input class=\"nwgrid_SearchNext\"> <button class=\"nwgrid_SearchFind nwgrid_buttons\"  >Find</button></div>";
+            strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><input class=\"nwgrid_SearchNext\"> <button class=\"nwgrid_SearchFind nwgrid_buttons\"  >Find</button></div>";
 
-        if (obj.buttonExport) strAddButton += "<div class=\"nwgrid_buttonsCon\" p8style=\"" + (obj.buttonExportHide ? "display:none;" : "") + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_Export nwgrid_buttons\"  >Export</button></div>";
+        if (obj.buttonExport) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\" p8style=\"" + (obj.buttonExportHide ? "display:none;" : "") + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_Export nwgrid_buttons\"  >Export</button></div>";
 
 
         /// hide for now
@@ -3228,7 +3688,7 @@ function _sfnwGridButtons(objBook) {
 
         try {
             for (var index1 = 0; index1 < obj.dataTableButtons.length; index1++)
-                strAddButton = strAddButton + "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button ID=\"" + obj.dataTableButtons[index1].ButtonID + "\" nwID=\"" + obj.dataTableButtons[index1].ButtonID + "\" class=\"nwgrid_buttonCustom nwgrid_buttons\"  >" + obj.dataTableButtons[index1].ButtonTitle + "</button></div>";
+                strAddButton = strAddButton + "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button ID=\"" + obj.dataTableButtons[index1].ButtonID + "\" nwID=\"" + obj.dataTableButtons[index1].ButtonID + "\" class=\"nwgrid_buttonCustom nwgrid_buttons\"  >" + obj.dataTableButtons[index1].ButtonTitle + "</button></div>";
         } catch (err) { }
 
         //strAddButton += "<style>";
@@ -3241,7 +3701,7 @@ function _sfnwGridButtons(objBook) {
 
     if (objBook.FormulaField == true) {
         strAddButton += "<div><span p8style='font-style: italic;font-weight: bold;margin: 10px;'>fx</span>"
-        strAddButton += "<input class='formulafield' p8style='min-width: 450px;max-width: 92%;width: 92%;'></div>";
+        strAddButton += "<input class='formulafield "+rclass+"' p8style='min-width: 450px;max-width: 92%;width: 92%;'></div>";
     }
 
     return strAddButton;
@@ -3281,6 +3741,16 @@ function _sfnwGridButtonsNew(objBook) {
         if (obj.buttonDelete) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_Delete nwgrid_buttons\"  >Delete Row</button></div>";
         if (obj.buttonSaveColumn) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_SaveWidth nwgrid_buttons\"  >Save Column Width</button></div>";
         if (obj.buttonResetColumn) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_ResetWidth nwgrid_buttons\"  >Reset Column Width</button></div>";
+        
+        
+        //aagGridColHide 09-07-2022
+        try
+        {
+            if (obj.hide_column_but == true) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_HideColumn nwgrid_buttons\" onclick=\" return false;\" style=\"\">Show/Hide Column</button></div>";
+        }
+        catch(err) { }
+
+
         if (obj.buttonReport) {
             strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_HeaderShowHide nwgrid_buttons\"  buttonstatus='true' buttonindex ='" + obj.buttonReportIndex + "'  txthide='" + obj.buttonReportTextHide.replaceAll("'", "\'") + "' txtshow='" + obj.buttonReportTextShow.replaceAll("'", "\'") + "' >" + obj.buttonReportTextHide + "</button></div>";
             //strAddButton += "<style>";
@@ -3325,7 +3795,7 @@ function _sfnwRandomString(count) {
 
 function _sfAutoWrap(obj, _canvasID) {
     //if (obj.AutoWrap == false) return;
-    // obj.RenderStatus = false;
+    obj.RenderStatus = false;
 
     var spread = obj;
     var rowcount = spread.Data.length;
@@ -3340,8 +3810,10 @@ function _sfAutoWrap(obj, _canvasID) {
         //if (i % 1000 == 0) sleep(2000);
     }
     obj.AutoWrapRender = true;
+
+    obj.RenderStatus = true;
     console.log("Canvas AutoWrap End:" + obj.canvasID);
-    //obj.RenderStatus = true;
+
 }
 
 function _sfWrapText(ctx, text, x, y, maxWidth, fontSize, fontFace) {
@@ -3433,9 +3905,31 @@ var def_Width = 90;
 var xTime;
 var P8Spread_elemLeft = 0;
 var P8Spread_elemTop = 0;
+var P8Spread_currcavas = "";
 
 function canvasCreate(canvasID, obj) {
+    var isresponsive = false;
+    if ($("body").width() <= 550) isresponsive = true;
 
+    if (isresponsive) {
+        if(obj.Theme  == P8Themes.FANCY)
+        {
+            canvasCreateListHTML(canvasID, obj);
+        }
+        else {
+            canvasCreateList(canvasID, obj);
+        }
+        
+        return;
+    }
+    if ($("#" + canvasID + "_vw").hasClass("nklist")) {
+        $("#" + canvasID).html("");
+    } 
+
+
+    var randomid = nwRandomString(40);
+    P8Spread_currcavas = randomid;
+    console.log("START:" + randomid );
     if (obj.gridtype == "grid") {
         return canvasGridCreate(canvasID, obj);
     }
@@ -3458,6 +3952,8 @@ function canvasCreate(canvasID, obj) {
     var scheight = 0;
     var aminus = 72;
 
+ 
+
     if ($("#" + canvasID).index() >= 0) {
         isObjectCreated = true;
 
@@ -3467,6 +3963,8 @@ function canvasCreate(canvasID, obj) {
         //}, 10);
     }
     else {
+        obj.havelistner = false;
+        console.log("CreateG:" + randomid);
         var scrollWidth = 10;
         var scrollHeight = 10;
         var x_html = "";
@@ -3510,7 +4008,7 @@ function canvasCreate(canvasID, obj) {
         x_html += "<tr p8style='padding:0px;' >"; //Content
         x_html += "<td colspan='2' p8style='padding:0px;vertical-align:top'>"; //Canvas
 
-        x_html += "<div  id='" + canvasID + "_con'><textarea id='" + canvasID + "_inpText' class='P8Spread_TextArea' p8style='opacity:0;position:absolute;width0;height:0;' ></textarea>";
+        x_html += "<div  id='" + canvasID + "_con'><textarea id='" + canvasID + "_inpText' class='P8Spread_TextArea paste' p8style='opacity:0;position:absolute;width0;height:0;z-index:-1;' ></textarea>";
         //x_html += "<div  id='" + canvasID + "_con'><input id='" + canvasID + "_inpText' class='P8Spread_TextArea' p8style='opacity:0;position:absolute;width0;height:0;' />";
 
 
@@ -3530,24 +4028,26 @@ function canvasCreate(canvasID, obj) {
         var xconheight = ($('#' + containerID).css("height")) || 0;
         if (xconheight <= 10) xconheight = obj.Book.TableHeight || 300;
 
-        x_html += "<canvas id='" + canvasID + "'  p8style='height:" + xconheight + ";cursor:default;width:" + $('#' + containerID).css("width") + ";'></canvas>";
+        x_html += "<canvas id='" + canvasID + "' class='nkspread'  p8style='height:" + xconheight + ";cursor:default;width:" + $('#' + containerID).css("width") + ";'></canvas>";
         x_html += "<canvas id='" + canvasID + "_temp'  p8style='display:none;height:" + xconheight + ";cursor:default;width:" + $('#' + containerID).css("width") + ";'></canvas>";
 
 
 
         x_html += "</td>"; //Canvas
-        x_html += "<td p8style='padding:0px;min-width:" + scrollWidth + "px;width:" + scrollWidth + "px;max-width:" + scrollWidth + "px;padding-right:1px;vertical-align: top;'>"; //scroller
+
+
+
+        x_html += "<td  class='P8Spread_SheetVScroll' p8style='padding:0px;min-width:" + scrollWidth + "px;width:" + scrollWidth + "px;max-width:" + scrollWidth + "px;padding-right:1px;vertical-align: top;'>"; //scroller
         x_html += "<div id='" + containerID + "_P8Spread_ScrollUp' class='P8Spread_ScrollUp' p8style='padding: 0px;min-height: 15px;min-width: " + scrollWidth + "px;display: inline-block;background-color: #efefef;background-color: #83b8d3;border: 1px solid #607c8b;box-shadow: inset 0px 0px 5px #e5e5e5;border-radius: 3px;'></div>";
         x_html += "<div  class='P8Spread_Scroll' p8style='padding:0px;min-width:100%;min-height:30px;background: #ececec;border: 1px solid #ececec;'><div id='" + containerID + "_P8Spread_Scroll' class='P8Spread_ScrollBar Vr' p8style='border-radius: 5px;min-height:30px;background: #bcc5ce;border-radius: 3px;background-image: -webkit-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -moz-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -ms-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -webkit-gradient(linear, 0 0, 0 100%, from (#bcc5ce), to(#bcc5ce));background-image: -webkit-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -o-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: linear-gradient(top, #bcc5ce, #bcc5ce);box-shadow: inset 1px 1px 5px #bcc5ce;border: 1px solid #bcc5ce;'><div id='" + containerID + "_P8Spread_Scroll_handler' p8style='min-width:100%;min-height:100%'></div></div></div>"; //scrollbar
         x_html += "<div id='" + containerID + "_P8Spread_ScrollBot' class='P8Spread_ScrollBot' p8style='padding: 0px;min-height: 15px;min-width: " + scrollWidth + "px;display: inline-block;background-color: #efefef;background-color: #83b8d3;border: 1px solid #607c8b;box-shadow: inset 0px 0px 5px #e5e5e5;border-radius: 3px;'></div>";
-
 
         x_html += "</td>"; //scroller
         x_html += "</tr>"; //Content
 
 
 
-        x_html += "<tr p8style='padding:0px;height:20px;' >"; //Bottom
+        x_html += "<tr class='P8Spread_SheetHScroll' p8style='padding:0px;height:20px;' >"; //Bottom
         x_html += "<td id='" + containerID + "_SheetCon' class='P8Spread_SheetCon' p8style='border-top: 1px solid #dddddd !important;max-width:" + (scrollhwidth + 10) + "px;min-width:" + (scrollhwidth + 10) + "px;width:" + (scrollhwidth + 10) + "px;padding:0px;background-color:#dddddd;'>"; //sheet Tab
         x_html += "<canvas id='" + containerID + "_SheetConCanvas'  class='P8Spread_SheetConCanvas' p8style='min-height: 25px;max-height: 25px;max-width:" + scrollhwidth + "px;min-width:" + scrollhwidth + "px;width:" + scrollhwidth + "px; height: 25px;'></canvas>";
         x_html += "</td>"; //
@@ -3559,6 +4059,7 @@ function canvasCreate(canvasID, obj) {
         //border: 1px solid #80808085;
         x_html += "</td>"; //scroll Horizontal
         x_html += "</tr>"; //Bottom
+
 
         x_html += "</table>";//main
 
@@ -3599,6 +4100,9 @@ function canvasCreate(canvasID, obj) {
                 obj.removeAttr("p8style");
             }
         });
+
+
+        setTimeout(function () { _sfRefreshSpecialConfig(obj) }, 10); // must remove to future to remove double refresh
 
 
         var scwidth = 0;
@@ -3645,7 +4149,7 @@ function canvasCreate(canvasID, obj) {
 
             perc = 2.5 / (rowcount + 0.0);
             if (perc < 0.005) perc = 0.005;
-            console.log("perc:" + perc);
+            //console.log("perc:" + perc);
 
 
             var ch = $("#" + containerID + "_P8Spread_Scroll").parent().height();
@@ -3792,7 +4296,7 @@ function canvasCreate(canvasID, obj) {
 
 
         //column config
-        _sfLog("Column Config Start:");
+        // _sfLog("Column Config Start:");
         Spread_ColumnConfig = nwCreate2DArray(obj.ColumnConfig.length);
         Spread_Column_backgroundColor = [];
         for (var i = 0 ; i < obj.ColumnConfig.length; i++) {
@@ -3800,7 +4304,7 @@ function canvasCreate(canvasID, obj) {
             Spread_ColumnConfig[i][_sfGetFormatValueColumnChecker(conid)] = obj.ColumnConfig[i][conid];
             Spread_Column_backgroundColor.push(obj.ColumnConfig[i][conid]);
         }
-        _sfLog("Column Config End:");
+        //_sfLog("Column Config End:");
 
 
 
@@ -3819,7 +4323,7 @@ function canvasCreate(canvasID, obj) {
 
 
 
-
+    //repos
 
 
 
@@ -3827,8 +4331,7 @@ function canvasCreate(canvasID, obj) {
     var conWidth = $('#' + containerID).width();
     var conheight = $('#' + containerID).height();
 
-
-    var myCanvas = createHiDPICanvas(canvasID, conWidth, conheight, 2);
+    var myCanvas = createHiDPICanvas(canvasID, conWidth, conheight, 3);
 
     var canvasSheet = document.getElementById(canvasID);
     var contextSheet = canvasSheet.getContext('2d');
@@ -3883,7 +4386,7 @@ function canvasCreate(canvasID, obj) {
     if (obj.HeaderGroup == undefined) obj.HeaderGroup = [];
     if (obj.HeaderGroup.length >= 1) {
         sheetStart_y += tlGroupHeight + borderMargin;
-        
+
     }
 
     var sheetStart_y2 = 0;
@@ -3932,6 +4435,7 @@ function canvasCreate(canvasID, obj) {
     var applyfreezeW = 0;
     //console.log("width SIze");
     while (conWidthDraw >= 0) {
+        //console.log("Column:" + randomid);
         var widthcol = def_Width;
         try {
             widthcol = obj.ColumnConfig[icounter].width;
@@ -3955,6 +4459,8 @@ function canvasCreate(canvasID, obj) {
 
 
         if (icounter >= 1000) break;
+
+       
         // if (icounter >= 50) { console.log("aa"); break; }
     }
 
@@ -3999,15 +4505,16 @@ function canvasCreate(canvasID, obj) {
     var tlBgColor = "#c0c7d5";
     tlNumberWidth += ((srow - 2) + "").length * 6;
 
-    var tlHBG = "#e4ecf7";
-    var tlHFont = "Arial,Tahoma";
-    var tlHFontSize = 12;
-    var tlHColor = "#212121";
+    var tlHBG = obj.HeaderBackround;
+    var tlHFont = obj.HeaderFontFamily;
+    var tlHFontSize = obj.HeaderFontSize;
+    var tlHColor = obj.HeaderColor ;
 
-    var tlVBG = "#e4ecf7";
-    var tlVFont = "Arial,Tahoma";
-    var tlVFontSize = 12;
-    var tlVColor = "#212121";
+
+    var tlVBG = obj.VHeaderBackround;
+    var tlVFont = obj.VHeaderFontFamily;
+    var tlVFontSize =  obj.VHeaderFontSize;
+    var tlVColor = obj.VHeaderColor ;
 
     var sheetStart_x = tlNumberWidth + borderMargin;
 
@@ -4141,9 +4648,11 @@ function canvasCreate(canvasID, obj) {
     //for data showing
     //srow += 3;
 
+    if (P8Spread_currcavas != randomid) return false;
 
     //field render Background border
     for (var i = obj_startRow; i <= srow; i++) {
+        //console.log("RowBackground:" + randomid);
 
         current_X = borderMargin;
 
@@ -4445,6 +4954,9 @@ function canvasCreate(canvasID, obj) {
     //border render 
     //text render
     for (var i = obj_startRow; i <= srow; i++) {
+        // dito matagal
+        //continue;
+        //
         current_X = borderMargin;
 
         //must check per rowheight
@@ -4472,7 +4984,7 @@ function canvasCreate(canvasID, obj) {
 
 
         for (var ic = obj_startCol; ic <= scolumn; ic++) {
-
+            if (P8Spread_currcavas != randomid) return false;
             if (ic + 1 >= xFreezeCol && xFreezeCol > scolumn) continue;
 
             //if (xFreezeCol > ic)
@@ -4690,6 +5202,7 @@ function canvasCreate(canvasID, obj) {
               , textAlign: "center"
               , col: curCol - 1, row: curRow - 1
               , currencyCode: myCell.currencyCode
+              , backgroundColor: ""
             };
             option = _sfSetFormatText(obj, option, curCol - 1, curRow - 1);
 
@@ -4742,10 +5255,13 @@ function canvasCreate(canvasID, obj) {
 
 
 
+    if (P8Spread_currcavas != randomid) return false;
 
     // print Freeze Objects BG
     var tempColumn = [];
     for (var ifr = 0; ifr < jsonFreezeBgList.length; ifr++) {
+        //console.log("FreezeLEFT:" + randomid);
+
         var myCell = jsonFreezeBgList[ifr];
         if (myCell.col <= xFreezeCol) {
             tempColumn.push(myCell);
@@ -4777,13 +5293,17 @@ function canvasCreate(canvasID, obj) {
     contextSheet.fillRect(0, 0, freezewidth, canvasSheet.height);
 
 
+    if (P8Spread_currcavas != randomid) return false;
     // print Freeze Objects BG top freeze
     for (var ifr = 0; ifr < tempColumn.length; ifr++) {
+        //console.log("FreezeTOp:" + randomid);
         var myCell = tempColumn[ifr];
         _sfCellDrawBox(obj, contextSheetText, contextSheet, myCell);
     }
     // print Text and Border top freeze
     for (var ifr = 0; ifr < tempColumnBorder.length; ifr++) {
+        //console.log("FreezeText:" + randomid);
+
         var data = tempColumnBorder[ifr];
         var myCell = data.border;
         var option = data.text;
@@ -4791,6 +5311,7 @@ function canvasCreate(canvasID, obj) {
     }
 
     for (var ifr = 0; ifr < jsonFreezeTextList.length; ifr++) {
+        //console.log("Freezeborder:" + randomid);
         var data = jsonFreezeTextList[ifr];
         if (data.col < xFreezeCol) {
             //tempColumnBorder.push(data);
@@ -4945,6 +5466,7 @@ function canvasCreate(canvasID, obj) {
             fillStyle: tlHBG,
             strokeStyle: 'black'
             , col: icx
+             , colindex: ic - 1
              , type: "col"
 
         };
@@ -5087,6 +5609,17 @@ function canvasCreate(canvasID, obj) {
         contextSheetText.font = fontsize + "px Arial";
         contextSheetText.fillStyle = "black";
         contextSheetText.fillText("", myCell.x + defaultpadding, myCell.y + fontsize, myCell.width, myCell.height);
+        
+        
+        if(obj.HeaderNumText !=""){
+            var option = {
+                font: "bold " + tlHFontSize + "px " + tlHFont, x:myCell.x + defaultpadding, y:  0 + yAxisValue , paddingX: defaultpadding, paddingY: defaultpadding, width: myCell.width, height: myCell.height
+             , verticalAlign: "middle"
+             , textAlign: "center"
+             , color: tlHColor
+            };
+            CanvasTextWrapper(canvas, obj.HeaderNumText, option);
+        }
 
     }
 
@@ -5151,11 +5684,13 @@ function canvasCreate(canvasID, obj) {
         }
     }
 
-
-
+    if (P8Spread_currcavas != randomid) return false;
+    console.log("col:" + scolumn + " row:" + srow);
+  
 
 
     if (obj.havelistner == false) {
+        console.log("ENDListner:" + randomid);
         _sfLog("add event:");
 
         obj.Events.push({ events: 1 });
@@ -5167,6 +5702,7 @@ function canvasCreate(canvasID, obj) {
 
 
         canvasSheet.addEventListener('mouseup', function (event) {
+            
             obj.CellSelHover = false;
             if (obj.IsResizeHover == true && obj.IsResizeClick == true && obj.ColumnResizable == true) {
                 var diff = obj.IsResizeColumnWidth;
@@ -5250,12 +5786,30 @@ function canvasCreate(canvasID, obj) {
 
         //if (isObjectCreated == false) 
         // cell click
+        // Spread Click
         canvasSheet.addEventListener('mousedown', SpreadMouseDown, false);
+        //canvasSheet.addEventListener('click', SpreadClick, false);
+
+        //function SpreadMouseDown(event) {
+        //    obj.ScrollActive = false;
+        //    obj.CellClickTime = new Date();
+        //    //obj.CellSelHover = false;
+        //    obj.CellSelHover = true;
+        //}
+        //function SpreadClick(event) {
+        //    P8CurrentIDSel = obj.canvasID;
+            
+        //    try{
+        //        const diffTime = Math.abs(new Date() - obj.CellClickTime);
+        //        if (diffTime >= 200)
+        //            return false;
+        //    }catch(err){}
+
         function SpreadMouseDown(event) {
             P8CurrentIDSel = obj.canvasID;
 
             obj.ScrollActive = false;
-
+            
 
             var oldRow = obj.CellSelected.row - 1;
             var oldCol = obj.CellSelected.col - 1;
@@ -5389,7 +5943,7 @@ function canvasCreate(canvasID, obj) {
                         if ((obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkbox"
                             || obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkboxtext"
                             ) && obj.GetEnabled(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == true) {
-                            
+
                             //if (obj.ColumnConfig[obj.CellSelected.col - 1].ObjectType == "checkbox") {
                             var value = obj.GetValue(obj.CellSelected.col - 1, obj.CellSelected.row - 1);
                             if (_sfGetCheckboxValue(value)) {
@@ -5405,7 +5959,9 @@ function canvasCreate(canvasID, obj) {
 
                     try {
                         obj.IsResizeHover = false;
-                        obj.CellSelHover = false;
+                        //obj.CellSelHover = false;
+                        
+
                         p8Spread_ClickT(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
                         p8Spread_FocusT(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
                     } catch (err) { }
@@ -5437,7 +5993,7 @@ function canvasCreate(canvasID, obj) {
                 if (obj.canvasID == "" && isvalid == false)
                     return true;
 
-                return true;
+                //return true;
 
 
 
@@ -5484,12 +6040,32 @@ function canvasCreate(canvasID, obj) {
             });
         }
 
+        canvasSheet.addEventListener('mousemove', function (event) {
+            var mousePos = _sfGetMousePos(canvasSheet, event);
+            var element_width = "";
+            var element_col = "";
+            $("body").addClass("p8SpreadHover");
+            obj.currentCells.forEach(function (element) {
+                if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
+                    && mousePos.x >= element.x - 2 && mousePos.x <= element.x + element.width + 2
+                    && element.type == "col"
+                    ) {
+                    var tooltip = "";
+                    try{ tooltip = obj.ColumnConfig[element.colindex].tooltip || "";
+                    }catch(err){}
+                    $("#" + obj.canvasID + "").attr("title", tooltip);
+                    //  console.log(element.colindexl);
+                }
+            });
+        });
 
 
         canvasSheet.addEventListener('mousemove', function (event) {
             P8CurrentIDSel = obj.canvasID;
+            
 
             var mousePos = _sfGetMousePos(canvasSheet, event);
+        
             if (obj.IsResizeClick == true) {
                 obj.IsResizeHoverValue = mousePos.x;
                 return;
@@ -5507,16 +6083,20 @@ function canvasCreate(canvasID, obj) {
             var element_width = "";
             var element_col = "";
 
-            obj.currentCells.forEach(function (element) {
-                //if (mousePos.y >= element.y && mousePos.y <= element.y + element.height && mousePos.x >= element.x-1 && mousePos.x <= element.x + 2
+           
 
+            iscurCellSelect = obj.currentCells.forEach(function (element) {
+                //if (mousePos.y >= element.y && mousePos.y <= element.y + element.height && mousePos.x >= element.x-1 && mousePos.x <= element.x + 2
+                
                 if (obj.CellSelHover == true) {
+                    //_sfLog("Cell Hover Index : " + mousePos.y + ">=" + element.y + " && " + mousePos.y + " <= " + element.y + " + " + element.height
+                    //    + " x :" + mousePos.x + " >= " + element.x + " && " + mousePos.x + " <= " + element.x + " + " + element.width
+                    //    );
 
                     if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
                          && mousePos.x >= element.x && mousePos.x <= element.x + element.width
                         ) {
                         _sfLog("Cell  Hover : " + p8_NumberToCell(element.col) + element.row);
-
 
                     }
 
@@ -5545,12 +6125,14 @@ function canvasCreate(canvasID, obj) {
                     }
                 }
 
+                // for Column width Handle
                 if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
                     && mousePos.x >= element.x + element.width - 2 && mousePos.x <= element.x + element.width + 2
                     && element.type == "col"
                     ) {
-                    _sfLog("column Hover : " + mousePos.x + " : " + mousePos.y);
 
+
+                    _sfLog("Column Hover : " + mousePos.x + " : " + mousePos.y);
 
                     if (element.width >= 1) {
                         element_width = element.width;
@@ -5558,9 +6140,10 @@ function canvasCreate(canvasID, obj) {
                         iscursor = true;
                     }
 
-                    
+
                 }
             });
+            //console.log(obj.CellSelHover);
 
             if (iscursor == true) {
                 obj.IsResizeHover = true;
@@ -5617,6 +6200,10 @@ function canvasCreate(canvasID, obj) {
 
 
         }, false);
+
+
+ 
+
 
         //keypress
         cmpInput.onkeydown = function (e) {
@@ -5677,6 +6264,14 @@ function canvasCreate(canvasID, obj) {
 
                 }
 
+            }
+            else {
+               
+                var keyisavalid = true;
+                try{
+                    keyisavalid = p8Spread_KeyPress(e);
+                } catch (err) { }
+                if (keyisavalid == false) return keyisavalid;
             }
 
             if (e_keyCode == '38') {
@@ -5998,7 +6593,7 @@ function canvasCreate(canvasID, obj) {
                 else {
                     var isvalid = _sfSelectionActivate(obj);
 
-                    if (isvalid) {
+                    if (isvalid && e.ctrlKey == false ) {
                         _sfSpreadInputShow(obj, true);
                         //$("#" + obj.canvasID + "_vw_inp").attr("acol", obj.CellIndexes.Col);
                         //$("#" + obj.canvasID + "_vw_inp").attr("arow", obj.CellIndexes.Row)
@@ -6020,16 +6615,18 @@ function canvasCreate(canvasID, obj) {
 
                 if (e_keyCode == '86' && e.ctrlKey) //paste  //&& $("#" + obj.canvasID + "_vw_selectorCon").css("opacity")=="0"
                 {
-                    $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
-                    $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
-                    $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
-                    $('#' + obj.canvasID + '_vw_inpText').focus();
-                    //  setTimeout(function () {
-                    //    _sfPaste(obj);
-                    // }, 100);
-                    // setTimeout(function () {
-                    //     $(obj).click();
-                    //}, 100);
+                    if (document.activeElement.classList.contains('P8Spread_Input')) {
+                        $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+                        $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+                        $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+                        $('#' + obj.canvasID + '_vw_inpText').val("");
+                        $('#' + obj.canvasID + '_vw_inpText').focus();
+                        setTimeout(function () {
+                            //console.log($('#' + obj.canvasID + '_vw_inpText').val());
+                            $('#' + obj.canvasID + '_vw_inpText').addClass("paste");
+                            _sfPaste(obj);
+                        }, 100);
+                    }
                     return true;
                 }
                 //else if(e.ctrlKey) //paste
@@ -6039,6 +6636,8 @@ function canvasCreate(canvasID, obj) {
                 //    return true;
                 //}
 
+               
+                
 
 
             }
@@ -6056,40 +6655,41 @@ function canvasCreate(canvasID, obj) {
             if (e.ctrlKey == false) return true;
 
 
+            //start add cut
+            if ((e.keyCode == 67 || e.keyCode == 88) && e.ctrlKey) {
 
-            if (e.keyCode == 67 && e.ctrlKey) {
-                //if ($(":focus").hasClass("P8Spread_Input")) {
-                //    return true;
-                //}
-                console.log("copy");
-                //if(isIe)
-                // setTimeout(function () {
-                //alert("CTRL+c");
-                //if (isCopying == false) {
-                //  isCopying = true;
+                var isCut = false;
+                if(e.keyCode == 88){
+                    console.log("cut");
+                    isCut = true;
+                }else{
+                    console.log("copy");
+                }
+                
                 try {
-                    textToPutOnClipboardHTML = "<table p8style=' border-collapse: collapse;'>";
-                    _sfP8Spread_Copy(obj, e);
-                    textToPutOnClipboardHTML += "</table>";
+                 
+                    _sfP8Spread_Copy(obj, e,undefined,isCut);
                     _sfLog("Length to be Copied:" + textToPutOnClipboardHTML.length);
                     _sfCopy(textToPutOnClipboardHTML, obj.canvasID);
 
-                    //setTimeout(function () { isCopying = false; }, 1000);
                 } catch (err) { isCopying = false; }
-                //}
-                // }, 10);
-                //copyToClipboardCrossbrowser("wewe");
+
                 return false;
             }
             else if (e.keyCode == 86 && e.ctrlKey) {
-                if ($(":focus").hasClass("P8Spread_Input")) {
-                    return true;
+                //check if focusing in spread
+                if (document.activeElement.classList.contains('P8Spread_Input')) {
+                    $('#' + obj.canvasID + '_vw_inpText').val("");
+                    $('#' + obj.canvasID + '_vw_inpText').focus();
+                    if ($(":focus").hasClass("P8Spread_Input")) {
+                        return true;
+                    }
+                    console.log("paste");
+                    $('#' + obj.canvasID + '_vw_inpText').addClass("paste");
+                    setTimeout(function () {
+                        _sfPaste(obj);
+                    }, 10);
                 }
-                console.log("paste");
-
-                setTimeout(function () {
-                    _sfPaste(obj);
-                }, 10);
                 return true;
             }
 
@@ -6099,6 +6699,7 @@ function canvasCreate(canvasID, obj) {
 
         obj.havelistner = true;
     }
+
     _sfRenderObjects(obj);
 
 
@@ -6119,8 +6720,1942 @@ function canvasCreate(canvasID, obj) {
 
     $('.P8Spread_Input.hasDatepicker').hide();
 
+    console.log("END:" + randomid);
+}
+
+
+
+
+function canvasListUpdate(canvasID, obj, col , row) {
+    if(obj.Theme  == P8Themes.FANCY){
+        if(p8Spread_IsResponsive()){
+
+
+
+        }
+    }
+}
+function canvasCreateListHTML(canvasID, obj) {
+    var randomid = nwRandomString(40);
+    P8Spread_currcavas = randomid;
+    console.log("START:" + randomid);
+    obj.ScrollActive = false;
+    obj.ScrollActiveStat = false;
+    //var data = obj.Data;
+    var canvasIDOrig = canvasID;
+    var containerID = canvasID;
+    canvasID = canvasID + "_vw";
+
+    if ($("#" + canvasID).hasClass("nkListView")) {
+        isObjectCreated = true;
+
+    }
+    else {
+        obj.havelistner = false;
+        var scrollWidth = 10;
+        var scrollHeight = 10;
+        var x_html = "";
+        $('#' + containerID).html("");
+
+        var maxrow = obj.Data.length;
+        if(maxrow >= obj.ListViewRowLoaderCount) 
+            maxrow = obj.ListViewRowLoaderCount;
+
+        var startrow =0;
+        var strbut = _sfnwGridButtons(obj.Book,"nkListViewObjs");
+
+        x_html += strbut;
+        x_html += "<div class='nkListView' data-text='No Data!' canvasID='"+containerID+"'>";
+        x_html += "</div>";
+        $('#' + containerID).html(x_html);
+        $('#' + containerID).addClass("P8Spread");
+
+        if(obj.ReportHeader == true){
+            canvasCreateListHTMLHeader(obj,startrow, obj.FreezeRow-1,containerID);
+            startrow = obj.FreezeRow;
+        }
+       
+        canvasCreateListHTMLDetail(obj,startrow,maxrow,containerID);
+    }
+
 
 }
+
+function canvasCreateListHTMLHeader(obj,startrow,maxrow,containerID){
+    var x_html ="";
+    x_html += "<div class='nkListViewRow nkListViewHeader' row='"+irow+"'>";
+    for(var irow=startrow; irow < maxrow; irow++){
+        for(var icol=0; icol < 1; icol++){
+
+            var xwidth =  parseInt(obj.GetColumnWidth(icol) || "0");
+
+            if(xwidth <=0)
+                x_html += "<div class='nkListViewCol nwHide'  col='"+icol+"'>";
+            else 
+                x_html += "<div class='nkListViewCol'  col='"+icol+"'>";
+
+
+            var enabled = obj.GetEnabled(icol,irow);
+            var background = obj.GetBackground(icol,irow);
+            var textcolor = obj.GetTextColor(icol,irow);
+            var enabled = obj.GetEnabled(icol,irow);
+
+            if(obj.GetObjectType(icol,irow) == "buttonflat"){
+                x_html += "<div class='nkListViewValue max buttonflat' enabled='"+enabled+"'>";
+                x_html += obj.GetText(icol,irow);
+                x_html += "</div>";
+            }else {
+               
+                //x_html += "<div class='nkListViewTitle'>";
+                //x_html += obj.ColumnName(icol);
+                //x_html += "</div>";
+               
+                var objtype = obj.GetObjectType(icol,irow);
+                var datatype = obj.GetDataType(icol,irow); 
+
+
+                x_html += "<div class='nkListViewValue "+(enabled ? "enable" : "" )+"' datatype='"+datatype+"' style='background-color:"+background+";color:"+textcolor+";' >"; //<textarea "+(enabled ? "" : "disabled='disabled'")+" >
+                var valueR = "";
+                if(objtype == "checkbox"){
+                    var ischeck = obj.GetValueBolean(icol,irow);
+
+                    if(ischeck) ischeck = "checked";
+                    else  ischeck = "";
+
+                    if(!enabled) enabled = "disabled";
+                    else  enabled = "";
+
+                    valueR = "<input class='nkListViewValueCheck' "+ ischeck +" "+ enabled +" type='checkbox' >";
+                }
+                else 
+                {
+                    valueR = obj.GetText(icol,irow) + "&nbsp;";
+                }
+               
+                
+                x_html += valueR;
+                x_html += "</div>"; //</textarea>
+            }
+
+            x_html += "</div>";
+        }
+    }
+    x_html += "</div>";
+
+    $('#' + containerID).find(".nkListView").append(x_html);
+    x_html ="";
+    
+}
+
+
+function canvasCreateListHTMLDetail(obj,startrow,maxrow,containerID){
+    var x_html ="";
+    for(var irow=startrow; irow < maxrow; irow++){
+        x_html += "<div class='nkListViewRow' row='"+irow+"'>";
+        for(var icol=0; icol < obj.ColumnConfig.length; icol++){
+
+            var xwidth =  parseInt(obj.GetColumnWidth(icol) || "0");
+
+            if(xwidth <=0)
+                x_html += "<div class='nkListViewCol nwHide'  col='"+icol+"'>";
+            else 
+                x_html += "<div class='nkListViewCol'  col='"+icol+"'>";
+
+
+            var enabled = obj.GetEnabled(icol,irow);
+            var background = obj.GetBackground(icol,irow);
+            var textcolor = obj.GetTextColor(icol,irow);
+            var enabled = obj.GetEnabled(icol,irow);
+
+            if(background=="white") background = "";
+            //parseInt(nwGrid_Book.ActiveSheet.ColumnConfig[20].width) <= 10
+
+            var xclass =  obj.ColumnConfig[icol].Class || "";
+
+            if(obj.GetObjectType(icol,irow) == "buttonflat"){
+                x_html += "<div class='nkListViewValue max buttonflat' enabled='"+enabled+"'>";
+                x_html += obj.GetText(icol,irow);
+                x_html += "</div>";
+            }
+            else {
+                x_html += "<div class='nkListViewTitle'>";
+                if(obj.ReportHeader == true){
+                    x_html += obj.GetText(icol,nwGridMainCon_Book.ActiveSheet.FreezeRow-1);
+                }
+                else 
+                    x_html += obj.ColumnName(icol);
+                x_html += "</div>";
+               
+               
+                var objtype = obj.GetObjectType(icol,irow);
+                var datatype = obj.GetDataType(icol,irow); 
+
+                	
+                if(xclass.indexOf('aagnwlookupgrid') >=1 || xclass.indexOf('aagAddTolist ') >=1){
+                    datatype = "lookup";
+                    if(background=="")background =obj.DefaultSettings.lookupBackgroundColor;
+                }
+
+
+                x_html += "<div class='nkListViewValue "+(enabled ? "enable" : "" )+"' datatype='"+datatype+"' style='background-color:"+background+";color:"+textcolor+";' >"; //<textarea "+(enabled ? "" : "disabled='disabled'")+" >
+                var valueR = "";
+                if(objtype == "checkbox"){
+                    var ischeck = obj.GetValueBolean(icol,irow);
+
+                    if(ischeck) ischeck = "checked";
+                    else  ischeck = "";
+
+                    if(!enabled) enabled = "disabled";
+                    else  enabled = "";
+
+                    valueR = "<input class='nkListViewValueCheck' "+ ischeck +" "+ enabled +" type='checkbox' >";
+                }
+                else 
+                {
+                    valueR = obj.GetText(icol,irow) + "&nbsp;";
+                }
+               
+                
+                x_html += valueR;
+                x_html += "</div>"; //</textarea>
+            }
+
+            x_html += "</div>";
+        }
+        x_html += "</div>";
+
+        $('#' + containerID).find(".nkListView").append(x_html);
+        var curindex = $('#' + containerID).find(".nkListViewRow").length - 1;
+
+        for(var icol=0; icol < obj.ColumnConfig.length; icol++){
+            if(obj.GetObjectType(icol,irow) == "buttonflat"){
+                var background = obj.GetBackground(icol,irow);
+                $('#' + containerID).find(".nkListViewRow:eq("+curindex+") .nkListViewValue:eq("+icol+")").css("background-color",background);
+            }
+
+            var textcolor = obj.GetTextColor(icol,irow);
+            if(textcolor != "" && textcolor != 'black')
+                $('#' + containerID).find(".nkListViewRow:eq("+curindex+") .nkListViewValue:eq("+icol+")").css("color",textcolor);
+        }
+       
+        x_html ="";
+    }
+    
+}
+
+$(document).on("click",".nkListViewCol",function(){
+    var canvasID = $(this).parents(".nkListView").attr("canvasID");
+    var row = parseInt($(this).parents(".nkListViewRow").attr("row")+""||-1);
+    var col = parseInt($(this).attr("col")+""||-1);//.index();
+
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row = row;
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row2 =row;
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col = col;
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col2 = col;
+
+
+    p8Spread_ClickT(canvasID, row, col,this);
+    //try{p8Spread_FocusT(canvasID, row, col,this);}catch(err){}
+});
+$(document).on("dblclick",".nkListViewCol",function(){
+    var canvasID = $(this).parents(".nkListView").attr("canvasID");
+    var row = parseInt($(this).parents(".nkListViewRow").attr("row")+""||-1);
+    var col = parseInt($(this).attr("col")+""||-1);//.index();
+
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row = row;
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row2 = row;
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col = col;
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col2 = col;
+
+    p8Spread_DblClickT(canvasID, row, col,this);
+});
+function canvasListSelect(){
+
+}
+
+
+function canvasCreateList(canvasID, obj) {
+    var randomid = nwRandomString(40);
+    P8Spread_currcavas = randomid;
+    var data = obj.Data;
+    var canvasIDOrig = canvasID;
+    var containerID = canvasID;
+    canvasID = canvasID + "_vw";
+    console.log("START:" + randomid);
+
+    if (obj.gridtype == "grid") {
+        return canvasGridCreate(canvasID, obj);
+    }
+
+    if (obj.startCol <= 0) obj.startCol = 1;
+
+    obj.ScrollActive = false;
+    obj.ScrollActiveStat = false;
+
+    var isObjectCreated = false;
+    if (xTime == undefined) xTime = new Date().getTime();
+
+
+    var data = obj.Data;
+    var canvasIDOrig = canvasID;
+    var containerID = canvasID;
+    canvasID = canvasID + "_vw";
+    var _tmpExtra = 0;
+
+    var scrollhwidth = 400;
+
+
+    var scheight = 0;
+    var aminus = 72;
+
+    var canvaswidth = $('#' + containerID).width() - 20;
+    var conWidth = $('#' + containerID).width();
+    var conheight = $('#' + containerID).height();
+
+
+    if ($("#" + canvasID).hasClass("nkspread")) {
+        $('#' + containerID).attr("nwidth", "");
+        $('#' + containerID).attr("nheight", "");
+        $("#" + containerID).html("");
+        var xconWidth = $('#' + containerID).width();
+        var xconheight = $('#' + containerID).height();
+        $('#' + containerID).attr("nwidth", xconWidth);
+        $('#' + containerID).attr("nheight", xconheight);
+    }
+    else {
+        if ($('#' + containerID).attr("nwidth") > 0 && $('#' + containerID).attr("nwidth") != undefined) {
+            conWidth = $('#' + containerID).attr("nwidth");
+            conheight = $('#' + containerID).attr("nheight");
+            if($('#' + containerID).attr("nheight") <=0)
+                conheight = $('#' + containerID).height();
+        }
+        else {
+            var xconWidth = $('#' + containerID).width();
+            var xconheight = $('#' + containerID).height();
+            $('#' + containerID).attr("nwidth", xconWidth);
+            $('#' + containerID).attr("nheight", xconheight);
+        }
+    
+    }
+   
+
+
+    
+    //  conWidth = $('#' + containerID + "_vw").width();
+    //  conheight = $('#' + containerID + "_vw").height();
+    
+
+
+    if ($("#" + canvasID).index() >= 0) {
+        isObjectCreated = true;
+
+       
+
+        //setTimeout(function () {
+        //    if (obj.AutoWrap == true && obj.AutoWrapRender == false)
+        //        _sfAutoWrap(obj);
+        //}, 10);
+    }
+    else {
+        obj.havelistner = false;
+        var scrollWidth = 10;
+        var scrollHeight = 10;
+        var x_html = "";
+        $('#' + containerID).html("");
+        $('#' + containerID).addClass("P8Spread");
+
+        $('#' + containerID).attr("intanceid", containerID + "-" + _sfnwRandomString(30));
+        $('#' + containerID).css("width", "99%");
+
+        // draw button
+        var strbut = _sfnwGridButtons(obj.Book);
+        if (strbut != "") {
+            x_html += "<table id='" + canvasID + "_tbl0' class='P8Spread_HeaderButtons' p8style='width:100%'>";//main border: solid 1px #7f7f7f;border-spacing: initial;padding-right: 1px;
+            //obj.Buttons
+            x_html += "<tr>"; //Buttons
+            x_html += "<td colspan='2' p8style='padding:0px'>"; //Buttons   //;background-color:#c3c3c3;  
+
+            // x_html += "<div class='nwgridButtons' p8style='height:25px;'></div>";
+            x_html += strbut;
+
+            x_html += "</td>"; //Buttons
+            x_html += "</tr>"; //Buttons
+            x_html += "</table>";//main
+        }
+
+
+
+        x_html += "<table id='" + canvasID + "_tbl' class='P8Spread_Content' p8style='border: solid 1px #7f7f7f;border-spacing: initial;padding-right: 1px;'>";//main
+
+        x_html += "<tr p8style='padding:0px;height:" + _tmpExtra + "px;display:" + (_tmpExtra <= 0 ? "none" : "table-row") + "' >"; //Top
+        x_html += "<td colspan='2' p8style='padding:0px;background-color:#c3c3c3;  '>"; //Canvas
+        x_html += "<div id='" + canvasID + "_inpC'><input id='" + canvasID + "_inpx' autofocus type='text' /><button id='" + canvasID + "_inpB'>focus</button></div>";
+        x_html += "</td>"; //Canvas
+        x_html += "</td></td>"; //spacer
+        x_html += "</td></td>";
+        x_html += "</tr>"; //Top
+
+
+
+        x_html += "<tr p8style='padding:0px;' >"; //Content
+        x_html += "<td colspan='2' p8style='padding:0px;vertical-align:top'>"; //Canvas
+
+        x_html += "<div  id='" + canvasID + "_con'><textarea id='" + canvasID + "_inpText' class='P8Spread_TextArea paste' p8style='opacity:0;position:absolute;width0;height:0;z-index:-1;' ></textarea>";
+        //x_html += "<div  id='" + canvasID + "_con'><input id='" + canvasID + "_inpText' class='P8Spread_TextArea' p8style='opacity:0;position:absolute;width0;height:0;' />";
+
+
+        //x_html += "<div id='" + canvasID + "_selectorCon' p8style='width: 0px;height: 0px;overflow:hidden'><textarea id='" + canvasID + "_inp' class='P8Spread_Input' type='text' p8style='height: 22px;border: 2px solid #0079d9;padding-left: 5px;padding-right: 5px;resize:none;'></textarea></div>";
+        //selector
+        //
+
+
+
+        x_html += "<div id='" + canvasID + "_selectorCon' class='p8_selectorCon' p8style='width: 0px;height: 0px;overflow:hidden;'>";
+        x_html += "<input id='" + canvasID + "_inp' class='P8Spread_Input' autocomplete='off' type='text' p8style='height: 19px;border: 2px solid #0079d9;marging-left:-2px;resize:none;' />";
+        x_html += "<div id='" + canvasID + "_inpDate' class='P8Spread_Input' type='text' p8style='' />";
+        x_html += "</div>";
+
+        x_html += "</div>";
+
+        var xconheight = ($('#' + containerID).css("height")) || 0;
+        if (xconheight <= 10) xconheight = obj.Book.TableHeight || 300;
+
+        x_html += "<canvas id='" + canvasID + "' class='nklist'  p8style='height:" + xconheight + ";cursor:default;width:" + (canvaswidth) + "px;'></canvas>";
+        x_html += "<canvas id='" + canvasID + "_temp'  p8style='display:none;height:" + xconheight + ";cursor:default;width:" + (canvaswidth) + "px;'></canvas>";
+
+
+
+        x_html += "</td>"; //Canvas
+
+       
+        x_html += "<td p8style='display:none;padding:0px;min-width:" + scrollWidth + "px;width:" + scrollWidth + "px;max-width:" + scrollWidth + "px;padding-right:1px;vertical-align: top;'>"; //scroller
+        x_html += "<div id='" + containerID + "_P8Spread_ScrollUp' class='P8Spread_ScrollUp' p8style='padding: 0px;min-height: 15px;min-width: " + scrollWidth + "px;display: inline-block;background-color: #efefef;background-color: #83b8d3;border: 1px solid #607c8b;box-shadow: inset 0px 0px 5px #e5e5e5;border-radius: 3px;'></div>";
+        x_html += "<div  class='P8Spread_Scroll' p8style='padding:0px;min-width:100%;min-height:30px;background: #ececec;border: 1px solid #ececec;'><div id='" + containerID + "_P8Spread_Scroll' class='P8Spread_ScrollBar Vr' p8style='border-radius: 5px;min-height:30px;background: #bcc5ce;border-radius: 3px;background-image: -webkit-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -moz-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -ms-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -webkit-gradient(linear, 0 0, 0 100%, from (#bcc5ce), to(#bcc5ce));background-image: -webkit-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -o-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: linear-gradient(top, #bcc5ce, #bcc5ce);box-shadow: inset 1px 1px 5px #bcc5ce;border: 1px solid #bcc5ce;'><div id='" + containerID + "_P8Spread_Scroll_handler' p8style='min-width:100%;min-height:100%'></div></div></div>"; //scrollbar
+        x_html += "<div id='" + containerID + "_P8Spread_ScrollBot' class='P8Spread_ScrollBot' p8style='padding: 0px;min-height: 15px;min-width: " + scrollWidth + "px;display: inline-block;background-color: #efefef;background-color: #83b8d3;border: 1px solid #607c8b;box-shadow: inset 0px 0px 5px #e5e5e5;border-radius: 3px;'></div>";
+        x_html += "</td>"; //scroller
+        /* //scroller*/
+
+        x_html += "</tr>"; //Content
+
+
+
+    
+
+        x_html += "</table>";//main
+
+        x_html += "<div id='" + containerID + "_copy' p8style='display:none;visibility:hidden;'></div>";
+
+
+
+
+        $('#' + containerID).html(x_html);
+        $('#' + containerID).addClass("P8Spread");
+
+        $('#' + containerID).attr('isresize', 0);
+        $('#' + containerID).attr('isresetsize', 0);
+
+
+        scheight = $('#' + containerID + '_vw_tbl').outerHeight() - aminus;
+        $('#' + containerID).find(".P8Spread_Scroll").css("min-height", scheight);
+
+
+
+        $('#' + canvasID + "_inpDate").datepicker({
+            altField: '#' + canvasID + "_inp",
+            altFormat: "mm/dd/yy"
+        });
+        $('#' + canvasID + "_inpDate").css("position", "absolute");
+        $("[p8style]").each(function (i) {
+            var obj = $(this);
+            var nwstyle = obj.attr("p8style");
+            if (nwstyle != undefined) {
+                var cssstyle = nwstyle.split(";");
+                var count = cssstyle.length;
+                for (var i2 = 0; i2 < count; i2++) {
+                    try {
+                        var style = cssstyle[i2].split(":");
+                        $(obj).css(style[0], style[1]);
+                    } catch (err) { }
+                }
+                obj.removeAttr("p8style");
+            }
+        });
+
+
+        var scwidth = 0;
+        var bminus = 49;
+        scwidth = $('#' + containerID).find(".scrollerH").outerWidth() - bminus;
+
+        //if (scwidth <= 500)
+        scwidth -= 12;
+
+        $('#' + containerID).find(".P8Spread_ScrollH").css("min-width", scwidth);
+        $('#' + containerID).find(".P8Spread_ScrollH").css("max-width", scwidth);
+        $('#' + containerID).find(".P8Spread_ScrollH").css("width", scwidth);
+
+
+
+        $('#' + containerID + "_vw_inpDate").hide();
+       
+
+        //var cmpScrollUp = document.getElementById(containerID + "_P8Spread_ScrollUp");
+        //cmpScrollUp.addEventListener('click', function (event) {
+        //    obj.Book.ActiveSheet.ScrollUp();
+        //}, false);
+
+        //var cmpScrollBot = document.getElementById(containerID + "_P8Spread_ScrollBot");
+        //cmpScrollBot.addEventListener('click', function (event) {
+        //    obj.Book.ActiveSheet.ScrollDown();
+        //}, false);
+
+
+        //var cmpScrollLeft = document.getElementById(containerID + "H_P8Spread_ScrollLeft");
+        //cmpScrollLeft.addEventListener('click', function (event) {
+        //    obj.Book.ActiveSheet.ScrollLeft();
+        //}, false);
+
+        //var cmpScrollRight = document.getElementById(containerID + "H_P8Spread_ScrollRight");
+        //cmpScrollRight.addEventListener('click', function (event) {
+        //    obj.Book.ActiveSheet.ScrollRight();
+        //}, false);
+
+
+        var canvasS = document.getElementById(canvasID);
+
+        canvasS.addEventListener('mousewheel', function (event) {
+            var scrollCount = 10;
+            var rowcount = obj.Data.length * (obj.ColumnConfig.length+1);
+            var perc = 0.01;
+
+
+            perc = 2.5 / (rowcount + 0.0);
+            if (perc < 0.005) perc = 0.005;
+            //console.log("perc:" + perc);
+
+
+            var ch = $("#" + containerID + "_P8Spread_Scroll").parent().height();
+            var scrollxx = 0;
+
+
+
+            if (event.wheelDeltaY <= 0)
+                scrollxx = parseFloat($("#" + containerID + "_P8Spread_Scroll").css("top")._sfReplaceAll("px", "")) + (ch * perc);
+            else
+                scrollxx = parseFloat($("#" + containerID + "_P8Spread_Scroll").css("top")._sfReplaceAll("px", "")) - (ch * perc);
+
+            if (scrollxx <= 0) scrollxx = 0;
+
+
+
+            var a = parseFloat($("#" + containerID + "_P8Spread_Scroll").css("top").replace("px", ""));
+            var b = $("#" + containerID + "_P8Spread_Scroll").parents(".P8Spread_Scroll").height();
+            var c = $("#" + containerID + "_P8Spread_Scroll").height();
+            if (b - c < a && scrollxx >= a) scrollxx = a;
+
+
+            $("#" + containerID + "_P8Spread_Scroll").css("top", scrollxx);
+
+            var t = parseInt($("#" + containerID + "_P8Spread_Scroll").css("top")._sfReplaceAll("px", ""));
+            var h = $("#" + containerID + "_P8Spread_Scroll").outerHeight();
+            var ratio = parseFloat(h) / parseFloat(ch);
+            var totaly = (t + h);
+
+            // _sfLog(event.wheelDeltaY + " : " + rowcount);
+            //console.log(event.wheelDeltaY + " : " + rowcount);
+
+
+
+            var scrolly = rowcount * ((100 - (((ch - h) - (t)) / (ch - h) * 100)) / 100);
+            scrolly = Math.floor(scrolly) + 1;
+            if (scrolly >= rowcount) scrolly = rowcount;
+            if (scrolly <= 0) scrolly = 1;
+
+            var dataadd = parseInt(event.wheelDeltaY / 150);
+            dataadd = (dataadd * -1);
+
+            var rowadd = 0;
+            var coladd = 0;
+
+            // console.log("Data:" + dataadd);
+            if (obj.Book.ActiveSheet.startRow + dataadd <= 0) {
+                obj.Book.ActiveSheet.startRow = 1;
+                dataadd = 0;
+                coladd = 0;
+            }
+
+           
+            // if (obj.Book.ActiveSheet.startCol + dataadd >= obj.Book.ActiveSheet.ColumnConfig.Length) {
+            rowadd = dataadd;
+            coladd = 0;
+            // }
+            // else {
+            //  coladd = dataadd;
+            // }
+                
+
+            // if (obj.Book.ActiveSheet.startCol >= obj.Book.ActiveSheet.ColumnConfig.length) {
+                
+            obj.Book.ActiveSheet.ScrollRender(obj.Book.ActiveSheet.startCol + coladd, obj.Book.ActiveSheet.startRow + rowadd);
+            // }
+            // else {
+            // obj.Book.ActiveSheet.ScrollRender(obj.Book.ActiveSheet.startCol + dataadd , undefined);
+            // }
+           
+
+            try {
+                // if (nwBrowser == "Firefox")
+                event.preventDefault();
+            } catch (err) {
+
+            }
+
+            return true;
+
+            //}, true);
+        }, { passive: false });
+
+
+
+        //$("#" + containerID + "_P8Spread_Scroll").draggable({
+        //    axis: "y", containment: "parent"
+        //    , drag: function () {
+        //        //counts[1]++;
+        //        //updateCounterStatus($drag_counter, counts[1]);
+        //        var scrollCount = 10;
+        //        var rowcount = obj.Data.length;
+        //        var t = parseInt($("#" + containerID + "_P8Spread_Scroll").css("top")._sfReplaceAll("px", ""));
+        //        var h = $("#" + containerID + "_P8Spread_Scroll").outerHeight() + 1;
+        //        var ch = $("#" + containerID + "_P8Spread_Scroll").parent().height();
+        //        var ratio = parseFloat(h) / parseFloat(ch);
+        //        var totaly = (t + h);
+        //        var scrolly = rowcount * ((100 - (((ch - h) - (t)) / (ch - h) * 100)) / 100);
+        //        scrolly = Math.floor(scrolly) + 1;
+        //        if (scrolly >= rowcount) scrolly = rowcount;
+        //        if (scrolly <= 0) scrolly = 1;
+
+        //        //console.log("scrolly:" + scrolly);
+        //        //var xlength = obj.Data.length;
+        //        //if (xlength - 1 < scrolly) {
+
+        //        //} else {
+
+        //        //}
+        //        obj.Book.ActiveSheet.ScrollRender(undefined, scrolly);
+
+
+
+        //        //if (xy == 2)
+        //        //    obj.ScrollDown();
+        //        //else if (xy == 1)
+        //        //    obj.ScrollUp();
+        //        //else if (xy == 3)
+        //        //    obj.ScrollLeft();
+        //        //else if (xy == 4)
+        //        //    obj.ScrollRight();
+
+        //    }
+        //});
+
+
+
+        //$("#" + containerID + "_P8Spread_ScrollH_handler").draggable({
+        //    axis: "x", containment: "parent"
+        //    , drag: function (e) {
+        //        //counts[1]++;
+        //        //updateCounterStatus($drag_counter, counts[1]);
+        //        var scrollCount = 10;
+        //        var colminus = 7;//aag scroll
+        //        var rowcount = obj.ColumnConfig.length - colminus;
+        //        if (rowcount <= 1) rowcount = 1;
+        //        var t = parseInt($("#" + containerID + "_P8Spread_ScrollH_handler").css("left")._sfReplaceAll("px", ""));
+        //        var h = $("#" + containerID + "_P8Spread_ScrollH_handler").outerWidth();
+        //        var ch = $("#" + containerID + "_P8Spread_ScrollH_handler").parent().width();
+        //        var ratio = parseFloat(h) / parseFloat(ch);
+        //        var totaly = (t + h);
+        //        var scrollx = rowcount * ((100 - (((ch - h) - (t)) / (ch - h) * 100)) / 100);
+        //        scrollx = Math.floor(scrollx) + 1;
+        //        if (scrollx >= rowcount) scrollx = rowcount;
+        //        if (scrollx <= 0) scrollx = 1;
+
+        //        //console.log(obj.ColumnConfig.length + " " + obj.startCol + " " + scrollx);
+
+        //        if ((obj.ColumnConfig.length - colminus) < obj.startCol) {
+        //            return false;
+        //        }
+
+
+        //        obj.Book.ActiveSheet.ScrollRender(scrollx, undefined);
+
+        //    }
+        //});
+
+
+        //}, 1);
+
+
+        //column config
+        // _sfLog("Column Config Start:");
+        Spread_ColumnConfig = nwCreate2DArray(obj.ColumnConfig.length);
+        Spread_Column_backgroundColor = [];
+        for (var i = 0 ; i < obj.ColumnConfig.length; i++) {
+            var conid = "backgroundColor";
+            Spread_ColumnConfig[i][_sfGetFormatValueColumnChecker(conid)] = obj.ColumnConfig[i][conid];
+            Spread_Column_backgroundColor.push(obj.ColumnConfig[i][conid]);
+        }
+        //_sfLog("Column Config End:");
+
+
+
+
+        canvasS.addEventListener('touchstart', function (evt) { handleTouchStart(evt, obj); return false; }, false);
+        canvasS.addEventListener('touchmove', function (evt) { handleTouchMove(evt, obj); return false; }, false);
+
+        //console.log("wrap code");
+        setTimeout(function () {
+            if (obj.AutoWrap == true && obj.AutoWrapRender == false) _sfAutoWrap(obj);
+        }, 10);
+
+        //console.log("containerID:" + containerID);
+        _sfScrollUpdateSizing(containerID);
+    }
+
+
+
+    //repos
+
+
+
+
+  
+
+
+    var myCanvas = createHiDPICanvas(canvasID, conWidth, conheight, 3);
+
+    var canvasSheet = document.getElementById(canvasID);
+    var contextSheet = canvasSheet.getContext('2d');
+    var contextSheetText = canvasSheet.getContext('2d');
+
+    var canvasSheetCurrentSelected = document.getElementById(canvasID);
+    var contextCurrentSelected = canvasSheetCurrentSelected.getContext('2d');
+    var contexToolBar = canvasSheetCurrentSelected.getContext('2d');
+
+
+
+    var canvasSheetNav = document.getElementById(containerID + "_SheetConCanvas");
+    //var contextSheetNav = canvasSheetNav.getContext('2d');
+
+
+
+
+    var canvasSheetCon = document.getElementById(containerID);
+    var elemLeft = P8Spread_elemLeft;
+    var elemTop = P8Spread_elemTop;
+
+    _sfLog("Offset:" + canvasSheet.offsetLeft + ":" + canvasSheet.offsetTop);
+    var scolumn = 17;
+    var srow = 26;
+    var borderMargin = 1;
+    var borderMarginScale = 1;
+    var current_X = borderMargin;
+    var current_Y = borderMargin;
+    var current_Width = canvaswidth; // change to 100%
+    var current_Height = def_Height;
+    obj.currentCells = [];
+
+
+    srow = data.length;
+    try {
+        scolumn = obj.ColumnConfig.length;
+    } catch (err) { }
+    var t_srow = srow;
+    var t_scolumn = scolumn;
+
+
+    // whole spread default
+    var tlNumberWidth = 23;
+
+    var tlBgColor = "#c0c7d5";
+    tlNumberWidth += ((srow - 2) + "").length * 6;
+
+    var tlHBG = "#e4ecf7";
+    var tlHFont = "Arial,Tahoma";
+    var tlHFontSize = 12;
+    var tlHColor = "#212121";
+
+    var tlVBG = "#e4ecf7";
+    var tlVFont = "Arial,Tahoma";
+    var tlVFontSize = 12;
+    var tlVColor = "#212121";
+
+    var sheetStart_x = tlNumberWidth + borderMargin;
+    var defaultpadding = 2;
+
+    var scale = 1;
+
+    var selectedValue = "rgba(255,255,255,0.0)";
+
+    contextSheet.scale(scale, scale);
+    contextSheet.clearRect(0, 0, canvasSheet.width, canvasSheet.height);
+
+    contextSheet.fillStyle = obj.backgroundColor;//'#CECECE'; 'green'; //
+    contextSheet.fillRect(0, 0, canvasSheet.width, canvasSheet.height);
+
+
+
+    // obj.FreezeCol
+    var ix = -1;
+    var ix2 = 1;
+    var obj_startRow = obj.startRow;
+    var icx = -1;
+    var icx2 = 1;
+    var obj_startCol = obj.startCol;
+  
+
+    var dashedarry = [3, 5];
+    var dottedarry = [2, 2];
+    var defaultarry = [];
+    // Print Cell Records
+    current_Y = borderMargin;    // srow = 0;
+    current_X = borderMargin*2;
+
+    ix = -1;
+    ix2 = 1;
+
+
+    var jsonFreezeBgList = [];
+    var jsonFreezeTextList = [];
+    var listOfMergeDraw = [];
+    var listOfMergeDrawText = [];
+
+    var curCol = 0; // current column
+    var curRow = 0; // current row
+    var curXorigin = undefined;
+    var curYorigin = undefined;
+    var curWidth = undefined;
+    var curHeight = undefined;
+
+    if (P8Spread_currcavas != randomid) return false;
+
+    var sheetStart_y = 0;
+    var sheetStart_x = 0;
+    var plusWidth = 0;
+    var plusHeight = 0;
+    var fontsize = 12;
+
+    var columnWidthSize = canvaswidth * 0.35;
+
+    srow = obj_startRow+5;
+    if (obj_startRow >= obj.Data.length) obj_startRow = obj.Data.length;
+
+    console.log("row:" + obj_startRow);
+
+    for (var i = obj_startRow; i < srow; i++) {
+        curRow = i;
+
+
+        var myCell = {
+            x: (curXorigin || sheetStart_x + current_X),
+            y: sheetStart_y + current_Y,
+            width: (curWidth || current_Width + plusWidth),
+            height: current_Height,
+            borderWidth: borderMargin * borderMarginScale,
+            fillStyle: "white",// tlVBG,
+            strokeStyle: 'black'
+                  , row: curRow
+                , type: "row"
+        };
+        contextSheet.fillStyle = myCell.fillStyle;
+        contextSheet.lineWidth = myCell.borderWidth;
+        contextSheet.strokeStyle = myCell.strokeStyle;
+        contextSheet.fillRect(myCell.x, myCell.y, myCell.width, myCell.height);
+
+        var option = {
+            font: "bold " + tlVFontSize + "px " + tlVFont, x: defaultpadding, y: myCell.y, paddingX: defaultpadding, paddingY: defaultpadding, width: myCell.width, height: myCell.height
+             , verticalAlign: "middle"
+             , textAlign: "center"
+             , color: tlVColor
+        };
+        var canvas = document.getElementById(canvasID);
+        if (obj.RecordText !="aagempty") CanvasTextWrapper(canvas, obj.RecordText + curRow, option);
+       
+
+        current_Y += myCell.height + borderMargin;
+
+      
+        for (var ic = obj_startCol; ic <= scolumn; ic++) {
+            curCol = ic;
+
+            var myCell = {
+                x: (curXorigin || sheetStart_x + current_X) + columnWidthSize,
+                y: curYorigin || sheetStart_y + current_Y,
+                width: (curWidth || current_Width + plusWidth) - columnWidthSize,
+                height: curHeight || current_Height + plusHeight,
+                borderWidth: borderMargin * borderMarginScale,
+
+                fillStyle: "white",
+                strokeStyle: 'black'
+                  , col: curCol
+                  , row: curRow
+                  , type: "cell"
+                  , borderMargin: borderMargin
+                  , selectedValue: selectedValue
+
+
+                  , borderColorTop: obj.gridlLineColor
+                  , borderColorBottom: obj.gridlLineColor
+                  , borderColorLeft: obj.gridlLineColor
+                  , borderColorRight: obj.gridlLineColor
+
+                  , borderStyleTop: "solid"
+                  , borderStyleBottom: "solid"
+                  , borderStyleLeft: "solid"
+                  , borderStyleRight: "solid"
+
+                  , borderWidthTop: "1"
+                  , borderWidthBottom: "1"
+                  , borderWidthLeft: "1"
+                  , borderWidthRight: "1"
+            };
+
+            var option = {
+                font: " " + tlVFontSize + "px " + tlVFont, x: myCell.x + defaultpadding, y: myCell.y, paddingX: defaultpadding, paddingY: 2 * defaultpadding, width: myCell.width - (defaultpadding * 2), height: myCell.height - (defaultpadding * 2)
+                   , verticalAlign: "middle"
+                  , textAlign: "center"
+            };
+            option = _sfSetFormatText(obj, option, curCol - 1, curRow - 1);
+            option.curCol = curCol;
+            option.curRow = curRow;
+
+            var canvas = document.getElementById(canvasID);
+            var stringText = "";
+            myCell = _sfSetFormatBox(obj, myCell, curCol - 1, curRow - 1);
+            myCell.fontsize = fontsize;
+            _sfCellDrawBox(obj, contextSheetText, contextSheet, myCell);
+
+            _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedValue, borderMargin, contextCurrentSelected);
+
+            var myCell = {
+                x: (curXorigin || sheetStart_x + current_X),
+                y: sheetStart_y + current_Y,
+                width: columnWidthSize,
+                height: current_Height,
+                borderWidth: borderMargin * borderMarginScale,
+                fillStyle: tlVBG,
+                strokeStyle: 'black'
+                  , row: ix
+                , type: "row"
+            };
+            contextSheet.fillStyle = myCell.fillStyle;
+            contextSheet.lineWidth = myCell.borderWidth;
+            contextSheet.strokeStyle = myCell.strokeStyle;
+            contextSheet.fillRect(myCell.x, myCell.y, myCell.width, myCell.height);
+
+            var option = {
+                font: "bold " + tlVFontSize + "px " + tlVFont, x: defaultpadding, y: myCell.y, paddingX: defaultpadding, paddingY: defaultpadding, width: myCell.width, height: myCell.height
+               , verticalAlign: "middle"
+               , textAlign: "left"
+               , color: tlVColor
+            };
+            var canvas = document.getElementById(canvasID);
+            var colname = obj.ColumnName(curCol-1);
+            CanvasTextWrapper(canvas, colname, option);
+
+
+            current_Y += myCell.height + borderMargin;
+        }
+        obj_startCol = 1;
+
+    }
+
+    _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canvasIDOrig,contextCurrentSelected);
+
+    //if ($('#' + containerID).attr("nwidth") == undefined || $('#' + containerID).attr("nwidth") <= 0) {
+    //    var conWidth = $('#' + containerID).width();
+    //    var conheight = $('#' + containerID).height();
+    //    $('#' + containerID).attr("nwidth", conWidth);
+    //   // $('#' + containerID).attr("nheight", conheight);
+    //}
+
+}
+function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canvasIDOrig,contextCurrentSelected) {
+    if (obj.havelistner == false) {
+        console.log("ENDListner:" + randomid);
+        _sfLog("add event:");
+
+        obj.Events.push({ events: 1 });
+        try {
+
+        } catch (err) {
+            _sfLog(err);
+        }
+
+
+        canvasSheet.addEventListener('mouseup', function (event) {
+
+            obj.CellSelHover = false;
+            if (obj.IsResizeHover == true && obj.IsResizeClick == true && obj.ColumnResizable == true) {
+                var diff = obj.IsResizeColumnWidth;
+
+
+                if (obj.IsResizeHoverSValue > obj.IsResizeHoverValue)
+                    diff = obj.IsResizeHoverValue - obj.IsResizeHoverSValue;
+                else
+                    diff = obj.IsResizeHoverValue - obj.IsResizeHoverSValue;
+
+                obj.IsResizeHover = true; obj.IsResizeClick = false;
+                var widthnew = obj.IsResizeColumnWidth + diff;
+                if (widthnew <= 10) widthnew = 10;
+                obj.ColumnWidth(obj.IsResizeColumnIndex, widthnew);
+
+
+                $("#" + obj.canvasID).attr("isresize", 1);
+
+
+                return;
+            }
+        });
+
+        function getCursorPosition(canvas, event) {
+            var rect = canvas.getBoundingClientRect();
+            var x = event.clientX - rect.left;
+            var y = event.clientY - rect.top;
+            P8Spread_elemLeft = x;
+            P8Spread_elemTop = y;
+        }
+
+        // cell double click
+        canvasSheet.addEventListener('dblclick', SpreadDBClick, false);
+        function SpreadDBClick(event, iscustom) {
+            P8CurrentIDSel = obj.canvasID;
+
+            try {
+                if (obj.CellElement.type != "cell") {
+                    return;
+                }
+            } catch (err) { }
+
+            var isvalid = _sfSelectionActivate(obj);
+
+            if (iscustom == undefined) iscustom = true;
+            if (iscustom == true) {
+                try {
+                    var xdata = p8Spread_DblClickT(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
+                    if (xdata == false) isvalid = false;
+                } catch (err) { }
+            }
+
+            var xclass = obj.ColumnConfig[obj.CellSelected.col - 1].Class;
+            var classBased = _sfCheckIfClassExist(xclass, "aagnwlookupgrid");
+            if (isvalid) {
+                if (classBased) {
+                    try {
+                        var Attribute = obj.ColumnConfig[obj.CellSelected.col - 1].Attribute;
+                        var selectedInput = "";
+                        if (Attribute != undefined) {
+                            selectedInput = Attribute.split("@#aag#@")[1];
+                        }
+                        if (selectedInput != undefined) {
+                            p8Spread_CurBook = obj.canvasID;
+                            if (_sfCheckIfClassExist(xclass, "aagAddTolist")) {
+                                lookUpCustomize(selectedInput, 2, undefined, true);
+                            }
+                            else {
+                                lookUpCustomize(selectedInput, 1, undefined, true);
+                            }
+                        }
+
+                    } catch (err) { }
+                }
+                else {
+                    _sfSpreadInputShow(obj);
+                }
+            }
+        }
+
+
+        //if (isObjectCreated == false) 
+        // cell click
+        // Spread Click
+        canvasSheet.addEventListener('mousedown', SpreadMouseDown, false);
+        canvasSheet.addEventListener('click', SpreadClick, false);
+
+        function SpreadMouseDown(event) {
+            obj.ScrollActive = false;
+            obj.CellClickTime = new Date();
+            //obj.CellSelHover = false;
+            obj.CellSelHover = true;
+        }
+        function SpreadClick(event) {
+            P8CurrentIDSel = obj.canvasID;
+
+            try {
+                const diffTime = Math.abs(new Date() - obj.CellClickTime);
+                if (diffTime >= 200)
+                    return false;
+            } catch (err) { }
+
+
+            obj.ScrollActive = false;
+            //obj.CellSelHover = false;
+
+            var oldRow = obj.CellSelected.row - 1;
+            var oldCol = obj.CellSelected.col - 1;
+
+
+            if (is_vw_inpDateHover == true) {
+                return true;
+            }
+
+
+
+            if (obj.IsResizeHover == true) {
+                obj.IsResizeClick = true;
+                return;
+            }
+
+            // event
+            var x = 0, y = 0;
+            try {
+                //x = event.pageX - elemLeft,
+                //y = event.pageY - elemTop;
+                getCursorPosition(document.getElementById(obj.canvasID + "_vw"), event);
+                x = P8Spread_elemLeft;
+                y = P8Spread_elemTop;
+            } catch (err) { }
+
+            //obj.currentCells.
+            var objx = P8DataList[obj.canvasID][0].sheet.ActiveSheet.currentCells;
+            objx.forEach(function (element) {
+                if (y > element.y && y < element.y + element.height && x > element.x && x < element.x + element.width) {
+
+                    if (element.type == "col") element.fillStyle = "transaparent";
+                    if (element.type == "col") {
+
+                        obj.CellIndexes.Col = element.col - 1;
+                        obj.CellIndexes.Row = 0;
+                        obj.CellIndexes.Col2 = element.col - 1;
+                        obj.CellIndexes.Row2 = P8DataList[obj.canvasID][0].sheet.ActiveSheet.Data.length;
+                        //obj.CellElement = element;
+
+                        _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
+                        drawRectangleSelected(obj, element, contextCurrentSelected);
+                        return;
+                    }
+                    else if (element.type == "row") {
+
+                        obj.CellIndexes.Col = 0;
+                        obj.CellIndexes.Row = element.row - 1;
+                        obj.CellIndexes.Col2 = P8DataList[obj.canvasID][0].sheet.ActiveSheet.ColumnConfig.length;
+                        obj.CellIndexes.Row2 = element.row - 1;
+                        //obj.CellElement = element;
+
+                        _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
+                        drawRectangleSelected(obj, element, contextCurrentSelected);
+                        return;
+                    }
+
+
+                    //obj.CellSelHover = true;
+                    obj.CellSelValue = { col: element.col - 1, row: element.row - 1 };
+
+                    obj.CellElement = element;
+
+                    _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
+
+
+                    var addTop = element.y;
+                    var addLeft = element.x;
+                    _sfSelectorAdjust(obj.canvasID, addTop, addLeft, element);
+
+
+
+
+
+
+                    if ($("#" + obj.canvasID + "_vw_inp").val() != "" && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") == "1") {
+
+                        var xvalue = $("#" + obj.canvasID + "_vw_inp").val();
+                        if (xvalue == '__/__/____') {
+                            xvalue = "";
+                        }
+
+
+                        var oldvalue = obj.GetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")));
+
+                        // obj.SetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")), xvalue);
+                        $("#" + obj.canvasID + "_vw_inp").attr("acol2", "" + $("#" + obj.canvasID + "_vw_inp").attr("acol"));
+                        $("#" + obj.canvasID + "_vw_inp").attr("arow2", "" + $("#" + obj.canvasID + "_vw_inp").attr("arow"));
+                        try {
+                            if (xvalue != oldvalue) {
+                                if (!isNaN(oldRow) && oldRow != undefined && !isNaN(oldCol) && oldRow != undefined) {
+                                    obj.SetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")), xvalue, "text", true);
+                                    // p8Spread_Change(obj.canvasID, oldRow, oldCol);
+                                }
+                            }
+                            $("#" + obj.canvasID + "_vw_inp").attr("oldvalue", xvalue);
+                        } catch (err) { }
+                        //aag tobe continue
+                    }
+
+                    try {
+                        //$("#" + obj.canvasID + "_vw_inp").blur();
+                        $("#" + obj.canvasID + "_vw_inp").val("");
+                        //setTimeout(function () {
+                        if (_sfDetectMobile()) {
+
+                        } else {
+                            $("#" + obj.canvasID + "_vw_inp").focus();
+                        }
+                        // }, 151);
+
+                    } catch (err) { }
+
+
+
+                    //$("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+                    //$("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+                    _sfSpreadInputHide(obj);
+
+                    //try {
+                    //    $("#" + obj.canvasID + "_vw_selector").val("");
+                    //    //setTimeout(function () {
+                    //    $("#" + obj.canvasID + "_vw_selector").focus();
+                    //    // }, 151);
+                    //} catch (err) { }
+
+                    //
+                    //AAGSAMPLE
+
+                    try {
+                        if ((obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkbox"
+                            || obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkboxtext"
+                            ) && obj.GetEnabled(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == true) {
+
+                            //if (obj.ColumnConfig[obj.CellSelected.col - 1].ObjectType == "checkbox") {
+                            var value = obj.GetValue(obj.CellSelected.col - 1, obj.CellSelected.row - 1);
+                            if (_sfGetCheckboxValue(value)) {
+                                obj.SetText(obj.CellSelected.col - 1, obj.CellSelected.row - 1, "0");
+                            }
+                            else {
+                                obj.SetText(obj.CellSelected.col - 1, obj.CellSelected.row - 1, "1");
+                            }
+                        }
+                    } catch (err) { }
+
+                    _sfSelectionActivate(obj);
+
+                    try {
+                        obj.IsResizeHover = false;
+                        //obj.CellSelHover = false;
+
+
+                        p8Spread_ClickT(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
+                        p8Spread_FocusT(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
+                    } catch (err) { }
+
+                    return true;
+                }
+            });
+
+
+            _sfSpreadInputHide(obj);
+            //$("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+            //$("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+
+        }
+        if (obj.canvasID != "") {
+            $(document).on("keypress", "#" + obj.canvasID + "_vw_selectorCon ", function (e) {
+                if (e.which == 13) {
+                    _sfSpreadInputHide(obj);
+                }
+            });
+            $(document).on("change", "#" + obj.canvasID + "_vw_selectorCon ", function () {
+
+                var isvalid = false;
+                //if ($(this).hasClass("nwDatePickP8")) {
+
+                //    isvalid = true;
+                //}
+
+                if (obj.canvasID == "" && isvalid == false)
+                    return true;
+
+                //return true;
+
+
+
+                if ($("#" + obj.canvasID + "_vw_inp").attr("acol2") != $("#" + obj.canvasID + "_vw_inp").attr("acol")
+                    && $("#" + obj.canvasID + "_vw_inp").attr("arow2") != $("#" + obj.canvasID + "_vw_inp").attr("arow")
+                    ) {
+
+                    var xvalue = $("#" + obj.canvasID + "_vw_inp").val();
+                    var oldvalue = obj.GetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")));
+                    var oldRow = parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow"));
+                    var oldCol = parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol"));
+
+
+                    if (P8SpreadLastCellChange.row == oldRow && P8SpreadLastCellChange.row == oldCol) {
+                        return; // make return to remove duplicate change
+                    }
+
+
+
+                    try {
+                        if (xvalue != oldvalue) {
+                            if (!isNaN(oldRow) && oldRow != undefined && !isNaN(oldCol) && oldRow != undefined) {
+                                //p8Spread_Change(obj.canvasID, oldRow, oldCol);
+                                obj.SetText(oldCol, oldRow, xvalue, "text", true);
+                            }
+
+
+                        }
+
+                    } catch (err) { }
+
+                    $("#" + obj.canvasID + "_vw_inp").attr("acol2", "");
+                    $("#" + obj.canvasID + "_vw_inp").attr("arow2", "");
+                    $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+                    $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+                    $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+                } else {
+                    $("#" + obj.canvasID + "_vw_inp").attr("acol2", "");
+                    $("#" + obj.canvasID + "_vw_inp").attr("arow2", "");
+                    $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+                    $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+                    $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+                }
+            });
+        }
+
+
+
+        canvasSheet.addEventListener('mousemove', function (event) {
+            P8CurrentIDSel = obj.canvasID;
+
+
+            var mousePos = _sfGetMousePos(canvasSheet, event);
+
+            if (obj.IsResizeClick == true) {
+                obj.IsResizeHoverValue = mousePos.x;
+                return;
+            }
+
+            var x = 0, y = 0;
+            try {
+                x = event.pageX - elemLeft,
+                y = event.pageY - elemTop;
+            } catch (err) { }
+
+
+            //_sfLog("column Hover : " + mousePos.x + " : " + mousePos.y);
+            var iscursor = false;
+            var element_width = "";
+            var element_col = "";
+
+
+
+            iscurCellSelect = obj.currentCells.forEach(function (element) {
+                //if (mousePos.y >= element.y && mousePos.y <= element.y + element.height && mousePos.x >= element.x-1 && mousePos.x <= element.x + 2
+
+                if (obj.CellSelHover == true) {
+                    //_sfLog("Cell Hover Index : " + mousePos.y + ">=" + element.y + " && " + mousePos.y + " <= " + element.y + " + " + element.height
+                    //    + " x :" + mousePos.x + " >= " + element.x + " && " + mousePos.x + " <= " + element.x + " + " + element.width
+                    //    );
+
+                    if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
+                         && mousePos.x >= element.x && mousePos.x <= element.x + element.width
+                        ) {
+                        _sfLog("Cell  Hover : " + p8_NumberToCell(element.col) + element.row);
+
+                    }
+
+
+                    if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
+                         && mousePos.x >= element.x && mousePos.x <= element.x + element.width
+                    && element.type == "cell"
+
+                        && (obj.CellIndexes.Col2 != element.col - 1
+                        || obj.CellIndexes.Row2 != element.row - 1)
+                   ) {
+                        /// hover cell
+
+
+                        obj.CellIndexes.Col2 = element.col - 1;
+                        obj.CellIndexes.Row2 = element.row - 1;
+
+                        _sfLog("column  Hover : " + obj.CellIndexes.Col2 + " : " + obj.CellIndexes.Row2);
+
+                        //contextCurrentSelected.clearRect(0, 0, 10000, 10000);
+                        obj.RenderNoEvent();
+                        // obj.CellSelected
+                        //drawRectangleSelected(obj, element, contextCurrentSelected);
+
+
+                    }
+                }
+
+                if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
+                    && mousePos.x >= element.x + element.width - 2 && mousePos.x <= element.x + element.width + 2
+                    && element.type == "col"
+                    ) {
+                    _sfLog("column Hover : " + mousePos.x + " : " + mousePos.y);
+
+
+                    if (element.width >= 1) {
+                        element_width = element.width;
+                        element_col = element.col - 1;
+                        iscursor = true;
+                    }
+
+
+                }
+            });
+            //console.log(obj.CellSelHover);
+
+            if (iscursor == true) {
+                obj.IsResizeHover = true;
+                obj.IsResizeHoverSValue = mousePos.x;
+                obj.IsResizeColumnWidth = element_width;
+                obj.IsResizeColumnIndex = element_col;
+                $("#" + obj.canvasID + "_vw").css('cursor', 'col-resize');
+            }
+            else {
+                $("#" + obj.canvasID + "_vw").css('cursor', 'default');
+                obj.IsResize = false;
+                obj.IsResizeHover = false;
+            }
+
+
+        }, false);
+
+
+
+        /*
+        left = 37
+        up = 38
+        right = 39
+        down = 40
+        */
+        if (isObjectCreated == false) {
+            $(document).on("change", "#" + canvasID + "_inp", function () {
+                // setTimeout(function () {
+
+                //obj.Book.ActiveSheet.SetText(0, 0, $(this).val());
+                if ($(this).hasClass("nwDatePickP8")) {
+
+                } else {
+                    $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+                    $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+                    $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+                }
+
+                // }, 1);
+
+
+            });
+        }
+
+
+
+
+        var cmpInput = document.getElementById(canvasID + "_inp");
+        var p8SpreadKeysControl = ["16", "17", "18", "33", "34", "36", "35", "19", "20", "91", "93", "112", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124"];
+        //, "113" F2
+        //, "114" F3
+        cmpInput.addEventListener('keypress', function (event) {
+            // event
+
+
+        }, false);
+
+
+
+
+
+        //keypress
+        cmpInput.onkeydown = function (e) {
+            //  if (P8CurrentIDSel != obj.canvasID) return;
+            e = e || window.event;
+            var e_keyCode = e.keyCode;
+
+            if ((e_keyCode == '113')
+                && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") == "0"
+                ) {
+                SpreadDBClick(e);
+                return false;
+            }
+            else if ((e_keyCode == '114')
+                && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") == "0"
+                ) {
+                SpreadMouseDown(e);
+                //lookup 
+                return false;
+            }
+            if (e_keyCode == '13' && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") == "0") {
+                e_keyCode = '40';
+            }
+
+            // event
+            var isValid = true;
+
+
+            var xy = 0;
+            _sfLog("key down:" + e.keyCode);
+
+            if (e_keyCode == '27') {
+                $("#" + obj.canvasID + "_vw_inp").val("");
+                $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+                $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+                $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+                return true;
+            }
+
+            if (e_keyCode == '38' || e_keyCode == '40' || e_keyCode == '37' || e_keyCode == '39'
+                 || e_keyCode == '9' || e_keyCode == '13'
+                ) {
+                if ($('#' + obj.canvasID + '_vw_selectorCon').css("opacity") == "1") {
+                    //, "text",true
+                    obj.SetText(undefined, undefined, $("#" + obj.canvasID + "_vw_inp").val(), "text", true);
+                    //else obj.SetText(undefined, undefined, $("#" + obj.canvasID + "_vw_inp").val());
+
+                    $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+                    $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+                    $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+
+                    try {
+                        // p8Spread_Change(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
+                    } catch (err) { }
+                    try {
+                        // p8Spread_Focus(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
+                    } catch (err) { }
+
+                }
+
+            }
+            else {
+
+                var keyisavalid = true;
+                try {
+                    keyisavalid = p8Spread_KeyPress(e);
+                } catch (err) { }
+                if (keyisavalid == false) return keyisavalid;
+            }
+
+            if (e_keyCode == '38') {
+                // up arrow
+                if (obj.CellIndexes.Row - 1 < 0) return;
+
+                if (obj.startRow >= obj.Data.length) {
+                    obj.startRow -= obj.FreezeRow;
+                }
+
+                //obj.CellIndexes.Row -= 1;
+                //obj.CellIndexes.Row2 = obj.CellIndexes.Row;
+
+                var cell = { row: -1, col: -1 };
+
+                var ismerge = _sfCheckIfMerge(obj, obj.CellIndexes.Col, obj.CellIndexes.Row - 1, "row", cell);
+                if (ismerge) {
+                    while (ismerge) {
+                        obj.CellIndexes.Row -= 1;
+                        obj.CellIndexes.Row2 = obj.CellIndexes.Row;
+                        ismerge = _sfCheckIfMerge(obj, obj.CellIndexes.Col, obj.CellIndexes.Row, "row", cell);
+                        obj.startRow -= 1;
+                    }
+                    obj.CellIndexes.Col = obj.CellIndexes.Col2 = cell.col;
+                    obj.CellIndexes.Row += 1;
+                    obj.CellIndexes.Row2 = obj.CellIndexes.Row;
+                }
+                else {
+                    obj.CellIndexes.Row -= 1;
+                    obj.CellIndexes.Row2 = obj.CellIndexes.Row;
+                }
+
+                xy = 1;
+            }
+            else if (e_keyCode == '40') {
+                // down arrow
+
+                //if end of theline
+                if (obj.Data.length <= obj.CellIndexes.Row + 1) return;
+
+                if (obj.CellIndexes.Row + 1 == obj.FreezeRow) {
+                    if (obj.startRow != 1) obj.startRow = 0;
+                    else obj.startRow = 1;
+                }
+
+                var cell = { row: -1, col: -1 };
+                var ismerge = _sfCheckIfMerge(obj, obj.CellIndexes.Col, obj.CellIndexes.Row, "row", cell);
+                if (ismerge) {
+                    while (ismerge) {
+                        obj.CellIndexes.Row += 1;
+                        obj.CellIndexes.Row2 = obj.CellIndexes.Row;
+                        ismerge = _sfCheckIfMerge(obj, obj.CellIndexes.Col, obj.CellIndexes.Row, "row", cell);
+                    }
+                    obj.CellIndexes.Col = obj.CellIndexes.Col2 = cell.col;
+                }
+                else {
+                    obj.CellIndexes.Row += 1;
+                    obj.CellIndexes.Row2 = obj.CellIndexes.Row;
+                }
+
+
+                xy = 2;
+            }
+            else if (e_keyCode == '37' || (e_keyCode == '9' && e.shiftKey)) {
+                // left arrow
+
+                var colvalue = obj.CellIndexes.Col;
+                var colvalue2 = colvalue;
+                var xwidth = 0;
+                do {
+                    colvalue -= 1;
+                    colvalue2 = colvalue;
+                    try {
+                        xwidth = obj.ColumnConfig[colvalue].width;
+                    } catch (err) {
+                        xwidth = 0;
+                    }
+                } while (xwidth == 0 && colvalue <= obj.ColumnConfig.length - 1 && colvalue >= 0)
+
+                if (obj.startCol >= obj.ColumnConfig.length) {
+                    obj.startCol -= obj.FreezeCol;
+                }
+
+                if (colvalue < 0) return;
+
+                var cell = { row: -1, col: -1 };
+                var ismerge = _sfCheckIfMerge(obj, obj.CellIndexes.Col - 1, obj.CellIndexes.Row, "col", cell);
+                if (ismerge == true) {
+                    colvalue = cell.col;
+                    obj.startCol = colvalue;
+                    obj.CellIndexes.Row = obj.CellIndexes.Row2 = cell.row;
+
+                }
+
+                if ((xwidth == 0 && colvalue <= obj.ColumnConfig.length - 1)) {
+
+                } else {
+                    obj.CellIndexes.Col = colvalue;
+                    obj.CellIndexes.Col2 = colvalue2;
+                }
+
+                xy = 3;
+                if ((e_keyCode == '9' && e.shiftKey))
+                    isValid = false;
+            }
+            else if (e_keyCode == '39' || (e_keyCode == '9')) {
+                // right arrow
+                if (obj.CellIndexes.Col >= obj.ColumnConfig.length) return;
+
+                var colvalue = obj.CellIndexes.Col;
+                var colvalue2 = colvalue;
+                var xwidth = 0;
+                do {
+                    colvalue += 1;
+                    colvalue2 = colvalue;
+                    colvalue2 = colvalue;
+                    try {
+                        xwidth = obj.ColumnConfig[colvalue].width;
+                    } catch (err) {
+                        xwidth = 0;
+                    }
+                } while (xwidth == 0 && colvalue <= obj.ColumnConfig.length - 1)
+                if ((xwidth == 0 && colvalue <= obj.ColumnConfig.length - 1)) {
+
+                }
+                else if (colvalue >= obj.ColumnConfig.length) {
+                    return;
+                }
+                else {
+                    obj.CellIndexes.Col = colvalue;
+                    obj.CellIndexes.Col2 = colvalue2;
+                }
+
+                xy = 4;
+                if ((e_keyCode == '9'))
+                    isValid = false;
+            }
+            //else if (e_keyCode== '9' && e.shiftKey) {
+            //    // Shift + Tab
+            //    if (obj.CellIndexes.Col - 1 < 0) return;
+            //    obj.CellIndexes.Col -= 1;
+            //    obj.CellIndexes.Col2 = obj.CellIndexes.Col;
+            //    xy = 4; isValid = false;
+            //}
+            //else if (e_keyCode== '9') {
+            //    // Tab
+            //    if (obj.CellIndexes.Col >= obj.ColumnConfig.length - 1) return;
+
+            //    var colvalue = obj.CellIndexes.Col;
+            //    var colvalue2 = colvalue;
+            //    var xwidth = 0;
+            //    do {
+            //        colvalue += 1;
+            //        colvalue2 = colvalue;
+            //        try {
+            //            xwidth = obj.ColumnConfig[colvalue].width;
+            //        } catch (err) {
+            //            xwidth = 0;
+            //        }
+            //    } while (xwidth == 0 && colvalue <= obj.ColumnConfig.length - 1)
+            //    if ((xwidth == 0 && colvalue <= obj.ColumnConfig.length - 1)) {
+
+            //    } else if (colvalue >= obj.ColumnConfig.length) {
+            //        return;
+            //    } else {
+            //        obj.CellIndexes.Col = colvalue;
+            //        obj.CellIndexes.Col2 = colvalue2;
+            //    }
+
+            //    xy = 4; isValid = false;
+            //}
+
+
+            if (xy >= 1 && xy <= 4) {
+
+                $("#" + obj.canvasID + "_vw_inp").val("");
+
+                obj.CellIndexes.Col2 = obj.CellIndexes.Col;
+                obj.CellIndexes.Row2 = obj.CellIndexes.Row;
+
+                var scrollcount = 1;
+                var isScrolled = false;
+
+                //check width next scroll
+                var conWidthDraw = conWidth - (100);
+                var icounter = obj.startCol - 1;
+                icounter += obj.FreezeCol;
+                icounter -= 1;
+                var applyfreezeW = 0;
+
+                //console.log("width checker");
+                while (conWidthDraw >= 0) {
+                    var widthcol = def_Width;
+                    try {
+                        widthcol = obj.ColumnConfig[icounter].width;
+                    } catch (err) { }
+
+                    if (applyfreezeW < obj.FreezeCol) {
+                        widthcol = obj.ColumnConfig[applyfreezeW].width;
+                        applyfreezeW++;
+                        // if ((conWidthDraw - widthcol) <= 0) break;
+                        // console.log(_sfGetCellName(obj, applyfreezeW) + " " + (conWidthDraw - widthcol) + " " + applyfreezeW);
+                    }
+                    else {
+                        icounter++;
+                        // if ((conWidthDraw - widthcol) <= 0) break;
+                        //console.log(_sfGetCellName(obj, icounter) + " " + (conWidthDraw - widthcol) + " " + icounter);
+                    }
+
+                    conWidthDraw -= widthcol;
+                    if (conWidthDraw <= 0 && xy == 4 && obj.CellIndexes.Col >= icounter) { isScrolled = true; }
+                    if (icounter >= 1000) break;
+                    // if (icounter >= 50) { console.log("aa"); break; }
+                }
+
+
+
+
+                if (isScrolled) {
+                    scrollcount += 1;
+                }
+
+                //scrollcount += 3;
+
+
+                var isconnect = false;
+
+                if (isScrolled == false) {
+                    obj.currentCells.forEach(function (element) {
+
+                        if (obj.CellIndexes.Col == element.col - 1 && obj.CellIndexes.Row == element.row - 1) {
+                            try {
+                                $("#" + obj.canvasID + "_vw_inp").val("");
+                            } catch (err) { }
+
+                            _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
+
+                            isconnect = true;
+                        }
+                        else {
+
+                        }
+
+                    });
+                }
+
+
+                // fixed the scroll down
+                var highrow = -1;
+                var lowrow = -1;
+                obj.currentCells.forEach(function (element) {
+                    if (element.row - 1 > highrow) {
+                        highrow = element.row - 1;
+                    }
+                    if (element.row - 1 <= lowrow) {
+                        lowrow = element.row - 1;
+                    }
+                });
+                if (obj.CellIndexes.Row >= highrow - (obj.CellRowMaxAdd - 1)) {
+                    scrollcount = scrollcount;
+                    isconnect = false;
+                }
+
+
+
+                if (isconnect == false) {
+
+                    if (xy == 2) {
+                        obj.ScrollDown(scrollcount);
+                    }
+                    else if (xy == 1)
+                        obj.ScrollUp(scrollcount);
+                    else if (xy == 3)
+                        obj.ScrollLeft(scrollcount);
+                    else if (xy == 4)
+                        obj.ScrollRight(scrollcount);
+                }
+                setTimeout(function () {
+                    try {
+                        p8Spread_FocusT(obj.canvasID, obj.CellIndexes.Row, obj.CellIndexes.Col);
+                    } catch (err) { }
+
+                }, 1);;
+            }
+            else if (e_keyCode == "46") // delete key   //|| e_keyCode== "8" backspace
+            {
+                var rowstart = obj.CellIndexes.Row;
+                var containerlen = 0;
+                obj.RenderStatus = false;
+                for (var i = rowstart; i <= obj.CellIndexes.Row2; i++) {
+                    for (var ic = obj.CellIndexes.Col ; ic <= obj.CellIndexes.Col2; ic++) {
+                        obj.RenderStatus = false;
+                        if (_sfCheckEnable(obj, i, ic)) {
+                            obj.SetText(ic, i, "", "text", true);
+                            try {
+                                //p8Spread_Change(obj.canvasID, i - 1, ic - 1);
+                            } catch (err) { }
+                        }
+
+
+
+                    }
+                }
+                setTimeout(function () {
+
+                    obj.RenderStatus = true;
+                    obj.ScrollActive = true;
+                    obj.RenderNoEvent();
+                    // _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
+                }, 100);
+                return true;
+            }
+            else {
+                if (
+                    ((e.ctrlKey || e.altKey || e.shiftKey) && p8SpreadKeysControl.indexOf(e_keyCode + "") >= 0 && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") != "1")
+                    || p8SpreadKeysControl.indexOf(e_keyCode + "") >= 0
+                    )
+                    isValid = false;
+                else {
+                    var isvalid = _sfSelectionActivate(obj);
+
+                    if (isvalid && e.ctrlKey == false) {
+                        _sfSpreadInputShow(obj, true);
+                        //$("#" + obj.canvasID + "_vw_inp").attr("acol", obj.CellIndexes.Col);
+                        //$("#" + obj.canvasID + "_vw_inp").attr("arow", obj.CellIndexes.Row)
+                        //$("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "1");
+                        //$("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "visible");
+                        //aagbenedict
+                        //if (obj.GetDataType() == "date") {
+                        //    $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").show();
+                        //}
+                    }
+
+
+                }
+
+                //if (e_keyCode== '67' && e.ctrlKey) //copy
+                //{
+
+                //}
+
+                if (e_keyCode == '86' && e.ctrlKey) //paste  //&& $("#" + obj.canvasID + "_vw_selectorCon").css("opacity")=="0"
+                {
+                    if (document.activeElement.classList.contains('P8Spread_Input')) {
+                        $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+                        $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+                        $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+                        $('#' + obj.canvasID + '_vw_inpText').val("");
+                        $('#' + obj.canvasID + '_vw_inpText').focus();
+                        setTimeout(function () {
+                            //console.log($('#' + obj.canvasID + '_vw_inpText').val());
+                            $('#' + obj.canvasID + '_vw_inpText').addClass("paste");
+                            _sfPaste(obj);
+                        }, 100);
+                    }
+                    return true;
+                }
+                //else if(e.ctrlKey) //paste
+                //{
+                //    $('#' + obj.canvasID + '_vw_inpText').val("");
+                //    $('#' + obj.canvasID + '_vw_inpText').focus();
+                //    return true;
+                //}
+
+
+
+
+
+            }
+
+            return isValid;
+            //return isValid;
+        };
+
+        var isCopying = false;
+        $(document).keydown(function (e) {
+            if (P8CurrentIDSel != obj.canvasID) return;
+
+            var isSpread = false;
+
+            if (e.ctrlKey == false) return true;
+            if (e.keyCode == 67 && e.ctrlKey) {
+                console.log("copy");
+                try {
+                    _sfP8Spread_Copy(obj, e,undefined,"copy");
+                    _sfLog("Length to be Copied:" + textToPutOnClipboardHTML.length);
+                    _sfCopy(textToPutOnClipboardHTML, obj.canvasID);
+
+                } catch (err) { isCopying = false; }
+              
+                return false;
+            }
+            else if (e.keyCode == 86 && e.ctrlKey) {
+                //check if focusing in spread
+                if (document.activeElement.classList.contains('P8Spread_Input')) {
+                    $('#' + obj.canvasID + '_vw_inpText').val("");
+                    $('#' + obj.canvasID + '_vw_inpText').focus();
+                    if ($(":focus").hasClass("P8Spread_Input")) {
+                        return true;
+                    }
+                    console.log("paste");
+                    $('#' + obj.canvasID + '_vw_inpText').addClass("paste");
+                    setTimeout(function () {
+                        _sfPaste(obj);
+                    }, 10);
+                }
+                return true;
+            }
+
+
+        });
+
+
+        obj.havelistner = true;
+    }
+}
+
 
 function _sfRenderObjects(obj) {
     //aagedit
@@ -6307,12 +8842,18 @@ function canvasGridCreate(canvasID, obj) {
 }
 
 function _sfCellDrawBox(obj, contextSheetText, contextSheet, myCell) {
+
+    var objecttype = obj.GetObjectType(myCell.col-1, myCell.row-1);
+   
+
     contextSheetText.font = myCell.fontsize + "px Arial";
     contextSheetText.fillStyle = "black";
-    if (myCell.fillStyle == "inherit")
+    if (myCell.fillStyle == "inherit" || objecttype == "button" || objecttype == "remarks")
         contextSheet.fillStyle = "white";
     else
         contextSheet.fillStyle = myCell.fillStyle;
+
+
 
     contextSheet.lineWidth = myCell.borderWidth;
     contextSheet.strokeStyle = myCell.strokeStyle;
@@ -6335,7 +8876,8 @@ function _sfCellDrawBox(obj, contextSheetText, contextSheet, myCell) {
 
 
 
-function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedValue, borderMargin, contextCurrentSelected) {
+function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedValue, borderMargin, contextCurrentSelected, isSpread) {
+    if(isSpread==undefined) isSpread=true;
     var dashedarry = option.dashedarry;
     var dottedarry = option.dottedarry;
     var curCol = option.curCol;
@@ -6477,30 +9019,38 @@ function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedVa
 
 
     var stringText = "";
-
-    try {
-        stringText = ""; //data[i-1][Object.keys(obj.Data[i-1])[ic-1]];
-        stringText = obj.GetValue(curCol - 1, curRow - 1);//;data[i - 1][Object.keys(obj.Data[i - 1])[ic - 1]];
-
+    var stringValue = "";
+    if (obj.ShowFormula == true && isSpread == true) {
+        stringText = obj.GetFormula(curCol - 1, curRow - 1);
+    }
+    else {
         try {
-            var stringText2 = obj.GetText2(curCol - 1, curRow - 1);
-            if ((stringText2 != "" && stringText2 != undefined && stringText2 != NaN))
-                stringText = stringText2;
-        } catch (err) {
+            stringText = ""; //data[i-1][Object.keys(obj.Data[i-1])[ic-1]];
+            stringText = obj.GetValue(curCol - 1, curRow - 1);//;data[i - 1][Object.keys(obj.Data[i - 1])[ic - 1]];
+            stringValue = stringText;
+            try {
+                var stringText2 = obj.GetText2(curCol - 1, curRow - 1);
+                if ((stringText2 != "" && stringText2 != undefined && stringText2 != NaN))
+                    stringText = stringText2;
+            } catch (err) {
 
-        }
+            }
 
-    } catch (err) { }
-
+        } catch (err) { }
+    }
+   
+     
     ////format
     ////obj.CellSelected.col 
     stringText = _sfDataTypeFormater(obj, option, stringText, false);
 
     stringText = stringText.replaceAll("nwNewLine", "\n").replaceAll("anwNewXLineX", "\n");
 
-    if (obj.ColumnConfig[curCol - 1].width < 5) {
-        stringText = "";
-    }
+    try {
+        if (obj.ColumnConfig[curCol - 1].width < 5) {
+            stringText = "";
+        }
+    } catch (err) { }
 
 
 
@@ -6510,6 +9060,8 @@ function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedVa
     //if (option.dataType == "number") {
     //    stringText = _sfNumberFormat(stringText, 2, ".", ",");
     //}
+
+    stringText = stringText.replaceAll("&nbsp;", " ");
 
     //display object
     var cobjecttype = _sfCheckObjectType(obj, curRow - 1, curCol - 1);
@@ -6544,7 +9096,25 @@ function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedVa
         //    contextSheet.drawImage(img, option.x, option.y, option.width, option.height);
         //} catch (err) { console.log("error log:" + err); }
     }
+    else if (cobjecttype == "button" || cobjecttype == "remarks") {
+
+        var bgcolorvalue = option.backgroundColor;
+        
+        if (cobjecttype == "remarks" && (stringValue + "").trim() != "")
+            bgcolorvalue = "green";
+
+        _sfDrawButton(contextSheet, option.x, option.y + 1, option.width, option.height + 2, bgcolorvalue);
+        CanvasTextWrapper(canvas, stringText, option);
+      
+    }
     else {
+        var indent  = obj.GetTextIndent(curCol - 1, curRow - 1);
+        if (indent > 0) {
+            //var align = obj.GetTextAlign(curCol - 1, curRow - 1);
+            var totalindent = indent * 5;
+            option.x = option.x + totalindent;
+            option.width = option.width - totalindent;
+        }
         if ((option.currencyCode || "") != "") {
             var currencyCode = option.currencyCode;
             var symbols = P8Spread_Currency[currencyCode].symbols;
@@ -6568,28 +9138,8 @@ function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedVa
                 CanvasTextWrapper(canvas, stringText + " " + symbols, option);
             }
         }
-        else {
-
-            if (cobjecttype == "button") {
-                //var c = document.getElementById("myCanvas");
-                //var ctx = c.getContext("2d");
-
-                var buttonbg = _sfCheckConfigType(obj, curRow - 1, curCol - 1, "ButtonBG", "gray");
-                var buttonText = _sfCheckConfigType(obj, curRow - 1, curCol - 1, "ButtonText", "");
-                if (buttonText != "")
-                    stringText = buttonText;
-
-                var my_gradient = contextSheet.createLinearGradient(0, 0, 0, option.x + option.width);
-                my_gradient.addColorStop(0, "silver");
-                my_gradient.addColorStop(1, buttonbg);
-                my_gradient.addColorStop(1, buttonbg);
-                contextSheet.fillStyle = my_gradient;
-                contextSheet.fillRect(option.x, option.y+2, option.width, option.height);
-            }
-
+        else
             CanvasTextWrapper(canvas, stringText, option);
-
-        }
     }
 
 
@@ -6654,6 +9204,8 @@ function _sfDataTypeFormater(obj, xoption, stringText, getdataonly) {
     } catch (err) { }
 
 
+  
+
 
     //display format
     if (finaldataType == "currency") {
@@ -6714,6 +9266,10 @@ function _sfDataTypeFormater(obj, xoption, stringText, getdataonly) {
 
         }
         //stringText = _sfNumberFormat(stringText, 2, ".", ",");
+    }
+
+    if (finaldataType == "currency" || finaldataType == "percent" || finaldataType == "percentvalue" || finaldataType == "number") {
+        if(parseFloat(stringText) < 0)  stringText = "(" + stringText.replace("-","") + ")";
     }
 
     return stringText;
@@ -6842,7 +9398,11 @@ function _sfCheckConfigType(obj, _row, _col, type, defvalue) {
     try {
         if (_row != Spread_ALLROW && _col != Spread_ALLCOL) {
             var config = obj.Data[_row][_sfGetCellName(obj, _col)].Config;
-            cell = _sfGetFormatValue(obj, config, type, true, _col, _row);
+            var configCondi ;
+            try{
+                configCondi = obj.Data[_row][_sfGetCellName(obj, _col)].ConfigCondition;
+            } catch (err) {}
+            cell = _sfGetFormatValue(obj, config, type, true, _col, _row,configCondi);
         }
     } catch (err) {
         return value;
@@ -6894,7 +9454,11 @@ function _sfCheckEnable(obj, _row, _col) {
 
     try {
         var config = obj.Data[_row][_sfGetCellName(obj, _col)].Config;
-        cell = _sfGetFormatValue(obj, config, "Enabled", true, _col, _row);
+        var configCondi ;
+        try{
+            configCondi = obj.Data[_row][_sfGetCellName(obj, _col)].ConfigCondition;
+        } catch (err) {}
+        cell = _sfGetFormatValue(obj, config, "Enabled", true, _col, _row,configCondi);
     } catch (err) { return false; }
 
 
@@ -6963,6 +9527,15 @@ function _sfSelectionActivate(obj) {
     var arow = obj.CellSelected.row - 1;
     var ColumnTemplate = "";
 
+    var maxlength = obj.GetMaxLength(acol, arow);
+    if (maxlength != undefined && !isNaN(maxlength)) {
+        $('#' + obj.canvasID + '_vw_inp').attr("maxlength", maxlength);
+    }
+    else {
+        $('#' + obj.canvasID + '_vw_inp').attr("maxlength", "-1");
+    }
+
+
     try {
         ColumnTemplate = obj.ColumnConfig[acol].ColumnTemplate;
     } catch (err) { }
@@ -6977,7 +9550,6 @@ function _sfSelectionActivate(obj) {
     //) ColumnTemplate = "nwPercentValue";
 
     //Precision
-
 
 
 
@@ -6999,7 +9571,10 @@ function _sfSelectionActivate(obj) {
     else {
         //$("#" + obj.canvasID + "_vw_selectorCon").hide();
 
-        $('#' + obj.canvasID + '_vw_inp').unmask();
+        try {
+            $('#' + obj.canvasID + '_vw_inp').unmask();
+        } catch (err) { }
+
         $('#' + obj.canvasID + '_vw_inpDate').hide();
         $('#' + obj.canvasID + '_vw_inp').attr("class", "P8Spread_Input " + ColumnTemplate);
     }
@@ -7360,8 +9935,15 @@ function _sfSelectorAdjust(id, addTop, addLeft, elem) {
 }
 
 
-var textToPutOnClipboardHTML = "<table p8style=' border-collapse: collapse;'>";
-function _sfP8Spread_Copy(obj, e, istart) {
+var textToPutOnClipboardHTML = "<table p8style='border-collapse: collapse; background-color:transparent;'>";
+function _sfP8Spread_Copy(obj, e, istart,isCut) {
+    var p8item = isCut ? "cut" : "copy";
+    textToPutOnClipboardHTML = `<table p8style=' border-collapse: collapse;'`
+    textToPutOnClipboardHTML += `p8item='${p8item}'`
+    textToPutOnClipboardHTML += `p8col='${obj.CellIndexes.Col}' p8row='${obj.CellIndexes.Row}'`
+    textToPutOnClipboardHTML += `p8col2='${obj.CellIndexes.Col2}' p8row2='${obj.CellIndexes.Row2}'`
+    textToPutOnClipboardHTML += `>`;
+
     //var obj=mSpread;
     if (istart == undefined) istart = 0;
     var textToPutOnClipboard = "";
@@ -7375,6 +9957,8 @@ function _sfP8Spread_Copy(obj, e, istart) {
         textToPutOnClipboardHTML += "<tr>";
         for (var ic = obj.CellIndexes.Col ; ic <= obj.CellIndexes.Col2; ic++) {
 
+            optionText = {};
+            optionBox = {};
             optionText = _sfSetFormatText(obj, optionText, ic, i);
             optionBox = _sfSetFormatBox(obj, optionBox, ic, i);
 
@@ -7383,7 +9967,12 @@ function _sfP8Spread_Copy(obj, e, istart) {
             if (ic > obj.CellIndexes.Col) textToPutOnClipboard += "\t";
             textToPutOnClipboard += xvalue;
 
-            textToPutOnClipboardHTML += "<td style='background-color:" + optionBox.backgroundColor + ";";
+            var optionBox_backgroundColor = "background-color:" + "transparent";
+            if (optionBox.backgroundColor != undefined)
+                optionBox_backgroundColor = "background-color:" + optionBox.backgroundColor;
+
+
+            textToPutOnClipboardHTML += "<td style='" + optionBox_backgroundColor + ";";
 
             textToPutOnClipboardHTML += ";border-top:" + optionBox.borderWidthTop + "px " + optionBox.borderStyleTop + " " + optionBox.borderColorTop + ";";
             textToPutOnClipboardHTML += ";border-Bottom:" + optionBox.borderWidthBottom + "px " + optionBox.borderStyleBottom + " " + optionBox.borderColorBottom + ";";
@@ -7410,50 +9999,33 @@ function _sfP8Spread_Copy(obj, e, istart) {
         containerlen = containerlen + 1;
 
 
-        //var index = i;
-        //if (obj.CellIndexes.Row + index + 10 == containerlen) {
-        //    setTimeout(function () { _sfP8Spread_Copy(obj, e, index + 1) }, 5);
-        //    break;
-        //}
-
     }
     if (textToPutOnClipboard.endsWith("\r\n"))
         textToPutOnClipboard = textToPutOnClipboard.substring(0, textToPutOnClipboard.length - ("\r\n".length));
 
-
-    //textToPutOnClipboardHTML += "</table>";
-
-    //$("#" + obj.canvasID + "_copy").html(textToPutOnClipboardHTML);
-    //_sfCopy(obj.canvasID + "_copy");
-
-    //_sfCopy(textToPutOnClipboardHTML);
+    
+    textToPutOnClipboardHTML += "</table>";
 
 }
 function _sfCopy(html, canvasID) {
-    //var aux = document.createElement("div");
     var aux = document.createElement("div");
-    try {
-        $("#" + canvasID + "_copyX").remove();
-    } catch (err) { }
-    aux.id = canvasID + "_copyX";
-    //$(aux).insertAfter("#" + canvasID + "_copy");
-    $("#" + canvasID + "_vw_selectorCon").prepend(aux);
-    $("#" + canvasID + "_vw_selectorCon").css("opacity", "1");
-    $("#" + canvasID + "_vw_selectorCon").css("height", "inherit");
-    $("#" + canvasID + "_vw_selectorCon").css("width", "inherit");
+    if (document.getSelection().toString() != "") {
 
-
-    //var aux = document.getElementById(canvasID +"_copy");
-
-    aux.setAttribute("contentEditable", true);
-    aux.innerHTML = html;//document.getElementById(element_id).innerHTML;
-    //aux.setAttribute("onfocus", "document.execCommand('selectAll',false,null)");
-    //document.body.appendChild(aux);
-
-    aux.focus();
-    document.execCommand('selectAll', false, null);
+    } else {
+        try {
+            $("#" + canvasID + "_copyX").remove();
+        } catch (err) { }
+        aux.id = canvasID + "_copyX";
+        $("#" + canvasID + "_vw_selectorCon").prepend(aux);
+        $("#" + canvasID + "_vw_selectorCon").css("opacity", "1");
+        $("#" + canvasID + "_vw_selectorCon").css("height", "inherit");
+        $("#" + canvasID + "_vw_selectorCon").css("width", "inherit");
+        aux.setAttribute("contentEditable", true);
+        aux.innerHTML = html;//document.getElementById(element_id).innerHTML;
+        aux.focus();
+        document.execCommand('selectAll', false, null);
+    }
     document.execCommand("copy");
-    //document.body.removeChild(aux);
     setTimeout(function () { $(aux).remove(); }, 100);
     $("#" + canvasID + "_vw_selectorCon").css("opacity", "0");
     $("#" + canvasID + "_vw_selectorCon").css("height", "0");
@@ -7465,10 +10037,13 @@ function _sfCopy(html, canvasID) {
 
 var P8Paster = false;
 function _sfPaste(obj) {
+    $('#' + obj.canvasID + '_vw_inpText').addClass("paste"); //  P8Spread_TextArea 
+   
 
     if (P8Paster == true) return;
     var data = $('#' + obj.canvasID + '_vw_inpText').val();
 
+    //mSpread_vw_inpText
     if (data == "")
         data = $('#' + obj.canvasID + '_vw_inp').val();
 
@@ -7506,7 +10081,13 @@ function _sfPaste(obj) {
 
             obj.RenderStatus = false;
             obj.Book.ActiveSheet.RenderStatus = false;
-            obj.Book.ActiveSheet.SetText(startx, starty, cells[x], "text", true);
+
+            var maxlength = obj.Book.ActiveSheet.GetMaxLength(startx, starty);
+            var strtext = cells[x];
+            if (maxlength >= 0) {
+                strtext = strtext.substring(0, maxlength);
+            }
+            obj.Book.ActiveSheet.SetText(startx, starty, strtext, "text", true);
             //row.append('<td>' + cells[x] + '</td>');
             startx++;
         }
@@ -7527,7 +10108,28 @@ function _sfPaste(obj) {
         P8Paster = false;
         $("#" + obj.canvasID + "_vw").focus();
         $("#" + obj.canvasID + "_vw").trigger("click");
+        
+       
     }, 300);
+
+    try {
+        var textToPutOnClipboard = $(textToPutOnClipboardHTML);
+        var p8item= textToPutOnClipboard.attr("p8item");
+        if(p8item == "cut"){
+            var p8col = textToPutOnClipboard.attr("p8col");
+            var p8col2 = textToPutOnClipboard.attr("p8col2");
+            var p8row = textToPutOnClipboard.attr("p8row");
+            var p8row2 = textToPutOnClipboard.attr("p8row2");
+            for (var i = p8row; i <= p8row2; i++) {
+                for (var j = p8col; j <= p8col2; j++) {
+                    obj.Book.ActiveSheet.SetText(j, i, "");
+                    //obj.Book.ActiveSheet.SetUnmerge(j, i);
+                    obj.Book.ActiveSheet.DeleteConfigData(j, i)
+                }
+            }
+            textToPutOnClipboardHTML = "";
+        }
+    } catch (err) { }
 }
 
 var aaa = 0;
@@ -7659,7 +10261,11 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
     if (icol == undefined) icol = obj.CellIndexes.Col;
     if (irow == undefined) irow = obj.CellIndexes.Row;
 
+    if (icol2 == undefined) icol2 = obj.CellIndexes.Col2;
+    if (irow2 == undefined) irow2 = obj.CellIndexes.Row2;
+
     var config = [];
+    var configCondi = [];
     var tempvalue = undefined;
     var tempvalueX = undefined;
     var temp1 = "";
@@ -7674,6 +10280,7 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
     if (irow == Spread_ALLCOL) {
         try {
             config = obj.ColumnConfig[icol].Config;
+           
         } catch (err) {
 
         }
@@ -7681,6 +10288,7 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
     else {
         try {
             config = obj.Data[irow][_sfGetCellName(obj, icol)].Config;
+            configCondi =obj.Data[irow][_sfGetCellName(obj, icol)].ConfigCondition;
         } catch (err) {
 
         }
@@ -7698,7 +10306,7 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
     if (type == undefined) {
         try {
 
-            var xtempvalue = _sfGetFormatValue(obj, config, "backgroundColor", true, icol, irow);
+            var xtempvalue = _sfGetFormatValue(obj, config, "backgroundColor", true, icol, irow,configCondi);
             if (xtempvalue != undefined && xtempvalue != "inherit") {
                 tempvalue = xtempvalue;
             }
@@ -7709,12 +10317,12 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
 
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "backgroundColorPercentValue", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "backgroundColorPercentValue", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.bgcolorPercValue = tempvalue || 0;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "backgroundColorPercent", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "backgroundColorPercent", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.bgcolorPerc = tempvalue || "green";
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
@@ -7729,79 +10337,83 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
 
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderColorTop", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderColorTop", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderColorTop = tempvalue || obj.gridlLineColor;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderColorBottom", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderColorBottom", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderColorBottom = tempvalue || obj.gridlLineColor;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderColorLeft", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderColorLeft", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderColorLeft = tempvalue || obj.gridlLineColor;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderColorRight", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderColorRight", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderColorRight = tempvalue || obj.gridlLineColor;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderStyleTop", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderStyleTop", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderStyleTop = tempvalue;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderStyleBottom", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderStyleBottom", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderStyleBottom = tempvalue;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderStyleLeft", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderStyleLeft", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderStyleLeft = tempvalue;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderStyleRight", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderStyleRight", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderStyleRight = tempvalue;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderWidthTop", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderWidthTop", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderWidthTop = tempvalue || 1;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderWidthBottom", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderWidthBottom", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderWidthBottom = tempvalue || 1;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderWidthLeft", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderWidthLeft", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderWidthLeft = tempvalue || 1;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderWidthRight", true, icol, irow);
+            tempvalue = _sfGetFormatValue(obj, config, "borderWidthRight", true, icol, irow,configCondi);
             if (tempvalue != undefined) option.borderWidthRight = tempvalue || 1;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
     }
 
+
+    try{
+        canvasListUpdate(obj.canvasID, obj, icol , irow);
+    }catch(err){}
 
     return option;
 }
@@ -7811,6 +10423,7 @@ function _sfSetFormatText(obj, option, icol, irow) {
     ;
     //var option ={};
     var config = [];
+    var configCondi =[];
     var tempvalue = undefined;
     var tempvalueX = undefined;
     var temp1 = "";
@@ -7820,6 +10433,7 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     try {
         config = obj.Data[irow][_sfGetCellName(obj, icol)].Config;
+        configCondi= obj.Data[irow][_sfGetCellName(obj, icol)].ConfigCondition;
     } catch (err) {
 
     }
@@ -7827,10 +10441,10 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     // font size,family,bold
     try {
-        temp1 = _sfGetFormatValue(obj, config, "bold", true, icol, irow);
-        temp2 = _sfGetFormatValue(obj, config, "fontSize", true, icol, irow) + "px";
-        temp3 = _sfGetFormatValue(obj, config, "fontFamily", true, icol, irow);
-        temp4 = _sfGetFormatValue(obj, config, "italic", true, icol, irow);
+        temp1 = _sfGetFormatValue(obj, config, "bold", true, icol, irow,configCondi);
+        temp2 = _sfGetFormatValue(obj, config, "fontSize", true, icol, irow,configCondi) + "px";
+        temp3 = _sfGetFormatValue(obj, config, "fontFamily", true, icol, irow,configCondi);
+        temp4 = _sfGetFormatValue(obj, config, "italic", true, icol, irow,configCondi);
         tempvalue = temp4 + " " + temp1 + " " + temp2 + " " + temp3;
         if (tempvalue != undefined) {
             option.font = tempvalue;
@@ -7844,21 +10458,21 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     // text underline
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "underline", true, icol, irow);
+        tempvalue = _sfGetFormatValue(obj, config, "underline", true, icol, irow,configCondi);
         if (tempvalue != undefined) option.textDecoration = tempvalue;
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
     // text align
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "textAlignment", true, icol, irow);
+        tempvalue = _sfGetFormatValue(obj, config, "textAlignment", true, icol, irow,configCondi);
         if (tempvalue != undefined) { option.textAlign = tempvalue; option.textAlignment = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
     // text vertical align
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "textVertical", true, icol, irow);
+        tempvalue = _sfGetFormatValue(obj, config, "textVertical", true, icol, irow,configCondi);
         if (tempvalue != undefined) { option.verticalAlign = tempvalue; option.textVertical = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
@@ -7866,21 +10480,21 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     // text color
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "textColor", true, icol, irow);
+        tempvalue = _sfGetFormatValue(obj, config, "textColor", true, icol, irow,configCondi);
         if (tempvalue != undefined) { option.color = tempvalue; option.textColor = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
     // dataType
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "dataType", true, icol, irow);
+        tempvalue = _sfGetFormatValue(obj, config, "dataType", true, icol, irow,configCondi);
         if (tempvalue != undefined) { option.dataType = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
     // dataStyle
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "dataStyle", true, icol, irow);
+        tempvalue = _sfGetFormatValue(obj, config, "dataStyle", true, icol, irow,configCondi);
         if (tempvalue != undefined) { option.dataStyle = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
@@ -7888,13 +10502,20 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     // currencyCode
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "currencyCode", true, icol, irow);
+        tempvalue = _sfGetFormatValue(obj, config, "currencyCode", true, icol, irow,configCondi);
         if (tempvalue != undefined) { option.currencyCode = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
 
-
+    try {
+        var xtempvalue = _sfGetFormatValue(obj, config, "backgroundColor", true, icol, irow,configCondi);
+        if (xtempvalue != undefined && xtempvalue != "inherit") {
+            tempvalue = xtempvalue;
+        }
+        if (tempvalue != undefined) { option.fillStyle = tempvalue; option.backgroundColor = tempvalue; }
+        tempvalue = undefined; tempvalueX = undefined;
+    } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
     //return {
     //    bold: "normal", italic: "normal"
     //, underline: "normal"
@@ -7917,22 +10538,42 @@ function _sfGetFormatValueColumnChecker(conid) {
     return i;
 }
 
-function _sfGetFormatValue(obj, config, conid, isnull, colselected, rowselected) {
+function _sfGetFormatValue(obj, config, conid, isnull, colselected, rowselected,configCondi) {
     var value = undefined;
     var len = -1;
+
     try {
-        len = config.length;
-        for (var i = 0; i < len; i++) {
-            var conid2 = _sfGetFormatValueRename(conid);
-            if (config[i].id == conid || config[i].id == conid2) {
-                try {
-                    value = config[i].element.value;
-                    break;
-                } catch (err) { value = undefined; }
+        if(configCondi != undefined){
+            len = configCondi.length;
+            for (var i = 0; i < len; i++) {
+                var conid2 = _sfGetFormatValueRename(conid);
+                if (configCondi[i].id == conid || configCondi[i].id == conid2) {
+                    try {
+                        value = configCondi[i].element.value;
+                        break;
+                    } catch (err) { value = undefined; }
+                }
             }
         }
     } catch (err) {
 
+    }
+
+    if(value == undefined){
+        try {
+            len = config.length;
+            for (var i = 0; i < len; i++) {
+                var conid2 = _sfGetFormatValueRename(conid);
+                if (config[i].id == conid || config[i].id == conid2) {
+                    try {
+                        value = config[i].element.value;
+                        break;
+                    } catch (err) { value = undefined; }
+                }
+            }
+        } catch (err) {
+
+        }
     }
 
 
@@ -7988,9 +10629,9 @@ function _sfGetFormatValue(obj, config, conid, isnull, colselected, rowselected)
         } catch (err) { value = ""; }
     }
 
-    try{
+    try {
         value = value.toLowerCase();
-        value = value.replace(" !important","");
+        value = value.replace(" !important", "");
     } catch (err) {
 
     }
@@ -8087,7 +10728,7 @@ function drawRectangleSelected(obj, myCell, context) {
             context.strokeStyle = "transparent";//;myCell.strokeStyle;
             context.stroke();
 
-            if (myCell.row == undefined ) {
+            if (myCell.row == undefined) {
                 element_width = element.width + element.borderWidth;
                 elementF_width += element_width;
             }
@@ -8154,7 +10795,7 @@ function drawRectangleSelected(obj, myCell, context) {
     if (myCell.col2 == undefined) myCell.row2 = obj.CellIndexes.Col2;
 
     if (elementF_width != 0 && elementF_height != 0)
-    drawRectangleSelectedDetail(myCell, context);
+        drawRectangleSelectedDetail(myCell, context);
 
 }
 function drawRectangleSelectedDetail(myCell, context) {
@@ -8264,7 +10905,8 @@ CanvasTextWrapper(canvas, str, {
     function CanvasTextWrapper(canvas, text, options, text2, options2) {
         'use strict';
 
-
+        if (text == "")
+            return;
 
 
         var defaults = {
@@ -9072,7 +11714,13 @@ function _sfGetConfigDataColumn(config, _id) {
     config[_id] = value;
 }
 function _sfCreateConfigDataColumn(config, _id, value) {
-    config[_id] = value;
+    if (_id == "textAlignment" || _id == "TextAlign") {
+        config["textAlignment"] = value;
+        config["TextAlign"] = value;
+    }
+    else {
+        config[_id] = value;
+    }
 }
 
 
@@ -9212,14 +11860,17 @@ $(document).on("click", ".P8Spread .nwgrid_Insert", function () {
     //RowInsert
     var isContinue = true;
     try {
-        isContinue = func_nwGrid_InsertValidation();
+        var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
+        var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
+        isContinue = func_nwGrid_InsertValidation(spreadID,xrow,xcol);
+        
     } catch (err) {
     }
     if (isContinue) {
         var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
         var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
         P8DataList[spreadID][0].sheet.ActiveSheet.RowInsert(xrow, false);
-        try { isContinue = func_nwGrid_InsertDone(); } catch (err) { }
+        try { isContinue = func_nwGrid_InsertDone(spreadID,xrow,xcol); } catch (err) { }
         _sfScrollUpdateSizing(spreadID);
     }
     return false;
@@ -9236,7 +11887,9 @@ $(document).on("click", ".P8Spread .nwgrid_CopyRow", function () {
     //RowInsert
     var isContinue = true;
     try {
-        isContinue = func_nwGrid_CopyRowValidation();
+        var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
+        var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
+        isContinue = func_nwGrid_CopyRowValidation(spreadID,xrow,xcol);
     } catch (err) {
     }
     if (isContinue) {
@@ -9248,7 +11901,7 @@ $(document).on("click", ".P8Spread .nwgrid_CopyRow", function () {
         P8DataList[spreadID][0].sheet.ActiveSheet.Data[xrow] = rowcopy;
 
 
-        try { isContinue = func_nwGrid_CopyRowDone(); } catch (err) { }
+        try { isContinue = func_nwGrid_CopyRowDone(spreadID,xrow,xcol); } catch (err) { }
         _sfScrollUpdateSizing(spreadID);
     }
     return false;
@@ -9265,14 +11918,16 @@ $(document).on("click", ".P8Spread .nwgrid_Delete", function () {
     //RowDelete
     var isContinue = true;
     try {
-        isContinue = func_nwGrid_DeleteValidation();
+        var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
+        var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
+        isContinue = func_nwGrid_DeleteValidation(spreadID,xrow,xcol);
     } catch (err) {
     }
     if (isContinue) {
         var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
         var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
         P8DataList[spreadID][0].sheet.ActiveSheet.RowDelete(xrow);
-        try { func_nwGrid_DeleteDone(); } catch (err) { }
+        try { func_nwGrid_DeleteDone(spreadID,xrow,xcol); } catch (err) { }
         _sfScrollUpdateSizing(spreadID);
     }
 
@@ -9303,15 +11958,28 @@ $(document).on("keypress", ".P8Spread input.nwgrid_SearchNext", function (e) {
 $(document).on("click", ".P8Spread .nwgrid_SearchFind", function () {
     var SpreadID = $(this).parents(".P8Spread").attr("id");
     var indexes = P8_SpreadGetBook(SpreadID).ActiveSheet.GetSelectedIndexes();
+    var frmTitle = "";
+
+    var sobj = P8_SpreadGetBook(SpreadID).ActiveSheet;
+    var frow = sobj.FreezeRow -1;
+    var fcol = sobj.GetSelectedIndexes().col;
+    var frmTitle = "";
+
+    if(frow< 0){
+        frmTitle = sobj.ColumnName(fcol);
+    }else {
+        frmTitle = sobj.GetText(fcol,frow);
+    }
+
 
     if (SpreadID == null || SpreadID == undefined || indexes.col < 0) {
-        MessageBox("Please Select Cell", "", "", "#" + $(this).parents(".P8Spread").attr("id") + " input.nwgrid_SearchNext");
+        MessageBox("Please Select Cell", frmTitle, "", "#" + $(this).parents(".P8Spread").attr("id") + " input.nwgrid_SearchNext");
         return false;
     }
     //P8_SpreadGetBook(SpreadID).ActiveSheet.GetSelectedIndexes()
 
     if ($(this).parents(".P8Spread").find(".nwgrid_SearchNext").val() == "") {
-        MessageBox("Please enter Keyword", "", "", "#" + $(this).parents(".P8Spread").attr("id") + " input.nwgrid_SearchNext");
+        MessageBox("Please enter Keyword", frmTitle, "", "#" + $(this).parents(".P8Spread").attr("id") + " input.nwgrid_SearchNext");
         return false;
     }
 
@@ -9319,7 +11987,7 @@ $(document).on("click", ".P8Spread .nwgrid_SearchFind", function () {
     var isfind = _sfFindSearch(SpreadID, strToSearch);
 
     if (isfind == false)
-        MessageBox("Cannot find :[" + strToSearch + "]", "", "", "#" + $(this).parents(".P8Spread").attr("id") + " input.nwgrid_SearchNext");
+        MessageBox("Cannot find :[" + strToSearch + "]", frmTitle, "error", "#" + $(this).parents(".P8Spread").attr("id") + " input.nwgrid_SearchNext","Error");
 
 
     return false;
@@ -9498,6 +12166,35 @@ function _sfDrawCheckBox(ctx, x, y, width, height, value) {
     }
 
     ctx.closePath();
+}
+function _sfDrawButton(ctx, x, y, width, height, value) {
+    try {
+        if (value == "") value = "gray";
+
+        var color1 = "rgba(0,0,0,0.2)";
+        var color2 = "rgba(255,255,255,0.2)";
+        var colorMain = value;
+
+        var grd = ctx.createLinearGradient(x, y + height, x, y);
+        grd.addColorStop(0, color1);
+        grd.addColorStop(1, color2);
+
+
+        ctx.beginPath();
+        ctx.fillStyle = colorMain;
+        ctx.roundRect(x, y, width, height, width * 0.05);
+        ctx.fill();
+        ctx.closePath();
+
+
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = value;
+        ctx.fillStyle = grd;
+        ctx.beginPath();
+        ctx.roundRect(x, y, width, height, width * 0.05);
+        ctx.stroke();
+        ctx.fill();
+    } catch (err) { }
 }
 var dataload = "<div class='nwGridDataBatchLoading'><div class='loadr'><div class='loadrC'><div class='loadCon'><div class='loadrLine'></div></div><div class='loadrText'><br><span class='loadPerc'>10%</span><span class='loadcurrent'>0</span> of <span class='loadtotal'>0</span></div></div></div></div>"
 function _sfLoading(canvasID, total, current) {
@@ -9962,12 +12659,14 @@ function func_GetFormulaRangeValue(ExFormula, obj, crFormulaFunc) {
     else if (crFormulaFunc.toUpperCase() == "AVERAGE") xvalF = "(" + xvalF + ")/" + (xcountval == 0 ? 1 : xcountval);
     else if (crFormulaFunc.toUpperCase() == "AVG") xvalF = "(" + xvalF + ")/" + (xcountval == 0 ? 1 : xcountval);
 
-
-
     xvalF = "(" + xvalF + ")";
 
 
+    /// EDIT FOrmula
+
+
     xvalue = eval(xvalF);
+
 
 
     return xvalue;
@@ -10050,6 +12749,9 @@ function _sfPromptMessage(msg) {
 
 
 
+
+
+
 $(document).on("click", ".P8Spread .nwgrid_SaveWidth", function () {
     if ($(this).parents(".P8Spread").hasClass("noah-webui-disabled") || $(this).parents(".P8Spread").parent().hasClass("noah-webui-disabled"))
         return false;
@@ -10059,7 +12761,7 @@ $(document).on("click", ".P8Spread .nwgrid_SaveWidth", function () {
 
 
     if (($(this).parents(".P8Spread").attr('isresize') || '') != "1") {
-        MessageBox("No changes have been made.");
+        MessageBox("No changes have been made.","Save Column Width");
         return false;
     }
     nwLoading_Start("actnwSaveColWidth", crLoadingHTML);
@@ -10115,7 +12817,7 @@ $(document).on("click", ".P8Spread .nwgrid_ResetWidth", function () {
     }
     else {
         if (hasChange == false) {
-            MessageBox("No changes have been made.");
+            MessageBox("No changes have been made.","Reset Column Width");
             return false;
         }
     }
@@ -10231,14 +12933,12 @@ function _sfAddToList() {
         jsonTable = func_ConvertTableJSON($('#dimTableLookUpCon'));
 
 
-    var cell = sheet.GetSelectedIndexes();
-    var currow = cell.row;
-
     var addtoListTableRec = $('#dimTableLookUp');
     if (addtoListTableRec.html() == undefined)
         addtoListTableRec = $('#dimTableLookUpCon tbody');
 
-
+    var cell = sheet.GetSelectedIndexes();
+    var currow = cell.row;
     for (var i = 0; i < jsonTable.length; i++) {
         var crnwTRtemp = [];
 
@@ -10246,9 +12946,10 @@ function _sfAddToList() {
         for (var i2 = 0; i2 < collength; i2++) {
             crnwTRtemp.push("");
         }
-     
+
         if (addtoListTableRec.find(".nwlookupgridcheck:eq(" + i + ")").prop("checked") == false)
             continue;
+
 
         crnwTRtemp = nwGrid_AddtoListDone(p8Spread_CurBook, crnwTRtemp, addtoListTableRec, i);
 
@@ -10265,8 +12966,18 @@ function _sfAddToList() {
         currow++;
 
 
+        // added 05/10/2023 by sir Bruce approved by sir Angelo
+        sheet.RowDelete(currow);
+
     }
     try {
+
+        // added 05/10/2023 by sir Bruce approved by sir Angelo
+        if (sheet.GetMaxRow() == currow) {
+            sheet.RowInsert(currow, false, true);
+        }
+
+
         nwGrid_AddtoListLoaded(p8Spread_CurBook);
     }
     catch (err) { }
@@ -10450,6 +13161,14 @@ P8.SpreadSheet.prototype.GetMaxCol = function () {
 
 
 function p8Spread_DblClickT(canvasID, row, col) {
+    var objecttype = P8DataList[canvasID][0].sheet.ActiveSheet.GetObjectType(col, row);
+    if (objecttype == "remarks"
+        || objecttype == "button"
+        || objecttype == "checkbox"
+        ) {
+
+        return false;
+    }
     try {
         P8DataList[canvasID][0].sheet.ActiveSheet.prevEvenRow = row;
         P8DataList[canvasID][0].sheet.ActiveSheet.prevEvenCol = col;
@@ -10459,9 +13178,13 @@ function p8Spread_DblClickT(canvasID, row, col) {
         try {
             lugid = lugid.split("@#aag#@")[1];
         } catch (err) { }
-        if (xclass == "aagnwlookupgrid") {
+        if (xclass == "aagnwlookupgrid" || xclass.indexOf('aagnwlookupgrid') >=1) {
             lookUpCustomize(lugid, 1);
         }
+        else if(xclass.indexOf('aagAddTolist') >=1){
+            lookUpCustomize(lugid, 2);
+        }
+
     } catch (err) { }
 
     return p8Spread_DblClick(canvasID, row, col);
@@ -10491,15 +13214,153 @@ function p8Spread_ChangeT(canvasID, row, col) {
         return p8Spread_Change(canvasID, row, col);
     }
 }
-function p8Spread_ClickT(canvasID, row, col) {
+function p8Spread_IsResponsive() {
+    if ($("body").width() <= 550) 
+        return true;
+    return   false;
+}
+function p8Spread_ClickT(canvasID, row, col,_this) {
+
+
     try {
         P8DataList[canvasID][0].sheet.ActiveSheet.prevEvenRow = row;
         P8DataList[canvasID][0].sheet.ActiveSheet.prevEvenCol = col;
     } catch (err) { }
 
+    var objecttype = P8DataList[canvasID][0].sheet.ActiveSheet.GetObjectType(col, row);
+    if (objecttype == "remarks") {
+        p8Spread_RemarksShow(canvasID,col,row);
+    }
+
+    var isresponsive = false;
+    if ($("body").width() <= 550) isresponsive = true;
+    if (isresponsive) {
+        if(P8DataList[canvasID][0].sheet.ActiveSheet.Theme  == P8Themes.FANCY)
+        {
+            var xclass =(P8DataList[canvasID][0].sheet.ActiveSheet.ColumnConfig[col].Class|| "").trim();
+            if (xclass.indexOf('aagAddTolist') >=1 || xclass.indexOf('aagnwlookupgrid') >=1 ) {
+                return;
+            }
+
+            $(".nkListViewRow.nkListViewRowSelect").removeClass("nkListViewRowSelect");
+            $(_this).parents(".nkListViewRow").addClass("nkListViewRowSelect");
+
+            var isenabled = P8DataList[canvasID][0].sheet.ActiveSheet.GetEnabled(col, row);
+            var datatype =  P8DataList[canvasID][0].sheet.ActiveSheet.GetDataType(col, row); 
+
+            var zcol = $("#p8SpreadListInput").attr("col");
+            var zrow = $("#p8SpreadListInput").attr("row");
+
+            if((!(zcol == col && zrow == row)) && $("#p8SpreadListInput").hasClass("nwDatePicker")){
+                var text =  P8DataList[canvasID][0].sheet.ActiveSheet.GetText(zcol, zrow);
+                $(".nkListViewRow[row='"+zrow+"']").find(".nkListViewValue[col='"+ zcol +"']").text(text);
+
+
+            }
+
+            if(isenabled){
+                if (objecttype == "celltext") {
+                    if($(_this).find(".nkListViewValue").find("#p8SpreadListInput").val() == undefined){
+
+                        var classType = "";
+
+                        if(datatype == "date"){
+                            classType = "nwDatePicker";
+                        }
+                        else  if(datatype == "currency"){
+                            classType = "listText isNumber numC";
+                        }
+                        else if(datatype == "number"){
+                            classType = "listText isNumber";
+                        }
+                        else {
+                            classType = "listText";
+                        }
+
+
+                        $(_this).find(".nkListViewValue").html("<input id='p8SpreadListInput' class='"+classType+"' canvasID='"+canvasID+"' col='"+col+"' row='"+row+"' />");
+                        var value = P8DataList[canvasID][0].sheet.ActiveSheet.GetText(col, row);
+                        $(_this).find(".nkListViewValue").addClass("withinput");
+
+                        var xdataType =  P8DataList[canvasID][0].sheet.ActiveSheet.GetDataType(col, row);
+                        var xprecision =  P8DataList[canvasID][0].sheet.ActiveSheet.GetPrecision(col, row);
+
+                        if (xdataType == "number"
+                            || xdataType == "currency"
+                             || xdataType == "percentvalue"
+                             || xdataType == "percent") {
+
+                            if (xdataType == "percentvalue") value = value * 100;
+
+                            value = _sfFormartNumber(value, xprecision);
+                        }
+
+
+                        //nkListViewRowSelect
+                        $("#p8SpreadListInput").focus();
+                        $("#p8SpreadListInput").val(value);
+                        $("#p8SpreadListInput").select();
+                    }
+                }
+            }
+        }
+    }
+
     return p8Spread_Click(canvasID, row, col);
 }
-function p8Spread_FocusT() {
+
+
+$(document).on("focusout","#p8SpreadListInput.listText",function(){
+    var value = $(this).val();
+    var canvasID = $(this).attr("canvasID");
+    var col = $(this).attr("col");
+    var row = $(this).attr("row");
+
+    P8DataList[canvasID][0].sheet.ActiveSheet.SetText(col, row, value);
+    $(this).parent().text(value);
+    $(this).parent().removeClass("withinput");
+
+    console.log("focusout");
+    return true;
+});
+
+$(document).on("change","#p8SpreadListInput",function(){
+    var value = $(this).val();
+    var canvasID = $(this).attr("canvasID");
+    var col = $(this).attr("col");
+    var row = $(this).attr("row");
+
+    P8DataList[canvasID][0].sheet.ActiveSheet.SetText(col, row, value);
+    $(this).parent().text(value);
+    $(this).parent().removeClass("withinput");
+
+    console.log("change");
+    return false;
+});
+
+function p8Spread_RemarksShow(canvasID,col,row) {
+    var text2 = P8DataList[canvasID][0].sheet.ActiveSheet.GetText2(col, row);
+    var value = P8DataList[canvasID][0].sheet.ActiveSheet.GetValue(col, row);
+      
+
+    $("#spreadRemarksCon").attr("canvasid", canvasID);
+    $("#spreadRemarksCon").attr("col", col);
+    $("#spreadRemarksCon").attr("row", row);
+
+    $("#txtSpreadRemarks").val(value);
+    setTimeout(function () {
+        nwPopupForm_ShowModal("spreadRemarksCon");
+        $("#spreadRemarksCon .modal-hdr-title").text(text2);
+        $("#nwgRemarksCon .BoxTitle").text(text2);
+        $("#txtSpreadRemarks").css("max-height", "initial");
+        $("#txtSpreadRemarks").css("height", "85%");
+        $("#txtSpreadRemarks").css("width", "100%");
+        $("#txtSpreadRemarks").focus();
+    }, 100);
+}
+
+
+function p8Spread_FocusT(canvasID, row, col) {
     try {
         P8DataList[canvasID][0].sheet.ActiveSheet.prevEvenRow = row;
         P8DataList[canvasID][0].sheet.ActiveSheet.prevEvenCol = col;
@@ -10509,13 +13370,1705 @@ function p8Spread_FocusT() {
 }
 
 
+$(function () {
+    $("body").append("<div id='spreadRemarksCon'><button id='btnSpreadRemarks'>Save and Exit</button> <span id='chkSpreadRemarksCon'></span>Auto Close upon Enter<br><textarea id='txtSpreadRemarks' maxlength='500'></textarea><div id='cmsSpreadRemarks'></div></div>");
+    nwPopupForm_Create("spreadRemarksCon", true);
+    setTimeout(function () {
+        $("#chkSpreadRemarksCon").html("<input id='chkSpreadRemarks' type='checkbox' />");
+    }, 100);
+    //<input id='chkSpreadRemarks' type='checkbox' />
+});
+function p8Spread_SetRemarks()
+{
+    var canvasID = $("#spreadRemarksCon").attr("canvasid");
+    var col = $("#spreadRemarksCon").attr("col");
+    var row = $("#spreadRemarksCon").attr("row");
+    var value = $("#txtSpreadRemarks").val();
+    P8DataList[canvasID][0].sheet.ActiveSheet.SetValue(col, row, value);
 
+    nwPopupForm_HideModal("spreadRemarksCon");
+    setTimeout(function () {
+        $("#" + canvasID + "_vw").click();
+        $("#" + canvasID + "_vw").focus();
+    }, 100);
+}
+$(document).on("click", "#btnSpreadRemarks", function () {
+  
+    p8Spread_SetRemarks();
+    return false;
+});
+
+
+$(document).on("keypress", "#txtSpreadRemarks", function (e) {
+    if (e.shiftKey && e.which == 13) return;
+
+    if (e.which == 13 && $('#chkSpreadRemarks').prop("checked") == true) p8Spread_SetRemarks();
+
+});
 
 var P8Spread_Currency = {
-    fil_PH: { code: "fil_PH", symbols: "₱", align: "L", description: "Filipino", remarks: "Philippines Peso - Currency", format: '_-[$₱-fil-PH]* #,##0.00_-;-[$₱-fil-PH]* #,##0.00_-;' }
-    , en_PH: { code: "en_PH", symbols: "₱", align: "L", description: "English (Philippines)", remarks: "Philippines Peso - Currency", format: '_-[$₱-fil-PH]* #,##0.00_-;-[$₱-fil-PH]* #,##0.00_-' } //, format: '_-[$₱-en-PH]* #,##0.00_-;-[$₱-en-PH]* #,##0.00_-;_-[$₱-en-PH]* " - "??_-;_-@_-' }
-    , en_SG: { code: "en_SG", symbols: "$", align: "L", description: "English (United States)", remarks: "United States - Currency", format: '_-[$$-en-SG]* #,##0.00_-;-[$$-en-SG]* #,##0.00_-;' }
-    , CHF_fr_CH: { code: "CHF_fr_CH", symbols: "CHF", align: "R", description: "CHF French (Switzerland)", remarks: "Switzerland - Currency", format: '_-* #,##0.00 [$CHF-fr-CH]_-;-* #,##0.00 [$CHF-fr-CH]_-;' }
+
+    fil_ph: { code: "fil_PH", symbols: "₱", align: "L", description: "Filipino", remarks: "Philippines Peso - Currency", format: '_-[$₱-fil-PH]* #,##0.00_-;-[$₱-fil-PH]* #,##0.00_-;', precision: 2 }
+    , en_ph: { code: "en_PH", symbols: "₱", align: "L", description: "English (Philippines)", remarks: "Philippines Peso - Currency", format: '_-[$₱-fil-PH]* #,##0.00_-;-[$₱-fil-PH]* #,##0.00_-', precision: 2 } //, format: '_-[$₱-en-PH]* #,##0.00_-;-[$₱-en-PH]* #,##0.00_-;_-[$₱-en-PH]* " - "??_-;_-@_-' }
+    //, en_us: { code: "en_US", symbols: "$", align: "L", description: "English (United States)", remarks: "United States - Currency", format: '_-[$$-en-SG]* #,##0.00_-;-[$$-en-SG]* #,##0.00_-;', precision: 2 }
+    //, chf_fr_ch: { code: "CHF_fr_CH", symbols: "CHF", align: "R", description: "CHF French (Switzerland)", remarks: "Switzerland - Currency", format: '_-* #,##0.00 [$CHF-fr-CH]_-;-* #,##0.00 [$CHF-fr-CH]_-;', precision: 2 }
+    //, ja_jp: { code: "ja_JP", symbols: "¥", align: "L", description: "Japanese", remarks: "Japan - Currency", format: '_-[$¥-ja-JP]* #,##0.00_-;-[$¥-ja-JP]* #,##0.00_-;', precision: 2 }
+    //, x_xbt2: { code: "x_xbt2", symbols: "₿", align: "L", description: "Bitcoin", remarks: "Bitcoin - Crypto Currency", format: '_-[$₿-x-xbt2] * #,##0.000000_-;-[$₿-x-xbt2] * #,##0.000000_-;', precision: 6 }
+    , af_za: { code: "af_ZA", symbols: "R", align: "L", description: "Afrikaans", remarks: "South Africa - Currency", format: '_-[$R-af-ZA]* #,##0.00_-;-[$R-af-ZA]* #,##0.00_-;', precision: 2 }
+    , sq_al: { code: "sq_AL", symbols: "Lekë", align: "R", description: "Albanian", remarks: "Albania - Currency", format: '_-* #,##0.00 [$Lekë-sq-AL]_-;-* #,##0.00 [$Lekë-sq-AL]_-;', precision: 2 }
+    , gsw_fr: { code: "gsw_FR", symbols: "€", align: "R", description: "Alsatian (France)", remarks: "France - Currency", format: '_-* #,##0.00 [$€-gsw-FR]_-;-* #,##0.00 [$€-gsw-FR]_-;', precision: 2 }
+    , am_et: { code: "am_ET", symbols: "ብር", align: "L", description: "Amharic", remarks: "Ethiopia - Currency", format: '_-[$ብር-am-ET]* #,##0.00_-;-[$ብር-am-ET]* #,##0.00_-;', precision: 2 }
+    , ar_dz: { code: "ar_DZ", symbols: "د.ج.‏", align: "R", description: "Arabic (Algeria)", remarks: "Algeria - Currency", format: '_-* #,##0.00 [$د.ج.‏-ar-DZ]_-;-* #,##0.00 [$د.ج.‏-ar-DZ]_-;', precision: 2 }
+    , ar_bh: { code: "ar_BH", symbols: "د.ب.‏", align: "R", description: "Arabic (Bahrain)", remarks: "Bahrain - Currency", format: '_-* #,##0.00 [$د.ب.‏-ar-BH]_-;-* #,##0.00 [$د.ب.‏-ar-BH]_-;', precision: 2 }
+    , ar_eg: { code: "ar_EG", symbols: "ج.م.‏", align: "R", description: "Arabic (Egypt)", remarks: "Egypt - Currency", format: '_-* #,##0.00 [$ج.م.‏-ar-EG]_-;-* #,##0.00 [$ج.م.‏-ar-EG]_-;', precision: 2 }
+    , fa_ir: { code: "fa_IR", symbols: "ريال‏", align: "R", description: "Arabic (Iran)", remarks: "Iran - Currency", format: '_ * #,##0.00_-[$ريال-fa-IR]_ ;_ * #,##0.00-[$ريال-fa-IR]_ ;', precision: 2 }
+    , ar_iq: { code: "ar_IQ", symbols: "د.ع.‏", align: "R", description: "Arabic (Iraq)", remarks: "Iraq - Currency", format: '_-* #,##0.00 [$د.ع.‏-ar-IQ]_-;-* #,##0.00 [$د.ع.‏-ar-IQ]_-;', precision: 2 }
+    , ar_jo: { code: "ar_JO", symbols: "د.ا.‏‏", align: "R", description: "Arabic (Jordan)", remarks: "Jordan - Currency", format: '_-* #,##0.00 [$د.ا.‏-ar-JO]_-;-* #,##0.00 [$د.ا.‏-ar-JO]_-;', precision: 2 }
+    , ar_kw: { code: "ar_KW", symbols: "د.ك.", align: "R", description: "Arabic (Kuwait)", remarks: "Kuwait - Currency", format: '_-* #,##0.00 [$د.ك.‏-ar-KW]_-;-* #,##0.00 [$د.ك.‏-ar-KW]_-;', precision: 2 }
+    , ar_lb: { code: "ar_LB", symbols: "ل.ل.‏", align: "R", description: "Arabic (Lebanon)", remarks: "Lebanon - Currency", format: '_-* #,##0.00 [$ل.ل.‏-ar-LB]_-;-* #,##0.00 [$ل.ل.‏-ar-LB]_-;', precision: 2 }
+    , ar_ly: { code: "ar_LY", symbols: "د.ل.", align: "R", description: "Arabic (Libya)", remarks: "Libya - Currency", format: '_-* #,##0.00 [$د.ل.‏-ar-LY]_-;-* #,##0.00 [$د.ل.‏-ar-LY]_-;', precision: 2 }
+    , ar_ma: { code: "ar_MA", symbols: "د.م.", align: "R", description: "Arabic (Morocco)", remarks: "Morocco - Currency", format: '_-* #,##0.00 [$د.م.‏-ar-MA]_-;-* #,##0.00 [$د.م.‏-ar-MA]_-;', precision: 2 }
+    , ar_om: { code: "ar_OM", symbols: "ر.ع.‏", align: "R", description: "Arabic (Oman)", remarks: "Oman - Currency", format: '_-* #,##0.00 [$ر.ع.‏-ar-OM]_-;-* #,##0.00 [$ر.ع.‏-ar-OM]_-;', precision: 2 }
+    , ar_qa: { code: "ar_QA", symbols: "ر.ق.‏", align: "R", description: "Arabic (Qatar)", remarks: "Qatar - Currency", format: '_-* #,##0.00 [$ر.ق.‏-ar-QA]_-;-* #,##0.00 [$ر.ق.‏-ar-QA]_-;', precision: 2 }
+    , ar_sa: { code: "ar_SA", symbols: "ر.س.‏", align: "R", description: "Arabic (Saudi Arabia)", remarks: "Saudi Arabia - Currency", format: '_-* #,##0.00 [$ر.س.‏-ar-SA]_-;-* #,##0.00 [$ر.س.‏-ar-SA]_-;', precision: 2 }
+    , ar_sy: { code: "ar_SY", symbols: "ل.س.‏‏", align: "R", description: "Arabic (Syria)", remarks: "Syria - Currency", format: '_-* #,##0.00 [$ل.س.‏-ar-SY]_-;-* #,##0.00 [$ل.س.‏-ar-SY]_-;', precision: 2 }
+    , ar_tn: { code: "ar_TN", symbols: "د.ت.‏", align: "R", description: "Arabic (Tunisia)", remarks: "Tunisia - Currency", format: '_-* #,##0.00 [$د.ت.‏-ar-TN]_-;-* #,##0.00 [$د.ت.‏-ar-TN]_-;', precision: 2 }
+    , ar_ae: { code: "ar_AE", symbols: "د.إ.‏‏", align: "R", description: "Arabic (U.A.E.)", remarks: "U.A.E. - Currency", format: '_-* #,##0.00 [$د.إ.‏-ar-AE]_-;-* #,##0.00 [$د.إ.‏-ar-AE]_-;', precision: 2 }
+    , ar_ye: { code: "ar_YE", symbols: "ر.ي.‏", align: "R", description: "Arabic (Yemen)", remarks: "Yemen - Currency", format: '_-* #,##0.00 [$ر.ي.‏-ar-YE]_-;-* #,##0.00 [$ر.ي.‏-ar-YE]_-;', precision: 2 }
+    , hy_am: { code: "hy_AM", symbols: "֏", align: "R", description: "Armenian", remarks: "Armenia - Currency", format: '_-* #,##0.00 [$֏-hy-AM]_-;-* #,##0.00 [$֏-hy-AM]_-;', precision: 2 }
+    , as_in: { code: "as_IN", symbols: "₹", align: "L", description: "Assamese", remarks: "India - Currency", format: '_ [$₹-as-IN] * #,##0.00_ ;_ [$₹-as-IN] * -#,##0.00_ ;', precision: 2 }
+    , az_latn_az: { code: "az_Latn_AZ", symbols: "₼", align: "R", description: "Azerbaijani (Latin)", remarks: "Azerbaijan - Currency", format: '_-* #,##0.00 [$₼-az-Latn-AZ]_-;-* #,##0.00 [$₼-az-Latn-AZ]_-;', precision: 2 }
+    , az_cyrl_az: { code: "az_Cyrl_AZ", symbols: "₼", align: "R", description: "Azerbaijani (Cyrillic)", remarks: "Azerbaijan - Currency", format: '_-* #,##0.00 [$₼-az-Cyrl-AZ]_-;-* #,##0.00 [$₼-az-Cyrl-AZ]_-;', precision: 2 }
+    , bn_bd: { code: "bn_BD", symbols: "৳", align: "R", description: "Bangla (Bangladesh)", remarks: "Bangladesh - Currency", format: '_-* #,##0.00[$৳-bn-BD]_-;-* #,##0.00[$৳-bn-BD]_-;', precision: 2 }
+    , ba_ru: { code: "ba_RU", symbols: "₽", align: "R", description: "Bashkir", remarks: "Russia - Currency", format: '_-* #,##0.00 [$₽-ba-RU]_-;-* #,##0.00 [$₽-ba-RU]_-;', precision: 2 }
+    , eu_es: { code: "eu_ES", symbols: "€", align: "R", description: "Basque", remarks: "Spain - Currency", format: '_-* #,##0.00 [$€-eu-ES]_-;-* #,##0.00 [$€-eu-ES]_-;', precision: 2 }
+    , be_by: { code: "be_BY", symbols: "Br", align: "R", description: "Belarusian", remarks: "Belarus - Currency", format: '_-* #,##0.00 [$Br-be-BY]_-;-* #,##0.00 [$Br-be-BY]_-;', precision: 2 }
+    , bn_in: { code: "bn_IN", symbols: "₹", align: "L", description: "Bengali (India)", remarks: "India - Currency", format: '_ [$₹-bn-IN] * #,##0.00_ ;_ [$₹-bn-IN] * -#,##0.00_ ;', precision: 2 }
+    , x_xbt2: { code: "x_xbt2", symbols: "₿", align: "L", description: "Bitcoin (₿ 123)", remarks: "Bitcoin - Crypto Currency", format: '_([$₿-x-xbt2] * #,##0.000000_);_([$₿-x-xbt2] * (#,##0.000000);', precision: 6 }
+    , x_xbt1: { code: "x_xbt1", symbols: "₿", align: "R", description: "Bitcoin (123 ₿)", remarks: "Bitcoin - Crypto Currency", format: '_ * #,##0.000000_) [$₿-x-xbt1]_ ;_ * (#,##0.000000) [$₿-x-xbt1]_ ;', precision: 6 }
+    , bs_cyrl_ba: { code: "bs_Cyrl_BA", symbols: "КМ", align: "R", description: "Bosnian (Cyrillic)", remarks: "Bosnia - Currency", format: '_-* #,##0.00 [$КМ-bs-Cyrl-BA]_-;-* #,##0.00 [$КМ-bs-Cyrl-BA]_-;', precision: 6 }
+    , bs_latn_ba: { code: "bs_Latn_BA", symbols: "KM", align: "R", description: "Bosnian (Latin)", remarks: "Bosnia - Currency", format: '_-* #,##0.00 [$KM-bs-Latn-BA]_-;-* #,##0.00 [$KM-bs-Latn-BA]_-;', precision: 6 }
+    , br_fr: { code: "br_FR", symbols: "€", align: "R", description: "Breton", remarks: "France - Currency", format: '_-* #,##0.00 [$€-br-FR]_-;-* #,##0.00 [$€-br-FR]_-;', precision: 2 }
+    , bg_bg: { code: "bg_BG", symbols: "лв.", align: "R", description: "Bulgarian", remarks: "Bulgaria - Currency", format: '_-* #,##0.00 [$лв.-bg-BG]_-;-* #,##0.00 [$лв.-bg-BG]_-;', precision: 2 }
+    , my_mm: { code: "my_MM", symbols: "K", align: "R", description: "Burmese", remarks: "Myanmar - Currency", format: '_-* #,##0.00 [$K-my-MM]_-;-* #,##0.00 [$K-my-MM]_-;', precision: 2 }
+    , ca_es: { code: "ca_ES", symbols: "€", align: "R", description: "Catalan", remarks: "Spain - Currency", format: '_-* #,##0.00 [$€-ca-ES]_-;-* #,##0.00 [$€-ca-ES]_-;', precision: 2 }
+    , ku_arab_iq: { code: "ku_Arab_IQ", symbols: "د.ع.‏", align: "L", description: "Cenral Kurdish (Iraq)", remarks: "Iraq - Currency", format: '_ [$د.ع.‏-ku-Arab-IQ]* #,##0.00_ ;_ [$د.ع.‏-ku-Arab-IQ]* -#,##0.00_ ;', precision: 2 }
+    , tzm_arab_ma: { code: "tzm_Arab_MA", symbols: "د.م.", align: "L", description: "Central Atlas Tamazight (Arabic, Morocco)", remarks: "Morocco - Currency", format: '_-[$د.م.‏-tzm-Arab-MA] * #,##0.00_-;-[$د.م.‏-tzm-Arab-MA] * #,##0.00_-;', precision: 2 }
+    , tzm_latn_dz: { code: "tzm_Latn_DZ", symbols: "DA", align: "R", description: "Central Atlas Tamazight (Latin, Algeria)", remarks: "Algeria - Currency", format: '_-* #,##0.00 [$DA-tzm-Latn-DZ]_-;-* #,##0.00 [$DA-tzm-Latn-DZ]_-;', precision: 2 }
+    , tzm_tfng_ma: { code: "tzm_Tfng_MA", symbols: "ⴷⵔ", align: "R", description: "Central Atlas Tamazight (Tifinagh, Morocco)", remarks: "Morocco - Currency", format: '_-* #,##0.00 [$ⴷⵔ-tzm-Tfng-MA]_-;-* #,##0.00 [$ⴷⵔ-tzm-Tfng-MA]_-;', precision: 2 }
+    , chr_cher_us: { code: "chr_Cher_US", symbols: "$", align: "L", description: "Cherokee (Cherokee, United States)", remarks: "United States - Currency", format: '_-[$$-chr-Cher-US]* #,##0.00_-;-[$$-chr-Cher-US]* #,##0.00_-;', precision: 2 }
+    , zh_cn: { code: "zh_CN", symbols: "¥", align: "L", description: "Chinese (Simplified, Mainland China)", remarks: "China - Currency", format: '_ [$¥-zh-CN]* #,##0.00_ ;_ [$¥-zh-CN]* -#,##0.00_ ;', precision: 2 }
+    , zh_sg: { code: "zh_SG", symbols: "$", align: "L", description: "Chinese (Simplified, Singapore)", remarks: "Singapore - Currency", format: '_-[$$-zh-SG]* #,##0.00_-;-[$$-zh-SG]* #,##0.00_-;', precision: 2 }
+    , zh_hk: { code: "zh_HK", symbols: "HK$", align: "L", description: "Chinese (Traditional, Hong Kong SAR))", remarks: "Hong Kong - Currency", format: '_([$HK$-zh-HK]* #,##0.00_);_([$HK$-zh-HK]* (#,##0.00);', precision: 2 }
+    , zh_tw: { code: "zh_TW", symbols: "NT$", align: "L", description: "Chinese (Traditional, Taiwan)", remarks: "Taiwan - Currency", format: '_-[$NT$-zh-TW]* #,##0.00_-;-[$NT$-zh-TW]* #,##0.00_-;', precision: 2 }
+    , co_fr: { code: "co_FR", symbols: "€", align: "R", description: "Corsican", remarks: "France - Currency", format: '_-* #,##0.00 [$€-co-FR]_-;-* #,##0.00 [$€-co-FR]_-;', precision: 2 }
+    , hr_ba: { code: "hr_BA", symbols: "KM", align: "R", description: "Croatian (Bosnia and Herzegovina)", remarks: "Bosnia - Currency", format: '_-* #,##0.00 [$KM-hr-BA]_-;-* #,##0.00 [$KM-hr-BA]_-;', precision: 2 }
+    , hr_hr: { code: "hr_HR", symbols: "€", align: "R", description: "Croatian (Croatia)", remarks: "Croatia - Currency", format: '_-* #,##0.00 [$€-hr-HR]_-;-* #,##0.00 [$€-hr-HR]_-;', precision: 2 }
+    , cs_cz: { code: "cs_CZ", symbols: "Kč", align: "R", description: "Czech", remarks: "Czechia - Currency", format: '_-* #,##0.00 [$Kč-cs-CZ]_-;-* #,##0.00 [$Kč-cs-CZ]_-;', precision: 2 }
+    , da_dk: { code: "da_DK", symbols: "kr.", align: "R", description: "Danish", remarks: "Denmark - Currency", format: '_-* #,##0.00 [$kr.-da-DK]_-;-* #,##0.00 [$kr.-da-DK]_-;', precision: 2 }
+    , prs_af: { code: "prs_AF", symbols: "؋", align: "L", description: "Dari", remarks: "Afghanistan - Currency", format: '_-[$؋-prs-AF] * #,##0.00_-;-[$؋-prs-AF] * #,##0.00_-;', precision: 2 }
+    , dv_mv: { code: "dv_MV", symbols: "ރ.", align: "R", description: "Divehi", remarks: "Maldives - Currency", format: '_-* #,##0.00 [$ރ.-dv-MV]_-;_-* #,##0.00 [$ރ.-dv-MV]-;', precision: 2 }
+    , nl_be: { code: "nl_BE", symbols: "€", align: "L", description: "Dutch (Belgium)", remarks: "Belgium - Currency", format: '_ [$€-nl-BE] * #,##0.00_ ;_ [$€-nl-BE] * -#,##0.00_ ;', precision: 2 }
+    , nl_nl: { code: "nl_NL", symbols: "€", align: "L", description: "Dutch (Netherlands)", remarks: "Netherlands - Currency", format: '_ [$€-nl-NL] * #,##0.00_ ;_ [$€-nl-NL] * -#,##0.00_ ;', precision: 2 }
+    , bin_ng: { code: "bin_NG", symbols: "₦", align: "L", description: "Edo", remarks: "Nigeria  - Currency", format: '_-[$₦-bin-NG] * #,##0.00_-;-[$₦-bin-NG] * #,##0.00_-;', precision: 2 }
+    , en_au: { code: "en_AU", symbols: "$", align: "L", description: "English (Australia)", remarks: "Australia - Currency", format: '_-[$$-en-AU]* #,##0.00_-;-[$$-en-AU]* #,##0.00_-;', precision: 2 }
+    , en_bz: { code: "en_BZ", symbols: "$", align: "L", description: "English (Belize)", remarks: "Belize - Currency", format: '_-[$$-en-BZ]* #,##0.00_-;-[$$-en-BZ]* #,##0.00_-;', precision: 2 }
+    , en_ca: { code: "en_CA", symbols: "$", align: "L", description: "English (Canada)", remarks: "Canada - Currency", format: '_-[$$-en-CA]* #,##0.00_-;-[$$-en-CA]* #,##0.00_-;', precision: 2 }
+    , en_029: { code: "en_029", symbols: "EC$", align: "L", description: "English (Caribbean)", remarks: "Caribbean - Currency", format: '_-[$EC$-en-029]* #,##0.00_-;-[$EC$-en-029]* #,##0.00_-;', precision: 2 }
+    , en_hk: { code: "en_HK", symbols: "$", align: "L", description: "English (Hong Kong SAR)", remarks: "Hong Kong - Currency", format: '_-[$$-en-HK]* #,##0.00_-;-[$$-en-HK]* #,##0.00_-;', precision: 2 }
+    , en_in: { code: "en_IN", symbols: "₹", align: "L", description: "English (India)", remarks: "India - Currency", format: '_ [$₹-en-IN] * #,##0.00_ ;_ [$₹-en-IN] * -#,##0.00_ ;', precision: 2 }
+    , en_id: { code: "en_ID", symbols: "Rp", align: "L", description: "English (Indonesia)", remarks: "Indonesia - Currency", format: '_-[$Rp-en-ID]* #,##0.00_-;-[$Rp-en-ID]* #,##0.00_-;', precision: 2 }
+    , en_ie: { code: "en_IE", symbols: "€", align: "L", description: "English (Ireland)", remarks: "Ireland - Currency", format: '_-[$€-en-IE]* #,##0.00_-;-[$€-en-IE]* #,##0.00_-;', precision: 2 }
+    , en_jm: { code: "en_JM", symbols: "$", align: "L", description: "English (Jamaica)", remarks: "Jamaica - Currency", format: '_-[$$-en-JM]* #,##0.00_-;-[$$-en-JM]* #,##0.00_-;', precision: 2 }
+    , en_my: { code: "en_MY", symbols: "RM", align: "L", description: "English (Malaysia)", remarks: "Malaysia - Currency", format: '_-[$RM-en-MY]* #,##0.00_-;-[$RM-en-MY]* #,##0.00_-;', precision: 2 }
+    , en_nz: { code: "en_NZ", symbols: "$", align: "L", description: "English (New Zealand)", remarks: "New Zealand - Currency", format: '_-[$$-en-NZ]* #,##0.00_-;-[$$-en-NZ]* #,##0.00_-;', precision: 2 }
+    //, en_ph: { code: "en_PH", symbols: "₱", align: "L", description: "English (Philippines)", remarks: "Philippines Peso - Currency", format: '_-[$₱-fil-PH]* #,##0.00_-;-[$₱-fil-PH]* #,##0.00_-', precision: 2 } //, format: '_-[$₱-en-PH]* #,##0.00_-;-[$₱-en-PH]* #,##0.00_-;_-[$₱-en-PH]* " - "??_-;_-@_-' }
+    , en_sg: { code: "en_SG", symbols: "$", align: "L", description: "English (Singapore)", remarks: "Singapore - Currency", format: '_-[$$-en-SG]* #,##0.00_-;-[$$-en-SG]* #,##0.00_-;', precision: 2 }
+    , en_za: { code: "en_ZA", symbols: "R", align: "L", description: "English (South Africa)", remarks: "South Africa - Currency", format: '_-[$R-en-ZA]* #,##0.00_-;-[$R-en-ZA]* #,##0.00_-;', precision: 2 }
+    , en_tt: { code: "en_TT", symbols: "$", align: "L", description: "English (Trinidad and Tobago)", remarks: "Trinidad and Tobago - Currency", format: '_-[$$-en-TT]* #,##0.00_-;-[$$-en-TT]* #,##0.00_-;', precision: 2 }
+    , en_gb: { code: "en_GB", symbols: "£", align: "L", description: "English (United Kingdom)", remarks: "United Kingdom - Currency", format: '_-[$£-en-GB]* #,##0.00_-;-[$£-en-GB]* #,##0.00_-;', precision: 2 }
+    , en_us: { code: "en_US", symbols: "$", align: "L", description: "English (United States)", remarks: "United States - Currency", format: '_([$$-en-US]* #,##0.00_);_([$$-en-US]* (#,##0.00);', precision: 2 }
+    , en_zw: { code: "en_ZW", symbols: "US$", align: "L", description: "English (Zimbabwe)", remarks: "Zimbabwe - Currency", format: '_-[$US$-en-ZW]* #,##0.00_-;-[$US$-en-ZW]* #,##0.00_-;', precision: 2 }
+    , et_ee: { code: "et_EE", symbols: "€", align: "R", description: "Estonian", remarks: "Estonia - Currency", format: '_-* #,##0.00 [$€-et-EE]_-;-* #,##0.00 [$€-et-EE]_-;', precision: 2 }
+    , x_euro2: { code: "x_euro2", symbols: "€", align: "L", description: "Euro (€ 123)", remarks: "Europe - Currency", format: '_([$€-x-euro2] * #,##0.00_);_([$€-x-euro2] * (#,##0.00);', precision: 2 }
+    , x_euro1: { code: "x_euro1", symbols: "€", align: "R", description: "Euro (123 €)", remarks: "Europe - Currency", format: '_ * #,##0.00_) [$€-x-euro1]_ ;_ * (#,##0.00) [$€-x-euro1]_ ;', precision: 2 }
+    , fo_fo: { code: "fo_FO", symbols: "kr", align: "R", description: "Faroese", remarks: "Faroe Islands - Currency", format: '_-* #,##0.00 [$kr-fo-FO]_-;-* #,##0.00 [$kr-fo-FO]_-;', precision: 2 }
+    //, fil_ph: { code: "fil_PH", symbols: "₱", align: "L", description: "Filipino", remarks: "Philippine Peso - Currency", format: '_-[$₱-fil-PH]* #,##0.00_-;-[$₱-fil-PH]* #,##0.00_-;', precision: 2 }
+    , fi_fi: { code: "fi_FI", symbols: "€", align: "R", description: "Finnish", remarks: "Finland - Currency", format: '_-* #,##0.00 [$€-fi-FI]_-;-* #,##0.00 [$€-fi-FI]_-;', precision: 2 }
+    , de_at: { code: "de_AT", symbols: "€", align: "L", description: "French (Austria)", remarks: "Austia - Currency", format: '_-[$€-de-AT] * #,##0.00_-;-[$€-de-AT] * #,##0.00_-;', precision: 2 }
+    , fr_be: { code: "fr_BE", symbols: "€", align: "R", description: "French (Belgium)", remarks: "Belgium - Currency", format: '_-* #,##0.00 [$€-fr-BE]_-;-* #,##0.00 [$€-fr-BE]_-;', precision: 2 }
+    , fr_cm: { code: "fr_CM", symbols: "FCFA", align: "R", description: "French (Cameroon)", remarks: "Cameroon - Currency", format: '_-* #,##0.00 [$FCFA-fr-CM]_-;-* #,##0.00 [$FCFA-fr-CM]_-;', precision: 2 }
+    , fr_ca: { code: "fr_CA", symbols: "$", align: "R", description: "French (Canada)", remarks: "Canada - Currency", format: '_ * #,##0.00_) [$$-fr-CA]_ ;_ * (#,##0.00) [$$-fr-CA]_ ;', precision: 2 }
+    , fr_029: { code: "fr_029", symbols: "EC$", align: "R", description: "French (Caribbean)", remarks: "Caribbean - Currency", format: '_-* #,##0.00 [$EC$-fr-029]_-;-* #,##0.00 [$EC$-fr-029]_-;', precision: 2 }
+    , fr_cd: { code: "fr_CD", symbols: "FC", align: "R", description: "French (Congo (DRC))", remarks: "Congo (DRC) - Currency", format: '_-* #,##0.00 [$FC-fr-CD]_-;-* #,##0.00 [$FC-fr-CD]_-;', precision: 2 }
+    , fr_ci: { code: "fr_CI", symbols: "CFA", align: "R", description: "French (Congo (DRC))", remarks: "Congo (DRC) - Currency", format: '_-* #,##0.00 [$CFA-fr-CI]_-;-* #,##0.00 [$CFA-fr-CI]_-;', precision: 2 }
+    , fr_fr: { code: "fr_FR", symbols: "€", align: "R", description: "French (France)", remarks: "France - Currency", format: '_-* #,##0.00 [$€-fr-FR]_-;-* #,##0.00 [$€-fr-FR]_-;', precision: 2 }
+    , fr_ht: { code: "fr_HT", symbols: "G", align: "R", description: "French (Haiti)", remarks: "Haiti - Currency", format: '_-* #,##0.00 [$G-fr-HT]_-;-* #,##0.00 [$G-fr-HT]_-;', precision: 2 }
+    , de_lu: { code: "de_LU", symbols: "€", align: "R", description: "French (Luxembourg)", remarks: "Luxembourg - Currency", format: '_-* #,##0.00 [$€-de-LU]_-;-* #,##0.00 [$€-de-LU]_-;', precision: 2 }
+    , fr_ml: { code: "fr_ML", symbols: "CFA", align: "R", description: "French (Mali)", remarks: "Mali - Currency", format: '_-* #,##0.00 [$CFA-fr-ML]_-;-* #,##0.00 [$CFA-fr-ML]_-;', precision: 2 }
+    , fr_mc: { code: "fr_MC", symbols: "€", align: "R", description: "French (Monaco)", remarks: "Monaco - Currency", format: '_-* #,##0.00 [$€-fr-MC]_-;-* #,##0.00 [$€-fr-MC]_-;', precision: 2 }
+    , fr_ma: { code: "fr_MA", symbols: "DH", align: "R", description: "French (Morocco)", remarks: "Morocco - Currency", format: '_-* #,##0.00 [$DH-fr-MA]_-;-* #,##0.00 [$DH-fr-MA]_-;', precision: 2 }
+    , fr_re: { code: "fr_RE", symbols: "€", align: "R", description: "French (Reunion)", remarks: "Reunion - Currency", format: '_-* #,##0.00 [$€-fr-RE]_-;-* #,##0.00 [$€-fr-RE]_-;', precision: 2 }
+    , fr_sn: { code: "fr_SN", symbols: "CFA", align: "R", description: "French (Senegal)", remarks: "Senegal - Currency", format: '_-* #,##0.00 [$CFA-fr-SN]_-;-* #,##0.00 [$CFA-fr-SN]_-;', precision: 2 }
+    , fr_ch: { code: "fr_CH", symbols: "CHF", align: "R", description: "French (Switzerland)", remarks: "Switzerland - Currency", format: '_-* #,##0.00 [$CHF-fr-CH]_-;-* #,##0.00 [$CHF-fr-CH]_-;', precision: 2 }
+    , ff_latn_sn: { code: "ff_Latn_SN", symbols: "CFA", align: "R", description: "Fulah (Latin, Senegal)", remarks: "Senegal - Currency", format: '_-* #,##0.00 [$CFA-ff-Latn-SN]_-;-* #,##0.00 [$CFA-ff-Latn-SN]_-;', precision: 2 }
+    , ff_ng: { code: "ff_NG", symbols: "₦", align: "R", description: "Fulah (Nigeria)", remarks: "Nigeria  - Currency", format: '_-* #,##0.00 [$₦-ff-NG]_-;-* #,##0.00 [$₦-ff-NG]_-;', precision: 2 }
+    , gl_es: { code: "gl_ES", symbols: "€", align: "R", description: "Galician", remarks: "Spain - Currency", format: '_-* #,##0.00 [$€-gl-ES]_-;-* #,##0.00 [$€-gl-ES]_-;', precision: 2 }
+    , ka_ge: { code: "ka_GE", symbols: "₾", align: "R", description: "Georgian", remarks: "Georgia - Currency", format: '_-* #,##0.00 [$₾-ka-GE]_-;-* #,##0.00 [$₾-ka-GE]_-;', precision: 2 }
+    , de_de: { code: "de_DE", symbols: "€", align: "R", description: "German (Germany)", remarks: "Germany - Currency", format: '_-* #,##0.00 [$€-de-DE]_-;-* #,##0.00 [$€-de-DE]_-;', precision: 2 }
+    , de_li: { code: "de_LI", symbols: "CHF", align: "L", description: "German (Liechtenstein)", remarks: "Liechtenstein - Currency", format: '_-[$CHF-de-LI] * #,##0.00_-;-[$CHF-de-LI] * #,##0.00_-;', precision: 2 }
+    , de_lu: { code: "de_LU", symbols: "€", align: "R", description: "German (Luxembourg)", remarks: "Luxembourg - Currency", format: '_-* #,##0.00 [$€-de-LU]_-;-* #,##0.00 [$€-de-LU]_-;', precision: 2 }
+    , de_ch: { code: "de_CH", symbols: "CHF", align: "L", description: "German (Switzerland)", remarks: "Switzerland - Currency", format: '_ [$CHF-de-CH] * #,##0.00_ ;_ [$CHF-de-CH] * -#,##0.00_ ;', precision: 2 }
+    , el_gr: { code: "el_GR", symbols: "€", align: "R", description: "Greek", remarks: "Greece - Currency", format: '_-* #,##0.00 [$€-el-GR]_-;-* #,##0.00 [$€-el-GR]_-;', precision: 2 }
+    , gn_py: { code: "gn_PY", symbols: "₲", align: "R", description: "Guarani", remarks: "Paraguay - Currency", format: '_-* #,##0.00 [$₲-gn-PY]_-;-* #,##0.00 [$₲-gn-PY]_-;', precision: 2 }
+    , gu_in: { code: "gu_IN", symbols: "₹", align: "L", description: "Gujarati", remarks: "India - Currency", format: '_ [$₹-gu-IN]* #,##0.00_ ;_ [$₹-gu-IN]* -#,##0.00_ ;', precision: 2 }
+    , ha_latn_ng: { code: "ha_Latn_NG", symbols: "₦", align: "L", description: "Hausa", remarks: "Nigeria  - Currency", format: '_-[$₦-ha-Latn-NG] * #,##0.00_-;-[$₦-ha-Latn-NG] * #,##0.00_-;', precision: 2 }
+    , haw_us: { code: "haw_US", symbols: "$", align: "L", description: "Hawaiian", remarks: "Hawaii - Currency", format: '_-[$$-haw-US]* #,##0.00_-;-[$$-haw-US]* #,##0.00_-;', precision: 2 }
+    , he_il: { code: "he_IL", symbols: "₪", align: "L", description: "Hebrew", remarks: "Israel - Currency", format: '_ [$₪-he-IL] * #,##0.00_ ;_ [$₪-he-IL] * -#,##0.00_ ;', precision: 2 }
+    , hi_in: { code: "hi_IN", symbols: "₹", align: "L", description: "Hindi", remarks: "India - Currency", format: '_ [$₹-hi-IN]* #,##0.00_ ;_ [$₹-hi-IN]* -#,##0.00_ ;', precision: 2 }
+    , hu_hu: { code: "hu_HU", symbols: "Ft", align: "R", description: "Hungarian", remarks: "Hungary - Currency", format: '_-* #,##0.00 [$Ft-hu-HU]_-;-* #,##0.00 [$Ft-hu-HU]_-;', precision: 2 }
+    , ibb_ng: { code: "ibb_NG", symbols: "₦", align: "L", description: "Ibibio (Nigeria)", remarks: "Nigeria  - Currency", format: '_-[$₦-ibb-NG] * #,##0.00_-;-[$₦-ibb-NG] * #,##0.00_-;', precision: 2 }
+    , is_is: { code: "is_IS", symbols: "kr", align: "R", description: "Icelandic", remarks: "Iceland - Currency", format: '_-* #,##0.00 [$kr-is-IS]_-;-* #,##0.00 [$kr-is-IS]_-;', precision: 2 }
+    , ig_ng: { code: "ig_NG", symbols: "₦", align: "L", description: "Igbo", remarks: "Nigeria  - Currency", format: '_-[$₦-ig-NG]* #,##0.00_-;-[$₦-ig-NG]* #,##0.00_-;', precision: 2 }
+    , smn_fi: { code: "smn_FI", symbols: "€", align: "R", description: "Inari Sami (Finland)", remarks: "Finland - Currency", format: '_-* #,##0.00 [$€-smn-FI]_-;-* #,##0.00 [$€-smn-FI]_-;', precision: 2 }
+    , iu_latn_ca: { code: "iu_Latn_CA", symbols: "$", align: "L", description: "Inuktitut (Latin)", remarks: "Canada - Currency", format: '_-[$$-iu-Latn-CA]* #,##0.00_-;-[$$-iu-Latn-CA]* #,##0.00_-;', precision: 2 }
+    , iu_cans_ca: { code: "iu_Cans_CA", symbols: "$", align: "L", description: "Inuktitut (Syllabics)", remarks: "Canada - Currency", format: '_-[$$-iu-Cans-CA]* #,##0.00_-;-[$$-iu-Cans-CA]* #,##0.00_-;', precision: 2 }
+    , ga_ie: { code: "ga_IE", symbols: "€", align: "L", description: "Irish", remarks: "Ireland - Currency", format: '_-[$€-ga-IE]* #,##0.00_-;-[$€-ga-IE]* #,##0.00_-;', precision: 2 }
+    , xh_za: { code: "xh_ZA", symbols: "R", align: "L", description: "isiXhosa", remarks: "South Africa - Currency", format: '_-[$R-xh-ZA]* #,##0.00_-;-[$R-xh-ZA]* #,##0.00_-;', precision: 2 }
+    , zu_za: { code: "zu_ZA", symbols: "R", align: "L", description: "isiZulu", remarks: "South Africa - Currency", format: '_-[$R-zu-ZA]* #,##0.00_-;-[$R-zu-ZA]* #,##0.00_-;', precision: 2 }
+    , it_it: { code: "it_IT", symbols: "€", align: "R", description: "Italian (Italy)", remarks: "Italy - Currency", format: '_-* #,##0.00 [$€-it-IT]_-;-* #,##0.00 [$€-it-IT]_-;', precision: 2 }
+    , it_ch: { code: "it_CH", symbols: "CHF", align: "R", description: "Italian (Switzerland)", remarks: "Switzerland - Currency", format: '_ [$CHF-it-CH] * #,##0.00_ ;_ [$CHF-it-CH] * -#,##0.00_ ;', precision: 2 }
+    , ja_jp: { code: "ja_JP", symbols: "¥", align: "L", description: "Japanese", remarks: "Japan - Currency", format: '_-[$¥-ja-JP]* #,##0.00_-;-[$¥-ja-JP]* #,##0.00_-;', precision: 2 }
+    , jv_java_id: { code: "jv_Java_ID", symbols: "Rp", align: "L", description: "Javanese (Javanese, Indonesia)", remarks: "Indonesia - Currency", format: '_-[$Rp-jv-Java-ID] * #,##0.00_-;-[$Rp-jv-Java-ID] * #,##0.00_-;', precision: 2 }
+    , jv_latn_id: { code: "jv_Latn_ID", symbols: "Rp", align: "L", description: "Javanese (Latin, Indonesia)", remarks: "Indonesia - Currency", format: '_-[$Rp-jv-Latn-ID]* #,##0.00_-;-[$Rp-jv-Latn-ID]* #,##0.00_-;', precision: 2 }
+    , kl_gl: { code: "kl_GL", symbols: "kr.", align: "L", description: "Kalaallisut", remarks: "Greenland - Currency", format: '_ [$kr.-kl-GL]* #,##0.00_ ;_ [$kr.-kl-GL]* -#,##0.00_ ;', precision: 2 }
+    , kn_in: { code: "kn_IN", symbols: "₹", align: "L", description: "Kannada", remarks: "India - Currency", format: '_ [$₹-kn-IN]* #,##0.00_ ;_ [$₹-kn-IN]* -#,##0.00_ ;', precision: 2 }
+    , kr_ng: { code: "kr_NG", symbols: "₦", align: "L", description: "Kanuri", remarks: "Nigeria  - Currency", format: '_-[$₦-kr-NG] * #,##0.00_-;-[$₦-kr-NG] * #,##0.00_-;', precision: 2 }
+    , ks_deva: { code: "ks_Deva", symbols: "₹", align: "L", description: "Kashmiri", remarks: "India - Currency", format: '_ [$₹-ks-Deva] * #,##0.00_ ;_ [$₹-ks-Deva] * -#,##0.00_ ;', precision: 2 }
+    , ks_arab: { code: "ks_Arab", symbols: "₹", align: "L", description: "Kashmiri (Arabic)", remarks: "Arabic - Currency", format: '_-[$₹-ks-Arab] * #,##0.00_-;-[$₹-ks-Arab] * #,##0.00_-;', precision: 2 }
+    , kk_kz: { code: "kk_KZ", symbols: "₸", align: "R", description: "Kazakh", remarks: "Kazakhstan - Currency", format: '_-* #,##0.00 [$₸-kk-KZ]_-;-* #,##0.00 [$₸-kk-KZ]_-;', precision: 2 }
+    , km_kh: { code: "km_KH", symbols: "៛", align: "R", description: "Khmer", remarks: "Cambodia - Currency", format: '_-* #,##0.00[$-km-KH]_-;-* #,##0.00[$៛-km-KH]_-;', precision: 2 }
+    , quc_latn_gt: { code: "quc_Latn_GT", symbols: "Q", align: "L", description: "K'iche", remarks: "Guatemala - Currency", format: '_-[$Q-quc-Latn-GT]* #,##0.00_-;-[$Q-quc-Latn-GT]* #,##0.00_-;', precision: 2 }
+    , rw_rw: { code: "rw_RW", symbols: "RF", align: "L", description: "Kinyarwanda", remarks: "Rwanda - Currency", format: '_-[$RF-rw-RW] * #,##0.00_-;-[$RF-rw-RW] * #,##0.00_-;', precision: 2 }
+    , sw_ke: { code: "sw_KE", symbols: "Ksh", align: "L", description: "Kiswahili", remarks: "Kenya - Currency", format: '_-[$Ksh-sw-KE] * #,##0.00_-;-[$Ksh-sw-KE] * #,##0.00_-;', precision: 2 }
+    , kok_in: { code: "kok_IN", symbols: "₹", align: "L", description: "Konkani", remarks: "India - Currency", format: '_ [$₹-kok-IN] * #,##0.00_ ;_ [$₹-kok-IN] * -#,##0.00_ ;', precision: 2 }
+    , ko_kr: { code: "ko_KR", symbols: "₩", align: "L", description: "Korean", remarks: "Korea - Currency", format: '_-[$₩-ko-KR]* #,##0.00_-;-[$₩-ko-KR]* #,##0.00_-;', precision: 2 }
+    , ky_kg: { code: "ky_KG", symbols: "сом", align: "R", description: "Kyrgyz", remarks: "Kyrgyzstan - Currency", format: '_-* #,##0.00 [$сом-ky-KG]_-;-* #,##0.00 [$сом-ky-KG]_-;', precision: 2 }
+    , lo_la: { code: "lo_LA", symbols: "₭", align: "L", description: "Lao", remarks: "Laos - Currency", format: '_ [$₭-lo-LA]* #,##0.00_ ;_ [$₭-lo-LA]* -#,##0.00_ ;', precision: 2 }
+    , la_latn: { code: "la_Latn", symbols: "¤", align: "L", description: "Latin", remarks: "Latin - Currency", format: '_-[$¤-la-Latn] * #,##0.00_-;-[$¤-la-Latn] * #,##0.00_-;', precision: 2 }
+    , lv_lv: { code: "lv_LV", symbols: "€", align: "R", description: "Latvian", remarks: "Latvia - Currency", format: '_-* #,##0.00 [$€-lv-LV]_-;-* #,##0.00 [$€-lv-LV]_-;', precision: 2 }
+    , lt_lt: { code: "lt_LT", symbols: "€", align: "R", description: "Lithuanian", remarks: "Lithuania - Currency", format: '_-* #,##0.00 [$€-lt-LT]_-;-* #,##0.00 [$€-lt-LT]_-;', precision: 2 }
+    , dsb_de: { code: "dsb_DE", symbols: "€", align: "R", description: "Lower Sorbian", remarks: "Germany - Currency", format: '_-* #,##0.00 [$€-dsb-DE]_-;-* #,##0.00 [$€-dsb-DE]_-;', precision: 2 }
+    , smj_no: { code: "smj_NO", symbols: "kr", align: "L", description: "Lule Sami (Norway)", remarks: "Norway - Currency", format: '_ [$kr-smj-NO] * #,##0.00_ ;_ [$kr-smj-NO] * -#,##0.00_ ;', precision: 2 }
+    , smj_se: { code: "smj_SE", symbols: "kr", align: "R", description: "Lule Sami (Sweden)", remarks: "Sweden - Currency", format: '_-* #,##0.00 [$kr-smj-SE]_-;-* #,##0.00 [$kr-smj-SE]_-;', precision: 2 }
+    , lb_lu: { code: "lb_LU", symbols: "€", align: "R", description: "Luxembourgish", remarks: "Luxembourg - Currency", format: '_-* #,##0.00 [$€-lb-LU]_-;-* #,##0.00 [$€-lb-LU]_-;', precision: 2 }
+    , mk_mk: { code: "mk_MK", symbols: "ден.", align: "R", description: "Macedonian", remarks: "North Macedonia - Currency", format: '_-* #,##0.00 [$ден.-mk-MK]_-;-* #,##0.00 [$ден.-mk-MK]_-;', precision: 2 }
+    , zgh_tfng_ma: { code: "zgh_Tfng_MA", symbols: "MAD", align: "R", description: "MAD Standard Moroccan Tamazight (Tifinagh, Morocco)", remarks: "Morocco - Currency", format: '_-* #,##0.00[$MAD-zgh-Tfng-MA]_-;-* #,##0.00[$MAD-zgh-Tfng-MA]_-;', precision: 2 }
+    , mg_mg: { code: "mg_MG", symbols: "Ar", align: "L", description: "Malagasy", remarks: "Madagascar - Currency", format: '_-[$Ar-mg-MG] * #,##0.00_-;-[$Ar-mg-MG] * #,##0.00_-;', precision: 2 }
+    , ms_bn: { code: "ms_BN", symbols: "$", align: "L", description: "Malay (Brunei Darussalam)", remarks: "Malay - Currency", format: '_-[$$-ms-BN] * #,##0.00_-;-[$$-ms-BN] * #,##0.00_-;', precision: 2 }
+    , ms_my: { code: "ms_MY", symbols: "RM", align: "L", description: "Malay (Malaysia)", remarks: "Malaysia - Currency", format: '_-[$RM-ms-MY]* #,##0.00_-;-[$RM-ms-MY]* #,##0.00_-;', precision: 2 }
+    , ml_in: { code: "ml_IN", symbols: "₹", align: "L", description: "MalayMalayalam)", remarks: "India - Currency", format: '_-[$₹-ml-IN]* #,##0.00_-;-[$₹-ml-IN]* #,##0.00_-;', precision: 2 }
+    , mt_mt: { code: "mt_MT", symbols: "€", align: "L", description: "Maltese", remarks: "Malta - Currency", format: '_-[$€-mt-MT]* #,##0.00_-;-[$€-mt-MT]* #,##0.00_-;', precision: 2 }
+    , mni_in: { code: "mni_IN", symbols: "₹", align: "L", description: "Manipuri", remarks: "India - Currency", format: '_-[$₹-mni-IN] * #,##0.00_-;-[$₹-mni-IN] * #,##0.00_-;', precision: 2 }
+    , mi_nz: { code: "mi_NZ", symbols: "$", align: "L", description: "Māori", remarks: "New Zealand - Currency", format: '_-[$$-mi-NZ] * #,##0.00_-;-[$$-mi-NZ] * #,##0.00_-;', precision: 2 }
+    , arn_cl: { code: "arn_CL", symbols: "$", align: "L", description: "Mapuche", remarks: "Chile - Currency", format: '_-[$$-arn-CL] * #,##0.00_-;-[$$-arn-CL] * #,##0.00_-;', precision: 2 }
+    , mr_in: { code: "mr_IN", symbols: "₹", align: "L", description: "Marathi", remarks: "India - Currency", format: '_ [$₹-mr-IN]* #,##0.00_ ;_ [$₹-mr-IN]* -#,##0.00_ ;', precision: 2 }
+    , moh_ca: { code: "moh_CA", symbols: "$", align: "L", description: "Mohawk", remarks: "Canada - Currency", format: '_-[$$-moh-CA]* #,##0.00_-;-[$$-moh-CA]* #,##0.00_-;', precision: 2 }
+    , mn_mn: { code: "mn_MN", symbols: "₮", align: "L", description: "Mongolian (Mongolia)", remarks: "Mongolia - Currency", format: '_-[$₮-mn-MN] * #,##0.00_-;-[$₮-mn-MN] * #,##0.00_-;', precision: 2 }
+    , mn_mong_cn: { code: "mn_Mong_CN", symbols: "¥", align: "L", description: "Mongolian (Traditional Mongolian, China)", remarks: "China - Currency", format: '_ [$¥-mn-Mong-CN]* #,##0.00_ ;_ [$¥-mn-Mong-CN]* -#,##0.00_ ;', precision: 2 }
+    , mn_mong_mn: { code: "mn_Mong_MN", symbols: "₮", align: "L", description: "Mongolian (Traditional Mongolian, Mongolia)", remarks: "Mongolia - Currency", format: '_ [$₮-mn-Mong-MN]* #,##0.00_ ;_ [$₮-mn-Mong-MN]* -#,##0.00_ ;', precision: 2 }
+    , zh_mo: { code: "zh_MO", symbols: "MOP", align: "L", description: "MOP Chinese (Traditional, Macao SAR)", remarks: "Macao - Currency", format: '_-[$MOP-zh-MO]* #,##0.00_-;-[$MOP-zh-MO]* #,##0.00_-;', precision: 2 }
+    , ne_np: { code: "ne_NP", symbols: "रु", align: "L", description: "Napali", remarks: "Nepal - Currency", format: '_-[$रु-ne-NP] * #,##0.00_-;-[$रु-ne-NP] * #,##0.00_-;', precision: 2 }
+    , ne_in: { code: "ne_IN", symbols: "₹", align: "L", description: "Nepali (India)", remarks: "India - Currency", format: '_-[$₹-ne-IN] * #,##0.00_-;-[$₹-ne-IN] * #,##0.00_-;', precision: 2 }
+    , nqo_gn: { code: "nqo_GN", symbols: "ߖߕ.", align: "L", description: "N'ko", remarks: "Guinea - Currency", format: '_ [$ߖߕ.‏-nqo-GN] * #,##0.00_ ;_ [$ߖߕ.‏-nqo-GN] * -#,##0.00_ ;', precision: 2 }
+    , se_fi: { code: "se_FI", symbols: "€", align: "R", description: "Northern Sami (Finland)", remarks: "Finland - Currency", format: '_-* #,##0.00 [$€-se-FI]_-;-* #,##0.00 [$€-se-FI]_-;', precision: 2 }
+    , se_no: { code: "se_NO", symbols: "kr", align: "R", description: "Northern Sami (Norway)", remarks: "Norway - Currency", format: '_-* #,##0.00 [$kr-se-NO]_-;-* #,##0.00 [$kr-se-NO]_-;', precision: 2 }
+    , se_no: { code: "se_SE", symbols: "kr", align: "R", description: "Northern Sami (Sweden)", remarks: "Sweden - Currency", format: '_-* #,##0.00 [$kr-se-SE]_-;-* #,##0.00 [$kr-se-SE]_-;', precision: 2 }
+    , nb_no: { code: "nb_NO", symbols: "kr", align: "L", description: "Norwegian (Bokmål)", remarks: "Norway - Currency", format: '_-[$kr-nb-NO] * #,##0.00_-;-[$kr-nb-NO] * #,##0.00_-;', precision: 2 }
+    , nn_no: { code: "nn_NO", symbols: "kr", align: "R", description: "Norwegian (Nynorsk)", remarks: "Norway - Currency", format: '_-* #,##0.00 [$kr-nn-NO]_-;-* #,##0.00 [$kr-nn-NO]_-;', precision: 2 }
+    , oc_fr: { code: "oc_FR", symbols: "€", align: "R", description: "Occitan", remarks: "France - Currency", format: '_-* #,##0.00[$€-oc-FR]_-;-* #,##0.00[$€-oc-FR]_-;', precision: 2 }
+    , or_in: { code: "or_IN", symbols: "₹", align: "L", description: "Odia", remarks: "India - Currency", format: '_ [$₹-or-IN] * #,##0.00_ ;_ [$₹-or-IN] * -#,##0.00_ ;', precision: 2 }
+    , om_et: { code: "om_ET", symbols: "Br", align: "L", description: "Oromo", remarks: "Ethiopia - Currency", format: '_-[$Br-om-ET]* #,##0.00_-;-[$Br-om-ET]* #,##0.00_-;', precision: 2 }
+    , pap_029: { code: "pap_029", symbols: "$", align: "L", description: "Papiamento", remarks: "Netherland Antilles - Currency", format: '_-[$$-pap-029]* #,##0.00_-;-[$$-pap-029]* #,##0.00_-;', precision: 2 }
+    , ps_af: { code: "ps_AF", symbols: "؋", align: "R", description: "Pashto", remarks: "Afghanistan - Currency", format: '_-* #,##0.00 [$؋-ps-AF]_-;-* #,##0.00 [$؋-ps-AF]_-;', precision: 2 }
+    , pl_pl: { code: "pl_PL", symbols: "zł", align: "R", description: "Polish", remarks: "Poland - Currency", format: '_-* #,##0.00 [$zł-pl-PL]_-;-* #,##0.00 [$zł-pl-PL]_-;', precision: 2 }
+    , pt_ao: { code: "pt_AO", symbols: "Kz", align: "R", description: "Portuguese (Angola)", remarks: "Angola - Currency", format: '_-* #,##0.00 [$Kz-pt-AO]_-;-* #,##0.00 [$Kz-pt-AO]_-;', precision: 2 }
+    , pt_br: { code: "pt_BR", symbols: "R$", align: "L", description: "Portuguese (Brazil)", remarks: "Brazil - Currency", format: '_-[$R$-pt-BR] * #,##0.00_-;-[$R$-pt-BR] * #,##0.00_-;', precision: 2 }
+    , pt_pt: { code: "pt_PT", symbols: "€", align: "R", description: "Portuguese (Portugal)", remarks: "Portugal - Currency", format: '_-* #,##0.00 [$€-pt-PT]_-;-* #,##0.00 [$€-pt-PT]_-;', precision: 2 }
+    , pa_in: { code: "pa_IN", symbols: "₹", align: "L", description: "Punjabi (India))", remarks: "India - Currency", format: '_ [$₹-pa-IN] * #,##0.00_ ;_ [$₹-pa-IN] * -#,##0.00_ ;', precision: 2 }
+    , pa_arab_pk: { code: "pa_Arab_PK", symbols: "Rs", align: "L", description: "Punjabi (Pakistan)", remarks: "Pakistan - Currency", format: '_-[$Rs-pa-Arab-PK] * #,##0.00_-;-[$Rs-pa-Arab-PK] * #,##0.00_-;', precision: 2 }
+    , quz_bo: { code: "quz_BO", symbols: "Bs.", align: "L", description: "Quechua (Bolivia)", remarks: "Bolivia - Currency", format: '_([$Bs.-quz-BO] * #,##0.00_);_([$Bs.-quz-BO] * (#,##0.00);', precision: 2 }
+    , quz_ec: { code: "quz_EC", symbols: "$", align: "L", description: "Quechua (Ecuador)", remarks: "Ecuador -Currency", format: '_ [$$-quz-EC] * #,##0.00_ ;_ [$$-quz-EC] * -#,##0.00_ ;', precision: 2 }
+    , quz_pe: { code: "quz_PE", symbols: "S/", align: "L", description: "Quechua (Peru)", remarks: "Peru - Currency", format: '_ [$S/-quz-PE] * #,##0.00_ ;_ [$S/-quz-PE] * -#,##0.00_ ;', precision: 2 }
+    , ro_ro: { code: "ro_RO", symbols: "lei", align: "R", description: "Romanian", remarks: "Romania  - Currency", format: '_-* #,##0.00 [$lei-ro-RO]_-;-* #,##0.00 [$lei-ro-RO]_-;', precision: 2 }
+    , ro_md: { code: "ro_MD", symbols: "L", align: "R", description: "Romanian (Moldova)", remarks: "Moldova - Currency", format: '_-* #,##0.00 [$L-ro-MD]_-;-* #,##0.00 [$L-ro-MD]_-;', precision: 2 }
+    , rm_ch: { code: "rm_CH", symbols: "CHF", align: "R", description: "Romansh", remarks: "Switzerland - Currency", format: '_-* #,##0.00 [$CHF-rm-CH]_-;-* #,##0.00 [$CHF-rm-CH]_-;', precision: 2 }
+    , ru_ru: { code: "ru_RU", symbols: "₽", align: "R", description: "Russian", remarks: "Russia -  Currency", format: '_-* #,##0.00 [$₽-ru-RU]_-;-* #,##0.00 [$₽-ru-RU]_-;', precision: 2 }
+    , ru_md: { code: "ru_MD", symbols: "L", align: "R", description: "Russian (Moldova)", remarks: "Moldova - Currency", format: '_-* #,##0.00 [$L-ru-MD]_-;-* #,##0.00 [$L-ru-MD]_-;', precision: 2 }
+    , sah_ru: { code: "sah_RU", symbols: "₽", align: "R", description: "Sakha", remarks: "Sakha - Currency", format: '_-* #,##0.00 [$₽-sah-RU]_-;-* #,##0.00 [$₽-sah-RU]_-;', precision: 2 }
+    , sa_in: { code: "sa_IN", symbols: "₹", align: "L", description: "Sanskrit", remarks: "India - Currency", format: '_-[$₹-sa-IN]* #,##0.00_-;-[$₹-sa-IN]* #,##0.00_-;', precision: 2 }
+    , gd_gb: { code: "gd_GB", symbols: "£", align: "L", description: "Scottish Gaelic (United Kingdom)", remarks: "United Kingdom - Currency", format: '_-[$£-gd-GB]* #,##0.00_-;-[$£-gd-GB]* #,##0.00_-;', precision: 2 }
+    , sr_cyrl_me: { code: "sr_Cyrl_ME", symbols: "€", align: "R", description: "Serbian (Cyrillic, Montenegro)", remarks: "Montenegro - Currency", format: '_-* #,##0.00 [$€-sr-Cyrl-ME]_-;-* #,##0.00 [$€-sr-Cyrl-ME]_-;', precision: 2 }
+    , sr_cyrl_ba: { code: "sr_Cyrl_BA", symbols: "КМ", align: "R", description: "Serbian (Cyrillic, Serbia and Herzegovina)", remarks: "Bosnia - Currency", format: '_-* #,##0.00 [$КМ-sr-Cyrl-BA]_-;-* #,##0.00 [$КМ-sr-Cyrl-BA]_-;', precision: 2 }
+    , sr_cyrl_cs: { code: "sr_Cyrl_CS", symbols: "дин.", align: "R", description: "Serbian (Cyrillic, Serbia and Montenegro (Former))", remarks: "Serbia - Currency", format: '_-* #,##0.00 [$дин.-sr-Cyrl-CS]_-;-* #,##0.00 [$дин.-sr-Cyrl-CS]_-;', precision: 2 }
+    , sr_cyrl_rs: { code: "sr_Cyrl_RS", symbols: "дин.", align: "R", description: "Serbian (Cyrillic, Serbia)", remarks: "Serbia - Currency", format: '_-* #,##0.00 [$дин.-sr-Cyrl-RS]_-;-* #,##0.00 [$дин.-sr-Cyrl-RS]_-;', precision: 2 }
+    , sr_latn_ba: { code: "sr_Latn_BA", symbols: "KM", align: "R", description: "Serbian (Latin, Bosnia and Herzegovia)", remarks: "Bosnia - Currency", format: '_-* #,##0.00 [$KM-sr-Latn-BA]_-;-* #,##0.00 [$KM-sr-Latn-BA]_-;', precision: 2 }
+    , sr_latn_me: { code: "sr_Latn_ME", symbols: "€", align: "R", description: "Serbian (Latin, Montenegro)", remarks: "Montenegro - Currency", format: '_-* #,##0.00 [$€-sr-Latn-ME]_-;-* #,##0.00 [$€-sr-Latn-ME]_-;', precision: 2 }
+    , sr_latn_cs: { code: "sr_Latn_CS", symbols: "din.", align: "R", description: "Serbian (Latin, Serbia and Montenegro (Former))", remarks: "Serbia - Currency", format: '_-* #,##0.00 [$din.-sr-Latn-CS]_-;-* #,##0.00 [$din.-sr-Latn-CS]_-;', precision: 2 }
+    , sr_latn_rs: { code: "sr_Latn_RS", symbols: "RSD", align: "R", description: "Serbian (Latin, Serbia)", remarks: "Latin, Serbia - Currency", format: '_-* #,##0.00 [$RSD-sr-Latn-RS]_-;-* #,##0.00 [$RSD-sr-Latn-RS]_-;', precision: 2 }
+    , st_za: { code: "st_ZA", symbols: "R", align: "L", description: "Sesotho (South Africa)", remarks: "South Africa - Currency", format: '_-[$R-st-ZA]* #,##0.00_-;-[$R-st-ZA]* #,##0.00_-;', precision: 2 }
+    , nso_za: { code: "nso_ZA", symbols: "R", align: "L", description: "Sesotho sa Leboa", remarks: "South Africa - Currency", format: '_-[$R-nso-ZA] * #,##0.00_-;-[$R-nso-ZA] * #,##0.00_-;', precision: 2 }
+    , tn_bw: { code: "tn_BW", symbols: "P", align: "L", description: "Setswana (Botswana) ", remarks: "Botswana - Currency", format: '_-[$P-tn-BW]* #,##0.00_-;-[$P-tn-BW]* #,##0.00_-;', precision: 2 }
+    , tn_za: { code: "tn_ZA", symbols: "R", align: "L", description: "Setswana (South Africa) ", remarks: "South Africa - Currency", format: '_-[$R-tn-ZA]* #,##0.00_-;-[$R-tn-ZA]* #,##0.00_-;', precision: 2 }
+    , tn_za: { code: "tn_ZA", symbols: "R", align: "L", description: "Setswana (South Africa)", remarks: "South Africa - Currency", format: '_-[$R-tn-ZA]* #,##0.00_-;-[$R-tn-ZA]* #,##0.00_-;', precision: 2 }
+    , sn_latn_zw: { code: "sn_Latn_ZW", symbols: "$", align: "L", description: "Shona (Latin)", remarks: "Zimbabwe - Currency", format: '_-[$$-sn-Latn-ZW]* #,##0.00_-;-[$$-sn-Latn-ZW]* #,##0.00_-;', precision: 2 }
+    , sd_arab_pk: { code: "sd_Arab_PK", symbols: "Rs", align: "L", description: "Sindhi (Arabic)", remarks: "Arabic - Currency", format: '_-[$Rs-sd-Arab-PK] * #,##0.00_-;-[$Rs-sd-Arab-PK] * #,##0.00_-;', precision: 2 }
+    , sd_deva_in: { code: "sd_Deva_IN", symbols: "₹", align: "L", description: "Sindhi (Devanagari)", remarks: "India - Currency", format: '_-[$₹-sd-Deva-IN] * #,##0.00_-;-[$₹-sd-Deva-IN] * #,##0.00_-;', precision: 2 }
+    , si_lk: { code: "si_LK", symbols: "රු.", align: "L", description: "Sinhala", remarks: "Sri Lanka - Currency", format: '_-[$රු.-si-LK]* #,##0.00_-;-[$රු.-si-LK]* #,##0.00_-;', precision: 2 }
+    , sms_fi: { code: "sms_FI", symbols: "€", align: "R", description: "Skolt Sami (Finland)", remarks: "Finland - Currency", format: '_-* #,##0.00 [$€-sms-FI]_-;-* #,##0.00 [$€-sms-FI]_-;', precision: 2 }
+    , sk_sk: { code: "sk_SK", symbols: "€", align: "R", description: "Slovak", remarks: "Slovakia - Currency", format: '_-* #,##0.00 [$€-sk-SK]_-;-* #,##0.00 [$€-sk-SK]_-;', precision: 2 }
+    , sl_si: { code: "sl_SI", symbols: "€", align: "R", description: "Slovenian", remarks: "Slovenia - Currency", format: '_-* #,##0.00 [$€-sl-SI]_-;-* #,##0.00 [$€-sl-SI]_-;', precision: 2 }
+    , so_so: { code: "so_SO", symbols: "S", align: "L", description: "Somali", remarks: "Somalia - Currency", format: '_-[$S-so-SO]* #,##0.00_-;-[$S-so-SO]* #,##0.00_-;', precision: 2 }
+    , sma_no: { code: "sma_NO", symbols: "kr", align: "L", description: "Southern Sami (Norway)", remarks: "Norway - Currency", format: '_ [$kr-sma-NO] * #,##0.00_ ;_ [$kr-sma-NO] * -#,##0.00_ ;', precision: 2 }
+    , sma_se: { code: "sma_SE", symbols: "kr", align: "R", description: "Southern Sami (Sweden", remarks: "Sweden - Currency", format: '_-* #,##0.00 [$kr-sma-SE]_-;-* #,##0.00 [$kr-sma-SE]_-;', precision: 2 }
+    , es_ar: { code: "es_AR", symbols: "$", align: "L", description: "Spanish (Argentina)", remarks: "Argentina - Currency", format: '_-[$$-es-AR] * #,##0.00_-;-[$$-es-AR] * #,##0.00_-;', precision: 2 }
+    , es_bo: { code: "es_BO", symbols: "Bs", align: "L", description: "Spanish (Bolivia)", remarks: "Bolivia - Currency", format: '_-[$Bs-es-BO]* #,##0.00_-;-[$Bs-es-BO]* #,##0.00_-;', precision: 2 }
+    , es_cl: { code: "es_CL", symbols: "$", align: "L", description: "Spanish (Chile)", remarks: "Chile - Currency", format: '_ [$$-es-CL]* #,##0.00_ ;_ [$$-es-CL]* -#,##0.00_ ;', precision: 2 }
+    , es_co: { code: "es_CO", symbols: "$", align: "L", description: "Spanish (Columbia)", remarks: "Columbia - Currency", format: '_-[$$-es-CO] * #,##0.00_-;-[$$-es-CO] * #,##0.00_-;', precision: 2 }
+    , es_cr: { code: "es_CR", symbols: "₡", align: "L", description: "Spanish (Costa Rica)", remarks: "Costa Rica - Currency", format: '_-[$₡-es-CR]* #,##0.00_-;-[$₡-es-CR]* #,##0.00_-;', precision: 2 }
+    , es_do: { code: "es_DO", symbols: "$", align: "L", description: "Spanish (Dominican Republic)", remarks: "Dominican Republic - Currency", format: '_([$$-es-DO]* #,##0.00_);_([$$-es-DO]* (#,##0.00);', precision: 2 }
+    , es_sv: { code: "es_SV", symbols: "$", align: "L", description: "Spanish (El Salvador)", remarks: "El Salvador - Currency", format: '_-[$$-es-SV]* #,##0.00_-;-[$$-es-SV]* #,##0.00_-;', precision: 2 }
+    , es_gt: { code: "es_GT", symbols: "Q", align: "L", description: "Spanish (Guatemala)", remarks: "Guatemala - Currency", format: '_-[$Q-es-GT]* #,##0.00_-;-[$Q-es-GT]* #,##0.00_-;', precision: 2 }
+    , es_hn: { code: "es_HN", symbols: "L", align: "L", description: "Spanish (Honduras)", remarks: "Honduras - Currency", format: '_-[$L-es-HN]* #,##0.00_-;-[$L-es-HN]* #,##0.00_-;', precision: 2 }
+    , es_419: { code: "es_419", symbols: "XDR", align: "L", description: "Spanish (Latin America)", remarks: "Latin America - Currency", format: '_-[$XDR-es-419]* #,##0.00_-;-[$XDR-es-419]* #,##0.00_-;', precision: 2 }
+    , es_mx: { code: "es_MX", symbols: "$", align: "L", description: "Spanish (Mexico)", remarks: "Mexico - Currency", format: '_-[$$-es-MX]* #,##0.00_-;-[$$-es-MX]* #,##0.00_-;', precision: 2 }
+    , es_ni: { code: "es_NI", symbols: "C$", align: "L", description: "Spanish (Nicaragua)", remarks: "Nicaragua - Currency", format: '_-[$C$-es-NI]* #,##0.00_-;-[$C$-es-NI]* #,##0.00_-;', precision: 2 }
+    , es_pa: { code: "es_PA", symbols: "B/.", align: "L", description: "Spanish (Panama)", remarks: "Panama  - Currency", format: '_-[$B/.-es-PA]* #,##0.00_-;-[$B/.-es-PA]* #,##0.00_-;', precision: 2 }
+    , es_py: { code: "es_PY", symbols: "₲", align: "L", description: "Spanish (Paraguay)", remarks: "Paraguay - Currency", format: '_ [$₲-es-PY] * #,##0.00_ ;_ [$₲-es-PY] * -#,##0.00_ ;', precision: 2 }
+    , es_pe: { code: "es_PE", symbols: "S/", align: "L", description: "Spanish (Peru)", remarks: "Peru - Currency", format: '_-[$S/-es-PE] * #,##0.00_-;-[$S/-es-PE] * #,##0.00_-;', precision: 2 }
+    , es_pr: { code: "es_PR", symbols: "$", align: "L", description: "Spanish (Puerto Rico)", remarks: "Puerto Rico - Currency", format: '_-[$$-es-PR]* #,##0.00_-;-[$$-es-PR]* #,##0.00_-;', precision: 2 }
+    , es_es: { code: "es_ES", symbols: "€", align: "R", description: "Spanish (Spain)", remarks: "Spain - Currency", format: '_-* #,##0.00 [$€-es-ES]_-;-* #,##0.00 [$€-es-ES]_-;', precision: 2 }
+    , es_es_tradnl: { code: "es_ES_tradnl", symbols: "€", align: "R", description: "Spanish (Spain, Traditional Sort)", remarks: "Spain - Currency", format: '_-* #,##0.00 [$€-es-ES_tradnl]_-;-* #,##0.00 [$€-es-ES_tradnl]_-;', precision: 2 }
+    , es_us: { code: "es_US", symbols: "$", align: "L", description: "Spanish (United States)", remarks: "United States - Currency", format: '_([$$-es-US]* #,##0.00_);_([$$-es-US]* (#,##0.00);', precision: 2 }
+    , es_uy: { code: "es_UY", symbols: "$", align: "L", description: "Spanish (Uruguay)", remarks: "Uruguay - Currency", format: '_-[$$-es-UY] * #,##0.00_-;-[$$-es-UY] * #,##0.00_-;', precision: 2 }
+    , es_ve: { code: "es_VE", symbols: "Bs.S", align: "L", description: "Spanish (Venezuela)", remarks: "Venezuela - Currency", format: '_ [$Bs.S-es-VE]* #,##0.00_ ;_ [$Bs.S-es-VE]* -#,##0.00_ ;', precision: 2 }
+    , sv_fi: { code: "sv_FI", symbols: "€", align: "R", description: "Swedish (Finland)", remarks: "Finland - Currency", format: '_-* #,##0.00 [$€-sv-FI]_-;-* #,##0.00 [$€-sv-FI]_-;', precision: 2 }
+    , sv_se: { code: "sv_SE", symbols: "kr", align: "R", description: "Swedish (Sweden)", remarks: "Sweden - Currency", format: '_-* #,##0.00 [$kr-sv-SE]_-;-* #,##0.00 [$kr-sv-SE]_-;', precision: 2 }
+    , gsw_ch: { code: "gsw_CH", symbols: "CHF", align: "R", description: "Swiss German (Switzerland)", remarks: "Switzerland - Currency", format: '_-* #,##0.00 [$CHF-gsw-CH]_-;-* #,##0.00 [$CHF-gsw-CH]_-;', precision: 2 }
+    , syr_sy: { code: "syr_SY", symbols: "ܠ.ܣ.‏", align: "R", description: "Syriac", remarks: "Syria - Currency", format: '_-* #,##0.00 [$ܠ.ܣ.‏-syr-SY]_-;-* #,##0.00 [$ܠ.ܣ.‏-syr-SY]_-;', precision: 2 }
+    , tg_cyrl_tj: { code: "tg_Cyrl_TJ", symbols: "смн", align: "R", description: "Tajik", remarks: "Tajikistan - Currency", format: '_-* #,##0.00 [$смн-tg-Cyrl-TJ]_-;-* #,##0.00 [$смн-tg-Cyrl-TJ]_-;', precision: 2 }
+    , ta_in: { code: "ta_IN", symbols: "₹", align: "L", description: "Tamil (India)", remarks: "India - Currency", format: '_ [$₹-ta-IN] * #,##0.00_ ;_ [$₹-ta-IN] * -#,##0.00_ ;', precision: 2 }
+    , ta_lk: { code: "ta_LK", symbols: "Rs.", align: "L", description: "Tamil (Sri Lanka)", remarks: "Sri Lanka - Currency", format: '_-[$Rs.-ta-LK] * #,##0.00_-;-[$Rs.-ta-LK] * #,##0.00_-;', precision: 2 }
+    , tt_ru: { code: "tt_RU", symbols: "₽", align: "R", description: "Tatar", remarks: "Russia - Currency", format: '_-* #,##0.00 [$₽-tt-RU]_-;-* #,##0.00 [$₽-tt-RU]_-;', precision: 2 }
+    , te_in: { code: "te_IN", symbols: "₹", align: "L", description: "Telugu", remarks: "India - Currency", format: '_-[$₹-te-IN]* #,##0.00_-;-[$₹-te-IN]* #,##0.00_-;', precision: 2 }
+    , th_th: { code: "th_TH", symbols: "฿", align: "L", description: "Thai", remarks: "Thailand - Currency", format: '_-[$฿-th-TH]* #,##0.00_-;-[$฿-th-TH]* #,##0.00_-;', precision: 2 }
+    , bo_cn: { code: "bo_CN", symbols: "¥", align: "L", description: "Tibetan (China)", remarks: "China - Currency", format: '_ [$¥-bo-CN]* #,##0.00_ ;_ [$¥-bo-CN]* -#,##0.00_ ;', precision: 2 }
+    , ti_er: { code: "ti_ER", symbols: "Nfk", align: "L", description: "Tigrinya (Eritrea)", remarks: "Eritrea - Currency", format: '_-[$Nfk-ti-ER]* #,##0.00_-;-[$Nfk-ti-ER]* #,##0.00_-;', precision: 2 }
+    , ti_et: { code: "ti_ET", symbols: "Br", align: "L", description: "Tigrinya (Ethiopia)", remarks: "Ethiopia - Currency", format: '_-[$Br-ti-ET]* #,##0.00_-;-[$Br-ti-ET]* #,##0.00_-;', precision: 2 }
+    , tr_cy: { code: "tr_CY", symbols: "€", align: "L", description: "Turkish (Cyprus)", remarks: "Cyprus - Currency", format: '_-[$€-tr-CY]* #,##0.00_-;-[$€-tr-CY]* #,##0.00_-;', precision: 2 }
+    , tr_tr: { code: "tr_TR", symbols: "₺", align: "L", description: "Turkish (Türkiye)", remarks: "Türkiye - Currency", format: '_-[$₺-tr-TR]* #,##0.00_-;-[$₺-tr-TR]* #,##0.00_-;', precision: 2 }
+    , tk_tm: { code: "tk_TM", symbols: "m.", align: "R", description: "Turkmen", remarks: "Turkmenistan - Currency", format: '_-* #,##0.00[$m.-tk-TM]_-;-* #,##0.00[$m.-tk-TM]_-;', precision: 2 }
+    , uk_ua: { code: "uk_UA", symbols: "₴", align: "R", description: "Ukrainian", remarks: "Ukraine - Currency", format: '_-* #,##0.00 [$₴-uk-UA]_-;-* #,##0.00 [$₴-uk-UA]_-;', precision: 2 }
+    , hsb_de: { code: "hsb_DE", symbols: "€", align: "R", description: "Upper Sorbian", remarks: "Germany - Currency", format: '_-* #,##0.00 [$€-hsb-DE]_-;-* #,##0.00 [$€-hsb-DE]_-;', precision: 2 }
+    , ur_in: { code: "ur_IN", symbols: "₹", align: "L", description: "Urdu (India)", remarks: "India - Currency", format: '_-[$₹-ur-IN]* #,##0.00_-;-[$₹-ur-IN]* #,##0.00_-;', precision: 2 }
+    , ur_pk: { code: "ur_PK", symbols: "Rs", align: "L", description: "Urdu (Pakistan)", remarks: "Pakistan - Currency", format: '_-[$Rs-ur-PK] * #,##0.00_-;-[$Rs-ur-PK] * #,##0.00_-;', precision: 2 }
+    , ug_cn: { code: "ug_CN", symbols: "¥", align: "L", description: "Uyghur (China)", remarks: "China - Currency", format: '_ [$¥-ug-CN]* #,##0.00_ ;_ [$¥-ug-CN]* -#,##0.00_ ;', precision: 2 }
+    , uz_cyrl_uz: { code: "uz_Cyrl_UZ", symbols: "сўм", align: "R", description: "Uzbek (Cyrillic)", remarks: "Uzbekistan - Currency", format: '_-* #,##0.00 [$сўм-uz-Cyrl-UZ]_-;-* #,##0.00 [$сўм-uz-Cyrl-UZ]_-;', precision: 2 }
+    , uz_latn_uz: { code: "uz_Latn_UZ", symbols: "soʻm", align: "R", description: "Uzbek (Latin)", remarks: "Uzbekistan - Currency", format: '_-* #,##0.00 [$soʻm-uz-Latn-UZ]_-;-* #,##0.00 [$soʻm-uz-Latn-UZ]_-;', precision: 2 }
+    , uz_arab_af: { code: "uz_Arab_AF", symbols: "؋", align: "R", description: "Uzbek (Perso-Arabic, Afghanistan)", remarks: "Afghanistan - Currency", format: '_-* #,##0.00 [$؋-uz-Arab-AF]_-;-* #,##0.00 [$؋-uz-Arab-AF]_-;', precision: 2 }
+    , ca_es_valencia: { code: "ca_ES_valencia", symbols: "€", align: "R", description: "Valencian", remarks: "Spain - Currency", format: '_-* #,##0.00 [$€-ca-ES-valencia]_-;-* #,##0.00 [$€-ca-ES-valencia]_-;', precision: 2 }
+    , ve_za: { code: "ve_ZA", symbols: "R", align: "L", description: "Venda", remarks: "South Africa - Currency", format: '_-[$R-ve-ZA]* #,##0.00_-;-[$R-ve-ZA]* #,##0.00_-;', precision: 2 }
+    , vi_vn: { code: "vi_VN", symbols: "₫", align: "R", description: "Vietnamese", remarks: "Vietnam - Currency", format: '_-* #,##0.00 [$₫-vi-VN]_-;-* #,##0.00 [$₫-vi-VN]_-;', precision: 2 }
+    , cy_gb: { code: "cy_GB", symbols: "£", align: "L", description: "Welsh", remarks: "United Kingdom - Currency", format: '_-[$£-cy-GB]* #,##0.00_-;-[$£-cy-GB]* #,##0.00_-;', precision: 2 }
+    , fy_nl: { code: "fy_NL", symbols: "€", align: "L", description: "Western Frisian", remarks: "Netherlands - Currency", format: '_-[$€-fy-NL] * #,##0.00_-;_-[$€-fy-NL] * #,##0.00-;', precision: 2 }
+    , wo_sn: { code: "wo_SN", symbols: "CFA", align: "L", description: "Wolof", remarks: "Senegal - Currency", format: '_-[$CFA-wo-SN] * #,##0.00_-;-[$CFA-wo-SN] * #,##0.00_-;', precision: 2 }
+    , ts_za: { code: "ts_ZA", symbols: "R", align: "L", description: "Xitsonga", remarks: "South Africa - Currency", format: '_-[$R-ts-ZA] * #,##0.00_-;-[$R-ts-ZA] * #,##0.00_-;', precision: 2 }
+    , ii_cn: { code: "ii_CN", symbols: "¥", align: "L", description: "Yi (China)", remarks: "China - Currency", format: '_ [$¥-ii-CN]* #,##0.00_ ;_ [$¥-ii-CN]* -#,##0.00_ ;', precision: 2 }
+    , yi_hebr: { code: "yi_Hebr", symbols: "¤", align: "L", description: "Yiddish", remarks: "Yiddish - Currency", format: '_-[$¤-yi-Hebr] * #,##0.00_-;-[$¤-yi-Hebr] * #,##0.00_-;', precision: 2 }
+    , yo_ng: { code: "yo_NG", symbols: "₦", align: "L", description: "Yoruba", remarks: "Nigeria  - Currency", format: '_-[$₦-yo-NG]* #,##0.00_-;-[$₦-yo-NG]* #,##0.00_-;', precision: 2 }
+    //
+    , adp: { code: "ADP", symbols: "ADP", align: "L", description: "ADP", remarks: "Andorran Pesets", format: '_([$ADP] * #,##0.00_);_([$ADP] * (#,##0.00);', precision: 0 }
+    , aed: { code: "AED", symbols: "AED", align: "L", description: "AED", remarks: "UAE Dirhams", format: '_([$AED] * #,##0.00_);_([$AED] * (#,##0.00);', precision: 2 }
+    , afa: { code: "AFA", symbols: "AFA", align: "L", description: "AFA", remarks: "Afghanis", format: '_([$AFA] * #,##0.00_);_([$AFA] * (#,##0.00);', precision: 2 }
+    , all: { code: "ALL", symbols: "ALL", align: "L", description: "ALL", remarks: "Leks", format: '_([$ALL] * #,##0.00_);_([$ALL] * (#,##0.00);', precision: 2 }
+    , amd: { code: "AMD", symbols: "AMD", align: "L", description: "AMD", remarks: "Armenian Drams", format: '_([$AMD] * #,##0.00_);_([$AMD] * (#,##0.00);', precision: 2 }
+    , ang: { code: "ANG", symbols: "ANG", align: "L", description: "ANG", remarks: "NE Antillian Guilders", format: '_([$ANG] * #,##0.00_);_([$ANG] * (#,##0.00);', precision: 2 }
+    , aoa: { code: "AOA", symbols: "AOA", align: "L", description: "AOA", remarks: "Kwanzas", format: '_([$AOA] * #,##0.00_);_([$AOA] * (#,##0.00);', precision: 2 }
+    , aon: { code: "AON", symbols: "AON", align: "L", description: "AON", remarks: "New Kwanzas", format: '_([$AON] * #,##0.00_);_([$AON] * (#,##0.00);', precision: 2 }
+    , aor: { code: "AOR", symbols: "AOR", align: "L", description: "AOR", remarks: "Kwanza Reajustados", format: '_([$AOR] * #,##0.00_);_([$AOR] * (#,##0.00);', precision: 2 }
+    , ars: { code: "ARS", symbols: "ARS", align: "L", description: "ARS", remarks: "Argentine Pesos", format: '_([$ARS] * #,##0.00_);_([$ARS] * (#,##0.00);', precision: 2 }
+    , ats: { code: "ATS", symbols: "ATS", align: "L", description: "ATS", remarks: "Schillings", format: '_([$ATS] * #,##0.00_);_([$ATS] * (#,##0.00);', precision: 2 }
+    , aud: { code: "AUD", symbols: "AUD", align: "L", description: "AUD", remarks: "Australian Dollars", format: '_([$AUD] * #,##0.00_);_([$AUD] * (#,##0.00);', precision: 2 }
+    , awg: { code: "AWG", symbols: "AWG", align: "L", description: "AWG", remarks: "Aruban Guilders", format: '_([$AWG] * #,##0.00_);_([$AWG] * (#,##0.00);', precision: 2 }
+    , azm: { code: "AZM", symbols: "AZM", align: "L", description: "AZM", remarks: "Azerbaijanian Manats", format: '_([$AZM] * #,##0.00_);_([$AZM] * (#,##0.00);', precision: 2 }
+    , bam: { code: "BAM", symbols: "BAM", align: "L", description: "BAM", remarks: "Convertable Marks", format: '_([$BAM] * #,##0.00_);_([$BAM] * (#,##0.00);', precision: 2 }
+    , bbd: { code: "BBD", symbols: "BBD", align: "L", description: "BBD", remarks: "Barbados Dollars", format: '_([$BBD] * #,##0.00_);_([$BBD] * (#,##0.00);', precision: 2 }
+    , bdt: { code: "BDT", symbols: "BDT", align: "L", description: "BDT", remarks: "Takas", format: '_([$BDT] * #,##0.00_);_([$BDT] * (#,##0.00);', precision: 2 }
+    , bef: { code: "BEF", symbols: "BEF", align: "L", description: "BEF", remarks: "Belgian Francs", format: '_([$BEF] * #,##0.00_);_([$BEF] * (#,##0.00);', precision: 0 }
+    , bgl: { code: "BGL", symbols: "BGL", align: "L", description: "BGL", remarks: "Levs", format: '_([$BGL] * #,##0.00_);_([$BGL] * (#,##0.00);', precision: 2 }
+    , bhd: { code: "BHD", symbols: "BHD", align: "L", description: "BHD", remarks: "Bahraini Dinars", format: '_([$BHD] * #,##0.00_);_([$BHD] * (#,##0.00);', precision: 3 }
+    , bif: { code: "BIF", symbols: "BIF", align: "L", description: "BIF", remarks: "Burundi Francs", format: '_([$BIF] * #,##0.00_);_([$BIF] * (#,##0.00);', precision: 0 }
+    , bmd: { code: "BMD", symbols: "BMD", align: "L", description: "BMD", remarks: "Bermuda Dollars", format: '_([$BMD] * #,##0.00_);_([$BMD] * (#,##0.00);', precision: 2 }
+    , bnd: { code: "BND", symbols: "BND", align: "L", description: "BND", remarks: "Brunei Dollars", format: '_([$BND] * #,##0.00_);_([$BND] * (#,##0.00);', precision: 2 }
+    , bob: { code: "BOB", symbols: "BOB", align: "L", description: "BOB", remarks: "Bolivianos", format: '_([$BOB] * #,##0.00_);_([$BOB] * (#,##0.00);', precision: 2 }
+    , brl: { code: "BRL", symbols: "BRL", align: "L", description: "BRL", remarks: "Brazilian Reals", format: '_([$BRL] * #,##0.00_);_([$BRL] * (#,##0.00);', precision: 2 }
+    , bsd: { code: "BSD", symbols: "BSD", align: "L", description: "BSD", remarks: "Bahamian Dollars", format: '_([$BSD] * #,##0.00_);_([$BSD] * (#,##0.00);', precision: 2 }
+    , btn: { code: "BTN", symbols: "BTN", align: "L", description: "BTN", remarks: "Ngultrums", format: '_([$BTN] * #,##0.00_);_([$BTN] * (#,##0.00);', precision: 2 }
+    , bwp: { code: "BWP", symbols: "BWP", align: "L", description: "BWP", remarks: "Pulas", format: '_([$BWP] * #,##0.00_);_([$BWP] * (#,##0.00);', precision: 2 }
+    , byr: { code: "BYR", symbols: "BYR", align: "L", description: "BYR", remarks: "Belarussiann Rubles", format: '_([$BYR] * #,##0.00_);_([$BYR] * (#,##0.00);', precision: 0 }
+    , bzd: { code: "BZD", symbols: "BZD", align: "L", description: "BZD", remarks: "Belize Dollars", format: '_([$BZD] * #,##0.00_);_([$BZD] * (#,##0.00);', precision: 2 }
+    , cad: { code: "CAD", symbols: "CAD", align: "L", description: "CAD", remarks: "Canadian Dollars", format: '_([$CAD] * #,##0.00_);_([$CAD] * (#,##0.00);', precision: 2 }
+    , cdf: { code: "CDF", symbols: "CDF", align: "L", description: "CDF", remarks: "Congolais Francs", format: '_([$CDF] * #,##0.00_);_([$CDF] * (#,##0.00);', precision: 2 }
+    , chf: { code: "CHF", symbols: "CHF", align: "L", description: "CHF", remarks: "Swiss Francs", format: '_([$CHF] * #,##0.00_);_([$CHF] * (#,##0.00);', precision: 2 }
+    , clp: { code: "CLP", symbols: "CLP", align: "L", description: "CLP", remarks: "Chilean Pesos", format: '_([$CLP] * #,##0.00_);_([$CLP] * (#,##0.00);', precision: 0 }
+    , cny: { code: "CNY", symbols: "CNY", align: "L", description: "CNY", remarks: "Yuan Renminbis", format: '_([$CNY] * #,##0.00_);_([$CNY] * (#,##0.00);', precision: 2 }
+    , cop: { code: "COP", symbols: "COP", align: "L", description: "COP", remarks: "Columbian Pesos", format: '_([$COP] * #,##0.00_);_([$COP] * (#,##0.00);', precision: 2 }
+    , crc: { code: "CRC", symbols: "CRC", align: "L", description: "CRC", remarks: "Costa Rican Colons", format: '_([$CRC] * #,##0.00_);_([$CRC] * (#,##0.00);', precision: 2 }
+    , cup: { code: "CUP", symbols: "CUP", align: "L", description: "CUP", remarks: "Cuban Pesos", format: '_([$CUP] * #,##0.00_);_([$CUP] * (#,##0.00);', precision: 2 }
+    , cve: { code: "CVE", symbols: "CVE", align: "L", description: "CVE", remarks: "Cape Verde Escudos", format: '_([$CVE] * #,##0.00_);_([$CVE] * (#,##0.00);', precision: 2 }
+    , cyp: { code: "CYP", symbols: "CYP", align: "L", description: "CYP", remarks: "Cyprus Pounds", format: '_([$CYP] * #,##0.00_);_([$CYP] * (#,##0.00);', precision: 2 }
+    , czk: { code: "CZK", symbols: "CZK", align: "L", description: "CZK", remarks: "Czech Korunas", format: '_([$CZK] * #,##0.00_);_([$CZK] * (#,##0.00);', precision: 2 }
+    , dem: { code: "DEM", symbols: "DEM", align: "L", description: "DEM", remarks: "Deutsche Marks", format: '_([$DEM] * #,##0.00_);_([$DEM] * (#,##0.00);', precision: 2 }
+    , djf: { code: "DJF", symbols: "DJF", align: "L", description: "DJF", remarks: "Djibouti Francs", format: '_([$DJF] * #,##0.00_);_([$DJF] * (#,##0.00);', precision: 0 }
+    , dkk: { code: "DKK", symbols: "DKK", align: "L", description: "DKK", remarks: "Danish Krones", format: '_([$DKK] * #,##0.00_);_([$DKK] * (#,##0.00);', precision: 2 }
+    , dop: { code: "DOP", symbols: "DOP", align: "L", description: "DOP", remarks: "Dominican Pesos", format: '_([$DOP] * #,##0.00_);_([$DOP] * (#,##0.00);', precision: 2 }
+    , dzd: { code: "DZD", symbols: "DZD", align: "L", description: "DZD", remarks: "Algerian Dinars", format: '_([$DZD] * #,##0.00_);_([$DZD] * (#,##0.00);', precision: 2 }
+    , eek: { code: "EEK", symbols: "EEK", align: "L", description: "EEK", remarks: "Kroons", format: '_([$EEK] * #,##0.00_);_([$EEK] * (#,##0.00);', precision: 0 }
+    , egp: { code: "EGP", symbols: "EGP", align: "L", description: "EGP", remarks: "Egyptian Pounds", format: '_([$EGP] * #,##0.00_);_([$EGP] * (#,##0.00);', precision: 2 }
+    , ern: { code: "ERN", symbols: "ERN", align: "L", description: "ERN", remarks: "Nakfas", format: '_([$ERN] * #,##0.00_);_([$ERN] * (#,##0.00);', precision: 2 }
+    , esp: { code: "ESP", symbols: "ESP", align: "L", description: "ESP", remarks: "Spanish Pesetas", format: '_([$ESP] * #,##0.00_);_([$ESP] * (#,##0.00);', precision: 0 }
+    , etb: { code: "ETB", symbols: "ETB", align: "L", description: "ETB", remarks: "Ethiopian Birrs", format: '_([$ETB] * #,##0.00_);_([$ETB] * (#,##0.00);', precision: 2 }
+    , eur: { code: "EUR", symbols: "EUR", align: "L", description: "EUR", remarks: "Euro", format: '_([$EUR] * #,##0.00_);_([$EUR] * (#,##0.00);', precision: 2 }
+    , fim: { code: "FIM", symbols: "FIM", align: "L", description: "FIM", remarks: "Markkas", format: '_([$FIM] * #,##0.00_);_([$FIM] * (#,##0.00);', precision: 2 }
+    , fjd: { code: "FJD", symbols: "FJD", align: "L", description: "FJD", remarks: "Fiji Dollars", format: '_([$FJD] * #,##0.00_);_([$FJD] * (#,##0.00);', precision: 2 }
+    , fkp: { code: "FKP", symbols: "FKP", align: "L", description: "FKP", remarks: "Falkland Islands Pounds", format: '_([$FKP] * #,##0.00_);_([$FKP] * (#,##0.00);', precision: 2 }
+    , frf: { code: "FRF", symbols: "FRF", align: "L", description: "FRF", remarks: "French Francs", format: '_([$FRF] * #,##0.00_);_([$FRF] * (#,##0.00);', precision: 2 }
+    , gbp: { code: "GBP", symbols: "GBP", align: "L", description: "GBP", remarks: "Pounds Sterling", format: '_([$GBP] * #,##0.00_);_([$GBP] * (#,##0.00);', precision: 2 }
+    , gek: { code: "GEK", symbols: "GEK", align: "L", description: "GEK", remarks: "Georgian Coupons", format: '_([$GEK] * #,##0.00_);_([$GEK] * (#,##0.00);', precision: 2 }
+    , ghc: { code: "GHC", symbols: "GHC", align: "L", description: "GHC", remarks: "Cedis", format: '_([$GHC] * #,##0.00_);_([$GHC] * (#,##0.00);', precision: 2 }
+    , gip: { code: "GIP", symbols: "GIP", align: "L", description: "GIP", remarks: "Gibraltar Pounds", format: '_([$GIP] * #,##0.00_);_([$GIP] * (#,##0.00);', precision: 2 }
+    , gmd: { code: "GMD", symbols: "GMD", align: "L", description: "GMD", remarks: "Dalasis", format: '_([$GMD] * #,##0.00_);_([$GMD] * (#,##0.00);', precision: 2 }
+    , gnf: { code: "GNF", symbols: "GNF", align: "L", description: "GNF", remarks: "Guinea Francs", format: '_([$GNF] * #,##0.00_);_([$GNF] * (#,##0.00);', precision: 0 }
+    , grd: { code: "GRD", symbols: "GRD", align: "L", description: "GRD", remarks: "Drachmas", format: '_([$GRD] * #,##0.00_);_([$GRD] * (#,##0.00);', precision: 0 }
+    , gtq: { code: "GTQ", symbols: "GTQ", align: "L", description: "GTQ", remarks: "Quetzals", format: '_([$GTQ] * #,##0.00_);_([$GTQ] * (#,##0.00);', precision: 2 }
+    , gwp: { code: "GWP", symbols: "GWP", align: "L", description: "GWP", remarks: "Guinea-Bissau Pesos", format: '_([$GWP] * #,##0.00_);_([$GWP] * (#,##0.00);', precision: 2 }
+    , gyd: { code: "GYD", symbols: "GYD", align: "L", description: "GYD", remarks: "Guyana Dollars", format: '_([$GYD] * #,##0.00_);_([$GYD] * (#,##0.00);', precision: 2 }
+    , hkd: { code: "HKD", symbols: "HKD", align: "L", description: "HKD", remarks: "Hong Kong Dollars", format: '_([$HKD] * #,##0.00_);_([$HKD] * (#,##0.00);', precision: 2 }
+    , hnl: { code: "HNL", symbols: "HNL", align: "L", description: "HNL", remarks: "Lempiras", format: '_([$HNL] * #,##0.00_);_([$HNL] * (#,##0.00);', precision: 2 }
+    , hrk: { code: "HRK", symbols: "HRK", align: "L", description: "HRK", remarks: "Kunas", format: '_([$HRK] * #,##0.00_);_([$HRK] * (#,##0.00);', precision: 2 }
+    , htg: { code: "HTG", symbols: "HTG", align: "L", description: "HTG", remarks: "Gourdes", format: '_([$HTG] * #,##0.00_);_([$HTG] * (#,##0.00);', precision: 2 }
+    , huf: { code: "HUF", symbols: "HUF", align: "L", description: "HUF", remarks: "Forints", format: '_([$HUF] * #,##0.00_);_([$HUF] * (#,##0.00);', precision: 2 }
+    , idr: { code: "IDR", symbols: "IDR", align: "L", description: "IDR", remarks: "Rupiahs", format: '_([$IDR] * #,##0.00_);_([$IDR] * (#,##0.00);', precision: 2 }
+    , iep: { code: "IEP", symbols: "IEP", align: "L", description: "IEP", remarks: "Irish Pounds", format: '_([$IEP] * #,##0.00_);_([$IEP] * (#,##0.00);', precision: 2 }
+    , ils: { code: "ILS", symbols: "ILS", align: "L", description: "ILS", remarks: "Shekels", format: '_([$ILS] * #,##0.00_);_([$ILS] * (#,##0.00);', precision: 2 }
+    , inr: { code: "INR", symbols: "INR", align: "L", description: "INR", remarks: "Indian Rupees", format: '_([$INR] * #,##0.00_);_([$INR] * (#,##0.00);', precision: 2 }
+    , iqd: { code: "IQD", symbols: "IQD", align: "L", description: "IQD", remarks: "Iraqi Dinars", format: '_([$IQD] * #,##0.00_);_([$IQD] * (#,##0.00);', precision: 2 }
+    , irr: { code: "IRR", symbols: "IRR", align: "L", description: "IRR", remarks: "Iranian Rials", format: '_([$IRR] * #,##0.00_);_([$IRR] * (#,##0.00);', precision: 2 }
+    , isk: { code: "ISK", symbols: "ISK", align: "L", description: "ISK", remarks: "Iceland Kronas", format: '_([$ISK] * #,##0.00_);_([$ISK] * (#,##0.00);', precision: 2 }
+    , itl: { code: "ITL", symbols: "ITL", align: "L", description: "ITL", remarks: "Italian Liras", format: '_([$ITL] * #,##0.00_);_([$ITL] * (#,##0.00);', precision: 0 }
+    , jmd: { code: "JMD", symbols: "JMD", align: "L", description: "JMD", remarks: "Jamaican Dollars", format: '_([$JMD] * #,##0.00_);_([$JMD] * (#,##0.00);', precision: 2 }
+    , jod: { code: "JOD", symbols: "JOD", align: "L", description: "JOD", remarks: "Jordanian Dinars", format: '_([$JOD] * #,##0.00_);_([$JOD] * (#,##0.00);', precision: 3 }
+    , jpy: { code: "JPY", symbols: "JPY", align: "L", description: "JPY", remarks: "Japanese Yen", format: '_([$JPY] * #,##0.00_);_([$JPY] * (#,##0.00);', precision: 0 }
+    , kes: { code: "KES", symbols: "KES", align: "L", description: "KES", remarks: "Kenyan Shillings", format: '_([$KES] * #,##0.00_);_([$KES] * (#,##0.00);', precision: 2 }
+    , kgs: { code: "KGS", symbols: "KGS", align: "L", description: "KGS", remarks: "Soms", format: '_([$KGS] * #,##0.00_);_([$KGS] * (#,##0.00);', precision: 2 }
+    , khr: { code: "KHR", symbols: "KHR", align: "L", description: "KHR", remarks: "Riels", format: '_([$KHR] * #,##0.00_);_([$KHR] * (#,##0.00);', precision: 2 }
+    , kmf: { code: "KMF", symbols: "KMF", align: "L", description: "KMF", remarks: "Comoro Francs", format: '_([$KMF] * #,##0.00_);_([$KMF] * (#,##0.00);', precision: 0 }
+    , kpw: { code: "KPW", symbols: "KPW", align: "L", description: "KPW", remarks: "N. Korean Wons", format: '_([$KPW] * #,##0.00_);_([$KPW] * (#,##0.00);', precision: 2 }
+    , krw: { code: "KRW", symbols: "KRW", align: "L", description: "KRW", remarks: "Wons", format: '_([$KRW] * #,##0.00_);_([$KRW] * (#,##0.00);', precision: 0 }
+    , kwd: { code: "KWD", symbols: "KWD", align: "L", description: "KWD", remarks: "Kuwaiti Dinars", format: '_([$KWD] * #,##0.00_);_([$KWD] * (#,##0.00);', precision: 3 }
+    , kyd: { code: "KYD", symbols: "KYD", align: "L", description: "KYD", remarks: "Cayman Is Dollars", format: '_([$KYD] * #,##0.00_);_([$KYD] * (#,##0.00);', precision: 2 }
+    , kzt: { code: "KZT", symbols: "KZT", align: "L", description: "KZT", remarks: "Tenges", format: '_([$KZT] * #,##0.00_);_([$KZT] * (#,##0.00);', precision: 2 }
+    , lak: { code: "LAK", symbols: "LAK", align: "L", description: "LAK", remarks: "Kips", format: '_([$LAK] * #,##0.00_);_([$LAK] * (#,##0.00);', precision: 2 }
+    , lbp: { code: "LBP", symbols: "LBP", align: "L", description: "LBP", remarks: "Lebanese Pounds", format: '_([$LBP] * #,##0.00_);_([$LBP] * (#,##0.00);', precision: 2 }
+    , lkr: { code: "LKR", symbols: "LKR", align: "L", description: "LKR", remarks: "Sri Lanka Rupees", format: '_([$LKR] * #,##0.00_);_([$LKR] * (#,##0.00);', precision: 2 }
+    , lrd: { code: "LRD", symbols: "LRD", align: "L", description: "LRD", remarks: "Liberian Dollars", format: '_([$LRD] * #,##0.00_);_([$LRD] * (#,##0.00);', precision: 2 }
+    , lsl: { code: "LSL", symbols: "LSL", align: "L", description: "LSL", remarks: "Lotis", format: '_([$LSL] * #,##0.00_);_([$LSL] * (#,##0.00);', precision: 2 }
+    , ltl: { code: "LTL", symbols: "LTL", align: "L", description: "LTL", remarks: "Lithuanian Litas", format: '_([$LTL] * #,##0.00_);_([$LTL] * (#,##0.00);', precision: 2 }
+    , luf: { code: "LUF", symbols: "LUF", align: "L", description: "LUF", remarks: "Luxembourg Francs", format: '_([$LUF] * #,##0.00_);_([$LUF] * (#,##0.00);', precision: 0 }
+    , lvl: { code: "LVL", symbols: "LVL", align: "L", description: "LVL", remarks: "Latvian Lats", format: '_([$LVL] * #,##0.00_);_([$LVL] * (#,##0.00);', precision: 2 }
+    , lyd: { code: "LYD", symbols: "LYD", align: "L", description: "LYD", remarks: "Libyan Dinars", format: '_([$LYD] * #,##0.00_);_([$LYD] * (#,##0.00);', precision: 3 }
+    , mad: { code: "MAD", symbols: "MAD", align: "L", description: "MAD", remarks: "Moroccan Dirhams", format: '_([$MAD] * #,##0.00_);_([$MAD] * (#,##0.00);', precision: 2 }
+    , mdl: { code: "MDL", symbols: "MDL", align: "L", description: "MDL", remarks: "Moldovan Leus", format: '_([$MDL] * #,##0.00_);_([$MDL] * (#,##0.00);', precision: 2 }
+    , mgf: { code: "MGF", symbols: "MGF", align: "L", description: "MGF", remarks: "Malagasy Francs", format: '_([$MGF] * #,##0.00_);_([$MGF] * (#,##0.00);', precision: 0 }
+    , mkd: { code: "MKD", symbols: "MKD", align: "L", description: "MKD", remarks: "Denars", format: '_([$MKD] * #,##0.00_);_([$MKD] * (#,##0.00);', precision: 2 }
+    , mmk: { code: "MMK", symbols: "MMK", align: "L", description: "MMK", remarks: "Kyats", format: '_([$MMK] * #,##0.00_);_([$MMK] * (#,##0.00);', precision: 2 }
+    , mnt: { code: "MNT", symbols: "MNT", align: "L", description: "MNT", remarks: "Tugrics", format: '_([$MNT] * #,##0.00_);_([$MNT] * (#,##0.00);', precision: 2 }
+    , mop: { code: "MOP", symbols: "MOP", align: "L", description: "MOP", remarks: "Patacas", format: '_([$MOP] * #,##0.00_);_([$MOP] * (#,##0.00);', precision: 2 }
+    , mro: { code: "MRO", symbols: "MRO", align: "L", description: "MRO", remarks: "Ouguiyas", format: '_([$MRO] * #,##0.00_);_([$MRO] * (#,##0.00);', precision: 2 }
+    , mtl: { code: "MTL", symbols: "MTL", align: "L", description: "MTL", remarks: "Maltese Liras", format: '_([$MTL] * #,##0.00_);_([$MTL] * (#,##0.00);', precision: 2 }
+    , mur: { code: "MUR", symbols: "MUR", align: "L", description: "MUR", remarks: "Mauritius Rupees", format: '_([$MUR] * #,##0.00_);_([$MUR] * (#,##0.00);', precision: 2 }
+    , mvr: { code: "MVR", symbols: "MVR", align: "L", description: "MVR", remarks: "Rufiyaas", format: '_([$MVR] * #,##0.00_);_([$MVR] * (#,##0.00);', precision: 2 }
+    , mwk: { code: "MWK", symbols: "MWK", align: "L", description: "MWK", remarks: "Kwachas - Malawi", format: '_([$MWK] * #,##0.00_);_([$MWK] * (#,##0.00);', precision: 2 }
+    , mxn: { code: "MXN", symbols: "MXN", align: "L", description: "MXN", remarks: "Mexican Pesos", format: '_([$MXN] * #,##0.00_);_([$MXN] * (#,##0.00);', precision: 2 }
+    , myr: { code: "MYR", symbols: "MYR", align: "L", description: "MYR", remarks: "Malaysian Ringgits", format: '_([$MYR] * #,##0.00_);_([$MYR] * (#,##0.00);', precision: 2 }
+    , mzm: { code: "MZM", symbols: "MZM", align: "L", description: "MZM", remarks: "Meticals", format: '_([$MZM] * #,##0.00_);_([$MZM] * (#,##0.00);', precision: 2 }
+    , nad: { code: "NAD", symbols: "NAD", align: "L", description: "NAD", remarks: "Namibia Dollars", format: '_([$NAD] * #,##0.00_);_([$NAD] * (#,##0.00);', precision: 2 }
+    , ngn: { code: "NGN", symbols: "NGN", align: "L", description: "NGN", remarks: "Nairas", format: '_([$NGN] * #,##0.00_);_([$NGN] * (#,##0.00);', precision: 2 }
+    , nio: { code: "NIO", symbols: "NIO", align: "L", description: "NIO", remarks: "Cordoba Oros", format: '_([$NIO] * #,##0.00_);_([$NIO] * (#,##0.00);', precision: 2 }
+    , nlg: { code: "NLG", symbols: "NLG", align: "L", description: "NLG", remarks: "Netherlands Guilders", format: '_([$NLG] * #,##0.00_);_([$NLG] * (#,##0.00);', precision: 2 }
+    , nok: { code: "NOK", symbols: "NOK", align: "L", description: "NOK", remarks: "Norwegian Krones", format: '_([$NOK] * #,##0.00_);_([$NOK] * (#,##0.00);', precision: 2 }
+    , npr: { code: "NPR", symbols: "NPR", align: "L", description: "NPR", remarks: "Nepalese Rupees", format: '_([$NPR] * #,##0.00_);_([$NPR] * (#,##0.00);', precision: 2 }
+    , nzd: { code: "NZD", symbols: "NZD", align: "L", description: "NZD", remarks: "New Zealand Dollars", format: '_([$NZD] * #,##0.00_);_([$NZD] * (#,##0.00);', precision: 2 }
+    , omr: { code: "OMR", symbols: "OMR", align: "L", description: "OMR", remarks: "Rial Omanis", format: '_([$OMR] * #,##0.00_);_([$OMR] * (#,##0.00);', precision: 3 }
+    , pab: { code: "PAB", symbols: "PAB", align: "L", description: "PAB", remarks: "Balboas", format: '_([$PAB] * #,##0.00_);_([$PAB] * (#,##0.00);', precision: 2 }
+    , pen: { code: "PEN", symbols: "PEN", align: "L", description: "PEN", remarks: "Nuevo Sols", format: '_([$PEN] * #,##0.00_);_([$PEN] * (#,##0.00);', precision: 2 }
+    , pes: { code: "PES", symbols: "PES", align: "L", description: "PES", remarks: "Sols", format: '_([$PES] * #,##0.00_);_([$PES] * (#,##0.00);', precision: 2 }
+    , pgk: { code: "PGK", symbols: "PGK", align: "L", description: "PGK", remarks: "Kinas", format: '_([$PGK] * #,##0.00_);_([$PGK] * (#,##0.00);', precision: 2 }
+    , php: { code: "PHP", symbols: "PHP", align: "L", description: "PHP", remarks: "Philippine Pesos", format: '_([$PHP] * #,##0.00_);_([$PHP] * (#,##0.00);', precision: 2 }
+    , pkr: { code: "PKR", symbols: "PKR", align: "L", description: "PKR", remarks: "Pakistan Rupees", format: '_([$PKR] * #,##0.00_);_([$PKR] * (#,##0.00);', precision: 2 }
+    , pln: { code: "PLN", symbols: "PLN", align: "L", description: "PLN", remarks: "Zlotys", format: '_([$PLN] * #,##0.00_);_([$PLN] * (#,##0.00);', precision: 2 }
+    , psz: { code: "PSZ", symbols: "PSZ", align: "L", description: "PSZ", remarks: "Palestinianzits", format: '_([$PSZ] * #,##0.00_);_([$PSZ] * (#,##0.00);', precision: 2 }
+    , pte: { code: "PTE", symbols: "PTE", align: "L", description: "PTE", remarks: "Portuguese Escudos", format: '_([$PTE] * #,##0.00_);_([$PTE] * (#,##0.00);', precision: 1 }
+    , pyg: { code: "PYG", symbols: "PYG", align: "L", description: "PYG", remarks: "Guaranis", format: '_([$PYG] * #,##0.00_);_([$PYG] * (#,##0.00);', precision: 0 }
+    , rol: { code: "ROL", symbols: "ROL", align: "L", description: "ROL", remarks: "Leus", format: '_([$ROL] * #,##0.00_);_([$ROL] * (#,##0.00);', precision: 2 }
+    , rub: { code: "RUB", symbols: "RUB", align: "L", description: "RUB", remarks: "Russian Federation Rubles", format: '_([$RUB] * #,##0.00_);_([$RUB] * (#,##0.00);', precision: 2 }
+    , rur: { code: "RUR", symbols: "RUR", align: "L", description: "RUR", remarks: "Russian RURles", format: '_([$RUR] * #,##0.00_);_([$RUR] * (#,##0.00);', precision: 2 }
+    , rwf: { code: "RWF", symbols: "RWF", align: "L", description: "RWF", remarks: "Rwanda Francs", format: '_([$RWF] * #,##0.00_);_([$RWF] * (#,##0.00);', precision: 0 }
+    , sar: { code: "SAR", symbols: "SAR", align: "L", description: "SAR", remarks: "Saudi Riyals", format: '_([$SAR] * #,##0.00_);_([$SAR] * (#,##0.00);', precision: 2 }
+    , sbd: { code: "SBD", symbols: "SBD", align: "L", description: "SBD", remarks: "Solomon Islands Dollars", format: '_([$SBD] * #,##0.00_);_([$SBD] * (#,##0.00);', precision: 2 }
+    , scr: { code: "SCR", symbols: "SCR", align: "L", description: "SCR", remarks: "Seycelles Rupees", format: '_([$SCR] * #,##0.00_);_([$SCR] * (#,##0.00);', precision: 2 }
+    , sdd: { code: "SDD", symbols: "SDD", align: "L", description: "SDD", remarks: "Dinars", format: '_([$SDD] * #,##0.00_);_([$SDD] * (#,##0.00);', precision: 2 }
+    , sdp: { code: "SDP", symbols: "SDP", align: "L", description: "SDP", remarks: "Sudanese Pounds", format: '_([$SDP] * #,##0.00_);_([$SDP] * (#,##0.00);', precision: 2 }
+    , sek: { code: "SEK", symbols: "SEK", align: "L", description: "SEK", remarks: "Swedish Kronas", format: '_([$SEK] * #,##0.00_);_([$SEK] * (#,##0.00);', precision: 2 }
+    , sgd: { code: "SGD", symbols: "SGD", align: "L", description: "SGD", remarks: "Singapore Dollars", format: '_([$SGD] * #,##0.00_);_([$SGD] * (#,##0.00);', precision: 2 }
+    , sit: { code: "SIT", symbols: "SIT", align: "L", description: "SIT", remarks: "Tolars", format: '_([$SIT] * #,##0.00_);_([$SIT] * (#,##0.00);', precision: 0 }
+    , skk: { code: "SKK", symbols: "SKK", align: "L", description: "SKK", remarks: "Slovak Korunas", format: '_([$SKK] * #,##0.00_);_([$SKK] * (#,##0.00);', precision: 2 }
+    , sll: { code: "SLL", symbols: "SLL", align: "L", description: "SLL", remarks: "Leones", format: '_([$SLL] * #,##0.00_);_([$SLL] * (#,##0.00);', precision: 2 }
+    , sosp: { code: "SOS", symbols: "SOS", align: "L", description: "SOS", remarks: "Somali Shillings", format: '_([$SOS] * #,##0.00_);_([$SOS] * (#,##0.00);', precision: 2 }
+    , srg: { code: "SRG", symbols: "SRG", align: "L", description: "SRG", remarks: "Surinam Guilders", format: '_([$SRG] * #,##0.00_);_([$SRG] * (#,##0.00);', precision: 2 }
+    , std: { code: "STD", symbols: "STD", align: "L", description: "STD", remarks: "Dobras", format: '_([$STD] * #,##0.00_);_([$STD] * (#,##0.00);', precision: 2 }
+    , svc: { code: "SVC", symbols: "SVC", align: "L", description: "SVC", remarks: "El Salvador Colons", format: '_([$SVC] * #,##0.00_);_([$SVC] * (#,##0.00);', precision: 2 }
+    , syp: { code: "SYP", symbols: "SYP", align: "L", description: "SYP", remarks: "Syrian Pounds", format: '_([$SYP] * #,##0.00_);_([$SYP] * (#,##0.00);', precision: 2 }
+    , szl: { code: "SZL", symbols: "SZL", align: "L", description: "SZL", remarks: "Lilangenis", format: '_([$SZL] * #,##0.00_);_([$SZL] * (#,##0.00);', precision: 2 }
+    , thb: { code: "THB", symbols: "THB", align: "L", description: "THB", remarks: "Bahts", format: '_([$THB] * #,##0.00_);_([$THB] * (#,##0.00);', precision: 2 }
+    , tmm: { code: "TMM", symbols: "TMM", align: "L", description: "TMM", remarks: "Manats", format: '_([$TMM] * #,##0.00_);_([$TMM] * (#,##0.00);', precision: 2 }
+    , tnd: { code: "TND", symbols: "TND", align: "L", description: "TND", remarks: "Tunisian Dinars", format: '_([$TND] * #,##0.00_);_([$TND] * (#,##0.00);', precision: 3 }
+    , top: { code: "TOP", symbols: "TOP", align: "L", description: "TOP", remarks: "Pa Angas", format: '_([$TOP] * #,##0.00_);_([$TOP] * (#,##0.00);', precision: 2 }
+    , trl: { code: "TRL", symbols: "TRL", align: "L", description: "TRL", remarks: "Turkish Liras", format: '_([$TRL] * #,##0.00_);_([$TRL] * (#,##0.00);', precision: 0 }
+    , ttd: { code: "TTD", symbols: "TTD", align: "L", description: "TTD", remarks: "Trndad Tobago Dollars", format: '_([$TTD] * #,##0.00_);_([$TTD] * (#,##0.00);', precision: 2 }
+    , twd: { code: "TWD", symbols: "TWD", align: "L", description: "TWD", remarks: "New Taiwan Dollars", format: '_([$TWD] * #,##0.00_);_([$TWD] * (#,##0.00);', precision: 2 }
+    , tzs: { code: "TZS", symbols: "TZS", align: "L", description: "TZS", remarks: "Tanzanian Shillings", format: '_([$TZS] * #,##0.00_);_([$TZS] * (#,##0.00);', precision: 2 }
+    , uah: { code: "UAH", symbols: "UAH", align: "L", description: "UAH", remarks: "Hryvnias", format: '_([$UAH] * #,##0.00_);_([$UAH] * (#,##0.00);', precision: 2 }
+    , ugx: { code: "UGX", symbols: "UGX", align: "L", description: "UGX", remarks: "Uganda Shillings", format: '_([$UGX] * #,##0.00_);_([$UGX] * (#,##0.00);', precision: 0 }
+    , usd: { code: "USD", symbols: "USD", align: "L", description: "USD", remarks: "US Dollars", format: '_([$USD] * #,##0.00_);_([$USD] * (#,##0.00);', precision: 2 }
+    , uzs: { code: "UZS", symbols: "UZS", align: "L", description: "UZS", remarks: "Uzbekistan Sums", format: '_([$UZS] * #,##0.00_);_([$UZS] * (#,##0.00);', precision: 2 }
+    , veb: { code: "VEB", symbols: "VEB", align: "L", description: "VEB", remarks: "Bolivars", format: '_([$VEB] * #,##0.00_);_([$VEB] * (#,##0.00);', precision: 2 }
+    , vnd: { code: "VND", symbols: "VND", align: "L", description: "VND", remarks: "Dongs", format: '_([$VND] * #,##0.00_);_([$VND] * (#,##0.00);', precision: 2 }
+    , vuv: { code: "VUV", symbols: "VUV", align: "L", description: "VUV", remarks: "Vatus", format: '_([$VUV] * #,##0.00_);_([$VUV] * (#,##0.00);', precision: 0 }
+    , wst: { code: "WST", symbols: "WST", align: "L", description: "WST", remarks: "Talas", format: '_([$WST] * #,##0.00_);_([$WST] * (#,##0.00);', precision: 2 }
+    , xaf: { code: "XAF", symbols: "XAF", align: "L", description: "XAF", remarks: "CFA Franc Beacs", format: '_([$XAF] * #,##0.00_);_([$XAF] * (#,##0.00);', precision: 0 }
+    , xcd: { code: "XCD", symbols: "XCD", align: "L", description: "XCD", remarks: "E Caribbean Dollars", format: '_([$XCD] * #,##0.00_);_([$XCD] * (#,##0.00);', precision: 2 }
+    , xof: { code: "XOF", symbols: "XOF", align: "L", description: "XOF", remarks: "CFA Franc Bceaos", format: '_([$XOF] * #,##0.00_);_([$XOF] * (#,##0.00);', precision: 0 }
+    , xpf: { code: "XPF", symbols: "XPF", align: "L", description: "XPF", remarks: "CFP Francs", format: '_([$XPF] * #,##0.00_);_([$XPF] * (#,##0.00);', precision: 0 }
+    , yer: { code: "YER", symbols: "YER", align: "L", description: "YER", remarks: "Yemeni Rials", format: '_([$YER] * #,##0.00_);_([$YER] * (#,##0.00);', precision: 2 }
+    , yug: { code: "YUG", symbols: "YUG", align: "L", description: "YUG", remarks: "New Dinars", format: '_([$YUG] * #,##0.00_);_([$YUG] * (#,##0.00);', precision: 2 }
+    , yum: { code: "YUM", symbols: "YUM", align: "L", description: "YUM", remarks: "New Dinars", format: '_([$YUM] * #,##0.00_);_([$YUM] * (#,##0.00);', precision: 2 }
+    , yun: { code: "YUN", symbols: "YUN", align: "L", description: "YUN", remarks: "Yugoslavian Dinars", format: '_([$YUN] * #,##0.00_);_([$YUN] * (#,##0.00);', precision: 2 }
+    , zar: { code: "ZAR", symbols: "ZAR", align: "L", description: "ZAR", remarks: "Rands", format: '_([$ZAR] * #,##0.00_);_([$ZAR] * (#,##0.00);', precision: 2 }
+    , zmk: { code: "ZMK", symbols: "ZMK", align: "L", description: "ZMK", remarks: "Kwachas - Zambia", format: '_([$ZMK] * #,##0.00_);_([$ZMK] * (#,##0.00);', precision: 2 }
+    , zrz: { code: "ZRZ", symbols: "ZRZ", align: "L", description: "ZRZ", remarks: "Zaires", format: '_([$ZRZ] * #,##0.00_);_([$ZRZ] * (#,##0.00);', precision: 2 }
+    , zwd: { code: "ZWD", symbols: "ZWD", align: "L", description: "ZWD", remarks: "Zimbabwe Dollars", format: '_([$ZWD] * #,##0.00_);_([$ZWD] * (#,##0.00);', precision: 2 }
+
+
 };
+
+
+$(document).on("mouseover", ".P8Spread", function () {
+    $("body").addClass("p8SpreadHover");
+}).on("mouseout", ".P8Spread", function () {
+    setTimeout(function () {
+        $("body").removeClass("p8SpreadHover");
+        $(".P8Spread").attr("title", "");
+    },100);
+});;
+
+
+//karl edit start
+function p8Spread_IsNull(id) {
+    if (id == '' || id == null || id == undefined || typeof id == 'undefined' || typeof variable == 'object') {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function p8Spread_GetJsonValue(json, object,indexbased) {
+    try{
+        if(indexbased){
+            var jsonArray = Object.values(json);
+            return jsonArray[object];
+        }else{
+            return json[object];
+        }
+    } catch (ex) { return "";}
+}
+
+
+function p8Spread_RowColToCell(col,row,colfixed,rowfixed) {
+    var newcell = "";
+    try{
+        var cellcol = p8_NumberToCell(col+1)
+        newcell = colfixed == true ? "$":"";
+        newcell += cellcol
+        newcell += rowfixed == true ? "$":"";
+        newcell += row+1
+    }catch(ex){}
+    return newcell;
+}
+
+function p8Spread_CellToRowCol(cellReference) {
+    try{cellReference = cellReference.toUpperCase()}catch(ex){}
+    // Match the cell reference pattern
+    var match = cellReference.match(/\$?([A-Z]+)\$?(\d+)/);
+
+    if (match) {
+        var colStr = match[1];
+        var rowStr = match[2];
+
+        // Convert column letters to a numeric value
+        var col = 0;
+        for (var i = 0; i < colStr.length; i++) {
+            col = col * 26 + colStr.charCodeAt(i) - 'A'.charCodeAt(0) + 1;
+        }
+
+        // Convert row string to a numeric value
+        var row = parseInt(rowStr, 10);
+
+        // Check if row or column is fixed
+        var rowFixed = cellReference.indexOf('$') !== -1;
+        var colFixed = cellReference.indexOf('$', colStr.length + 1) !== -1;
+
+        // Return the result as an object
+        return { row: row - 1, col: col - 1, rowFixed: rowFixed, colFixed: colFixed };
+    } else {
+        // Invalid cell reference
+        return null;
+    }
+}
+
+
+P8.SpreadSheet.prototype.JSONUpdateCell = function (col,row,coladd,rowadd,jsonupdatecell){
+    coladd = coladd || 0;
+    rowadd = rowadd || 0;
+    //var jsonupdatecell = []
+    //jsonupdatecell.push({jsonname:"tableevent",cellname:"cell"})
+    var len = 0
+    try{len = this.Data.length;}catch(ex){}
+    //loop row data
+    for(var i =0; i < len; i++ ){
+        var item = this.Data[i];
+        //loop column data per row data
+        var keys = Object.keys(item);
+        var len_j = 0
+        try{len_j = keys.length;}catch(ex){}
+        for (var j = 0; j < len_j; j++) {
+            var key = keys[j];
+            var len_k = 0
+            //loop json list
+            try{len_k = jsonupdatecell.length;}catch(ex){}
+            for (var k = 0; k < len_k; k++) {
+                var jsonlist = jsonupdatecell[k]
+                var jsonname = p8Spread_GetJsonValue(jsonlist,"jsonname")
+                var cellname = p8Spread_GetJsonValue(jsonlist,"cellname")
+                var jsondata = p8Spread_GetJsonValue(item[key],jsonname)
+                //loop json data
+                var len_l = 0
+                try{len_l = jsondata.length;}catch(ex){}
+                for (var l = 0; l < len_l; l++) {
+                    var data = jsondata[l];
+                    var cell = p8Spread_GetJsonValue(data,cellname)
+                    if(!p8Spread_IsNull(cell)){
+                        var cellconfig = p8Spread_CellToRowCol(cell);
+                        if(rowadd != 0){
+                            //if not fixed
+                            if(!cellconfig.rowfixed){
+                                if(cellconfig.row >= row){
+                                    var newcell = p8Spread_RowColToCell((cellconfig.col),(cellconfig.row+rowadd),cellconfig.colfixed,cellconfig.rowfixed) 
+                                    //update main data to new cell
+                                    item[key][jsonname][l][cellname] = newcell
+                                }
+                            }
+                        }
+                        if(coladd != 0){
+                            //if not fixed
+                            if(!cellconfig.colfixed){
+                                if(cellconfig.col >= col){
+                                    var newcell = p8Spread_RowColToCell((cellconfig.col+coladd),(cellconfig.row),cellconfig.colfixed,cellconfig.rowfixed) 
+                                    //update main data to new cell
+                                    item[key][jsonname][l][cellname] = newcell
+                                }
+                            }
+                        }
+                    }    
+                }
+            }
+        }
+    }
+
+}
+
+
+P8.SpreadSheet.prototype.GetJSONData = function (c, r,jsonname,withcolrow) {
+    var json = [];
+    try{
+        var colcell = p8_NumberToCell(parseInt(c) + 1);
+        if(c == -247 && r == -247){
+            var len = 0
+            try{len = this.Data.length;}catch(ex){}
+            //loop row data
+            for(var i =0; i < len; i++ ){
+                var item = this.Data[i];
+                var keys = Object.keys(item);
+                var len_j = 0
+                try{len_j = keys.length;}catch(ex){}
+                for (var j = 0; j < len_j; j++) {
+                    var key = keys[j];
+                    var jsondata = item[key][jsonname];
+                    var len_k = 0
+                    try{len_k = jsondata.length;}catch(ex){}
+                    for (var k = 0; k < len_k; k++) {
+                        var data = jsondata[k]
+                        if(!p8Spread_IsNull(data)){
+                            if(withcolrow){
+                                data.col = j;
+                                data.row = i;
+                            }
+                            json.push(data);
+                        }
+                    }
+                }
+            }
+        }else{ 
+            var jsondata = JSON.parse(JSON.stringify(this.Data[r][colcell][jsonname]));
+            var len_k = 0
+            try{len_k = jsondata.length;}catch(ex){}
+            for (var k = 0; k < len_k; k++) {
+                var data = jsondata[k]
+                if(!p8Spread_IsNull(data)){
+                    if(withcolrow){
+                        data.col = j;
+                        data.row = i;
+                    }
+                    json.push(data);
+                }
+            }
+        }
+    }catch(ex){}
+    return json;
+}
+
+P8.SpreadSheet.prototype.SetJSONData = function (c, r, jsonname, data) {
+    var colcell = p8_NumberToCell(parseInt(c) + 1);
+    this.Data[r][colcell][jsonname] = data;
+}
+
+function _sfSpreadAddColumn(obj) {
+    // var obj = mSpreadBook.Sheet[0];
+    var arry = { value: "", formula: "", Config: [] };
+    return arry;
+}
+function _sfSpreadColumnConfigUpdate(obj) {
+    var len = 0;
+    try{len = obj.length;}catch(ex){}
+    for (var i = 0; i < len; i++) {
+        var ColumName = p8_NumberToCell(i+1);
+        obj[i].ColumName = ColumName
+        obj[i].name = ColumName
+    }
+    return obj;
+}
+
+function _sfSpreadInsertColumnAdjustConfig(obj, startindex) {
+
+    obj.ColumnConfig.splice(startindex, 0, _sfDefaultSettingsColumn());
+    obj.ColumnConfig[startindex].width = def_Width;
+    obj.ColumnConfig[startindex].ColumnWidth = def_Width + "";
+
+    obj.ColumnConfig[startindex].config = {};
+    obj.ColumnConfig[startindex].dataType = "text"
+
+    obj.ColumnConfig = _sfSpreadColumnConfigUpdate(obj.ColumnConfig);
+    
+}
+
+
+P8.SpreadSheet.prototype.ColumnAdd = function (atbegin) {
+    var index = 0;
+    if(atbegin){
+        index = 0;
+    }else{
+        index = this.GetMaxCol() -1;
+    }
+    this.ColumnInsert(index,true,true);
+ 
+    try{
+        var jsonupdatecell = func_ColumnAdd(index);
+        if(jsonupdatecell.length > 0){
+            this.JSONUpdateCell(index,-1,1,0,jsonupdatecell)
+        }
+    }catch(ex){}
+
+
+    this.ScrollActive = true;
+    this.RenderNoEvent();
+    return index;
+}
+
+
+P8.SpreadSheet.prototype.ColumnInsert = function (index, isright, norender) {
+
+    if (isright == undefined) isright = true;
+
+    //if ((index < this.FreezeRow && isright == false)
+    //    ||
+    //    (index < this.FreezeRow && isright == true)
+    //    ) {
+    //    try {
+    //        ToastMessage("Insert Column is Invalid for Freeze Panes");
+    //    } catch (err) {
+    //        console.log("Insert Column is Invalid for Freeze Panes");
+    //    }
+    //    return false;
+    //}
+    var col = index;
+    if (isright) {
+        col = col + 1;
+    }
+    var len = 0
+    try{len = this.Data.length;}catch(ex){}
+    for(var i = 0; i < len; i++ ){
+        var item = this.Data[i];
+        //var item = this.Data[0];
+        var keys = Object.keys(item);
+        var itemnew = [];
+        var itemstd = [];
+        //Insert item to new item
+        for (var j = 0; j < keys.length; j++) {
+            var key = keys[j];
+            if(key.includes("aag")){
+                itemstd.push({[key]:item[key]});
+            }else{
+                itemnew.push(item[key]);
+            }
+        }
+        // get default data
+        var arry = _sfSpreadAddColumn(this);
+        itemnew.splice(col, 0, arry);
+
+        //Update index to alphabet
+        var NewData = {}
+        Object.keys(itemnew).forEach((key, j) => {
+            var newKey = p8_NumberToCell(j+1);
+            NewData[newKey] = itemnew[key];
+        });
+        //add std
+        for (var j = 0; j < itemstd.length; j++) {
+            var key = itemstd[j];
+            //console.log(key)
+            for (var subkey in key) {
+                NewData[subkey] = key[subkey];
+            }
+        }
+        this.Data[i] = NewData
+    }
+
+    _sfSpreadInsertColumnAdjustConfig(this, col);
+    //karl edit start
+    this.UpdateFormula(col, Spread_ALLROW, 1, 0);
+    //karl edit end
+    try{
+        var jsonupdatecell = func_ColumnInsert(index, isright);
+        if(jsonupdatecell.length > 0){
+            this.JSONUpdateCell(col,-1,1,0,jsonupdatecell)
+        }
+    }catch(ex){}
+
+
+    if (norender == undefined) norender = false;
+
+    if (norender == false) {
+        this.ScrollActive = true;
+        this.RenderNoEvent();
+    }
+    return index;
+}
+
+
+function _sfSpreadDeleteColumnAdjustConfig(obj, startindex) {
+    obj.ColumnConfig.splice(startindex, 1);
+    obj.ColumnConfig = _sfSpreadColumnConfigUpdate(obj.ColumnConfig);
+}
+
+P8.SpreadSheet.prototype.ColumnDelete = function (col) {
+    //if (index == undefined) index = obj.CellIndexes.Row;
+
+    if (col == undefined) { }
+    else {
+        var len = 0
+        try{len = this.Data.length;}catch(ex){}
+        for(var i = 0; i < len; i++ ){
+            var item = this.Data[i];
+            //var item = this.Data[0];
+            var keys = Object.keys(item);
+            var itemnew = [];
+            var itemstd = [];
+            //Insert item to new item
+            for (var j = 0; j < keys.length; j++) {
+                if (j == col){continue;}
+                var key = keys[j];
+                if(key.includes("aag")){
+                    itemstd.push({[key]:item[key]});
+                }else{
+                    itemnew.push(item[key]);
+                }
+            }
+            //Update index to alphabet
+            var NewData = {}
+            Object.keys(itemnew).forEach((key, j) => {
+                var newKey = p8_NumberToCell(j+1);
+                NewData[newKey] = itemnew[key];
+            });
+            //add std
+            for (var j = 0; j < itemstd.length; j++) {
+                var key = itemstd[j];
+                //console.log(key)
+                for (var subkey in key) {
+                    NewData[subkey] = key[subkey];
+                }
+            }
+
+            this.Data[i] = NewData
+        }
+
+        _sfSpreadDeleteColumnAdjustConfig(this, col);
+        //karl edit start
+        this.UpdateFormula(col, Spread_ALLROW, -1, 0);
+        //karl edit end
+        try{
+            var jsonupdatecell = func_ColumnDelete(col);
+            if(jsonupdatecell.length > 0){
+                this.JSONUpdateCell(col,-1,-1,0,jsonupdatecell)
+            }
+        }catch(ex){}
+
+        this.ScrollActive = true;
+        this.RenderNoEvent();
+    }
+    return col;
+}
+
+
+P8.SpreadSheet.prototype.ColumnInsertShift = function (col,row, isright, norender) {
+
+    if (isright == undefined) isright = true;
+
+    //if ((col < this.FreezeRow && isright == false)
+    //    ||
+    //    (col < this.FreezeRow && isright == true)
+    //    ) {
+    //    try {
+    //        ToastMessage("Insert Column is Invalid for Freeze Panes");
+    //    } catch (err) {
+    //        console.log("Insert Column is Invalid for Freeze Panes");
+    //    }
+    //    return false;
+    //}
+    if (isright) {
+        col = col + 1;
+    }
+    var item = this.Data[row];
+    //var item = this.Data[0];
+    var keys = Object.keys(item);
+    var itemnew = [];
+    var itemstd = [];
+    //Insert item to new item
+    for (var j = 0; j < keys.length; j++) {
+        var key = keys[j];
+        if(key.includes("aag")){
+            itemstd.push({[key]:item[key]});
+        }else{
+            itemnew.push(item[key]);
+        }
+    }
+    // get default data
+    var arry = _sfSpreadAddColumn(this);
+    itemnew.splice(col, 0, arry);
+    //Update index to alphabet
+    var NewData = {};
+    var lenkey = 0 
+    try{ lenkey = itemnew.length;}catch(ex){}
+    var hasDataInLastCell = false;
+    Object.keys(itemnew).forEach((key, j) => {
+        var newKey = p8_NumberToCell(j+1);
+        var valuekey = itemnew[key];
+
+        //when no data in last column cell, no new column insertion
+        if((j+1) == lenkey){
+            for (var key in valuekey) {
+                if (valuekey.hasOwnProperty(key)) {
+                    var val = valuekey[key];
+                    if(val != ""){
+                        hasDataInLastCell = true;
+                    }
+                }
+            }
+            if(hasDataInLastCell){
+                NewData[newKey] = valuekey;
+            }  
+        }else{
+            NewData[newKey] = valuekey;
+        }
+    });
+    //add std
+    for (var j = 0; j < itemstd.length; j++) {
+        var key = itemstd[j];
+        //console.log(key)
+        for (var subkey in key) {
+            NewData[subkey] = key[subkey];
+        }
+    }
+    if(hasDataInLastCell){
+        this.ColumnInsert((lenkey - 2), true, false);
+    }
+    this.Data[row] = NewData
+
+
+    //_sfSpreadInsertColumnAdjustConfig(this, index);
+    //karl edit start
+    this.UpdateFormula(col, row, 1, 0);
+    //karl edit end
+    if (norender == undefined) norender = false;
+
+    if (norender == false) {
+        this.ScrollActive = true;
+        this.RenderNoEvent();
+    }
+    return {col:col,row:row};
+}
+
+
+P8.SpreadSheet.prototype.ColumnDeleteShift = function (col,row) {
+    //if (index == undefined) index = obj.CellIndexes.Row;
+
+    if (col == undefined) { }
+    else {
+        //_sfJsonDelete(this.Data, index);
+        //_sfSpreadDeleteRowAdjustConfig(this, index);
+
+        var item = this.Data[row];
+        //var item = this.Data[0];
+        var keys = Object.keys(item);
+        var itemnew = [];
+        var itemstd = [];
+        //Insert item to new item
+        for (var j = 0; j < keys.length; j++) {
+            if(j == col){continue;}
+            var key = keys[j];
+            if(key.includes("aag")){
+                itemstd.push({[key]:item[key]});
+            }else{
+                itemnew.push(item[key]);
+            }
+        }
+
+        var arry = _sfSpreadAddColumn(this);
+        itemnew.push(arry);
+
+        //Update index to alphabet
+        var NewData = {}
+        Object.keys(itemnew).forEach((key, j) => {
+            var newKey = p8_NumberToCell(j+1);
+            NewData[newKey] = itemnew[key];
+        });
+        //add std
+        for (var j = 0; j < itemstd.length; j++) {
+            var key = itemstd[j];
+            //console.log(key)
+            for (var subkey in key) {
+                NewData[subkey] = key[subkey];
+            }
+        }
+            
+        this.Data[row] = NewData
+        //karl edit start
+        this.UpdateFormula(col, row, -1, 0);
+        //karl edit end
+        //_sfSpreadDeleteColumnAdjustConfig(this, col);
+
+        this.ScrollActive = true;
+        this.RenderNoEvent();
+    }
+    return {col:col,row:row};
+}
+
+
+P8.SpreadSheet.prototype.RowInsertShift = function (col,row, isdown,col2,row2, norender) {
+
+    if (isdown == undefined) isdown = true;
+
+    col2 = col2 == undefined ? col : col2;
+    row2 = row2 == undefined ? row : row2;
+    //if ((row < this.FreezeRow && isdown == false)
+    //    ||
+    //    (row < this.FreezeRow && isdown == true)
+    //    ) {
+    //    try {
+    //        ToastMessage("Insert Row is Invalid for Freeze Panes");
+    //    } catch (err) {
+    //        console.log("Insert Row is Invalid for Freeze Panes");
+    //    }
+    //    return false;
+    //}
+    //if (isdown) {
+    //    row = row + 1;
+    //}
+    //var prevdata = {};
+    //var prevobjectkey ="";
+    //var previtemnew = {};
+    var prevData = this.JSONCopy(this.Data);
+    var hasDataInLastCell = false;
+    var hasInsertAlready = false;
+    var len = 0
+    try{len = this.Data.length;}catch(ex){}
+
+    //var hasdataincell = this.GetText(col,row+1);
+    //if(excludeformat && p8Spread_IsNull(hasdataincell)){
+        
+    //}else{
+    for(var i = row; i < this.Data.length; i++ ){
+        var item = this.Data[i];
+        //console.log(objectkey)
+        //console.log(itemnew)
+        for (var j = col; j <= col2; j++) {
+            var objectkey = Object.keys(item)[j];
+            var itemnew = item[objectkey]
+            //new data 
+            if (i == row) {
+                previtem = _sfSpreadAddColumn(this);
+                item[objectkey] = previtem;
+            }
+            else {
+                var previtem = prevData[i - 1][objectkey];
+                item[objectkey] = previtem;
+                    
+            }
+            if (i == (len - 1)) {
+                if (!hasInsertAlready) { 
+                    for (var key in itemnew) {
+                        if (itemnew.hasOwnProperty(key)) {
+                            var val = itemnew[key];
+                            if (val != "") {
+                                hasDataInLastCell = true;
+                            }
+                        }
+                    }
+                    if (hasDataInLastCell) {
+                        hasInsertAlready = true;
+                        this.RowAdd();
+                    }
+                }
+            }
+            //item[prevobjectkey] = prevdata[prevobjectkey];
+            //prevobjectkey = objectkey;
+            //previtemnew = itemnew;
+            //prevdata[prevobjectkey] = previtemnew;
+        }
+           
+    }
+    //}
+    if (row == len && !hasDataInLastCell){
+        this.RowAdd();
+    }
+    //_sfSpreadInsertColumnAdjustConfig(this, index);
+
+    this.UpdateFormula(col, row, 0, 1);
+
+    if (norender == undefined) norender = false;
+
+    if (norender == false) {
+        this.ScrollActive = true;
+        this.RenderNoEvent();
+    }
+    return {col:col,row:row};
+}
+
+
+P8.SpreadSheet.prototype.RowDeleteShift = function (col,row,norender) {
+    //if (index == undefined) index = obj.CellIndexes.Row;
+
+    if (col == undefined) { }
+    else {
+        var prevobjectkey ="";
+        var previtemnew= {};
+        var len = 0
+        try{len = this.Data.length;}catch(ex){}
+        //var len =5;
+        for(var i = len-1; i >= row; i-- ){
+            var item = this.Data[i];
+            //console.log(objectkey)
+            //console.log(itemnew)
+            var objectkey = Object.keys(item)[col];
+            var itemnew = item[objectkey]
+            //new data 
+            if(i == (len-1)){ 
+                prevobjectkey = objectkey;
+                previtemnew = _sfSpreadAddColumn(this);
+            }
+            item[prevobjectkey] = previtemnew
+            prevobjectkey = objectkey;
+            previtemnew = itemnew;
+        }
+
+        //_sfSpreadInsertColumnAdjustConfig(this, index);
+        this.UpdateFormula(col, row, 0, -1);
+        
+        if (norender == undefined) norender = false;
+
+        if (norender == false) {
+            this.ScrollActive = true;
+            this.RenderNoEvent();
+        }
+    }
+    return {col:col,row:row};
+}
+
+//karl 01/31/2024 end
+
+//karl 02/22/2024 start
+
+function _sfseparateAlphabetAndNumber(cellReference) {
+    // Find the index where the first numeric character appears
+    var index = cellReference.search(/\d/);
+    // Separate the alphabet and number based on the index
+    var alphabetPart = cellReference.slice(0, index);
+    var numberPart = cellReference.slice(index);
+
+    return [alphabetPart, numberPart];
+}
+
+function _sflistCellsBetween(cell) {
+    var cellrange = cell.split(':');
+    var cellfrom = cellrange[0];
+    var cellto = cellrange[1] == undefined ? cellrange[0] : cellrange[1];
+
+    var col_temp = p8Spread_CellToRowCol(cellfrom).col;
+    var row_temp = p8Spread_CellToRowCol(cellfrom).row;
+    var col2_temp  = p8Spread_CellToRowCol(cellto).col;
+    var row2_temp  = p8Spread_CellToRowCol(cellto).row;
+
+    var iscolreverse = col_temp > col2_temp;
+    var isrowreverse = col_temp == col2_temp &&  row_temp > row2_temp;
+    if(iscolreverse || isrowreverse){
+        var col = col2_temp;
+        var row =  row2_temp;
+        var col2  = col_temp;
+        var row2  = row_temp;
+    } else {
+        var col = col_temp;
+        var row =  row_temp;
+        var col2  = col2_temp;
+        var row2  = row2_temp;
+    }
+    from = p8Spread_RowColToCell(col,row)
+    to = p8Spread_RowColToCell(col2,row2)
+    var fromArray = _sfseparateAlphabetAndNumber(from);
+    var from_alphabet = fromArray[0];
+    var from_number = fromArray[1];
+        
+    var toArray = _sfseparateAlphabetAndNumber(to);
+    var to_alphabet = toArray[0];
+    var to_number = toArray[1];
+    var cellList = [];
+    for (var row = from_number; row <= to_number; row++) {
+        for (var col = from_alphabet.charCodeAt(0); col <= to_alphabet.charCodeAt(0); col++) {
+            cellList.push(String.fromCharCode(col) + row);
+        }
+    }
+    return cellList;
+}
+function p8Spread_listCells(cell) {
+    try{cell = cell.toUpperCase()}catch(ex){}
+    var celllist = cell.split(",");
+    var cellFinalList = [];
+    for (var i = 0; i < celllist.length; i++) {
+        var cell = celllist[i];
+        if(cell.includes(":")){
+            var celllist_t = _sflistCellsBetween(cell);
+            cellFinalList = [...cellFinalList,...celllist_t]
+        }else{
+            cellFinalList.push(cell);
+        }
+
+    }
+    return cellFinalList;
+}
+
+
+P8.SpreadSheet.prototype.SetSelectedCell = function (cell) {
+    try{
+        try{cell = cell.toUpperCase()}catch(ex){}
+        //var cell = "B1:B2"
+        var celllist = cell.split(',');
+        var len = 0
+        try{len = celllist.length;}catch(ex){}
+        for(var i = 0; i < len; i++ ){
+            var cell = celllist[i];
+            var cellrange = cell.split(':');
+            var cellfrom = cellrange[0];
+            var cellto = cellrange[1] == undefined ? cellrange[0] : cellrange[1];
+
+            var col_temp = p8Spread_CellToRowCol(cellfrom).col;
+            var row_temp = p8Spread_CellToRowCol(cellfrom).row;
+            var col2_temp  = p8Spread_CellToRowCol(cellto).col;
+            var row2_temp  = p8Spread_CellToRowCol(cellto).row;
+
+            var iscolreverse = col_temp > col2_temp;
+            var isrowreverse = col_temp == col2_temp &&  row_temp > row2_temp;
+            if(iscolreverse || isrowreverse){
+                var col = col2_temp;
+                var row =  row2_temp;
+                var col2  = col_temp;
+                var row2  = row_temp;
+            } else {
+                var col = col_temp;
+                var row =  row_temp;
+                var col2  = col2_temp;
+                var row2  = row2_temp;
+            }
+            var option = {
+                col: col,
+                row: row,
+                col2: col2,
+                row2: row2,
+            }
+            this.SetSelectedIndexes(option)
+        }
+        this.ScrollActive = true;
+        this.RenderNoEvent();
+    }catch(ex){}
+    return this.GetSelectedIndexes();
+};
+
+P8.SpreadSheet.prototype.GetSelectedCell = function () {
+    var celllist = "";
+    try{
+        var item = this.GetSelectedIndexes();
+        var row = p8Spread_GetJsonValue(item, "row");
+        var row2 = p8Spread_GetJsonValue(item, "row2");
+        var col = p8Spread_GetJsonValue(item, "col");
+        var col2 = p8Spread_GetJsonValue(item, "col2");
+        var cell = p8_NumberToCell(col + 1) + (row + 1);
+        cell += ":"+p8_NumberToCell(col2 + 1) + (row2 + 1);
+        celllist = p8Spread_listCells(cell);
+    }catch(ex){}
+    return celllist
+}
+
+P8.SpreadSheet.prototype.UpdateFormula = function (col, row, coladd, rowadd, col2add, row2add) {
+    col2add = col2add || coladd;
+    row2add = row2add || rowadd;
+    //if (index == undefined) index = obj.CellIndexes.Row;
+    var _this = mSpreadBook.ActiveSheet.JSONCopy(this.Data);
+    var len = 0
+    try { len = _this.length; } catch (ex) { }
+    for (var i = 0; i < len; i++) {
+        var item = _this[i];
+        //var item = this.Data[0];
+        var keys = Object.keys(item);
+        //Loop column (per row)
+        for (var j = 0; j < keys.length; j++) {
+              
+            var key = keys[j];
+            if (key.includes("aag")) {
+
+            } else {
+                //get formula
+                var formula = item[key].formula;
+                if (!p8Spread_IsNull(formula)) {
+                    var rowtemp = row;
+                    if (row == Spread_ALLROW) { rowtemp = i; }
+                    var formulanew = _sfAdjustFormula(col, rowtemp, formula, coladd, rowadd, col, row);
+                    //this.SetFormula(col, i, formula);
+                    this.Data[i][key].formula = formulanew;
+                }
+                ////get config
+                //var itemconfig = item[key].Config;
+                ////loop config to update data
+                //for (var k = 0; k < itemconfig.length; k++) {
+                //    var id = p8Spread_GetJsonValue(itemconfig[k], "id")
+                //    var itemconfigdata = p8Spread_GetJsonValue(itemconfig[k], "element")
+                //    var value = p8Spread_GetJsonValue(itemconfigdata, "value")
+                //    if (id == "table") {
+                //        var colconfig = value[0].col;
+                //        var col2config = value[0].col2;
+                //        var rowconfig = value[0].row;
+                //        var row2config = value[0].row2;
+     
+                //        ////cell after
+                //        if (coladd != 0) {
+                //            if (col <= colconfig) {
+                //                this.Data[i][key].Config[k].element.value[0].col = colconfig + coladd;
+                //            }
+                //            if (col <= col2config) {
+                //                this.Data[i][key].Config[k].element.value[0].col2 = col2config + col2add;
+                //            }
+                //        }
+                //        if (rowadd != 0) {
+                //            if (row <= rowconfig) {
+                //                this.Data[i][key].Config[k].element.value[0].row = value[0].row + rowadd;
+                //            }
+                //        }
+                //        if (col2add != 0) {
+                //            if (col <= col2config) {
+                //                this.Data[i][key].Config[k].element.value[0].col2 = col2config + col2add;
+                //            }
+                //        }
+                //        if (row2add != 0) {
+                //            if (row <= row2config) {
+                //                this.Data[i][key].Config[k].element.value[0].row2 = value[0].row2 + row2add;
+                //            }
+                //        }
+                //    }
+                //}
+            }
+        }
+    }
+
+
+    this.ScrollActive = true;
+    this.RenderNoEvent();
+    return col;
+}
+
+P8.SpreadSheet.prototype.DeleteConfigData = function (col,row,data){
+    try{
+        var col_a = p8_NumberToCell(col+1);
+        var jsonconfig = this.Data[row][col_a].Config
+
+        for (var i = jsonconfig.length - 1; i >= 0; i--) {
+            var item = jsonconfig[i];
+            var id = p8Spread_GetJsonValue(item,"id")
+            if (id === data || data == undefined) {
+                jsonconfig.splice(i, 1);
+                if(id == "merge"){
+                    try{
+                        var itemmerge = this.mergeList;
+                        for (var l = itemmerge.length - 1; l >= 0; l--) {
+                            var itemm = itemmerge[l];
+                            var colm = p8Spread_GetJsonValue(itemm,"col");
+                            var rowm = p8Spread_GetJsonValue(itemm,"row");
+                            if (colm == col && rowm == row) {
+                                itemmerge.splice(l, 1);
+                            }
+                        }
+                    }catch(ex){}
+                }else if(id == "backgroundColor"){
+                    mSpreadBook.ActiveSheet.SetBackground(col,row,this.DefaultSettings.backgroundColor)
+                }
+            }
+        }
+    }catch(ex){}
+}
+P8.SpreadSheet.prototype.GetConfigData = function (col,row,data){ //,col2,row2
+    var jsondata = [];
+    try {
+        if (col == -247) {
+            var jsontemp = []
+            var datarow = this.Data[row];
+            var objkey = Object.keys(datarow);
+            for (var i = 0; i < objkey.length; i++) {
+                try {
+                    if (!p8Spread_IsNull(data)) {
+                        jsontemp = nwJson(datarow[objkey[i]].Config, "id", data, false);
+                        jsontemp = jsontemp[0].element.value;
+                    } else {
+                        jsontemp = datarow[objkey[i]].Config;
+                    }
+                    if (jsontemp.length > 0) {
+                        jsondata.push({ col: i, row: row, data: jsontemp });
+                    }
+                } catch (ex) { }
+            }
+        } else if (row == -247) {
+            var colcell = p8_NumberToCell(parseInt(col) + 1);
+            var jsontemp = []
+            var datarow_all = this.Data;
+            for (var i = 0; i < datarow_all.length; i++) {
+                var datarow = datarow_all[i];
+                try {
+                    if (!p8Spread_IsNull(data)) {
+                        jsontemp = nwJson(datarow[colcell].Config, "id", data, false);
+                        jsontemp = jsontemp[0].element.value;
+                    } else {
+                        jsontemp = datarow[colcell].Config;
+                    }
+                    if (jsontemp.length > 0) {
+                        jsondata.push({ col: col, row: i, data: jsontemp });
+                    }
+                } catch (ex) { }
+            }
+        } else {
+            var colcell = p8_NumberToCell(parseInt(col) + 1);
+            if (!p8Spread_IsNull(data)) {
+                jsondata = nwJson(this.Data[row][colcell].Config, "id", data, false);
+                jsondata = jsondata[0].element.value;
+            } else {
+                jsondata = this.Data[row][colcell].Config;
+            }
+        }
+    } catch (ex) { }
+    return jsondata;
+}
+P8.SpreadSheet.prototype.SetConfigData = function (col,row,data,id){
+    var colcell = p8_NumberToCell(parseInt(col) + 1);
+    if(!p8Spread_IsNull(id)){
+        this.Data[row][colcell].Config[id] = data;
+    }else{
+        this.Data[row][colcell].Config = data;
+    }
+}
+P8.SpreadSheet.prototype.SetUnmerge = function (col,row,col2,row2){
+    try{
+        var item = this.GetSelectedIndexes();
+        if(col == undefined){ col = p8Spread_GetJsonValue(item, "col");}
+        if(col2 == undefined){ col2 = p8Spread_GetJsonValue(item, "col2");}
+        if(row == undefined){ row = p8Spread_GetJsonValue(item, "row");}
+        if(row2 == undefined){ row2 = p8Spread_GetJsonValue(item, "row2");}
+
+        var len = 0
+        try{len = jsonconfig.length;}catch(ex){}
+        for(var m = row; m <=row2; m++ ){
+
+            var col_a = p8_NumberToCell(col+1);
+            var jsonconfig = this.Data[m][col_a].Config
+            var len = 0
+            try{len = jsonconfig.length;}catch(ex){}
+            for(var i = 0; i <len; i++ ){
+                var itemconfig = jsonconfig[i]
+                var id = p8Spread_GetJsonValue(itemconfig,"id")
+                if(id == "merge"){
+                    var value = itemconfig.element.value[0];
+                    var itemcol = p8Spread_GetJsonValue(value,"col")
+                    var itemcol2 = p8Spread_GetJsonValue(value,"col2")
+                    var itemrow = p8Spread_GetJsonValue(value,"row")
+                    var itemrow2 = p8Spread_GetJsonValue(value,"row2")
+                    for (var k = itemrow; k <= itemrow2; k++) {
+                        for (var j = itemcol; j <= itemcol2; j++) {
+                            this.DeleteConfigData(j, k,"merge");
+                            //clear value
+                            if (col != j && row != k) {
+                                this.SetText(j, k,"");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(itemcol == undefined){
+            var colu =  col;
+            var col2u  = col2;
+            var rowu =  row;
+            var row2u  = row2;
+        } else{
+            var colu =  col > itemcol ? itemcol : col;
+            var col2u  = col2 > itemcol2 || itemcol2 == undefined ? col2: itemcol2;
+            var rowu =  row > itemrow2 ? itemrow: row;
+            var row2u  = row2 > itemrow2 ? row2: itemrow2;
+        }
+        var option = {
+            col: colu,
+            col2: col2u,
+            row: rowu,
+            row2: row2u,
+        }
+        this.SetSelectedIndexes(option)
+
+        this.ScrollActive = true;
+        this.RenderNoEvent();
+    }catch(ex){}
+}
+
+P8.SpreadSheet.prototype.SetCrossMerge = function (col,row,col2,row2){
+    try{
+        var item = this.GetSelectedIndexes();
+        if(col == undefined){ col = p8Spread_GetJsonValue(item, "col");}
+        if(col2 == undefined){ col2 = p8Spread_GetJsonValue(item, "col2");}
+        if(row == undefined){ row = p8Spread_GetJsonValue(item, "row");}
+        if(row2 == undefined){ row2 = p8Spread_GetJsonValue(item, "row2");}
+
+        for (var i = row; i <= row2; i++) {
+            this.SetMerge(col, i, col2, i, true);
+        }
+        this.ScrollActive = true;
+        this.RenderNoEvent();
+    }catch(ex){}
+}
+
+P8.SpreadSheet.prototype.AutoSum = function (col,row,data,col2,row2){
+    //data - sum,average,count numbers,max,min
+    try{
+       
+        var item = this.GetSelectedIndexes();
+        if(col == undefined){ col = p8Spread_GetJsonValue(item, "col");}
+        if(col2 == undefined){ col2 = p8Spread_GetJsonValue(item, "col2");}
+        if(row == undefined){ row = p8Spread_GetJsonValue(item, "row");}
+        if(row2 == undefined){ row2 = p8Spread_GetJsonValue(item, "row2");}
+
+        var total = 0;
+        var fromcell = p8_NumberToCell(col+1)+(row+1);
+        var tocell = p8_NumberToCell(col2+1)+(row2+1);
+        if(fromcell == tocell){
+            tocell = "";
+        }
+        var valuex = fromcell;
+        if(!p8Spread_IsNull(tocell)){
+            valuex += ":" +tocell;
+        }
+
+        data = data || "SUM";
+        valuex = "="+data.toUpperCase()+"("+valuex+")"
+        var coldiff = col2 - col;
+        var rowdiff = row2 - row;
+        if(coldiff > rowdiff){
+            var colu =col2+1;
+            var rowu =row2;
+        }else{
+            var colu =col2;
+            var rowu =row2+1;
+        }
+        this.SetFormula(colu,rowu,valuex);
+
+        this.ScrollActive = true;
+        this.RenderNoEvent();
+    }catch(ex){}
+}
+function _sfAdjustFormula(col, row, formula, colAdd, rowAdd,currentCol,currentRow) {
+    // Regular expression to match cell references in the formula (e.g., A1, B2)
+    var cellReferenceRegex = /[A-Z]+\d+/g;
+
+    // Function to adjust cell references based on colAdd and rowAdd
+    function adjustCellReference(currentData) {
+        // Extract the column part of the cell reference (e.g., A, B)
+
+        var cellcol = p8Spread_CellToRowCol(currentData).col;
+        var cellrow = p8Spread_CellToRowCol(currentData).row;
+
+        if (colAdd != 0) {
+            if (cellcol >= col) {
+                if (cellrow == currentRow || currentRow == Spread_ALLROW) {
+                    cellcol = cellcol + colAdd;
+                }
+            }
+        }
+        if (rowAdd != 0) {
+            if (cellrow >= row) {
+                if (cellcol == currentCol || currentCol == Spread_ALLCOL) {
+                    cellrow = cellrow + rowAdd;
+                }
+            }
+        }
+        if (cellrow < 0) {
+            cellrow = 0;
+        }
+        if (cellcol < 0) {
+            cellcol = 0;
+        }
+        
+        var newcell = p8Spread_RowColToCell(cellcol, cellrow)
+        // Return the adjusted cell reference
+        return newcell;
+    }
+
+    // Replace cell references in the formula using the adjustCellReference function
+    var adjustedFormula = formula.replace(cellReferenceRegex, adjustCellReference);
+
+    return adjustedFormula;
+}
+
+P8.SpreadSheet.prototype.JSONCopy = function (json) {
+    return JSON.parse(JSON.stringify(json));
+}
+P8.SpreadSheet.prototype.JSONRemoveDuplicateRows = function (json) {
+    // Create a Set to store unique string representations of the objects
+    const seen = new Set();
+
+    // Filter out duplicate rows
+    return json.filter(obj => {
+        const strRepresentation = JSON.stringify(obj);
+        // If the string representation is not seen yet, add it to the Set and keep the row
+        if (!seen.has(strRepresentation)) {
+            seen.add(strRepresentation);
+            return true;
+        }
+        // If the string representation is already seen, discard the row
+        return false;
+    });
+}
+
+
+function _sfJSONConvertKeysToLowerCase(json) {
+    if (Array.isArray(json)) {
+        return json.map(_sfJSONConvertKeysToLowerCase); // Recursively convert keys for each element in the array
+    } else if (typeof json === 'object' && json !== null) {
+        var newObj = {};
+
+        for (var key in json) {
+            if (Object.prototype.hasOwnProperty.call(json, key)) {
+                var newKey = key.toLowerCase();
+                newObj[newKey] = _sfJSONConvertKeysToLowerCase(json[key]);
+            }
+        }
+
+        return newObj;
+    } else {
+        return json; // Base case: return non-object values as is
+    }
+}
+//karl edit end
+
+
+
+class P8ConditionalFormat {
+    static Contains = 1;
+    static Equal = 1;
+    }
+class P8Themes {
+    static DEFAULT = 1;
+    static FANCY = 2;
+
+
+    //constructor() {
+
+    //    const privateVariable = 'private value'; // Private variable at the constructor scope
+    //    this.publicVariable = 'public value'; // Public property
+
+    //    this.privilegedMethod = function() {
+    //        // Public Method with access to the constructor scope variables
+    //        console.log(privateVariable);
+    //    };
+    //}
+
+    //// Prototype methods:
+    //publicMethod() {
+    //    console.log(this.publicVariable);
+    //}
+
+    //// Static properties shared by all instances
+    //static staticProperty = 'static value';
+
+    //static staticMethod() {
+    //    console.log(this.staticProperty);
+    //}
+    }
+
+// We can add properties to the class prototype
+//P8Themes.prototype.additionalMethod = function() {
+//    console.log(this.publicVariable);
+//};
+//myInstance.publicMethod();       // "public value"
+//myInstance.additionalMethod(); // "public value"
+//myInstance.privilegedMethod(); // "private value"
+//P8Themes.staticMethod(); 
 
 

@@ -1,7 +1,7 @@
 ﻿
 function func_Reload() {
 
-    crLnk = "../SAModuleWeb/SAModuleWeb_Gateway";
+    crLnk = GetCurrentURL() +  "SAModuleWeb_Gateway";
     crLnkGateKey = "SAModuleWeb";
 
 

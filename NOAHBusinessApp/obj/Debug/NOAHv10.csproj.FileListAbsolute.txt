@@ -1,0 +1,324 @@
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\ApplicationInsights.config
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\csc.exe
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\vbc.exe
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Custom.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\EntityFramework.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Owin.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\WebGrease.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\EntityFramework.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.dll
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.pdb
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\ApplicationInsights.config
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\csc.exe
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\vbc.exe
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Custom.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Owin.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\WebGrease.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHv10.csprojResolveAssemblyReference.cache
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.pdb
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\ApplicationInsights.config
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\csc.exe
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\vbc.exe
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Custom.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Owin.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\WebGrease.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHv10.csprojResolveAssemblyReference.cache
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023]\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.pdb
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\ApplicationInsights.config
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\csc.exe
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\vbc.exe
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Custom.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Owin.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\WebGrease.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHv10.csprojResolveAssemblyReference.cache
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.dll
+D:\aaRico Works\CONSO V10 [OFFICIAL]\NOAH V10[08012023][FPMC]\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.pdb
+D:\Angelo Works\Web Libraries\v10 Portal\NOAHV10\NOAHBusinessApp\obj\Debug\NOAHv10.csprojResolveAssemblyReference.cache

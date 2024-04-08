@@ -3,7 +3,7 @@ var nwaccess = "";
 
 function func_Reload() {
 
-    crLnk = "../SAUserAccessReport/SAUserAccessReport_Gateway";
+    crLnk = GetCurrentURL() +  "SAUserAccessReport_Gateway";
     crLnkGateKey = "SAUserAccessReport";
 
 

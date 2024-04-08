@@ -1,0 +1,155 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Support Ticket Monitoring";
+    //Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+    Layout = "~/forms_standards/StandardLayout/NOAHSpreadDesigner/NOAHSpreadDesigner.cshtml";
+
+}
+<head>
+    @*<link rel="stylesheet" href="~/materials/NOAHPlugin/NOAHSpread/css/NOAHSpread.css">
+    <link rel="stylesheet" href="~/materials/NOAHPlugin/NOAHSpread/fonts/new/fonts.css">*@
+    @*<script type="text/javascript" src="~/materials/NOAHPlugin/NOAHSpread/js/NOAHSpread.js"></script>*@
+
+    @*<link rel="stylesheet" href="~/materials/NOAHPlugin/NOAHSpread/colorpicker/spectrum.css">
+    <script type="text/javascript" src="~/materials/NOAHPlugin/NOAHSpread/colorpicker/spectrum.js"></script>*@
+
+    <script src="~/RND/DocumentEntry/FPTIIssueLogs/FPTIIssueLogs.js"></script>
+    <link href="~/RND/DocumentEntry/FPTIIssueLogs/FPTIIssueLogs.css" rel="stylesheet" />
+</head>
+
+<div class="nwe-flex-c">
+    <div class="nwe-cb-main">
+        <div class="nwe-cb-btn ed nwe-algs">
+            <div class="nwe-cb-fl-c">
+                <div class="nwe-cb-icon-m fnw" id="new"></div>
+                <div class="nwe-cb-icontext">New</div>
+            </div>
+
+            <div class="nwe-cb-sf-c">
+                <div class="nwe-ed-icon-m save" id="save"></div>
+                <div class="nwe-ed-icontext">Save</div>
+            </div>
+
+            <div class="nwe-cb-sf-c">
+                <div class="nwe-ed-icon-m addrow" id="addrow"></div>
+                <div class="nwe-ed-icontext">Add Row</div>
+            </div>
+            <div class="nwe-cb-sf-c">
+                <div class="nwe-ed-icon-m copy" id="copyfrom"></div>
+                <div class="nwe-ed-icontext">Copy from</div>
+            </div>
+            <div class="nwe-cb-sf-c">
+                <div class="nwe-ed-icon-m filter" id="filter"></div>
+                <div class="nwe-ed-icontext">Filter</div>
+            </div>
+            <div class="nwe-cb-sf-c">
+                <div class="nwe-ed-icon-m refresh" id="refresh"></div>
+                <div class="nwe-ed-icontext">Refresh</div>
+            </div>
+        </div>
+        <div class="nwe-title">Others</div>
+    </div>
+</div>
+
+
+    @*filter*@
+    @*<div class="nw-htr-container" id="nwgFilterCon">
+        <div class="nw-htr-box">
+            <div class="nw-htr-content">
+                <div class="nw-htr-header">
+                    <div class="nw-htr-title">Forms</div>
+                    <div class="nw-htr-icon-btn">
+                        <div class="nw-htr-i-btn fullscreen"></div>
+                        <div class="nw-htr-i-btn close"></div>
+                    </div>
+                </div>
+
+
+               
+            </div>
+        </div>
+    </div>*@
+<div id="nwgFilterCon">
+    <div id="cmsnwgFilter" class="nw-htr-fx">
+
+        <div class="col col-12 col-parent nwRightheader">
+            @*date*@
+            <fieldset class="fieldset fullwidth" nk-fieldset-style="6">
+                <legend>Filter By Date</legend>
+                <div class="row">
+                    <div class="col col-12">
+                        <div class="col col-6 col-parent padding-x-15">
+
+                            <div class="row">
+                                <div class="col col-6">
+                                    <label class="lbltxt">Date From</label>
+                                </div>
+                                <div class="col col-6">
+                                    <input name="" class="txtbox nwDatePicker" id="txtdatefrom">
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col col-6 col-parent padding-x-15">
+
+                            <div class="row">
+                                <div class="col col-6">
+                                    <label class="lbltxt">Date To</label>
+                                </div>
+                                <div class="col col-6">
+                                    <input name="" class="txtbox nwDatePicker" id="txtdateto">
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            @*date*@
+            @*Client*@
+            <fieldset class="fieldset fullwidth" nk-fieldset-style="6">
+                <legend>Filter By NOAH's Client</legend>
+                <div class="row">
+                    <div class="col col-12">
+                        <div class="tabs tabs-lbl-bold fullwidth">
+                            <div id="settingstabs" class="tabs-content">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            @*Client*@
+            @*Issue log Tagging*@
+            <fieldset class="fieldset fullwidth" nk-fieldset-style="6">
+                <legend>Filter By Issue Log Tagging</legend>
+                <div class="row">
+                    <div class="col col-12">
+                        <div class="tabs tabs-lbl-bold fullwidth">
+                            <div id="settingstabs1" class="tabs-content">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            @*Issuelog Tagging*@
+            @*FPTI Employee*@
+            <fieldset class="fieldset fullwidth" nk-fieldset-style="6">
+                <legend>Filter By FPTI Employee</legend>
+                <div class="row">
+                    <div class="col col-12">
+                        <div class="tabs tabs-lbl-bold fullwidth">
+                            <div id="settingstabs2" class="tabs-content">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            @*FPTI Employee*@
+        </div>
+
+    </div>
+</div>
+    @*end filter*@
+

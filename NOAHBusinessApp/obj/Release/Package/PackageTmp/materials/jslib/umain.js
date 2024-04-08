@@ -1,5 +1,5 @@
 ﻿
-
+var jsonMainData = [];
 
 function nk_GetUInfo()
 {

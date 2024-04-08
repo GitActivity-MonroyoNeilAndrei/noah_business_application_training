@@ -1,0 +1,237 @@
+﻿Modified By			: RJJR.
+Date Modified		: 02/08/2023	 		  
+Menu Item Version	: 10.0.0.2
+Reason				: Enhancement
+
+Modified By			: RJJR.
+Date Modified		: 01/12/2022			 		  
+Menu Item Version	: 10.0.0.1
+Reason				: Changed SP for support documents details
+
+Modified By			: RJJR.
+Date Modified		: 12/12/2022			 		  
+Menu Item Version	: 10.0.0.0
+Reason				: v10 Conversion
+
+Modified By			: KSG
+Date Modified		: 12/12/2022			 		  
+Menu Item Version	: 9.0.0.41
+Reason				: Update column.
+
+Modified By			: KSG
+Date Modified		: 12/12/2022			 		  
+Menu Item Version	: 9.0.0.40
+Reason				: Add Open in new tab attachment.
+
+Modified By			: KSG
+Date Modified		: 12/12/2022			 		  
+Menu Item Version	: 9.0.0.39
+Reason				: Add Open in new tab attachment.
+
+Modified By			: MSC
+Date Modified		: 11/25/2022			 		  
+Menu Item Version	: 9.0.0.38
+Reason				: Add ZoomIn/ZoomOut button in View Attachment
+
+Modified By			: KSG/AAG
+Date Modified		: 10/07/2022			 		  
+Menu Item Version	: 9.0.0.37
+Reason				: Add open in new tab in view attachment.
+
+Modified By			: RJL
+Date Modified		: 09/14/2022			 		  
+Menu Item Version	: 9.0.0.36
+Reason				: Changes in SPR, Move View Attachment column after Required column
+
+Modified By			: RJL
+Date Modified		: 04/04/2022			 		  
+Menu Item Version	: 9.0.0.35
+Reason				: Addressing of findings
+						Forever loading upon click of View Froms when button is color gray
+
+Modified By			: RJL
+Date Modified		: 02/24/2021				 		  
+Menu Item Version	: 9.0.0.34
+Reason				: Addressing of findings
+						a. Rephrase prompt message: processing without providing the remarks
+						   Current prompt: "Cannot be processed. Source Documents: Remarks for Compliance Updating is required in row #."
+						   Should be: "Cannot be processed. Source Documents: Remarks for Compliance Updating in row # is required."
+						b. Updates in vapt compliant coding
+
+Modified By			: AZNA
+Date Modified		: 02/08/2021				 		  
+Menu Item Version	: 9.0.0.33
+Reason				: VAPT Compliance
+
+Modified By			: MSC
+Date Modified		: 02/06/2021				 		  
+Menu Item Version	: 9.0.0.32
+Reason				: Fixed the view attachment window
+
+Modified By			: MSC
+Date Modified		: 02/04/2021				 		  
+Menu Item Version	: 9.0.0.31
+Reason				: Fixed the view attachment window
+
+Modified By			: MSC
+Date Modified		: 01/26/2021				 		  
+Menu Item Version	: 9.0.0.30
+Reason				: Addressing of findings
+						a. Added rcRow in the table
+						b. disable return to code and returnremarks if added in workins
+
+Modified By			: RJL
+Date Modified		: 12/29/2020				 		  
+Menu Item Version	: 9.0.0.27
+Reason				: Addressing of findings
+						a. Disable Return Checkbox and For Compliance Updating oif record has no Date Posted (Saved records)
+
+Modified By			: RJL
+Date Modified		: 12/17/2020				 		  
+Menu Item Version	: 9.0.0.26
+Reason				: Addressing of findings
+						a. In the notificatication message, remove the words "Error(s) Found:"
+
+Modified By			: RJL
+Date Modified		: 12/17/2020				 		  
+Menu Item Version	: 9.0.0.25
+Reason				: Addressing of findings
+						a. Do not allow saving and processing if no return  or for compliance chexkbox is ticked 
+						b. Allow return of PR Document
+
+Modified By			: RJL
+Date Modified		: 12/17/2020				 		  
+Menu Item Version	: 9.0.0.24
+Reason				: Addressing of findings
+						a. Add rcRowno
+
+Modified By			: RJL
+Date Modified		: 12/17/2020				 		  
+Menu Item Version	: 9.0.0.23
+Reason				: Addressing of findings
+						a. Add lineidSetup and itemGroupType column in Supporting Documents
+
+Modified By			: RJL
+Date Modified		: 11/14/2020				 		  
+Menu Item Version	: 9.0.0.22
+Reason				: Addressing of findings
+						a. Return To Code should be formatted to UPPERCASE
+						b. if no entry screen available, For Requirements Compliance Updating or For Return checkbox must be disabled.
+
+Modified By			: RJL
+Date Modified		: 10/01/2020
+Reason				: Enhancements (UI) Reupload					 		  
+Menu Item Version	: 9.0.0.21
+
+Modified By			: RJL
+Date Modified		: 10/01/2020
+Reason				: Enhancements (UI)
+					  a. Change button style
+					  b. Input fields should be gainsboro	
+					  c. If no forms available, View Form Details should not be click				  
+Menu Item Version	: 9.0.0.20
+
+
+Modified By			: RJL
+Date Modified		: 08/04/2020
+Reason				: Add history table for Source & Supporting Documents
+					  Add validation message upon tick of return checkboxes for pending Requirements Compliance Updating
+					  Delete Source/Supporting upon save of Source/Supporting Documents
+Menu Item Version	: 9.0.0.19
+
+Modified By			: RJL
+Date Modified		: 07/17/2020
+Reason				: Change prompt message upon save/process
+Menu Item Version	: 9.0.0.18
+
+Modified By       : SBL
+Date Modified     : 07/17/2020
+Menu Item Version : 9.0.0.17
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified By			: RJL
+Date Modified		: 06/20/2020
+Reason				: Fixed download icon, remove DocAttach reference
+Menu Item Version	: 9.0.0.16
+
+Modified By			: RJL
+Date Modified		: 06/20/2020
+Reason				:	a. In Source Documents, if current docno is ticked, should untick same docno in Supporting Documents
+						b. In Supporting Documents, if current docno is ticked, should untick same docno in Source Documents
+Menu Item Version	: 9.0.0.15
+
+Modified By			: RJL
+Date Modified		: 06/18/2020
+Reason				: Add nwCurrDocno for disabling input fields
+Menu Item Version	: 9.0.0.14
+
+Modified By			: RJL
+Date Modified		: 06/04/2020
+Reason				: Disable Return checkboxes
+Menu Item Version	: 9.0.0.13
+
+Modified By			: RJL
+Date Modified		: 05/02/2020
+Reason				: fixed js issue
+Menu Item Version	: 9.0.0.12
+
+Modified By			: RJL
+Date Modified		: 05/02/2020
+Reason				: Add linkung of FIV
+Menu Item Version	: 9.0.0.11
+
+Modified By			: RJL
+Date Modified		: 04/25/2020
+Reason				: comment
+Menu Item Version	: 9.0.0.10
+
+Modified By			: RJL
+Date Modified		: 04/24/2020
+Reason				: Add view details and view form 
+Menu Item Version	: 9.0.0.9
+
+Modified By			: RJL
+Date Modified		: 04/08/2020
+Reason				: Change button color to gray
+Menu Item Version	: 9.0.0.8
+
+Modified By			: RJL
+Date Modified		: 03/27/2020
+Reason				: Change Prompt Message to standard, Should not save if no tick return checkbox
+Menu Item Version	: 9.0.0.7
+
+Modified By			: RJL
+Date Modified		: 03/10/2020
+Reason				: Add Work Instructions Column in Supporting Documents
+Menu Item Version	: 9.0.0.6
+
+Modified By			: RJL
+Date Modified		: 03/10/2020
+Reason				: Additional Controls in Return Process
+Menu Item Version	: 9.0.0.5
+
+Modified By			: RJL
+Date Modified		: 02/07/2020
+Reason				: Address findings in Return controls
+Menu Item Version	: 9.0.0.4
+
+Modified By			: RJL
+Date Modified		: 01/30/2020
+Reason				: Addressing of findings (4 items)
+						Linking of entries, hide/unhide Toolbox
+Menu Item Version	: 9.0.0.3
+
+Modified By			: GG
+Date Modified		: 1/3/2019
+Reason				: Added download Icon
+Menu Item Version	: 9.0.0.2
+
+Modified By			: RJL
+Date Modified		: 10/19/2019
+Menu Item Version	: 9.0.0.1
+Reason				: Enhancement add save and process button, add multiple columns in Source, Supporting Details
+
+Created BY        : RJL
+Date Modified     : 09/09/2019
+Menu Item Version : 9.0.0.0

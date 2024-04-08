@@ -1,0 +1,184 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+     ViewBag.Title = "Basic Information";
+     Layout =NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/PMO/ReportsAndInquiry/PMOBasicInformation/PMOBasicInformation.js"></script>
+    <script src="~/PMO/ReportsAndInquiry/PMOBasicInformation/guide.js"></script>
+
+    <link href="~/PMO/ReportsAndInquiry/PMOBasicInformation/PMOBasicInformation.css" rel="stylesheet" />
+    <link href="~/materials/fonts/new/fonts.css" rel="stylesheet" />
+</head>
+
+@*<div id="noah-webui-Toolbox" class="nk-toolbar-c">
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+</div>*@
+
+<div class="container-flex padding-10">
+
+    <div class="row">
+        <div class="row child-centered margin-bottom-10">
+            <div class="col col-12">
+                <div class="mb-profile-main">
+                    <div class="mb-profile">
+                        <img src="~/materials/media/icons/_overview/user-profile-from-freepik-photo.png">
+                    </div>
+                    <div class="mb-user-name"><label id="lblCustName">""</label></div>
+                    <div class="mb-user-name"><label id="lblCustAccNo">""</label></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <div class="nk-accordion fullwidth" nk-style-accordion="3">
+                    <div class="nk-ul">
+                        <div class="nk-li collapse">
+                            <div class="nk-li-title">User Information</div>
+                            <div class="nk-li-content">
+                                <div class="nk-li-text">
+                                    <div class="row">
+                                        <div class="col col-12">
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Customer</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" class="txtbox" id="txtCustName" disabled="">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Mobile Number</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" class="txtbox isNumber nwCuzTxtLeft" id="txtMobileNo" disabled="" maxlength="11">
+                                                    <div class="pr-icon emailadd" id="editInfoNum"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Email Address</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" class="txtbox" id="txtEmailAdd" disabled="">
+                                                    <div class="pr-icon emailadd" id="editInfoEmail"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Phone Number</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox txtbox-time" id="txtPhoneNo" disabled="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nk-li collapse">
+                            <div class="nk-li-title">Account Details</div>
+                            <div class="nk-li-content">
+                                <div class="nk-li-text">
+                                    <div class="row">
+                                        <div class="col col-12">
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Account Number</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox" id="txtAccNo" disabled="">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Account Status</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox" id="txtAccStats" disabled="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nk-li collapse">
+                            <div class="nk-li-title">Unit Details</div>
+                            <div class="nk-li-content">
+                                <div class="nk-li-text">
+                                    <div class="row">
+                                        <div class="col col-12">
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Base Unit</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox" id="txtBaseUnit" disabled="">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Base Unit Description</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox" id="txtBaseUnitDesc" disabled="">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-5">
+                                                    <label class="lbltxt">Inventory Type</label>
+                                                </div>
+                                                <div class="col col-7">
+                                                    <input type="text" name="" class="txtbox" id="txtInventType" disabled="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*For Pop-Up OTP*@
+    <div id="editValue"class="nwHide">
+        <div class="noah-webui-containerRow">
+            <div class="noah-webui-containerRowItem">
+                <div id="labelName" class="nwLabel"></div>
+                <input id="txtNewVal" class="txtbox txtbox-date" />
+                <div id="labelName2" class="nwLabel">One-Time Pin: </div>
+                <input id="txtOTP" />
+                <input id="txtAnswerOTP" class="nwHide"/>
+            </div>
+        </div>
+        <div class="noah-webui-containerRow">
+            <div class="noah-webui-containerRowItem">
+                <button id="btnSaveEdit">Save</button>
+            </div>
+        </div>
+    </div>
+
+    @*Temporary Error Message Box*@
+    <div id="frError" class="nwHide">
+        <div class="noah-webui-containerRow">
+            <div class="noah-webui-containerRowItem">
+                <div id="errorMessagetext" class="nwLabel"></div>
+            </div>
+        </div>
+        <div class="noah-webui-containerRow">
+            <div class="noah-webui-containerRowItem">
+                <button id="btnErrorOkay class="btnOk">Okay</button>
+            </div>
+        </div>
+    </div>
+
+</div>

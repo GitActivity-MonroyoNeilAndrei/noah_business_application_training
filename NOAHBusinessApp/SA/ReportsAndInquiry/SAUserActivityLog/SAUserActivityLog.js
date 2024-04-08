@@ -7,7 +7,7 @@
    
 function func_Reload() {
 
-    crLnk = "../SAUserActivityLog/SAUserActivityLog_Gateway";
+    crLnk = GetCurrentURL() + "SAUserActivityLog_Gateway";
     crLnkGateKey = "SAUserActivityLog";
 
     var isContinue = true;

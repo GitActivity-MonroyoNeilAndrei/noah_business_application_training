@@ -40,7 +40,7 @@ var cuztag = false;
 
 function func_Reload() {
     crnwTagSingleBind = true;
-    crLnk = "../SOA/SOA_Gateway";
+    crLnk = GetCurrentURL() +  "SOA_Gateway";
     crLnkGateKey = "SOA";
 
 

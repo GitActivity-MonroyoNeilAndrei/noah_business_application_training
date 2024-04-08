@@ -1,9 +1,0 @@
-﻿Modified By			: CLS
-Date Modified		: 06/25/2022
-Version				: 10.0.0.1
-Reason				: Convert to v10
-
-Modified By			: HRL
-Date Modified		: 06/22/2022
-Version				: 10.0.0.0
-Reason				: Convert to v10

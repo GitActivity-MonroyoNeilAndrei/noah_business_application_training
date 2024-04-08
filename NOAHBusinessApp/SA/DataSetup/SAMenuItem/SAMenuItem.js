@@ -10,7 +10,7 @@ function func_Reload() {
     $("#lugCode2 .Lookup").prop("disabled", true);
     $("#link").val("");
 
-    crLnk = "../SAMenuItem/SAMenuItem_Gateway";
+    crLnk = GetCurrentURL() + "SAMenuItem_Gateway";
     crLnkGateKey = "SAMenuItem";
     init_request();
     isContinue = true;

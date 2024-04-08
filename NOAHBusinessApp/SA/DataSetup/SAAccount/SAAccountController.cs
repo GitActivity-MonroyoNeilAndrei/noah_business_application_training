@@ -15,8 +15,8 @@ namespace NOAHBusinessApp.Controllers.SA
     {
         public ActionResult Index()
         {
-            mainDataAccess main = new mainDataAccess();
-            main.MenuAccess(User, this);
+            //mainDataAccess main = new mainDataAccess();
+            //main.MenuAccess(User, this);
             return View(@"~\SA\DataSetup\SAAccount\SAAccount.cshtml");
         }
 

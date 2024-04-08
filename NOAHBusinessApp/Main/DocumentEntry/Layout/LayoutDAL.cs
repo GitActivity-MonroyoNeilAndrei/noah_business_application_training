@@ -45,7 +45,6 @@ namespace DALComponent
         #endregion
         private string _ConnectionString;
         private string _ConnectionString2;
-        private string _ConnectionStringARK = WebConfigurationManager.AppSettings["NoahWebConnectArk"];
         public string focusRecordPK;
         public readonly string errorString = "Error",                                     //--do not change this line
                                 primaryKey = "ID";                                    //--column for searching
@@ -68,229 +67,96 @@ namespace DALComponent
         }
 
         public string ConnectionString { get { return _ConnectionString; } }
-        public string Serverlink()
-        {
-            return SFObjects.returnText(@"SELECT [Value] FROM [dbo].[SystemConfig] where [code]='Server_Link'", _ConnectionString);
-        }
-        public string InquireQry()
-        {
-            return string.Format(@"EXEC [pir].[nsp_QuizMaster] @QueryType = 3");
-        }
-        public string LISTINGQUERY(string pcode, string ptype, string phtw)
-        {
-
-            string sql = $"EXEC [PRT].[nsp_Main] @QueryType=23,@Project='{pcode}',@ProjectType='{ ptype }',@PhaseTower='{ phtw}'";
-            return sql;
-            //return string.Format($@"SELECT * FROM [RE].[fn_CustomerBasicInformation_Listing]('{recuser}') ORDER BY [Customer Code]");
-
-        }
-        public string GetData()
-        {
-            string a = string.Format(@"SELECT [Code]
-                      ,[Description]
-                      ,[Title]
-                      ,[CheckTitle]
-                      ,[ButtonSubmitTitle]
-                      ,[ButtonCancelTitle]
-                      ,convert(varchar,[EffectivityDate],101)[EffectivityDate]
-                      ,Format([EffectivityDate],'hh:mm tt') [EffectivityTime]
-                      ,[Contents][Text]
-                      ,[Recuser]
-                      ,[Recdate]
-                      ,[Moduser]
-                      ,[Moddate]
-                  FROM [FPTI_NW].[TermsAndConditions]");
-
-            focusRecordPK = string.Empty;
-            a = a.Replace(Environment.NewLine, " "); /*Do not Remove this*/
-
-            return a;
-        }
-        public DataTable GetPortalMenuItems()
-        {
-            return SFObjects.LoadDataTable(@"EXEC [PRT].[nsp_Main] @QueryType=21", _ConnectionString);
-        }
-        public string GetPortalUserAccess(string user,string code)
-        {
-            return SFObjects.returnText(@"EXEC [PRT].[nsp_Main] @QueryType=20,@Recuser='" + user + "',@Code='" + code + "'", _ConnectionString);
-        }
-        public DataTable GetPortalConfig()
-        {
-            return SFObjects.LoadDataTable($@"SELECT * FROM [PRT].[PortalMenuConfiguration]", _ConnectionString);
-        }
-        public string GetPortalConfig(string code)
-        {
-            return SFObjects.returnText($@"SELECT Value FROM [PRT].[PortalMenuConfiguration] where Code='"+code+"'", _ConnectionString);
-        }
-        public DataTable getLogo()
-        {
-            return SFObjects.LoadDataTable(@"SELECT CompanyLogo [CompanyLogo] FROM SG.BIRCASConfig", _ConnectionString);
-        }
-        public string getBanner()
-        {
-            return SFObjects.returnText($"select value from PRT.ContentMngr_General where Code='GEN002'", _ConnectionString);
-        }
-        public string getUserImage(string user)
-        {
-            return SFObjects.returnText($"SELECT SellerImage FROM RE.SellerInformation where SellerCode='" + user + "'", _ConnectionString);
-        }
-        public DataTable getProperty(string projtype,string loc)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=1,@ProjectType='" + projtype + "',@Location='" + loc + "'", _ConnectionString);
-        }
-        public DataTable getLocation(string projtype,string loc)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=2,@ProjectType='" + projtype + "',@Location='" + loc + "'", _ConnectionString);
-        }
-        public DataTable getProjectDtls(string type, string loc)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=3,@ProjectType='" + type + "',@Location='" + loc + "'", _ConnectionString);
-        }
-        public DataTable getImage(string project,string type,string phtw)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=4,@Project='" + project + "',@ProjectType='" + type + "',@PhaseTower='" + phtw + "'", _ConnectionString);
-        }
-        public DataTable getUnitImage(string project, string type, string unit)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=13,@Project='" + project + "',@ProjectType='" + type + "',@UnitCode='" + unit + "'", _ConnectionString);
-        }
-        public DataTable getBookingSummary(string status,string user, string proj,int reopen)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=9,@Status='" + status + "',@Recuser='" + user + "',@UnitCode='',@Project='" + proj + "',@isReopen=" + reopen + "", _ConnectionString);
-        }
-        public DataTable getBookingSummaryTotal(string status,string user, string proj,int reopen)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=10,@Status='" + status + "',@Recuser='" + user + "',@Project='" + proj + "',@isReopen=" + reopen + "", _ConnectionString);
-        }
-        public string getCountStatus(string status,string user,string project,int reopen)
-        {
-            return SFObjects.returnText($@"EXEC [PRT].[nsp_Main] @QueryType=5,@Status='" + status + "',@Recuser='" + user + "',@Project='" + project + "',@isReopen=" + reopen + "", _ConnectionString);
-        }
-        public string getStatusColor(string status)
-        {
-            return SFObjects.returnText($@"EXEC [PRT].[nsp_Main] @QueryType=8,@Status='" + status + "'", _ConnectionString);
-        }
-        public string getCountStatusUA(string status,string pcode,string ptype,string phtw,string floor,int iscoordinate,int isReopen)
-        {
-            return SFObjects.returnText($@"EXEC [PRT].[nsp_Main] @QueryType=6,@Status='" + status + "',@Project='" + pcode + "',@ProjectType='" + ptype + "',@PhaseTower='" + phtw + "',@floorblock='" + floor + "',@isCoordinate=" + iscoordinate + ",@isReopen=" + isReopen + "", _ConnectionString);
-        }
-        public DataTable UnitDetails(string unit)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=7,@UnitCode='" + unit + "'", _ConnectionString);
-        }
-        public DataTable UnitAvailSummary(string pcode, string ptype, string phtw)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=23,@Project='" + pcode + "',@ProjectType='" + ptype + "',@PhaseTower='" + phtw + "'", _ConnectionString);
-        }
-        public DataTable getCommissionTotals(string recuser,int commode, string commdate, string commfrom, string commto, string comproj, string comcust)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=29,@Recuser='" + recuser + "',@CommMode=" + commode + ",@Project='" + comproj + "',@Customer='" + comcust + "',@From='" + commfrom + "',@To='" + commto + "',@DateSingle='" + commdate + "'", _ConnectionString);
-        }
-        public DataTable getCommissionDetails(string recuser, int commode, string commdate, string commfrom, string commto, string comproj, string comcust)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=28,@Recuser='" + recuser + "',@CommMode=" + commode + ",@Project='" + comproj + "',@Customer='" + comcust + "',@From='" + commfrom + "',@To='" + commto + "',@DateSingle='" + commdate + "'", _ConnectionString);
-        }
-        public DataTable getCommissionCustomer(string recuser)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=31,@Recuser='" + recuser + "'", _ConnectionString);
-        }
-        public DataTable getCommissionProject(string recuser)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=32,@Recuser='" + recuser + "'", _ConnectionString);
-        }
-        public string GetUnitPrice(string unitcode)
-        {
-            return SFObjects.returnText(@"EXEC [PRT].[nsp_Main] @QueryType=25,@UnitCode='" + unitcode + "'", _ConnectionString);
-        }
-        public string getHoldingPeriod(string project,string custclass)
-        {
-            return SFObjects.returnText(@"EXEC [PRT].[nsp_Main] @QueryType=11,@project='"+project+ "',@CustClass='"+custclass+"'", _ConnectionString);
-        }
-        //for those floors w/out setup
-        public DataTable getNonSetupUnits(string project,string projecttype,string phtw,string floorblock)
-        {
-            return SFObjects.LoadDataTable($@"EXEC [PRT].[nsp_Main] @QueryType=18,@Project='" + project + "',@ProjectType='" + projecttype + "',@PhaseTower='" + phtw + "',@floorblock='" + floorblock + "'", _ConnectionString);
-        }
-        //UNIT AVAILABILITY
-        public string lookupFloorHDR(string project, string phase, string floor, string type)
-        {
-            return string.Format(@"EXEC [PRT].[nsp_REUnitCoordiantesSetup] @QueryType=6, @project ='{0}' , @phase ='{1}',   @floorblock ='{2}' , @ItmGrpType='{3}'", project, phase, floor, type);
-        }
-        public string lookupFloorLin(string project, string phase, string floor, string type)
-        {
-            return string.Format(@"EXEC [PRT].[nsp_REUnitCoordiantesSetup] @QueryType=7, @project ='{0}' , @phase ='{1}', @floorblock ='{2}' , @ItmGrpType='{3}'", project, phase, floor, type);
-        }
-        public DataTable GetHDRImgSrc(string project, string phase)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Clear();
-            cmd.CommandText = "[PRT].[nsp_REUnitCoordiantesSetup]";
-            cmd.Parameters.AddWithValue("@project", project);
-            cmd.Parameters.AddWithValue("@phase", phase);
-            cmd.Parameters.AddWithValue("@QueryType", 10);
-            return base.ExecGetData(cmd, _ConnectionString);
-        }
-
-        public DataTable GetUnitImgSrc(string project, string phase)
-        {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Clear();
-            cmd.CommandText = "[PRT].[nsp_REUnitCoordiantesSetup]";
-            cmd.Parameters.AddWithValue("@project", project);
-            cmd.Parameters.AddWithValue("@phase", phase);
-            cmd.Parameters.AddWithValue("@QueryType", 13);
-            return base.ExecGetData(cmd, _ConnectionString);
-        }
-        public string lookupFloor(string project, string phase, string projtype)
-        {
-            return string.Format(@"EXEC [PRT].[nsp_REUnitCoordiantesSetup] @QueryType=25, @project ='{0}' , @phase ='{1}', @ItmGrpType ='{2}'", project, phase, projtype);
-        }
-        public string lookupUnit(string project, string phase, string projtype)
-        {
-            return string.Format(@"EXEC [PRT].[nsp_REUnitCoordiantesSetup] @QueryType=26, @project ='{0}', @phase ='{1}',@ItmGrpType ='{2}'", project, phase, projtype);
-        }
-        public DataTable floorDetails(string project, string phase, string floor)
-        {
-            return SFObjects.LoadDataTable(string.Format(@"EXEC [PRT].[nsp_REUnitCoordiantesSetup] @QueryType=35, @project ='{0}', @phase='{1}', @floorblock='{2}'", project, phase, floor), _ConnectionString);
-        }
-        public string HasFloorSetup(string project, string ptype, string floor, string phtw)
-        {
-            return SFObjects.returnText(string.Format(@"EXEC [PRT].[nsp_Main] @QueryType=12, @Project ='{0}', @ProjectType='{1}', @floorblock='{2}', @PhaseTower='{3}'", project, ptype, floor,phtw), _ConnectionString);
-        }
-        public string HasAvailableCoordinate(string project, string ptype, string floor, string phtw)
-        {
-            return SFObjects.returnText(string.Format(@"EXEC [PRT].[nsp_Main] @QueryType=22, @Project ='{0}', @ProjectType='{1}', @floorblock='{2}', @PhaseTower='{3}'", project, ptype, floor, phtw), _ConnectionString);
-        }
-        public string HasAvailableUnit(string project, string ptype, string floor ,string phtw)
-        {
-            return SFObjects.returnText(string.Format(@"EXEC [PRT].[nsp_Main] @QueryType=19, @Project ='{0}', @ProjectType='{1}', @floorblock='{2}' ,@PhaseTower='{3}'", project, ptype, floor, phtw), _ConnectionString);
-        }
-        //END
 
 
-        public string isReserved(string unit)
+        public DataTable GetNotifUnread(string curdate,string recuser)
         {
-            return SFObjects.returnText(string.Format(@"EXEC [PRT].[nsp_Main] @QueryType=15, @UnitCode ='{0}'", unit), _ConnectionString);
+            curdate=nwSystem.FilterSQL(curdate);
+            recuser = nwSystem.FilterSQL(recuser);
+
+            string sql =$@"
+                                declare @curdate datetime = '{curdate}'
+                                declare @recuser varchar(100) = '{recuser}'
+                                set @curdate = iif(@curdate = '1900-01-01 00:00:00.000', dbo.getnoahdate(), @curdate)
+                                Select * from zapi.Mob_Notifications
+                                where UserID = @recuser
+                                and Recdate < @curdate
+                                and [read] = 0
+                                order by Recdate desc";
+
+            return SFObjects.LoadDataTable(sql,_ConnectionString2); ;
         }
-        public string hasHold(string unit)
+        public string ValidateOTP(string _account, string OTPCode)
         {
-            return SFObjects.returnText(string.Format(@"EXEC [PRT].[nsp_Main] @QueryType=16, @UnitCode ='{0}'", unit), _ConnectionString);
-        }
-        public string getMaxQueue(string trantype)
-        {
-            return SFObjects.returnText(string.Format(@"EXEC [PRT].[nsp_Main] @QueryType=14, @Trantype ='{0}'", trantype), _ConnectionString);
+            return SFObjects.returnText($"exec [zAPI].[nsp_Mob_Accounts] @AccountNo='{_account}', @OTPCode='{OTPCode}', @QueryType = 69", _ConnectionString2);
         }
 
-        //ALL ARKDB
-        public string CheckUserIP(string user)
+        public bool InsertOTP(string _user, string _OTPType, string _OTPCode)
         {
-            return SFObjects.returnText(string.Format(@"select userIPLog from FPTI_NW.noahweb_UserLogStatus WHERE userID='{0}'", user), _ConnectionStringARK);
+            string query1 = string.Format(@"EXEC [zAPI].[nsp_Mob_Accounts]   @AccountNo = '" + _user + "', @QueryType = 70");
+            DataTable userInfo = SFObjects.LoadDataTable(query1, _ConnectionString2);
+
+            string userEmail = userInfo.Rows[0]["Email"] + "";
+            //string userMobile = userInfo.Rows[0]["Mobile Number"] + "";
+
+            int result = 0;
+            bool userExists = true;
+            string query = SFObjects.returnText($"exec [zAPI].[nsp_Mob_Accounts] @AccountNo='{_user}', @Email='{userEmail}', @OTPType='{_OTPType}', @OTPCode='{_OTPCode}', @QueryType = 71", _ConnectionString2);
+            try
+            {
+                result = Int32.Parse(query);
+            }
+            catch (Exception ex)
+            { }
+            userExists = result > 0 ? true : false;
+            return userExists;
         }
-        public string UserDesc(string user)
+
+        public string updateContact(string _user, string _detail, string _info)
         {
-            return SFObjects.returnText(string.Format(@"select Description from FPTI.[User] WHERE Code='{0}'", user), _ConnectionStringARK);
+            try
+            {
+                int queryType = _detail == "Email Address" ? 19 : 18;
+                string detailType = _detail == "Email Address" ? "@Email" : "@MobileNo";
+                string query = String.Format($"exec [zAPI].[nsp_Mob_Accounts] @AccountNo='{_user}', {detailType}='{_info}', @QueryType = 72 ");
+                return SFObjects.returnText(query, _ConnectionString2);
+            }
+            catch (Exception e)
+            {
+                return e.ToString();
+            }
         }
+
+        public string currentpassword(string accno)
+        {
+            return SFObjects.returnText($@"Select password from fpti.[user] where code = '{accno}'", _ConnectionString2);
+        }
+
+        public string currentemail(string recuser)
+        {
+            return SFObjects.returnText($@"Select Email from fpti_nw.noahweb_zEmail where userID = '{recuser}'", _ConnectionString2);
+        }
+        public DataTable GetCompany(string recuser)
+        {
+
+            DataTable dtGetCompany = SFObjects.LoadDataTable(string.Format(@"select a.Company ,b.Description 
+                                From FPTI.CompanyUserMapping a 
+                                inner join FPTI.Company b on a.Company = b.Code
+                                where (SysUser = '{0}' or SysUser like '{0}@%') "
+                                , recuser), _ConnectionString2);
+
+            dtGetCompany.Columns.Add("CompanyCode");
+            for (int i = 0; i < dtGetCompany.Rows.Count; i++)
+            {
+
+                string code = dtGetCompany.Rows[i]["Company"].ToString();
+                code = nwSystem.GetGeneralTokenKey(code, recuser);
+                dtGetCompany.Rows[i]["CompanyCode"] = code;
+
+            }
+
+            return dtGetCompany;
+        }
+
     }
 }

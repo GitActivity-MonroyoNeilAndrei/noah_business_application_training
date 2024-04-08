@@ -5,310 +5,304 @@
 }
 
 <head>
-    <script src="~/FPMC/DocumentEntry/PMORequestEntry/PMORequestEntry.js"></script>
-    <link href="~/FPMC/DocumentEntry/PMORequestEntry/PMORequestEntry.css" rel="stylesheet" />
+    <script src="~/PMO/DocumentEntry/PMORequestEntry/PMORequestEntry.js"></script>
+    <link href="~/PMO/DocumentEntry/PMORequestEntry/PMORequestEntry.css" rel="stylesheet" />
 </head>
 
-@*ToolBox*@
-<div id="noah-webui-Toolbox" class="nk-toolbar-c">
-    <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new">
-        <div class="_icon"></div>
-        <div class="_lbl">New</div>
-    </div>
-    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save" onclick="thismethod()">
-        <div class="_icon"></div>
-        <div class="_lbl">Save</div>
-    </div>
-    <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete">
-        <div class="_icon"></div>
-        <div class="_lbl">Delete</div>
-    </div>
-    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh nwHide">
-        <div class="_icon"></div>
-        <div class="_lbl">Refresh</div>
-    </div>
-    <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire nwHide">
-        <div class="_icon"></div>
-        <div class="_lbl">Inquire</div>
-    </div>
-    <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export nwHide">
-        <div class="_icon"></div>
-        <div class="_lbl">Export</div>
-    </div>
-    <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process">
-        <div class="_icon"></div>
-        <div class="_lbl">Process</div>
-    </div>
-</div>
 
 
-@*Main*@
-<div class="container-flex custview">
+<div class="container-flex padding-5 cst-height">
 
-    <div class="row row-parent padding-10">
 
-        <div class="col col-6 col-parent">
 
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Transaction/Type of Activity<span class="nwRequiredField">*</span></label>
-                </div>
-                <div class="col col-7">
-                    <select class="cmb fullwidth" id="cmbTranAct">
-                        <option></option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Account No.</label>
-                </div>
-                <div class="col col-7">
-                    <select class="cmb fullwidth" id="cmbAccNo">
-                        <option></option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Location</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtLocation" disabled="" class="input clr" maxlength="80">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Unit No.</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtUnitNo" disabled="" class="input clr" maxlength="80">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Request<span class="nwRequiredField">*</span></label>
-                </div>
-                <div class="col col-7">
-                    <select class="cmb fullwidth" id="cmbRequest">
-                        <option></option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Proposed Date</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtPropDate" class="nwDatePick txtbox-date txtbox input clr" disabled="">
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col col-6 col-parent">
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Transaction No.</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtTranNo" disabled="" class="input clr" maxlength="80">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Transaction Date</label>
-                </div>
-                <div class="col col-7">
-                    <input  id="txtTranDate" class="nwDatePick txtbox txtbox-date input clr" disabled="">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Date Submitted</label>
-                </div>
-                <div class="col col-7">
-                    <input  id="txtDateSub" class="nwDatePick txtbox txtbox-date input clr" disabled="">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Date Posted</label>
-                </div>
-                <div class="col col-7">
-                    <input  id="txtDatePosted" class="nwDatePick txtbox txtbox-date input clr" disabled="">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Remarks</label>
-                </div>
-                <div class="col col-7">
-                    <textarea id="txtRemarks" class="txtarea noresize txtAreaRemarks clr" rows="2" disabled="" style="min-height:80px !important; max-height:80px !important;"></textarea>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col col-6 col-parent">
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Basis for Billing</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtBasisBill" disabled="" class="input clr" maxlength="80">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">No. of Consumption</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtConsumptionNo" disabled="" class="input clr isNumber nwAlignRight" maxlength="18" nwdp="2">
-                    <input type="text" id="txtConsump" disabled="" class="nwHide clr">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Cost per Unit/SQM/Consumption</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtSQM" disabled="" class="input clr isNumber nwAlignRight" maxlength="18" nwdp="2">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Amount</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtAmount" disabled="" class="input clr isNumber nwAlignRight" maxlength="18" nwdp="2">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">VAT Amount</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtVATAmount" disabled="" class="input clr isNumber nwAlignRight" maxlength="18" nwdp="2">
-                    <input type="text" id="txtVAT" disabled="" class="nwHide clr">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">EWT Amount</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtEWTAmount" disabled="" class="input clr isNumber nwAlignRight" maxlength="18" nwdp="2">
-                    <input type="text" id="txtCWT" disabled="" class="nwHide clr">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">NET Amount</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" id="txtNETAmount" disabled="" class="input clr isNumber nwAlignRight" maxlength="3" nwdp="2">
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col col-6 col-parent">
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Document Status</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" name="txtDocStatus" id="txtDocStatus" disabled="" class="input clr" maxlength="80">
-                    <input type="text" id="txtStatusCode" style="display: none !important;" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Reason for Disapproval</label>
-                </div>
-                <div class="col col-7">
-                    <input type="text" name="txtRsnDisapprove" id="txtRsnDisapprove" disabled="" class="input clr" maxlength="80">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                    <label class="lbltxt">Remarks for Disapproval</label>
-                </div>
-                <div class="col col-7">
-                    <textarea id="txtRemarksDisapprove" class="txtarea noresize txtAreaRemarks clr" rows="2" disabled="" style="min-height:80px !important; max-height:80px !important;"></textarea>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                </div>
-                <div class="col col-7">
-                    <div id="btnReviewAttachment" class="btn btn-default fullwidth">Review Attachment</div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col col-5">
-                </div>
-                <div class="col col-7">
-                    <div id="btnReqCompliance" class="btn btn-default fullwidth">Requirements Compliance</div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-@*Footer*@
-<div class="nk-footer-c">
-    <div class="nk-footer-info">
-        <div class="nk-footer-create">
-            <div class="nkf nk-f-createBy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
-                    <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
-                    </path>
-                </svg>
-                <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
-            </div>
-            <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
-            <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
-            <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
-        </div>
-        <div class="nk-footer-x"></div>
-        <div class="nk-footer-modified">
-            <div class="nkf nk-f-modifiedBy">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
-                    <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
-                    </path>
-                </svg>
-                <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
-            </div>
-            <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
-            <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
-            <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
+    <div class="row">
+        <div class="col col-12">
+            <div class="menuitem-title">Service Entry</div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col col-12">
+            <div class="cst-hrd">
+                <div class="cst-hrd-wrap active" id="formTitle">Fill Out Form</div>
+                <div class="cst-hrd-wrap">Summary</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row rx">
+        <div class="col col-12">
+            <div class="cst-container active">
+               
+                <div class="row row-parent">
+
+                    <div class="col col-6">
+
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5">
+                                <label class="lbltxt">Transaction/Type of Activity<span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div class="col col-7">
+                                <select id="cmbTranAct" class="cmb fullwidth">
+                                    
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5">
+                                <label class="lbltxt">Request<span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div class="col col-7">
+                                <select id="cmbRequest" class="cmb fullwidth">
+                                    @*<option value="none" selected disabled hidden>Select Transaction</option>*@
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5">
+                                <label class="lbltxt">Proposed Date<span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input type="text" class="txtbox nwDatePicker clr" id="txtPropDate" placeholder="mm/dd/yyyy">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col col-6">
+
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5">
+                                <label class="lbltxt">Basis for Billing</label>
+                            </div>
+                            <div class="col col-7">
+                                <input type="text" id="txtBasisDesc" class="txtbox clr num-left" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5">
+                                <label class="lbltxt">No. of Consumption<span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input type="text" id="txtNoConsumption" maxlength="12" class="txtbox clr isNumber num-left" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5">
+                                <label class="lbltxt">Remarks<span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtRemarks" maxlength="500" class="txtbox clr" >
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row row-parent">
+                    <div class="col col-5">
+                        <div class="row margin-bottom-5">
+                            <div class="col col-12 cst-flex">
+                              @*<div class="btn btn-default btn-default-darkblue cst">Review Attachment</div>*@
+                                <div class="btn btn-default btn-default-darkblue fullwidth cst-dis" id="btnReqCompliance">Requirements Compliance</div>
+                            </div>
+
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-12">
+                                <div class="btn btn-default fullwidth cst-dis" id="next-button">Next</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="cst-container">
+
+                <div class="row row-parent">
+                    <div class="col col-4">
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Account No.</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox" id="txtAccNumber" disabled="" >
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Location</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox" id="txtLocation" disabled="">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Unit No.</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox" id="txtUnitNo" disabled="">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Request</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input type="text" class="txtbox" id="txtRequestDesc" disabled="">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Proposed Date</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input type="text" class="txtbox" id="txtPropdateDesc" disabled="">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Basis of Billing</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input type="text" class="txtbox" id="txtBasisBill" disabled="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-4">
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">No of Consumption</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox isNumber" id="txtConsumptionNo" disabled="" maxlength="3" nwdp="2">
+                                <input type="text" id="txtConsump" disabled="" class="nwHide clr">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Amount</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="isNumber txtbox" id="txtAmount" disabled="" maxlength="18" nwdp="2">
+                                <input type="text" id="txtSQM" disabled="" class="isNumber nwHide clr" nwdp="2">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Vat Amount</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                
+                                <input class="isNumber txtbox" id="txtVATAmount" maxlength="18" disabled="" nwdp="2">
+                                <input type="text" id="txtVAT" disabled="" class="nwHide clr">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">EWT Amount</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox" id="txtEWTAmount" disabled="">
+                                <input type="text" id="txtCWT" disabled="" class="nwHide clr">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">NET Amount</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox isNumber" id="txtNETAmount" disabled="" maxlength="3" nwdp="2">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Transaction No.</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox" id="txtTranNo" disabled="">
+                                <input type="text" id="txtDocno" disabled="" class="nwHide clr">
+                            </div>
+                        </div>
+
+                    </div><div class="col col-4 nwHide" id="savedColumn">
+                            <div class="row margin-bottom-5">
+                                <div class="col col-5 col-mob">
+                                    <label class="lbltxt">Transaction Date</label>
+                                </div>
+                                <div class="col col-7 col-mob">
+                                    <input class="txtbox" id="txtTranDate" disabled="">
+                                </div>
+                            </div>
+
+                        <div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Date Submitted</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox" id="txtDateSub" disabled="">
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5 nwHide">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Date Posted</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox" id="txtDatePosted" disabled="">
+                            </div>
+                        </div><div class="row margin-bottom-5">
+                            <div class="col col-5 col-mob">
+                                <label class="lbltxt">Status</label>
+                            </div>
+                            <div class="col col-7 col-mob">
+                                <input class="txtbox" id="txtDocStatus" disabled="">
+                                <input class="txtbox nwHide" id="txtDocStatCode" disabled="">
+                            </div>
+                        </div>
+                              <div class="row margin-bottom-5 nwHide" id="viewingRemarks">
+                                  <div class="col col-5 col-mob">
+                                      <label class="lbltxt">Remarks</label>
+                                  </div>
+                                  <div class="col col-7 col-mob">
+                                      <input class="txtbox" id="txtDocRemarks" disabled="">
+                                  </div>
+                              </div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <div class="row margin-bottom-5" id="saveControlsGrp">
+                            <div class="col col-12 cst-flex">
+                                <div class="btn btn-default btn-default-darkblue cst" id="saveDraft-button">Save as Draft</div>
+                                <div class="btn btn-default btn-default-darkblue cst" id="process-button">Process</div>
+                                <div class="btn btn-default btn-default-darkblue cst nwHide" id="cancel-button">Cancel Request</div>
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-5">
+                            <div class="col col-12 cst-flex">
+                                <div class="btn btn-default cst btn-default-darkblue" id="back-button">Back</div>
+                                <div class="btn btn-default cst btn-default-darkblue nwHide" id="okay-button">Ok</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>

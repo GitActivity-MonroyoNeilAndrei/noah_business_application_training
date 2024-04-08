@@ -2,89 +2,46 @@
     Layout = null;
 }
 <!DOCTYPE html>
-
 @using Microsoft.AspNet.Identity
 @{
-    //Session["noahwebUserID"] += "";
-    //string x_struser = Session["noahwebUserID"].ToString();
-
     string x_struser = User.Identity.GetUserName();
     if (Request.IsAuthenticated && x_struser != "")
     {
-        Response.Redirect("\\home\\" + Request.Url.Query);
+        Response.Redirect("home\\" + Request.Url.Query);
     }
 }
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Welcome to @NoahWebLib.nwSystem.GetAppSettings("AppTitle")</title>
+    <title>Welcome to @NoahWebLib.nwSystem.GetAppSettings("AppTitle", "NOAH Business Applications")</title>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#184688" />
 
-    <link rel="shortcut icon" href="~/Main/PortalMaterials/system_images/ThemeImage/logo40x40.png" />
+    <link rel="shortcut icon" href="~/custom_materials/materials/system_images/ThemeImage/logo40x40.png" />
     <script src="~/materials/jslib/fpti.js"></script>
     <script src="~/materials/jslib/fptiextra.js"></script>
     <script src="~/materials/jslib/fptistyle.js"></script>
     <script src="~/materials/jslib/noahwebAAGlib.js"></script>
 
     <link href="~/materials/css/login.css" rel="stylesheet" />
+    <link href="~/materials/css/login_materials.css" rel="stylesheet" />
 
-    <link href="~/Main/PortalMaterials/css/newERA/font/font-style/font-style.css" rel="stylesheet" />
-    <link href="~/Main/PortalMaterials/css/noah_web-ui-ver2.css' rel='stylesheet" />
-    <link href="~/Main/PortalMaterials/css/newERA/login.css" rel="stylesheet" />
-    <link href="~/Main/PortalMaterials/css/newERA/login_v3.css" rel="stylesheet" />
-    <link href="~/Main/PortalMaterials/css/newERA/theme/login_v3_dark.css" rel="stylesheet" />
+    <link href="~/materials/fonts/fonts.css" rel="stylesheet" />
+    <link href="~/custom_materials/materials/css/Login/Custom.css" rel="stylesheet" />
 
-    <style>
-
-    .lgn-aSlider {
-        position: relative;
-        height: 100%;
-        width: 100%;
-    }
-
-    .lgn-sliderCon {
-        position: relative;
-        width: 70%;
-        height: 100%;
-        margin: 0 auto;
-    }
-
-    .lgn-slider-img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        opacity: 0;
-        transition: 1s ease-in-out;
-        overflow: hidden;
-    }
-
-    .lgn-slider-img img {
-        width: 100%;
-        height: 100%;
-    }
-    </style>
-
-    @*<script type="text/javascript" src="~/Main/PortalMaterials/js/newERA/login.js"></script>*@
-   
 
     <script type="text/javascript" src="~/materials_main/js/login.js" nonce="@NoahWebLib.NonceHelper.ScriptNonce()"></script>
-    <script type="text/javascript" src="~/Main/PortalMaterials/js/newERA/fx_login.js"></script>
-
 </head>
-<body ver="3" theme="">
+<body ver="3" theme="" >
 
         <div id="bodyBG"></div>
 
         <div class="new-c">
             <div class="new-hdr">
                 <div class="new-hdr_l">
-                    <img src="~/Main/PortalMaterials/images/NOAH-with-Advancing-the-role-of-ERP-03.png" />
+                    <img src="~/custom_materials/materials/system_images/Login/logo.png" />
                 </div>
                 <div class="new-hdr_r">
                     <div class="Login-version"></div>
@@ -99,6 +56,9 @@
                     </div>
                     <div class="new-login-account-text" style="display: none;">Login to your account</div>
                     <div class="new-field-c">
+                        <div class="comp-img">
+                            @*<img src="">*@
+                        </div>
                         <div class="new-comp-c new-comp-user-c">
                             <div class="new-txtlbl">Username</div>
                             <div class="new-comp-icon"></div>
@@ -144,64 +104,46 @@
                         </div>
 
                         <button id="Button1" class="">Login</button>
-                        <a id="forgotpass" href="ForgotPassword.aspx">Forgot your password?</a>
+                        <div class="fx-container-new">
+                            <a id="forgotpass" href="ForgotPassword.aspx">Forgot password?</a>
+                           
+                        </div>
+                        <br>
+                        @{ 
+                            string LoginRegisterShow = NoahWebLib.nwSystem.GetAppSettings("LoginRegisterShow");
+                            string LoginRegisterText = NoahWebLib.nwSystem.GetAppSettings("LoginRegisterText");
+                            string LoginRegisterLink = NoahWebLib.nwSystem.GetAppSettings("LoginRegisterLink");
+                            string LoginRegisterHTML = NoahWebLib.nwSystem.GetAppSettings("LoginRegisterHTML");
 
-    
+                            if (LoginRegisterShow == "1")
+                            {
+                               <div class="registercon"><a id='register' href='@LoginRegisterLink'>@LoginRegisterText</a></div>
+                            }
+                            if (LoginRegisterHTML != "")
+                            {
+                                @LoginRegisterHTML
+                            }
+                         }
+
 
                     </div>
                 </div>
 
-                <div class="new-mid_r">
-                    @*<div class="new-big-img">
-                        <img id="img_primary" src="~/PortalMaterials/images/MALE.png" alt="Aboitiz Land, Inc.s • Big Male Image" />
-                        <img id="img_secondary" src="~/PortalMaterials/images/FEMALE.png" alt="Aboitiz Land, Inc.s • Big Female Image" />
-                    </div>*@
+   
 
-                    <div class="lgn-aSlider">
-                        <div class="lgn-sliderCon" nwData-autoplay="true">
-                            <div class="lgn-slider-img">
-                                <img src="~/Main/PortalMaterials/images/sample-image-one.jpg">
-                            </div>
-                            <div class="lgn-slider-img">
-                                <img id="img_primary" src="~/Main/PortalMaterials/images/sample-img-six.jpg" >
-                            </div>
-                            <div class="lgn-slider-img">
-                                <img src="~/Main/PortalMaterials/images/sample-img-three.jpg">
-                            </div>
-                            <div class="lgn-slider-img">
-                                <img id="img_primary" src="~/Main/PortalMaterials/images/sample-img-five.jpg">
-                            </div>
-                        </div>
+                <div class="new-mid_r">
+                    <div class="new-big-img">
+                        <img id="img_primary" src="~/custom_materials/materials/system_images/Login/MALE.png" alt="NOAH" />
+                        <img id="img_secondary" src="~/custom_materials/materials/system_images/Login/FEMALE.png" alt="NOAH" />
                     </div>
-                  
-                    @*<div id="typeWriterFx1" class="new-login-text-c"></div>*@
-                    <div class="login-title-bVerse">❝ Matthew 6:26 - Obey God's Arrangements ❞</div>
-                    <div class="login-desc-bVerse">From this verse, Jesus tells us not to worry about the future. We are created by God. In order to make people survive better on earth, 
-                    God created everything that mankind requires in advance. As it is recorded in the Bible that when God commanded Abraham to the land which God promised him, 
-                    he didn’t consider his future and left his hometown.</div>
-                    @*<div class="new-feat-img-c">
-                        <div class="new-feat-img">
-                            <div class="new-feat-img-icon"></div>
-                            <div class="new-feat-img-lbl">View and manage your account easily</div>
-                        </div>
-                        <div class="new-feat-img">
-                            <div class="new-feat-img-icon"></div>
-                            <div class="new-feat-img-lbl">Access your invitations and join events conveniently</div>
-                        </div>
-                        <div class="new-feat-img">
-                            <div class="new-feat-img-icon"></div>
-                            <div class="new-feat-img-lbl">Monitor your Purchase Orders, deliveries, and billing statuses readily</div>
-                        </div>
-                    </div>*@
+                    <div id="typeWriterFx1" class="new-login-text-c"> </div>
                 </div>
             </div>
         </div>
 
 
         <div id="annContainer" style="display:none;">
-            <div id="announcement-icon">
-                <img src="~/Main/PortalMaterials/system_images/login_Announce.png" alt="Announcement" />
-            </div>
+          
             <!--<div id="welcometext">Welcome to <span>NOAH</span></div>-->
             <div id="welcometext">Aboitiz Land, Inc.s</div>
             <!--<div id="contenttext">login to access your account</div>-->

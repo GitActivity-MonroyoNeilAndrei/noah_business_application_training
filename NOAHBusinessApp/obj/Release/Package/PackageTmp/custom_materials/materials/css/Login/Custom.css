@@ -1,0 +1,22 @@
+﻿
+.new-txtlbl {
+    display: none;
+}
+
+.new-hdr .new-hdr_l img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+body[ver="3"] .new-hdr {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+body[ver="3"] .new-hdr_l {
+    height: 130px;
+    width: 140px;
+    position: relative;
+    object-fit: contain;
+}

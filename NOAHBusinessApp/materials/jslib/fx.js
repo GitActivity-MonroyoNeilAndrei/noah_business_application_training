@@ -18,9 +18,9 @@
 	// - - - F un c t i o n s - - - 
 	function initLoad() {
 
-		fnUILoadAlerts();
-		fnUIProgressbar();
-		fnUITable();
+		//fnUILoadAlerts();
+		//fnUIProgressbar();
+		//fnUITable();
 		fnModal();
 		fnModalSingle();
 		fnUIRescaleFullscreenTarget();
@@ -28,30 +28,43 @@
 		fnUICreateRow();
 		fnUIAccordion();
 		fnUIDropdown();
-		fnDraggableGridList();
-		fnIconizedHdrBtn();
+		//fnDraggableGridList();
+		//fnIconizedHdrBtn();
 		fnGridSelectionActive();
-		fnPagination();
-		activeSelect();
+		//fnPagination();
+		//activeSelect();
 		fnUILoadAlertv2();
 		fnCheckActive();
 		fnGridList();
 	}
 
 	// Component: Alerts
-	function fnUILoadAlerts() {
-		// Loads initial alerts upon laod
-		$doc.find(".alert").each(function (i) {
-            $(this).css({
-                "animation-delay": 0.2 * (0.20 + i) + "s",
-                "display": "flex",
-            });
-		});
+	//function fnUILoadAlerts() {
+	//	// Loads initial alerts upon laod
+	//	$doc.find(".alert").each(function (i) {
+    //        $(this).css({
+    //            "animation-delay": 0.2 * (0.20 + i) + "s",
+    //            "display": "flex",
+    //        });
+	//	});
 		
-		$doc.on("click", ".btn.btn-alert-close", function () {
-			$(this).parents(".alert").fadeOut().delay(300).remove();
-		});
-	}
+	//	$doc.on("click", ".btn.btn-alert-close", function () {
+	//		$(this).parents(".alert").fadeOut().delay(300).remove();
+	//	});
+    //}
+
+	$(document).ready(function () {
+	    $(document).find(".alert").each(function (i) {
+	        $(this).css({
+	            "animation-delay": 0.2 * (0.20 + i) + "s",
+	            "display": "flex",
+	        });
+	    });
+
+	    $doc.on("click", ".btn.btn-alert-close", function () {
+	        $(this).parents(".alert").fadeOut().delay(300).remove();
+	    });
+	})
 
 	function fnUILoadAlertv2() {
 	    
@@ -65,16 +78,27 @@
 	}
 
 	// Component: Progressbar
-	function fnUIProgressbar() {
-		$doc.find(".progressbar").each(function (i) {
-			var $line = $(this).find(".progressbar-line");
+	//function fnUIProgressbar() {
+	//	$doc.find(".progressbar").each(function (i) {
+	//		var $line = $(this).find(".progressbar-line");
 			
-			$line.attr("aria-valuenow", $line.text() + "%").width($line.text() + "%");
-			$line.on("DOMSubtreeModified", function () {
-				$(this).attr("aria-valuenow", $(this).text()).width($(this).text() + "%");
-			});
-		});
-	}
+	//		$line.attr("aria-valuenow", $line.text() + "%").width($line.text() + "%");
+	//		$line.on("DOMSubtreeModified", function () {
+	//			$(this).attr("aria-valuenow", $(this).text()).width($(this).text() + "%");
+	//		});
+	//	});
+    //}
+
+	$(document).ready(function () {
+	    $(document).find(".progressbar").each(function (i) {
+	        var $line = $(this).find(".progressbar-line");
+
+	        $line.attr("aria-valuenow", $line.text() + "%").width($line.text() + "%");
+	        $line.on("DOMSubtreeModified", function () {
+	            $(this).attr("aria-valuenow", $(this).text()).width($(this).text() + "%");
+	        });
+	    });
+	})
 
 	// Component: Modal
 	function fnModal() {
@@ -108,133 +132,134 @@
 
 
 	// Component: Table
-	function fnUITable() {
-		var $tbl = $(document).find(".nk .table");
 
-		$tbl.each(function (i) {
-			$tbl.eq(i).attr("sid", `nkTable${i}`);
-		
-			// var sid = $tbl.eq(i).attr("sid");
-			var $this = $(this);			
-			var $th = $this.find("thead tr").find("th");
-			var $rowth = $this.find("tbody th");
-			var $rowtr = $this.find("tbody tr");
-		
-			$rowth.each(function (j) {
-				$(this).attr("row-th", $th.eq(0).text().trim());
-				$(this).wrapInner(`<span class="wrap-td"></span>`);
-			});
-		
-			$rowtr.each(function (k) {
-				var $rowtd = $(this).find("td");
-		
-				$rowtd.each(function (l) {
-					var x = l + 0;
-					$(this).attr("row-th", $th.eq(x).text().trim());
-		
-					if ($(this).hasClass("tbl-row-selector"))
-						$(this).attr("row-th", "Select");
+	$(document).ready(function () {
+	    var $tbl = $(document).find(".nk .table");
 
-					$(this).wrapInner(`<span class="wrap-td"></span>`);
-				});
-			});
-		});
+	    $tbl.each(function (i) {
+	        $tbl.eq(i).attr("sid", `nkTable${i}`);
 
-		$doc.on("keyup", ".table-search-txtbox", function (i) {
-			var $input = $(this),
+	        // var sid = $tbl.eq(i).attr("sid");
+	        var $this = $(this);
+	        var $th = $this.find("thead tr").find("th");
+	        var $rowth = $this.find("tbody th");
+	        var $rowtr = $this.find("tbody tr");
+
+	        $rowth.each(function (j) {
+	            $(this).attr("row-th", $th.eq(0).text().trim());
+	            $(this).wrapInner(`<span class="wrap-td"></span>`);
+	        });
+
+	        $rowtr.each(function (k) {
+	            var $rowtd = $(this).find("td");
+
+	            $rowtd.each(function (l) {
+	                var x = l + 0;
+	                $(this).attr("row-th", $th.eq(x).text().trim());
+
+	                if ($(this).hasClass("tbl-row-selector"))
+	                    $(this).attr("row-th", "Select");
+
+	                $(this).wrapInner(`<span class="wrap-td"></span>`);
+	            });
+	        });
+	    });
+
+	    $doc.on("keyup", ".table-search-txtbox", function (i) {
+	        var $input = $(this),
 				$tblwrapper = $(this).parents(".table-tabs-wrapper"),
 				$tbl = $tblwrapper.find(".table"),
 				filter = $input.val().toLowerCase(),
 				$tr = $tbl.find("tbody tr");
 
-			$tr.each(function (j) {
-				var $td = $(this).find("td:not(.tbl-row-selector)"), ctr = [];
+	        $tr.each(function (j) {
+	            var $td = $(this).find("td:not(.tbl-row-selector)"), ctr = [];
 
-				$td.each(function (k) {
-					$td.eq(k).text().toLowerCase().indexOf(filter) > -1 ? ctr.push("1") : ctr.push("0");
-				});
-				ctr.includes("1") ? $tr.eq(j).css("display", "") : $tr.eq(j).hide();
-			});
-		});
+	            $td.each(function (k) {
+	                $td.eq(k).text().toLowerCase().indexOf(filter) > -1 ? ctr.push("1") : ctr.push("0");
+	            });
+	            ctr.includes("1") ? $tr.eq(j).css("display", "") : $tr.eq(j).hide();
+	        });
+	    });
 
-		// Sort on th click
-		//$doc.on("mouseup", ".table thead th:not([data-type='none'])", function (e) {
-		//	var $this = $(this),
-		//		$tbl = $(this).parents(".table"),
-		//		$tr = $tbl.find("tbody > tr"),
-		//		$th = $tbl.find("thead th"),
-		//		i = $(this).index(),
-		//		type = $(this).attr("data-type"),
-		//		thclass = $(this).hasClass("asc") ? "desc" : "asc";
+	    // Sort on th click
+	    $doc.on("mouseup", ".table thead th:not([data-type='none'])", function (e) {
+	        var $this = $(this),
+				$tbl = $(this).parents(".table"),
+				$tr = $tbl.find("tbody > tr"),
+				$th = $tbl.find("thead th"),
+				i = $(this).index(),
+				type = $(this).attr("data-type"),
+				thclass = $(this).hasClass("asc") ? "desc" : "asc";
 
-		//	$th.removeClass("asc desc");
+	        $th.removeClass("asc desc");
 
-		//	if ($(e.target).hasClass("btn-th-asc")) thclass = "asc";
-		//	if ($(e.target).hasClass("btn-th-desc")) thclass = "desc";
-			
-		//	$this.addClass(thclass);
+	        if ($(e.target).hasClass("btn-th-asc")) thclass = "asc";
+	        if ($(e.target).hasClass("btn-th-desc")) thclass = "desc";
 
-		//	// compare(a, b) compares two rows, need for sorting
-		//	var compare;
-		//	var rows = Array.from($tr);
-			
-		//	switch(type) {
-		//		case "num":
-		//		  	compare = function(a, b) {
-		//				var a = a.cells[i].innerHTML, b = b.cells[i].innerHTML;
-		//				return  a.toLowerCase() - b.toLowerCase();
-		//		  	};
-		//		  	break;
-		//		case "str":
-		//		  	compare = function(a, b) {
-		//				var a = a.cells[i].innerHTML, b = b.cells[i].innerHTML;
-		//				return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
-		//		  	};
-		//		  	break;
-		//	}
+	        $this.addClass(thclass);
 
-		//	// Sort method
-		//	rows.sort(compare);
-		//	$this.hasClass("desc") && rows.reverse();	  
-		//	$tbl.find("tbody").append(...rows);			
-		//});
+	        // compare(a, b) compares two rows, need for sorting
+	        var compare;
+	        var rows = Array.from($tr);
 
-		// Item selection using row checkboxes & header
-		$doc.on("change", ".chk-tbl", function () {  
-			var $chk = $(this).parents(".table").find(".chk-tbl:not(.chk-tbl-th)"), $this = $(this),
+	        switch (type) {
+	            case "num":
+	                compare = function (a, b) {
+	                    var a = a.cells[i].innerHTML, b = b.cells[i].innerHTML;
+	                    return a.toLowerCase() - b.toLowerCase();
+	                };
+	                break;
+	            case "str":
+	                compare = function (a, b) {
+	                    var a = a.cells[i].innerHTML, b = b.cells[i].innerHTML;
+	                    return a.toLowerCase() > b.toLowerCase() ? 1 : -1;
+	                };
+	                break;
+	        }
+
+	        // Sort method
+	        rows.sort(compare);
+	        $this.hasClass("desc") && rows.reverse();
+	        $tbl.find("tbody").append(...rows);
+	    });
+
+	    // Item selection using row checkboxes & header
+	    $doc.on("change", ".chk-tbl", function () {
+	        var $chk = $(this).parents(".table").find(".chk-tbl:not(.chk-tbl-th)"), $this = $(this),
 				$chkth = $(this).parents(".table").find(".chk-tbl-th"),
 				$tr = $(this).parents(".table").find("tbody tr");
 
-			if ($this.hasClass("chk-tbl-th")) {  
-				$this.is(":checked") ? $chk.prop('checked', true) : $chk.prop('checked', false);
-				$this.is(":checked") ? $tr.addClass("selected") : $tr.removeClass("selected");
-			}
-			else {
-				var $checked = $(this).parents(".table").find("tbody .chk-tbl:checked"),
+	        if ($this.hasClass("chk-tbl-th")) {
+	            $this.is(":checked") ? $chk.prop('checked', true) : $chk.prop('checked', false);
+	            $this.is(":checked") ? $tr.addClass("selected") : $tr.removeClass("selected");
+	        }
+	        else {
+	            var $checked = $(this).parents(".table").find("tbody .chk-tbl:checked"),
 					$unchecked = $(this).parents(".table").find("tbody .chk-tbl:not(:checked)");
-				
-				if ($checked.length == $chk.length) {
-					$chkth.prop("checked", true).prop("indeterminate", false);
-				}
-				else if ($unchecked.length == $chk.length) {
-					$chkth.prop("checked", false).prop("indeterminate", false);
-				}
-				else {
-					$checked.length != $chk.length && $chkth.prop("checked", false).prop("indeterminate", true);
-				}				
-			}
-		});
-		
-		$tbl.on("change", "input.chk-tbl", function () {
-			var $this = $(this), $tr = $(this).parents("tr");
-			$this.is(":checked") ? $tr.addClass("selected") : $tr.removeClass("selected");
-		});
 
-		// Mark parent tr as selected row
-		$tbl.find("input.chk-tbl:checked").each(function(){
-			$(this).parents("tr").addClass("selected");
-		});
-	}
+	            if ($checked.length == $chk.length) {
+	                $chkth.prop("checked", true).prop("indeterminate", false);
+	            }
+	            else if ($unchecked.length == $chk.length) {
+	                $chkth.prop("checked", false).prop("indeterminate", false);
+	            }
+	            else {
+	                $checked.length != $chk.length && $chkth.prop("checked", false).prop("indeterminate", true);
+	            }
+	        }
+	    });
+
+	    $tbl.on("change", "input.chk-tbl", function () {
+	        var $this = $(this), $tr = $(this).parents("tr");
+	        $this.is(":checked") ? $tr.addClass("selected") : $tr.removeClass("selected");
+	    });
+
+	    // Mark parent tr as selected row
+	    $tbl.find("input.chk-tbl:checked").each(function () {
+	        $(this).parents("tr").addClass("selected");
+	    });
+	})
 
 	// Component: Rescale element
 	function fnUIRescaleFullscreenTarget() {
@@ -282,16 +307,31 @@
 	}
 
 	// Accordion
-	function fnUIAccordion() {
-		$doc.on("click", ".nk-accordion .nk-li .nk-li-title", function () {
-			$(this).parents('.nk-li').siblings().removeClass('collapse');
+	//function fnUIAccordion() {
+	//	$doc.on("click", ".nk-accordion .nk-li .nk-li-title", function () {
+	//		$(this).parents('.nk-li').siblings().removeClass('collapse');
 
-			if ($(this).parents('.nk-li').hasClass('collapse')) {
-				$(this).parents('.nk-li').removeClass('collapse');
-			}
-			else $(this).parents('.nk-li').addClass('collapse');
-		});
-	}
+	//		if ($(this).parents('.nk-li').hasClass('collapse')) {
+	//			$(this).parents('.nk-li').removeClass('collapse');
+	//		}
+	//		else $(this).parents('.nk-li').addClass('collapse');
+	//	});
+    //}
+
+    function fnUIAccordion() {
+        $doc.on("click", ".nk-accordion .nk-li .nk-li-title", function () {
+            var $parentLi = $(this).parents('.nk-li');
+
+            // Check if the clicked element's parent has the 'collapse' class
+            if ($parentLi.hasClass('collapse')) {
+                // If it has the 'collapse' class, remove it
+                $parentLi.removeClass('collapse');
+            } else {
+                // If it doesn't have the 'collapse' class, add it to the clicked element only
+                $parentLi.addClass('collapse');
+            }
+        });
+    }
 
 	//function fnUICarousel() {
 	$.fn.fnUICarousel = function (settings) {
@@ -564,153 +604,153 @@
 	}
 	
 	// Draggable Grid List Items
-	function fnDraggableGridList() {
-		var dragDestIndex,
+	$(document).ready(function () {
+	    var dragDestIndex,
 			draggedElIndex,
 			rearranging = false,
 			rearrangingDuration = 420,
 			colCount;
-		var $draggableCont = $doc.find(".draggable-c"),
-			$draggableItems,			
+	    var $draggableCont = $doc.find(".draggable-c"),
+			$draggableItems,
 			$draggedEl,
 			draggedElContID;
 
-		fnInitDraggableGrid();
-		function fnInitDraggableGrid () {
-			$doc.find(".draggable-c").each(function () {
-				var $this = $(this);
-	
-				$draggableCont = $doc.find("#" + $this.attr("id")) || "";
-				colCount = $this.attr("nk-col-count") || 1;
-				$draggableItems = $this.find(".draggable-item");
-	
-				isNotNull($draggableCont) && arrangeItems($draggableItems, colCount, $draggableCont);			
-			});
-		}
+	    fnInitDraggableGrid();
+	    function fnInitDraggableGrid() {
+	        $doc.find(".draggable-c").each(function () {
+	            var $this = $(this);
 
-		function arrangeItems(draggableItems, columnCount, draggableCont) {
-			if (!isNotNull(draggableCont)) return;
-			
-			var $draggableCont = draggableCont,
+	            $draggableCont = $doc.find("#" + $this.attr("id")) || "";
+	            colCount = $this.attr("nk-col-count") || 1;
+	            $draggableItems = $this.find(".draggable-item");
+
+	            isNotNull($draggableCont) && arrangeItems($draggableItems, colCount, $draggableCont);
+	        });
+	    }
+
+	    function arrangeItems(draggableItems, columnCount, draggableCont) {
+	        if (!isNotNull(draggableCont)) return;
+
+	        var $draggableCont = draggableCont,
 				$draggableItems = draggableItems,
 				colCount = columnCount;
-			var elWidth = $draggableCont.outerWidth() / colCount,
+	        var elWidth = $draggableCont.outerWidth() / colCount,
 				elHeight = $draggableCont.find(".draggable-item").outerHeight();
-		
-			for (var i = 0; i < $draggableItems.length; i++) {
-			  	var $item = $($draggableItems[i]);
-			  	var pos = {
-					x: parseInt(i % colCount),
-					y: parseInt(i / colCount)
-			  	};
-				
-				$item.data("index", i);
-			  	$item.css({
-					top: Math.round(pos.y * elHeight) + "px",
-					left: Math.round(pos.x * elWidth) + "px",
-					width: Math.round(100 / colCount) + "%",
-			  	});
-			}
-		}
 
-		function rearrangeItems(arr, movedItemIndex, destinationIndex) {
-			var movedEl = arr.splice(movedItemIndex, 1)[0];
-			arr.splice(destinationIndex, 0, movedEl);
-			return arr;
-		}
+	        for (var i = 0; i < $draggableItems.length; i++) {
+	            var $item = $($draggableItems[i]);
+	            var pos = {
+	                x: parseInt(i % colCount),
+	                y: parseInt(i / colCount)
+	            };
 
-		$(window).resize(function () {
-			fnInitDraggableGrid();
-			getHighestItemHeight();
-		});
+	            $item.data("index", i);
+	            $item.css({
+	                top: Math.round(pos.y * elHeight) + "px",
+	                left: Math.round(pos.x * elWidth) + "px",
+	                width: Math.round(100 / colCount) + "%",
+	            });
+	        }
+	    }
 
-		$doc.on("dragstart", ".draggable-item", function (e) {
-			var $this = $(this),
+	    function rearrangeItems(arr, movedItemIndex, destinationIndex) {
+	        var movedEl = arr.splice(movedItemIndex, 1)[0];
+	        arr.splice(destinationIndex, 0, movedEl);
+	        return arr;
+	    }
+
+	    $(window).resize(function () {
+	        fnInitDraggableGrid();
+	        getHighestItemHeight();
+	    });
+
+	    $doc.on("dragstart", ".draggable-item", function (e) {
+	        var $this = $(this),
 				id = $this.parents(".draggable-c").attr("id");
-			var sortedArr = [];
+	        var sortedArr = [];
 
-			$draggedEl = $this;
-			draggedElContID = id;
+	        $draggedEl = $this;
+	        draggedElContID = id;
 
-			if (!isNotNull(id)) return;
-			
-			$draggableItems = $doc.find("#" + id).find(".draggable-item");
-			colCount = $doc.find("#" + id).attr("nk-col-count") || 1;
+	        if (!isNotNull(id)) return;
 
-			for (var i = 0; i < $draggableItems.length; i++) {
-				var elIndex = $($draggableItems[i]).data("index");
-				sortedArr[elIndex] = $draggableItems[i];
-			}
+	        $draggableItems = $doc.find("#" + id).find(".draggable-item");
+	        colCount = $doc.find("#" + id).attr("nk-col-count") || 1;
 
-			$draggableItems = sortedArr;
-			draggedElIndex = $this.data("index");
-			
-			$this.css({
-				opacity: 0,
-			});
-		});
-		
-		$doc.on("dragover", ".draggable-item", function (e) {
-			e.preventDefault();
+	        for (var i = 0; i < $draggableItems.length; i++) {
+	            var elIndex = $($draggableItems[i]).data("index");
+	            sortedArr[elIndex] = $draggableItems[i];
+	        }
 
-			if (rearranging) return;
+	        $draggableItems = sortedArr;
+	        draggedElIndex = $this.data("index");
 
-			var dragDestIndex = $(this).data("index");
-			
-			draggedElIndex = $draggedEl.data("index");
-			
-			if (draggedElIndex !== dragDestIndex) {
-				rearranging = true;
-				
-				var $rearrangedEls = rearrangeItems($draggableItems, draggedElIndex, dragDestIndex);
+	        $this.css({
+	            opacity: 0,
+	        });
+	    });
 
-				arrangeItems($rearrangedEls, colCount, $doc.find("#" + draggedElContID));
+	    $doc.on("dragover", ".draggable-item", function (e) {
+	        e.preventDefault();
 
-				setTimeout(function () {
-					rearranging = false;
-				}, rearrangingDuration);
-			}
-		});
+	        if (rearranging) return;
 
-		$doc.on("dragend", ".draggable-item", function (e) {
-			e.preventDefault();
-			$(this).css({
-				opacity: 1,
-			});
-		});
+	        var dragDestIndex = $(this).data("index");
 
-		$doc.on("drop", ".draggable-item", function (e) {
-			e.preventDefault();
-			rearranging = false;
-		});
+	        draggedElIndex = $draggedEl.data("index");
 
-		getHighestItemHeight();
-		function getHighestItemHeight() {
-			var $dc = $doc.find(".draggable-c");
+	        if (draggedElIndex !== dragDestIndex) {
+	            rearranging = true;
 
-			$dc.each(function (i) {
-				var $c = $(this).find(".draggable-item");
-				var hh = 0, lt = 0, tt = 0;
+	            var $rearrangedEls = rearrangeItems($draggableItems, draggedElIndex, dragDestIndex);
 
-				$c.css({ height: "", });
+	            arrangeItems($rearrangedEls, colCount, $doc.find("#" + draggedElContID));
 
-				$c.each(function (j) {
-					var $this = $(this), $el, $el2;
+	            setTimeout(function () {
+	                rearranging = false;
+	            }, rearrangingDuration);
+	        }
+	    });
 
-					if ($this.outerHeight() > hh) {
-						hh = $this.outerHeight();
-					}
-					if ($this.position().top > lt) {
-						lt = $this.position().top;
-						tt = lt + hh;
-					}
-				});
+	    $doc.on("dragend", ".draggable-item", function (e) {
+	        e.preventDefault();
+	        $(this).css({
+	            opacity: 1,
+	        });
+	    });
 
-				$c.css({ height: hh + "px", });
-				$c.parents(".draggable-c").css({ height: tt + "px", });
-			});
-		}
-	}
+	    $doc.on("drop", ".draggable-item", function (e) {
+	        e.preventDefault();
+	        rearranging = false;
+	    });
+
+	    getHighestItemHeight();
+	    function getHighestItemHeight() {
+	        var $dc = $doc.find(".draggable-c");
+
+	        $dc.each(function (i) {
+	            var $c = $(this).find(".draggable-item");
+	            var hh = 0, lt = 0, tt = 0;
+
+	            $c.css({ height: "", });
+
+	            $c.each(function (j) {
+	                var $this = $(this), $el, $el2;
+
+	                if ($this.outerHeight() > hh) {
+	                    hh = $this.outerHeight();
+	                }
+	                if ($this.position().top > lt) {
+	                    lt = $this.position().top;
+	                    tt = lt + hh;
+	                }
+	            });
+
+	            $c.css({ height: hh + "px", });
+	            $c.parents(".draggable-c").css({ height: tt + "px", });
+	        });
+	    }
+	})
 
 	function fnUIAutoExpandTextareaHeight() {
 		$doc.find("textarea.autoresize").each(function () {
@@ -749,23 +789,40 @@
 		}
 	}
 
-	function fnIconizedHdrBtn() {
-		$doc.on("click", ".btn-iconized.btn-iconized-select, .btn-iconized.btn-iconized-delete", function () {
-			$(this).siblings(".btn-iconized").removeClass("active");
-			$(this).toggleClass("active");
-			var c = $(this).attr("class").split(/\s+/);
-			var $el = $(this).parents(".iconized-hdr-button").siblings(".draggable-c");
-			if ($(this).hasClass("active")) {
-				if (c.indexOf("btn-iconized-select") > -1)
-					$el.attr("nk-select-mode", "select");
-				else if (c.indexOf("btn-iconized-delete") > -1)
-					$el.attr("nk-select-mode", "delete");
-			}
-			else
-				$el.attr("nk-select-mode", "");
-		});
-	}
+	//function fnIconizedHdrBtn() {
+	//	$doc.on("click", ".btn-iconized.btn-iconized-select, .btn-iconized.btn-iconized-delete", function () {
+	//		$(this).siblings(".btn-iconized").removeClass("active");
+	//		$(this).toggleClass("active");
+	//		var c = $(this).attr("class").split(/\s+/);
+	//		var $el = $(this).parents(".iconized-hdr-button").siblings(".draggable-c");
+	//		if ($(this).hasClass("active")) {
+	//			if (c.indexOf("btn-iconized-select") > -1)
+	//				$el.attr("nk-select-mode", "select");
+	//			else if (c.indexOf("btn-iconized-delete") > -1)
+	//				$el.attr("nk-select-mode", "delete");
+	//		}
+	//		else
+	//			$el.attr("nk-select-mode", "");
+	//	});
+	//}
 	
+	$(document).ready(function () {
+	    $(document).on("click", ".btn-iconized.btn-iconized-select, .btn-iconized.btn-iconized-delete", function () {
+	        $(this).siblings(".btn-iconized").removeClass("active");
+	        $(this).toggleClass("active");
+	        var c = $(this).attr("class").split(/\s+/);
+	        var $el = $(this).parents(".iconized-hdr-button").siblings(".draggable-c");
+	        if ($(this).hasClass("active")) {
+	            if (c.indexOf("btn-iconized-select") > -1)
+	                $el.attr("nk-select-mode", "select");
+	            else if (c.indexOf("btn-iconized-delete") > -1)
+	                $el.attr("nk-select-mode", "delete");
+	        }
+	        else
+	            $el.attr("nk-select-mode", "");
+	    });
+	})
+
 	function fnGridSelectionActive() {
 		$doc.on("click", ".di-inner", function () {
 			var mode = $(this).parents(".draggable-c").attr("nk-select-mode");
@@ -780,144 +837,144 @@
 		});
 	}
 	
-	function fnPagination() {
-		var $pg = $doc.find(".pagination-c");
-		var $ellipsis = `<div class="page-ellipsis hide">...</div>`;
+	$(document).ready(function () {
+	    var $pg = $doc.find(".pagination-c");
+	    var $ellipsis = `<div class="page-ellipsis hide">...</div>`;
 
-		$pg.each((i) => {
-			var $this = $pg.eq(i);
-			var currentpagenum = $this.attr("nk-current-page");
-			var currentpagecount = $this.attr("nk-page-count");
-			var pagethreshold = $this.attr("nk-page-threshold");
-			
-			$this.attr("sid", `nkPagination${i}`);
+	    $pg.each((i) => {
+	        var $this = $pg.eq(i);
+	        var currentpagenum = $this.attr("nk-current-page");
+	        var currentpagecount = $this.attr("nk-page-count");
+	        var pagethreshold = $this.attr("nk-page-threshold");
 
-			(!currentpagenum || currentpagenum == 0) && $this.attr("nk-current-page", "1");
-			(!currentpagecount || currentpagecount == 0) && $this.attr("nk-page-count", "5");
-			(!pagethreshold || pagethreshold <= 0 || pagethreshold > 10) && $this.attr("nk-page-threshold", "10");
+	        $this.attr("sid", `nkPagination${i}`);
 
-			// get again the new value of the current page number and current page count
-			var recurrentpagenum = +$this.attr("nk-current-page");
-			var recurrentpagecount = +$this.attr("nk-page-count");
-			var repagethreshold = +$this.attr("nk-page-threshold");
+	        (!currentpagenum || currentpagenum == 0) && $this.attr("nk-current-page", "1");
+	        (!currentpagecount || currentpagecount == 0) && $this.attr("nk-page-count", "5");
+	        (!pagethreshold || pagethreshold <= 0 || pagethreshold > 10) && $this.attr("nk-page-threshold", "10");
 
-			$this.find(".page-count").length > 0 && $this.find(".page-count, .page-control").remove();
+	        // get again the new value of the current page number and current page count
+	        var recurrentpagenum = +$this.attr("nk-current-page");
+	        var recurrentpagecount = +$this.attr("nk-page-count");
+	        var repagethreshold = +$this.attr("nk-page-threshold");
 
-			if ($this.find(".page-count").length < 1) {
-				var pagediv = document.createDocumentFragment();
-				for (let x = 1; x <= recurrentpagecount; x++) {
-					var $el = document.createElement("div");
+	        $this.find(".page-count").length > 0 && $this.find(".page-count, .page-control").remove();
 
-					$el.className = "page-count";
-					$el.innerHTML = x;
-					if (x == recurrentpagenum) $el.className += " selected";
-					if (x >= repagethreshold && x < recurrentpagecount) $el.className += " hide";
-					pagediv.appendChild($el);
-				}
+	        if ($this.find(".page-count").length < 1) {
+	            var pagediv = document.createDocumentFragment();
+	            for (let x = 1; x <= recurrentpagecount; x++) {
+	                var $el = document.createElement("div");
 
-				setTimeout(() => {
-					$this.append(pagediv);
-				}, 100, clearTimeout);
-				
-				setTimeout(() => {
-					var $page = $this.find(".page-count");
+	                $el.className = "page-count";
+	                $el.innerHTML = x;
+	                if (x == recurrentpagenum) $el.className += " selected";
+	                if (x >= repagethreshold && x < recurrentpagecount) $el.className += " hide";
+	                pagediv.appendChild($el);
+	            }
 
-					$page.first().after($ellipsis);
-					$page.last().before($ellipsis);	
-					if ($this.find(".page-count").length > repagethreshold) {
-						$this.find(".page-ellipsis:last").removeClass("hide")
-					}	
-					$this.prepend(`<div class="page-control page-control-prev">Prev</div>`);
-					$this.append(`<div class="page-control page-control-next">Next</div>`);	
-				}, 100, clearTimeout);
-			}					
-		});
+	            setTimeout(() => {
+	                $this.append(pagediv);
+	            }, 100, clearTimeout);
 
-		$doc.on("click", ".pagination-c .page-count:not(.hide)", function () {
-			var $this = $(this);
-			var $p = $(this).parents(".pagination-c");
-			var $page = $p.find(".page-count");
-			var $ellip = $p.find(".page-ellipsis");
-			var pagecount = $p.find(".page-count").length;
-			var threshold = $p.attr("nk-page-threshold") || 10;
+	            setTimeout(() => {
+	                var $page = $this.find(".page-count");
 
-			$page.removeClass("selected");
-			$this.addClass("selected");
+	                $page.first().after($ellipsis);
+	                $page.last().before($ellipsis);
+	                if ($this.find(".page-count").length > repagethreshold) {
+	                    $this.find(".page-ellipsis:last").removeClass("hide")
+	                }
+	                $this.prepend(`<div class="page-control page-control-prev">Prev</div>`);
+	                $this.append(`<div class="page-control page-control-next">Next</div>`);
+	            }, 100, clearTimeout);
+	        }
+	    });
 
-			var a = threshold;
-			var b = pagecount;
+	    $doc.on("click", ".pagination-c .page-count:not(.hide)", function () {
+	        var $this = $(this);
+	        var $p = $(this).parents(".pagination-c");
+	        var $page = $p.find(".page-count");
+	        var $ellip = $p.find(".page-ellipsis");
+	        var pagecount = $p.find(".page-count").length;
+	        var threshold = $p.attr("nk-page-threshold") || 10;
 
-			if (b <= a) return;
-			
-			if ($this.text() == "1") {
-				for (let x = 0; x < (b - 1); x++) {
-					$page.eq(x).removeClass("hide");
-					x >= (a - 1) && $page.eq(x).addClass("hide");
-				}
-				$page.eq(b - 1).removeClass("hide");
-				$ellip.first().addClass("hide");
-				$ellip.last().removeClass("hide");
-			}
-			else if ($this.text() == b) {
-				for (let x = a; x < b; x++) {
-					$page.eq(x - 1).removeClass("hide");
-					$page.eq(x - (a - 1)).addClass("hide");
-				}			
-				$ellip.first().removeClass("hide");
-				$ellip.last().addClass("hide");
-			}
-		});
-		
-		$doc.on("click", ".pagination-c .page-control.page-control-next", function () {
-			var $p = $(this).parents(".pagination-c");
-			var $page = $p.find(".page-count");
-			var $lastpage = $page.last();
-			var $selectedpage = $p.find(".page-count.selected");
-			var tempcount = +$selectedpage.text();
-			var targetcount = tempcount + 1;
-			var threshold = +$p.attr("nk-page-threshold");
-			var $ellip = $p.find(".page-ellipsis");
+	        $page.removeClass("selected");
+	        $this.addClass("selected");
 
-			if (targetcount <= +$lastpage.text()) {
-				$page.removeClass("selected").eq(tempcount).addClass("selected");
-				$p.attr("nk-current-page", targetcount);
+	        var a = threshold;
+	        var b = pagecount;
 
-				if (+targetcount >= threshold && targetcount < +$lastpage.text()) {
-					var tohidecount = targetcount - (threshold - 1);
-					$page.eq(tempcount).removeClass("hide");
-					$page.eq(tohidecount).addClass("hide");
-					$ellip.first().removeClass("hide");					
-				}
-				(targetcount == (+$lastpage.text() - 1)) && $ellip.last().addClass("hide");
-			}
-		});
-		
-		$doc.on("click", ".pagination-c .page-control.page-control-prev", function () {
-			var $p = $(this).parents(".pagination-c");
-			var $page = $p.find(".page-count");
-			var $firstpage = $page.first();
-			var $selectedpage = $p.find(".page-count.selected");
-			var tempcount = +$selectedpage.text() - 2;
-			var targetcount = tempcount + 1;
-			var threshold = +$p.attr("nk-page-threshold");
-			var $ellip = $p.find(".page-ellipsis");
+	        if (b <= a) return;
 
-			if (targetcount >= +$firstpage.text()) {
-				$page.removeClass("selected").eq(tempcount).addClass("selected");
-				$p.attr("nk-current-page", targetcount);
+	        if ($this.text() == "1") {
+	            for (let x = 0; x < (b - 1) ; x++) {
+	                $page.eq(x).removeClass("hide");
+	                x >= (a - 1) && $page.eq(x).addClass("hide");
+	            }
+	            $page.eq(b - 1).removeClass("hide");
+	            $ellip.first().addClass("hide");
+	            $ellip.last().removeClass("hide");
+	        }
+	        else if ($this.text() == b) {
+	            for (let x = a; x < b; x++) {
+	                $page.eq(x - 1).removeClass("hide");
+	                $page.eq(x - (a - 1)).addClass("hide");
+	            }
+	            $ellip.first().removeClass("hide");
+	            $ellip.last().addClass("hide");
+	        }
+	    });
 
-				var $toshow = $page.eq(tempcount);
-				if ($toshow.hasClass("hide")) {
-					var tohidecount = tempcount + (threshold - 2);
-					$toshow.removeClass("hide");
-					$page.eq(tohidecount).addClass("hide");
-					$ellip.last().removeClass("hide");
-				}
+	    $doc.on("click", ".pagination-c .page-control.page-control-next", function () {
+	        var $p = $(this).parents(".pagination-c");
+	        var $page = $p.find(".page-count");
+	        var $lastpage = $page.last();
+	        var $selectedpage = $p.find(".page-count.selected");
+	        var tempcount = +$selectedpage.text();
+	        var targetcount = tempcount + 1;
+	        var threshold = +$p.attr("nk-page-threshold");
+	        var $ellip = $p.find(".page-ellipsis");
 
-				tempcount == 1 && $ellip.first().addClass("hide");
-			}
-		});
-	}
+	        if (targetcount <= +$lastpage.text()) {
+	            $page.removeClass("selected").eq(tempcount).addClass("selected");
+	            $p.attr("nk-current-page", targetcount);
+
+	            if (+targetcount >= threshold && targetcount < +$lastpage.text()) {
+	                var tohidecount = targetcount - (threshold - 1);
+	                $page.eq(tempcount).removeClass("hide");
+	                $page.eq(tohidecount).addClass("hide");
+	                $ellip.first().removeClass("hide");
+	            }
+	            (targetcount == (+$lastpage.text() - 1)) && $ellip.last().addClass("hide");
+	        }
+	    });
+
+	    $doc.on("click", ".pagination-c .page-control.page-control-prev", function () {
+	        var $p = $(this).parents(".pagination-c");
+	        var $page = $p.find(".page-count");
+	        var $firstpage = $page.first();
+	        var $selectedpage = $p.find(".page-count.selected");
+	        var tempcount = +$selectedpage.text() - 2;
+	        var targetcount = tempcount + 1;
+	        var threshold = +$p.attr("nk-page-threshold");
+	        var $ellip = $p.find(".page-ellipsis");
+
+	        if (targetcount >= +$firstpage.text()) {
+	            $page.removeClass("selected").eq(tempcount).addClass("selected");
+	            $p.attr("nk-current-page", targetcount);
+
+	            var $toshow = $page.eq(tempcount);
+	            if ($toshow.hasClass("hide")) {
+	                var tohidecount = tempcount + (threshold - 2);
+	                $toshow.removeClass("hide");
+	                $page.eq(tohidecount).addClass("hide");
+	                $ellip.last().removeClass("hide");
+	            }
+
+	            tempcount == 1 && $ellip.first().addClass("hide");
+	        }
+	    });
+	})
 
     //Rico JS 232021
 	$doc.on("click", "#btnSuccessPopup", function () {
@@ -969,7 +1026,7 @@
 		if (n < 1) slideIndex = slides.length;
 		
 		Array.from(slides).forEach((item) => (item.style.display = "none"));
-		slides[slideIndex - 1].style.display = "block";
+	    try { slides[slideIndex - 1].style.display = "block"; } catch (err) { }
 	}
 
 	$(document).on("click", ".slth-img", function (e) {
@@ -1009,6 +1066,7 @@
 	});
 
 	function fnMagnifySlide(imgID, zoom) {
+        try{
 		var img, glass, w, h, bw;
 		img = document.getElementById(imgID);
 
@@ -1017,7 +1075,7 @@
 		glass.setAttribute("class", "img-magnifier-glass");
 
 		/* Insert magnifier glass: */
-		img.parentElement.insertBefore(glass, img);
+	    try { img.parentElement.insertBefore(glass, img); } catch (err) { }
 
 		/* Set background properties for the magnifier glass: */
 		glass.style.backgroundImage = "url('" + img.src + "')";
@@ -1077,9 +1135,24 @@
 			y = y - window.pageYOffset;
 			return { x: x, y: y };
 		}
+       } catch (err) { }
 	}
 
-	function activeSelect() {
+	//function activeSelect() {
+	//    $(".nf-default-opt").click(function () {
+	//        $(this).parent().toggleClass("nf-active");
+	//    })
+
+	//    $(".nf-opt-ul .nf-li").click(function () {
+	//        var currentSelected = $(this).html();
+	//        var wrapper = $(this).closest(".nf-select-c");
+	//        wrapper.find(".nf-default-opt .nf-li").html(currentSelected);
+	//        wrapper.removeClass("nf-active");
+	//    })
+    //}
+
+	$(document).ready(function () {
+
 	    $(".nf-default-opt").click(function () {
 	        $(this).parent().toggleClass("nf-active");
 	    })
@@ -1090,7 +1163,7 @@
 	        wrapper.find(".nf-default-opt .nf-li").html(currentSelected);
 	        wrapper.removeClass("nf-active");
 	    })
-	}
+	})
 
 	function fnCheckActive() {
 	    $(".imgRdo").change(function () {
@@ -1244,34 +1317,93 @@ $(document).ready(function () {
 
 //Component JS: Checkbox with check all 
 $(document).ready(function () {
-    $('input[type=checkbox][class=chk-all-s]').click(function () {
-        var cb = $(this),
-            name = cb.attr('check-all-for');
+    $('.chk-all-s').click(function () {
+        var parent = $(this).closest('.checkboxfxdy');
+        parent.find('input.chkAll').prop('checked', this.checked);
 
-        if (name == null)
-            return false;
-
-        $('input[type=checkbox][name^=' + name + ']')
-            .prop('checked', cb.prop('checked'))
-            .click(function () {
-                if (!$(this).prop('checked'))
-                    cb.prop('checked', false);
-            });
-    });
-    $('input[type=checkbox][class!=chk-all-s]').click(function () {
-        var cb = $(this),
-            name = cb.attr('name');
-
-        if (name == null)
-            return false;
-        var allChildrenChecked = true;
-        $('input[type=checkbox][name^=' + name + ']').each(function () {
-            if (!$(this).prop('checked')) {
-                allChildrenChecked = false;
-                return;
-            }
-        });
-        $('input[type=checkbox][check-all-for^=' + name + ']').prop('checked', allChildrenChecked);
+        // check if any of the chkAll checkboxes are unchecked
+        if (parent.find('input.chkAll:not(:checked)').length) {
+            $(this).addClass('unchecked');
+        } else {
+            $(this).removeClass('unchecked');
+        }
     });
 
+    $('.chkAll').click(function () {
+        var parent = $(this).closest('.checkboxfxdy');
+        var subChk = parent.find('input.chkAll');
+        var parentChk = parent.find('.chk-all-s');
+
+        // check if all chkAll checkboxes are checked
+        if (subChk.length === subChk.filter(':checked').length) {
+            parentChk.removeClass('unchecked');
+            parentChk.prop("checked", true);
+        } else {
+            parentChk.addClass('unchecked');
+        }
+
+        // check if all chkAll checkboxes are unchecked
+        if (subChk.filter(':checked').length === 0) {
+            parentChk.removeClass('unchecked');
+            parentChk.prop("checked", false);
+        }
+    });
 });
+
+$(document).ready(function () {
+    $(".table-header-mob").on("click", function () {
+        $(this).next().addClass("show");
+    });
+
+    $(".hrd-closed-sb").on("click", function () {
+        $(this).closest(".table-header-actions-c").removeClass("show")
+    })
+})
+
+
+//HTML Remarks Component
+$(document).ready(function () {
+
+    $(".nw-htr-i-btn.fullscreen").on("click", function () {
+        $(".nw-htr-box").toggleClass("fullscreen");
+        $(".fullscreen").toggleClass("active")
+    })
+
+
+    $("#btnRemarksHTML").on("click", function () {
+        $(".nw-htr-container").addClass("show")
+    });
+
+    $(".nw-htr-i-btn.close").on("click", function () {
+        $(".nw-htr-container").removeClass("show");
+        $(".nw-htr-box").removeClass("fullscreen");
+    });
+
+})
+
+
+//Component JS:  Profile Component
+$(document).ready(function () {
+    $('.chgpfct-c .chgpfbt#change').hover(function () {
+        $(this).parent().siblings('.chgpfimg-c').toggleClass('chgfx');
+    });
+});
+
+
+//$(document).ready(function () {
+//    $('#change').hover(function () {
+//        $('.chgpfimg-c').toggleClass('chgfx');
+//    });
+//});
+
+
+$(document).ready(function () {
+    let name = $('#fn').text();
+
+    let firstName = name.substring(0, 1);
+    let lastName = name.substring(name.indexOf(' ') + 1, name.indexOf(' ') + 2);
+
+    $('.chgpftx').text(firstName + lastName);
+})
+
+//Component JS: END Profile Component

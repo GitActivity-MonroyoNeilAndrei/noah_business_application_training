@@ -16,8 +16,8 @@ namespace NOAHBusinessApp.Controllers.FPMC
         public ActionResult Index()
         {
             mainDataAccess main = new mainDataAccess();
-            main.MenuAccess(User, this);
-            return View(@"~\FPMC\DocumentEntry\PMORequestEntry\PMORequestEntry.cshtml");
+            main.MenuAccess(User, this); //security
+            return View(@"~\PMO\DocumentEntry\PMORequestEntry\PMORequestEntry.cshtml");
         }
 
         public ActionResult PMORequestEntry_Gateway()

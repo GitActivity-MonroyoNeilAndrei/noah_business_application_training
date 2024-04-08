@@ -1,17 +1,27 @@
 ﻿baseTitle = "Request Entry";
+modaltitle = baseTitle;
 
 var nwDocno = '';
+let btnNext = false;
+let lastAction;
+
 function func_Reload() {
 
-    crnwTagSingleBind = true;
-
-    crLnk = "../PMORequestEntry/PMORequestEntry_Gateway";
+    crLnk = GetCurrentURL() +"PMORequestEntry_Gateway";
     crLnkGateKey = "PMORequestEntry";
-
+    crnwTagSingleBind = true;
     var isContinue = true;
     init_request();
     ToolBoxGetData = false;
-    DisableFields();
+    ClearFields();
+
+
+    nwParameter_Add("nwtku", getParameterByName("nwtku"));
+    nwParameter_Add("fromHist", getParameterByName("isView"));
+    nwParameter_Add("fromDocno", getParameterByName("docno"));
+
+    func_ActionDriven("actLoadDefaults", false);
+    nwLoading_Start("actLoadDefaults", crLoadingHTML);
 
     return isContinue;
 }
@@ -21,8 +31,7 @@ function func_Reload() {
 function func_ToolboxADD(indef, enume) {
     var isContinue = true;
 
-    MessageBox("New", "Trial");
-    parent_MessageBoxQuestionToolBox("New parent message box", baseTitle, "", indef, enume);
+    nwParameter_Add("nwtku", getParameterByName("nwtku"));
     EnableFields();
     ClearFields();
     func_Toolbox_Clear();
@@ -32,10 +41,8 @@ function func_ToolboxADD(indef, enume) {
 
 function func_ToolboxSave(indef, enume) {
     var isContinue = true;
-    console.log("func_ToolboxSave");
     cust_GetPara();
     parent_MessageBoxQuestionToolBox("Do you want to save the current record?", baseTitle, "", indef, enume);
-
     isContinue = false;
     return isContinue;
 }
@@ -57,6 +64,8 @@ function func_ToolboxRefresh(indef, enume) {
 
 function func_ToolboxInquire(indef, enume) {
     var isContinue = true;
+    nwParameter_Add("nwtku", getParameterByName("nwtku"));
+    $("#noah-webui-Toolbox").bindingProcess().enable(true);
     return isContinue;
 }
 
@@ -108,7 +117,9 @@ function cust_GetPara() {
     nwParameter_Add("txtVATAmount", $('#txtVATAmount').val());
     nwParameter_Add("txtEWTAmount", $('#txtEWTAmount').val());
     nwParameter_Add("txtNETAmount", $('#txtNETAmount').val());
+
     nwParameter_Add("txtTranNo", $('#txtTranNo').val());
+
     nwParameter_Add("txtTranDate", $('#txtTranDate').val());
     nwParameter_Add("txtDateSub", $('#txtDateSub').val());
     nwParameter_Add("txtDatePosted", $('#txtDatePosted').val());
@@ -116,9 +127,7 @@ function cust_GetPara() {
     nwParameter_Add("txtDocStatus", $('#txtDocStatus').val());
     nwParameter_Add("txtStatusCode", $('#txtStatusCode').val());
 
-    nwDocno = getParameterByName('nwDocno');
-    nwParameter_Add("nwDocno", nwDocno);
-
+    nwParameter_Add("nwtku", getParameterByName("nwtku"));
     nwParameter_Add("amt", $('#txtAmount').val());
     nwParameter_Add("vat", $('#txtVAT').val());
     nwParameter_Add("cwt", $('#txtCWT').val());
@@ -159,9 +168,11 @@ function EnableFields() { //Upon New
     $('#cmbTranAct').prop('disabled', false);
     $('#cmbRequest').prop('disabled', false);
     $('#cmbAccNo').prop('disabled', false);
-    $('#txtPropDate').enable(true);
+    $('#dpPropDate').enable(true);
     $('#txtRemarks').enable(true);
-    
+    $('#txtNoConsumption').enable(true);
+
+    $("#noah-webui-Toolbox").bindingProcess().enable(false);
     $('#btnReviewAttachment').enable(true);
     $('#btnReqCompliance').enable(true);
     //addbtnColorClass
@@ -241,25 +252,21 @@ function isExists(isEnabled) {
     }
 }
 
-///////////////////////////////////////
 
-$(document).on("change", "#cmbAccNo", function (e) {
+function Lookup_DoneFunction(idName, idNum) {
 
-    var accNo = $('#cmbAccNo').val();
-    nwParameter_Add("cmbAccNo", accNo);
+    var blank = "";
 
-    func_ActionDriven("load_defaults", false);
+    if (idName == 'toolboxInquire') {
+        nwParameter_Add("txtTrasactionNo", getLookupData(idNum, 0));
+    }
+    func_ActionDriven("actLoadBindings", false);
+}
 
-});
-
-$(document).on("change", "#cmbRequest", function (e) {
-
-    var req = $('#cmbRequest').val();
-    nwParameter_Add("cmbRequest", req);
-    
-    func_ActionDriven("load_defaultsX", false);
-
-});
+function getLookupData(idnum, index) {
+    var data = $("#menuCreatorContainer #nkLookupCon table tbody tr:eq(" + (idnum - 1) + ") td:eq(" + index + ") span").text();
+    return data;
+}
 
 $(document).on("change", "#txtSQM", function (e) {  //Cost Per unit
 
@@ -270,117 +277,457 @@ $(document).on("change", "#txtSQM", function (e) {  //Cost Per unit
         var amt = ConNo * CostU;
         $('#txtAmount').val(amt);
     }
-
 });
 
 $(document).on("change", "#txtConsumptionNo", function (e) {  //No of Consumption
 
-    var ConNo = $('#txtConsumptionNo').val();
-    var CostU = $('#txtSQM').val();
-    
-    var amt = ConNo * CostU;
-    $('#txtAmount').val(amt);
-
-    nwParameter_Add("amt", $('#txtAmount').val());
-    nwParameter_Add("vat", $('#txtVAT').val());
-    nwParameter_Add("cwt", $('#txtCWT').val());
-
-    func_ActionDriven("load_fromAmt", false);
+    //compAMT();
 });
 
-$(document).on("change", "#txtAmount", function (e) {  // Amount
+//$(document).on("change", "#txtAmount", function (e) {  // Amount
 
-    try {
-        nwParameter_Add("amt", $('#txtAmount').val());
-        nwParameter_Add("vat", $('#txtVAT').val());
-        nwParameter_Add("cwt", $('#txtCWT').val());
+//    try {
+//        nwParameter_Add("amt", $('#txtAmount').val());
+//        nwParameter_Add("vat", $('#txtVAT').val());
+//        nwParameter_Add("cwt", $('#txtCWT').val());
 
-        func_ActionDriven("load_fromAmt", false);
-        console.log("clicked");
-    } catch (e) {
-        console.log(e.toString());
-    }
-});
-
-$(document).on("change", "#txtConsump", function (e) {  // Enable No of consumption Trigger
-
-    var value = $('#txtConsump').val();
-   
-    if (value == 1) {
-        $('#txtConsumptionNo').enable(true);
-    } else {
-        $('#txtConsumptionNo').enable(false);
-        $('#txtConsumptionNo').val(value);
-    }
-
-});
+//        func_ActionDriven("actFromAmt", false);
+//        console.log("clicked");
+//    } catch (e) {
+//        console.log(e.toString());
+//    }
+//});
 
 $(document).on("click", "#btnReqCompliance", function (e) {
-    getcmbParams();
-    var trantype = getParameterByName('cmbTranAct_code');
-    var docno = $('#txtTranNo').val();
-    var status = $('#txtStatusCode').val();
-    nwDocno = getParameterByName('nwDocno');
+    const btnDisabled = $(this).hasClass('cst-dis');
 
-    if (status == "3" || nwDocno != "") {
-        var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=true";
+    if (!btnDisabled) {
+        var trantype = $('#cmbTranAct').val();
+        var docno = $('#txtTranNo').val();
+        var status = $('#txtStatusCode').val();
+        nwDocno = "";//getParameterByName('nwDocno');
 
-    } else {
-        var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=false";
+        if (status == "3" || nwDocno != "") {
+            var fullength = GetCurrentURL() + "../DCRequirementCompliance?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=true&nkpop=y";
+            //var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=true";
+
+        } else {
+            var fullength = GetCurrentURL() + "../DCRequirementCompliance?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=false&nkpop=y";
+            //var fullength = "../../../DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.aspx?TransactionNo=" + docno + "&TranType=" + trantype + "&isView=false";
+        }
+
+        nwLoading_Start('btnReqCompliance', crLoadingHTML);
+        nwPopupForm_Create("nwPopUpReqComp", true, fullength);
+        $('#nwPopUpReqComp .BoxTitle').text("Requirements Compliance");
+        $("#nwPopUpReqComp").css({ "min-width": "80%" });
+        $("#nwPopUpReqComp").css({ "min-height": "80%" });
+        nwPopupForm_ShowModal("nwPopUpReqComp");
+        nwLoading_End('btnReqCompliance');
     }
-
-    nwLoading_Start('btnReqCompliance', crLoadingHTML);
-    nwPopupForm_Create("nwPopUpReqComp", true, fullength);
-    $('#nwPopUpReqComp .BoxTitle').text("Requirements Compliance");
-    $("#nwPopUpReqComp").css({ "min-width": "80%" });
-    $("#nwPopUpReqComp").css({ "min-height": "80%" });
-    nwPopupForm_ShowModal("nwPopUpReqComp");
-    nwLoading_End('btnReqCompliance');
 });
 
 ///////////////////////////////////////
 
 function LoadfromReq() {
     ////
+
+    console.log("loadfromreq");
     var value = $('#txtConsump').val();
 
-    if (value == 1) {
-        $('#txtConsumptionNo').enable(true);
+    if (value == 1 || value == 5) {
+        $('#txtNoConsumption').enable(true);
+        $('#txtNoConsumption').val(0);
     } else {
-        $('#txtConsumptionNo').enable(false);
-        $('#txtConsumptionNo').val(value);
+        $('#txtNoConsumption').enable(false);
+        $('#txtNoConsumption').val(1);
     }
-    ////
-    var ConNo = $('#txtConsumptionNo').val();
+}
+
+function compAMT() {
+    var ConNo = $('#txtNoConsumption').val();
     var CostU = $('#txtSQM').val();
 
-    if (ConNo != "" & CostU != "") {
+    if (ConNo != "" && CostU != "") {
         var amtValue = ConNo * CostU;
-        $('#txtAmount').val(amtValue);
+        $('#txtAmount').val(amtValue.toFixed(2));
     }
-    ////
+
     nwParameter_Add("amt", $('#txtAmount').val());
     nwParameter_Add("vat", $('#txtVAT').val());
     nwParameter_Add("cwt", $('#txtCWT').val());
 
-    func_ActionDriven("load_fromAmt", false);
+    nwLoading_Start('actFromAmt', crLoadingHTML);
+    func_ActionDriven("actFromAmt", false);
 }
 
-/////////////Custom for ToolBox
-function thismethod() {
-    console.log("onclick method");
-
-    msgBoxContainerQuestion = "btnSaveCustom";
-    parent_MessageBoxQuestion("Would you like to save the current record?", baseTitle, "Question");
-    return true;
-}
-
+var genID;
 function msgBoxContainerQuestionF(genID, answer) {
 
-    if (genID == "btnSaveCustom") {
-        if (answer == "Yes") {
+    if (answer == "Yes") {
+
+        if (PromptID == "SaveDraft") {
             cust_GetPara();
-            func_ActionDriven("saveBtn_func", false);
+            nwLoading_Start('actSave', crLoadingHTML);
+            func_ActionDriven("actSave", false);
         }
+        if (PromptID == "ProcessData") {
+            var value = $('#txtTranNo').val();
+            cust_GetPara();
+
+            if (value == "") {
+                nwLoading_Start('actOnlyProcess', crLoadingHTML);
+                func_ActionDriven("actOnlyProcess", false);
+            }
+            else {
+                nwLoading_Start('actProcess', crLoadingHTML);
+                func_ActionDriven("actProcess", false)
+            }
+        }
+
+        if (PromptID == "Cancel") {
+            cust_GetPara();
+            nwLoading_Start('actCancelRequest', crLoadingHTML);
+            func_ActionDriven("actCancelRequest", false);
+        }
+    }
+}
+
+function disableTranTypeSelection() {
+    $('#viewingRemarks').removeClass('nwHide');
+
+    const pop = getParameterByName("isView");
+    if (pop == "true") { }
+    else {
+        $('#okay-button').removeClass('nwHide');
+    }
+
+    $('#cancel-button').removeClass('nwHide');
+
+    lastAction = "SaveDraft";
+
+    $('#btnReqCompliance').removeClass('cst-dis');
+    $('#btnReqCompliance').addClass('cst');
+
+    $('#savedColumn').removeClass('nwHide');
+}
+
+function showTransactionNo() {
+    $('#viewingRemarks').removeClass('nwHide');
+    $('#cancel-button').removeClass('nwHide');
+
+    let docno = $('#txtDocno').val();
+    lastAction = "SaveDone";
+    MessageBox("Entry has been Saved as Draft", "Service Entry", "");
+}
+
+
+function changeButton() {
+    lastAction = "SaveDraft";
+
+    $('#viewingRemarks').removeClass('nwHide');
+    $('#cancel-button').removeClass('nwHide');
+    $('#savedColumn').removeClass('nwHide');
+
+    const pop = getParameterByName("isView");
+    if (pop == "true") { }
+    else {
+        $('#okay-button').removeClass('nwHide');
+    }
+
+    $('#saveDraft-button').html('Save Changes');
+    $('#process-button').addClass('nwHide');
+    ///$('#back-button').addClass('nwHide');
+
+    let docno = $('#txtTranNo').val();
+    MessageBox("Your entry has been submitted.\n Transaction No.\n" + docno, "Service Entry", "");
+}
+
+function SaveDraft(indef, enume) {
+    //var isContinue = true;
+    cust_GetPara();
+    PromptID = "SaveDraft";
+    MessageBoxQuestion("Do you want to save the current record?", "Service Entry", "");
+    isContinue = false;
+
+    //return isContinue;
+}
+
+function CancelTransaction(indef, enume) {
+    cust_GetPara();
+    PromptID = "Cancel";
+    MessageBoxQuestion("Do you want to cancel the current request?", "Service Entry", "");
+    isContinue = false;
+    //return isContinue;
+}
+
+function SaveDone(indef, enume) {
+    //var isContinue = true;
+    PromptID = "SaveDone";
+    var savenwDocno = $('#txtDocno').val();
+    MessageBox("Entry has been Saved as Draft", "Service Entry", "error");
+    //MessageBox("Your entry has been submitted.\nTransaction No.\n" + savenwDocno + ".", "Service Entry", "error");
+    isContinue = false;
+
+    //return isContinue;
+}
+
+function ProcessData(indef, enume) {
+    var isContinue = true;
+    cust_GetPara();
+    PromptID = "ProcessData";
+    MessageBoxQuestion("Do you want to process the current record?", "Service Entry", "");
+    isContinue = false;
+
+    return isContinue;
+}
+
+
+function hideOkButton() {
+    const isView = getParameterByName("isView");
+    $('#btnReqCompliance').removeClass('cst-dis');
+    $('#btnReqCompliance').addClass('cst');
+
+    if (isView != "true") {
+        $('#okay-button').removeClass('nwHide');
+
+        let docStat = $('#txtDocStatCode').val();
+
+        if ((docStat != "1" && docStat != "2") && docStat != "") {
+
+            $('#back-button').addClass('nwHide');
+        }
+    }
+}
+
+$(document).ready(function () {
+    $('#next-button').click(function () {
+        if (btnNext == true) {
+            compAMT();
+            //cust_GetPara();
+            var currentContainer = $('.cst-container.active');
+            var nextContainer = currentContainer.next('.cst-container');
+
+            currentContainer.removeClass('active');
+            nextContainer.addClass('active');
+
+            var currentHeader = $('.cst-hrd-wrap.active');
+            var nextHeader = currentHeader.next('.cst-hrd-wrap');
+
+            currentHeader.removeClass('active');
+            nextHeader.addClass('active');
+        }
+    });
+
+    $('#back-button').click(function () {
+        let docStat = $('#txtDocStatCode').val();
+
+        if ((docStat != "1" && docStat != "2") && docStat != "") {
+            //redirectLink();
+        } else {
+            if (docStat == "2") {
+                $('#cmbTranAct').prop('disabled', true);
+            }
+
+            var currentContainer = $('.cst-container.active');
+            var prevContainer = currentContainer.prev('.cst-container');
+
+            currentContainer.removeClass('active');
+            prevContainer.addClass('active');
+
+            var currentHeader = $('.cst-hrd-wrap.active');
+            var prevHeader = currentHeader.prev('.cst-hrd-wrap');
+
+            currentHeader.removeClass('active');
+            prevHeader.addClass('active');
+        }
+    });
+
+    $('#saveDraft-button').click(function () {
+        cust_GetPara();
+        SaveDraft();
+    });
+
+    $('#process-button').click(function () {
+        cust_GetPara();
+        ProcessData();
+    });
+
+    $('#cancel-button').click(function () {
+        CancelTransaction();
+    });
+
+    $('#okay-button').click(function () {
+        redirectLink();
+    });
+});
+
+
+
+function manageTranButtons(saveType) {
+    $('#savedColumn').removeClass('nwHide');
+
+    let reqDesc = $("#cmbRequest option:selected").text();
+    $('#txtRequestDesc').val(reqDesc);
+
+    if (saveType != "1" && saveType != "2") {
+        $('#saveControlsGrp').addClass("nwHide");
+        $('#back-button').addClass('nwHide');
+        $('#formTitle').addClass('nwHide');
+        
+    } else {
+        if (saveType == "2") {
+            $('#saveDraft-button').html("Save Changes");
+            $('#process-button').addClass('nwHide');
+        }
+    }
+
+    $('#viewingRemarks').removeClass("nwHide");
+    $('#cancel-button').removeClass('nwHide');
+
+    $('#btnReqCompliance').prop('disabled', false);
+    $('#btnReqCompliance').removeClass('cst-dis');
+    $('#btnReqCompliance').addClass('cst');
+
+    $('#next-button').addClass('btn-default-darkblue');
+    $('#next-button').removeClass('cst-dis');
+
+    const pop = getParameterByName("isView");
+
+    btnNext = true;
+    $('#next-button').click();
+}
+
+function Message_Ok() {
+    switch (lastAction) {
+        case "SaveDraft":
+            Message_close();
+            break;
+        case "SaveDone":
+            Message_close();
+            //redirectLink();
+            break;
+        default:
+            Message_close();
+            break;
+    }
+
+    lastAction = "";
+}
+
+function redirectLink() {
+    let nwtku = getParameterByName("nwtku");
+    let nsc = getParameterByName("nsc");
+    var redirectURL = "";
+
+    if (nwtku != "")
+        redirectURL = GetCurrentURL() + "../PMOTransaction_History?nwtku=" + nwtku + "&nsc=" + nsc + "&nkpop=y&nkmob=y";
+    else
+        redirectURL = GetCurrentURL() + "../PMOTransaction_History";
+
+    location.href = redirectURL;
+}
+
+
+function cancelDone() {
+    lastAction = "Cancel";
+
+    $('#saveControlsGrp').addClass('nwHide');
+    $('#back-button').addClass('nwHide');
+
+    nwLoading_End('actCancelRequest');
+
+    let docno = $('#txtTranNo').val();
+    MessageBox("Your request with Transaction No. " + docno + " has been cancelled.", "Service Entry", "");
+}
+
+$(document).on("change", "#cmbTranAct", function (e) {
+    var value = $('#cmbTranAct').val();
+
+    if (value != "") {
+        $('#txtBasisDesc').val();
+        $('#txtNoConsumption').val();
+        nwParameter_Add("cmbTranSelected", value);
+        func_ActionDriven("actGetRequests", true);
+    } else {
+        var x = $('#cmbRequest');
+        x.empty();
+    }
+
+    checkEmptyFields();
+});
+
+$(document).on("change", "#cmbRequest", function (e) {
+
+    var req = $('#cmbRequest').val();
+    var reqDesc = $('#cmbRequest :selected').text();
+    var cosum = $('#txtNoConsumption').val();
+
+    $('#txtConsumptionNo').val(cosum);
+    $('#txtRequestDesc').val(reqDesc);
+
+    nwParameter_Add("cmbReq", req);
+    nwParameter_Add("nwtku", getParameterByName("nwtku"));
+    func_ActionDriven("actGetDataDetails", false);
+    checkEmptyFields();
+    //compAMT();
+});
+
+$(document).on("change", "#txtNoConsumption", function (e) {
+    var cosum1 = $('#txtNoConsumption').val();
+    $('#txtConsumptionNo').val(cosum1);
+    //compAMT();
+    checkEmptyFields();
+});
+
+$(document).on('change', '#txtPropDate', function () {
+    var selectedDate = $(this).val();
+    var today = new Date().toLocaleDateString();
+
+    if (Date.parse(selectedDate) < Date.parse(today)) {
+        MessageBox("Cannot proceed. Date should not be earlier today.\n", modaltitle, "error");
+        $(this).val("");
+        return false;
+    }
+    $('#txtPropdateDesc').val(selectedDate);
+    checkEmptyFields();
+});
+
+$(document).on("blur", "#txtNoConsumption", function (e) {
+    checkEmptyFields();
+});
+
+$(document).on("blur", "#txtRemarks", function (e) {
+    checkEmptyFields();
+});
+
+function checkEmptyFields() {
+    var cmbTran = $('#cmbTranAct').val();
+    var cmbReq = $('#cmbRequest').val();
+    var dpPropDate = $('#txtPropDate').val();
+    var txtNoConsump = $('#txtNoConsumption').val();
+    var txtRemarks = $('#txtRemarks').val();
+
+    let errCtr = 0;
+    errCtr = (cmbTran == "" || cmbTran == null) ? ++errCtr : errCtr;
+    errCtr = (cmbReq == "" || cmbReq == null) ? ++errCtr : errCtr;
+    errCtr = (dpPropDate == "" || dpPropDate == null) ? ++errCtr : errCtr;
+    errCtr = (txtNoConsump == "" || txtNoConsump == 0 || txtNoConsump == null) ? ++errCtr : errCtr;
+    errCtr = (txtRemarks == "" || txtRemarks == null) ? ++errCtr : errCtr;
+
+    //console.log(errCtr, cmbTran, cmbReq, dpPropDate, txtNoConsump, txtRemarks);
+
+    if (errCtr == 0) {
+        var element = document.getElementById("next-button");
+        element.classList.add("btn-default-darkblue");
+        element.classList.remove("cst-dis");
+        
+        $('#txtConsumptionNo').val($('#txtNoConsumption').val());
+
+        btnNext = true;
+    } else {
+        var element = document.getElementById("next-button");
+        element.classList.add("cst-dis");
+        element.classList.remove("btn-default-darkblue");
+        btnNext = false;
     }
 }

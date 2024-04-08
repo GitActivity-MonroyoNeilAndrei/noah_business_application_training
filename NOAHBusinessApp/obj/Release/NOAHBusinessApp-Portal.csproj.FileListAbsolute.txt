@@ -158,3 +158,651 @@ D:\Angelo Works\Web Libraries\PORTAL MAIN CONSO\PORTAL MAIN CONSO\NOAHV10\NOAHBu
 D:\Angelo Works\Web Libraries\PORTAL MAIN CONSO\PORTAL MAIN CONSO\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Angelo Works\Web Libraries\PORTAL MAIN CONSO\PORTAL MAIN CONSO\NOAHV10\NOAHBusinessApp\obj\Release\NOAHBusinessApp.dll
 D:\Angelo Works\Web Libraries\PORTAL MAIN CONSO\PORTAL MAIN CONSO\NOAHV10\NOAHBusinessApp\obj\Release\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\ApplicationInsights.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\csc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\vbc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Custom.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\WebGrease.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\obj\Release\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10\NOAHBusinessApp\obj\Release\NOAHBusinessApp.pdb
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\ApplicationInsights.config
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\csc.exe
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\vbc.exe
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Custom.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\EntityFramework.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Owin.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\WebGrease.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.Helpers.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.Mvc.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.Optimization.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.Razor.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\EntityFramework.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\obj\Release\NOAHBusinessApp-Portal.csprojResolveAssemblyReference.cache
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\obj\Release\NOAHBusinessApp.dll
+D:\PORTAL CENTRAL\V10\Conso\10272022\NOAHV10\NOAHBusinessApp\obj\Release\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\ApplicationInsights.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\csc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\vbc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Custom.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.Helpers.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.Mvc.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.Optimization.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.WebPages.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\WebGrease.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.Helpers.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.Mvc.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.Optimization.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.WebPages.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\obj\Release\NOAHBusinessApp-Portal.csprojResolveAssemblyReference.cache
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\obj\Release\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 11092022 TD\NOAHBusinessApp\obj\Release\NOAHBusinessApp.pdb
+D:\Angelo Works\Web Libraries\PORTAL MAIN CONSO\PORTAL MAIN CONSO\NOAHV10\NOAHBusinessApp\obj\Release\NOAHBusinessApp-Portal.csprojResolveAssemblyReference.cache
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\ApplicationInsights.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\csc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\vbc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Custom.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.Helpers.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.Mvc.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.Optimization.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.WebPages.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\WebGrease.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.Helpers.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.Mvc.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.Optimization.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.WebPages.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\obj\Release\NOAHBusinessApp-Portal.csprojResolveAssemblyReference.cache
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\obj\Release\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD\NOAHBusinessApp\obj\Release\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\ApplicationInsights.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\csc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\vbc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Custom.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.Helpers.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.Mvc.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.Optimization.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.WebPages.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\WebGrease.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.Helpers.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.Mvc.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.Optimization.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.WebPages.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp-Portal.csprojResolveAssemblyReference.cache
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10 12052022 TD (Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\ApplicationInsights.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\csc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\vbc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Custom.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Helpers.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Mvc.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Optimization.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\WebGrease.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Helpers.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Mvc.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Optimization.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp-Portal.csprojResolveAssemblyReference.cache
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_02212023_DEPLOY_(Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\ApplicationInsights.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\csc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\vbc.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Custom.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Owin.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Helpers.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Mvc.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Optimization.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\WebGrease.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Helpers.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Mvc.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Optimization.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp-Portal.csprojResolveAssemblyReference.cache
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp.dll
+C:\Users\fpti\Desktop\For OJT\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp.pdb
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\ApplicationInsights.config
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\csc.exe
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\vbc.exe
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Custom.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Owin.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Helpers.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Mvc.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Optimization.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Razor.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\WebGrease.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Helpers.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Mvc.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Optimization.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.Razor.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp-Portal.csprojResolveAssemblyReference.cache
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp.dll
+C:\NOAHV10_DEPLOY_(Seller)\NOAHBusinessApp\obj\Release\NOAHBusinessApp.pdb

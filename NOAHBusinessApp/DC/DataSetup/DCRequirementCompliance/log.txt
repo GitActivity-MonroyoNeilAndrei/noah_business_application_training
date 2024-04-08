@@ -1,4 +1,39 @@
-﻿Modified By       : BJV
+﻿Modified By       : CLS
+Date Modified     : 4/20/2023
+Menu Item Version : 10.0.0.8
+Reason			  : Remove Row Adding
+
+Modified By       : BJV
+Date Modified     : 01/24/2023
+Menu Item Version : 10.0.0.7
+Reason			  : Add auto close upon success of Upload and addressing findings on redirect if file is blank
+
+Modified By       : BJV
+Date Modified     : 01/24/2023
+Menu Item Version : 10.0.0.6
+Reason			  : Add Attach,Remove and View text in line details 
+
+Modified By       : BJV
+Date Modified     : 12/27/2022
+Menu Item Version : 10.0.0.5
+Reason			  : value of compile and require is change and fix validation of dates
+
+Modified By       : BJV
+Date Modified     : 12/23/2022
+Menu Item Version : 10.0.0.4
+Reason			  : Fix Value of CompileHDR for validation in Saving 
+
+Modified By       : BJV
+Date Modified     : 12/23/2022
+Menu Item Version : 10.0.0.3
+Reason			  : Set value to false if compile is empty
+
+Modified By       : BJV
+Date Modified     : 12/22/2022
+Menu Item Version : 10.0.0.2
+Reason			  : Fix Uploading
+
+Modified By       : BJV
 Date Modified     : 08/23/2022
 Menu Item Version : 10.0.0.1
 Reason			  : Conversion from v9 to v10

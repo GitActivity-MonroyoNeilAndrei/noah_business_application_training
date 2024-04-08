@@ -10,6 +10,7 @@ using NoahWebLib;
 using System.Data;
 
 using System.Web.Mvc;
+using System.Text.RegularExpressions;
 
 namespace NOAHBusinessApp.Main.DocumentEntry
 {
@@ -29,6 +30,8 @@ namespace NOAHBusinessApp.Main.DocumentEntry
             try
             {
                 strpop = Context.Request.QueryString["nkpop"].ToString();
+                string[] strpop_list = Regex.Split(strpop, ",");
+                strpop = strpop_list[0].ToString();
             }
             catch { }
             if(strpop == "y") def.isPopup = true;
@@ -54,19 +57,19 @@ namespace NOAHBusinessApp.Main.DocumentEntry
 
                
 
-                //Company Logo
-                DataTable dtLogo = dal.getLogo();
-                string imagestring = picChange(dtLogo.Rows[0][0]);
-                strf += "$(`.hdr-logo`).attr(`src`,`" + imagestring + "`);";
+                ////Company Logo
+                //DataTable dtLogo = dal.getLogo();
+                //string imagestring = picChange(dtLogo.Rows[0][0]);
+                //strf += "$(`.hdr-logo`).attr(`src`,`" + imagestring + "`);";
 
-                string banner = dal.getBanner();
-                string file = banner.Replace("#baselink#", "").Replace("\\", "/");
-                strf += "ChangeBanner(`" + file + "`);";
+                //string banner = dal.getBanner();
+                //string file = banner.Replace("#baselink#", "").Replace("\\", "/");
+                //strf += "ChangeBanner(`" + file + "`);";
 
-                //Seller Picture
-                string image = dal.getUserImage(recuser);
-                image = image.Replace("\\", "//");
-                strf += "ChangeUserImage(`" + image + "`);";
+                ////Seller Picture
+                //string image = dal.getUserImage(recuser);
+                //image = image.Replace("\\", "//");
+                //strf += "ChangeUserImage(`" + image + "`);";
 
 
                 //strf = "<script id =`sdefault`>"+ strf + "</script>";
