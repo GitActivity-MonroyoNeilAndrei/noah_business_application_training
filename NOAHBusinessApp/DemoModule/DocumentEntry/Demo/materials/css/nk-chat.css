@@ -1,0 +1,986 @@
+﻿/*
+    # NEW NOAH WEB UI
+    # Company Owner: Forecasting and Planning Technologies Inc. | NOAH Business Applications | PROMPTUS 8
+    # Developer : April Rose Cabalhug
+    # Designer : April Rose Cabalhug
+    # Date Created : September 19, 2024
+    # Last Date Modified : Sept 23, 2024 | ARC
+    # Date Modified : Sept 23, 2024 | ARC
+*/
+
+/*Component: CHAT BOX*/
+.chat-bx {
+    .open-button {
+        background-color: #555;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        opacity: 0.8;
+        position: fixed;
+        bottom: 35px;
+        right: 20px;
+        width: 50px;
+        border-radius: 50%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+            width: 50px !important;
+            height: 50px;
+            transform: scale(2.3);
+        }
+    }
+
+    .chat-popup {
+        display: none;
+        position: fixed;
+        bottom: 34px;
+        right: 20px;
+        z-index: 13;
+        width: 300px;
+    }
+
+    .form-container {
+        max-width: 300px;
+        background-color: white;
+        border-radius: 10px 10px 0px 0px;
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
+            rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    }
+
+    .form-container textarea {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+        resize: none;
+        min-height: 200px;
+    }
+
+    .form-container textarea:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    .form-container .btn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 10px;
+        opacity: 0.8;
+    }
+
+    .chat-bx-hdr {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #e8edf3;
+        padding: 10px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        width: 70%;
+    }
+
+    .nk-pr {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .nk-pr img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .nk-name {
+        margin-left: 10px;
+        font-weight: 600;
+    }
+
+    .btn-actions {
+        display: flex;
+        justify-content: space-around;
+        width: 30%;
+    }
+
+    .btn-actions .nk-options,
+    .btn-actions .nk-create,
+    .btn-actions .nk-minimize {
+        width: 30px;
+        height: 28px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        cursor: pointer;
+        background-size: 18px 18px;
+        border-radius: 50%;
+
+        &:hover {
+            background-color: #d2e9ff;
+        }
+    }
+
+    .left {
+        width: 100%;
+        background-color: #fff;
+
+        input[type="text"] {
+            height: 30px;
+            width: 90%;
+            padding: 0 5px;
+            background-color: #eceff1;
+            border-radius: 21px;
+        }
+    }
+
+    .nk-options {
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%2325619c" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,10a2,2,0,1,1-2,2A2,2,0,0,1,12,10ZM4,14a2,2,0,1,0-2-2A2,2,0,0,0,4,14Zm16-4a2,2,0,1,0,2,2A2,2,0,0,0,20,10Z"></path></svg>');
+    }
+
+    .nk-create {
+        background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20id%3D%22SVGRepo_bgCarrier%22%20stroke-width%3D%220%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_tracerCarrier%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_iconCarrier%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M21.1213%202.70705C19.9497%201.53548%2018.0503%201.53547%2016.8787%202.70705L15.1989%204.38685L7.29289%2012.2928C7.16473%2012.421%207.07382%2012.5816%207.02986%2012.7574L6.02986%2016.7574C5.94466%2017.0982%206.04451%2017.4587%206.29289%2017.707C6.54127%2017.9554%206.90176%2018.0553%207.24254%2017.9701L11.2425%2016.9701C11.4184%2016.9261%2011.5789%2016.8352%2011.7071%2016.707L19.5556%208.85857L21.2929%207.12126C22.4645%205.94969%2022.4645%204.05019%2021.2929%202.87862L21.1213%202.70705ZM18.2929%204.12126C18.6834%203.73074%2019.3166%203.73074%2019.7071%204.12126L19.8787%204.29283C20.2692%204.68336%2020.2692%205.31653%2019.8787%205.70705L18.8622%206.72357L17.3068%205.10738L18.2929%204.12126ZM15.8923%206.52185L17.4477%208.13804L10.4888%2015.097L8.37437%2015.6256L8.90296%2013.5112L15.8923%206.52185ZM4%207.99994C4%207.44766%204.44772%206.99994%205%206.99994H10C10.5523%206.99994%2011%206.55223%2011%205.99994C11%205.44766%2010.5523%204.99994%2010%204.99994H5C3.34315%204.99994%202%206.34309%202%207.99994V18.9999C2%2020.6568%203.34315%2021.9999%205%2021.9999H16C17.6569%2021.9999%2019%2020.6568%2019%2018.9999V13.9999C19%2013.4477%2018.5523%2012.9999%2018%2012.9999C17.4477%2012.9999%2017%2013.4477%2017%2013.9999V18.9999C17%2019.5522%2016.5523%2019.9999%2016%2019.9999H5C4.44772%2019.9999%204%2019.5522%204%2018.9999V7.99994Z%22%20fill%3D%22%2325619c%22%3E%3C/path%3E%20%3C/g%3E%3C/svg%3E");
+    }
+
+    .nk-minimize {
+        background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20id%3D%22SVGRepo_bgCarrier%22%20stroke-width%3D%220%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_tracerCarrier%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_iconCarrier%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M4.29289%208.29289C4.68342%207.90237%205.31658%207.90237%205.70711%208.29289L12%2014.5858L18.2929%208.29289C18.6834%207.90237%2019.3166%207.90237%2019.7071%208.29289C20.0976%208.68342%2020.0976%209.31658%2019.7071%209.70711L12.7071%2016.7071C12.3166%2017.0976%2011.6834%2017.0976%2011.2929%2016.7071L4.29289%209.70711C3.90237%209.31658%203.90237%208.68342%204.29289%208.29289Z%22%20fill%3D%22%2325619c%22%3E%3C/path%3E%20%3C/g%3E%3C/svg%3E");
+    }
+
+    .top {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        padding: 10px;
+        display: inline-flex;
+        border-bottom: 2px solid #e8edf3;
+    }
+
+    .search {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        margin-left: 5px;
+        background-color: #25619c;
+        border: 1px solid #e6e6e6;
+        background-size: 20px;
+        background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20id%3D%22SVGRepo_bgCarrier%22%20stroke-width%3D%220%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_tracerCarrier%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C/g%3E%3Cg%20id%3D%22SVGRepo_iconCarrier%22%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M11.567%209.8895C12.2495%208.90124%2012.114%207.5637%2011.247%206.7325C10.3679%205.88806%209.02339%205.75928%207.99998%206.4215C7.57983%206.69308%207.25013%207.0837%207.05298%207.5435C6.85867%207.99881%206.80774%208.50252%206.90698%208.9875C7.00665%209.47472%207.25054%209.92071%207.60698%2010.2675C7.97021%2010.6186%208.42786%2010.8563%208.92398%2010.9515C9.42353%2011.049%209.94062%2011.0001%2010.413%2010.8105C10.8798%2010.6237%2011.2812%2010.3033%2011.567%209.8895Z%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C/path%3E%20%3Cpath%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M12.433%2017.8895C11.7504%2016.9012%2011.886%2015.5637%2012.753%2014.7325C13.6321%2013.8881%2014.9766%2013.7593%2016%2014.4215C16.4202%2014.6931%2016.7498%2015.0837%2016.947%2015.5435C17.1413%2015.9988%2017.1922%2016.5025%2017.093%2016.9875C16.9933%2017.4747%2016.7494%2017.9207%2016.393%2018.2675C16.0298%2018.6186%2015.5721%2018.8563%2015.076%2018.9515C14.5773%2019.0481%2014.0614%2018.9988%2013.59%2018.8095C13.1222%2018.6234%2012.7197%2018.3034%2012.433%2017.8895V17.8895Z%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C/path%3E%20%3Cpath%20d%3D%22M12%207.75049C11.5858%207.75049%2011.25%208.08627%2011.25%208.50049C11.25%208.9147%2011.5858%209.25049%2012%209.25049V7.75049ZM19%209.25049C19.4142%209.25049%2019.75%208.9147%2019.75%208.50049C19.75%208.08627%2019.4142%207.75049%2019%207.75049V9.25049ZM6.857%209.25049C7.27121%209.25049%207.607%208.9147%207.607%208.50049C7.607%208.08627%207.27121%207.75049%206.857%207.75049V9.25049ZM5%207.75049C4.58579%207.75049%204.25%208.08627%204.25%208.50049C4.25%208.9147%204.58579%209.25049%205%209.25049V7.75049ZM12%2017.2505C12.4142%2017.2505%2012.75%2016.9147%2012.75%2016.5005C12.75%2016.0863%2012.4142%2015.7505%2012%2015.7505V17.2505ZM5%2015.7505C4.58579%2015.7505%204.25%2016.0863%204.25%2016.5005C4.25%2016.9147%204.58579%2017.2505%205%2017.2505V15.7505ZM17.143%2015.7505C16.7288%2015.7505%2016.393%2016.0863%2016.393%2016.5005C16.393%2016.9147%2016.7288%2017.2505%2017.143%2017.2505V15.7505ZM19%2017.2505C19.4142%2017.2505%2019.75%2016.9147%2019.75%2016.5005C19.75%2016.0863%2019.4142%2015.7505%2019%2015.7505V17.2505ZM12%209.25049H19V7.75049H12V9.25049ZM6.857%207.75049H5V9.25049H6.857V7.75049ZM12%2015.7505H5V17.2505H12V15.7505ZM17.143%2017.2505H19V15.7505H17.143V17.2505Z%22%20fill%3D%22%23ffffff%22%3E%3C/path%3E%20%3C/g%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    ul.people {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 350px;
+        z-index: 15;
+        position: relative;
+
+        .person {
+            position: relative;
+            width: 100%;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+
+            &:after {
+                position: absolute;
+                bottom: 0;
+                display: block;
+                width: 93%;
+                height: 1px;
+                content: "";
+                background-color: #e6e6e6;
+            }
+
+            &:hover {
+                background-color: #ebf5fc;
+            }
+
+            img {
+                float: left;
+                width: 40px;
+                height: 40px;
+                margin-right: 12px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+
+        .name {
+            font-size: 14px;
+            line-height: 22px;
+            color: #1a1a1a;
+            font-weight: 600;
+            width: 55%;
+            display: inline-block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .time {
+            font-size: 14px;
+            position: absolute;
+            right: 10px;
+            color: #999;
+            line-height: 22px;
+        }
+
+        .unread {
+            width: 18px;
+            font-size: 12px;
+            position: absolute;
+            right: 10px;
+            color: #fff;
+            line-height: 18px;
+            background-color: #93aac3;
+            justify-content: center;
+            display: inline-flex;
+            border-radius: 50%;
+        }
+
+        .preview {
+            font-size: 13px;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 70%;
+            text-overflow: ellipsis;
+            color: #999;
+            line-height: 18px;
+        }
+
+        .person img {
+            display: none;
+        }
+
+        .person[data-chat="person1"]::before,
+        .person[data-chat="person2"]::before,
+        .person[data-chat="person3"]::before,
+        .person[data-chat="person4"]::before,
+        .person[data-chat="person5"]::before,
+        .person[data-chat="person6"]::before {
+            float: left;
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+            object-fit: cover;
+            border-radius: 50%;
+            content: "";
+            background-size: cover;
+        }
+
+        .person[data-chat="person1"]::before {
+            background-image: url(../../Media/images/bg-theme/random/avatar-icon-ab.svg);
+        }
+
+        .person[data-chat="person2"]::before {
+            background-image: url(../../Media/images/bg-theme/random/avatar-icon-ac.svg);
+        }
+
+        .person[data-chat="person3"]::before {
+            background-image: url(../../Media/images/bg-theme/random/avatar-icon-aa.svg);
+        }
+
+        .person[data-chat="person4"]::before {
+            background-image: url(../../Media/images/bg-theme/random/avatar-icon-ad.svg);
+        }
+
+        .person[data-chat="person5"]::before {
+            background-image: url(../../Media/images/bg-theme/random/avatar-icon-ae.svg);
+        }
+
+        .person[data-chat="person6"]::before {
+            background-image: url(../../Media/images/bg-theme/random/avatar-icon-ae.svg);
+        }
+    }
+
+    /*RIGHT SIDE CHAT BOX*/
+    div#right-container {
+        display: none;
+    }
+
+    .right {
+        background-color: #fff;
+        display: block;
+        position: fixed;
+        bottom: 34px;
+        right: 320px;
+        border: 1px solid #f1f1f1;
+        z-index: 14;
+        width: 350px;
+        height: 441px;
+        border-radius: 10px 10px 0px 0px;
+
+        .btn-actions .nk-video,
+        .btn-actions .nk-exit {
+            width: 30px;
+            height: 28px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            background-size: 15px 15px;
+            border-radius: 50%;
+
+            &:hover {
+                background-color: #d2e9ff;
+            }
+        }
+
+        .nk-video {
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 10L18.5768 8.45392C19.3699 7.97803 19.7665 7.74009 20.0928 7.77051C20.3773 7.79703 20.6369 7.944 20.806 8.17433C21 8.43848 21 8.90095 21 9.8259V14.1741C21 15.099 21 15.5615 20.806 15.8257C20.6369 16.056 20.3773 16.203 20.0928 16.2295C19.7665 16.2599 19.3699 16.022 18.5768 15.5461L16 14M6.2 18H12.8C13.9201 18 14.4802 18 14.908 17.782C15.2843 17.5903 15.5903 17.2843 15.782 16.908C16 16.4802 16 15.9201 16 14.8V9.2C16 8.0799 16 7.51984 15.782 7.09202C15.5903 6.71569 15.2843 6.40973 14.908 6.21799C14.4802 6 13.9201 6 12.8 6H6.2C5.0799 6 4.51984 6 4.09202 6.21799C3.71569 6.40973 3.40973 6.71569 3.21799 7.09202C3 7.51984 3 8.07989 3 9.2V14.8C3 15.9201 3 16.4802 3.21799 16.908C3.40973 17.2843 3.71569 17.5903 4.09202 17.782C4.51984 18 5.07989 18 6.2 18Z" stroke="%2325619c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>');
+        }
+
+        .nk-exit {
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="%2325619c"></path> </g></svg>');
+        }
+
+        .user-info {
+            width: 65%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-actions {
+            width: 35%;
+        }
+
+        span.profile {
+            float: left;
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 50%;
+            background-size: cover;
+            background-image: url(../../Media/images/bg-theme/random/avatar-icon-aa.svg);
+        }
+
+        span.name {
+            font-size: 14px;
+            color: #1a1a1a;
+            font-weight: 600;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 55%;
+        }
+
+        span.status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            vertical-align: middle;
+
+            &.active {
+                background: linear-gradient(to bottom, #47e07d, #38af62);
+            }
+
+            &.inactive {
+                background: linear-gradient(to bottom, #acbfd2, #7f92a5);
+            }
+        }
+
+        .chat-bx-send {
+            position: relative;
+            padding: 10px 0;
+            border-top: 1px solid #e8edf3;
+
+            input[type="text"] {
+                width: 94%;
+                margin: 0 10px;
+                height: 30px;
+                border-radius: 5px;
+                padding: 0 30px 0 60px;
+            }
+
+            .nk-attachment,
+            .nk-smiley,
+            .nk-send {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                background-size: 17px;
+                background-repeat: no-repeat;
+                width: 23px !important;
+                height: 23px !important;
+                border-radius: 50%;
+                background-position: center;
+
+                &:hover {
+                    background-color: #eee;
+                }
+            }
+
+            span.nk-attachment {
+                left: 15px;
+                background-image: url('data:image/svg+xml;utf8,<svg viewBox="-8 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="%23999999"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>attachment</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-212.000000, -151.000000)" fill="%23999999"> <path d="M226,155 L226,175 C226,178.313 223.313,181 220,181 C216.687,181 214,178.313 214,175 L214,157 C214,154.791 215.791,153 218,153 C220.209,153 222,154.791 222,157 L222,175 C222,176.104 221.104,177 220,177 C218.896,177 218,176.104 218,175 L218,159 L216,159 L216,175 C216,177.209 217.791,179 220,179 C222.209,179 224,177.209 224,175 L224,157 C224,153.687 221.313,151 218,151 C214.687,151 212,153.687 212,157 L212,176 C212.493,179.945 215.921,183 220,183 C224.079,183 227.507,179.945 228,176 L228,155 L226,155" id="attachment" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>');
+            }
+
+            span.nk-smiley {
+                left: 38px;
+                background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 23.25C18.2132 23.25 23.25 18.2132 23.25 12C23.25 5.7868 18.2132 0.75 12 0.75C5.7868 0.75 0.75 5.7868 0.75 12C0.75 18.2132 5.7868 23.25 12 23.25Z" stroke="%23999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M18.75 10.5005C18.595 10.0617 18.3077 9.68178 17.9278 9.41305C17.5478 9.14432 17.0939 9.00001 16.6285 9.00001C16.1631 9.00001 15.7092 9.14432 15.3292 9.41305C14.9551 9.67765 14.6709 10.0501 14.5142 10.4803" stroke="%23999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M5.25018 10.5005C5.4052 10.0617 5.69247 9.68178 6.07242 9.41305C6.45237 9.14432 6.9063 9.00001 7.37168 9.00001C7.83706 9.00001 8.29099 9.14432 8.67094 9.41305C9.03808 9.67272 9.31868 10.0362 9.47705 10.4563" stroke="%23999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M5.94824 15C6.50681 16.1273 7.3692 17.076 8.43818 17.7394C9.50715 18.4027 10.7402 18.7542 11.9982 18.7542C13.2563 18.7542 14.4893 18.4027 15.5583 17.7394C16.6202 17.0804 17.4782 16.1399 18.0371 15.0224" stroke="%23999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>');
+            }
+
+            span.nk-send {
+                right: 18px;
+                background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10.3009 13.6949L20.102 3.89742M10.5795 14.1355L12.8019 18.5804C13.339 19.6545 13.6075 20.1916 13.9458 20.3356C14.2394 20.4606 14.575 20.4379 14.8492 20.2747C15.1651 20.0866 15.3591 19.5183 15.7472 18.3818L19.9463 6.08434C20.2845 5.09409 20.4535 4.59896 20.3378 4.27142C20.2371 3.98648 20.013 3.76234 19.7281 3.66167C19.4005 3.54595 18.9054 3.71502 17.9151 4.05315L5.61763 8.2523C4.48114 8.64037 3.91289 8.83441 3.72478 9.15032C3.56153 9.42447 3.53891 9.76007 3.66389 10.0536C3.80791 10.3919 4.34498 10.6605 5.41912 11.1975L9.86397 13.42C10.041 13.5085 10.1295 13.5527 10.2061 13.6118C10.2742 13.6643 10.3352 13.7253 10.3876 13.7933C10.4468 13.87 10.491 13.9585 10.5795 14.1355Z" stroke="%23999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>');
+            }
+        }
+
+        .chat-bx-body {
+            width: 100%;
+            height: 350px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 5px;
+        }
+
+        .chat-message {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .chat-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            .ks-item {
+                display: flex;
+                padding: 5px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            /*SENDER*/
+            li.ks-item.ks-self {
+                display: flex;
+                padding: 5px;
+                width: 100%;
+                box-sizing: border-box;
+                justify-content: flex-end;
+
+                span.ks-avatar.ks-offline {
+                    order: 2;
+                }
+
+                .ks-body {
+                    order: 1;
+                    border-top-left-radius: 0;
+                    margin-left: 45px;
+                    margin-right: 10px;
+                    padding: 8px;
+                    background-color: #d2e9ff;
+                    position: relative;
+                    max-width: calc(100% - 50px);
+                    box-sizing: border-box;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                    border-radius: 5px 0px 5px 5px;
+                    min-width: calc(100% - 215px);
+
+                    &:before {
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        right: -9px;
+                        top: 0px;
+                        width: 0;
+                        height: 0;
+                        border-top: 0 solid transparent;
+                        border-right: 0 solid transparent;
+                        border-bottom: 10px solid transparent;
+                        border-left: 10px solid #d2e9ff;
+                    }
+                }
+            }
+
+            /*RECEIVER*/
+            li.ks-item.ks-sender {
+                display: flex;
+                padding: 5px;
+                width: 100%;
+                box-sizing: border-box;
+
+                span.ks-avatar.ks-offline {
+                    order: 1;
+                }
+
+                .ks-body {
+                    order: 2;
+                    border-top-left-radius: 0;
+                    margin-left: 10px;
+                    margin-right: 47px;
+                    padding: 8px;
+                    background-color: #eff1f7;
+                    position: relative;
+                    max-width: calc(100% - 50px);
+                    box-sizing: border-box;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                    border-radius: 0px 5px 5px 5px;
+                    min-width: calc(100% - 215px);
+
+                    &:before {
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        left: -9px;
+                        top: 0px;
+                        width: 0;
+                        height: 0;
+                        border-top: 10px solid #eff1f7;
+                        border-right: 0 solid transparent;
+                        border-bottom: 0 solid transparent;
+                        border-left: 10px solid transparent;
+                    }
+                }
+            }
+
+            .rounded-circle {
+                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+            }
+
+            img {
+                vertical-align: middle;
+                border-style: none;
+            }
+
+            .ks-message {
+                font-size: 13px;
+                color: #535050;
+            }
+
+            .ks-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 2px;
+            }
+
+            .ks-name {
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 15px;
+            }
+
+            .ks-datetime {
+                font-size: 10px;
+                text-transform: uppercase;
+                color: #858585;
+                line-height: 15px;
+            }
+        }
+
+        div#nk-right-opt {
+            display: none;
+            width: 150px;
+            height: auto;
+            position: absolute;
+            right: 2;
+            border-radius: 5px;
+            top: 42px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+            ul.nk-drop-opt {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            li.nk-drop-opt {
+                padding: 5px;
+                color: #222;
+                font-size: 12px;
+                margin: 5px;
+                border-radius: 3px;
+
+                &:hover {
+                    background-color: #ebf5fc;
+                    color: #4a70c7;
+                }
+            }
+        }
+    }
+
+    div#nk-left-hdr-opt {
+        display: none;
+        width: 150px;
+        height: auto;
+        position: absolute;
+        right: 2;
+        border-radius: 5px;
+        top: 43px;
+        z-index: 16;
+        background-color: #fff;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+        ul.nk-drop-opt {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li.nk-drop-opt {
+            padding: 5px;
+            color: #222;
+            font-size: 12px;
+            margin: 5px;
+            border-radius: 3px;
+
+            &:hover {
+                background-color: #ebf5fc;
+                color: #4a70c7;
+            }
+        }
+    }
+
+    div#nk-sub-hdr-opt {
+        display: none;
+        width: 150px;
+        height: auto;
+        position: absolute;
+        right: 2;
+        border-radius: 5px;
+        top: 43px;
+        z-index: 16;
+        background-color: #fff;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+        ul.nk-drop-opt {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li.nk-drop-opt {
+            padding: 5px;
+            color: #222;
+            font-size: 12px;
+            margin: 5px;
+            border-radius: 3px;
+
+            &:hover {
+                background-color: #ebf5fc;
+                color: #4a70c7;
+            }
+        }
+    }
+
+    div#nk-contact-list {
+        display: none;
+        width: 150px;
+        height: auto;
+        position: absolute;
+        right: 2;
+        border-radius: 5px;
+        top: 25px;
+        z-index: 17;
+        background-color: #fff;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+        ul.nk-drop-opt {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li.nk-drop-opt {
+            padding: 5px;
+            color: #222;
+            font-size: 12px;
+            margin: 5px;
+            border-radius: 3px;
+
+            &:hover {
+                background-color: #ebf5fc;
+                color: #4a70c7;
+            }
+        }
+    }
+}
+
+/*DARK MODE CHAT BOX*/
+.main-c.theme_secondary_dark {
+    .chat-bx {
+        .form-container {
+            background-color: #242526;
+            border: 1px solid #56669945;
+        }
+
+        .chat-bx-hdr {
+            border-bottom: 1px solid #272727;
+        }
+
+        .nk-name {
+            color: #e4e6eb;
+        }
+
+        .left {
+            background-color: #18191a;
+
+            input[type="text"] {
+                background-color: #18191a;
+            }
+
+            ;
+            border: none;
+        }
+
+        .top {
+            border-bottom: 2px solid#56669945
+        }
+
+        ul.people {
+            .person {
+                background-color: #18191a;
+
+                &:hover {
+                    background-color: #242526;
+                }
+
+                &:after {
+                    background-color: #5f666d;
+                }
+            }
+        }
+
+        span.name {
+            color: #e4e6e5;
+        }
+
+        .right {
+            border: 1px solid #313745;
+            background-color: #242526;
+
+            .chat-bx-body {
+                background-color: #18191a;
+            }
+
+            .chat-bx-send {
+                border-top: 1px solid #5f666d;
+                background-color: #18191a;
+            }
+        }
+
+        .btn-actions .nk-options,
+        .btn-actions .nk-create,
+        .btn-actions .nk-minimize,
+        .btn-actions .nk-video,
+        .btn-actions .nk-exit,
+        span.nk-attachment,
+        span.nk-smiley,
+        span.nk-send,
+        .nk-options {
+            &:hover {
+                background-color: #313448;
+            }
+        }
+
+        div#nk-sub-hdr-opt,
+        div#nk-right-opt,
+        div#nk-left-hdr-opt,
+        div#nk-contact-list {
+            background-color: #242526;
+            z-index: 101;
+            border: 1px solid #56669945;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+            li.nk-drop-opt {
+                color: #eee;
+
+                &:hover {
+                    background-color: #313448;
+                }
+            }
+        }
+
+        .ks-self {
+            .ks-body {
+                background-color: #313448 !important;
+                border: 1px solid #56669945;
+
+                &:before {
+                    border-top: 0 solid transparent;
+                    border-right: 0 solid transparent;
+                    border-bottom: 10px solid transparent;
+                    border-left: 10px solid #313448 !important;
+                }
+            }
+        }
+
+        .ks-sender {
+            .ks-body {
+                background-color: #242526 !important;
+                border: 1px solid #56669945;
+
+                &:before {
+                    border-top: 10px solid #242526 !important;
+                    border-right: 0 solid transparent;
+                    border-bottom: 0 solid transparent;
+                    border-left: 10px solid transparent;
+                }
+            }
+        }
+
+        .ks-message {
+            color: #999;
+        }
+    }
+}
+
+
+/* Extra Small Devices (phones) */
+@media only screen and (max-width: 576px) {
+    .chat-bx {
+        .open-button {
+            min-height: 50px;
+            width: 50px;
+            box-shadow: 0 0 0px 2px #aed7ff;
+            bottom: 40px;
+
+            &:active {
+                background: #94caff;
+            }
+        }
+
+        .chat-popup {
+            left: 0px;
+            bottom: 1px;
+
+            .form-container {
+                border-radius: 0px;
+                height: 666px;
+                border: 2px solid #e6e6e6;
+                min-width: 375px;
+                position: relative;
+                /* bottom: 0px; */
+            }
+        }
+
+        ul.people {
+            height: 570px;
+        }
+
+        div#right-container {
+            left: 0;
+            height: 665px;
+            border-radius: 0px;
+            min-width: 375px;
+            border: 2px solid #e6e6e6;
+            z-index: 14;
+            bottom: 1px;
+
+            .chat-bx-body {
+                height: 570px;
+            }
+        }
+    }
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+    .chat-bx {
+        .open-button {
+            min-height: 50px;
+            width: 50px;
+            box-shadow: 0 0 0px 2px #aed7ff;
+            bottom: 40px;
+
+            &:active {
+                background: #94caff;
+            }
+        }
+
+        .chat-popup {
+            left: 0;
+            bottom: 1px;
+            width: 100%;
+
+            .form-container {
+                border-radius: 0px;
+                height: 375px;
+                border: 2px solid #e6e6e6;
+                min-width: 667px;
+                position: relative;
+                /* z-index: 200; */
+            }
+        }
+
+        ul.people {
+            height: 285px;
+
+            .person {
+                &:after {
+                    width: 97%;
+                }
+            }
+        }
+
+        div#right-container {
+            left: 0;
+            height: 374px;
+            border-radius: 0px;
+            min-width: 667px;
+            border: 2px solid #e6e6e6;
+            z-index: 200;
+            bottom: 1px;
+
+            .chat-bx-body {
+                height: 281px;
+            }
+        }
+
+        div#nk-left-hdr-opt {
+            right: 10px;
+        }
+
+        .btn-actions {
+            width: 100px;
+        }
+
+        input#chatInput {
+            width: 97%;
+        }
+
+        div#right-container {
+            .btn-actions {
+                width: 120px;
+            }
+        }
+
+        .left {
+            input[type="text"] {
+                width: 95%;
+            }
+        }
+    }
+}

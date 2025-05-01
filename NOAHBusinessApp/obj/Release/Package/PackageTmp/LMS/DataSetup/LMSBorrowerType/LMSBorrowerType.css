@@ -1,0 +1,26 @@
+﻿#tbl_total table td {
+    border: 1px solid black;
+}
+
+.noah-webui-containerRow > .noah-webui-containerRowItem:nth-child(1) {
+    padding-left: 12px;
+}
+
+.nwCuz-001 {
+    padding-bottom: 10px;
+}
+
+.nwCuz-002 {
+    min-width: 150px;
+}
+
+.nwCuz-003 {
+    min-width: 300px; max-width: 300px;
+}
+.nwcb2P {
+    margin-left:150px!important;
+}
+.nwcb3P {
+    margin-left:70px!important;
+}
+

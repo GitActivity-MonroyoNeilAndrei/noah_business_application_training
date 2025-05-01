@@ -1,0 +1,52 @@
+﻿Modified by			: Neil Andrei G. Monroyo
+Date Modified		: 04/03/2025
+Menu Item Version	: 10.0.0.1
+Reason				: Addressing of Findings
+					- Remarks field: Max length of the field should only up to 500 characters
+
+					- Add Insert Row and Delete Row
+
+					- Upon Initial loading, new should be enable
+
+					- Upon clicking new, remarks should be enable
+
+					- Add Optional Field for VAT Short Description and EWT Short Description
+
+					- No loaded Base UOM upon lookup of Item Code (Code)
+
+					- Upon new, all fields should clear data
+
+					- "Upon saving, Prompt Message 
+					   Cannot be saved. At least one line detail is required.\n"
+
+					- 1. Menu Item Title APVITA Setup, rename into Vendor Item Tax Assignment
+					  2. Notification Message Title: Vendor Item Tax Code Assignment rename into Vendor Item Tax Assignment
+
+					- Copy From
+					    Upon load of the copied Vendor, Remarks should be colored green if with data.
+
+ 
+
+Created by			: Jenny May Cabantug
+Date Created		: 01/13/2025
+Menu Item Version	: 10.0.0.0
+Reason				: Development 
+						Header button
+							- new
+							- save
+							- delete
+							- inquire
+							- process
+						Header fields
+							- Vendor
+							- Remarks
+						Line Details
+							- Item Group Type Code
+							- Item Group Type Description
+							- Item Code
+							- Item Description
+							- Base UOM
+							- VAT Short Description
+							- EWT Short Description
+							- Remarks
+

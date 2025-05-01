@@ -1,5 +1,5 @@
 ﻿var vurl = GetCurrentURL() +
-    "../DCRequirementCompliance/Upload";
+    "../PMOUtilitiesBillingEntry/Upload";
 
 
 function ClearUploadField() {
@@ -107,12 +107,12 @@ function upload() {
 
                             //nwLib.nwTempTable_RowData_Set("nwGrid2", crnwTR.index(), SPR_FILEPATH)(path);
                             //nwLib.nwTempTable_RowData_Set("nwGrid2", currentRow, SPR_FILEPATH - 1)(path);
-                            nwGrid_Book.ActiveSheet.SetText(SPR_FILEPATH - 1, currentRow, path);
+                            nwGrid_Book.ActiveSheet.SetText(SPR_FILEPATH - 1, _row, path);
                             //$('.btnview').text('').prepend('<a>View Attachment</a>');
                             //$("#nwGrid2-nwData tbody").find("tr:eq(" + crnwTR.index() + ") td:eq(" + SPR_VIEWHDR + ") a").addClass('green');
-                            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, currentRow, 'green');
-                            nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, currentRow, "white");
-
+                            nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, _row, 'green');
+                            nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, _row, "white");
+                            AutoCompiled(_row);
                         }
                         //Close Popup Upload
                         $('#nwUploadCon .btn.btn-modal-back').click();

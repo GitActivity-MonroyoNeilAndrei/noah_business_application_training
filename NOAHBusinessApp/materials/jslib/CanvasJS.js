@@ -1,10 +1,9 @@
-﻿/* # Canvas JS Library 1.10.1.78
+﻿/* # Canvas JS Library 1.10.1.81l
 # Company Owner: Forecasting and Planning Technologies Inc. / Promptus8 Inc.
 # Developers : Angelo Carlo A. Gonzales
-Karl Angelo S. Gamayo
 
 # Date Created : March 2018
-# Date Modified : March 07 2024 / 01:33 PM  - before: 03-06-2024
+# Date Modified : September 19 2024 / 01:45 PM  - before: 07-09-2024
 
 For  NoahWeb Application and Promptus8 Modules used only. 
 
@@ -19,8 +18,8 @@ var p8Spread_CurBook = "";
 
 var iscurCellSelect;
 
-$(function(){
-    window.NOAH_SpreadCanvas = {"version":"1.10.1.78"}
+$(function () {
+    window.NOAH_SpreadCanvas = { "version": "1.10.1.81l" }
     console.log("NOAH_SpreadCanvas: " + window.NOAH_SpreadCanvas.version);
 });
 
@@ -30,11 +29,11 @@ createHiDPICanvas = function (c, w, h, ratio) {
         var canvas = document.getElementById(c);
         var ctx = canvas.getContext("2d");
         var dpr = window.devicePixelRatio || 1,
-        bsr = ctx.webkitBackingStorePixelRatio ||
-              ctx.mozBackingStorePixelRatio ||
-              ctx.msBackingStorePixelRatio ||
-              ctx.oBackingStorePixelRatio ||
-              ctx.backingStorePixelRatio || 1;
+            bsr = ctx.webkitBackingStorePixelRatio ||
+                ctx.mozBackingStorePixelRatio ||
+                ctx.msBackingStorePixelRatio ||
+                ctx.oBackingStorePixelRatio ||
+                ctx.backingStorePixelRatio || 1;
         ratio = dpr / bsr;
     }
 
@@ -125,7 +124,7 @@ P8.Spread = function (canvasID, sheetcount) {
     this.curCount = 0;
     this.totCount = 0;
 
-
+    this.AddSheetVisible = true;
 
     var temp = {};
 
@@ -133,79 +132,208 @@ P8.Spread = function (canvasID, sheetcount) {
     varx.push({ canvasID: canvasID, sheet: this });
     P8DataList[canvasID] = varx;
 
-
     //this.ActiveSheet.Render();
     //sheet tab
 
 };
 
+P8.Spread.prototype.AddSheet = function (canvasID, sheetno) {
+    var maxSheetID = 1;
+    try {
+        if (this.Sheet.length > 0) {
+            maxSheetID = Math.max(...this.Sheet.map(sheet => sheet.SheetID)) + 1;
+        }
+    } catch (ex) { }
+    var SheetName = "Sheet" + (maxSheetID);
+    while (this.Sheet.some(sheet => sheet.SheetName === SheetName)) {
+        maxSheetID++;
+        SheetName = "Sheet" + maxSheetID;
+    }
+
+
+    if (isNaN(sheetno)) {
+        sheetno = this.GetActiveSheet()+1;
+    }
+    var obj = new P8.SpreadSheet(canvasID);
+    obj.SheetName = SheetName;
+    obj.SheetID = maxSheetID;
+    obj.Book = this;
+    this.Sheet.splice(sheetno, 0, obj);
+    this.Sheet[sheetno].IsDesigner = true; 
+    var datax = _sfCreateData(10, 30, "");
+    this.Sheet[sheetno].DataBind(datax);
+    this.ActiveSheet = this.Sheet[sheetno];
+    //  this.Sheet[sheetno] = obj;
+    //  this.ActiveSheet = this.Sheet[sheetno];
+
+    try {
+        p8Spread_AddSheetDone(canvasID, sheetno)
+    } catch (ex) { }
+    //this.RenderStatus = true;
+    this.SetActiveSheet(sheetno);
+
+}
+P8.Spread.prototype.DeleteSheet = function (SheetID) {
+    try {
+       
+        var noofsheet = this.Sheet.length;
+        if (noofsheet > 1) {
+            if (SheetID == undefined) {
+                SheetID = this.ActiveSheet.SheetID;
+            }
+            SheetID = parseInt(SheetID);
+            var sheetno = 0;
+            for (var i = 0; i < this.Sheet.length; i++) {
+                var item = this.Sheet[i];
+                var zSheetID = item.SheetID;
+                if (SheetID == zSheetID) {
+                    sheetno = i;
+                    this.Sheet.splice(i, 1);  // This will work because `this` is correctly scoped
+                    break;  // Exit the loop after removal
+                }
+            }
+   
+            if ((noofsheet-1) <= sheetno) {
+                this.SetActiveSheet(sheetno-1);
+            } else {
+                this.SetActiveSheet(sheetno);
+            }
+        }
+    } catch (ex) { }
+}
+P8.Spread.prototype.RenameSheet = function (SheetID,Rename) {
+    try {
+
+        if (SheetID == undefined) {
+            SheetID = this.ActiveSheet.SheetID;
+        }
+        SheetID = parseInt(SheetID);
+        //check if name exists
+        for (var i = 0; i < this.Sheet.length; i++) {
+            var item = this.Sheet[i];
+            var zSheetID = item.SheetID;
+            if (SheetID == zSheetID) {
+                    
+            } else { 
+                if (this.Sheet[i].SheetName == Rename) {
+                    try {
+                        ToastMessage(`A sheet with the name "${Rename}" already exists. Please enter another name.`);
+                    } catch (err) {
+                        console.log(`A sheet with the name "${Rename}" already exists. Please enter another name.`);
+                    }
+                    return false;
+                }
+            }
+        }
+
+        var sheetno = 0;
+        for (var i = 0; i < this.Sheet.length; i++) {
+            var item = this.Sheet[i];
+            var zSheetID = item.SheetID;
+            if (SheetID == zSheetID) {
+                sheetno = i;
+                this.Sheet[i].SheetName = Rename;  // This will work because `this` is correctly scoped
+                break;  // Exit the loop after removal
+            }
+        }
+
+        if ((noofsheet - 1) <= sheetno) {
+            this.SetActiveSheet(sheetno - 1);
+        } else {
+            this.SetActiveSheet(sheetno);
+        }
+
+    } catch (ex) { }
+    return true;
+}
+
 P8.Spread.prototype.SetSpreadConfig = function (jsonData) {
-    var canvasID =this.ActiveSheet.canvasID;
-
-    //var json = JSON.parse(jsonData);
-    //for(var i = 0 ; i < this.Sheet.length; i ++){
-    //    this.Sheet[i].Book = this;   
-    //}
-
-    //this.Sheet = [];
+    this.Sheet = [];
     var json = JSON.parse(jsonData);
-    for(var i = 0 ; i < json.length; i ++){
-        //this.Sheet[i] = json[i].sheetconfig;
+    for (var i = 0; i < json.length; i++) {
+        this.AddSheet(this.ActiveSheet.canvasID)
         var item = json[i];
         this.Sheet[i].Data = item.Data;
         this.Sheet[i].ColumnConfig = item.ColumnConfig;
         this.Sheet[i].RowConfig = item.RowConfig;
-        try{
+        try {
             var SheetConfig = item.SheetConfig;
             this.Sheet[i].SheetName = SheetConfig.SheetName;
+            var SheetID = -1;
+            try { 
+                if (SheetConfig.SheetID == undefined) {
+                    SheetID = parseInt(this.Sheet[i].SheetName._sfReplaceAll("Sheet",""))
+                } else {
+                    SheetID = SheetConfig.SheetID;
+                }
+               
+            } catch (ex) { }
+            if (SheetID > -1) {
+                this.Sheet[i].SheetID = SheetID;
+            }
             this.Sheet[i].backgroundColor = SheetConfig.backgroundColor;
             this.Sheet[i].FreezeCol = SheetConfig.FreezeCol;
             this.Sheet[i].FreezeRow = SheetConfig.FreezeRow;
-            this.Sheet[i].FreezeColor = SheetConfig.FreezeColor;   
+            this.Sheet[i].FreezeColor = SheetConfig.FreezeColor;
             this.Sheet[i].mergeList = SheetConfig.mergeList;
             try {
                 this.Sheet[i].TableList = SheetConfig.TableList;
             } catch (ex) { }
-            
-        }catch(ex){}
+            try {
+                if (SheetConfig.CellFomulaList == undefined) {
+                    this.Sheet[i].CellFomulaList = [];
+                } else {
+                    this.Sheet[i].CellFomulaList = SheetConfig.CellFomulaList;
+                }
+            } catch (ex) { }
+            try {
+                this.Sheet[i].AutoWrap = SheetConfig.AutoWrap;
+            } catch (ex) { }
+            try {
+                this.Sheet[i].AutoWrapRender = SheetConfig.AutoWrapRender;
+            } catch (ex) { }
+        } catch (ex) { }
     }
-
+    try {
+        this.SetActiveSheet(0);
+    } catch (ex) { }
 
 }
+
 P8.Spread.prototype.GetSpreadConfig = function () {
     var jsonData = [];
-    for(var i = 0 ; i < this.Sheet.length; i ++){
-        //this.Sheet[i].Book = null;   
-        //jsonData.push({ 
-        //    "sheetindex": i 
-        //    ,"sheetconfig" : this.Sheet[i]
-        //});
-        jsonData.push({ 
-            "sheetindex": i 
-            , Data:this.Sheet[i].Data 
-            , ColumnConfig:this.Sheet[i].ColumnConfig 
-            , RowConfig:this.Sheet[i].RowConfig 
-            , SheetConfig:{
-                SheetName:this.Sheet[i].SheetName,
-                backgroundColor:this.Sheet[i].backgroundColor,
-                FreezeCol:this.Sheet[i].FreezeCol,
-                FreezeRow:this.Sheet[i].FreezeRow,
-                FreezeColor:this.Sheet[i].FreezeColor,
+    for (var i = 0; i < this.Sheet.length; i++) {
+        jsonData.push({
+            "sheetindex": i
+            , Data: this.Sheet[i].Data
+            , ColumnConfig: this.Sheet[i].ColumnConfig
+            , RowConfig: this.Sheet[i].RowConfig
+            , SheetConfig: {
+                SheetName: this.Sheet[i].SheetName,
+                SheetID: this.Sheet[i].SheetID,
+                backgroundColor: this.Sheet[i].backgroundColor,
+                FreezeCol: this.Sheet[i].FreezeCol,
+                FreezeRow: this.Sheet[i].FreezeRow,
+                FreezeColor: this.Sheet[i].FreezeColor,
                 mergeList: this.Sheet[i].mergeList,
-                TableList: this.Sheet[i].TableList
+                TableList: this.Sheet[i].TableList,
+                CellFomulaList: this.Sheet[i].CellFomulaList,
+                CellFomulaList: this.Sheet[i].CellFomulaList,
+                AutoWrap: this.Sheet[i].AutoWrap,
+                AutoWrapRender: this.Sheet[i].AutoWrapRender,
             }
         });
     }
-
-    //jsonData = JSON.stringify(this);
+    //var jsonDataTemp = this.Sheet[0].JSONCopy(jsonData);
     return JSON.stringify(jsonData);
 }
 
 
+
 P8.Spread.prototype.SetThemes = function (theme) {
-    if(P8Themes.FANCY == theme){
-        
-        var canvasID=this.ActiveSheet.canvasID;
+    if (P8Themes.FANCY == theme) {
+
+        var canvasID = this.ActiveSheet.canvasID;
 
         this.ActiveSheet.Theme = theme;
         this.ActiveSheet.backgroundColor = "#ECECEC";
@@ -218,7 +346,7 @@ P8.Spread.prototype.SetThemes = function (theme) {
         this.ActiveSheet.VHeaderFontFamily = "Poppins-Regular,Arial,Tahoma";
         this.ActiveSheet.VHeaderFontSize = 12;
         this.ActiveSheet.VHeaderColor = "#000000";
-        this.ActiveSheet.HeaderNumText= "#";
+        this.ActiveSheet.HeaderNumText = "#";
 
 
         //FPMC aagedit
@@ -241,15 +369,15 @@ P8.Spread.prototype.SetThemes = function (theme) {
         this.ActiveSheet.VHeaderFontFamily = "Arial,Tahoma";
         this.ActiveSheet.VHeaderFontSize = 12;
         this.ActiveSheet.VHeaderColor = "#212121";
-        this.ActiveSheet.HeaderNumText= "";
-         
+        this.ActiveSheet.HeaderNumText = "";
+
         //$("#" + canvasID+" .P8Spread_SheetVScroll").show();
         //$("#" + canvasID+" .P8Spread_SheetHScroll").show();
 
-        $("#" + canvasID+" .P8Spread_SheetVScroll").css("visibility","");
-        $("#" + canvasID+" .P8Spread_SheetVScroll").css("position","");
-        $("#" + canvasID+" .P8Spread_SheetHScroll").css("visibility","");
-        $("#" + canvasID+" .P8Spread_SheetHScroll").css("position","");
+        $("#" + canvasID + " .P8Spread_SheetVScroll").css("visibility", "");
+        $("#" + canvasID + " .P8Spread_SheetVScroll").css("position", "");
+        $("#" + canvasID + " .P8Spread_SheetHScroll").css("visibility", "");
+        $("#" + canvasID + " .P8Spread_SheetHScroll").css("position", "");
     }
 
     this.ActiveSheet.Refresh();
@@ -347,7 +475,7 @@ function _sfInitialize(obj, canvasID, data) {
 
     obj.backgroundColor = "#E2E2E2"; //"red";//
     obj.gridlLineColor = "#E2E2E2";
-    
+
 
     //obj.backgroundColor = "green";//"#E2E2E2";
     //obj.gridlLineColor =  "red" ;//"#E2E2E2";
@@ -356,6 +484,9 @@ function _sfInitialize(obj, canvasID, data) {
 
     obj.imagelist = [];
     obj.mergeList = [];
+    obj.exportList = [];
+    obj.dataValidationList = [];
+
     obj.RenderStatus = true;
     obj.canvasID = canvasID;
     obj.havelistner = false;
@@ -383,9 +514,9 @@ function _sfInitialize(obj, canvasID, data) {
     obj.HeaderFontFamily = "Arial,Tahoma";
     obj.HeaderFontSize = 12;
     obj.HeaderColor = "#212121";
-    obj.HeaderNumText= "";
+    obj.HeaderNumText = "";
 
-    obj.ListViewRowLoaderCount= 1000;
+    obj.ListViewRowLoaderCount = 1000;
 
 
     obj.VHeaderBackround = "#e4ecf7";
@@ -394,7 +525,7 @@ function _sfInitialize(obj, canvasID, data) {
     obj.VHeaderColor = "#212121";
 
     //obj.Theme= P8Themes.DEFAULT;
-    obj.Theme= P8Themes.FANCY;
+    obj.Theme = P8Themes.FANCY;
 
     obj.ColumnHeaderIndex = -1;
     //var tlVBG = "#e4ecf7";
@@ -403,8 +534,6 @@ function _sfInitialize(obj, canvasID, data) {
     //var tlVColor = "#212121";
 
     obj.ShowFormula = false;
-
-
 
     obj.haveLog = haveLog;
 
@@ -436,6 +565,11 @@ function _sfInitialize(obj, canvasID, data) {
     obj.IsResizeColumnWidth = 0;
     obj.IsResizeColumnIndex = -1;
 
+    obj.RowResizable = true;
+    obj.IsResizeRowHeight = 0;
+    obj.IsResizeRowIndex = -1;
+    obj.IsResizeRow = false;
+
     obj.AutoWrap = false;
     obj.AutoWrapRender = false;
 
@@ -443,6 +577,11 @@ function _sfInitialize(obj, canvasID, data) {
 
 
     obj.Enabled = true;
+
+    obj.excelSheetProtection = true;
+    obj.excelSheetProtectionPassword = "";
+    obj.excelRowAutoResize = true;
+    //obj.ExportCSVFileName = "";
 
     if (obj.Data == undefined) {
         obj.DataBind(_sfCreateData(3, 5));
@@ -474,7 +613,7 @@ function fnExcelReport() {
     tab = document.getElementById('headerTable'); // id of table
 
 
-    for (j = 0 ; j < tab.rows.length ; j++) {
+    for (j = 0; j < tab.rows.length; j++) {
         tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
         //tab_text=tab_text+"</tr>";
     }
@@ -512,20 +651,20 @@ function _sfCreateStyle(config) {
 }
 
 //tablesToExcel(['tbl1','tbl2'], ['ProductDay1','ProductDay2'], 'TestBook.xls', 'Excel')"
-var tablesToExcel = (function() {
+var tablesToExcel = (function () {
     var uri = 'data:application/vnd.ms-excel;base64,'
-    , tmplWorkbookXML = '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
-      + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"><Author>Promptus8</Author><Created>{created}</Created></DocumentProperties>'
-      + '<Styles>'
-      + '<Style ss:ID="Currency"><NumberFormat ss:Format="Currency"></NumberFormat></Style>'
-      + '<Style ss:ID="Date"><NumberFormat ss:Format="Medium Date"></NumberFormat></Style>'
-   //   + '{worksheetsstyle}'
-      + '</Styles>'
-      + '{worksheets}</Workbook>'
-    , tmplWorksheetXML = '<Worksheet ss:Name="{nameWS}"><Table>{rows}</Table></Worksheet>'
-    , tmplCellXML = '<Cell{attributeStyleID}{attributeFormula}><Data ss:Type="{nameType}">{data}</Data></Cell>'
-    , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
-    , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        , tmplWorkbookXML = '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
+            + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"><Author>Promptus8</Author><Created>{created}</Created></DocumentProperties>'
+            + '<Styles>'
+            + '<Style ss:ID="Currency"><NumberFormat ss:Format="Currency"></NumberFormat></Style>'
+            + '<Style ss:ID="Date"><NumberFormat ss:Format="Medium Date"></NumberFormat></Style>'
+            //   + '{worksheetsstyle}'
+            + '</Styles>'
+            + '{worksheets}</Workbook>'
+        , tmplWorksheetXML = '<Worksheet ss:Name="{nameWS}"><Table>{rows}</Table></Worksheet>'
+        , tmplCellXML = '<Cell{attributeStyleID}{attributeFormula}><Data ss:Type="{nameType}">{data}</Data></Cell>'
+        , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
     return function (tables, wbname, appname) {
         var ctx = "";
         var workbookXML = "";
@@ -594,9 +733,9 @@ var tablesToExcel = (function() {
                     dataFormula = (dataFormula) ? dataFormula : (appname == 'Calc' && dataType == 'DateTime') ? dataValue : null;
                     ctx = {
                         attributeStyleID: (dataStyle == 'Currency' || dataStyle == 'Date' || dataStyle != "") ? ' ss:StyleID="' + dataStyle + '"' : ''
-                           , nameType: (dataType == 'Number' || dataType == 'DateTime' || dataType == 'Boolean' || dataType == 'Error') ? dataType : 'String'
-                           , data: (dataFormula) ? '' : dataValue
-                           , attributeFormula: (dataFormula) ? ' ss:Formula="' + dataFormula + '"' : ''
+                        , nameType: (dataType == 'Number' || dataType == 'DateTime' || dataType == 'Boolean' || dataType == 'Error') ? dataType : 'String'
+                        , data: (dataFormula) ? '' : dataValue
+                        , attributeFormula: (dataFormula) ? ' ss:Formula="' + dataFormula + '"' : ''
 
 
                     };
@@ -666,30 +805,30 @@ ActiveSheet.prototype.SetTextActive = function (text) {
 function _sfDefaultSettingsColumn() {
     return {
         Attribute: null
-            , CheckBox: null
-            , Class: null
-            , ColumName: ""
-            , ColumnTemplate: ""
-            , ColumnTemplateEmpty: "aagdefault"
-            , ColumnTemplateObject: ""
-            , ColumnWidth: "150"
-            , Enabled: true
-            , FontFamily: ""
-            , FontSize: ""
-            , FontStyle: ""
-            , FontWeight: ""
-            , HeaderColumnReq: null
-            , MergeRow: null
-            , ObjectType: ""
-            , Precision: 2
-            , Protected: null
-            , TextAlign: ""
-            , TextColor: ""
-            , TextDecoration: null
-            , ThousandSeparator: null
-            , VerticalAlign: null
-            , backgroundColor: null
-            , dataType: null
+        , CheckBox: null
+        , Class: null
+        , ColumName: ""
+        , ColumnTemplate: ""
+        , ColumnTemplateEmpty: "aagdefault"
+        , ColumnTemplateObject: ""
+        , ColumnWidth: "150"
+        , Enabled: true
+        , FontFamily: ""
+        , FontSize: ""
+        , FontStyle: ""
+        , FontWeight: ""
+        , HeaderColumnReq: null
+        , MergeRow: null
+        , ObjectType: ""
+        , Precision: 2
+        , Protected: null
+        , TextAlign: ""
+        , TextColor: ""
+        , TextDecoration: null
+        , ThousandSeparator: null
+        , VerticalAlign: null
+        , backgroundColor: null
+        , dataType: null
     };
 }
 
@@ -871,8 +1010,32 @@ P8.SpreadSheet.prototype.DataBind = function (data) {
     for (var i = 0; i < this.ColumnConfig.length; i++) {
         try {
             //objecttype
-            if (this.ColumnConfig[i].CheckBox == "true" || this.ColumnConfig[i].CheckBox == "True") {
-                this.ColumnConfig[i].ObjectType = "checkbox";
+            if (this.ColumnConfig[i].CheckBox == "true" || this.ColumnConfig[i].CheckBox == "True" || this.ColumnConfig[i].CheckBox == true ||
+                this.ColumnConfig[i].ObjectType == "checkbox") {
+                var CheckBoxShow = this.ColumnConfig[i].CheckBoxShow == undefined ? true:  this.ColumnConfig[i].CheckBoxShow;
+                if(CheckBoxShow == true){
+                    this.ColumnConfig[i].ObjectType = "checkbox";
+                    try {
+                        var istick = true;
+                        for (j = 0; j < this.Data.length; j++) {
+                            var value = this.Data[j][p8_NumberToCell(i+1)].value;
+                            if (value == "1" || value == true || value == "true" || value == "True") {
+
+                            } else {
+                                istick = false;
+                                break;
+                            }
+                        }
+                        if (this.Data.length <= 0) {
+                            istick = false;
+                        }
+                        if (istick) {
+                            this.ColumnConfig[i].CheckBoxValue = true;
+                        } else {
+                            this.ColumnConfig[i].CheckBoxValue = false;
+                        }
+                    } catch (ex) { }
+                }
             }
 
 
@@ -901,60 +1064,73 @@ P8.SpreadSheet.prototype.DataBind = function (data) {
     //.DataTypeCol(3,"number");
 }
 
-P8.SpreadSheet.prototype.RowDelete = function (index) {
-    //if (index == undefined) index = obj.CellIndexes.Row;
-
-    if (index == undefined) { }
+P8.SpreadSheet.prototype.RowDelete = function (row, length) {
+    length = length == undefined ? 1 : length;
+    if (row == undefined) { }
     else {
-        _sfJsonDelete(this.Data, index);
-        _sfSpreadDeleteRowAdjustConfig(this, index);
+        _sfJsonDelete(this.Data, row, length);
+        _sfSpreadDeleteRowAdjustConfig(this, row, length);
+        _sfSpreadAdjustMergeList(this, row, (length == undefined ? 1 : length) * -1,0);
 
 
-        try{
-            var jsonupdatecell = func_RowDelete(index);
-            if(jsonupdatecell.length > 0){
-                this.JSONUpdateCell(-1,index,0,-1,jsonupdatecell)
+        try {
+            try {
+                var jsonupdatecell = func_RowDelete_Menuitem(row, length, this.canvasID, this.CellIndexes.Row, this.CellIndexes.Col);
+            } catch (err) {
+                try {
+                    var jsonupdatecell = func_RowDelete(row, length, this.canvasID, this.CellIndexes.Row, this.CellIndexes.Col);
+                } catch (err) { }
             }
-        }catch(ex){}
-        this.UpdateFormula(Spread_ALLCOL, index, 0, -1);
-
+            if (jsonupdatecell.length > 0) {
+                this.JSONUpdateCell(length * -1, row, 0, length * -1, jsonupdatecell)
+            }
+        } catch (ex) { }
+        this.UpdateFormula(Spread_ALLCOL, row, 0, length * -1);
+        try {
+            func_RowDeleteDone(row, length);
+        } catch (err) { }
         this.ScrollActive = true;
         this.RenderNoEvent();
     }
-    return index;
+    return row;
 }
-function _sfSpreadDeleteRowAdjustConfig(obj, startindex) {
+function _sfSpreadDeleteRowAdjustConfig(obj, startindex, rowminus) {
     var len = obj.RowConfig.length;
 
     for (var i = 0; i < len; i++) {
         if (obj.RowConfig[i].row == startindex) {
-            obj.RowConfig.splice(i, 1);
+            obj.RowConfig.splice(i, rowminus);
             break;
         }
     }
     len = obj.RowConfig.length;
     for (var i = 0; i < len; i++) {
         if (obj.RowConfig[i].row > startindex) {
-            obj.RowConfig[i].row = obj.RowConfig[i].row - 1;
+            obj.RowConfig[i].row = obj.RowConfig[i].row - rowminus;
         }
     }
 }
 
-P8.SpreadSheet.prototype.RowAdd = function (atbegin) {
+P8.SpreadSheet.prototype.RowAdd = function (atbegin, rowadd) {
     var index = 0;
-
+    rowadd = rowadd == undefined ? 1 : rowadd;
+    var Data = this.JSONCopy(this.Data);
     arry = _sfSpreadAddRow(this);
+    for (var i = 0; i < rowadd; i++) {
+        Data = this.JSONCopy(Data);
 
-    if (atbegin == true) this.Data.unshift(arry);
-    else this.Data.push(arry);
+        if (atbegin == true) Data.unshift(arry);
+        else Data.push(arry);
 
+    }
+    this.Data = Data;
     this.ScrollActive = true;
     this.RenderNoEvent();
     return index;
 }
 
-P8.SpreadSheet.prototype.RowInsert = function (index, isbottom, norender, hasfreeze) {
-     
+P8.SpreadSheet.prototype.RowInsert = function (index, isbottom, norender, hasfreeze,rowadd) {
+
     if (isbottom == undefined) isbottom = true;
     if (hasfreeze == undefined) hasfreeze = true;
     if (hasfreeze) {
@@ -980,14 +1156,22 @@ P8.SpreadSheet.prototype.RowInsert = function (index, isbottom, norender, hasfre
     this.Data.splice(row, 0, arry);
     _sfSpreadInsertRowAdjustConfig(this, row);
     this.UpdateFormula(Spread_ALLCOL, row, 0, 1);
-    try{
-        var jsonupdatecell = func_RowInsert(index, isbottom);
-        if(jsonupdatecell.length > 0){
-            this.JSONUpdateCell(-1, row,0,1,jsonupdatecell)
+    _sfSpreadAdjustMergeList(this, row, (rowadd == undefined ? 1 : rowadd),0);
+
+    try {
+       
+        var rowadd = 1;
+        try {
+            var jsonupdatecell = func_RowInsert_Menuitem(index, isbottom, rowadd, this.canvasID, this.CellIndexes.Row, this.CellIndexes.Col);
+        } catch (err) {
+            try {
+                var jsonupdatecell = func_RowInsert(index, isbottom, rowadd, this.canvasID, this.CellIndexes.Row, this.CellIndexes.Col);
+            } catch (err) { }
         }
-    }catch(ex){}
-
-
+        if (jsonupdatecell.length > 0) {
+            this.JSONUpdateCell(-1, row, 0, 1, jsonupdatecell)
+        }
+    } catch (ex) { }
 
     if (norender == undefined) norender = false;
 
@@ -1161,7 +1345,7 @@ P8.SpreadSheet.prototype.FreezePane = function (c, r) {
 }
 
 P8.SpreadSheet.prototype.SetPrecision = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     if (data == undefined) data = data;
     else {
         _sfSetFormat(this, icol, irow, "Precision", data, icol2, irow2);
@@ -1169,8 +1353,9 @@ P8.SpreadSheet.prototype.SetPrecision = function (c, r, data, icol2, irow2) {
     return data;
 }
 
+
 P8.SpreadSheet.prototype.SetDataType = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     if (data == undefined) data = data;
     else {
         _sfSetFormat(this, icol, irow, "dataType", data, icol2, irow2);
@@ -1179,7 +1364,7 @@ P8.SpreadSheet.prototype.SetDataType = function (c, r, data, icol2, irow2) {
 }
 
 P8.SpreadSheet.prototype.DataType = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     if (data == undefined) data = data;
     else {
         _sfSetFormat(this, icol, irow, "dataType", data, icol2, irow2);
@@ -1187,7 +1372,7 @@ P8.SpreadSheet.prototype.DataType = function (c, r, data, icol2, irow2) {
     return data;
 }
 P8.SpreadSheet.prototype.DataStyle = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     if (data == undefined) data = data;
     else {
         _sfSetFormat(this, icol, irow, "dataStyle", data, icol2, irow2);
@@ -1210,7 +1395,7 @@ P8.SpreadSheet.prototype.SetTag = function (c, r, tagname, data, icol2, irow2) {
         console.error("tagname is required");
         return;
     }
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "tag-" + tagname, data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.GetTag = function (c, r, tagname) {
@@ -1228,21 +1413,21 @@ P8.SpreadSheet.prototype.GetTag = function (c, r, tagname) {
 
 
 P8.SpreadSheet.prototype.SetTextColor = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "textColor", data, icol2, irow2);
 }
 
 P8.SpreadSheet.prototype.SetFontSize = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "fontSize", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetFontFamily = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "fontFamily", data, icol2, irow2);
 }
 
 P8.SpreadSheet.prototype.SetBold = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     if (data === true) data = "bold";
     if (data === false) data = "normal";
     _sfSetFormat(this, icol, irow, "bold", data, icol2, irow2);
@@ -1257,13 +1442,15 @@ P8.SpreadSheet.prototype.GetBold = function (c, r) {
 
     }
     if (stringV == "bold") stringV = true;
+    else if (stringV == "bolder") stringV = true;
     else if (stringV == "normal") stringV = false;
     else stringV = false;
 
     return stringV;
 }
+
 P8.SpreadSheet.prototype.SetTextIndent = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "textindent", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.GetTextIndent = function (c, r) {
@@ -1276,6 +1463,7 @@ P8.SpreadSheet.prototype.GetTextIndent = function (c, r) {
     }
     return stringV;
 }
+
 P8.SpreadSheet.prototype.GetItalic = function (c, r) {
     if (c == undefined) c = this.CellIndexes.Col;
     if (r == undefined) r = this.CellIndexes.Row;
@@ -1309,37 +1497,49 @@ P8.SpreadSheet.prototype.GetUnderline = function (c, r) {
 }
 
 P8.SpreadSheet.prototype.SetItalic = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     if (data === true) data = "italic";
     if (data === false) data = "normal";
     _sfSetFormat(this, icol, irow, "italic", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetUnderline = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     if (data === true) data = "underline";
     if (data === false) data = "none";
     _sfSetFormat(this, icol, irow, "underline", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetTextAlign = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "textAlignment", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetVerticalAlign = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "textVertical", data, icol2, irow2);
 }
+P8.SpreadSheet.prototype.GetVerticalAlign = function (c, r) {
+    if (c == undefined) c = this.CellIndexes.Col;
+    if (r == undefined) r = this.CellIndexes.Row;
+    var stringV;
+    try {
+        stringV = _sfCheckConfigType(this, r, c, "textVertical", false);;
+    } catch (err) {
 
+    }
+    try { stringV = (stringV + "").replace("!important", ""); } catch (err) { }
+
+    return stringV;
+}
 
 P8.SpreadSheet.prototype.SetBackground = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "backgroundColor", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBackgroundPercent = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "backgroundColorPercent", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBackgroundPercentValue = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "backgroundColorPercentValue", data, icol2, irow2);
 }
 
@@ -1360,19 +1560,19 @@ P8.SpreadSheet.prototype.SetCurrencyCode = function (c, r, data, icol2, irow2) {
 }
 
 P8.SpreadSheet.prototype.SetEnable = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "Enabled", data, icol2, irow2);
 };
 
-P8.SpreadSheet.prototype.SetMaxLength = function (c, r, data) {
-    var irow = r; icol = c;
-    _sfSetFormat(this, icol, irow, "MaxLength", data);
+P8.SpreadSheet.prototype.SetMaxLength = function (c, r, data, icol2, irow2) {
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
+    _sfSetFormat(this, icol, irow, "MaxLength", data, icol2, irow2);
 };
 
 
 
 P8.SpreadSheet.prototype.SetObjectType = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
 
     if (data == undefined || data == "") data = "celltext";
 
@@ -1385,8 +1585,9 @@ P8.SpreadSheet.prototype.SetObjectType = function (c, r, data, icol2, irow2) {
     //    _sfSetFormat(this, icol, irow, "Checked", data);
 };
 
-P8.SpreadSheet.prototype.SetTemplate = function (c, r, Type, option , icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+P8.SpreadSheet.prototype.SetTemplate = function (c, r, Type, option, icol2, irow2) {
+    if(option == undefined){ option = {}}
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     if (Type == "button") {
         this.SetObjectType(c, r, "button", icol2, irow2);
         this.SetBackground(c, r, (option.BackgroundColor || ""), icol2, irow2);
@@ -1446,57 +1647,57 @@ P8.SpreadSheet.prototype.SetMerge = function (c, r, c2, r2, data) {
 
 
 P8.SpreadSheet.prototype.SetBorderColorTop = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderColorTop", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBorderColorBottom = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderColorBottom", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBorderColorLeft = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderColorLeft", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBorderColorRight = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c;icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderColorRight", data, icol2, irow2);
 }
 
 
 
 P8.SpreadSheet.prototype.SetBorderStyleTop = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderStyleTop", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBorderStyleBottom = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderStyleBottom", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBorderStyleLeft = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderStyleLeft", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBorderStyleRight = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderStyleRight", data, icol2, irow2);
 }
 
 
 
 P8.SpreadSheet.prototype.SetBorderWidthTop = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderWidthTop", data, icol2, irow2);
 }
-P8.SpreadSheet.prototype.SetBorderWidthBottom = function (c, r, data) {
-    var irow = r; icol = c;icol2 = icol2 | c; irow2 = irow2 | r;
+P8.SpreadSheet.prototype.SetBorderWidthBottom = function (c, r, data, icol2, irow2) {
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderWidthBottom", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBorderWidthLeft = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c;icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderWidthLeft", data, icol2, irow2);
 }
 P8.SpreadSheet.prototype.SetBorderWidthRight = function (c, r, data, icol2, irow2) {
-    var irow = r; icol = c; icol2 = icol2 | c; irow2 = irow2 | r;
+    var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
     _sfSetFormat(this, icol, irow, "borderWidthRight", data, icol2, irow2);
 }
 
@@ -1529,8 +1730,7 @@ function _sfSetBorder(obj, c, r, data, tag) {
         if (splitdata[i] == undefined) splitdata[i] = "";
         if ((arrStyle.indexOf(splitdata[i]) > -1))
             styleX = splitdata[i];
-        else if (!isNaN(splitdata[i].replace("px", "")) || splitdata[i].indexOf("px") > -1)
-        { widthX = splitdata[i].replace("px", ""); }
+        else if (!isNaN(splitdata[i].replace("px", "")) || splitdata[i].indexOf("px") > -1) { widthX = splitdata[i].replace("px", ""); }
         else {
             colorX = splitdata[i];
         }
@@ -1605,7 +1805,7 @@ P8.SpreadSheet.prototype.SetText = function (c, r, text, type, librarybase) {
     if (this.IsDesigner == false && text.trim().indexOf("=") == 0) {
         text = text.replace("=", "");
     }
-  
+
     //if (this.IsDesigner == true) {
     //    if (this.IsDesigner == true && text.trim().indexOf("=") == 0) {
     //        this.SetDataType(c, r, "currency");
@@ -1628,22 +1828,22 @@ P8.SpreadSheet.prototype.SetFormula = function (c, r, text, type, librarybase) {
 };
 
 //aagedit
-P8.SpreadSheet.prototype.AddConditionalFormatting = function (type,range) {
-    
+P8.SpreadSheet.prototype.AddConditionalFormatting = function (type, range) {
+
     var col = 2;
     var row = 2;
     var col2 = 4;
     var row2 = 4;
     this.CellConditionalList.push({
-        id:this.CellConditionalID
-        ,type:type
-        ,range:range
-        ,col: col
-        ,row: row
-        ,col2: col2
-        ,row2: row2
-        ,format: [{
-            
+        id: this.CellConditionalID
+        , type: type
+        , range: range
+        , col: col
+        , row: row
+        , col2: col2
+        , row2: row2
+        , format: [{
+
         }]
     });
 
@@ -1696,6 +1896,17 @@ function _sfSetText(obj, c, r, text, type, librarybase, isformula) {
             else {
 
                 if (obj.Data[r][_sfGetCellName(obj, c)].value != text) {
+                    if (librarybase) {
+                        var isValid = true;
+                        try {
+                            isValid = p8Spread_Change_Initial_Menuitem(obj.canvasID, r, c);
+                        } catch (err) {
+                            try {
+                                isValid = p8Spread_Change_Initial(obj.canvasID, r, c);
+                            } catch (err) { }
+                        }
+                        isValid = isValid == undefined ? true: isValid;
+                    }
                     isValueChange = true;
                 }
 
@@ -1752,7 +1963,7 @@ function _sfSetText(obj, c, r, text, type, librarybase, isformula) {
         //CanvasTextWrapper(canvasSheet, "Calculating...", option);
         */
 
-        if (obj.RenderStatus == true) 
+        if (obj.RenderStatus == true)
             _sfAutoWrapRow(obj, r);
 
 
@@ -1816,77 +2027,91 @@ function _sfComputeFormulaSub(obj, zsearchVal) {
             text = obj.Data[r][_sfGetCellName(obj, c)].formula;
         } catch (err) { }
         var result = "";
+        result = _sfEvaluateFormula(obj, c, r, text);
 
-        //_sfLog("formulax:" + p8_NumberToCell(c + 1) + r)
-
-
-        var xtemp = text.toUpperCase()._sfReplaceAll("=", "")._sfReplaceAll("-", "#aag#")._sfReplaceAll("*", "#aag#")._sfReplaceAll("/", "#aag#")._sfReplaceAll("+", "#aag#");
-        //._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#")
-        var xArry = xtemp.split("#aag#");
-        var xArryVal = xtemp.split("#aag#");
-
-        var tempValue = [];
-
-        var formula_ = text._sfReplaceAll("=", "")._sfReplaceAll(" ", "").toUpperCase();;
-        for (var i2 = 0; i2 < xArry.length; i2++) {
-            var cellindex = { row: -1, col: -1 };
-            try {
-                xArry[i2] = xArry[i2].trim();
-                var importantCell = xArry[i2];
-
-                var tempimportantCell = importantCell._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#");
-                var tempimportantCellArry = tempimportantCell.split("#aag#");
-                crFormulaFuncTemp = func_GetFormulaFunc(tempimportantCellArry[0]);
-                if (crFormulaFuncTemp != "") {
-                    importantCell = tempimportantCellArry[1];
-                    crFormulaFunc = crFormulaFuncTemp;
-
-                    //continue;
-                    var xval = 0;
-                    // Custom Function    like SUM
-                    if (crFormulaFunc != "") { //&& 1==2
-                        try {
-                            // get whole value of Custom Function
-                            xval = func_GetFormulaRangeValue(importantCell, obj, crFormulaFunc);
-                        } catch (err) {
-                            xval = "";
-                            //  xval = err;
-                        }
-                        if (xval == undefined || xval == "undefined" || xval == "") xArryVal[i] = "0";
-                        else xArryVal[i] = xval + "";
-                        crFormulaFunc = "";
-
-                        tempValue.push({ cell: xArry[i2].trim() + "", value: xval, type: "special" });
-                        continue;
-                    }
-                }
-                else {
-                    xArry[i2] = xArry[i2].replaceAll("(", "").replaceAll(")", "");
-                }
-
-
-                cellindex = _sfcellA1ToIndex(xArry[i2].trim(), 0);
-                var valuex = obj.GetValue(cellindex.col, cellindex.row);
-                if (valuex == undefined || valuex == "") valuex = 0;
-
-
-
-                tempValue.push({ cell: xArry[i2].trim() + "", value: valuex, type: "cell" });
-            } catch (err) { }
-        }
-
-        tempValue.sort(function (a, b) { return b.cell.length - a.cell.length });
-        for (var i2 = 0; i2 < tempValue.length; i2++) {
-            formula_ = formula_._sfReplaceAll(tempValue[i2].cell, tempValue[i2].value);
-        }
-        try { result = eval(formula_); } catch (err) { isFailed = true; result = "#VALUE!"; }
+        var resultNaN = result + ""
         if (result == undefined || result == "undefined") { isFailed = true; result = "#ERROR#"; }
         if (_sfIsFunction(result)) { isFailed = true; result = "#ERROR#"; }
+        if (resultNaN == "NaN") {
+            try {
+                if (formula_.includes("/")) { result = "#DIV/0!" }
+            } catch (ex) { }
+        }
         obj.Data[r][_sfGetCellName(obj, c)].value = result;
 
 
         zsearchVal = c + ":" + r + ":";
         _sfComputeFormulaSub(obj, zsearchVal);
+        //_sfLog("formulax:" + p8_NumberToCell(c + 1) + r)
+
+
+        //var xtemp = text.toUpperCase()._sfReplaceAll("=", "")._sfReplaceAll("-", "#aag#")._sfReplaceAll("*", "#aag#")._sfReplaceAll("/", "#aag#")._sfReplaceAll("+", "#aag#");
+        ////._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#")
+        //var xArry = xtemp.split("#aag#");
+        //var xArryVal = xtemp.split("#aag#");
+
+        //var tempValue = [];
+
+        //var formula_ = text._sfReplaceAll("=", "")._sfReplaceAll(" ", "").toUpperCase();;
+        //for (var i2 = 0; i2 < xArry.length; i2++) {
+        //    var cellindex = { row: -1, col: -1 };
+        //    try {
+        //        xArry[i2] = xArry[i2].trim();
+        //        var importantCell = xArry[i2];
+
+        //        var tempimportantCell = importantCell._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#");
+        //        var tempimportantCellArry = tempimportantCell.split("#aag#");
+        //        crFormulaFuncTemp = func_GetFormulaFunc(tempimportantCellArry[0]);
+        //        if (crFormulaFuncTemp != "") {
+        //            importantCell = tempimportantCellArry[1];
+        //            crFormulaFunc = crFormulaFuncTemp;
+
+        //            //continue;
+        //            var xval = 0;
+        //            // Custom Function    like SUM
+        //            if (crFormulaFunc != "") { //&& 1==2
+        //                try {
+        //                    // get whole value of Custom Function
+        //                    xval = func_GetFormulaRangeValue(importantCell, obj, crFormulaFunc);
+        //                } catch (err) {
+        //                    xval = "";
+        //                    //  xval = err;
+        //                }
+        //                if (xval == undefined || xval == "undefined" || xval == "") xArryVal[i] = "0";
+        //                else xArryVal[i] = xval + "";
+        //                crFormulaFunc = "";
+
+        //                tempValue.push({ cell: xArry[i2].trim() + "", value: xval, type: "special" });
+        //                continue;
+        //            }
+        //        }
+        //        else {
+        //            xArry[i2] = xArry[i2].replaceAll("(", "").replaceAll(")", "");
+        //        }
+
+
+        //        cellindex = _sfcellA1ToIndex(xArry[i2].trim(), 0);
+        //        var valuex = obj.GetValue(cellindex.col, cellindex.row);
+        //        if (valuex == undefined || valuex == "") valuex = 0;
+
+
+
+        //        tempValue.push({ cell: xArry[i2].trim() + "", value: valuex, type: "cell" });
+        //    } catch (err) { }
+        //}
+
+        //tempValue.sort(function (a, b) { return b.cell.length - a.cell.length });
+        //for (var i2 = 0; i2 < tempValue.length; i2++) {
+        //    formula_ = formula_._sfReplaceAll(tempValue[i2].cell, tempValue[i2].value);
+        //}
+        //try { result = eval(formula_); } catch (err) { isFailed = true; result = "#VALUE!"; }
+        //if (result == undefined || result == "undefined") { isFailed = true; result = "#ERROR#"; }
+        //if (_sfIsFunction(result)) { isFailed = true; result = "#ERROR#"; }
+        //obj.Data[r][_sfGetCellName(obj, c)].value = result;
+
+
+        //zsearchVal = c + ":" + r + ":";
+        //_sfComputeFormulaSub(obj, zsearchVal);
     }
 }
 
@@ -1895,7 +2120,7 @@ function _sfSetFormulaChange(obj, c, r) {
 }
 function _sfSetFormulaRemove(obj, c, r) {
 
-    for (var i = obj.CellFomulaList.length - 1; i >= 0 ; i--) {
+    for (var i = obj.CellFomulaList.length - 1; i >= 0; i--) {
         if (obj.CellFomulaList[i].acol == c && obj.CellFomulaList[i].arow == r) {
             obj.CellFomulaList.splice(i, 1);
         }
@@ -1918,123 +2143,132 @@ function _sfSetFormula(obj, c, r, text) {
 
 
         var result = "";
+        result = _sfEvaluateFormula(obj, c, r, text);
 
-        var xtemp = text.toUpperCase()._sfReplaceAll("=", "")._sfReplaceAll("^", "#aag#");
-        //xtemp = xtemp._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#");
-        xtemp = xtemp._sfReplaceAll("-", "#aag#")._sfReplaceAll("*", "#aag#")._sfReplaceAll("/", "#aag#")._sfReplaceAll("+", "#aag#");
-
-        var xArry = xtemp.split("#aag#");
-        var xArryVal = xtemp.split("#aag#");
-
-        var tempValue = [];
-
-        var formula_ = text._sfReplaceAll("=", "")._sfReplaceAll(" ", "").toUpperCase();;
-        var crFormulaFuncTemp = "";
-        var crFormulaFunc = "";
-        var importantCell = "";
-        var xval = "";
-
-
-        for (var i = 0; i < xArry.length; i++) {
-            var cellindex = { row: -1, col: -1 };
-            try {
-                xArry[i] = xArry[i].trim();
-                importantCell = xArry[i];
-                xval = "";
-
-
-                var tempimportantCell = importantCell._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#");
-                var tempimportantCellArry = tempimportantCell.split("#aag#");
-                crFormulaFuncTemp = func_GetFormulaFunc(tempimportantCellArry[0]);
-                if (crFormulaFuncTemp != "") {
-                    importantCell = tempimportantCellArry[1];
-                    crFormulaFunc = crFormulaFuncTemp;
-
-                    //continue;
-
-                    // Custom Function    like SUM
-                    if (crFormulaFunc != "") { //&& 1==2
-                        try {
-                            // get whole value of Custom Function
-                            xval = func_GetFormulaRangeValue(importantCell, obj, crFormulaFunc);
-                        } catch (err) {
-                            xval = "";
-                            //  xval = err;
-                        }
-                        if (xval == undefined || xval == "undefined" || xval == "") xArryVal[i] = "0";
-                        else xArryVal[i] = xval + "";
-                        crFormulaFunc = "";
-
-                        tempValue.push({ cell: xArry[i].trim() + "", value: xval, type: "special" });
-                        continue;
-                    }
-                }
-                else {
-                    xArry[i] = xArry[i].replaceAll("(", "").replaceAll(")", "");
-                }
-
-
-
-
-
-                cellindex = _sfcellA1ToIndex(xArry[i].trim(), 0);
-                var valuex = obj.GetValue(cellindex.col, cellindex.row);
-                if (valuex == undefined || valuex == "") valuex = 0;
-
-                tempValue.push({ cell: xArry[i].trim() + "", value: valuex, type: "cell" });
-            } catch (err) { }
-        }
-
-        tempValue.sort(function (a, b) { return b.cell.length - a.cell.length });
-
-
-        for (var i = 0; i < tempValue.length; i++) {
-            formula_ = formula_._sfReplaceAll(tempValue[i].cell, tempValue[i].value);
-
-            if (tempValue[i].type == "cell") {
-                var xindexes = _sfcellA1ToIndex(tempValue[i].cell);
-                _sfLoadFormulaRef(obj, tempValue[i].cell, xindexes.col, xindexes.row, c, r, text);
-            }
-            else {
-                // continue;
-                var celvalue = tempValue[i].cell;
-                var tempimportantCell = celvalue._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#");
-                var tempimportantCellArry = tempimportantCell.split("#aag#");
-                var cellarray = tempimportantCellArry[1].split(",");
-                for (var ix = 0; ix < cellarray.length; ix++) {
-                    var cellarray2 = cellarray[ix].split(":");
-                    if (cellarray2.length > 1) {
-                        //range
-                        var xindexes1 = _sfcellA1ToIndex(cellarray2[0]);
-                        var xindexes2 = _sfcellA1ToIndex(cellarray2[1]);
-
-                        for (var ir = xindexes1.row; ir <= xindexes2.row; ir++) {
-                            for (var ic = xindexes1.col; ic <= xindexes2.col; ic++) {
-                                var cellname = GetExcelColumnName(ic + 1) + "" + (ir + 1);
-                                _sfLoadFormulaRef(obj, cellname, ic, ir, c, r, text);
-                                //break;
-                            }
-                            // break;
-                        }
-
-                    }
-                    else {
-                        var xindexes = _sfcellA1ToIndex(cellarray2[0]);
-                        _sfLoadFormulaRef(obj, cellarray2[0], xindexes.col, xindexes.row, c, r, text);
-                    }
-                }
-            }
-        }
-
-
-
-        formula_ = _sfLoadFormulaPow(formula_); // convert pow
-
-
-        try { result = eval(formula_); } catch (err) { isFailed = true; result = "#VALUE!"; }
+        var resultNaN = result + ""
         if (result == undefined || result == "undefined") { isFailed = true; result = "#ERROR#"; }
         if (_sfIsFunction(result)) { isFailed = true; result = "#ERROR#"; }
+        if (resultNaN == "NaN") {
+            if (formula_.includes("/")) { result = "#DIV/0!" }
+        }
         obj.Data[r][_sfGetCellName(obj, c)].value = result;
+
+        //var xtemp = text.toUpperCase()._sfReplaceAll("=", "")._sfReplaceAll("^", "#aag#");
+        ////xtemp = xtemp._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#");
+        //xtemp = xtemp._sfReplaceAll("-", "#aag#")._sfReplaceAll("*", "#aag#")._sfReplaceAll("/", "#aag#")._sfReplaceAll("+", "#aag#");
+
+        //var xArry = xtemp.split("#aag#");
+        //var xArryVal = xtemp.split("#aag#");
+
+        //var tempValue = [];
+
+        //var formula_ = text._sfReplaceAll("=", "")._sfReplaceAll(" ", "").toUpperCase();;
+        //var crFormulaFuncTemp = "";
+        //var crFormulaFunc = "";
+        //var importantCell = "";
+        //var xval = "";
+
+
+        //for (var i = 0; i < xArry.length; i++) {
+        //    var cellindex = { row: -1, col: -1 };
+        //    try {
+        //        xArry[i] = xArry[i].trim();
+        //        importantCell = xArry[i];
+        //        xval = "";
+
+
+        //        var tempimportantCell = importantCell._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#");
+        //        var tempimportantCellArry = tempimportantCell.split("#aag#");
+        //        crFormulaFuncTemp = func_GetFormulaFunc(tempimportantCellArry[0]);
+        //        if (crFormulaFuncTemp != "") {
+        //            importantCell = tempimportantCellArry[1];
+        //            crFormulaFunc = crFormulaFuncTemp;
+
+        //            //continue;
+
+        //            // Custom Function    like SUM
+        //            if (crFormulaFunc != "") { //&& 1==2
+        //                try {
+        //                    // get whole value of Custom Function
+        //                    xval = func_GetFormulaRangeValue(importantCell, obj, crFormulaFunc);
+        //                } catch (err) {
+        //                    xval = "";
+        //                    //  xval = err;
+        //                }
+        //                if (xval == undefined || xval == "undefined" || xval == "") xArryVal[i] = "0";
+        //                else xArryVal[i] = xval + "";
+        //                crFormulaFunc = "";
+
+        //                tempValue.push({ cell: xArry[i].trim() + "", value: xval, type: "special" });
+        //                continue;
+        //            }
+        //        }
+        //        else {
+        //            xArry[i] = xArry[i].replaceAll("(", "").replaceAll(")", "");
+        //        }
+
+
+
+
+
+        //        cellindex = _sfcellA1ToIndex(xArry[i].trim(), 0);
+        //        var valuex = obj.GetValue(cellindex.col, cellindex.row);
+        //        if (valuex == undefined || valuex == "") valuex = 0;
+
+        //        tempValue.push({ cell: xArry[i].trim() + "", value: valuex, type: "cell" });
+        //    } catch (err) { }
+        //}
+
+        //tempValue.sort(function (a, b) { return b.cell.length - a.cell.length });
+
+
+        //for (var i = 0; i < tempValue.length; i++) {
+        //    formula_ = formula_._sfReplaceAll(tempValue[i].cell, tempValue[i].value);
+
+        //    if (tempValue[i].type == "cell") {
+        //        var xindexes = _sfcellA1ToIndex(tempValue[i].cell);
+        //        _sfLoadFormulaRef(obj, tempValue[i].cell, xindexes.col, xindexes.row, c, r, text);
+        //    }
+        //    else {
+        //        // continue;
+        //        var celvalue = tempValue[i].cell;
+        //        var tempimportantCell = celvalue._sfReplaceAll("(", "#aag#")._sfReplaceAll(")", "#aag#");
+        //        var tempimportantCellArry = tempimportantCell.split("#aag#");
+        //        var cellarray = tempimportantCellArry[1].split(",");
+        //        for (var ix = 0; ix < cellarray.length; ix++) {
+        //            var cellarray2 = cellarray[ix].split(":");
+        //            if (cellarray2.length > 1) {
+        //                //range
+        //                var xindexes1 = _sfcellA1ToIndex(cellarray2[0]);
+        //                var xindexes2 = _sfcellA1ToIndex(cellarray2[1]);
+
+        //                for (var ir = xindexes1.row; ir <= xindexes2.row; ir++) {
+        //                    for (var ic = xindexes1.col; ic <= xindexes2.col; ic++) {
+        //                        var cellname = GetExcelColumnName(ic + 1) + "" + (ir + 1);
+        //                        _sfLoadFormulaRef(obj, cellname, ic, ir, c, r, text);
+        //                        //break;
+        //                    }
+        //                    // break;
+        //                }
+
+        //            }
+        //            else {
+        //                var xindexes = _sfcellA1ToIndex(cellarray2[0]);
+        //                _sfLoadFormulaRef(obj, cellarray2[0], xindexes.col, xindexes.row, c, r, text);
+        //            }
+        //        }
+        //    }
+        //}
+
+
+
+        //formula_ = _sfLoadFormulaPow(formula_); // convert pow
+
+
+        //try { result = eval(formula_); } catch (err) { isFailed = true; result = "#VALUE!"; }
+        //if (result == undefined || result == "undefined") { isFailed = true; result = "#ERROR#"; }
+        //if (_sfIsFunction(result)) { isFailed = true; result = "#ERROR#"; }
+        //obj.Data[r][_sfGetCellName(obj, c)].value = result;
 
 
     } catch (err) {
@@ -2137,10 +2371,10 @@ function _sfLoadFormulaRef(obj, cell, col, row, c, r, text) {
 
 }
 
-function _sfJsonDelete(json, rowIndex) {
+function _sfJsonDelete(json, rowIndex, rowminus) {
     var results = json;
     try {
-        json.splice(rowIndex, 1);
+        json.splice(rowIndex, rowminus);
     } catch (err) { }
     return results;
 }
@@ -2226,24 +2460,38 @@ function _sfJson(json, searchField, searchVal, isCaseSensitive) {
 * @throws                     Error if invalid parameter
 */
 function _sfcellA1ToIndex(cellA1, index) {
+    cellA1 = (cellA1 + "").trim();
     // Ensure index is (default) 0 or 1, no other values accepted.
     index = index || 0;
     index = (index == 0) ? 0 : 1;
 
-    // Use regex match to find column & row references.
-    // Must start with letters, end with numbers.
-    // This regex still allows induhviduals to provide illegal strings like "AB.#%123"
-    var match = cellA1.match(/(^[A-Z]+)|([0-9]+$)/gm);
+    try { cellA1 = cellA1.toUpperCase() } catch (ex) { }
+    // Match the cell reference pattern
+    var match = cellA1.match(/\$?([A-Z]+)\$?(\d+)/);
 
-    if (match.length != 2) throw new Error("Invalid cell reference");
+    if (match) {
+        var colStr = match[1];
+        var rowStr = match[2];
 
-    var colA1 = match[0];
-    var rowA1 = match[1];
+        // Convert column letters to a numeric value
+        var col = 0;
+        for (var i = 0; i < colStr.length; i++) {
+            col = col * 26 + colStr.charCodeAt(i) - 'A'.charCodeAt(0) + 1;
+        }
 
-    return {
-        row: _sfrowA1ToIndex(rowA1, index),
-        col: _sfcolA1ToIndex(colA1, index)
-    };
+        // Convert row string to a numeric value
+        var row = parseInt(rowStr, 10);
+
+        // Check if row or column is fixed
+        var rowFixed = cellA1.indexOf('$') !== -1;
+        var colFixed = cellA1.indexOf('$', colStr.length + 1) !== -1;
+
+        // Return the result as an object
+        return { row: row - 1, col: col - 1, rowFixed: rowFixed, colFixed: colFixed };
+    } else {
+        // Invalid cell reference
+        return null;
+    }
 }
 
 /**
@@ -2449,7 +2697,7 @@ P8.SpreadSheet.prototype.GetMaxLength = function (c, r) {
     if (r == undefined) r = this.CellIndexes.Row;
     var stringV;
     try {
-        stringV = _sfCheckConfigType(this, r, c, "MaxLength",-1);
+        stringV = _sfCheckConfigType(this, r, c, "MaxLength", -1);
     } catch (err) {
 
     }
@@ -2509,7 +2757,7 @@ P8.SpreadSheet.prototype.GetText = function (c, r) {
         stringV == undefined;
     }
     try {
-        if (stringV == undefined )
+        if (stringV == undefined)
             stringV = this.ColumnConfig[c].Text2;
     } catch (err) {
         stringV == undefined;
@@ -2567,7 +2815,9 @@ P8.SpreadSheet.prototype.GetFormula = function (c, r) {
         } catch (err) { }
     }
 
-    stringV = (stringV || "") + "";
+    // stringV = (stringV || "") + "";
+
+    stringV = (stringV !== undefined && stringV !== null ? stringV : "") + "";
 
     return stringV;
 };
@@ -2604,7 +2854,12 @@ function _sfScrollUpdatePosition(obj) {
     var canvasID = obj.canvasID;
     var maxrow = obj.Data.length;
     var columnminus = 7;//aag scroll
-    var maxcolumn = obj.ColumnConfig.length - columnminus;
+    
+    if (obj.ColumnConfig.length < columnminus) {
+        columnminus = obj.ColumnConfig.length - 1
+    }
+    //var maxcolumn = obj.ColumnConfig.length - columnminus;
+    var maxcolumn = obj.ColumnConfig.length;
     if (maxcolumn <= 1) maxcolumn = 1;
 
     var currow = obj.startRow - 1;
@@ -2617,7 +2872,9 @@ function _sfScrollUpdatePosition(obj) {
     //}
 
     var varpercV = currow / maxrow;
-    var varpercH = curcol / maxcolumn;
+    
+    //var varpercH = curcol / maxcolumn;
+    var varpercH = maxcolumn / curcol;
 
     if (currow + 1 == maxrow) varpercV = 1;
     if (curcol + 1 == maxcolumn) varpercH = 1;
@@ -2633,7 +2890,9 @@ function _sfScrollUpdatePosition(obj) {
     var width = $(scH).width();
     var barwidth = $(scH).find('.P8Spread_ScrollH_handler').width();
     var wdiff = width - barwidth;
-    $(scH).find('.P8Spread_ScrollH_handler').css("left", wdiff * varpercH + "px");
+    var wdiff = ((wdiff / maxcolumn) * (curcol));
+    $(scH).find('.P8Spread_ScrollH_handler').css("left", wdiff + "px");
+    //$(scH).find('.P8Spread_ScrollH_handler').css("left", wdiff * varpercH + "px");
 
     obj.ScrollActiveStat = false;
 }
@@ -2659,7 +2918,8 @@ P8.SpreadSheet.prototype.ScrollDown = function (c) {
     this.ScrollActiveStat = true;
     _sfStartTime();
     if (c == undefined) c = this.ScrollCounterV;
-    if (this.startRow >= this.Data.length) return;
+    if (this.startRow >= this.Data.length) { this.ScrollActiveStat = false; return };
+    //if (this.startRow >= this.Data.length) return;
     this.startRow += c;
 
     //console.log("scrolls:" + this.startCol + ":" + this.startRow);
@@ -2676,7 +2936,8 @@ P8.SpreadSheet.prototype.ScrollUp = function (c) {
     this.ScrollActiveStat = true;
     _sfStartTime();
     if (c == undefined) c = this.ScrollCounterV;
-    if (this.startRow == 1) return;
+    if (this.startRow == 1) { this.ScrollActiveStat = false; return };
+    //if (this.startRow == 1) return;
 
     this.startRow -= c;
     if (this.startRow <= 1) this.startRow = 1;
@@ -2693,7 +2954,8 @@ P8.SpreadSheet.prototype.ScrollRight = function (c) {
         c += 1;
     }
 
-    if (this.startCol >= this.ColumnConfig.length) return;
+    if (this.startCol >= this.ColumnConfig.length) { this.ScrollActiveStat = false; return };
+    //if (this.startCol >= this.ColumnConfig.length) return;
 
 
     this.startCol += c;
@@ -2719,7 +2981,8 @@ P8.SpreadSheet.prototype.ScrollLeft = function (c) {
     }
     //if (c <= 0) return;
 
-    if (this.startCol <= 1) return;
+    if (this.startCol <= 1) { this.ScrollActiveStat = false; return };
+    //if (this.startCol <= 1) return;
 
     //var width =0;
     //do {
@@ -2737,14 +3000,14 @@ function _sfModifyScrollBar() {
 
 }
 
-var P8RendeVar=[];
+var P8RendeVar = [];
 var P8RendeVarSub;
 function _sfRenderFunction(_this) {
     console.log("test");
-   
+
     if (_this.Book.ActiveSheet.startCol == _this.Book.ActiveSheet.prevstartCol
-     && _this.Book.ActiveSheet.startRow == _this.Book.ActiveSheet.prevstartRow
-     && _this.ScrollActiveStat) {
+        && _this.Book.ActiveSheet.startRow == _this.Book.ActiveSheet.prevstartRow
+        && _this.ScrollActiveStat) {
 
         return;
     }
@@ -2759,7 +3022,7 @@ function _sfRenderFunction(_this) {
         _this.Book.ActiveSheet.prevstartRow = _this.Book.ActiveSheet.startRow;
         _this.Book.ActiveSheet.prevstartCol = _this.Book.ActiveSheet.startCol;
 
-        try { clearTimeout(P8RendeVar[_this.canvasID]); } catch (err) {  console.log("error:" + err); }
+        try { clearTimeout(P8RendeVar[_this.canvasID]); } catch (err) { console.log("error:" + err); }
         P8RendeVar[_this.canvasID] = setTimeout(function () {
             //_this.havelistner = false;
             //console.log("start:" + renderID + " | col:" + _this.Book.ActiveSheet.startCol + " | row:" + _this.Book.ActiveSheet.startRow);
@@ -2846,24 +3109,34 @@ P8.SpreadSheet.prototype.Refresh = function () {
 
 
 P8.SpreadSheet.prototype.RefreshSpecialConfig = function () {
-  
+
     _sfRefreshSpecialConfig(this);
-  
+
     this.RenderNoEvent();
 };
 function _sfRefreshSpecialConfig(_this) {
-  
+
     try {
         var ccID = _this.canvasID;
         var nwcolumnhideconfig = $("#" + ccID).attr("nwcolumnhideconfig");
         var nwcolumnhideconfig_list = nwcolumnhideconfig.split("|");
-        for (var i = 0; i < nwcolumnhideconfig_list.length - 1; i++) {
+        if (nwcolumnhideconfig_list.length <= 0) return;
+
+        for (var i = 0; i < nwcolumnhideconfig_list.length; i++) {
             try {
+                if (nwcolumnhideconfig_list[i] == "") {
+                    continue;
+                }
                 if (nwcolumnhideconfig_list[i] == 0) {
                     _this.ColumnWidth(i, 0);
                 }
                 else {
-                    _this.ColumnWidth(i, parseInt(_this.ColumnConfig[i].ColumnWidth));
+                    var ColumnWidth = _this.ColumnConfig[i].ColumnWidth;
+                    if (ColumnWidth == "aagdefault")
+                        ColumnWidth = 120;
+
+                    ColumnWidth = parseInt(ColumnWidth);
+                    _this.ColumnWidth(i, ColumnWidth);
                 }
             } catch (err) { }
         }
@@ -2903,7 +3176,7 @@ P8.Spread.prototype.SetTabSheetVisible = function (value) {
 P8.Spread.prototype.Destroy = function () {
     var objMain = this;
     var canvasID = this.ActiveSheet.canvasID;
-    for (var i = 0; i < objMain.Sheet.length ; i++) {
+    for (var i = 0; i < objMain.Sheet.length; i++) {
         try {
             var sheet = objMain.Sheet[i];
             sheet.Destroy();
@@ -3212,7 +3485,7 @@ function _sfConvertJSONtoP8(json, name) {
     return {
         _data: json,
         _column: name
-    , _row: []
+        , _row: []
     };
 }
 
@@ -3301,7 +3574,7 @@ function _sfExcelExport(SpreadID, FileName) {
     var textRange; var j = 0;
     tab = document.getElementById(SpreadID); // id of table
 
-    for (j = 0 ; j < tab.rows.length ; j++) {
+    for (j = 0; j < tab.rows.length; j++) {
         tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
         //tab_text=tab_text+"</tr>";
     }
@@ -3381,7 +3654,7 @@ function _sfFormartNumber(num, precision) {
     } catch (err) { alert(err); }
 }
 
-function _sfSpreadInputShow(obj, clearText) {
+function _sfSpreadInputShow(obj, clearText,e) {
 
     var valueformula = obj.Book.ActiveSheet.GetFormula();
     if (obj.Book.FormulaField == true) {
@@ -3402,7 +3675,7 @@ function _sfSpreadInputShow(obj, clearText) {
     $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "visible");
 
     var valuex = obj.Book.ActiveSheet.GetValue();
-    if (obj.IsDesigner){
+    if (obj.IsDesigner) {
         valuex = obj.Book.ActiveSheet.GetFormula();
     }
 
@@ -3411,12 +3684,17 @@ function _sfSpreadInputShow(obj, clearText) {
 
     if (xdataType == "number"
         || xdataType == "currency"
-         || xdataType == "percentvalue"
-         || xdataType == "percent") {
+        || xdataType == "percentvalue"
+        || xdataType == "percent") {
 
-        if (xdataType == "percentvalue") valuex = valuex * 100;
+        if (!p8Spread_IsNull(valueformula)) {
 
-        valuex = _sfFormartNumber(valuex, xprecision);
+        } else {
+            //if (xdataType == "percent") valuex = valuex * 100;
+            if (xdataType == "percentvalue") valuex = valuex * 100;
+
+            valuex = _sfFormartNumber(valuex, xprecision);
+        }
 
 
 
@@ -3429,12 +3707,19 @@ function _sfSpreadInputShow(obj, clearText) {
         $("#" + obj.canvasID + "_vw_inp").removeClass("isNumber");
         $("#" + obj.canvasID + "_vw_inp").removeClass("numC");
         $("#" + obj.canvasID + "_vw_inp").removeClass("nwPercentValue");
-    }
-    if (obj.GetDataType() == "date") {
-        $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").show();
+        if (xdataType == "date") {
+            $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").show();
+            setTimeout(function () {
+                $("#" + obj.canvasID + "_vw_inp").val(valuex);
+            }, 1);
+        } else {
+            // setTimeout(function () {
+            $("#" + obj.canvasID + "_vw_inp").val(valuex);
+            //  }, 1);
+        }
     }
 
-    $("#" + obj.canvasID + "_vw_inp").val("");
+    // $("#" + obj.canvasID + "_vw_inp").val("");
 
     if (clearText == true) $("#" + obj.canvasID + "_vw_inp").val("");
     else $("#" + obj.canvasID + "_vw_inp").val(valuex);
@@ -3609,8 +3894,8 @@ function _sfResizeScroll(containerID) {
     }, 10);
 }
 
-function _sfnwGridButtons(objBook,rclass) {
-    if(rclass==undefined)rclass="";
+function _sfnwGridButtons(objBook, rclass) {
+    if (rclass == undefined) rclass = "";
 
 
     var strAddButton = "";
@@ -3620,13 +3905,13 @@ function _sfnwGridButtons(objBook,rclass) {
         var obj = objBook.Buttons[index];
 
 
-        strAddButton = "<div class=\"nwgridButtons "+rclass+"\" p8style='{0}'>";
+        strAddButton = "<div class=\"nwgridButtons " + rclass + "\" p8style='{0}'>";
 
         if (!obj._isAddNew) {
             strAddButton += "";
         }
         else {
-            strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><button class=\"nwgrid_AddNew nwgrid_buttons "+rclass+"\"  >Add Row</button></div>";
+            strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\"><button class=\"nwgrid_AddNew nwgrid_buttons " + rclass + "\"  >Add Row</button></div>";
         }
         if (obj.dataTableButtons.length >= 1
             || obj.buttonInsert || obj.buttonCopyRow || obj.buttonDelete || obj._isAddNew
@@ -3634,9 +3919,9 @@ function _sfnwGridButtons(objBook,rclass) {
             || obj.buttonSearchFind
             || obj.buttonSaveColumn || obj.buttonResetColumn
             || obj.buttonReport
-            ) {
+        ) {
             //  tableHeightBut = tableHeightBut - 25;
-            strAddButton = String.Format(strAddButton, "height:21px;");
+            strAddButton = String.Format(strAddButton, "height:21px;display: inline;");
         }
         else {
             //tableHeight += 14; tableHeightBut += 12; // in old for height
@@ -3648,23 +3933,23 @@ function _sfnwGridButtons(objBook,rclass) {
 
         //<div class="nwgridButtons" p8style="height:20px;">
 
-        if (obj.buttonInsert) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_Insert nwgrid_buttons\"  >Insert Row</button></div>";
-        if (obj.buttonCopyRow) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_CopyRow nwgrid_buttons\"    >Copy Row</button></div>";
-        if (obj.buttonDelete) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_Delete nwgrid_buttons\"  >Delete Row</button></div>";
+        if (obj.buttonInsert) strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_Insert nwgrid_buttons\"  >Insert Row</button></div>";
+        if (obj.buttonCopyRow) strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_CopyRow nwgrid_buttons\"    >Copy Row</button></div>";
+        if (obj.buttonDelete) strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_Delete nwgrid_buttons\"  >Delete Row</button></div>";
 
 
-        if (obj.buttonSaveColumn) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_SaveWidth nwgrid_buttons\"  >Save Column Width</button></div>";
-        if (obj.buttonResetColumn) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_ResetWidth nwgrid_buttons\"  >Reset Column Width</button></div>";
+        if (obj.buttonSaveColumn) strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_SaveWidth nwgrid_buttons\"  >Save Column Width</button></div>";
+        if (obj.buttonResetColumn) strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_ResetWidth nwgrid_buttons\"  >Reset Column Width</button></div>";
 
         //aagGridColHide 09-07-2022
         try {
-            if (obj.hide_column_but == true) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_HideColumn nwgrid_buttons\" onclick=\" return false;\" style=\"\">Show/Hide Column</button></div>";
+            if (obj.hide_column_but == true) strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_HideColumn nwgrid_buttons\" onclick=\" return false;\" style=\"\">Show/Hide Column</button></div>";
         }
         catch (err) { }
 
 
         if (obj.buttonReport) {
-            strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button class=\"nwgrid_HeaderShowHide nwgrid_buttons\"  buttonstatus='true' buttonindex ='" + obj.buttonReportIndex + "'  txthide='" + obj.buttonReportTextHide.replaceAll("'", "\'") + "' txtshow='" + obj.buttonReportTextShow.replaceAll("'", "\'") + "' >" + obj.buttonReportTextHide + "</button></div>";
+            strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_HeaderShowHide nwgrid_buttons\"  buttonstatus='true' buttonindex ='" + obj.buttonReportIndex + "'  txthide='" + obj.buttonReportTextHide.replaceAll("'", "\'") + "' txtshow='" + obj.buttonReportTextShow.replaceAll("'", "\'") + "' >" + obj.buttonReportTextHide + "</button></div>";
 
             //strAddButton += "<style>";
 
@@ -3677,9 +3962,9 @@ function _sfnwGridButtons(objBook,rclass) {
         }
 
         if (obj.buttonSearchFind)
-            strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><input class=\"nwgrid_SearchNext\"> <button class=\"nwgrid_SearchFind nwgrid_buttons\"  >Find</button></div>";
+            strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\"><span class=\"btnImage\"></span><input class=\"nwgrid_SearchNext\"> <button class=\"nwgrid_SearchFind nwgrid_buttons\"  >Find</button></div>";
 
-        if (obj.buttonExport) strAddButton += "<div class=\"nwgrid_buttonsCon "+rclass+"\" p8style=\"" + (obj.buttonExportHide ? "display:none;" : "") + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_Export nwgrid_buttons\"  >Export</button></div>";
+        if (obj.buttonExport) strAddButton += "<div class=\"nwgrid_buttonsCon " + rclass + "\" p8style=\"" + (obj.buttonExportHide ? "display:none;" : "") + "\"><span class=\"btnImage\"></span><button class=\"nwgrid_Export nwgrid_buttons\"  >Export</button></div>";
 
 
         /// hide for now
@@ -3687,8 +3972,13 @@ function _sfnwGridButtons(objBook,rclass) {
 
 
         try {
-            for (var index1 = 0; index1 < obj.dataTableButtons.length; index1++)
-                strAddButton = strAddButton + "<div class=\"nwgrid_buttonsCon "+rclass+"\"><span class=\"btnImage\"></span><button ID=\"" + obj.dataTableButtons[index1].ButtonID + "\" nwID=\"" + obj.dataTableButtons[index1].ButtonID + "\" class=\"nwgrid_buttonCustom nwgrid_buttons\"  >" + obj.dataTableButtons[index1].ButtonTitle + "</button></div>";
+            for (var index1 = 0; index1 < obj.dataTableButtons.length; index1++){
+                var ButtonClass = "";
+                try {
+                    ButtonClass = obj.dataTableButtons[index1].ButtonClass == undefined ? "" : obj.dataTableButtons[index1].ButtonClass;
+                } catch (err) { }
+                strAddButton = strAddButton + "<div class=\"nwgrid_buttonsCon " + rclass + "\"><span class=\"btnImage\"></span><button ID=\"" + obj.dataTableButtons[index1].ButtonID + "\" nwID=\"" + obj.dataTableButtons[index1].ButtonID + "\" class=\"nwgrid_buttonCustom nwgrid_buttons " + ButtonClass + "\"  >" + obj.dataTableButtons[index1].ButtonTitle + "</button></div>";
+            }
         } catch (err) { }
 
         //strAddButton += "<style>";
@@ -3701,7 +3991,7 @@ function _sfnwGridButtons(objBook,rclass) {
 
     if (objBook.FormulaField == true) {
         strAddButton += "<div><span p8style='font-style: italic;font-weight: bold;margin: 10px;'>fx</span>"
-        strAddButton += "<input class='formulafield "+rclass+"' p8style='min-width: 450px;max-width: 92%;width: 92%;'></div>";
+        strAddButton += "<input class='formulafield " + rclass + "' p8style='min-width: 450px;max-width: 92%;width: 92%;'></div>";
     }
 
     return strAddButton;
@@ -3726,9 +4016,9 @@ function _sfnwGridButtonsNew(objBook) {
             || obj.buttonSearchFind
             || obj.buttonSaveColumn || obj.buttonResetColumn
             || obj.buttonReport
-            ) {
+        ) {
             //  tableHeightBut = tableHeightBut - 25;
-            strAddButton = String.Format(strAddButton, "height:21px;");
+            strAddButton = String.Format(strAddButton, "height:21px;display: inline;");
         }
         else {
             //tableHeight += 14; tableHeightBut += 12; // in old for height
@@ -3741,14 +4031,13 @@ function _sfnwGridButtonsNew(objBook) {
         if (obj.buttonDelete) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_Delete nwgrid_buttons\"  >Delete Row</button></div>";
         if (obj.buttonSaveColumn) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_SaveWidth nwgrid_buttons\"  >Save Column Width</button></div>";
         if (obj.buttonResetColumn) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_ResetWidth nwgrid_buttons\"  >Reset Column Width</button></div>";
-        
-        
+
+
         //aagGridColHide 09-07-2022
-        try
-        {
+        try {
             if (obj.hide_column_but == true) strAddButton += "<div class=\"nwgrid_buttonsCon\"><span class=\"btnImage\"></span><button class=\"nwgrid_HideColumn nwgrid_buttons\" onclick=\" return false;\" style=\"\">Show/Hide Column</button></div>";
         }
-        catch(err) { }
+        catch (err) { }
 
 
         if (obj.buttonReport) {
@@ -3855,6 +4144,8 @@ function _sfAutoWrapRow(obj, rowindex, _canvasID) {
         var canvasSheet = document.getElementById(canvasID);
         try {
             var ctx = canvasSheet.getContext('2d');
+
+            var currentmax = spread.Data[rowindex]["aagrowHeight"] || def_Height;
             //var rowindex = i;
             for (var c = 0; c < spread.ColumnConfig.length; c++) {
                 //var c=4;
@@ -3880,15 +4171,16 @@ function _sfAutoWrapRow(obj, rowindex, _canvasID) {
 
                 //_sfWrapText(ctx, textX, 0, 0, width * 0.99, Font.fontSize, fontFace);//
 
-                if (textheight <= 5) textheight = def_Height;
+                //if (textheight <= 5) textheight = heighttemp;
 
-                if (textheight >= def_Height) textheight = textheight - def_Height;
+                //if (textheight >= heighttemp) textheight = textheight - heighttemp;
 
-                if (textheight >= 250) textheight = 250;
+                //if (textheight >= 250) textheight = 250;
 
-                textheight = def_Height + ((textheight) * 1.0);
+                //textheight = heighttemp + ((textheight) * 1.0);
                 //console.log(rowindex + " |" + textX + "| " + width + " : " + currentmax + " < = " + textheight);
                 if (textheight >= currentmax) currentmax = textheight;
+                //if (34 >= currentmax) currentmax = 34;
             }
             //console.log(rowindex + " "  + " " + width + " : " + currentmax);
             try {
@@ -3912,24 +4204,23 @@ function canvasCreate(canvasID, obj) {
     if ($("body").width() <= 550) isresponsive = true;
 
     if (isresponsive) {
-        if(obj.Theme  == P8Themes.FANCY)
-        {
+        if (obj.Theme == P8Themes.FANCY) {
             canvasCreateListHTML(canvasID, obj);
         }
         else {
             canvasCreateList(canvasID, obj);
         }
-        
+
         return;
     }
     if ($("#" + canvasID + "_vw").hasClass("nklist")) {
         $("#" + canvasID).html("");
-    } 
+    }
 
 
     var randomid = nwRandomString(40);
     P8Spread_currcavas = randomid;
-    console.log("START:" + randomid );
+    console.log("START:" + randomid);
     if (obj.gridtype == "grid") {
         return canvasGridCreate(canvasID, obj);
     }
@@ -3946,13 +4237,13 @@ function canvasCreate(canvasID, obj) {
     canvasID = canvasID + "_vw";
     var _tmpExtra = 0;
 
-    var scrollhwidth = 400;
+    var scrollhwidth = 600;
 
 
     var scheight = 0;
     var aminus = 72;
 
- 
+
 
     if ($("#" + canvasID).index() >= 0) {
         isObjectCreated = true;
@@ -4028,9 +4319,42 @@ function canvasCreate(canvasID, obj) {
         var xconheight = ($('#' + containerID).css("height")) || 0;
         if (xconheight <= 10) xconheight = obj.Book.TableHeight || 300;
 
-        x_html += "<canvas id='" + canvasID + "' class='nkspread'  p8style='height:" + xconheight + ";cursor:default;width:" + $('#' + containerID).css("width") + ";'></canvas>";
-        x_html += "<canvas id='" + canvasID + "_temp'  p8style='display:none;height:" + xconheight + ";cursor:default;width:" + $('#' + containerID).css("width") + ";'></canvas>";
+        //x_html += "<canvas id='" + canvasID + "' class='nkspread'  p8style='height:" + xconheight + ";cursor:default;width:" + $('#' + containerID).css("width") + ";'></canvas>";
+        //x_html += "<canvas id='" + canvasID + "_temp'  p8style='display:none;height:" + xconheight + ";cursor:default;width:" + $('#' + containerID).css("width") + ";'></canvas>";
 
+        
+        var scrollerHwidth = 120;
+
+        var haspx = false;
+        try {
+            haspx = $('#' + containerID).css("width").toString().includes("px");
+        } catch (ex) { }
+        if (haspx) {
+            var xconwidth = $('#' + containerID).width() - 10;
+            x_html += "<canvas id='" + canvasID + "' class='nkspread'  p8style='height:" + xconheight + ";cursor:default;width:" + (xconwidth + "px") + ";'></canvas>";
+            x_html += "<canvas id='" + canvasID + "_temp'  p8style='display:none;height:" + xconheight + ";cursor:default;width:" + (xconwidth + "px") + ";'></canvas>";
+            if (xconwidth < 300) {
+                scrollhwidth = xconwidth * 0.6
+                scrollerHwidth = xconwidth * 0.4
+            }
+            else if (xconwidth < 380) {
+                scrollhwidth = xconwidth * 0.6
+                scrollerHwidth = xconwidth * 0.4
+            } else if (xconwidth < 500) {
+                scrollhwidth = xconwidth * 0.7
+                scrollerHwidth = xconwidth * 0.3
+            } else {
+                scrollhwidth = 600
+            }
+            if (scrollerHwidth > 120) {
+                scrollerHwidth = 120;
+            }
+        } else {
+            scrollhwidth = 600
+            x_html += "<canvas id='" + canvasID + "' class='nkspread'  p8style='height:" + xconheight + ";cursor:default;width:" + $('#' + containerID).css("width") + ";'></canvas>";
+            x_html += "<canvas id='" + canvasID + "_temp'  p8style='display:none;height:" + xconheight + ";cursor:default;width:" + $('#' + containerID).css("width") + ";'></canvas>";
+        }
+    
 
 
         x_html += "</td>"; //Canvas
@@ -4051,8 +4375,8 @@ function canvasCreate(canvasID, obj) {
         x_html += "<td id='" + containerID + "_SheetCon' class='P8Spread_SheetCon' p8style='border-top: 1px solid #dddddd !important;max-width:" + (scrollhwidth + 10) + "px;min-width:" + (scrollhwidth + 10) + "px;width:" + (scrollhwidth + 10) + "px;padding:0px;background-color:#dddddd;'>"; //sheet Tab
         x_html += "<canvas id='" + containerID + "_SheetConCanvas'  class='P8Spread_SheetConCanvas' p8style='min-height: 25px;max-height: 25px;max-width:" + scrollhwidth + "px;min-width:" + scrollhwidth + "px;width:" + scrollhwidth + "px; height: 25px;'></canvas>";
         x_html += "</td>"; //
-
-        x_html += "<td class='scrollerH' colspan='2' p8style='padding:0px;background-color:#dddddd;min-width:120px'>"; //scroll  Horizontal
+        x_html += "<td class='scrollerH' colspan='2' p8style='padding:0px;background-color:#dddddd;min-width:" + (scrollerHwidth) + "px'>"; //scroll  Horizontal
+        //x_html += "<td class='scrollerH' colspan='2' p8style='padding:0px;background-color:#dddddd;min-width:120px'>"; //scroll  Horizontal
         x_html += "<div id='" + containerID + "H_P8Spread_ScrollLeft' class='P8Spread_ScrollLeft' p8style='padding: 0px;min-height: " + scrollHeight + "px;min-width: " + scrollHeight + "px;display: inline-block;background-color: #efefef;background-color: #83b8d3;border: 1px solid #607c8b;box-shadow: inset 0px 0px 5px #e5e5e5;border-radius: 3px;'></div>";
         x_html += "<div  class='P8Spread_ScrollH' p8style='padding:0px;min-width:30px;min-height:" + (scrollHeight - 2) + "px;background: #c7d4e1;display: inline-block;'><div id='" + containerID + "H_P8Spread_Scroll' class='P8Spread_ScrollBar Hr' p8style='padding: 0px;min-height: " + (scrollHeight - 2) + "px;min-width: 30px;border: 1px solid #ececec;box-shadow: inset 0 0 5px #ececec;border-radius: 2px;background-color: #ececec;'><div id='" + containerID + "_P8Spread_ScrollH_handler' class='P8Spread_ScrollH_handler' p8style='border-radius:5px; width: 30px;min-height: " + (scrollHeight - 2) + "px;padding: 0px;position: relative;left: 0px;background: #bcc5ce;border-radius: 3px;background-image: -webkit-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -moz-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -ms-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -webkit-gradient(linear, 0 0, 0 100%, from (#bcc5ce), to(#bcc5ce));background-image: -webkit-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -o-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: linear-gradient(top, #bcc5ce, #bcc5ce);box-shadow: inset 1px 1px 5px #bcc5ce;border: 1px solid #bcc5ce;'></div></div></div>"; //scrollbar
         x_html += "<div id='" + containerID + "H_P8Spread_ScrollRight' class='P8Spread_ScrollRight' p8style='padding: 0px;min-height: " + scrollHeight + "px;min-width: " + scrollHeight + "px;display: inline-block;background-color: #efefef;background-color: #83b8d3;border: 1px solid #607c8b;box-shadow: inset 0px 0px 5px #e5e5e5;border-radius: 3px;'></div>";
@@ -4081,10 +4405,24 @@ function canvasCreate(canvasID, obj) {
 
 
         $('#' + canvasID + "_inpDate").datepicker({
+            canvasID: obj.canvasID,
             altField: '#' + canvasID + "_inp",
-            altFormat: "mm/dd/yy"
+            altFormat: "mm/dd/yy"//,
+            //onSelect: function (dateText, inst) {
+            //    $(this).closest(".P8Spread").attr("id");
+            //    $(this).hide();
+            //    $(inst.settings.altField).hide();
+            //    var canvasID = inst.settings.canvasID;
+            //    var acol = $(inst.settings.altField).attr("acol");
+            //    var arow = $(inst.settings.altField).attr("arow");
+            //    var obj = P8DataList[canvasID][0].sheet.ActiveSheet;
+            //    obj.SetText(parseInt(acol), parseInt(arow), dateText, "text", true);
+            //}
+
         });
         $('#' + canvasID + "_inpDate").css("position", "absolute");
+        $('#' + canvasID + "_inpDate").css("z-index", "1");
+        $('#' + canvasID + "_inpDate").hide();
         $("[p8style]").each(function (i) {
             var obj = $(this);
             var nwstyle = obj.attr("p8style");
@@ -4187,7 +4525,22 @@ function canvasCreate(canvasID, obj) {
             var scrolly = rowcount * ((100 - (((ch - h) - (t)) / (ch - h) * 100)) / 100);
             scrolly = Math.floor(scrolly) + 1;
             if (scrolly >= rowcount) scrolly = rowcount;
-            if (scrolly <= 0) scrolly = 1;
+            //if (scrolly < 1) scrolly = 2;
+            if (event.deltaY < 0) {  //scrolling up
+                if (scrolly >= obj.startRow) {
+                    if (scrolly > obj.Data.length) {
+                        scrolly = (obj.startRow - 1)
+                    }
+                }
+            }
+            else {
+                //  if (scrolly <= 1) scrolly = (obj.startRow+1); //scrolling down
+                if (scrolly <= obj.startRow) {
+                    if (scrolly < obj.Data.length) {
+                        scrolly = (obj.startRow + 1)
+                    }
+                }
+            }
 
 
             obj.Book.ActiveSheet.ScrollRender(undefined, scrolly);
@@ -4264,30 +4617,37 @@ function canvasCreate(canvasID, obj) {
 
         $("#" + containerID + "_P8Spread_ScrollH_handler").draggable({
             axis: "x", containment: "parent"
-            , drag: function (e) {
+            , drag: function (e, ui) {
                 //counts[1]++;
                 //updateCounterStatus($drag_counter, counts[1]);
-                var scrollCount = 10;
-                var colminus = 7;//aag scroll
-                var rowcount = obj.ColumnConfig.length - colminus;
-                if (rowcount <= 1) rowcount = 1;
-                var t = parseInt($("#" + containerID + "_P8Spread_ScrollH_handler").css("left")._sfReplaceAll("px", ""));
-                var h = $("#" + containerID + "_P8Spread_ScrollH_handler").outerWidth();
-                var ch = $("#" + containerID + "_P8Spread_ScrollH_handler").parent().width();
-                var ratio = parseFloat(h) / parseFloat(ch);
-                var totaly = (t + h);
-                var scrollx = rowcount * ((100 - (((ch - h) - (t)) / (ch - h) * 100)) / 100);
-                scrollx = Math.floor(scrollx) + 1;
-                if (scrollx >= rowcount) scrollx = rowcount;
-                if (scrollx <= 0) scrollx = 1;
+                //var scrollCount = 10;
+                //var colminus = 7;//aag scroll
+                //var rowcount = obj.ColumnConfig.length - colminus;
+                //if (rowcount <= 1) rowcount = 1;
+                //var t = parseInt($("#" + containerID + "_P8Spread_ScrollH_handler").css("left")._sfReplaceAll("px", ""));
+                //var h = $("#" + containerID + "_P8Spread_ScrollH_handler").outerWidth();
+                //var ch = $("#" + containerID + "_P8Spread_ScrollH_handler").parent().width();
+                //var ratio = parseFloat(h) / parseFloat(ch);
+                //var totaly = (t + h);
+                //var scrollx = rowcount * ((100 - (((ch - h) - (t)) / (ch - h) * 100)) / 100);
+                //scrollx = Math.floor(scrollx) + 1;
+                //if (scrollx >= rowcount) scrollx = rowcount;
+                //if (scrollx <= 0) scrollx = 1;
 
-                //console.log(obj.ColumnConfig.length + " " + obj.startCol + " " + scrollx);
+                ////console.log(obj.ColumnConfig.length + " " + obj.startCol + " " + scrollx);
 
-                if ((obj.ColumnConfig.length - colminus) < obj.startCol) {
-                    return false;
-                }
+                //if ((obj.ColumnConfig.length - colminus) < obj.startCol) {
+                //    return false;
+                //}
 
+                var maxcolumn = obj.ColumnConfig.length;
+                if (maxcolumn <= 1) maxcolumn = 1;
+                var scH = $('#' + containerID).find('.P8Spread_ScrollH');
+                var width = $(scH).width();
+                var barwidth = $(scH).find('.P8Spread_ScrollH_handler').width();
+                var wdiff = parseInt($("#" + containerID + "_P8Spread_ScrollH_handler").css("left")._sfReplaceAll("px", ""));
 
+                var scrollx = Math.ceil((wdiff * maxcolumn) / (width - barwidth));
                 obj.Book.ActiveSheet.ScrollRender(scrollx, undefined);
 
             }
@@ -4299,7 +4659,7 @@ function canvasCreate(canvasID, obj) {
         // _sfLog("Column Config Start:");
         Spread_ColumnConfig = nwCreate2DArray(obj.ColumnConfig.length);
         Spread_Column_backgroundColor = [];
-        for (var i = 0 ; i < obj.ColumnConfig.length; i++) {
+        for (var i = 0; i < obj.ColumnConfig.length; i++) {
             var conid = "backgroundColor";
             Spread_ColumnConfig[i][_sfGetFormatValueColumnChecker(conid)] = obj.ColumnConfig[i][conid];
             Spread_Column_backgroundColor.push(obj.ColumnConfig[i][conid]);
@@ -4327,8 +4687,8 @@ function canvasCreate(canvasID, obj) {
 
 
 
-
-    var conWidth = $('#' + containerID).width();
+    var conWidth = $('#' + containerID).width() - 10;
+    //var conWidth = $('#' + containerID).width();
     var conheight = $('#' + containerID).height();
 
     var myCanvas = createHiDPICanvas(canvasID, conWidth, conheight, 3);
@@ -4416,7 +4776,8 @@ function canvasCreate(canvasID, obj) {
 
         try {
             // if (obj.AutoWrap)
-            heightrow = obj.Data[rowindexHe - 1].aagrowHeight || (def_Height + 0);
+            // heightrow = obj.Data[rowindexHe - 1].aagrowHeight || (def_Height + 0);
+            heightrow = obj.Data[rowindexHe - 1].aagrowHeight == undefined ? (def_Height + 0) : obj.Data[rowindexHe - 1].aagrowHeight;
         } catch (err) { }
 
         rowindexHe += 1;
@@ -4460,7 +4821,7 @@ function canvasCreate(canvasID, obj) {
 
         if (icounter >= 1000) break;
 
-       
+
         // if (icounter >= 50) { console.log("aa"); break; }
     }
 
@@ -4508,13 +4869,13 @@ function canvasCreate(canvasID, obj) {
     var tlHBG = obj.HeaderBackround;
     var tlHFont = obj.HeaderFontFamily;
     var tlHFontSize = obj.HeaderFontSize;
-    var tlHColor = obj.HeaderColor ;
+    var tlHColor = obj.HeaderColor;
 
 
     var tlVBG = obj.VHeaderBackround;
     var tlVFont = obj.VHeaderFontFamily;
-    var tlVFontSize =  obj.VHeaderFontSize;
-    var tlVColor = obj.VHeaderColor ;
+    var tlVFontSize = obj.VHeaderFontSize;
+    var tlVColor = obj.VHeaderColor;
 
     var sheetStart_x = tlNumberWidth + borderMargin;
 
@@ -4674,7 +5035,8 @@ function canvasCreate(canvasID, obj) {
 
 
         try { //get Row height if there is
-            current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
+            //current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
+            current_Height = obj.Data[ix - 1].aagrowHeight == undefined ? def_Height : obj.Data[ix - 1].aagrowHeight;
             //console.log(ix + " " + current_Height);
         } catch (err) { }
 
@@ -4719,7 +5081,7 @@ function canvasCreate(canvasID, obj) {
                 if ((mergeList[it].col2 >= icx - 1 && mergeList[it].col <= icx - 1)
                     && (mergeList[it].row2 >= ix - 1 && mergeList[it].row <= ix - 1)
                     && !(mergeList[it].col == icx - 1 && mergeList[it].row == ix - 1)
-                    ) {
+                ) {
 
 
                     var idlist = mergeList[it].row + "|" + mergeList[it].col + "|" + mergeList[it].row2 + "|" + mergeList[it].col2;
@@ -4739,7 +5101,7 @@ function canvasCreate(canvasID, obj) {
                             var recol2 = merge_ix[0].col2;
                             var rerow2 = merge_ix[0].row2;
                             var xcurrent_Width = def_Width;
-                            for (var icc = merge_ix[0].col ; icc <= merge_ix[0].col2; icc++) {
+                            for (var icc = merge_ix[0].col; icc <= merge_ix[0].col2; icc++) {
 
                                 try {
                                     xcurrent_Width = def_Width;
@@ -4765,10 +5127,11 @@ function canvasCreate(canvasID, obj) {
                             }
 
                             var totalheight = def_Height;
-                            for (var icc = merge_ix[0].row ; icc <= merge_ix[0].row2; icc++) {
+                            for (var icc = merge_ix[0].row; icc <= merge_ix[0].row2; icc++) {
 
                                 try { //get Row height if there is
-                                    totalheight = obj.Data[icc].aagrowHeight || def_Height;
+                                    //totalheight = obj.Data[icc].aagrowHeight || def_Height;
+                                    totalheight = obj.Data[icc].aagrowHeight == undefined ? def_Height : obj.Data[icc].aagrowHeight;
                                 } catch (err) { }
 
                                 curHeight += borderMargin + totalheight;
@@ -4821,7 +5184,7 @@ function canvasCreate(canvasID, obj) {
 
 
                 var xcurrent_Width = current_Width;
-                for (var icc = merge_ix[0].col + 1 ; icc <= recol2; icc++) {
+                for (var icc = merge_ix[0].col + 1; icc <= recol2; icc++) {
 
                     try {
                         xcurrent_Width = def_Width;
@@ -4849,10 +5212,11 @@ function canvasCreate(canvasID, obj) {
 
                 var totalheight = current_Height;
                 plusHeight = 0;
-                for (var icc = curRow ; icc <= rerow2; icc++) {
+                for (var icc = curRow; icc <= rerow2; icc++) {
 
                     try { //get Row height if there is
-                        totalheight = obj.Data[icc].aagrowHeight || def_Height;
+                        //totalheight = obj.Data[icc].aagrowHeight || def_Height;
+                        totalheight = obj.Data[icc].aagrowHeight == undefined ? def_Height : obj.Data[icc].aagrowHeight;
                     } catch (err) { }
 
                     //must check the row height +1
@@ -4903,8 +5267,8 @@ function canvasCreate(canvasID, obj) {
 
             var option = {
                 font: " " + tlVFontSize + "px " + tlVFont, x: myCell.x + defaultpadding, y: myCell.y, paddingX: defaultpadding, paddingY: 2 * defaultpadding, width: myCell.width - (defaultpadding * 2), height: myCell.height - (defaultpadding * 2)
-             , verticalAlign: "middle"
-            , textAlign: "center"
+                , verticalAlign: "middle"
+                , textAlign: "center"
             };
             option = _sfSetFormatText(obj, option, curCol - 1, curRow - 1);
 
@@ -4978,7 +5342,8 @@ function canvasCreate(canvasID, obj) {
         //obj_startCol = obj.startCol;
 
         try { //get Row height if there is
-            current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
+            //current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
+            current_Height = obj.Data[ix - 1].aagrowHeight == undefined ? def_Height : obj.Data[ix - 1].aagrowHeight;
         } catch (err) { }
 
 
@@ -5024,7 +5389,7 @@ function canvasCreate(canvasID, obj) {
                 if ((mergeList[it].col2 >= icx - 1 && mergeList[it].col <= icx - 1)
                     && (mergeList[it].row2 >= ix - 1 && mergeList[it].row <= ix - 1)
                     && !(mergeList[it].col == icx - 1 && mergeList[it].row == ix - 1)
-                    ) {
+                ) {
 
                     var idlist = mergeList[it].row + "|" + mergeList[it].col + "|" + mergeList[it].row2 + "|" + mergeList[it].col2;
                     if (listOfMergeDraw.indexOf(idlist) < 0) {
@@ -5042,7 +5407,7 @@ function canvasCreate(canvasID, obj) {
                             var recol2 = merge_ix[0].col2;
                             var rerow2 = merge_ix[0].row2;
                             var xcurrent_Width = def_Width;
-                            for (var icc = merge_ix[0].col ; icc <= merge_ix[0].col2; icc++) {
+                            for (var icc = merge_ix[0].col; icc <= merge_ix[0].col2; icc++) {
 
                                 try {
                                     xcurrent_Width = def_Width;
@@ -5069,10 +5434,11 @@ function canvasCreate(canvasID, obj) {
                             }
 
                             var totalheight = def_Height;
-                            for (var icc = merge_ix[0].row ; icc <= merge_ix[0].row2; icc++) {
+                            for (var icc = merge_ix[0].row; icc <= merge_ix[0].row2; icc++) {
 
                                 try { //get Row height if there is
-                                    totalheight = obj.Data[icc].aagrowHeight || def_Height;
+                                    //totalheight = obj.Data[icc].aagrowHeight || def_Height;
+                                    totalheight = obj.Data[icc].aagrowHeight == undefined ? def_Height : obj.Data[icc].aagrowHeight;
                                 } catch (err) { }
 
                                 curHeight += borderMargin + totalheight;
@@ -5119,7 +5485,7 @@ function canvasCreate(canvasID, obj) {
 
 
                 var xcurrent_Width = current_Width;
-                for (var icc = merge_ix[0].col + 1 ; icc <= recol2; icc++) {
+                for (var icc = merge_ix[0].col + 1; icc <= recol2; icc++) {
 
                     try {
                         xcurrent_Width = def_Width;
@@ -5141,10 +5507,11 @@ function canvasCreate(canvasID, obj) {
 
 
                 var totalheight = current_Height;
-                for (var icc = curRow ; icc <= rerow2; icc++) {
+                for (var icc = curRow; icc <= rerow2; icc++) {
                     //totalheight = def_Height;
                     try { //get Row height if there is
-                        totalheight = obj.Data[icc].aagrowHeight || def_Height;
+                        //totalheight = obj.Data[icc].aagrowHeight || def_Height;
+                        totalheight = obj.Data[icc].aagrowHeight == undefined ? def_Height : obj.Data[icc].aagrowHeight;
                     } catch (err) { }
 
                     //must check the row height +1
@@ -5198,11 +5565,11 @@ function canvasCreate(canvasID, obj) {
 
             var option = {
                 font: " " + tlVFontSize + "px " + tlVFont, x: myCell.x + defaultpadding, y: myCell.y, paddingX: defaultpadding, paddingY: 2 * defaultpadding, width: myCell.width - (defaultpadding * 2), height: myCell.height - (defaultpadding * 2)
-              , verticalAlign: "middle"
-              , textAlign: "center"
-              , col: curCol - 1, row: curRow - 1
-              , currencyCode: myCell.currencyCode
-              , backgroundColor: ""
+                , verticalAlign: "middle"
+                , textAlign: "center"
+                , col: curCol - 1, row: curRow - 1
+                , currencyCode: myCell.currencyCode
+                , backgroundColor: ""
             };
             option = _sfSetFormatText(obj, option, curCol - 1, curRow - 1);
 
@@ -5242,10 +5609,11 @@ function canvasCreate(canvasID, obj) {
 
     //clear column part
     var HeadertotalHeight = sheetStart_y + borderMargin;
-    for (var i = 0 ; i < xFreezeRow - 1; i++) {
+    for (var i = 0; i < xFreezeRow - 1; i++) {
         current_Height = def_Height;
         try {
-            current_Height = obj.Data[i].aagrowHeight || def_Height;
+            //current_Height = obj.Data[i].aagrowHeight || def_Height;
+            current_Height = obj.Data[i].aagrowHeight == undefined ? def_Height : obj.Data[i].aagrowHeight;
         } catch (err) { }
         HeadertotalHeight += current_Height + borderMargin;
     }
@@ -5337,7 +5705,7 @@ function canvasCreate(canvasID, obj) {
 
     //clear row part
     var HeadertotalWidth = sheetStart_x + borderMargin;
-    for (var i = 0 ; i < xFreezeCol - 1; i++) {
+    for (var i = 0; i < xFreezeCol - 1; i++) {
         current_Width = def_Width;
         try {
             current_Width = parseInt(obj.ColumnConfig[i].width) || def_Width;
@@ -5365,26 +5733,33 @@ function canvasCreate(canvasID, obj) {
     icx2 = 1;
     // Print Row Number
     current_Y = borderMargin;
-    for (var i = obj_startRow ; i <= srow; i++) {
+    //ix=0;
+    for (var i = obj_startRow; i <= srow; i++) {
 
         //must check per rowheight
         current_Height = def_Height;
 
-
+       
         if (ix2 < xFreezeRow) {
             ix = ix2;
-            FreezeLineRow = sheetStart_y + current_Y + borderMargin + current_Height;
+            //FreezeLineRow = sheetStart_y + current_Y + borderMargin + current_Height;
         }
         else {
             ix = i;
-            //icx = icx - obj.FreezeCol;
         }
+        try { 
+            current_Height = obj.Data[ix-1].aagrowHeight == undefined ? def_Height : obj.Data[ix-1].aagrowHeight;
+        } catch (err) { }
+        
+
+
+        if (ix2 < xFreezeRow) {
+            FreezeLineRow = sheetStart_y + current_Y + borderMargin + current_Height;
+        }
+
+
         ix2++;
 
-
-        try { //get Row height if there is
-            current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
-        } catch (err) { }
 
 
         current_X = borderMargin;
@@ -5396,7 +5771,7 @@ function canvasCreate(canvasID, obj) {
             borderWidth: borderMargin * borderMarginScale,
             fillStyle: tlVBG,
             strokeStyle: 'black'
-              , row: ix
+            , row: ix
             , type: "row"
         };
         contextSheet.fillStyle = myCell.fillStyle;
@@ -5432,7 +5807,7 @@ function canvasCreate(canvasID, obj) {
     // Print Column Header
     current_Y = borderMargin;
     current_X = borderMargin;
-    for (var ic = obj_startCol ; ic <= scolumn ; ic++) {
+    for (var ic = obj_startCol; ic <= scolumn; ic++) {
 
         if (ic + 1 >= xFreezeCol && xFreezeCol > scolumn) continue;
 
@@ -5466,8 +5841,8 @@ function canvasCreate(canvasID, obj) {
             fillStyle: tlHBG,
             strokeStyle: 'black'
             , col: icx
-             , colindex: ic - 1
-             , type: "col"
+            , colindex: ic - 1
+            , type: "col"
 
         };
 
@@ -5487,7 +5862,7 @@ function canvasCreate(canvasID, obj) {
                 Title = obj.HeaderGroup[ih].Title;
                 if (CellStart == colindex) {
 
-                    for (var ihx = CellStart; ihx <= CellStart + (CellNumber - 1) ; ihx++) {
+                    for (var ihx = CellStart; ihx <= CellStart + (CellNumber - 1); ihx++) {
                         try {
                             tmp_current_Width = def_Width;
                             tmp_current_Width = parseInt(obj.ColumnConfig[ihx].width);
@@ -5519,9 +5894,9 @@ function canvasCreate(canvasID, obj) {
 
                     var option = {
                         font: "bold " + tlHFontSize + "px " + tlHFont, x: myCellGroup.x, y: 0, paddingX: defaultpadding, paddingY: defaultpadding, width: myCellGroup.width, height: myCellGroup.height
-                       , verticalAlign: "middle"
-                       , textAlign: "center"
-                       , color: tlHColor
+                        , verticalAlign: "middle"
+                        , textAlign: "center"
+                        , color: tlHColor
                     };
                     var canvas = document.getElementById(canvasID);
                     CanvasTextWrapper(canvas, Title, option);
@@ -5575,11 +5950,31 @@ function canvasCreate(canvasID, obj) {
             extraText = "*";
             option2.color = "red";
         }
+        else if (obj.ColumnConfig[icx - 1].HeaderColumnReq == "nwFieldopt") {
+            extraText = "*";
+            option2.color = "blue";
+        }
         else {
             ;
         }
 
-        CanvasTextWrapper(canvas, _sfGetCellNameEdit(obj, icx - 1), option, extraText, option2);
+        if (obj.ColumnConfig[icx - 1].ObjectType == "checkbox") {
+            var CheckBoxShow = obj.ColumnConfig[icx - 1].CheckBoxShow == undefined ? true: obj.ColumnConfig[icx - 1].CheckBoxShow;
+
+            if(CheckBoxShow){
+                var chkheight = 18;
+                var chkwidth = 18;
+                var chky = option.height / 2 - (chkheight / 2)//option.height - chkheight - 2;
+                var chkx = option.x + 5;
+                var CheckBoxValue = obj.ColumnConfig[icx - 1].CheckBoxValue || false;
+                _sfDrawCheckBox(contextSheet, chkx, chky, chkwidth, chkheight, CheckBoxValue);
+                option.x = chkx + chkwidth
+                option.width = option.width - chkwidth
+            }
+            CanvasTextWrapper(canvas, _sfGetCellNameEdit(obj, icx - 1), option, extraText, option2);
+        } else {
+            CanvasTextWrapper(canvas, _sfGetCellNameEdit(obj, icx - 1), option, extraText, option2);
+        }
 
         current_X += borderMargin + current_Width;
     }
@@ -5596,7 +5991,7 @@ function canvasCreate(canvasID, obj) {
             strokeStyle: 'black'
             , row: 0
             , col: 0
-             , type: "tot"
+            , type: "tot"
         };
         if (obj.HeaderGroup.length >= 1) {
             myCell.height = (tlLetterHeight - borderMargin) + (tlGroupHeight + borderMargin)
@@ -5609,14 +6004,14 @@ function canvasCreate(canvasID, obj) {
         contextSheetText.font = fontsize + "px Arial";
         contextSheetText.fillStyle = "black";
         contextSheetText.fillText("", myCell.x + defaultpadding, myCell.y + fontsize, myCell.width, myCell.height);
-        
-        
-        if(obj.HeaderNumText !=""){
+
+
+        if (obj.HeaderNumText != "") {
             var option = {
-                font: "bold " + tlHFontSize + "px " + tlHFont, x:myCell.x + defaultpadding, y:  0 + yAxisValue , paddingX: defaultpadding, paddingY: defaultpadding, width: myCell.width, height: myCell.height
-             , verticalAlign: "middle"
-             , textAlign: "center"
-             , color: tlHColor
+                font: "bold " + tlHFontSize + "px " + tlHFont, x: myCell.x + defaultpadding, y: 0 + yAxisValue, paddingX: defaultpadding, paddingY: defaultpadding, width: myCell.width, height: myCell.height
+                , verticalAlign: "middle"
+                , textAlign: "center"
+                , color: tlHColor
             };
             CanvasTextWrapper(canvas, obj.HeaderNumText, option);
         }
@@ -5648,10 +6043,11 @@ function canvasCreate(canvasID, obj) {
     // draw row lines
     if (1 == 2) {
         current_Y = sheetStart_y;
-        for (var i = obj_startRow ; i <= srow; i++) {
+        for (var i = obj_startRow; i <= srow; i++) {
             current_Height = def_Height;
             try {
-                current_Height = obj.Data[i - 1].aagrowHeight || def_Height;
+                //current_Height = obj.Data[i - 1].aagrowHeight || def_Height;
+                current_Height = obj.Data[i - 1].aagrowHeight == undefined ? def_Height : obj.Data[i - 1].aagrowHeight;
             } catch (err) { }
             contextSheet.beginPath();
             contextSheet.strokeStyle = obj.gridlLineColor;
@@ -5664,7 +6060,7 @@ function canvasCreate(canvasID, obj) {
         }
 
         current_X = sheetStart_x + borderMargin;
-        for (var ic = obj_startCol ; ic <= scolumn ; ic++) {
+        for (var ic = obj_startCol; ic <= scolumn; ic++) {
 
             current_Width = def_Width;
             try {
@@ -5686,7 +6082,7 @@ function canvasCreate(canvasID, obj) {
 
     if (P8Spread_currcavas != randomid) return false;
     console.log("col:" + scolumn + " row:" + srow);
-  
+
 
 
     if (obj.havelistner == false) {
@@ -5702,9 +6098,29 @@ function canvasCreate(canvasID, obj) {
 
 
         canvasSheet.addEventListener('mouseup', function (event) {
-            
+
             obj.CellSelHover = false;
-            if (obj.IsResizeHover == true && obj.IsResizeClick == true && obj.ColumnResizable == true) {
+            if (obj.IsResizeHover == true && obj.IsResizeClick == true && obj.RowResizable == true && obj.IsResizeRow == true) {
+                var diff = obj.IsResizeRowHeight;
+
+
+                if (obj.IsResizeHoverSValue > obj.IsResizeHoverValue)
+                    diff = obj.IsResizeHoverValue - obj.IsResizeHoverSValue;
+                else
+                    diff = obj.IsResizeHoverValue - obj.IsResizeHoverSValue;
+
+                obj.IsResizeHover = true; obj.IsResizeClick = false; obj.IsResizeRow == false;
+                var heightnew = obj.IsResizeRowHeight + diff;
+                if (heightnew <= 10) heightnew = 10;
+                obj.RowHeight(obj.IsResizeRowIndex, heightnew);
+
+
+                $("#" + obj.canvasID).attr("isresize", 1);
+
+
+                return;
+            }
+            else if (obj.IsResizeHover == true && obj.IsResizeClick == true && obj.ColumnResizable == true) {
                 var diff = obj.IsResizeColumnWidth;
 
 
@@ -5724,6 +6140,26 @@ function canvasCreate(canvasID, obj) {
 
                 return;
             }
+            //if (obj.IsResizeHover == true && obj.IsResizeClick == true && obj.ColumnResizable == true) {
+            //    var diff = obj.IsResizeColumnWidth;
+
+
+            //    if (obj.IsResizeHoverSValue > obj.IsResizeHoverValue)
+            //        diff = obj.IsResizeHoverValue - obj.IsResizeHoverSValue;
+            //    else
+            //        diff = obj.IsResizeHoverValue - obj.IsResizeHoverSValue;
+
+            //    obj.IsResizeHover = true; obj.IsResizeClick = false;
+            //    var widthnew = obj.IsResizeColumnWidth + diff;
+            //    if (widthnew <= 10) widthnew = 10;
+            //    obj.ColumnWidth(obj.IsResizeColumnIndex, widthnew);
+
+
+            //    $("#" + obj.canvasID).attr("isresize", 1);
+
+
+            //    return;
+            //}
         });
 
         function getCursorPosition(canvas, event) {
@@ -5738,7 +6174,7 @@ function canvasCreate(canvasID, obj) {
         canvasSheet.addEventListener('dblclick', SpreadDBClick, false);
         function SpreadDBClick(event, iscustom) {
             P8CurrentIDSel = obj.canvasID;
-
+            p8Spread_CurBook = obj.canvasID;
             try {
                 if (obj.CellElement.type != "cell") {
                     return;
@@ -5784,32 +6220,44 @@ function canvasCreate(canvasID, obj) {
         }
 
 
-        //if (isObjectCreated == false) 
+        //if (isObjectCreated == false)
         // cell click
         // Spread Click
-        canvasSheet.addEventListener('mousedown', SpreadMouseDown, false);
-        //canvasSheet.addEventListener('click', SpreadClick, false);
+        canvasSheet.addEventListener('mouseup', SpreadMouseUp, false);
+        function SpreadMouseUp(event) {
+            obj.ScrollActive = false;
+            var isValid = true;
+            try {
+                isValid = p8Spread_MouseUp_Menuitem(obj.canvasID, obj.CellIndexes.Row, obj.CellIndexes.Col);
+            } catch (err) {
+                try {
+                    isValid = p8Spread_MouseUp(obj.canvasID, obj.CellIndexes.Row, obj.CellIndexes.Col);
+                } catch (err) { }
+            }
+        }
 
-        //function SpreadMouseDown(event) {
-        //    obj.ScrollActive = false;
-        //    obj.CellClickTime = new Date();
-        //    //obj.CellSelHover = false;
-        //    obj.CellSelHover = true;
-        //}
-        //function SpreadClick(event) {
-        //    P8CurrentIDSel = obj.canvasID;
-            
-        //    try{
-        //        const diffTime = Math.abs(new Date() - obj.CellClickTime);
-        //        if (diffTime >= 200)
-        //            return false;
-        //    }catch(err){}
+        canvasSheet.addEventListener('mousedown', SpreadMouseDown, false);
 
         function SpreadMouseDown(event) {
+            // Check if it's a right-click
+            if ('which' in event) {
+                // For browsers that support the 'which' property (e.g., Firefox)
+                if (event.which === 3) {
+                    // Right-click detected
+                    return false;
+                }
+            } else if ('button' in event) {
+                // For browsers that support the 'button' property (e.g., Chrome, Safari, IE)
+                if (event.button === 2) {
+                    // Right-click detected
+                    return false;
+                }
+            }
+
             P8CurrentIDSel = obj.canvasID;
 
             obj.ScrollActive = false;
-            
+
 
             var oldRow = obj.CellSelected.row - 1;
             var oldCol = obj.CellSelected.col - 1;
@@ -5847,23 +6295,79 @@ function canvasCreate(canvasID, obj) {
                         obj.CellIndexes.Col = element.col - 1;
                         obj.CellIndexes.Row = 0;
                         obj.CellIndexes.Col2 = element.col - 1;
-                        obj.CellIndexes.Row2 = P8DataList[obj.canvasID][0].sheet.ActiveSheet.Data.length;
+                        obj.CellIndexes.Row2 = P8DataList[obj.canvasID][0].sheet.ActiveSheet.Data.length - 1;
                         //obj.CellElement = element;
 
                         _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
-                        drawRectangleSelected(obj, element, contextCurrentSelected);
+                  
+                        //drawRectangleSelected(obj, element, contextCurrentSelected);
+
+                        try {
+                            if ((obj.ColumnConfig[obj.CellIndexes.Col].ObjectType == "checkbox"
+                                || obj.ColumnConfig[obj.CellIndexes.Col].ObjectType == "checkboxtext"
+                            ) && obj.ColumnConfig[obj.CellIndexes.Col].Enabled == true) {
+                                var CheckBoxShow = obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxShow == undefined ? true: obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxShow
+                                if(CheckBoxShow == true){
+                                    var isValid = true;
+                                    try {
+                                        var value = obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxValue || false;
+                                        if (_sfGetCheckboxValue(value)) {
+                                            obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxValue = false;
+                                        }
+                                        else {
+                                            obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxValue = true;
+                                        }
+                                        try {
+                                            isValid = p8Spread_Header_Click_Menuitem(obj.canvasID, obj.CellIndexes.Col);
+                                        } catch (err) {
+                                            try {
+                                                isValid = p8Spread_Header_Click(obj.canvasID, obj.CellIndexes.Col);
+                                            } catch (err) { }
+                                        }
+                                    } catch (err) { }
+                                    if (isValid) {
+                                        //if (obj.ColumnConfig[obj.CellSelected.col - 1].ObjectType == "checkbox") {
+                                        //var value = obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxValue || false;
+                                        //if (_sfGetCheckboxValue(value)) {
+                                        //    obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxValue = false;
+                                        //}
+                                        //else {
+                                        //    obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxValue = true;
+                                        //}
+                                        var CheckBoxValueRow = (obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxValue) ? "1" : "0";
+                                        for (row = 0; row < obj.Data.length; row++) {
+                                            if(obj.GetEnabled(obj.CellIndexes.Col,row)){
+                                                obj.Data[row][p8_NumberToCell(obj.CellIndexes.Col + 1)].value = CheckBoxValueRow;
+                                            }
+                                        }
+                                    } else {
+                                        if (_sfGetCheckboxValue(value)) {
+                                            obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxValue = true;
+                                        }
+                                        else {
+                                            obj.ColumnConfig[obj.CellIndexes.Col].CheckBoxValue = false;
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (err) { }
+                       
+
                         return;
                     }
                     else if (element.type == "row") {
 
                         obj.CellIndexes.Col = 0;
                         obj.CellIndexes.Row = element.row - 1;
-                        obj.CellIndexes.Col2 = P8DataList[obj.canvasID][0].sheet.ActiveSheet.ColumnConfig.length;
+                        obj.CellIndexes.Col2 = P8DataList[obj.canvasID][0].sheet.ActiveSheet.ColumnConfig.length - 1;
                         obj.CellIndexes.Row2 = element.row - 1;
                         //obj.CellElement = element;
 
                         _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
-                        drawRectangleSelected(obj, element, contextCurrentSelected);
+
+                        
+                        //    drawRectangleSelected(obj, element, contextCurrentSelected);
+
                         return;
                     }
 
@@ -5942,16 +6446,38 @@ function canvasCreate(canvasID, obj) {
                     try {
                         if ((obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkbox"
                             || obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkboxtext"
-                            ) && obj.GetEnabled(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == true) {
-
+                        ) && obj.GetEnabled(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == true) {
+                            
                             //if (obj.ColumnConfig[obj.CellSelected.col - 1].ObjectType == "checkbox") {
                             var value = obj.GetValue(obj.CellSelected.col - 1, obj.CellSelected.row - 1);
                             if (_sfGetCheckboxValue(value)) {
                                 obj.SetText(obj.CellSelected.col - 1, obj.CellSelected.row - 1, "0");
+                                obj.ColumnConfig[obj.CellSelected.col - 1].CheckBoxValue = false;
                             }
                             else {
                                 obj.SetText(obj.CellSelected.col - 1, obj.CellSelected.row - 1, "1");
+
+                                
+                                var CheckBoxShow = obj.ColumnConfig[obj.CellSelected.col - 1].CheckBoxShow == undefined ? true: obj.ColumnConfig[obj.CellSelected.col - 1].CheckBoxShow
+                                if(CheckBoxShow == true){
+                                    var CheckAll = false;
+                                    for (row = 0; row < obj.Data.length; row++) {
+                                        var CheckAllRow = obj.Data[row][p8_NumberToCell((obj.CellSelected.col - 1) + 1)].value;
+                                        if (_sfGetCheckboxValue(CheckAllRow)) {
+                                            CheckAll = true;
+                                        } else {
+                                            if(obj.GetEnabled((obj.CellSelected.col - 1),row)){
+                                                CheckAll = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (CheckAll) {
+                                        obj.ColumnConfig[obj.CellSelected.col - 1].CheckBoxValue = true;
+                                    }
+                                }
                             }
+                            
                         }
                     } catch (err) { }
 
@@ -5960,7 +6486,7 @@ function canvasCreate(canvasID, obj) {
                     try {
                         obj.IsResizeHover = false;
                         //obj.CellSelHover = false;
-                        
+
 
                         p8Spread_ClickT(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
                         p8Spread_FocusT(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
@@ -5976,68 +6502,257 @@ function canvasCreate(canvasID, obj) {
             //$("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
 
         }
+
+        //canvasSheet.addEventListener('click', SpreadClick, false);
+
+        //function SpreadMouseDown(event) {
+        //    obj.ScrollActive = false;
+        //    obj.CellClickTime = new Date();
+        //    //obj.CellSelHover = false;
+        //    obj.CellSelHover = true;
+        //}
+        //function SpreadClick(event) {
+        //    P8CurrentIDSel = obj.canvasID;
+
+        //    try{
+        //        const diffTime = Math.abs(new Date() - obj.CellClickTime);
+        //        if (diffTime >= 200)
+        //            return false;
+        //    }catch(err){}
+
+        //function SpreadMouseDown(event) {
+        //    P8CurrentIDSel = obj.canvasID;
+
+        //    obj.ScrollActive = false;
+
+
+        //    var oldRow = obj.CellSelected.row - 1;
+        //    var oldCol = obj.CellSelected.col - 1;
+
+
+        //    if (is_vw_inpDateHover == true) {
+        //        return true;
+        //    }
+
+
+
+        //    if (obj.IsResizeHover == true) {
+        //        obj.IsResizeClick = true;
+        //        return;
+        //    }
+
+        //    // event
+        //    var x = 0, y = 0;
+        //    try {
+        //        //x = event.pageX - elemLeft,
+        //        //y = event.pageY - elemTop;
+        //        getCursorPosition(document.getElementById(obj.canvasID + "_vw"), event);
+        //        x = P8Spread_elemLeft;
+        //        y = P8Spread_elemTop;
+        //    } catch (err) { }
+
+        //    //obj.currentCells.
+        //    var objx = P8DataList[obj.canvasID][0].sheet.ActiveSheet.currentCells;
+        //    objx.forEach(function (element) {
+        //        if (y > element.y && y < element.y + element.height && x > element.x && x < element.x + element.width) {
+
+        //            if (element.type == "col") element.fillStyle = "transaparent";
+        //            if (element.type == "col") {
+
+        //                obj.CellIndexes.Col = element.col - 1;
+        //                obj.CellIndexes.Row = 0;
+        //                obj.CellIndexes.Col2 = element.col - 1;
+        //                obj.CellIndexes.Row2 = P8DataList[obj.canvasID][0].sheet.ActiveSheet.Data.length;
+        //                //obj.CellElement = element;
+
+        //                _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
+        //                drawRectangleSelected(obj, element, contextCurrentSelected);
+        //                return;
+        //            }
+        //            else if (element.type == "row") {
+
+        //                obj.CellIndexes.Col = 0;
+        //                obj.CellIndexes.Row = element.row - 1;
+        //                obj.CellIndexes.Col2 = P8DataList[obj.canvasID][0].sheet.ActiveSheet.ColumnConfig.length;
+        //                obj.CellIndexes.Row2 = element.row - 1;
+        //                //obj.CellElement = element;
+
+        //                _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
+        //                drawRectangleSelected(obj, element, contextCurrentSelected);
+        //                return;
+        //            }
+
+
+        //            obj.CellSelHover = true;
+        //            obj.CellSelValue = { col: element.col - 1, row: element.row - 1 };
+
+        //            obj.CellElement = element;
+
+        //            _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelected);
+
+
+        //            var addTop = element.y;
+        //            var addLeft = element.x;
+        //            _sfSelectorAdjust(obj.canvasID, addTop, addLeft, element);
+
+
+
+
+
+
+        //            if ($("#" + obj.canvasID + "_vw_inp").val() != "" && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") == "1") {
+
+        //                var xvalue = $("#" + obj.canvasID + "_vw_inp").val();
+        //                if (xvalue == '__/__/____') {
+        //                    xvalue = "";
+        //                }
+
+
+        //                var oldvalue = obj.GetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")));
+
+        //                // obj.SetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")), xvalue);
+        //                $("#" + obj.canvasID + "_vw_inp").attr("acol2", "" + $("#" + obj.canvasID + "_vw_inp").attr("acol"));
+        //                $("#" + obj.canvasID + "_vw_inp").attr("arow2", "" + $("#" + obj.canvasID + "_vw_inp").attr("arow"));
+        //                try {
+        //                    if (xvalue != oldvalue) {
+        //                        if (!isNaN(oldRow) && oldRow != undefined && !isNaN(oldCol) && oldRow != undefined) {
+        //                            obj.SetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")), xvalue, "text", true);
+        //                            // p8Spread_Change(obj.canvasID, oldRow, oldCol);
+        //                        }
+        //                    }
+        //                    $("#" + obj.canvasID + "_vw_inp").attr("oldvalue", xvalue);
+        //                } catch (err) { }
+        //                //aag tobe continue
+        //            }
+
+        //            try {
+        //                //$("#" + obj.canvasID + "_vw_inp").blur();
+        //                $("#" + obj.canvasID + "_vw_inp").val("");
+        //                //setTimeout(function () {
+        //                if (_sfDetectMobile()) {
+
+        //                } else {
+        //                    $("#" + obj.canvasID + "_vw_inp").focus();
+        //                }
+        //                // }, 151);
+
+        //            } catch (err) { }
+
+
+
+        //            //$("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+        //            //$("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+        //            _sfSpreadInputHide(obj);
+
+        //            //try {
+        //            //    $("#" + obj.canvasID + "_vw_selector").val("");
+        //            //    //setTimeout(function () {
+        //            //    $("#" + obj.canvasID + "_vw_selector").focus();
+        //            //    // }, 151);
+        //            //} catch (err) { }
+
+        //            //
+        //            //AAGSAMPLE
+
+        //            try {
+        //                if ((obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkbox"
+        //                    || obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkboxtext"
+        //                ) && obj.GetEnabled(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == true) {
+
+        //                    //if (obj.ColumnConfig[obj.CellSelected.col - 1].ObjectType == "checkbox") {
+        //                    var value = obj.GetValue(obj.CellSelected.col - 1, obj.CellSelected.row - 1);
+        //                    if (_sfGetCheckboxValue(value)) {
+        //                        obj.SetText(obj.CellSelected.col - 1, obj.CellSelected.row - 1, "0");
+        //                    }
+        //                    else {
+        //                        obj.SetText(obj.CellSelected.col - 1, obj.CellSelected.row - 1, "1");
+        //                    }
+        //                }
+        //            } catch (err) { }
+
+        //            _sfSelectionActivate(obj);
+
+        //            try {
+        //                obj.IsResizeHover = false;
+        //                //obj.CellSelHover = false;
+
+
+        //                p8Spread_ClickT(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
+        //                p8Spread_FocusT(obj.canvasID, obj.CellSelected.row - 1, obj.CellSelected.col - 1);
+        //            } catch (err) { }
+
+        //            return true;
+        //        }
+        //    });
+
+
+        //    _sfSpreadInputHide(obj);
+        //    //$("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+        //    //$("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+
+        //}
         if (obj.canvasID != "") {
             $(document).on("keypress", "#" + obj.canvasID + "_vw_selectorCon ", function (e) {
                 if (e.which == 13) {
                     _sfSpreadInputHide(obj);
                 }
             });
-            $(document).on("change", "#" + obj.canvasID + "_vw_selectorCon ", function () {
+            //$(document).on("change", "#" + obj.canvasID + "_vw_selectorCon ", function () {
 
-                var isvalid = false;
-                //if ($(this).hasClass("nwDatePickP8")) {
+            //    var isvalid = false;
+            //    //if ($(this).hasClass("nwDatePickP8")) {
 
-                //    isvalid = true;
-                //}
+            //    //    isvalid = true;
+            //    //}
 
-                if (obj.canvasID == "" && isvalid == false)
-                    return true;
+            //    if (obj.canvasID == "" && isvalid == false)
+            //        return true;
 
-                //return true;
-
-
-
-                if ($("#" + obj.canvasID + "_vw_inp").attr("acol2") != $("#" + obj.canvasID + "_vw_inp").attr("acol")
-                    && $("#" + obj.canvasID + "_vw_inp").attr("arow2") != $("#" + obj.canvasID + "_vw_inp").attr("arow")
-                    ) {
-
-                    var xvalue = $("#" + obj.canvasID + "_vw_inp").val();
-                    var oldvalue = obj.GetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")));
-                    var oldRow = parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow"));
-                    var oldCol = parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol"));
-
-
-                    if (P8SpreadLastCellChange.row == oldRow && P8SpreadLastCellChange.row == oldCol) {
-                        return; // make return to remove duplicate change
-                    }
+            //    //return true;
 
 
 
-                    try {
-                        if (xvalue != oldvalue) {
-                            if (!isNaN(oldRow) && oldRow != undefined && !isNaN(oldCol) && oldRow != undefined) {
-                                //p8Spread_Change(obj.canvasID, oldRow, oldCol);
-                                obj.SetText(oldCol, oldRow, xvalue, "text", true);
-                            }
+            //    if ($("#" + obj.canvasID + "_vw_inp").attr("acol2") != $("#" + obj.canvasID + "_vw_inp").attr("acol")
+            //        && $("#" + obj.canvasID + "_vw_inp").attr("arow2") != $("#" + obj.canvasID + "_vw_inp").attr("arow")
+            //    ) {
+
+            //        var xvalue = $("#" + obj.canvasID + "_vw_inp").val();
+            //        var oldvalue = obj.GetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")));
+            //        var oldRow = parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow"));
+            //        var oldCol = parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol"));
 
 
-                        }
+            //        if (P8SpreadLastCellChange.row == oldRow && P8SpreadLastCellChange.row == oldCol) {
+            //            return; // make return to remove duplicate change
+            //        }
 
-                    } catch (err) { }
 
-                    $("#" + obj.canvasID + "_vw_inp").attr("acol2", "");
-                    $("#" + obj.canvasID + "_vw_inp").attr("arow2", "");
-                    $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
-                    $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
-                    $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
-                } else {
-                    $("#" + obj.canvasID + "_vw_inp").attr("acol2", "");
-                    $("#" + obj.canvasID + "_vw_inp").attr("arow2", "");
-                    $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
-                    $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
-                    $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
-                }
-            });
+
+            //        try {
+            //            if (xvalue != oldvalue) {
+            //                if (!isNaN(oldRow) && oldRow != undefined && !isNaN(oldCol) && oldRow != undefined) {
+            //                    //p8Spread_Change(obj.canvasID, oldRow, oldCol);
+            //                    obj.SetText(oldCol, oldRow, xvalue, "text", true);
+            //                }
+
+
+            //            }
+
+            //        } catch (err) { }
+
+            //        $("#" + obj.canvasID + "_vw_inp").attr("acol2", "");
+            //        $("#" + obj.canvasID + "_vw_inp").attr("arow2", "");
+            //        $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+            //        $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+            //        $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+            //    } else {
+            //        $("#" + obj.canvasID + "_vw_inp").attr("acol2", "");
+            //        $("#" + obj.canvasID + "_vw_inp").attr("arow2", "");
+            //        $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+            //        $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+            //        $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+            //    }
+            //});
         }
 
         canvasSheet.addEventListener('mousemove', function (event) {
@@ -6049,10 +6764,11 @@ function canvasCreate(canvasID, obj) {
                 if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
                     && mousePos.x >= element.x - 2 && mousePos.x <= element.x + element.width + 2
                     && element.type == "col"
-                    ) {
+                ) {
                     var tooltip = "";
-                    try{ tooltip = obj.ColumnConfig[element.colindex].tooltip || "";
-                    }catch(err){}
+                    try {
+                        tooltip = obj.ColumnConfig[element.colindex].tooltip || "";
+                    } catch (err) { }
                     $("#" + obj.canvasID + "").attr("title", tooltip);
                     //  console.log(element.colindexl);
                 }
@@ -6062,52 +6778,58 @@ function canvasCreate(canvasID, obj) {
 
         canvasSheet.addEventListener('mousemove', function (event) {
             P8CurrentIDSel = obj.canvasID;
-            
+
 
             var mousePos = _sfGetMousePos(canvasSheet, event);
-        
+
+            //karl 05/26
             if (obj.IsResizeClick == true) {
-                obj.IsResizeHoverValue = mousePos.x;
+                if (obj.IsResizeRow == true) {
+                    obj.IsResizeHoverValue = mousePos.y;
+                } else {
+                    obj.IsResizeHoverValue = mousePos.x;
+                }
                 return;
             }
 
             var x = 0, y = 0;
             try {
                 x = event.pageX - elemLeft,
-                y = event.pageY - elemTop;
+                    y = event.pageY - elemTop;
             } catch (err) { }
 
 
             //_sfLog("column Hover : " + mousePos.x + " : " + mousePos.y);
             var iscursor = false;
+            var iscursor_row = false;
             var element_width = "";
             var element_col = "";
 
-           
+
 
             iscurCellSelect = obj.currentCells.forEach(function (element) {
                 //if (mousePos.y >= element.y && mousePos.y <= element.y + element.height && mousePos.x >= element.x-1 && mousePos.x <= element.x + 2
-                
+
                 if (obj.CellSelHover == true) {
                     //_sfLog("Cell Hover Index : " + mousePos.y + ">=" + element.y + " && " + mousePos.y + " <= " + element.y + " + " + element.height
                     //    + " x :" + mousePos.x + " >= " + element.x + " && " + mousePos.x + " <= " + element.x + " + " + element.width
                     //    );
 
                     if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
-                         && mousePos.x >= element.x && mousePos.x <= element.x + element.width
-                        ) {
+                        && mousePos.x >= element.x && mousePos.x <= element.x + element.width
+                    ) {
                         _sfLog("Cell  Hover : " + p8_NumberToCell(element.col) + element.row);
 
                     }
 
 
                     if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
-                         && mousePos.x >= element.x && mousePos.x <= element.x + element.width
-                    && element.type == "cell"
+                        && mousePos.x >= element.x && mousePos.x <= element.x + element.width
+                        && element.type == "cell"
 
                         && (obj.CellIndexes.Col2 != element.col - 1
-                        || obj.CellIndexes.Row2 != element.row - 1)
-                   ) {
+                            || obj.CellIndexes.Row2 != element.row - 1)
+                    ) {
                         /// hover cell
 
 
@@ -6129,7 +6851,7 @@ function canvasCreate(canvasID, obj) {
                 if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
                     && mousePos.x >= element.x + element.width - 2 && mousePos.x <= element.x + element.width + 2
                     && element.type == "col"
-                    ) {
+                ) {
 
 
                     _sfLog("Column Hover : " + mousePos.x + " : " + mousePos.y);
@@ -6142,10 +6864,36 @@ function canvasCreate(canvasID, obj) {
 
 
                 }
+                //karl 05/24
+                // for Row height Handle
+                if (mousePos.x >= element.x && mousePos.x <= element.x + element.width
+                    && mousePos.y >= element.y + element.height - 2 && mousePos.y <= element.y + element.height + 2
+                    && element.type == "row"
+                ) {
+
+                    _sfLog("Row Hover : " + mousePos.x + " : " + mousePos.y);
+
+                    if (element.height >= 1) {
+                        element_height = element.height;
+                        element_row = element.row - 1;
+                        iscursor_row = true;
+                    }
+
+
+                }
             });
             //console.log(obj.CellSelHover);
 
-            if (iscursor == true) {
+            if (iscursor_row == true) {
+                obj.IsResizeRow = true;
+                obj.IsResizeHover = true;
+                obj.IsResizeHoverSValue = mousePos.y;
+                obj.IsResizeRowHeight = element_height;
+                obj.IsResizeRowIndex = element_row;
+                $("#" + obj.canvasID + "_vw").css('cursor', 'row-resize');
+            }
+            else if (iscursor == true) {
+                obj.IsResizeRow = false;
                 obj.IsResizeHover = true;
                 obj.IsResizeHoverSValue = mousePos.x;
                 obj.IsResizeColumnWidth = element_width;
@@ -6156,6 +6904,7 @@ function canvasCreate(canvasID, obj) {
                 $("#" + obj.canvasID + "_vw").css('cursor', 'default');
                 obj.IsResize = false;
                 obj.IsResizeHover = false;
+                obj.IsResizeRow = false;
             }
 
 
@@ -6202,7 +6951,7 @@ function canvasCreate(canvasID, obj) {
         }, false);
 
 
- 
+
 
 
         //keypress
@@ -6213,13 +6962,13 @@ function canvasCreate(canvasID, obj) {
 
             if ((e_keyCode == '113')
                 && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") == "0"
-                ) {
+            ) {
                 SpreadDBClick(e);
                 return false;
             }
             else if ((e_keyCode == '114')
                 && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") == "0"
-                ) {
+            ) {
                 SpreadMouseDown(e);
                 //lookup 
                 return false;
@@ -6244,8 +6993,15 @@ function canvasCreate(canvasID, obj) {
             }
 
             if (e_keyCode == '38' || e_keyCode == '40' || e_keyCode == '37' || e_keyCode == '39'
-                 || e_keyCode == '9' || e_keyCode == '13'
-                ) {
+           ){
+                if ($('#' + obj.canvasID + '_vw_selectorCon').css("opacity") == "1") {
+
+                    return true;
+                }
+            }
+            if (//e_keyCode == '38' || e_keyCode == '40' || e_keyCode == '37' || e_keyCode == '39' ||
+                 e_keyCode == '9' || e_keyCode == '13'
+            ) {
                 if ($('#' + obj.canvasID + '_vw_selectorCon').css("opacity") == "1") {
                     //, "text",true
                     obj.SetText(undefined, undefined, $("#" + obj.canvasID + "_vw_inp").val(), "text", true);
@@ -6266,11 +7022,16 @@ function canvasCreate(canvasID, obj) {
 
             }
             else {
-               
+
                 var keyisavalid = true;
-                try{
-                    keyisavalid = p8Spread_KeyPress(e);
-                } catch (err) { }
+
+                try {
+                    keyisavalid = p8Spread_KeyPress_Menuitem(e, obj.canvasID, obj.CellIndexes.Row, obj.CellIndexes.Col);
+                } catch (err) {
+                    try {
+                        keyisavalid = p8Spread_KeyPress(e, obj.canvasID, obj.CellIndexes.Row, obj.CellIndexes.Col);
+                    } catch (err) { }
+                }
                 if (keyisavalid == false) return keyisavalid;
             }
 
@@ -6562,7 +7323,7 @@ function canvasCreate(canvasID, obj) {
                 var containerlen = 0;
                 obj.RenderStatus = false;
                 for (var i = rowstart; i <= obj.CellIndexes.Row2; i++) {
-                    for (var ic = obj.CellIndexes.Col ; ic <= obj.CellIndexes.Col2; ic++) {
+                    for (var ic = obj.CellIndexes.Col; ic <= obj.CellIndexes.Col2; ic++) {
                         obj.RenderStatus = false;
                         if (_sfCheckEnable(obj, i, ic)) {
                             obj.SetText(ic, i, "", "text", true);
@@ -6588,13 +7349,13 @@ function canvasCreate(canvasID, obj) {
                 if (
                     ((e.ctrlKey || e.altKey || e.shiftKey) && p8SpreadKeysControl.indexOf(e_keyCode + "") >= 0 && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") != "1")
                     || p8SpreadKeysControl.indexOf(e_keyCode + "") >= 0
-                    )
+                )
                     isValid = false;
                 else {
                     var isvalid = _sfSelectionActivate(obj);
 
-                    if (isvalid && e.ctrlKey == false ) {
-                        _sfSpreadInputShow(obj, true);
+                    if (isvalid && e.ctrlKey == false) {
+                        _sfSpreadInputShow(obj, true,e);
                         //$("#" + obj.canvasID + "_vw_inp").attr("acol", obj.CellIndexes.Col);
                         //$("#" + obj.canvasID + "_vw_inp").attr("arow", obj.CellIndexes.Row)
                         //$("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "1");
@@ -6616,16 +7377,35 @@ function canvasCreate(canvasID, obj) {
                 if (e_keyCode == '86' && e.ctrlKey) //paste  //&& $("#" + obj.canvasID + "_vw_selectorCon").css("opacity")=="0"
                 {
                     if (document.activeElement.classList.contains('P8Spread_Input')) {
-                        $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
-                        $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
-                        $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
-                        $('#' + obj.canvasID + '_vw_inpText').val("");
-                        $('#' + obj.canvasID + '_vw_inpText').focus();
-                        setTimeout(function () {
-                            //console.log($('#' + obj.canvasID + '_vw_inpText').val());
+                        if ($('#' + obj.canvasID + '_vw_selectorCon').css("opacity") == "1"
+                        ) {
+
+                            $("#" + obj.canvasID + "_vw_selectorCon").css("opacity", "0");
+                            $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
+                            $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
+                            $('#' + obj.canvasID + '_vw_inpText').val("");
+                            //ksg, to fixed multiple grid
+                            // $('#' + obj.canvasID + '_vw_inpText').focus();
+                            setTimeout(function () {
+                                //console.log($('#' + obj.canvasID + '_vw_inpText').val());
+                                $('#' + obj.canvasID + '_vw_inpText').addClass("paste");
+                                _sfPaste(obj);
+                            }, 100);
+                        } else {
+
+                            $('#' + obj.canvasID + '_vw_inpText').val("");
+                            //ksg, to fixed multiple grid
+
+                            //if ($(":focus").hasClass("P8Spread_Input")) {
+                            //    return true;
+                            //}
+                            $('#' + obj.canvasID + '_vw_inpText').focus();
+                            console.log("paste");
                             $('#' + obj.canvasID + '_vw_inpText').addClass("paste");
-                            _sfPaste(obj);
-                        }, 100);
+                            setTimeout(function () {
+                                _sfPaste(obj);
+                            }, 100);
+                        }
                     }
                     return true;
                 }
@@ -6636,8 +7416,8 @@ function canvasCreate(canvasID, obj) {
                 //    return true;
                 //}
 
-               
-                
+
+
 
 
             }
@@ -6655,20 +7435,20 @@ function canvasCreate(canvasID, obj) {
             if (e.ctrlKey == false) return true;
 
 
-            //start add cut
+
             if ((e.keyCode == 67 || e.keyCode == 88) && e.ctrlKey) {
 
                 var isCut = false;
-                if(e.keyCode == 88){
+                if (e.keyCode == 88) {
                     console.log("cut");
                     isCut = true;
-                }else{
+                } else {
                     console.log("copy");
                 }
-                
+
                 try {
-                 
-                    _sfP8Spread_Copy(obj, e,undefined,isCut);
+
+                    _sfP8Spread_Copy(obj, e, undefined, isCut);
                     _sfLog("Length to be Copied:" + textToPutOnClipboardHTML.length);
                     _sfCopy(textToPutOnClipboardHTML, obj.canvasID);
 
@@ -6676,22 +7456,23 @@ function canvasCreate(canvasID, obj) {
 
                 return false;
             }
-            else if (e.keyCode == 86 && e.ctrlKey) {
-                //check if focusing in spread
-                if (document.activeElement.classList.contains('P8Spread_Input')) {
-                    $('#' + obj.canvasID + '_vw_inpText').val("");
-                    $('#' + obj.canvasID + '_vw_inpText').focus();
-                    if ($(":focus").hasClass("P8Spread_Input")) {
-                        return true;
-                    }
-                    console.log("paste");
-                    $('#' + obj.canvasID + '_vw_inpText').addClass("paste");
-                    setTimeout(function () {
-                        _sfPaste(obj);
-                    }, 10);
-                }
-                return true;
-            }
+            //else if (e.keyCode == 86 && e.ctrlKey) {
+            //    //check if focusing in spread
+            //    if (document.activeElement.classList.contains('P8Spread_Input')) {
+            //        $('#' + obj.canvasID + '_vw_inpText').val("");
+            //        //ksg, to fixed multiple grid
+            //        //$('#' + obj.canvasID + '_vw_inpText').focus();
+            //        if ($(":focus").hasClass("P8Spread_Input")) {
+            //            return true;
+            //        }
+            //        console.log("paste");
+            //        $('#' + obj.canvasID + '_vw_inpText').addClass("paste");
+            //        setTimeout(function () {
+            //            _sfPaste(obj);
+            //        }, 10);
+            //    }
+            //    return true;
+            //}
 
 
         });
@@ -6718,7 +7499,7 @@ function canvasCreate(canvasID, obj) {
         //console.log(is_vw_inpDateHover);
     }, 11);
 
-    $('.P8Spread_Input.hasDatepicker').hide();
+    // $('.P8Spread_Input.hasDatepicker').hide();
 
     console.log("END:" + randomid);
 }
@@ -6726,9 +7507,9 @@ function canvasCreate(canvasID, obj) {
 
 
 
-function canvasListUpdate(canvasID, obj, col , row) {
-    if(obj.Theme  == P8Themes.FANCY){
-        if(p8Spread_IsResponsive()){
+function canvasListUpdate(canvasID, obj, col, row) {
+    if (obj.Theme == P8Themes.FANCY) {
+        if (p8Spread_IsResponsive()) {
 
 
 
@@ -6758,81 +7539,80 @@ function canvasCreateListHTML(canvasID, obj) {
         $('#' + containerID).html("");
 
         var maxrow = obj.Data.length;
-        if(maxrow >= obj.ListViewRowLoaderCount) 
+        if (maxrow >= obj.ListViewRowLoaderCount)
             maxrow = obj.ListViewRowLoaderCount;
 
-        var startrow =0;
-        var strbut = _sfnwGridButtons(obj.Book,"nkListViewObjs");
+        var startrow = 0;
+        var strbut = _sfnwGridButtons(obj.Book, "nkListViewObjs");
 
         x_html += strbut;
-        x_html += "<div class='nkListView' data-text='No Data!' canvasID='"+containerID+"'>";
+        x_html += "<div class='nkListView' data-text='No Data!' canvasID='" + containerID + "'>";
         x_html += "</div>";
         $('#' + containerID).html(x_html);
         $('#' + containerID).addClass("P8Spread");
 
-        if(obj.ReportHeader == true){
-            canvasCreateListHTMLHeader(obj,startrow, obj.FreezeRow-1,containerID);
+        if (obj.ReportHeader == true) {
+            canvasCreateListHTMLHeader(obj, startrow, obj.FreezeRow - 1, containerID);
             startrow = obj.FreezeRow;
         }
-       
-        canvasCreateListHTMLDetail(obj,startrow,maxrow,containerID);
+
+        canvasCreateListHTMLDetail(obj, startrow, maxrow, containerID);
     }
 
 
 }
 
-function canvasCreateListHTMLHeader(obj,startrow,maxrow,containerID){
-    var x_html ="";
-    x_html += "<div class='nkListViewRow nkListViewHeader' row='"+irow+"'>";
-    for(var irow=startrow; irow < maxrow; irow++){
-        for(var icol=0; icol < 1; icol++){
+function canvasCreateListHTMLHeader(obj, startrow, maxrow, containerID) {
+    var x_html = "";
+    x_html += "<div class='nkListViewRow nkListViewHeader' row='" + irow + "'>";
+    for (var irow = startrow; irow < maxrow; irow++) {
+        for (var icol = 0; icol < 1; icol++) {
 
-            var xwidth =  parseInt(obj.GetColumnWidth(icol) || "0");
+            var xwidth = parseInt(obj.GetColumnWidth(icol) || "0");
 
-            if(xwidth <=0)
-                x_html += "<div class='nkListViewCol nwHide'  col='"+icol+"'>";
-            else 
-                x_html += "<div class='nkListViewCol'  col='"+icol+"'>";
+            if (xwidth <= 0)
+                x_html += "<div class='nkListViewCol nwHide'  col='" + icol + "'>";
+            else
+                x_html += "<div class='nkListViewCol'  col='" + icol + "'>";
 
 
-            var enabled = obj.GetEnabled(icol,irow);
-            var background = obj.GetBackground(icol,irow);
-            var textcolor = obj.GetTextColor(icol,irow);
-            var enabled = obj.GetEnabled(icol,irow);
+            var enabled = obj.GetEnabled(icol, irow);
+            var background = obj.GetBackground(icol, irow);
+            var textcolor = obj.GetTextColor(icol, irow);
+            var enabled = obj.GetEnabled(icol, irow);
 
-            if(obj.GetObjectType(icol,irow) == "buttonflat"){
-                x_html += "<div class='nkListViewValue max buttonflat' enabled='"+enabled+"'>";
-                x_html += obj.GetText(icol,irow);
+            if (obj.GetObjectType(icol, irow) == "buttonflat") {
+                x_html += "<div class='nkListViewValue max buttonflat' enabled='" + enabled + "'>";
+                x_html += obj.GetText(icol, irow);
                 x_html += "</div>";
-            }else {
-               
+            } else {
+
                 //x_html += "<div class='nkListViewTitle'>";
                 //x_html += obj.ColumnName(icol);
                 //x_html += "</div>";
-               
-                var objtype = obj.GetObjectType(icol,irow);
-                var datatype = obj.GetDataType(icol,irow); 
+
+                var objtype = obj.GetObjectType(icol, irow);
+                var datatype = obj.GetDataType(icol, irow);
 
 
-                x_html += "<div class='nkListViewValue "+(enabled ? "enable" : "" )+"' datatype='"+datatype+"' style='background-color:"+background+";color:"+textcolor+";' >"; //<textarea "+(enabled ? "" : "disabled='disabled'")+" >
+                x_html += "<div class='nkListViewValue " + (enabled ? "enable" : "") + "' datatype='" + datatype + "' style='background-color:" + background + ";color:" + textcolor + ";' >"; //<textarea "+(enabled ? "" : "disabled='disabled'")+" >
                 var valueR = "";
-                if(objtype == "checkbox"){
-                    var ischeck = obj.GetValueBolean(icol,irow);
+                if (objtype == "checkbox") {
+                    var ischeck = obj.GetValueBolean(icol, irow);
 
-                    if(ischeck) ischeck = "checked";
-                    else  ischeck = "";
+                    if (ischeck) ischeck = "checked";
+                    else ischeck = "";
 
-                    if(!enabled) enabled = "disabled";
-                    else  enabled = "";
+                    if (!enabled) enabled = "disabled";
+                    else enabled = "";
 
-                    valueR = "<input class='nkListViewValueCheck' "+ ischeck +" "+ enabled +" type='checkbox' >";
+                    valueR = "<input class='nkListViewValueCheck' " + ischeck + " " + enabled + " type='checkbox' >";
                 }
-                else 
-                {
-                    valueR = obj.GetText(icol,irow) + "&nbsp;";
+                else {
+                    valueR = obj.GetText(icol, irow) + "&nbsp;";
                 }
-               
-                
+
+
                 x_html += valueR;
                 x_html += "</div>"; //</textarea>
             }
@@ -6843,79 +7623,86 @@ function canvasCreateListHTMLHeader(obj,startrow,maxrow,containerID){
     x_html += "</div>";
 
     $('#' + containerID).find(".nkListView").append(x_html);
-    x_html ="";
-    
+    x_html = "";
+
 }
 
 
-function canvasCreateListHTMLDetail(obj,startrow,maxrow,containerID){
-    var x_html ="";
-    for(var irow=startrow; irow < maxrow; irow++){
-        x_html += "<div class='nkListViewRow' row='"+irow+"'>";
-        for(var icol=0; icol < obj.ColumnConfig.length; icol++){
+function canvasCreateListHTMLDetail(obj, startrow, maxrow, containerID) {
+    var x_html = "";
+    for (var irow = startrow; irow < maxrow; irow++) {
+        x_html += "<div class='nkListViewRow' row='" + irow + "'>";
+        for (var icol = 0; icol < obj.ColumnConfig.length; icol++) {
 
-            var xwidth =  parseInt(obj.GetColumnWidth(icol) || "0");
+            var xwidth = parseInt(obj.GetColumnWidth(icol) || "0");
 
-            if(xwidth <=0)
-                x_html += "<div class='nkListViewCol nwHide'  col='"+icol+"'>";
-            else 
-                x_html += "<div class='nkListViewCol'  col='"+icol+"'>";
+            if (xwidth <= 0)
+                x_html += "<div class='nkListViewCol nwHide'  col='" + icol + "'>";
+            else
+                x_html += "<div class='nkListViewCol'  col='" + icol + "'>";
 
 
-            var enabled = obj.GetEnabled(icol,irow);
-            var background = obj.GetBackground(icol,irow);
-            var textcolor = obj.GetTextColor(icol,irow);
-            var enabled = obj.GetEnabled(icol,irow);
+            var enabled = obj.GetEnabled(icol, irow);
+            var background = obj.GetBackground(icol, irow);
+            var textcolor = obj.GetTextColor(icol, irow);
+            var enabled = obj.GetEnabled(icol, irow);
 
-            if(background=="white") background = "";
+            if (background == "white") background = "";
+            if (background == "inherit") background = "";
             //parseInt(nwGrid_Book.ActiveSheet.ColumnConfig[20].width) <= 10
 
-            var xclass =  obj.ColumnConfig[icol].Class || "";
+            var xclass = obj.ColumnConfig[icol].Class || "";
 
-            if(obj.GetObjectType(icol,irow) == "buttonflat"){
-                x_html += "<div class='nkListViewValue max buttonflat' enabled='"+enabled+"'>";
-                x_html += obj.GetText(icol,irow);
+            if (obj.GetObjectType(icol, irow) == "buttonflat") {
+                x_html += "<div class='nkListViewValue max buttonflat' enabled='" + enabled + "'>";
+                x_html += obj.GetText(icol, irow);
                 x_html += "</div>";
             }
             else {
                 x_html += "<div class='nkListViewTitle'>";
-                if(obj.ReportHeader == true){
-                    x_html += obj.GetText(icol,nwGridMainCon_Book.ActiveSheet.FreezeRow-1);
+                if (obj.ReportHeader == true) {
+                    x_html += obj.GetText(icol, obj.FreezeRow - 1);
                 }
-                else 
+                else
                     x_html += obj.ColumnName(icol);
+
+
+                if(obj.ColumnConfig[icol].HeaderColumnReq=="nwFieldreq"){
+                    x_html += "<span class='nwRequiredField'>*</span>";
+                }else if(obj.ColumnConfig[icol].HeaderColumnReq=="nwFieldopt"){
+                    x_html += "<span class='nwOptionalField'>*</span>";
+                }
                 x_html += "</div>";
-               
-               
-                var objtype = obj.GetObjectType(icol,irow);
-                var datatype = obj.GetDataType(icol,irow); 
 
-                	
-                if(xclass.indexOf('aagnwlookupgrid') >=1 || xclass.indexOf('aagAddTolist ') >=1){
+
+                var objtype = obj.GetObjectType(icol, irow);
+                var datatype = obj.GetDataType(icol, irow);
+
+
+                if (xclass.indexOf('aagnwlookupgrid') >= 1 || xclass.indexOf('aagAddTolist ') >= 1) {
                     datatype = "lookup";
-                    if(background=="")background =obj.DefaultSettings.lookupBackgroundColor;
+                    if (background == "") background = obj.DefaultSettings.lookupBackgroundColor;
                 }
 
 
-                x_html += "<div class='nkListViewValue "+(enabled ? "enable" : "" )+"' datatype='"+datatype+"' style='background-color:"+background+";color:"+textcolor+";' >"; //<textarea "+(enabled ? "" : "disabled='disabled'")+" >
+                x_html += "<div class='nkListViewValue " + (enabled ? "enable" : "") + "' datatype='" + datatype + "' style='background-color:" + background + ";color:" + textcolor + ";' >"; //<textarea "+(enabled ? "" : "disabled='disabled'")+" >
                 var valueR = "";
-                if(objtype == "checkbox"){
-                    var ischeck = obj.GetValueBolean(icol,irow);
+                if (objtype == "checkbox") {
+                    var ischeck = obj.GetValueBolean(icol, irow);
 
-                    if(ischeck) ischeck = "checked";
-                    else  ischeck = "";
+                    if (ischeck) ischeck = "checked";
+                    else ischeck = "";
 
-                    if(!enabled) enabled = "disabled";
-                    else  enabled = "";
+                    if (!enabled) enabled = "disabled";
+                    else enabled = "";
 
-                    valueR = "<input class='nkListViewValueCheck' "+ ischeck +" "+ enabled +" type='checkbox' >";
+                    valueR = "<input class='nkListViewValueCheck' " + ischeck + " " + enabled + " type='checkbox' >";
                 }
-                else 
-                {
-                    valueR = obj.GetText(icol,irow) + "&nbsp;";
+                else {
+                    valueR = obj.GetText(icol, irow) + "&nbsp;";
                 }
-               
-                
+
+
                 x_html += valueR;
                 x_html += "</div>"; //</textarea>
             }
@@ -6927,49 +7714,49 @@ function canvasCreateListHTMLDetail(obj,startrow,maxrow,containerID){
         $('#' + containerID).find(".nkListView").append(x_html);
         var curindex = $('#' + containerID).find(".nkListViewRow").length - 1;
 
-        for(var icol=0; icol < obj.ColumnConfig.length; icol++){
-            if(obj.GetObjectType(icol,irow) == "buttonflat"){
-                var background = obj.GetBackground(icol,irow);
-                $('#' + containerID).find(".nkListViewRow:eq("+curindex+") .nkListViewValue:eq("+icol+")").css("background-color",background);
+        for (var icol = 0; icol < obj.ColumnConfig.length; icol++) {
+            if (obj.GetObjectType(icol, irow) == "buttonflat") {
+                var background = obj.GetBackground(icol, irow);
+                $('#' + containerID).find(".nkListViewRow:eq(" + curindex + ") .nkListViewValue:eq(" + icol + ")").css("background-color", background);
             }
 
-            var textcolor = obj.GetTextColor(icol,irow);
-            if(textcolor != "" && textcolor != 'black')
-                $('#' + containerID).find(".nkListViewRow:eq("+curindex+") .nkListViewValue:eq("+icol+")").css("color",textcolor);
+            var textcolor = obj.GetTextColor(icol, irow);
+            if (textcolor != "" && textcolor != 'black')
+                $('#' + containerID).find(".nkListViewRow:eq(" + curindex + ") .nkListViewValue:eq(" + icol + ")").css("color", textcolor);
         }
-       
-        x_html ="";
+
+        x_html = "";
     }
-    
+
 }
 
-$(document).on("click",".nkListViewCol",function(){
+$(document).on("click", ".nkListViewCol", function () {
     var canvasID = $(this).parents(".nkListView").attr("canvasID");
-    var row = parseInt($(this).parents(".nkListViewRow").attr("row")+""||-1);
-    var col = parseInt($(this).attr("col")+""||-1);//.index();
-
-    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row = row;
-    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row2 =row;
-    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col = col;
-    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col2 = col;
-
-
-    p8Spread_ClickT(canvasID, row, col,this);
-    //try{p8Spread_FocusT(canvasID, row, col,this);}catch(err){}
-});
-$(document).on("dblclick",".nkListViewCol",function(){
-    var canvasID = $(this).parents(".nkListView").attr("canvasID");
-    var row = parseInt($(this).parents(".nkListViewRow").attr("row")+""||-1);
-    var col = parseInt($(this).attr("col")+""||-1);//.index();
+    var row = parseInt($(this).parents(".nkListViewRow").attr("row") + "" || -1);
+    var col = parseInt($(this).attr("col") + "" || -1);//.index();
 
     P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row = row;
     P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row2 = row;
     P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col = col;
     P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col2 = col;
 
-    p8Spread_DblClickT(canvasID, row, col,this);
+    p8Spread_CurBook = canvasID;
+    p8Spread_ClickT(canvasID, row, col, this);
+    //try{p8Spread_FocusT(canvasID, row, col,this);}catch(err){}
 });
-function canvasListSelect(){
+$(document).on("dblclick", ".nkListViewCol", function () {
+    var canvasID = $(this).parents(".nkListView").attr("canvasID");
+    var row = parseInt($(this).parents(".nkListViewRow").attr("row") + "" || -1);
+    var col = parseInt($(this).attr("col") + "" || -1);//.index();
+
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row = row;
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Row2 = row;
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col = col;
+    P8DataList[canvasID][0].sheet.ActiveSheet.CellIndexes.Col2 = col;
+
+    p8Spread_DblClickT(canvasID, row, col, this);
+});
+function canvasListSelect() {
 
 }
 
@@ -7002,7 +7789,7 @@ function canvasCreateList(canvasID, obj) {
     canvasID = canvasID + "_vw";
     var _tmpExtra = 0;
 
-    var scrollhwidth = 400;
+    var scrollhwidth = 600;
 
 
     var scheight = 0;
@@ -7026,7 +7813,7 @@ function canvasCreateList(canvasID, obj) {
         if ($('#' + containerID).attr("nwidth") > 0 && $('#' + containerID).attr("nwidth") != undefined) {
             conWidth = $('#' + containerID).attr("nwidth");
             conheight = $('#' + containerID).attr("nheight");
-            if($('#' + containerID).attr("nheight") <=0)
+            if ($('#' + containerID).attr("nheight") <= 0)
                 conheight = $('#' + containerID).height();
         }
         else {
@@ -7035,21 +7822,21 @@ function canvasCreateList(canvasID, obj) {
             $('#' + containerID).attr("nwidth", xconWidth);
             $('#' + containerID).attr("nheight", xconheight);
         }
-    
+
     }
-   
 
 
-    
+
+
     //  conWidth = $('#' + containerID + "_vw").width();
     //  conheight = $('#' + containerID + "_vw").height();
-    
+
 
 
     if ($("#" + canvasID).index() >= 0) {
         isObjectCreated = true;
 
-       
+
 
         //setTimeout(function () {
         //    if (obj.AutoWrap == true && obj.AutoWrapRender == false)
@@ -7127,7 +7914,7 @@ function canvasCreateList(canvasID, obj) {
 
         x_html += "</td>"; //Canvas
 
-       
+
         x_html += "<td p8style='display:none;padding:0px;min-width:" + scrollWidth + "px;width:" + scrollWidth + "px;max-width:" + scrollWidth + "px;padding-right:1px;vertical-align: top;'>"; //scroller
         x_html += "<div id='" + containerID + "_P8Spread_ScrollUp' class='P8Spread_ScrollUp' p8style='padding: 0px;min-height: 15px;min-width: " + scrollWidth + "px;display: inline-block;background-color: #efefef;background-color: #83b8d3;border: 1px solid #607c8b;box-shadow: inset 0px 0px 5px #e5e5e5;border-radius: 3px;'></div>";
         x_html += "<div  class='P8Spread_Scroll' p8style='padding:0px;min-width:100%;min-height:30px;background: #ececec;border: 1px solid #ececec;'><div id='" + containerID + "_P8Spread_Scroll' class='P8Spread_ScrollBar Vr' p8style='border-radius: 5px;min-height:30px;background: #bcc5ce;border-radius: 3px;background-image: -webkit-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -moz-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -ms-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -webkit-gradient(linear, 0 0, 0 100%, from (#bcc5ce), to(#bcc5ce));background-image: -webkit-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: -o-linear-gradient(top, #bcc5ce, #bcc5ce);background-image: linear-gradient(top, #bcc5ce, #bcc5ce);box-shadow: inset 1px 1px 5px #bcc5ce;border: 1px solid #bcc5ce;'><div id='" + containerID + "_P8Spread_Scroll_handler' p8style='min-width:100%;min-height:100%'></div></div></div>"; //scrollbar
@@ -7139,7 +7926,7 @@ function canvasCreateList(canvasID, obj) {
 
 
 
-    
+
 
         x_html += "</table>";//main
 
@@ -7196,7 +7983,7 @@ function canvasCreateList(canvasID, obj) {
 
 
         $('#' + containerID + "_vw_inpDate").hide();
-       
+
 
         //var cmpScrollUp = document.getElementById(containerID + "_P8Spread_ScrollUp");
         //cmpScrollUp.addEventListener('click', function (event) {
@@ -7224,7 +8011,7 @@ function canvasCreateList(canvasID, obj) {
 
         canvasS.addEventListener('mousewheel', function (event) {
             var scrollCount = 10;
-            var rowcount = obj.Data.length * (obj.ColumnConfig.length+1);
+            var rowcount = obj.Data.length * (obj.ColumnConfig.length + 1);
             var perc = 0.01;
 
 
@@ -7283,7 +8070,7 @@ function canvasCreateList(canvasID, obj) {
                 coladd = 0;
             }
 
-           
+
             // if (obj.Book.ActiveSheet.startCol + dataadd >= obj.Book.ActiveSheet.ColumnConfig.Length) {
             rowadd = dataadd;
             coladd = 0;
@@ -7291,16 +8078,16 @@ function canvasCreateList(canvasID, obj) {
             // else {
             //  coladd = dataadd;
             // }
-                
+
 
             // if (obj.Book.ActiveSheet.startCol >= obj.Book.ActiveSheet.ColumnConfig.length) {
-                
+
             obj.Book.ActiveSheet.ScrollRender(obj.Book.ActiveSheet.startCol + coladd, obj.Book.ActiveSheet.startRow + rowadd);
             // }
             // else {
             // obj.Book.ActiveSheet.ScrollRender(obj.Book.ActiveSheet.startCol + dataadd , undefined);
             // }
-           
+
 
             try {
                 // if (nwBrowser == "Firefox")
@@ -7397,7 +8184,7 @@ function canvasCreateList(canvasID, obj) {
         // _sfLog("Column Config Start:");
         Spread_ColumnConfig = nwCreate2DArray(obj.ColumnConfig.length);
         Spread_Column_backgroundColor = [];
-        for (var i = 0 ; i < obj.ColumnConfig.length; i++) {
+        for (var i = 0; i < obj.ColumnConfig.length; i++) {
             var conid = "backgroundColor";
             Spread_ColumnConfig[i][_sfGetFormatValueColumnChecker(conid)] = obj.ColumnConfig[i][conid];
             Spread_Column_backgroundColor.push(obj.ColumnConfig[i][conid]);
@@ -7426,7 +8213,7 @@ function canvasCreateList(canvasID, obj) {
 
 
 
-  
+
 
 
     var myCanvas = createHiDPICanvas(canvasID, conWidth, conheight, 3);
@@ -7509,14 +8296,14 @@ function canvasCreateList(canvasID, obj) {
     var icx = -1;
     var icx2 = 1;
     var obj_startCol = obj.startCol;
-  
+
 
     var dashedarry = [3, 5];
     var dottedarry = [2, 2];
     var defaultarry = [];
     // Print Cell Records
     current_Y = borderMargin;    // srow = 0;
-    current_X = borderMargin*2;
+    current_X = borderMargin * 2;
 
     ix = -1;
     ix2 = 1;
@@ -7544,7 +8331,7 @@ function canvasCreateList(canvasID, obj) {
 
     var columnWidthSize = canvaswidth * 0.35;
 
-    srow = obj_startRow+5;
+    srow = obj_startRow + 5;
     if (obj_startRow >= obj.Data.length) obj_startRow = obj.Data.length;
 
     console.log("row:" + obj_startRow);
@@ -7561,8 +8348,8 @@ function canvasCreateList(canvasID, obj) {
             borderWidth: borderMargin * borderMarginScale,
             fillStyle: "white",// tlVBG,
             strokeStyle: 'black'
-                  , row: curRow
-                , type: "row"
+            , row: curRow
+            , type: "row"
         };
         contextSheet.fillStyle = myCell.fillStyle;
         contextSheet.lineWidth = myCell.borderWidth;
@@ -7571,17 +8358,17 @@ function canvasCreateList(canvasID, obj) {
 
         var option = {
             font: "bold " + tlVFontSize + "px " + tlVFont, x: defaultpadding, y: myCell.y, paddingX: defaultpadding, paddingY: defaultpadding, width: myCell.width, height: myCell.height
-             , verticalAlign: "middle"
-             , textAlign: "center"
-             , color: tlVColor
+            , verticalAlign: "middle"
+            , textAlign: "center"
+            , color: tlVColor
         };
         var canvas = document.getElementById(canvasID);
-        if (obj.RecordText !="aagempty") CanvasTextWrapper(canvas, obj.RecordText + curRow, option);
-       
+        if (obj.RecordText != "aagempty") CanvasTextWrapper(canvas, obj.RecordText + curRow, option);
+
 
         current_Y += myCell.height + borderMargin;
 
-      
+
         for (var ic = obj_startCol; ic <= scolumn; ic++) {
             curCol = ic;
 
@@ -7594,33 +8381,33 @@ function canvasCreateList(canvasID, obj) {
 
                 fillStyle: "white",
                 strokeStyle: 'black'
-                  , col: curCol
-                  , row: curRow
-                  , type: "cell"
-                  , borderMargin: borderMargin
-                  , selectedValue: selectedValue
+                , col: curCol
+                , row: curRow
+                , type: "cell"
+                , borderMargin: borderMargin
+                , selectedValue: selectedValue
 
 
-                  , borderColorTop: obj.gridlLineColor
-                  , borderColorBottom: obj.gridlLineColor
-                  , borderColorLeft: obj.gridlLineColor
-                  , borderColorRight: obj.gridlLineColor
+                , borderColorTop: obj.gridlLineColor
+                , borderColorBottom: obj.gridlLineColor
+                , borderColorLeft: obj.gridlLineColor
+                , borderColorRight: obj.gridlLineColor
 
-                  , borderStyleTop: "solid"
-                  , borderStyleBottom: "solid"
-                  , borderStyleLeft: "solid"
-                  , borderStyleRight: "solid"
+                , borderStyleTop: "solid"
+                , borderStyleBottom: "solid"
+                , borderStyleLeft: "solid"
+                , borderStyleRight: "solid"
 
-                  , borderWidthTop: "1"
-                  , borderWidthBottom: "1"
-                  , borderWidthLeft: "1"
-                  , borderWidthRight: "1"
+                , borderWidthTop: "1"
+                , borderWidthBottom: "1"
+                , borderWidthLeft: "1"
+                , borderWidthRight: "1"
             };
 
             var option = {
                 font: " " + tlVFontSize + "px " + tlVFont, x: myCell.x + defaultpadding, y: myCell.y, paddingX: defaultpadding, paddingY: 2 * defaultpadding, width: myCell.width - (defaultpadding * 2), height: myCell.height - (defaultpadding * 2)
-                   , verticalAlign: "middle"
-                  , textAlign: "center"
+                , verticalAlign: "middle"
+                , textAlign: "center"
             };
             option = _sfSetFormatText(obj, option, curCol - 1, curRow - 1);
             option.curCol = curCol;
@@ -7642,7 +8429,7 @@ function canvasCreateList(canvasID, obj) {
                 borderWidth: borderMargin * borderMarginScale,
                 fillStyle: tlVBG,
                 strokeStyle: 'black'
-                  , row: ix
+                , row: ix
                 , type: "row"
             };
             contextSheet.fillStyle = myCell.fillStyle;
@@ -7652,12 +8439,12 @@ function canvasCreateList(canvasID, obj) {
 
             var option = {
                 font: "bold " + tlVFontSize + "px " + tlVFont, x: defaultpadding, y: myCell.y, paddingX: defaultpadding, paddingY: defaultpadding, width: myCell.width, height: myCell.height
-               , verticalAlign: "middle"
-               , textAlign: "left"
-               , color: tlVColor
+                , verticalAlign: "middle"
+                , textAlign: "left"
+                , color: tlVColor
             };
             var canvas = document.getElementById(canvasID);
-            var colname = obj.ColumnName(curCol-1);
+            var colname = obj.ColumnName(curCol - 1);
             CanvasTextWrapper(canvas, colname, option);
 
 
@@ -7667,7 +8454,7 @@ function canvasCreateList(canvasID, obj) {
 
     }
 
-    _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canvasIDOrig,contextCurrentSelected);
+    _sfRenderEvent(obj, canvasSheet, randomid, isObjectCreated, canvasID, canvasIDOrig, contextCurrentSelected);
 
     //if ($('#' + containerID).attr("nwidth") == undefined || $('#' + containerID).attr("nwidth") <= 0) {
     //    var conWidth = $('#' + containerID).width();
@@ -7677,7 +8464,7 @@ function canvasCreateList(canvasID, obj) {
     //}
 
 }
-function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canvasIDOrig,contextCurrentSelected) {
+function _sfRenderEvent(obj, canvasSheet, randomid, isObjectCreated, canvasID, canvasIDOrig, contextCurrentSelected) {
     if (obj.havelistner == false) {
         console.log("ENDListner:" + randomid);
         _sfLog("add event:");
@@ -7693,6 +8480,26 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
         canvasSheet.addEventListener('mouseup', function (event) {
 
             obj.CellSelHover = false;
+            if (obj.IsResizeHover == true && obj.IsResizeClick == true && obj.RowResizable == true && obj.IsResizeRow == true) {
+                var diff = obj.IsResizeRowHeight;
+
+
+                if (obj.IsResizeHoverSValue > obj.IsResizeHoverValue)
+                    diff = obj.IsResizeHoverValue - obj.IsResizeHoverSValue;
+                else
+                    diff = obj.IsResizeHoverValue - obj.IsResizeHoverSValue;
+
+                obj.IsResizeHover = true; obj.IsResizeClick = false; obj.IsResizeRow == false;
+                var heightnew = obj.IsResizeRowHeight + diff;
+                if (heightnew <= 10) heightnew = 10;
+                obj.RowHeight(obj.IsResizeRowIndex, heightnew);
+
+
+                $("#" + obj.canvasID).attr("isresize", 1);
+
+
+                return;
+            }
             if (obj.IsResizeHover == true && obj.IsResizeClick == true && obj.ColumnResizable == true) {
                 var diff = obj.IsResizeColumnWidth;
 
@@ -7929,7 +8736,7 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
                     try {
                         if ((obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkbox"
                             || obj.GetObjectType(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == "checkboxtext"
-                            ) && obj.GetEnabled(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == true) {
+                        ) && obj.GetEnabled(obj.CellSelected.col - 1, obj.CellSelected.row - 1) == true) {
 
                             //if (obj.ColumnConfig[obj.CellSelected.col - 1].ObjectType == "checkbox") {
                             var value = obj.GetValue(obj.CellSelected.col - 1, obj.CellSelected.row - 1);
@@ -7986,7 +8793,7 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
 
                 if ($("#" + obj.canvasID + "_vw_inp").attr("acol2") != $("#" + obj.canvasID + "_vw_inp").attr("acol")
                     && $("#" + obj.canvasID + "_vw_inp").attr("arow2") != $("#" + obj.canvasID + "_vw_inp").attr("arow")
-                    ) {
+                ) {
 
                     var xvalue = $("#" + obj.canvasID + "_vw_inp").val();
                     var oldvalue = obj.GetText(parseInt($("#" + obj.canvasID + "_vw_inp").attr("acol")), parseInt($("#" + obj.canvasID + "_vw_inp").attr("arow")));
@@ -8043,7 +8850,7 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
             var x = 0, y = 0;
             try {
                 x = event.pageX - elemLeft,
-                y = event.pageY - elemTop;
+                    y = event.pageY - elemTop;
             } catch (err) { }
 
 
@@ -8063,20 +8870,20 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
                     //    );
 
                     if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
-                         && mousePos.x >= element.x && mousePos.x <= element.x + element.width
-                        ) {
+                        && mousePos.x >= element.x && mousePos.x <= element.x + element.width
+                    ) {
                         _sfLog("Cell  Hover : " + p8_NumberToCell(element.col) + element.row);
 
                     }
 
 
                     if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
-                         && mousePos.x >= element.x && mousePos.x <= element.x + element.width
-                    && element.type == "cell"
+                        && mousePos.x >= element.x && mousePos.x <= element.x + element.width
+                        && element.type == "cell"
 
                         && (obj.CellIndexes.Col2 != element.col - 1
-                        || obj.CellIndexes.Row2 != element.row - 1)
-                   ) {
+                            || obj.CellIndexes.Row2 != element.row - 1)
+                    ) {
                         /// hover cell
 
 
@@ -8097,7 +8904,7 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
                 if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
                     && mousePos.x >= element.x + element.width - 2 && mousePos.x <= element.x + element.width + 2
                     && element.type == "col"
-                    ) {
+                ) {
                     _sfLog("column Hover : " + mousePos.x + " : " + mousePos.y);
 
 
@@ -8180,13 +8987,13 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
 
             if ((e_keyCode == '113')
                 && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") == "0"
-                ) {
+            ) {
                 SpreadDBClick(e);
                 return false;
             }
             else if ((e_keyCode == '114')
                 && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") == "0"
-                ) {
+            ) {
                 SpreadMouseDown(e);
                 //lookup 
                 return false;
@@ -8209,10 +9016,13 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
                 $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
                 return true;
             }
-
             if (e_keyCode == '38' || e_keyCode == '40' || e_keyCode == '37' || e_keyCode == '39'
-                 || e_keyCode == '9' || e_keyCode == '13'
-                ) {
+           ){
+
+            }
+            if (//e_keyCode == '38' || e_keyCode == '40' || e_keyCode == '37' || e_keyCode == '39' ||
+                 e_keyCode == '9' || e_keyCode == '13'
+            ) {
                 if ($('#' + obj.canvasID + '_vw_selectorCon').css("opacity") == "1") {
                     //, "text",true
                     obj.SetText(undefined, undefined, $("#" + obj.canvasID + "_vw_inp").val(), "text", true);
@@ -8236,8 +9046,12 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
 
                 var keyisavalid = true;
                 try {
-                    keyisavalid = p8Spread_KeyPress(e);
-                } catch (err) { }
+                    keyisavalid = p8Spread_KeyPress_Menuitem(e, obj.canvasID, obj.CellIndexes.Row, obj.CellIndexes.Col);
+                } catch (err) {
+                    try {
+                        keyisavalid = p8Spread_KeyPress(e, obj.canvasID, obj.CellIndexes.Row, obj.CellIndexes.Col);
+                    } catch (err) { }
+                }
                 if (keyisavalid == false) return keyisavalid;
             }
 
@@ -8529,7 +9343,7 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
                 var containerlen = 0;
                 obj.RenderStatus = false;
                 for (var i = rowstart; i <= obj.CellIndexes.Row2; i++) {
-                    for (var ic = obj.CellIndexes.Col ; ic <= obj.CellIndexes.Col2; ic++) {
+                    for (var ic = obj.CellIndexes.Col; ic <= obj.CellIndexes.Col2; ic++) {
                         obj.RenderStatus = false;
                         if (_sfCheckEnable(obj, i, ic)) {
                             obj.SetText(ic, i, "", "text", true);
@@ -8555,7 +9369,7 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
                 if (
                     ((e.ctrlKey || e.altKey || e.shiftKey) && p8SpreadKeysControl.indexOf(e_keyCode + "") >= 0 && $("#" + obj.canvasID + "_vw_selectorCon").css("opacity") != "1")
                     || p8SpreadKeysControl.indexOf(e_keyCode + "") >= 0
-                    )
+                )
                     isValid = false;
                 else {
                     var isvalid = _sfSelectionActivate(obj);
@@ -8587,7 +9401,8 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
                         $("#" + obj.canvasID + "_vw_selectorCon").css("overflow", "hidden");
                         $("#" + obj.canvasID + "_vw_selectorCon .P8Spread_Input.hasDatepicker").hide();
                         $('#' + obj.canvasID + '_vw_inpText').val("");
-                        $('#' + obj.canvasID + '_vw_inpText').focus();
+                        //ksg, to fixed multiple grid
+                        //$('#' + obj.canvasID + '_vw_inpText').focus();
                         setTimeout(function () {
                             //console.log($('#' + obj.canvasID + '_vw_inpText').val());
                             $('#' + obj.canvasID + '_vw_inpText').addClass("paste");
@@ -8620,22 +9435,50 @@ function _sfRenderEvent(obj, canvasSheet, randomid,isObjectCreated,canvasID,canv
             var isSpread = false;
 
             if (e.ctrlKey == false) return true;
+
+
+
+            //if (e.keyCode == 67 && e.ctrlKey) {
+            //    //if ($(":focus").hasClass("P8Spread_Input")) {
+            //    //    return true;
+            //    //}
+            //    console.log("copy");
+            //    //if(isIe)
+            //    // setTimeout(function () {
+            //    //alert("CTRL+c");
+            //    //if (isCopying == false) {
+            //    //  isCopying = true;
+            //    try {
+            //        textToPutOnClipboardHTML = "<table p8style=' border-collapse: collapse;'>";
+            //        _sfP8Spread_Copy(obj, e);
+            //        textToPutOnClipboardHTML += "</table>";
+            //        _sfLog("Length to be Copied:" + textToPutOnClipboardHTML.length);
+            //        _sfCopy(textToPutOnClipboardHTML, obj.canvasID);
+
+            //        //setTimeout(function () { isCopying = false; }, 1000);
+            //    } catch (err) { isCopying = false; }
+            //    //}
+            //    // }, 10);
+            //    //copyToClipboardCrossbrowser("wewe");
+            //    return false;
+            //}
             if (e.keyCode == 67 && e.ctrlKey) {
                 console.log("copy");
                 try {
-                    _sfP8Spread_Copy(obj, e,undefined,"copy");
+                    _sfP8Spread_Copy(obj, e, undefined, "copy");
                     _sfLog("Length to be Copied:" + textToPutOnClipboardHTML.length);
                     _sfCopy(textToPutOnClipboardHTML, obj.canvasID);
 
                 } catch (err) { isCopying = false; }
-              
+
                 return false;
             }
             else if (e.keyCode == 86 && e.ctrlKey) {
                 //check if focusing in spread
                 if (document.activeElement.classList.contains('P8Spread_Input')) {
                     $('#' + obj.canvasID + '_vw_inpText').val("");
-                    $('#' + obj.canvasID + '_vw_inpText').focus();
+                    //ksg, to fixed multiple grid
+                    //$('#' + obj.canvasID + '_vw_inpText').focus();
                     if ($(":focus").hasClass("P8Spread_Input")) {
                         return true;
                     }
@@ -8670,9 +9513,11 @@ function _sfRenderObjects(obj) {
     var xrows = 0;
     //if(obj.FreezeRow < obj.startRow)xrows = obj.startRow-obj.FreezeRow;
     xrows = obj.startRow - 1;
-    for (var i = 0; i < xrows; i++) {
-        var rowh = obj.Data[i].aagrowHeight || (def_Height + 0);
-        xheight += rowh;
+    try {
+        //var rowh = obj.Data[i].aagrowHeight || (def_Height + 0);
+        var rowh = obj.Data[i].aagrowHeight == undefined ? def_Height : obj.Data[i].aagrowHeight;
+    } catch (ex) {
+        var rowh = (def_Height + 0)
     }
 
     var xwidth = 0;
@@ -8680,7 +9525,7 @@ function _sfRenderObjects(obj) {
     //if(obj.FreezeRow < obj.startRow)xrows = obj.startRow-obj.FreezeRow;
     // xcols = obj.startCol - 1;
 
-    for (var i = obj.FreezeCol ; i < obj.startCol ; i++) {
+    for (var i = obj.FreezeCol; i < obj.startCol; i++) {
         if (i < 0) continue;
         var xfreeze = obj.FreezeCol;
         if (xfreeze >= 1) xfreeze = xfreeze - 1;
@@ -8712,8 +9557,8 @@ function _sfRenderObjects(obj) {
             ctx.drawImage(image, xwidth, xheight
                 , width, height
                 , x + xwidth, y + xheight
-               , width, height
-                );
+                , width, height
+            );
 
             //ctx.drawImage(image,
             //     70, 20,   // Start at 70/20 pixels from the left and the top of the image (crop),
@@ -8843,8 +9688,8 @@ function canvasGridCreate(canvasID, obj) {
 
 function _sfCellDrawBox(obj, contextSheetText, contextSheet, myCell) {
 
-    var objecttype = obj.GetObjectType(myCell.col-1, myCell.row-1);
-   
+    var objecttype = obj.GetObjectType(myCell.col - 1, myCell.row - 1);
+
 
     contextSheetText.font = myCell.fontsize + "px Arial";
     contextSheetText.fillStyle = "black";
@@ -8877,7 +9722,7 @@ function _sfCellDrawBox(obj, contextSheetText, contextSheet, myCell) {
 
 
 function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedValue, borderMargin, contextCurrentSelected, isSpread) {
-    if(isSpread==undefined) isSpread=true;
+    if (isSpread == undefined) isSpread = true;
     var dashedarry = option.dashedarry;
     var dottedarry = option.dottedarry;
     var curCol = option.curCol;
@@ -9038,8 +9883,8 @@ function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedVa
 
         } catch (err) { }
     }
-   
-     
+
+
     ////format
     ////obj.CellSelected.col 
     stringText = _sfDataTypeFormater(obj, option, stringText, false);
@@ -9099,16 +9944,16 @@ function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedVa
     else if (cobjecttype == "button" || cobjecttype == "remarks") {
 
         var bgcolorvalue = option.backgroundColor;
-        
+
         if (cobjecttype == "remarks" && (stringValue + "").trim() != "")
             bgcolorvalue = "green";
 
         _sfDrawButton(contextSheet, option.x, option.y + 1, option.width, option.height + 2, bgcolorvalue);
         CanvasTextWrapper(canvas, stringText, option);
-      
+
     }
     else {
-        var indent  = obj.GetTextIndent(curCol - 1, curRow - 1);
+        var indent = obj.GetTextIndent(curCol - 1, curRow - 1);
         if (indent > 0) {
             //var align = obj.GetTextAlign(curCol - 1, curRow - 1);
             var totalindent = indent * 5;
@@ -9116,26 +9961,31 @@ function _sfCellDrawText(canvasID, obj, contextSheet, myCell, option, selectedVa
             option.width = option.width - totalindent;
         }
         if ((option.currencyCode || "") != "") {
-            var currencyCode = option.currencyCode;
-            var symbols = P8Spread_Currency[currencyCode].symbols;
-            var align = P8Spread_Currency[currencyCode].align;
-
-            if (align == "L") {
-
-                let copiedoption = Object.assign({}, option);
-                copiedoption.textAlign = "left";
-                CanvasTextWrapper(canvas, symbols, copiedoption);
-
-
-                var diffwidth = 0;
-                option.width -= diffwidth;
-                option.x += diffwidth;
-                if (stringText == NaN) stringText = "";
+           
+            if (p8Spread_IsNull(stringText)) {
                 CanvasTextWrapper(canvas, stringText, option);
-
             } else {
-                if (stringText == NaN) stringText = "";
-                CanvasTextWrapper(canvas, stringText + " " + symbols, option);
+                var currencyCode = option.currencyCode;
+                var symbols = P8Spread_Currency[currencyCode].symbols;
+                var align = P8Spread_Currency[currencyCode].align;
+
+                if (align == "L") {
+
+                    let copiedoption = Object.assign({}, option);
+                    copiedoption.textAlign = "left";
+                    CanvasTextWrapper(canvas, symbols, copiedoption);
+
+
+                    var diffwidth = 0;
+                    option.width -= diffwidth;
+                    option.x += diffwidth;
+                    if (stringText == NaN) stringText = "";
+                    CanvasTextWrapper(canvas, stringText, option);
+
+                } else {
+                    if (stringText == NaN) stringText = "";
+                    CanvasTextWrapper(canvas, stringText + " " + symbols, option);
+                }
             }
         }
         else
@@ -9204,7 +10054,7 @@ function _sfDataTypeFormater(obj, xoption, stringText, getdataonly) {
     } catch (err) { }
 
 
-  
+
 
 
     //display format
@@ -9212,7 +10062,8 @@ function _sfDataTypeFormater(obj, xoption, stringText, getdataonly) {
         var _stringText = stringText.replaceAll(" ", "").replaceAll(",", "");
         if (!isNaN(_stringText) && (_stringText + "").trim() != "") {
             _stringText = _sfNumberFormat(_stringText, precision, ".", thousandSeparator);
-            if (getdataonly == false) xoption.textAlign = "right";
+            if (getdataonly == false && !p8Spread_IsNull(obj.GetCurrencyCode(xoption.col, xoption.row))) xoption.textAlign = "right";
+            // if (getdataonly == false) xoption.textAlign = obj.GetTextAlign(xoption.col, xoption.row);
             stringText = _stringText;
         }
     }
@@ -9220,7 +10071,8 @@ function _sfDataTypeFormater(obj, xoption, stringText, getdataonly) {
         var _stringText = stringText.replaceAll(" ", "").replaceAll(",", "").replaceAll("%", "");
         if (!isNaN(_stringText) && (_stringText + "").trim() != "") {
             _stringText = _sfNumberFormat(_stringText, precision, ".", thousandSeparator);
-            if (getdataonly == false) xoption.textAlign = "right";
+            //  if (getdataonly == false) xoption.textAlign = "right";
+            if (getdataonly == false) xoption.textAlign = obj.GetTextAlign(xoption.col, xoption.row);
             _stringText += " %";
             stringText = _stringText;
         }
@@ -9229,14 +10081,16 @@ function _sfDataTypeFormater(obj, xoption, stringText, getdataonly) {
         if (!isNaN(stringText) && (stringText + "").trim() != "") {
             stringText = stringText * 100.0;
             stringText = _sfNumberFormat(stringText, precision, ".", thousandSeparator);
-            if (getdataonly == false) xoption.textAlign = "right";
+            //   if (getdataonly == false) xoption.textAlign = "right";
+            if (getdataonly == false) xoption.textAlign = obj.GetTextAlign(xoption.col, xoption.row);
             stringText += " %";
         }
     }
     else if (finaldataType == "number") {
         if (!isNaN(stringText) && (stringText + "").trim() != "") {
             // stringText = _sfNumberFormat(stringText, 2, '.', '');
-            if (getdataonly == false) xoption.textAlign = "right";
+            //  if (getdataonly == false) xoption.textAlign = "right";
+            if (getdataonly == false) xoption.textAlign = obj.GetTextAlign(xoption.col, xoption.row);
         }
     }
     else if (finaldataType == "datetime") {
@@ -9260,7 +10114,8 @@ function _sfDataTypeFormater(obj, xoption, stringText, getdataonly) {
 
             if (xstringText != undefined) {
                 stringText = xstringText;
-                if (getdataonly == false) xoption.textAlign = "right";
+                // if (getdataonly == false) xoption.textAlign = "right";
+                if (getdataonly == false) xoption.textAlign = obj.GetTextAlign(xoption.col, xoption.row);
             }
             // }
 
@@ -9269,7 +10124,7 @@ function _sfDataTypeFormater(obj, xoption, stringText, getdataonly) {
     }
 
     if (finaldataType == "currency" || finaldataType == "percent" || finaldataType == "percentvalue" || finaldataType == "number") {
-        if(parseFloat(stringText) < 0)  stringText = "(" + stringText.replace("-","") + ")";
+        if (parseFloat(stringText) < 0) stringText = "(" + stringText.replace("-", "") + ")";
     }
 
     return stringText;
@@ -9302,15 +10157,15 @@ function _sfNumberFormat(number, decimals, dec_point, thousands_sep) {
     // *    example 12: _sfNumberFormat('1.2000', 3);
     // *    returns 12: '1.200'
     var n = !isFinite(+number) ? 0 : +number,
- prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
- sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
- dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
- toFixedFix = function (n, prec) {
-     // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-     var k = Math.pow(10, prec);
-     return Math.round(n * k) / k;
- },
- s = (prec ? toFixedFix(n, prec) : Math.round(n)).toString().split('.');
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        toFixedFix = function (n, prec) {
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            var k = Math.pow(10, prec);
+            return Math.round(n * k) / k;
+        },
+        s = (prec ? toFixedFix(n, prec) : Math.round(n)).toString().split('.');
     if (s[0].length > 3) {
         s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
     }
@@ -9398,11 +10253,11 @@ function _sfCheckConfigType(obj, _row, _col, type, defvalue) {
     try {
         if (_row != Spread_ALLROW && _col != Spread_ALLCOL) {
             var config = obj.Data[_row][_sfGetCellName(obj, _col)].Config;
-            var configCondi ;
-            try{
+            var configCondi;
+            try {
                 configCondi = obj.Data[_row][_sfGetCellName(obj, _col)].ConfigCondition;
-            } catch (err) {}
-            cell = _sfGetFormatValue(obj, config, type, true, _col, _row,configCondi);
+            } catch (err) { }
+            cell = _sfGetFormatValue(obj, config, type, true, _col, _row, configCondi);
         }
     } catch (err) {
         return value;
@@ -9454,11 +10309,11 @@ function _sfCheckEnable(obj, _row, _col) {
 
     try {
         var config = obj.Data[_row][_sfGetCellName(obj, _col)].Config;
-        var configCondi ;
-        try{
+        var configCondi;
+        try {
             configCondi = obj.Data[_row][_sfGetCellName(obj, _col)].ConfigCondition;
-        } catch (err) {}
-        cell = _sfGetFormatValue(obj, config, "Enabled", true, _col, _row,configCondi);
+        } catch (err) { }
+        cell = _sfGetFormatValue(obj, config, "Enabled", true, _col, _row, configCondi);
     } catch (err) { return false; }
 
 
@@ -9541,17 +10396,36 @@ function _sfSelectionActivate(obj) {
     } catch (err) { }
 
     if (ColumnTemplate == "" && obj.ColumnConfig[acol].dataType == "currency"
-        ) ColumnTemplate = "isNumber numC";
+    ){ 
+        ColumnTemplate = "isNumber numC";
+    }
     else if (ColumnTemplate == "" && obj.ColumnConfig[acol].dataType == "number"
-        ) ColumnTemplate = "isNumber";
+    ) ColumnTemplate = "isNumber";
     // else if (ColumnTemplate == "" && obj.ColumnConfig[acol].dataType == "percent"
     //  ) ColumnTemplate = "nwPercent";
     // else if (ColumnTemplate == "" && obj.ColumnConfig[acol].dataType == "percentvalue"
     //) ColumnTemplate = "nwPercentValue";
 
     //Precision
+    if(obj.ColumnConfig[acol].dataType == "currency"){
+        $('#' + obj.canvasID + '_vw_inp').attr("nwdp", obj.ColumnConfig[acol]["Precision"] || 0);
+    }
 
+    try {
+        var Class = obj.ColumnConfig[acol].Class;
+        if(!p8Spread_IsNull(Class)){
+            ColumnTemplate += " "+Class;
+        }
+    } catch (err) { }
 
+    try {
+        if (nwJson(obj.Data[arow][p8_NumberToCell(acol +1)].Config, "id", "dataType", false)[0].element.value == "date") {
+            if ((ColumnTemplate + "").indexOf("nwDatePick") >= 0) {
+            } else {
+                ColumnTemplate += " nwDatePick"
+            }
+        }
+    } catch (err) { }
 
     if ((ColumnTemplate + "").indexOf("nwDatePick") >= 0) {
         $('#' + obj.canvasID + '_vw_inpDate').show();
@@ -9566,7 +10440,7 @@ function _sfSelectionActivate(obj) {
         //});
         try { setTimeout(function () { $('.nwDatePickP8').mask("99/99/9999"); }, 1); } catch (err) { }
 
-        $('#ui-datepicker-div').css("margin-top", "15px");
+        //$('#ui-datepicker-div').css("margin-top", "15px");
     }
     else {
         //$("#" + obj.canvasID + "_vw_selectorCon").hide();
@@ -9682,9 +10556,9 @@ function _sfLoadSheetTabTimer(objparent, containerID, varindex, isnav) {
                 var option = {
                     font: "bold " + tlVFontSize + "px " + tlVFont, x: sheetTabStartX, y: sheetTabStartY, width: sheetwidth + sheetwidthAdd, height: sheetheight
                     , paddingX: 3, paddingY: 3
-                  , verticalAlign: "top"
-                  , textAlign: "left"
-                  , color: selColor
+                    , verticalAlign: "top"
+                    , textAlign: "left"
+                    , color: selColor
                     , sheetindex: i, nav: false
                     , spacetrimer: true
                 };
@@ -9744,9 +10618,9 @@ function _sfLoadSheetTabTimer(objparent, containerID, varindex, isnav) {
                 var option = {
                     font: " " + tlVFontSize + "px " + tlVFont, x: sheetTabStartX, y: sheetTabStartY, width: sheetwidth + sheetwidthAdd, height: sheetheight
                     , paddingX: 3, paddingY: 3
-                  , verticalAlign: "top"
-                  , textAlign: "left"
-                  , color: tlVColor
+                    , verticalAlign: "top"
+                    , textAlign: "left"
+                    , color: tlVColor
                     , sheetindex: i, nav: false
                     , spacetrimer: true
                 };
@@ -9775,11 +10649,11 @@ function _sfLoadSheetTabTimer(objparent, containerID, varindex, isnav) {
 
         var option = {
             font: bold + "  " + tlVFontSize + "px " + tlVFont, x: sheetTabStartX, y: sheetTabStartY, width: sheetwidthAdd, height: sheetheight
-                 , paddingX: 1, paddingY: 3
-               , verticalAlign: "middle"
-               , textAlign: "left"
-               , color: tlVColor
-                 , sheetindex: 1
+            , paddingX: 1, paddingY: 3
+            , verticalAlign: "middle"
+            , textAlign: "left"
+            , color: tlVColor
+            , sheetindex: 1
             , nav: true
 
         };
@@ -9790,11 +10664,11 @@ function _sfLoadSheetTabTimer(objparent, containerID, varindex, isnav) {
         sheetTabStartX += sheetwidthAdd + 2;
         option = {
             font: bold + "  " + tlVFontSize + "px " + tlVFont, x: sheetTabStartX, y: sheetTabStartY, width: sheetwidthAdd, height: sheetheight
-                , paddingX: 1, paddingY: 3
-              , verticalAlign: "middle"
-              , textAlign: "left"
-              , color: tlVColor
-                , sheetindex: 2, nav: true
+            , paddingX: 1, paddingY: 3
+            , verticalAlign: "middle"
+            , textAlign: "left"
+            , color: tlVColor
+            , sheetindex: 2, nav: true
         };
         objparent.NavSheet.push(option);
         CanvasTextWrapper(c, "◄", option);
@@ -9803,11 +10677,11 @@ function _sfLoadSheetTabTimer(objparent, containerID, varindex, isnav) {
         sheetTabStartX += sheetwidthAdd + 2;
         option = {
             font: bold + "  " + tlVFontSize + "px " + tlVFont, x: sheetTabStartX, y: sheetTabStartY, width: sheetwidthAdd, height: sheetheight
-              , paddingX: 1, paddingY: 3
+            , paddingX: 1, paddingY: 3
             , verticalAlign: "middle"
             , textAlign: "left"
             , color: tlVColor
-              , sheetindex: 3, nav: true
+            , sheetindex: 3, nav: true
         };
         objparent.NavSheet.push(option);
         CanvasTextWrapper(c, "►", option);
@@ -9816,11 +10690,11 @@ function _sfLoadSheetTabTimer(objparent, containerID, varindex, isnav) {
         sheetTabStartX += sheetwidthAdd + 2;
         option = {
             font: bold + "  " + tlVFontSize + "px " + tlVFont, x: sheetTabStartX, y: sheetTabStartY, width: sheetwidthAdd, height: sheetheight
-              , paddingX: 1, paddingY: 3
+            , paddingX: 1, paddingY: 3
             , verticalAlign: "middle"
             , textAlign: "left"
             , color: tlVColor
-              , sheetindex: 4, nav: true
+            , sheetindex: 4, nav: true
         };
         objparent.NavSheet.push(option);
         CanvasTextWrapper(c, "►|", option);
@@ -9850,8 +10724,8 @@ function _sfLoadSheetTabTimer(objparent, containerID, varindex, isnav) {
         objparent.NavSheet.forEach(function (element) {
 
             if (mousePos.y >= element.y && mousePos.y <= element.y + element.height
-                 && mousePos.x >= element.x && mousePos.x <= element.x + element.width
-                ) {
+                && mousePos.x >= element.x && mousePos.x <= element.x + element.width
+            ) {
                 var nav = element.nav;
                 var sheetindex = element.sheetindex;
 
@@ -9878,6 +10752,10 @@ function _sfLoadSheetTabTimer(objparent, containerID, varindex, isnav) {
 
                     $("#" + containerID + "_vw").off("mousedown");
                     objparent.SetActiveSheet(sheetindex);
+                    try{
+                        var canvasID = containerID;
+                        p8Spread_Click_Sheet(canvasID,sheetindex);
+                    }catch(ex){}
                     //  _sfLoadSheetTab(objparent, containerID, xindex);
                 }
             }
@@ -9917,9 +10795,9 @@ function _sfSelectorAdjust(id, addTop, addLeft, elem) {
     var element = document.getElementById(id);
     var rect = element.getBoundingClientRect();
     var bodyRect = document.body.getBoundingClientRect(),
-    elemRect = element.getBoundingClientRect(),
+        elemRect = element.getBoundingClientRect(),
 
-    offsetTop = elemRect.top - bodyRect.top;
+        offsetTop = elemRect.top - bodyRect.top;
     offsetTop += addTop;
 
     var offsetLeft = elemRect.left - bodyRect.left;
@@ -9936,7 +10814,7 @@ function _sfSelectorAdjust(id, addTop, addLeft, elem) {
 
 
 var textToPutOnClipboardHTML = "<table p8style='border-collapse: collapse; background-color:transparent;'>";
-function _sfP8Spread_Copy(obj, e, istart,isCut) {
+function _sfP8Spread_Copy(obj, e, istart, isCut) {
     var p8item = isCut ? "cut" : "copy";
     textToPutOnClipboardHTML = `<table p8style=' border-collapse: collapse;'`
     textToPutOnClipboardHTML += `p8item='${p8item}'`
@@ -9955,7 +10833,7 @@ function _sfP8Spread_Copy(obj, e, istart,isCut) {
     for (var i = rowstart; i <= obj.CellIndexes.Row2; i++) {
         if (i > rowstart) textToPutOnClipboard += "\r\n";
         textToPutOnClipboardHTML += "<tr>";
-        for (var ic = obj.CellIndexes.Col ; ic <= obj.CellIndexes.Col2; ic++) {
+        for (var ic = obj.CellIndexes.Col; ic <= obj.CellIndexes.Col2; ic++) {
 
             optionText = {};
             optionBox = {};
@@ -10003,7 +10881,7 @@ function _sfP8Spread_Copy(obj, e, istart,isCut) {
     if (textToPutOnClipboard.endsWith("\r\n"))
         textToPutOnClipboard = textToPutOnClipboard.substring(0, textToPutOnClipboard.length - ("\r\n".length));
 
-    
+
     textToPutOnClipboardHTML += "</table>";
 
 }
@@ -10038,7 +10916,7 @@ function _sfCopy(html, canvasID) {
 var P8Paster = false;
 function _sfPaste(obj) {
     $('#' + obj.canvasID + '_vw_inpText').addClass("paste"); //  P8Spread_TextArea 
-   
+
 
     if (P8Paster == true) return;
     var data = $('#' + obj.canvasID + '_vw_inpText').val();
@@ -10108,14 +10986,14 @@ function _sfPaste(obj) {
         P8Paster = false;
         $("#" + obj.canvasID + "_vw").focus();
         $("#" + obj.canvasID + "_vw").trigger("click");
-        
-       
+
+
     }, 300);
 
     try {
         var textToPutOnClipboard = $(textToPutOnClipboardHTML);
-        var p8item= textToPutOnClipboard.attr("p8item");
-        if(p8item == "cut"){
+        var p8item = textToPutOnClipboard.attr("p8item");
+        if (p8item == "cut") {
             var p8col = textToPutOnClipboard.attr("p8col");
             var p8col2 = textToPutOnClipboard.attr("p8col2");
             var p8row = textToPutOnClipboard.attr("p8row");
@@ -10123,8 +11001,9 @@ function _sfPaste(obj) {
             for (var i = p8row; i <= p8row2; i++) {
                 for (var j = p8col; j <= p8col2; j++) {
                     obj.Book.ActiveSheet.SetText(j, i, "");
-                    //obj.Book.ActiveSheet.SetUnmerge(j, i);
-                    obj.Book.ActiveSheet.DeleteConfigData(j, i)
+                    if (1 != 1) {
+                        obj.Book.ActiveSheet.DeleteConfigData(j, i)
+                    }
                 }
             }
             textToPutOnClipboardHTML = "";
@@ -10183,7 +11062,7 @@ function _sfSelectCell(obj, element, canvasIDOrig, canvasID, contextCurrentSelec
         , row: element.row
         , col2: element.col
         , row2: element.row
-         , type: "cellselected"
+        , type: "cellselected"
     };
     try {
         $(canvasIDOrig).TestX(obj);
@@ -10280,7 +11159,7 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
     if (irow == Spread_ALLCOL) {
         try {
             config = obj.ColumnConfig[icol].Config;
-           
+
         } catch (err) {
 
         }
@@ -10288,7 +11167,7 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
     else {
         try {
             config = obj.Data[irow][_sfGetCellName(obj, icol)].Config;
-            configCondi =obj.Data[irow][_sfGetCellName(obj, icol)].ConfigCondition;
+            configCondi = obj.Data[irow][_sfGetCellName(obj, icol)].ConfigCondition;
         } catch (err) {
 
         }
@@ -10306,7 +11185,7 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
     if (type == undefined) {
         try {
 
-            var xtempvalue = _sfGetFormatValue(obj, config, "backgroundColor", true, icol, irow,configCondi);
+            var xtempvalue = _sfGetFormatValue(obj, config, "backgroundColor", true, icol, irow, configCondi);
             if (xtempvalue != undefined && xtempvalue != "inherit") {
                 tempvalue = xtempvalue;
             }
@@ -10317,12 +11196,12 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
 
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "backgroundColorPercentValue", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "backgroundColorPercentValue", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.bgcolorPercValue = tempvalue || 0;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "backgroundColorPercent", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "backgroundColorPercent", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.bgcolorPerc = tempvalue || "green";
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
@@ -10337,73 +11216,73 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
 
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderColorTop", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderColorTop", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderColorTop = tempvalue || obj.gridlLineColor;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderColorBottom", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderColorBottom", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderColorBottom = tempvalue || obj.gridlLineColor;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderColorLeft", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderColorLeft", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderColorLeft = tempvalue || obj.gridlLineColor;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderColorRight", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderColorRight", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderColorRight = tempvalue || obj.gridlLineColor;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderStyleTop", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderStyleTop", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderStyleTop = tempvalue;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderStyleBottom", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderStyleBottom", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderStyleBottom = tempvalue;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderStyleLeft", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderStyleLeft", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderStyleLeft = tempvalue;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderStyleRight", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderStyleRight", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderStyleRight = tempvalue;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderWidthTop", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderWidthTop", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderWidthTop = tempvalue || 1;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderWidthBottom", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderWidthBottom", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderWidthBottom = tempvalue || 1;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderWidthLeft", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderWidthLeft", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderWidthLeft = tempvalue || 1;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
         try {
-            tempvalue = _sfGetFormatValue(obj, config, "borderWidthRight", true, icol, irow,configCondi);
+            tempvalue = _sfGetFormatValue(obj, config, "borderWidthRight", true, icol, irow, configCondi);
             if (tempvalue != undefined) option.borderWidthRight = tempvalue || 1;
             tempvalue = undefined; tempvalueX = undefined;
         } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
@@ -10411,9 +11290,9 @@ function _sfSetFormatBox(obj, option, icol, irow, icol2, irow2, type) {
     }
 
 
-    try{
-        canvasListUpdate(obj.canvasID, obj, icol , irow);
-    }catch(err){}
+    try {
+        canvasListUpdate(obj.canvasID, obj, icol, irow);
+    } catch (err) { }
 
     return option;
 }
@@ -10423,7 +11302,7 @@ function _sfSetFormatText(obj, option, icol, irow) {
     ;
     //var option ={};
     var config = [];
-    var configCondi =[];
+    var configCondi = [];
     var tempvalue = undefined;
     var tempvalueX = undefined;
     var temp1 = "";
@@ -10433,7 +11312,7 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     try {
         config = obj.Data[irow][_sfGetCellName(obj, icol)].Config;
-        configCondi= obj.Data[irow][_sfGetCellName(obj, icol)].ConfigCondition;
+        configCondi = obj.Data[irow][_sfGetCellName(obj, icol)].ConfigCondition;
     } catch (err) {
 
     }
@@ -10441,10 +11320,10 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     // font size,family,bold
     try {
-        temp1 = _sfGetFormatValue(obj, config, "bold", true, icol, irow,configCondi);
-        temp2 = _sfGetFormatValue(obj, config, "fontSize", true, icol, irow,configCondi) + "px";
-        temp3 = _sfGetFormatValue(obj, config, "fontFamily", true, icol, irow,configCondi);
-        temp4 = _sfGetFormatValue(obj, config, "italic", true, icol, irow,configCondi);
+        temp1 = _sfGetFormatValue(obj, config, "bold", true, icol, irow, configCondi);
+        temp2 = _sfGetFormatValue(obj, config, "fontSize", true, icol, irow, configCondi) + "px";
+        temp3 = _sfGetFormatValue(obj, config, "fontFamily", true, icol, irow, configCondi);
+        temp4 = _sfGetFormatValue(obj, config, "italic", true, icol, irow, configCondi);
         tempvalue = temp4 + " " + temp1 + " " + temp2 + " " + temp3;
         if (tempvalue != undefined) {
             option.font = tempvalue;
@@ -10458,21 +11337,21 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     // text underline
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "underline", true, icol, irow,configCondi);
+        tempvalue = _sfGetFormatValue(obj, config, "underline", true, icol, irow, configCondi);
         if (tempvalue != undefined) option.textDecoration = tempvalue;
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
     // text align
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "textAlignment", true, icol, irow,configCondi);
+        tempvalue = _sfGetFormatValue(obj, config, "textAlignment", true, icol, irow, configCondi);
         if (tempvalue != undefined) { option.textAlign = tempvalue; option.textAlignment = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
     // text vertical align
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "textVertical", true, icol, irow,configCondi);
+        tempvalue = _sfGetFormatValue(obj, config, "textVertical", true, icol, irow, configCondi);
         if (tempvalue != undefined) { option.verticalAlign = tempvalue; option.textVertical = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
@@ -10480,21 +11359,21 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     // text color
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "textColor", true, icol, irow,configCondi);
+        tempvalue = _sfGetFormatValue(obj, config, "textColor", true, icol, irow, configCondi);
         if (tempvalue != undefined) { option.color = tempvalue; option.textColor = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
     // dataType
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "dataType", true, icol, irow,configCondi);
+        tempvalue = _sfGetFormatValue(obj, config, "dataType", true, icol, irow, configCondi);
         if (tempvalue != undefined) { option.dataType = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
     // dataStyle
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "dataStyle", true, icol, irow,configCondi);
+        tempvalue = _sfGetFormatValue(obj, config, "dataStyle", true, icol, irow, configCondi);
         if (tempvalue != undefined) { option.dataStyle = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
@@ -10502,14 +11381,14 @@ function _sfSetFormatText(obj, option, icol, irow) {
 
     // currencyCode
     try {
-        tempvalue = _sfGetFormatValue(obj, config, "currencyCode", true, icol, irow,configCondi);
+        tempvalue = _sfGetFormatValue(obj, config, "currencyCode", true, icol, irow, configCondi);
         if (tempvalue != undefined) { option.currencyCode = tempvalue; }
         tempvalue = undefined; tempvalueX = undefined;
     } catch (err) { tempvalue = undefined; tempvalueX = undefined; }
 
 
     try {
-        var xtempvalue = _sfGetFormatValue(obj, config, "backgroundColor", true, icol, irow,configCondi);
+        var xtempvalue = _sfGetFormatValue(obj, config, "backgroundColor", true, icol, irow, configCondi);
         if (xtempvalue != undefined && xtempvalue != "inherit") {
             tempvalue = xtempvalue;
         }
@@ -10538,12 +11417,12 @@ function _sfGetFormatValueColumnChecker(conid) {
     return i;
 }
 
-function _sfGetFormatValue(obj, config, conid, isnull, colselected, rowselected,configCondi) {
+function _sfGetFormatValue(obj, config, conid, isnull, colselected, rowselected, configCondi) {
     var value = undefined;
     var len = -1;
 
     try {
-        if(configCondi != undefined){
+        if (configCondi != undefined) {
             len = configCondi.length;
             for (var i = 0; i < len; i++) {
                 var conid2 = _sfGetFormatValueRename(conid);
@@ -10559,7 +11438,7 @@ function _sfGetFormatValue(obj, config, conid, isnull, colselected, rowselected,
 
     }
 
-    if(value == undefined){
+    if (value == undefined) {
         try {
             len = config.length;
             for (var i = 0; i < len; i++) {
@@ -10575,7 +11454,10 @@ function _sfGetFormatValue(obj, config, conid, isnull, colselected, rowselected,
 
         }
     }
-
+    //
+    // var currencycode = obj.GetCurrencyCode(colselected, rowselected);
+    // if (currencycode != "")
+    //    value = "right";
 
     //if (isnull && (value == undefined || (value + "").trim() == "")) {
     //    try {
@@ -10622,7 +11504,7 @@ function _sfGetFormatValue(obj, config, conid, isnull, colselected, rowselected,
                 if (rowselected == undefined) rowselected = Spread_ALLROW;
                 var datatype = obj.GetDataType(colselected, rowselected);
 
-                if ((datatype == "currency" || datatype == "percentvalue" || datatype == "percent"))
+                if ((datatype == "currency" || datatype == "percentvalue" || datatype == "percent" || datatype == "number"))
                     value = "right";
             }
 
@@ -10630,6 +11512,7 @@ function _sfGetFormatValue(obj, config, conid, isnull, colselected, rowselected,
     }
 
     try {
+
         value = value.toLowerCase();
         value = value.replace(" !important", "");
     } catch (err) {
@@ -10758,7 +11641,7 @@ function drawRectangleSelected(obj, myCell, context) {
         if (
             element.col - 1 >= obj.CellIndexes.Col && element.col - 1 <= obj.CellIndexes.Col2
             && element.row - 1 >= obj.CellIndexes.Row2 && element.row - 1 <= obj.CellIndexes.Row2
-            ) {
+        ) {
 
             element_width = element.width + element.borderWidth;
             elementF_width += element_width;
@@ -10768,16 +11651,16 @@ function drawRectangleSelected(obj, myCell, context) {
         }
 
         if (
-          element.col - 1 >= obj.CellIndexes.Col2 && element.col - 1 <= obj.CellIndexes.Col2
-          && element.row - 1 >= obj.CellIndexes.Row && element.row - 1 <= obj.CellIndexes.Row2
-          ) {
+            element.col - 1 >= obj.CellIndexes.Col2 && element.col - 1 <= obj.CellIndexes.Col2
+            && element.row - 1 >= obj.CellIndexes.Row && element.row - 1 <= obj.CellIndexes.Row2
+        ) {
             element_height = element.height + element.borderWidth;
             elementF_height += element_height;
 
         }
         if (element.col - 1 == obj.CellIndexes.Col
             && element.row - 1 == obj.CellIndexes.Row
-            ) {
+        ) {
             myCell.y = element.y;
             myCell.x = element.x;
         }
@@ -11132,7 +12015,7 @@ CanvasTextWrapper(canvas, str, {
                 tokenLen = context.measureText(word).width;
 
                 if (tokenLen > MAX_TXT_WIDTH) {
-                    for (var k = 0; (context.measureText(testString + word[k]).width <= MAX_TXT_WIDTH) && (k < word.length) ; k++) {
+                    for (var k = 0; (context.measureText(testString + word[k]).width <= MAX_TXT_WIDTH) && (k < word.length); k++) {
                         testString += word[k];
                     }
 
@@ -11720,6 +12603,11 @@ function _sfCreateConfigDataColumn(config, _id, value) {
     }
     else {
         config[_id] = value;
+        if (_id == "dataType"){
+            if(value == "date"){
+                config.ColumnTemplate = config.ColumnTemplate.replaceAll("nwDatePicker","")+ " nwDatePicker";
+            }
+        }
     }
 }
 
@@ -11783,6 +12671,11 @@ $(document).on("mouseover", ".P8Spread_Input.hasDatepicker .ui-datepicker", func
         //console.log(is_vw_inpDateHover);
     }, 10);
 });
+//$(document).on("click", `.P8Spread_Input.hasDatepicker [data-handler="selectDay"]`, function () {
+//    setTimeout(function () {
+//        $(".P8Spread_Input.hasDatepicker").hide();
+//    }, 10);
+//});
 $(document).on("change", ".formulafield", function () {
     var value = $(this).val().trim();
     var canvasID = $(this).parents(".P8Spread").attr("id");
@@ -11842,6 +12735,14 @@ $(document).on("mousedown", ".p8_selectorCon .ui-datepicker-calendar td", functi
         $(".P8Spread_Input.nwDatePickP8.active").parents(".p8_selectorCon").css("opacity", "0");
         $(".P8Spread_Input.nwDatePickP8.active").parents(".p8_selectorCon").css("overflow", "hidden");
         $(".P8Spread_Input.nwDatePickP8.active").removeClass("active");
+        //try {
+        //    var canvasID = $(_this).closest(".P8Spread").attr("id");
+        //    $("#" + canvasID + "_vw_inp").focus()
+        //    $("#" + canvasID + "_vw_inp").click();
+        //} catch(ex) { }
+        //$('.P8Spread_Input').hide();
+        // $('.P8Spread_Input').hide();
+        // $('.P8Spread_Input.hasDatepicker').hide();
         //console.log(is_vw_inpDateHover);
     }, 150);
     return true;
@@ -11862,15 +12763,15 @@ $(document).on("click", ".P8Spread .nwgrid_Insert", function () {
     try {
         var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
         var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
-        isContinue = func_nwGrid_InsertValidation(spreadID,xrow,xcol);
-        
+        isContinue = func_nwGrid_InsertValidation(spreadID, xrow, xcol);
+
     } catch (err) {
     }
     if (isContinue) {
         var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
         var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
         P8DataList[spreadID][0].sheet.ActiveSheet.RowInsert(xrow, false);
-        try { isContinue = func_nwGrid_InsertDone(spreadID,xrow,xcol); } catch (err) { }
+        try { isContinue = func_nwGrid_InsertDone(spreadID, xrow, xcol); } catch (err) { }
         _sfScrollUpdateSizing(spreadID);
     }
     return false;
@@ -11889,7 +12790,7 @@ $(document).on("click", ".P8Spread .nwgrid_CopyRow", function () {
     try {
         var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
         var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
-        isContinue = func_nwGrid_CopyRowValidation(spreadID,xrow,xcol);
+        isContinue = func_nwGrid_CopyRowValidation(spreadID, xrow, xcol);
     } catch (err) {
     }
     if (isContinue) {
@@ -11901,7 +12802,7 @@ $(document).on("click", ".P8Spread .nwgrid_CopyRow", function () {
         P8DataList[spreadID][0].sheet.ActiveSheet.Data[xrow] = rowcopy;
 
 
-        try { isContinue = func_nwGrid_CopyRowDone(spreadID,xrow,xcol); } catch (err) { }
+        try { isContinue = func_nwGrid_CopyRowDone(spreadID, xrow, xcol); } catch (err) { }
         _sfScrollUpdateSizing(spreadID);
     }
     return false;
@@ -11920,14 +12821,14 @@ $(document).on("click", ".P8Spread .nwgrid_Delete", function () {
     try {
         var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
         var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
-        isContinue = func_nwGrid_DeleteValidation(spreadID,xrow,xcol);
+        isContinue = func_nwGrid_DeleteValidation(spreadID, xrow, xcol);
     } catch (err) {
     }
     if (isContinue) {
         var xrow = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().row;
         var xcol = P8DataList[spreadID][0].sheet.ActiveSheet.GetSelectedIndexes().col;
         P8DataList[spreadID][0].sheet.ActiveSheet.RowDelete(xrow);
-        try { func_nwGrid_DeleteDone(spreadID,xrow,xcol); } catch (err) { }
+        try { func_nwGrid_DeleteDone(spreadID, xrow, xcol); } catch (err) { }
         _sfScrollUpdateSizing(spreadID);
     }
 
@@ -11961,14 +12862,14 @@ $(document).on("click", ".P8Spread .nwgrid_SearchFind", function () {
     var frmTitle = "";
 
     var sobj = P8_SpreadGetBook(SpreadID).ActiveSheet;
-    var frow = sobj.FreezeRow -1;
+    var frow = sobj.FreezeRow - 1;
     var fcol = sobj.GetSelectedIndexes().col;
     var frmTitle = "";
 
-    if(frow< 0){
+    if (frow < 0) {
         frmTitle = sobj.ColumnName(fcol);
-    }else {
-        frmTitle = sobj.GetText(fcol,frow);
+    } else {
+        frmTitle = sobj.GetText(fcol, frow);
     }
 
 
@@ -11987,7 +12888,7 @@ $(document).on("click", ".P8Spread .nwgrid_SearchFind", function () {
     var isfind = _sfFindSearch(SpreadID, strToSearch);
 
     if (isfind == false)
-        MessageBox("Cannot find :[" + strToSearch + "]", frmTitle, "error", "#" + $(this).parents(".P8Spread").attr("id") + " input.nwgrid_SearchNext","Error");
+        MessageBox("Cannot find :[" + strToSearch + "]", frmTitle, "error", "#" + $(this).parents(".P8Spread").attr("id") + " input.nwgrid_SearchNext", "Error");
 
 
     return false;
@@ -12093,7 +12994,7 @@ function _sfGetBooleanValue(value) {
     return false;
 }
 function _sfGetCheckboxValue(value) {
-    value = (value || "").toLocaleLowerCase();
+    value = (value || "").toString().toLocaleLowerCase();
     if (value == "1" || value == "true" || value == "on" || value == "yes")
         return true;
     return false;
@@ -12206,20 +13107,29 @@ function _sfLoading(canvasID, total, current) {
     obj.find('.loadtotal').text(total);
     _sfLoadingUpdate(canvasID, current);
 }
-
+var _sfspreadcurrent = 0;
 function _sfLoadingUpdateAppend(canvasID, currentAdd) {
     var obj = $('#' + canvasID).find('.nwGridDataBatchLoading');
-    var current = 0;
-    current = parseInt(obj.find('.loadcurrent').text());
-    current += currentAdd;
+    //var current = 0;
+    //current = parseInt(obj.find('.loadcurrent').text());
+    if(currentAdd <= 10000){
+        _sfspreadcurrent = 0;
+    }
+    _sfspreadcurrent += currentAdd;
 
     //try {
     //    var obook = P8DataList[canvasID][0].sheet.ActiveSheet.Book;
     //    obook.Book.curCount += currentAdd;
     //} catch (err) { }
+    //try {
+    //    total = P8DataList["nwGridDLCon"][0].sheet.ActiveSheet.GetMaxRow()
+    ////    obook.Book.curCount += currentAdd;
+    //} catch (err) { }
 
-
-    _sfLoadingUpdate(canvasID, current);
+    _sfLoadingUpdate(canvasID, _sfspreadcurrent);
+    //if(total >= _sfspreadcurrent){
+    //    try { p8Spread_DataBindDone(canvasID) } catch (exx) { }
+    //}
 }
 function _sfLoadingUpdate(canvasID, current, total) {
     var obj = $('#' + canvasID).find('.nwGridDataBatchLoading');
@@ -12295,9 +13205,9 @@ var defset = _sfDefaultSettings();
 
 var Font = {
     fontFamily: defset.fontFamily
-        , fontSize: defset.fontSize
-        , fontWeight: "norlam"
-        , fontStyle: "normal"
+    , fontSize: defset.fontSize
+    , fontWeight: "norlam"
+    , fontStyle: "normal"
 };
 //var textheight = wrapTextHeight(ctx, text, 0, width, (FontHeight(ctx, Font.fontSize, Font.fontWeight, Font.fontFamily, Font.fontStyle)));
 
@@ -12372,18 +13282,18 @@ function _sfCheckIfMerge(obj, col, row, type, cell) {
     for (var i = 0; i < len; i++) {
         if (type == "col") {
             if ((obj.mergeList[i].col <= col && obj.mergeList[i].col2 >= col)
-                 && (obj.mergeList[i].row <= row && obj.mergeList[i].row2 >= row)
-                 && (obj.mergeList[i].col != obj.mergeList[i].col2)
-                ) {
+                && (obj.mergeList[i].row <= row && obj.mergeList[i].row2 >= row)
+                && (obj.mergeList[i].col != obj.mergeList[i].col2)
+            ) {
                 cell.row = obj.mergeList[i].row;
                 cell.col = obj.mergeList[i].col;
                 isValid = true; break;
             }
         } else if (type == "row") {
             if ((obj.mergeList[i].col <= col && obj.mergeList[i].col2 >= col)
-                 && (obj.mergeList[i].row <= row && obj.mergeList[i].row2 >= row)
-                 && (obj.mergeList[i].row != obj.mergeList[i].row2)
-                ) {
+                && (obj.mergeList[i].row <= row && obj.mergeList[i].row2 >= row)
+                && (obj.mergeList[i].row != obj.mergeList[i].row2)
+            ) {
                 cell.row = obj.mergeList[i].row;
                 cell.col = obj.mergeList[i].col;
                 isValid = true; break;
@@ -12391,7 +13301,7 @@ function _sfCheckIfMerge(obj, col, row, type, cell) {
         }
         else {
             if ((obj.mergeList[i].col <= col && obj.mergeList[i].col2 >= col)
-                 && (obj.mergeList[i].row <= row && obj.mergeList[i].row2 >= row)) {
+                && (obj.mergeList[i].row <= row && obj.mergeList[i].row2 >= row)) {
                 cell.row = obj.mergeList[i].row;
                 cell.col = obj.mergeList[i].col;
                 isValid = true; break;
@@ -12413,7 +13323,7 @@ var delayTime = new Date();
 
 function getTouches(evt) {
     return evt.touches ||             // browser API
-           evt.originalEvent.touches; // jQuery
+        evt.originalEvent.touches; // jQuery
 }
 
 function handleTouchStart(evt, obj) {
@@ -12481,7 +13391,7 @@ function handleTouchMove(evt, obj) {
 
 function _sfDetectMobile() {
     if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)
-    || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4)))
+        || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4)))
         return true;
     return false;
 }
@@ -12499,8 +13409,37 @@ conFormulaFunc[3] = "MIN"; // function Name
 conFormulaFunc[4] = "MAX"; // function Name
 conFormulaFunc[5] = "AVG"; // function Name
 conFormulaFunc[6] = "AVERAGE"; // function Name
+conFormulaFunc[7] = "COUNTIF"; // function Name
+conFormulaFunc[8] = "COUNTIFS"; // function Name
+conFormulaFunc[9] = "SUMIF"; // function Name
+conFormulaFunc[10] = "SUMIFS"; // function Name
+conFormulaFunc[11] = "ROUND";
+conFormulaFunc[12] = "DAY";
+conFormulaFunc[13] = "MONTH";
+conFormulaFunc[14] = "YEAR";
+conFormulaFunc[15] = "TEXT";
 
+// Regular expression to match Excel functions
+var excelFunctions = /(SUM|SUMIF|SUMIFS|COUNTIF|COUNTIFS|COUNTA|COUNT|MIN|MAX|AVG|AVERAGE|ROUND|DAY|MONTH|YEAR|TEXT)\(/gi;
 
+var functionMap = {
+    'SUM': _sfSum,
+    'SUMIF': _sfSumIf,
+    'SUMIFS': _sfSumIfs,
+    'COUNTIF': _sfCountIf,
+    'COUNTIFS': _sfCountIfs,
+    'COUNTA': _sfCountA,
+    'COUNT': _sfCount,
+    'MIN': _sfMin,
+    'MAX': _sfMax,
+    'AVG': _sfAvg,
+    'AVERAGE': _sfAvg,
+    'ROUND': _sfRound,
+    'DAY': _sfDay,
+    'MONTH': _sfMonth,
+    'YEAR': _sfYear,
+    'TEXT': _sfText
+};
 
 
 function func_GetFormulaFunc(crFormulaFunc) {
@@ -12533,14 +13472,35 @@ function func_GetFormulaRangeValue(ExFormula, obj, crFormulaFunc) {
     var ExFormulaArry = ExFormula.split(",");
     var xval = ""; var xvalF = "";
     var xminval = 0; var xmaxval = 0;
-    var xcountval = 0;
-    var xcountvalA = 0;
+    var xcountval = 0; // COUNT
+    var xcountvalA = 0;// COUNTA
+    var xcountvalIF = 0;// COUNTIF
 
     var xmax = -1; var ymax = -1;
     var xmin = -1; var ymin = -1;
 
+
+    var varCondition = "";
+
     for (var i = 0; i < ExFormulaArry.length; i++) {
+
         xvalueTemp = ExFormulaArry[i];
+
+        if ((crFormulaFunc.toUpperCase() == "SUMIF"
+            || crFormulaFunc.toUpperCase() == "COUNTIF") && i >= 1) {
+            break;
+        }
+        if ((crFormulaFunc.toUpperCase() == "SUMIF"
+            || crFormulaFunc.toUpperCase() == "COUNTIF") && i == 0) {
+            varCondition = ExFormulaArry[1];;
+            if (varCondition.indexOf("\"") == 0) {
+                varCondition = varCondition.substring(1);
+            }
+            if (varCondition.lastIndexOf("\"") == varCondition.length - 1) {
+                varCondition = varCondition.substring(0, varCondition.length - 1);
+            }
+        }
+
         if (xvalueTemp.indexOf(":") >= 1) {
             var xvalueTempArry = xvalueTemp.split(":");
             var tempstr;
@@ -12579,7 +13539,14 @@ function func_GetFormulaRangeValue(ExFormula, obj, crFormulaFunc) {
                     if (xval == undefined || xval == "undefined" || xval == "") xvalF = xvalF + "0";
                     else {
                         try {
-                            xvalF = xvalF + nwNumber(xval);
+
+                            if (crFormulaFunc.toUpperCase() == "SUMIF") {
+                                if ((xval + "").toLowerCase() == (varCondition + "").toLowerCase())
+                                    xvalF = xvalF + nwNumber(xval);
+                            }
+                            else
+                                xvalF = xvalF + nwNumber(xval);
+
                         } catch (err) {
                             xvalF = xvalF + "0";
                         }
@@ -12588,6 +13555,9 @@ function func_GetFormulaRangeValue(ExFormula, obj, crFormulaFunc) {
 
                     try {
                         if (xval != "") xcountvalA = xcountvalA + 1;
+                        if ((xval + "").toLowerCase() == (varCondition + "").toLowerCase()) xcountvalIF = xcountvalIF + 1;
+
+
                         if (parseFloat(xval)) {
                             xcountval = xcountval + 1;
                         }
@@ -12653,12 +13623,17 @@ function func_GetFormulaRangeValue(ExFormula, obj, crFormulaFunc) {
 
     if (crFormulaFunc.toUpperCase() == "COUNT") xvalF = xcountval + "";
     else if (crFormulaFunc.toUpperCase() == "COUNTA") xvalF = xcountvalA + "";
+    else if (crFormulaFunc.toUpperCase() == "COUNTIF") xvalF = xcountvalIF + "";
+
+
     else if (crFormulaFunc.toUpperCase() == "MAX") xvalF = xmaxval + "";
     else if (crFormulaFunc.toUpperCase() == "MIN") xvalF = xminval + "";
 
     else if (crFormulaFunc.toUpperCase() == "AVERAGE") xvalF = "(" + xvalF + ")/" + (xcountval == 0 ? 1 : xcountval);
     else if (crFormulaFunc.toUpperCase() == "AVG") xvalF = "(" + xvalF + ")/" + (xcountval == 0 ? 1 : xcountval);
 
+
+    // SUM & SUMIF
     xvalF = "(" + xvalF + ")";
 
 
@@ -12681,28 +13656,33 @@ function nwNumber(x) {
 }
 
 
+//function cellA1ToIndex(cellA1, index) {
+//    cellA1 = (cellA1 + "").trim();
+//    // Ensure index is (default) 0 or 1, no other values accepted.
+//    index = index || 0;
+//    index = (index == 0) ? 0 : 1;
+
+//    // Use regex match to find column & row references.
+//    // Must start with letters, end with numbers.
+//    // This regex still allows induhviduals to provide illegal strings like "AB.#%123"
+//    var match = cellA1.match(/(^[A-Z]+)|([0-9]+$)/gm);
+
+//    if (match.length != 2) throw new Error("Invalid cell reference");
+
+//    var colA1 = match[0];
+//    var rowA1 = match[1];
+
+//    return {
+//        row: rowA1ToIndex(rowA1, index),
+//        col: colA1ToIndex(colA1, index)
+//    };
+//}
+
 function cellA1ToIndex(cellA1, index) {
-    cellA1 = (cellA1 + "").trim();
-    // Ensure index is (default) 0 or 1, no other values accepted.
-    index = index || 0;
-    index = (index == 0) ? 0 : 1;
 
-    // Use regex match to find column & row references.
-    // Must start with letters, end with numbers.
-    // This regex still allows induhviduals to provide illegal strings like "AB.#%123"
-    var match = cellA1.match(/(^[A-Z]+)|([0-9]+$)/gm);
+    return _sfcellA1ToIndex(cellA1, index)
 
-    if (match.length != 2) throw new Error("Invalid cell reference");
-
-    var colA1 = match[0];
-    var rowA1 = match[1];
-
-    return {
-        row: rowA1ToIndex(rowA1, index),
-        col: colA1ToIndex(colA1, index)
-    };
 }
-
 
 function func_GetFormulaRangeAddClass(col, row, obj) {
     //var xcell = GetLetterByNumber(col + 1, true) + (row + 1);
@@ -12761,7 +13741,7 @@ $(document).on("click", ".P8Spread .nwgrid_SaveWidth", function () {
 
 
     if (($(this).parents(".P8Spread").attr('isresize') || '') != "1") {
-        MessageBox("No changes have been made.","Save Column Width");
+        MessageBox("No changes have been made.", "Save Column Width");
         return false;
     }
     nwLoading_Start("actnwSaveColWidth", crLoadingHTML);
@@ -12802,8 +13782,13 @@ $(document).on("click", ".P8Spread .nwgrid_ResetWidth", function () {
     var spread = P8DataList[canvasID][0].sheet.ActiveSheet;
     var hasChange = false;
 
-    for (var i = 0 ; i < spread.ColumnConfig.length; i++) {
-        var ColumnWidth = parseInt(spread.ColumnConfig[i].ColumnWidth);
+    for (var i = 0; i < spread.ColumnConfig.length; i++) {
+        var ColumnWidth = spread.ColumnConfig[i].ColumnWidth;
+        if (ColumnWidth == "aagdefault")
+            ColumnWidth = 120;
+
+        ColumnWidth = parseInt(ColumnWidth);
+
         var width = parseInt(spread.ColumnConfig[i].width);
         if (ColumnWidth != width) {
             hasChange = true; break;
@@ -12813,11 +13798,11 @@ $(document).on("click", ".P8Spread .nwgrid_ResetWidth", function () {
 
     if (($(this).parents(".P8Spread").attr('isresize') || '') == "1"
         || ($(this).parents(".P8Spread").attr('isresetsize') || '1') == "1"
-        ) {
+    ) {
     }
     else {
         if (hasChange == false) {
-            MessageBox("No changes have been made.","Reset Column Width");
+            MessageBox("No changes have been made.", "Reset Column Width");
             return false;
         }
     }
@@ -12925,20 +13910,27 @@ function p8SpreadGetColWith(ver) {
 }
 
 
+
 function _sfAddToList() {
     var sheet = P8_SpreadGetBook(p8Spread_CurBook).ActiveSheet;
     var jsonTable = func_ConvertTableJSON($('#dimTableLookUp'));
 
-    if (jsonTable.length <= 0)
-        jsonTable = func_ConvertTableJSON($('#dimTableLookUpCon'));
-
-
+    if (jsonTable.length <= 0){
+        // jsonTable = func_ConvertTableJSON($('#dimTableLookUpCon'));
+        var idCon = $('#dimTableLookUpCon').clone();
+        idCon.find("tbody").find("tr").find(".nwlookupgridcheck:not(:checked)").closest("tr").remove()
+        jsonTable = func_ConvertTableJSON(idCon);
+    }
     var addtoListTableRec = $('#dimTableLookUp');
-    if (addtoListTableRec.html() == undefined)
-        addtoListTableRec = $('#dimTableLookUpCon tbody');
+    if (addtoListTableRec.html() == undefined){
+        //   addtoListTableRec = $('#dimTableLookUpCon tbody');
+        addtoListTableRec = idCon.find("tbody");
+    }
 
     var cell = sheet.GetSelectedIndexes();
     var currow = cell.row;
+    var curcol = cell.col;
+    if (currow < 0) { currow = 0; }
     for (var i = 0; i < jsonTable.length; i++) {
         var crnwTRtemp = [];
 
@@ -12949,33 +13941,58 @@ function _sfAddToList() {
 
         if (addtoListTableRec.find(".nwlookupgridcheck:eq(" + i + ")").prop("checked") == false)
             continue;
-
-
+        //if (version == "v10") {
+        //} else {
+        //    if (sheet.CellIndexes.Row <= 0)
+        //        func_nwGrid_AddRow(nwGridID);
+        //}
         crnwTRtemp = nwGrid_AddtoListDone(p8Spread_CurBook, crnwTRtemp, addtoListTableRec, i);
 
-        if (crnwTRtemp == null || crnwTRtemp == undefined)
+        if (crnwTRtemp == null || crnwTRtemp == undefined){
             continue;
+        }
 
-
-        sheet.RowInsert(currow, false, true);
+        var rowminus = 0;
+        var colblank = false;
+        if(i == 0){
+            if(!p8Spread_IsNull(sheet.Data[currow][p8_NumberToCell(curcol+1)].value)){
+                colblank = false;
+            }else{
+                colblank = true;
+                rowminus = 1;
+            }
+            //for (var i2 = 0; i2 < collength; i2++) {
+            //    if(!p8Spread_IsNull(sheet.Data[currow][p8_NumberToCell(i2+1)].value)){
+            //        allblank = false;
+            //        break;
+            //    }else{
+            //        allblank = true;
+            //    }
+            //}
+            //if(!allblank){
+            //    rowadd = 1;
+            //}
+        }else{
+            colblank = false;
+        }
+        if(!colblank){
+            sheet.RowInsert(currow, true, true);
+        }
+        currow -= rowminus;
+        currow++;
         for (var i2 = 0; i2 < collength; i2++) {
             sheet.SetText(i2, currow, crnwTRtemp[i2]);
         }
+
         sheet.CellIndexes.Row += 1;
         sheet.CellIndexes.Row2 += 1;
-        currow++;
+       
 
-
-        // added 05/10/2023 by sir Bruce approved by sir Angelo
-        sheet.RowDelete(currow);
 
     }
     try {
 
-        // added 05/10/2023 by sir Bruce approved by sir Angelo
-        if (sheet.GetMaxRow() == currow) {
-            sheet.RowInsert(currow, false, true);
-        }
+
 
 
         nwGrid_AddtoListLoaded(p8Spread_CurBook);
@@ -13165,7 +14182,7 @@ function p8Spread_DblClickT(canvasID, row, col) {
     if (objecttype == "remarks"
         || objecttype == "button"
         || objecttype == "checkbox"
-        ) {
+    ) {
 
         return false;
     }
@@ -13178,16 +14195,25 @@ function p8Spread_DblClickT(canvasID, row, col) {
         try {
             lugid = lugid.split("@#aag#@")[1];
         } catch (err) { }
-        if (xclass == "aagnwlookupgrid" || xclass.indexOf('aagnwlookupgrid') >=1) {
+        if (xclass == "aagnwlookupgrid" || xclass.indexOf('aagnwlookupgrid') >= 1) {
             lookUpCustomize(lugid, 1);
         }
-        else if(xclass.indexOf('aagAddTolist') >=1){
+        else if (xclass.indexOf('aagAddTolist') >= 1) {
             lookUpCustomize(lugid, 2);
         }
 
     } catch (err) { }
 
-    return p8Spread_DblClick(canvasID, row, col);
+    var isValid = true;
+    try {
+        isValid = p8Spread_DblClick_Menuitem(canvasID, row, col);
+    } catch (err) {
+        try {
+            isValid = p8Spread_DblClick(canvasID, row, col);
+        } catch (err) { }
+    }
+
+    return isValid;
 }
 function p8Spread_ChangeT(canvasID, row, col) {
     var isvalid = true;
@@ -13211,15 +14237,24 @@ function p8Spread_ChangeT(canvasID, row, col) {
     } catch (err) { }
     if (isvalid == undefined) isvalid = true;
     if (isvalid) {
-        return p8Spread_Change(canvasID, row, col);
+        var isValid = true;
+        try {
+            isValid = p8Spread_Change_Menuitem(canvasID, row, col);
+        } catch (err) {
+            try {
+                isValid = p8Spread_Change(canvasID, row, col);
+            } catch (err) { }
+        }
+
+        return isValid;
     }
 }
 function p8Spread_IsResponsive() {
-    if ($("body").width() <= 550) 
+    if ($("body").width() <= 550)
         return true;
-    return   false;
+    return false;
 }
-function p8Spread_ClickT(canvasID, row, col,_this) {
+function p8Spread_ClickT(canvasID, row, col, _this) {
 
 
     try {
@@ -13228,17 +14263,14 @@ function p8Spread_ClickT(canvasID, row, col,_this) {
     } catch (err) { }
 
     var objecttype = P8DataList[canvasID][0].sheet.ActiveSheet.GetObjectType(col, row);
-    if (objecttype == "remarks") {
-        p8Spread_RemarksShow(canvasID,col,row);
-    }
+ 
 
     var isresponsive = false;
     if ($("body").width() <= 550) isresponsive = true;
     if (isresponsive) {
-        if(P8DataList[canvasID][0].sheet.ActiveSheet.Theme  == P8Themes.FANCY)
-        {
-            var xclass =(P8DataList[canvasID][0].sheet.ActiveSheet.ColumnConfig[col].Class|| "").trim();
-            if (xclass.indexOf('aagAddTolist') >=1 || xclass.indexOf('aagnwlookupgrid') >=1 ) {
+        if (P8DataList[canvasID][0].sheet.ActiveSheet.Theme == P8Themes.FANCY) {
+            var xclass = (P8DataList[canvasID][0].sheet.ActiveSheet.ColumnConfig[col].Class || "").trim();
+            if (xclass.indexOf('aagAddTolist') >= 1 || xclass.indexOf('aagnwlookupgrid') >= 1) {
                 return;
             }
 
@@ -13246,31 +14278,37 @@ function p8Spread_ClickT(canvasID, row, col,_this) {
             $(_this).parents(".nkListViewRow").addClass("nkListViewRowSelect");
 
             var isenabled = P8DataList[canvasID][0].sheet.ActiveSheet.GetEnabled(col, row);
-            var datatype =  P8DataList[canvasID][0].sheet.ActiveSheet.GetDataType(col, row); 
+            var datatype = P8DataList[canvasID][0].sheet.ActiveSheet.GetDataType(col, row);
 
             var zcol = $("#p8SpreadListInput").attr("col");
             var zrow = $("#p8SpreadListInput").attr("row");
 
-            if((!(zcol == col && zrow == row)) && $("#p8SpreadListInput").hasClass("nwDatePicker")){
-                var text =  P8DataList[canvasID][0].sheet.ActiveSheet.GetText(zcol, zrow);
-                $(".nkListViewRow[row='"+zrow+"']").find(".nkListViewValue[col='"+ zcol +"']").text(text);
+            if ((!(zcol == col && zrow == row)) && $("#p8SpreadListInput").hasClass("nwDatePicker")) {
+                var text = P8DataList[canvasID][0].sheet.ActiveSheet.GetText(zcol, zrow);
+                $(".nkListViewRow[row='" + zrow + "']").find(".nkListViewValue[col='" + zcol + "']").text(text);
 
 
             }
+          
 
-            if(isenabled){
+            if (isenabled) {
+                //balik
+                //if (objecttype == "checkbox") {
+                //    P8DataList[canvasID][0].sheet.ActiveSheet.SetText(zcol, zrow);
+                //}
+                // else 
                 if (objecttype == "celltext") {
-                    if($(_this).find(".nkListViewValue").find("#p8SpreadListInput").val() == undefined){
+                    if ($(_this).find(".nkListViewValue").find("#p8SpreadListInput").val() == undefined) {
 
                         var classType = "";
 
-                        if(datatype == "date"){
+                        if (datatype == "date") {
                             classType = "nwDatePicker";
                         }
-                        else  if(datatype == "currency"){
+                        else if (datatype == "currency") {
                             classType = "listText isNumber numC";
                         }
-                        else if(datatype == "number"){
+                        else if (datatype == "number") {
                             classType = "listText isNumber";
                         }
                         else {
@@ -13278,17 +14316,17 @@ function p8Spread_ClickT(canvasID, row, col,_this) {
                         }
 
 
-                        $(_this).find(".nkListViewValue").html("<input id='p8SpreadListInput' class='"+classType+"' canvasID='"+canvasID+"' col='"+col+"' row='"+row+"' />");
+                        $(_this).find(".nkListViewValue").html("<input id='p8SpreadListInput' class='" + classType + "' canvasID='" + canvasID + "' col='" + col + "' row='" + row + "' />");
                         var value = P8DataList[canvasID][0].sheet.ActiveSheet.GetText(col, row);
                         $(_this).find(".nkListViewValue").addClass("withinput");
 
-                        var xdataType =  P8DataList[canvasID][0].sheet.ActiveSheet.GetDataType(col, row);
-                        var xprecision =  P8DataList[canvasID][0].sheet.ActiveSheet.GetPrecision(col, row);
+                        var xdataType = P8DataList[canvasID][0].sheet.ActiveSheet.GetDataType(col, row);
+                        var xprecision = P8DataList[canvasID][0].sheet.ActiveSheet.GetPrecision(col, row);
 
                         if (xdataType == "number"
                             || xdataType == "currency"
-                             || xdataType == "percentvalue"
-                             || xdataType == "percent") {
+                            || xdataType == "percentvalue"
+                            || xdataType == "percent") {
 
                             if (xdataType == "percentvalue") value = value * 100;
 
@@ -13307,26 +14345,29 @@ function p8Spread_ClickT(canvasID, row, col,_this) {
     }
 
     var isValid = true;
-    try{
-        isValid =  p8Spread_Click_Menuitem(canvasID, row, col);
-    }catch(err){
-        try{
-               isValid =  p8Spread_Click(canvasID, row, col);
-        }catch(err){}
+    try {
+        isValid = p8Spread_Click_Menuitem(canvasID, row, col);
+    } catch (err) {
+        try {
+            isValid = p8Spread_Click(canvasID, row, col);
+        } catch (err) { }
     }
-
+    isValid = isValid == undefined ? true : isValid; 
+    if (objecttype == "remarks" && isValid) {
+        p8Spread_RemarksShow(canvasID, col, row);
+    }
 
     return isValid;
 }
 
 
-$(document).on("focusout","#p8SpreadListInput.listText",function(){
+$(document).on("focusout", "#p8SpreadListInput.listText", function () {
     var value = $(this).val();
     var canvasID = $(this).attr("canvasID");
     var col = $(this).attr("col");
     var row = $(this).attr("row");
 
-    P8DataList[canvasID][0].sheet.ActiveSheet.SetText(col, row, value);
+    P8DataList[canvasID][0].sheet.ActiveSheet.SetText(col, row, value,undefined,true);
     $(this).parent().text(value);
     $(this).parent().removeClass("withinput");
 
@@ -13334,13 +14375,13 @@ $(document).on("focusout","#p8SpreadListInput.listText",function(){
     return true;
 });
 
-$(document).on("change","#p8SpreadListInput",function(){
+$(document).on("change", "#p8SpreadListInput", function () {
     var value = $(this).val();
     var canvasID = $(this).attr("canvasID");
     var col = $(this).attr("col");
     var row = $(this).attr("row");
 
-    P8DataList[canvasID][0].sheet.ActiveSheet.SetText(col, row, value);
+    P8DataList[canvasID][0].sheet.ActiveSheet.SetText(col, row, value,undefined,true);
     $(this).parent().text(value);
     $(this).parent().removeClass("withinput");
 
@@ -13348,10 +14389,22 @@ $(document).on("change","#p8SpreadListInput",function(){
     return false;
 });
 
-function p8Spread_RemarksShow(canvasID,col,row) {
+
+$(document).on("click", ".nkListViewValueCheck", function () {
+    var value = $(this).prop("checked") ? "1" : "0";
+    var canvasID = $(this).closest(".P8Spread").attr("id");
+    var col = $(this).closest(".nkListViewCol").attr("col");
+    var row = $(this).closest(".nkListViewRow").attr("row");
+
+    P8DataList[canvasID][0].sheet.ActiveSheet.SetText(col, row, value,undefined);
+    console.log("click checkbox");
+    return false;
+});
+
+function p8Spread_RemarksShow(canvasID, col, row) {
     var text2 = P8DataList[canvasID][0].sheet.ActiveSheet.GetText2(col, row);
     var value = P8DataList[canvasID][0].sheet.ActiveSheet.GetValue(col, row);
-      
+
 
     $("#spreadRemarksCon").attr("canvasid", canvasID);
     $("#spreadRemarksCon").attr("col", col);
@@ -13376,7 +14429,16 @@ function p8Spread_FocusT(canvasID, row, col) {
         P8DataList[canvasID][0].sheet.ActiveSheet.prevEvenCol = col;
     } catch (err) { }
 
-    return p8Spread_Focus(canvasID, row, col);
+    var isValid = true;
+    try {
+        isValid = p8Spread_Focus_Menuitem(canvasID, row, col);
+    } catch (err) {
+        try {
+            isValid = p8Spread_Focus(canvasID, row, col);
+        } catch (err) { }
+    }
+
+    return isValid;
 }
 
 
@@ -13388,8 +14450,7 @@ $(function () {
     }, 100);
     //<input id='chkSpreadRemarks' type='checkbox' />
 });
-function p8Spread_SetRemarks()
-{
+function p8Spread_SetRemarks() {
     var canvasID = $("#spreadRemarksCon").attr("canvasid");
     var col = $("#spreadRemarksCon").attr("col");
     var row = $("#spreadRemarksCon").attr("row");
@@ -13403,7 +14464,7 @@ function p8Spread_SetRemarks()
     }, 100);
 }
 $(document).on("click", "#btnSpreadRemarks", function () {
-  
+
     p8Spread_SetRemarks();
     return false;
 });
@@ -13889,11 +14950,12 @@ $(document).on("mouseover", ".P8Spread", function () {
     setTimeout(function () {
         $("body").removeClass("p8SpreadHover");
         $(".P8Spread").attr("title", "");
-    },100);
+    }, 100);
 });;
 
 
-//karl edit start
+
+
 function p8Spread_IsNull(id) {
     if (id == '' || id == null || id == undefined || typeof id == 'undefined' || typeof variable == 'object') {
         return true;
@@ -13903,32 +14965,32 @@ function p8Spread_IsNull(id) {
     }
 }
 
-function p8Spread_GetJsonValue(json, object,indexbased) {
-    try{
-        if(indexbased){
+function p8Spread_GetJsonValue(json, object, indexbased) {
+    try {
+        if (indexbased) {
             var jsonArray = Object.values(json);
             return jsonArray[object];
-        }else{
+        } else {
             return json[object];
         }
-    } catch (ex) { return "";}
+    } catch (ex) { return ""; }
 }
 
 
-function p8Spread_RowColToCell(col,row,colfixed,rowfixed) {
+function p8Spread_RowColToCell(col, row, colfixed, rowfixed) {
     var newcell = "";
-    try{
-        var cellcol = p8_NumberToCell(col+1)
-        newcell = colfixed == true ? "$":"";
+    try {
+        var cellcol = p8_NumberToCell(col + 1)
+        newcell = colfixed == true ? "$" : "";
         newcell += cellcol
-        newcell += rowfixed == true ? "$":"";
-        newcell += row+1
-    }catch(ex){}
+        newcell += rowfixed == true ? "$" : "";
+        newcell += row + 1
+    } catch (ex) { }
     return newcell;
 }
 
 function p8Spread_CellToRowCol(cellReference) {
-    try{cellReference = cellReference.toUpperCase()}catch(ex){}
+    try { cellReference = cellReference.toUpperCase() } catch (ex) { }
     // Match the cell reference pattern
     var match = cellReference.match(/\$?([A-Z]+)\$?(\d+)/);
 
@@ -13958,59 +15020,59 @@ function p8Spread_CellToRowCol(cellReference) {
 }
 
 
-P8.SpreadSheet.prototype.JSONUpdateCell = function (col,row,coladd,rowadd,jsonupdatecell){
+P8.SpreadSheet.prototype.JSONUpdateCell = function (col, row, coladd, rowadd, jsonupdatecell) {
     coladd = coladd || 0;
     rowadd = rowadd || 0;
     //var jsonupdatecell = []
     //jsonupdatecell.push({jsonname:"tableevent",cellname:"cell"})
     var len = 0
-    try{len = this.Data.length;}catch(ex){}
+    try { len = this.Data.length; } catch (ex) { }
     //loop row data
-    for(var i =0; i < len; i++ ){
+    for (var i = 0; i < len; i++) {
         var item = this.Data[i];
         //loop column data per row data
         var keys = Object.keys(item);
         var len_j = 0
-        try{len_j = keys.length;}catch(ex){}
+        try { len_j = keys.length; } catch (ex) { }
         for (var j = 0; j < len_j; j++) {
             var key = keys[j];
             var len_k = 0
             //loop json list
-            try{len_k = jsonupdatecell.length;}catch(ex){}
+            try { len_k = jsonupdatecell.length; } catch (ex) { }
             for (var k = 0; k < len_k; k++) {
                 var jsonlist = jsonupdatecell[k]
-                var jsonname = p8Spread_GetJsonValue(jsonlist,"jsonname")
-                var cellname = p8Spread_GetJsonValue(jsonlist,"cellname")
-                var jsondata = p8Spread_GetJsonValue(item[key],jsonname)
+                var jsonname = p8Spread_GetJsonValue(jsonlist, "jsonname")
+                var cellname = p8Spread_GetJsonValue(jsonlist, "cellname")
+                var jsondata = p8Spread_GetJsonValue(item[key], jsonname)
                 //loop json data
                 var len_l = 0
-                try{len_l = jsondata.length;}catch(ex){}
+                try { len_l = jsondata.length; } catch (ex) { }
                 for (var l = 0; l < len_l; l++) {
                     var data = jsondata[l];
-                    var cell = p8Spread_GetJsonValue(data,cellname)
-                    if(!p8Spread_IsNull(cell)){
+                    var cell = p8Spread_GetJsonValue(data, cellname)
+                    if (!p8Spread_IsNull(cell)) {
                         var cellconfig = p8Spread_CellToRowCol(cell);
-                        if(rowadd != 0){
+                        if (rowadd != 0) {
                             //if not fixed
-                            if(!cellconfig.rowfixed){
-                                if(cellconfig.row >= row){
-                                    var newcell = p8Spread_RowColToCell((cellconfig.col),(cellconfig.row+rowadd),cellconfig.colfixed,cellconfig.rowfixed) 
+                            if (!cellconfig.rowfixed) {
+                                if (cellconfig.row >= row) {
+                                    var newcell = p8Spread_RowColToCell((cellconfig.col), (cellconfig.row + rowadd), cellconfig.colfixed, cellconfig.rowfixed)
                                     //update main data to new cell
                                     item[key][jsonname][l][cellname] = newcell
                                 }
                             }
                         }
-                        if(coladd != 0){
+                        if (coladd != 0) {
                             //if not fixed
-                            if(!cellconfig.colfixed){
-                                if(cellconfig.col >= col){
-                                    var newcell = p8Spread_RowColToCell((cellconfig.col+coladd),(cellconfig.row),cellconfig.colfixed,cellconfig.rowfixed) 
+                            if (!cellconfig.colfixed) {
+                                if (cellconfig.col >= col) {
+                                    var newcell = p8Spread_RowColToCell((cellconfig.col + coladd), (cellconfig.row), cellconfig.colfixed, cellconfig.rowfixed)
                                     //update main data to new cell
                                     item[key][jsonname][l][cellname] = newcell
                                 }
                             }
                         }
-                    }    
+                    }
                 }
             }
         }
@@ -14019,54 +15081,182 @@ P8.SpreadSheet.prototype.JSONUpdateCell = function (col,row,coladd,rowadd,jsonup
 }
 
 
-P8.SpreadSheet.prototype.GetJSONData = function (c, r,jsonname,withcolrow) {
+//P8.SpreadSheet.prototype.GetJSONData = function (c, r, jsonname, withcolrow, c2, r2) {
+//    var json = [];
+//    c2 = c2 == undefined ? c : c2;
+//    r2 = r2 == undefined ? r : r2;
+//    try {
+//        var colcell = p8_NumberToCell(parseInt(c) + 1);
+//        if (c == -247 && r == -247) {
+//            var len = 0
+//            try { len = this.Data.length; } catch (ex) { }
+//            //loop row data
+//            for (var i = 0; i < len; i++) {
+//                var item = this.Data[i];
+//                var keys = Object.keys(item);
+//                var len_j = 0
+//                try { len_j = keys.length; } catch (ex) { }
+//                for (var j = 0; j < len_j; j++) {
+//                    var key = keys[j];
+//                    var jsondata = item[key][jsonname];
+//                    var len_k = 0
+//                    try { len_k = jsondata.length; } catch (ex) { }
+//                    for (var k = 0; k < len_k; k++) {
+//                        var data = jsondata[k]
+//                        if (!p8Spread_IsNull(data)) {
+//                            if (withcolrow) {
+//                                data.col = j;
+//                                data.row = i;
+//                            }
+//                            json.push(data);
+//                        }
+//                    }
+//                }
+//            }
+//        } else {
+
+//            if (jsonname == undefined) {
+//                for (var row_r = r; row_r <= r2; row_r++) {
+//                    for (var col_r = c; col_r <= c2; col_r++) {
+//                        var colcell_r = p8_NumberToCell(parseInt(col_r) + 1);
+//                        var jsondata = JSON.parse(JSON.stringify(this.Data[row_r][colcell_r]));
+//                        if (!p8Spread_IsNull(jsondata)) {
+//                            if (withcolrow) {
+//                                jsondata.col = col_r;
+//                                jsondata.colcell = colcell_r;
+//                                jsondata.row = row_r;
+//                            }
+//                            json.push(jsondata);
+//                        }
+//                    }
+//                }
+//            } else {
+//                var jsondata = JSON.parse(JSON.stringify(this.Data[r][colcell][jsonname]));
+//                var len_k = 0
+//                try { len_k = jsondata.length; } catch (ex) { }
+//                for (var k = 0; k < len_k; k++) {
+//                    var data = jsondata[k]
+//                    if (!p8Spread_IsNull(data)) {
+//                        if (withcolrow) {
+//                            data.col = j;
+//                            data.row = i;
+//                        }
+//                        json.push(data);
+//                    }
+//                }
+//            }
+//        }
+//    } catch (ex) { }
+//    return json;
+//}
+var rowtest;
+var coltest;
+
+P8.SpreadSheet.prototype.GetJSONData = function (c, r, jsonname, withcolrow, c2, r2) {
     var json = [];
-    try{
+    c2 = c2 === undefined ? c : c2;
+    r2 = r2 === undefined ? r : r2;
+
+    try {
         var colcell = p8_NumberToCell(parseInt(c) + 1);
-        if(c == -247 && r == -247){
-            var len = 0
-            try{len = this.Data.length;}catch(ex){}
-            //loop row data
-            for(var i =0; i < len; i++ ){
-                var item = this.Data[i];
-                var keys = Object.keys(item);
-                var len_j = 0
-                try{len_j = keys.length;}catch(ex){}
-                for (var j = 0; j < len_j; j++) {
-                    var key = keys[j];
-                    var jsondata = item[key][jsonname];
-                    var len_k = 0
-                    try{len_k = jsondata.length;}catch(ex){}
-                    for (var k = 0; k < len_k; k++) {
-                        var data = jsondata[k]
-                        if(!p8Spread_IsNull(data)){
-                            if(withcolrow){
-                                data.col = j;
-                                data.row = i;
+        if (c === -247 && r === -247) {
+            // Process all rows and columns if specific cells are not targeted
+            var rowCount = this.Data.length;
+
+            for (var row = 0; row < rowCount; row++) {
+                var rowData = this.Data[row];
+                var colKeys = Object.keys(rowData);
+                rowtest = row
+                colKeys.forEach((colKey, colIndex) => {
+                    coltest = colIndex
+                    var cellData = rowData[colKey][jsonname];
+                    if (Array.isArray(cellData)) {
+                        cellData.forEach(data => {
+                            if (!p8Spread_IsNull(data)) {
+                                if (withcolrow) {
+                                    data.col = colIndex;
+                                    data.row = row;
+                                }
+                                json.push(data);
                             }
-                            json.push(data);
+                        });
+                    }
+                });
+            }
+        } else {
+            if (jsonname == undefined) {
+                for (var row_r = r; row_r <= r2; row_r++) {
+                    for (var col_r = c; col_r <= c2; col_r++) {
+                        var colcell_r = p8_NumberToCell(parseInt(col_r) + 1);
+                        var jsondata = this.JSONCopy(this.Data[row_r][colcell_r]) 
+                        if (!p8Spread_IsNull(jsondata)) {
+                            if (withcolrow) {
+                                jsondata.col = col_r;
+                                jsondata.colcell = colcell_r;
+                                jsondata.row = row_r;
+                            }
+                            json.push(jsondata);
                         }
                     }
                 }
-            }
-        }else{ 
-            var jsondata = JSON.parse(JSON.stringify(this.Data[r][colcell][jsonname]));
-            var len_k = 0
-            try{len_k = jsondata.length;}catch(ex){}
-            for (var k = 0; k < len_k; k++) {
-                var data = jsondata[k]
-                if(!p8Spread_IsNull(data)){
-                    if(withcolrow){
-                        data.col = j;
-                        data.row = i;
+            } else {
+                var jsondata = this.JSONCopy(this.Data[r][colcell][jsonname]) 
+                var len_k = 0
+                try { len_k = jsondata.length; } catch (ex) { }
+                for (var k = 0; k < len_k; k++) {
+                    var data = jsondata[k]
+                    if (!p8Spread_IsNull(data)) {
+                        if (withcolrow) {
+                            data.col = j;
+                            data.row = i;
+                        }
+                        json.push(data);
                     }
-                    json.push(data);
                 }
             }
+            // Process a specific range of cells
+            //for (var row_r = r; row_r <= r2; row_r++) {
+            //    for (var col_r = c; col_r <= c2; col_r++) {
+            //        var colcell_r = p8_NumberToCell(col_r + 1); // Convert column number to cell
+            //        var cellData = this.Data[row_r][colcell_r];
+
+            //        if (jsonname === undefined) {
+            //            // No specific JSON property; process the entire cell data
+            //            var cellJson = JSON.parse(JSON.stringify(cellData));
+            //            if (!p8Spread_IsNull(cellJson)) {
+            //                if (withcolrow) {
+            //                    cellJson.col = col_r;
+            //                    cellJson.colcell = colcell_r;
+            //                    cellJson.row = row_r;
+            //                }
+            //                json.push(cellJson);
+            //            }
+            //        } else {
+            //            // Process specific JSON property
+            //            var jsonData = cellData ? cellData[jsonname] : [];
+            //            if (Array.isArray(jsonData)) {
+            //                jsonData.forEach(data => {
+            //                    if (!p8Spread_IsNull(data)) {
+            //                        if (withcolrow) {
+            //                            data.col = col_r;
+            //                            data.row = row_r;
+            //                        }
+            //                        json.push(data);
+            //                    }
+            //                });
+            //            }
+            //        }
+            //    }
+            //}
         }
-    }catch(ex){}
+    } catch (ex) {
+        console.log("row:"+rowtest +" col:"+ coltest)
+        console.error("Error in GetJSONData:", ex);
+    }
+
     return json;
-}
+};
+
 
 P8.SpreadSheet.prototype.SetJSONData = function (c, r, jsonname, data) {
     var colcell = p8_NumberToCell(parseInt(c) + 1);
@@ -14078,15 +15268,22 @@ function _sfSpreadAddColumn(obj) {
     var arry = { value: "", formula: "", Config: [] };
     return arry;
 }
-function _sfSpreadColumnConfigUpdate(obj) {
+function _sfSpreadColumnConfigUpdate(obj,startindex) {
+    var jsonColumnConfig = obj.JSONCopy(obj.ColumnConfig)
     var len = 0;
-    try{len = obj.length;}catch(ex){}
-    for (var i = 0; i < len; i++) {
-        var ColumName = p8_NumberToCell(i+1);
-        obj[i].ColumName = ColumName
-        obj[i].name = ColumName
+    try { len = obj.ColumnConfig.length; } catch (ex) { }
+    for (var i = startindex; i < len; i++) {
+        var name = p8_NumberToCell(i + 1);
+        var prevname = p8_NumberToCell(i);
+        var prevColumnName = jsonColumnConfig[i].ColumName;
+        if(prevname == prevColumnName){
+            obj.ColumnConfig[i].ColumName = name;
+        }
+        //  var ColumName = obj.ColumnConfig[i-1].ColumName;
+        //  obj.ColumnConfig[i].ColumName = ColumName
+        obj.ColumnConfig[i].name = name
     }
-    return obj;
+    return obj.ColumnConfig;
 }
 
 function _sfSpreadInsertColumnAdjustConfig(obj, startindex) {
@@ -14098,26 +15295,30 @@ function _sfSpreadInsertColumnAdjustConfig(obj, startindex) {
     obj.ColumnConfig[startindex].config = {};
     obj.ColumnConfig[startindex].dataType = "text"
 
-    obj.ColumnConfig = _sfSpreadColumnConfigUpdate(obj.ColumnConfig);
-    
+    var name = p8_NumberToCell(startindex + 1);
+    obj.ColumnConfig[startindex].ColumName = name
+    obj.ColumnConfig[startindex].name = name
+
+    obj.ColumnConfig = _sfSpreadColumnConfigUpdate(obj,startindex);
+
 }
 
 
 P8.SpreadSheet.prototype.ColumnAdd = function (atbegin) {
     var index = 0;
-    if(atbegin){
+    if (atbegin) {
         index = 0;
-    }else{
-        index = this.GetMaxCol() -1;
+    } else {
+        index = this.GetMaxCol() - 1;
     }
-    this.ColumnInsert(index,true,true);
- 
-    try{
+    this.ColumnInsert(index, true, true);
+
+    try {
         var jsonupdatecell = func_ColumnAdd(index);
-        if(jsonupdatecell.length > 0){
-            this.JSONUpdateCell(index,-1,1,0,jsonupdatecell)
+        if (jsonupdatecell.length > 0) {
+            this.JSONUpdateCell(index, -1, 1, 0, jsonupdatecell)
         }
-    }catch(ex){}
+    } catch (ex) { }
 
 
     this.ScrollActive = true;
@@ -14146,8 +15347,8 @@ P8.SpreadSheet.prototype.ColumnInsert = function (index, isright, norender) {
         col = col + 1;
     }
     var len = 0
-    try{len = this.Data.length;}catch(ex){}
-    for(var i = 0; i < len; i++ ){
+    try { len = this.Data.length; } catch (ex) { }
+    for (var i = 0; i < len; i++) {
         var item = this.Data[i];
         //var item = this.Data[0];
         var keys = Object.keys(item);
@@ -14156,9 +15357,9 @@ P8.SpreadSheet.prototype.ColumnInsert = function (index, isright, norender) {
         //Insert item to new item
         for (var j = 0; j < keys.length; j++) {
             var key = keys[j];
-            if(key.includes("aag")){
-                itemstd.push({[key]:item[key]});
-            }else{
+            if (key.includes("aag")) {
+                itemstd.push({ [key]: item[key] });
+            } else {
                 itemnew.push(item[key]);
             }
         }
@@ -14169,7 +15370,7 @@ P8.SpreadSheet.prototype.ColumnInsert = function (index, isright, norender) {
         //Update index to alphabet
         var NewData = {}
         Object.keys(itemnew).forEach((key, j) => {
-            var newKey = p8_NumberToCell(j+1);
+            var newKey = p8_NumberToCell(j + 1);
             NewData[newKey] = itemnew[key];
         });
         //add std
@@ -14184,15 +15385,31 @@ P8.SpreadSheet.prototype.ColumnInsert = function (index, isright, norender) {
     }
 
     _sfSpreadInsertColumnAdjustConfig(this, col);
-    //karl edit start
+    //this.ColumnConfig.splice(col, 0, _sfDefaultSettingsColumn());
+    //this.ColumnConfig[col].width = def_Width;
+    //this.ColumnConfig[col].ColumnWidth = def_Width + "";
+    //this.ColumnConfig[col].config = {};
+    //this.ColumnConfig[col].dataType = "text"
+
+    //this.ColumnConfig = _sfSpreadColumnConfigUpdate(this.ColumnConfig);
+
+    _sfSpreadAdjustMergeList(this, col,0, 1);
+
     this.UpdateFormula(col, Spread_ALLROW, 1, 0);
-    //karl edit end
-    try{
-        var jsonupdatecell = func_ColumnInsert(index, isright);
-        if(jsonupdatecell.length > 0){
-            this.JSONUpdateCell(col,-1,1,0,jsonupdatecell)
+
+    try {
+        var coladd = 1;
+        try {
+            var jsonupdatecell = func_ColumnInsert_Menuitem(index, isright, coladd, this.canvasID, this.CellIndexes.Row, this.CellIndexes.Col);
+        } catch (err) {
+            try {
+                var jsonupdatecell = func_ColumnInsert(index, isright, coladd, this.canvasID, this.CellIndexes.Row, this.CellIndexes.Col);
+            } catch (err) { }
         }
-    }catch(ex){}
+        if (jsonupdatecell.length > 0) {
+            this.JSONUpdateCell(col, -1, 1, 0, jsonupdatecell)
+        }
+    } catch (ex) { }
 
 
     if (norender == undefined) norender = false;
@@ -14207,7 +15424,7 @@ P8.SpreadSheet.prototype.ColumnInsert = function (index, isright, norender) {
 
 function _sfSpreadDeleteColumnAdjustConfig(obj, startindex) {
     obj.ColumnConfig.splice(startindex, 1);
-    obj.ColumnConfig = _sfSpreadColumnConfigUpdate(obj.ColumnConfig);
+    obj.ColumnConfig = _sfSpreadColumnConfigUpdate(obj,startindex);
 }
 
 P8.SpreadSheet.prototype.ColumnDelete = function (col) {
@@ -14216,8 +15433,8 @@ P8.SpreadSheet.prototype.ColumnDelete = function (col) {
     if (col == undefined) { }
     else {
         var len = 0
-        try{len = this.Data.length;}catch(ex){}
-        for(var i = 0; i < len; i++ ){
+        try { len = this.Data.length; } catch (ex) { }
+        for (var i = 0; i < len; i++) {
             var item = this.Data[i];
             //var item = this.Data[0];
             var keys = Object.keys(item);
@@ -14225,18 +15442,18 @@ P8.SpreadSheet.prototype.ColumnDelete = function (col) {
             var itemstd = [];
             //Insert item to new item
             for (var j = 0; j < keys.length; j++) {
-                if (j == col){continue;}
+                if (j == col) { continue; }
                 var key = keys[j];
-                if(key.includes("aag")){
-                    itemstd.push({[key]:item[key]});
-                }else{
+                if (key.includes("aag")) {
+                    itemstd.push({ [key]: item[key] });
+                } else {
                     itemnew.push(item[key]);
                 }
             }
             //Update index to alphabet
             var NewData = {}
             Object.keys(itemnew).forEach((key, j) => {
-                var newKey = p8_NumberToCell(j+1);
+                var newKey = p8_NumberToCell(j + 1);
                 NewData[newKey] = itemnew[key];
             });
             //add std
@@ -14252,15 +15469,22 @@ P8.SpreadSheet.prototype.ColumnDelete = function (col) {
         }
 
         _sfSpreadDeleteColumnAdjustConfig(this, col);
-        //karl edit start
+        _sfSpreadAdjustMergeList(this, col,0, -1);
         this.UpdateFormula(col, Spread_ALLROW, -1, 0);
-        //karl edit end
-        try{
-            var jsonupdatecell = func_ColumnDelete(col);
-            if(jsonupdatecell.length > 0){
-                this.JSONUpdateCell(col,-1,-1,0,jsonupdatecell)
+      
+        try {
+            var colminus = 1;
+            try {
+                var jsonupdatecell = func_ColumnDelete_Menuitem(col, colminus, this.canvasID, this.CellIndexes.Row, this.CellIndexes.Col);
+            } catch (err) {
+                try {
+                    var jsonupdatecell = func_ColumnDelete(col, colminus, this.canvasID, this.CellIndexes.Row, this.CellIndexes.Col);
+                } catch (err) { }
             }
-        }catch(ex){}
+            if (jsonupdatecell.length > 0) {
+                this.JSONUpdateCell(col, -1, -1, 0, jsonupdatecell)
+            }
+        } catch (ex) { }
 
         this.ScrollActive = true;
         this.RenderNoEvent();
@@ -14269,7 +15493,7 @@ P8.SpreadSheet.prototype.ColumnDelete = function (col) {
 }
 
 
-P8.SpreadSheet.prototype.ColumnInsertShift = function (col,row, isright, norender) {
+P8.SpreadSheet.prototype.ColumnInsertShift = function (col, row, isright, norender) {
 
     if (isright == undefined) isright = true;
 
@@ -14287,6 +15511,23 @@ P8.SpreadSheet.prototype.ColumnInsertShift = function (col,row, isright, norende
     if (isright) {
         col = col + 1;
     }
+    var mergeListTemp = []
+    try {
+        for (var i = this.mergeList.length - 1; i >= 0; i--) {
+            var mcol = this.mergeList[i].col;
+            var mcol2 = this.mergeList[i].col2;
+            var mrow = this.mergeList[i].row;
+            var mrow2 = this.mergeList[i].row2;
+            if (mcol >= col) {
+                if (mrow <= row && mrow2 >= row) {
+                    if (mrow == mrow2) {
+                        mergeListTemp.push({ col: mcol + 1, row: mrow, col2: mcol2 + 1, row2: mrow2 })
+                    }
+                    this.SetUnmerge(mcol, mrow)
+                }
+            }
+        }
+    } catch (err) { }
     var item = this.Data[row];
     //var item = this.Data[0];
     var keys = Object.keys(item);
@@ -14295,9 +15536,9 @@ P8.SpreadSheet.prototype.ColumnInsertShift = function (col,row, isright, norende
     //Insert item to new item
     for (var j = 0; j < keys.length; j++) {
         var key = keys[j];
-        if(key.includes("aag")){
-            itemstd.push({[key]:item[key]});
-        }else{
+        if (key.includes("aag")) {
+            itemstd.push({ [key]: item[key] });
+        } else {
             itemnew.push(item[key]);
         }
     }
@@ -14306,27 +15547,27 @@ P8.SpreadSheet.prototype.ColumnInsertShift = function (col,row, isright, norende
     itemnew.splice(col, 0, arry);
     //Update index to alphabet
     var NewData = {};
-    var lenkey = 0 
-    try{ lenkey = itemnew.length;}catch(ex){}
+    var lenkey = 0
+    try { lenkey = itemnew.length; } catch (ex) { }
     var hasDataInLastCell = false;
     Object.keys(itemnew).forEach((key, j) => {
-        var newKey = p8_NumberToCell(j+1);
+        var newKey = p8_NumberToCell(j + 1);
         var valuekey = itemnew[key];
 
         //when no data in last column cell, no new column insertion
-        if((j+1) == lenkey){
+        if ((j + 1) == lenkey) {
             for (var key in valuekey) {
                 if (valuekey.hasOwnProperty(key)) {
                     var val = valuekey[key];
-                    if(val != ""){
+                    if (val != "") {
                         hasDataInLastCell = true;
                     }
                 }
             }
-            if(hasDataInLastCell){
+            if (hasDataInLastCell) {
                 NewData[newKey] = valuekey;
-            }  
-        }else{
+            }
+        } else {
             NewData[newKey] = valuekey;
         }
     });
@@ -14338,33 +15579,60 @@ P8.SpreadSheet.prototype.ColumnInsertShift = function (col,row, isright, norende
             NewData[subkey] = key[subkey];
         }
     }
-    if(hasDataInLastCell){
+    if (hasDataInLastCell) {
         this.ColumnInsert((lenkey - 2), true, false);
     }
     this.Data[row] = NewData
 
 
     //_sfSpreadInsertColumnAdjustConfig(this, index);
-    //karl edit start
+
     this.UpdateFormula(col, row, 1, 0);
-    //karl edit end
+
+    try {
+        for (var i = 0; i < mergeListTemp.length; i++) {
+            var mcol = mergeListTemp[i].col;
+            var mcol2 = mergeListTemp[i].col2;
+            var mrow = mergeListTemp[i].row;
+            var mrow2 = mergeListTemp[i].row2;
+            this.SetMerge(mcol, mrow, mcol2, mrow2);
+        }
+    } catch (err) { }
+
     if (norender == undefined) norender = false;
 
     if (norender == false) {
         this.ScrollActive = true;
         this.RenderNoEvent();
     }
-    return {col:col,row:row};
+    return { col: col, row: row };
 }
 
 
-P8.SpreadSheet.prototype.ColumnDeleteShift = function (col,row) {
+P8.SpreadSheet.prototype.ColumnDeleteShift = function (col, row) {
     //if (index == undefined) index = obj.CellIndexes.Row;
 
     if (col == undefined) { }
     else {
         //_sfJsonDelete(this.Data, index);
         //_sfSpreadDeleteRowAdjustConfig(this, index);
+        var mergeListTemp = []
+        try {
+            for (var i = this.mergeList.length - 1; i >= 0; i--) {
+                var mcol = this.mergeList[i].col;
+                var mcol2 = this.mergeList[i].col2;
+                var mrow = this.mergeList[i].row;
+                var mrow2 = this.mergeList[i].row2;
+                if (mcol >= col) {
+                    if (mrow <= row && mrow2 >= row) {
+                        if (mrow == mrow2) {
+                            mergeListTemp.push({ col: mcol - 1, row: mrow, col2: mcol2 - 1, row2: mrow2 })
+                        }
+                        this.SetUnmerge(mcol, mrow)
+                    }
+                }
+            }
+        } catch (err) { }
 
         var item = this.Data[row];
         //var item = this.Data[0];
@@ -14373,11 +15641,11 @@ P8.SpreadSheet.prototype.ColumnDeleteShift = function (col,row) {
         var itemstd = [];
         //Insert item to new item
         for (var j = 0; j < keys.length; j++) {
-            if(j == col){continue;}
+            if (j == col) { continue; }
             var key = keys[j];
-            if(key.includes("aag")){
-                itemstd.push({[key]:item[key]});
-            }else{
+            if (key.includes("aag")) {
+                itemstd.push({ [key]: item[key] });
+            } else {
                 itemnew.push(item[key]);
             }
         }
@@ -14388,7 +15656,7 @@ P8.SpreadSheet.prototype.ColumnDeleteShift = function (col,row) {
         //Update index to alphabet
         var NewData = {}
         Object.keys(itemnew).forEach((key, j) => {
-            var newKey = p8_NumberToCell(j+1);
+            var newKey = p8_NumberToCell(j + 1);
             NewData[newKey] = itemnew[key];
         });
         //add std
@@ -14399,129 +15667,337 @@ P8.SpreadSheet.prototype.ColumnDeleteShift = function (col,row) {
                 NewData[subkey] = key[subkey];
             }
         }
-            
+
         this.Data[row] = NewData
-        //karl edit start
+  
         this.UpdateFormula(col, row, -1, 0);
-        //karl edit end
+
+        try {
+            for (var i = 0; i < mergeListTemp.length; i++) {
+                var mcol = mergeListTemp[i].col;
+                var mcol2 = mergeListTemp[i].col2;
+                var mrow = mergeListTemp[i].row;
+                var mrow2 = mergeListTemp[i].row2;
+                this.SetMerge(mcol, mrow, mcol2, mrow2);
+            }
+        } catch (err) { }
+     
         //_sfSpreadDeleteColumnAdjustConfig(this, col);
 
         this.ScrollActive = true;
         this.RenderNoEvent();
     }
-    return {col:col,row:row};
+    return { col: col, row: row };
 }
 
-
-P8.SpreadSheet.prototype.RowInsertShift = function (col,row, isdown,col2,row2, norender) {
+P8.SpreadSheet.prototype.RowInsertShift = function (col, row, isdown, col2, rowadd, norender, forceinsert) {
 
     if (isdown == undefined) isdown = true;
+    if (forceinsert == undefined) forceinsert = false;
 
     col2 = col2 == undefined ? col : col2;
-    row2 = row2 == undefined ? row : row2;
-    //if ((row < this.FreezeRow && isdown == false)
-    //    ||
-    //    (row < this.FreezeRow && isdown == true)
-    //    ) {
-    //    try {
-    //        ToastMessage("Insert Row is Invalid for Freeze Panes");
-    //    } catch (err) {
-    //        console.log("Insert Row is Invalid for Freeze Panes");
-    //    }
-    //    return false;
+    rowadd = rowadd == undefined ? 1 : rowadd;
+    var row2 = row + rowadd - 1;
+
+    //if (isdown == true) {
+    var mergeListTemp = []
+    try {
+        for (var i = this.mergeList.length - 1; i >= 0; i--) {
+            var mcol = this.mergeList[i].col;
+            var mcol2 = this.mergeList[i].col2;
+            var mrow = this.mergeList[i].row;
+            var mrow2 = this.mergeList[i].row2;
+            if (mrow >= row) {
+                if (mcol <= col && mcol2 >= col) {
+                    if (mcol == mcol2 || forceinsert == true) {
+                        mergeListTemp.push({ col: mcol, row: mrow + rowadd, col2: mcol2, row2: mrow2 + rowadd })
+                    }
+                    this.SetUnmerge(mcol, mrow)
+                }
+            }
+        }
+    } catch (err) { }
     //}
-    //if (isdown) {
-    //    row = row + 1;
-    //}
-    //var prevdata = {};
-    //var prevobjectkey ="";
-    //var previtemnew = {};
+
     var prevData = this.JSONCopy(this.Data);
-    var hasDataInLastCell = false;
+    var currentData = this.JSONCopy(this.Data);
     var hasInsertAlready = false;
     var len = 0
-    try{len = this.Data.length;}catch(ex){}
+    try { len = currentData.length; } catch (ex) { }
+    //var addrow = row2 - row;
+    var prev_i = row;
+    var rowwaddcnt = 0;
+    for (var i = row; i < currentData.length; i++) {
+        currentData = this.JSONCopy(currentData);
+        rowwaddcnt += 1;
+        //new data 
+        if (i >= row && i <= row2) {
+        } else {
+            prev_i += 1;
+        }
+        var hasDataInLastCell = false;
 
-    //var hasdataincell = this.GetText(col,row+1);
-    //if(excludeformat && p8Spread_IsNull(hasdataincell)){
-        
-    //}else{
-    for(var i = row; i < this.Data.length; i++ ){
-        var item = this.Data[i];
+        var item = currentData[i];;
         //console.log(objectkey)
         //console.log(itemnew)
         for (var j = col; j <= col2; j++) {
             var objectkey = Object.keys(item)[j];
             var itemnew = item[objectkey]
-            //new data 
-            if (i == row) {
-                previtem = _sfSpreadAddColumn(this);
-                item[objectkey] = previtem;
-            }
-            else {
-                var previtem = prevData[i - 1][objectkey];
-                item[objectkey] = previtem;
-                    
-            }
             if (i == (len - 1)) {
-                if (!hasInsertAlready) { 
-                    for (var key in itemnew) {
-                        if (itemnew.hasOwnProperty(key)) {
-                            var val = itemnew[key];
-                            if (val != "") {
-                                hasDataInLastCell = true;
+                if (!hasInsertAlready) {
+                    if (forceinsert) {
+                        hasInsertAlready = true;
+                        var rowaddremaining = rowadd//((rowadd + (currentData.length - row))  + 1);
+                        prev_i = row;
+                        i = row2;
+                        if (rowaddremaining > 0) {
+                            //this.RowAdd(false, (rowadd - rowwaddcnt));
+                            arry = _sfSpreadAddRow(this);
+                            for (var rowadd_i = 0; rowadd_i < rowaddremaining; rowadd_i++) {
+                                currentData.push(arry);
                             }
                         }
-                    }
-                    if (hasDataInLastCell) {
-                        hasInsertAlready = true;
-                        this.RowAdd();
+                        //prevData = this.JSONCopy(this.Data);
+                    } else {
+                        for (var key in itemnew) {
+                            if (itemnew.hasOwnProperty(key)) {
+                                var val = itemnew[key];
+                                if (val != "") {
+                                    hasDataInLastCell = true;
+                                }
+                            }
+                        }
+                        if (hasDataInLastCell) {
+                            hasInsertAlready = true;
+                            this.RowAdd(false, 1);
+                        }
                     }
                 }
             }
-            //item[prevobjectkey] = prevdata[prevobjectkey];
-            //prevobjectkey = objectkey;
-            //previtemnew = itemnew;
-            //prevdata[prevobjectkey] = previtemnew;
+
+            //new data 
+            if (i >= row && i <= row2) {
+                previtem = _sfSpreadAddColumn(this);
+                currentData[i][objectkey] = previtem;
+            }
+            else {
+                var previtem = prevData[prev_i - 1][objectkey];
+                currentData[i][objectkey] = previtem;
+            }
+
         }
-           
+
+
     }
+    this.Data = this.JSONCopy(currentData);
+
     //}
-    if (row == len && !hasDataInLastCell){
-        this.RowAdd();
+    if (row == len && !hasDataInLastCell) {
+        this.RowAdd(false, 1);
     }
     //_sfSpreadInsertColumnAdjustConfig(this, index);
-
-    this.UpdateFormula(col, row, 0, 1);
-
+    for (var j = col; j <= col2; j++) {
+        this.UpdateFormula(j, row, 0, rowadd);
+    }
+    try {
+        for (var i = 0; i < mergeListTemp.length; i++) {
+            var mcol = mergeListTemp[i].col;
+            var mcol2 = mergeListTemp[i].col2;
+            var mrow = mergeListTemp[i].row;
+            var mrow2 = mergeListTemp[i].row2;
+            this.SetMerge(mcol, mrow, mcol2, mrow2);
+        }
+    } catch (err) { }
     if (norender == undefined) norender = false;
 
     if (norender == false) {
         this.ScrollActive = true;
         this.RenderNoEvent();
     }
-    return {col:col,row:row};
+    return { col: col, row: row };
 }
+//P8.SpreadSheet.prototype.RowInsertShift = function (col, row, isdown, col2, rowadd, norender, forceinsert) {
 
+//    if (isdown == undefined) isdown = true;
+//    if (forceinsert == undefined) forceinsert = false;
 
-P8.SpreadSheet.prototype.RowDeleteShift = function (col,row,norender) {
+//    col2 = col2 == undefined ? col : col2;
+//    rowadd = rowadd == undefined ? 1 : rowadd;
+//    var row2 = row + rowadd - 1;
+
+//    //if (isdown == true) {
+//    var mergeListTemp = [];
+//    try {
+//        $(this.mergeList).each(function (index, item) {
+//            var mcol = item.col;
+//            var mcol2 = item.col2;
+//            var mrow = item.row;
+//            var mrow2 = item.row2;
+
+//            if (mrow >= row) {
+//                if (mcol <= col && mcol2 >= col) {
+//                    if (mcol == mcol2 || forceinsert === true) {
+//                        mergeListTemp.push({ col: mcol, row: mrow + rowadd, col2: mcol2, row2: mrow2 + rowadd });
+//                    }
+//                    this.SetUnmerge(mcol, mrow);
+//                }
+//            }
+//        });
+//    } catch (err) { }
+//    //}
+
+//    var prevData = this.JSONCopy(this.Data);
+//    var currentData = this.JSONCopy(this.Data);
+//    var hasInsertAlready = false;
+//    var len = currentData.length || 0;
+//    var prev_i = row;
+//    var rowwaddcnt = 0;
+
+//    try {
+//        for (var i = row; i < len; i++) {
+//            currentData = this.JSONCopy(currentData); // Ensure a fresh copy of currentData for each iteration
+//            rowwaddcnt += 1;
+
+//            if (i >= row && i <= row2) {
+//                // No operation here, it's a placeholder for new data
+//            } else {
+//                prev_i += 1;
+//            }
+
+//            var hasDataInLastCell = false;
+//            var item = currentData[i];
+
+//            // Handle last row logic and forced insert
+//            if (i === (len - 1)) {
+//                if (!hasInsertAlready) {
+//                    if (forceinsert) {
+//                        hasInsertAlready = true;
+//                        var rowaddremaining = rowadd;
+//                        prev_i = row;
+//                        i = row2;
+
+//                        if (rowaddremaining > 0) {
+//                            // Add new rows based on remaining rows to add
+//                            var arry = _sfSpreadAddRow(this);
+//                            for (var rowadd_i = 0; rowadd_i < rowaddremaining; rowadd_i++) {
+//                                currentData.push(arry);
+//                            }
+//                        }
+//                    } else {
+//                        // Check for data in the last cell and decide if new rows should be added
+//                        for (var key in item) {
+//                            if (item.hasOwnProperty(key)) {
+//                                var val = item[key];
+//                                if (val !== "") {
+//                                    hasDataInLastCell = true;
+//                                }
+//                            }
+//                        }
+
+//                        if (hasDataInLastCell) {
+//                            hasInsertAlready = true;
+//                            this.RowAdd(false, 1); // Add a new row if data exists
+//                        }
+//                    }
+//                }
+//            }
+
+//            // Update data for the range between row and row2
+//            for (var j = col; j <= col2; j++) {
+//                var objectkey = Object.keys(item)[j];
+//                var itemnew = item[objectkey];
+
+//                if (i >= row && i <= row2) {
+//                    // Add new data to the specified range
+//                    var previtem = _sfSpreadAddColumn(this);
+//                    currentData[i][objectkey] = previtem;
+//                } else {
+//                    // Otherwise, copy data from the previous row
+//                    var previtem = prevData[prev_i - 1][objectkey];
+//                    currentData[i][objectkey] = previtem;
+//                }
+//            }
+//        }
+//    } catch (ex) {
+//        // Handle any errors if necessary
+//    }
+
+//    this.Data = this.JSONCopy(currentData); // Assign the modified data back
+
+//    //}
+//    // Check if the row is at the end and no data exists in the last cell, then add a new row
+//    if (row === len && !hasDataInLastCell) {
+//        this.RowAdd(false, 1); // Add 1 row if the condition is met
+//    }
+
+//    // Adjust formulas for the specified range of columns (col to col2)
+//    for (var j = col; j <= col2; j++) {
+//        this.UpdateFormula(j, row, 0, rowadd); // Update the formula for each column in the range
+//    }
+
+//    try {
+//        // Iterate through the merge list and apply merges
+//        for (var i = 0; i < mergeListTemp.length; i++) {
+//            var mcol = mergeListTemp[i].col;
+//            var mcol2 = mergeListTemp[i].col2;
+//            var mrow = mergeListTemp[i].row;
+//            var mrow2 = mergeListTemp[i].row2;
+//            this.SetMerge(mcol, mrow, mcol2, mrow2); // Set merge for each entry in the merge list
+//        }
+//    } catch (err) {
+//        // Handle any errors that may occur during the merge operation
+//    }
+
+//    // Set the `norender` flag to false if it's undefined
+//    if (norender === undefined) {
+//        norender = false;
+//    }
+
+//    // Render the data if `norender` is false
+//    if (!norender) {
+//        this.ScrollActive = true; // Enable scrolling
+//        this.RenderNoEvent(); // Render without triggering events
+//    }
+
+//    return { col: col, row: row }; // Return the column and row
+//}
+
+P8.SpreadSheet.prototype.RowDeleteShift = function (col, row, norender) {
     //if (index == undefined) index = obj.CellIndexes.Row;
 
     if (col == undefined) { }
     else {
-        var prevobjectkey ="";
-        var previtemnew= {};
+        var mergeListTemp = []
+        try {
+            for (var i = this.mergeList.length - 1; i >= 0; i--) {
+                var mcol = this.mergeList[i].col;
+                var mcol2 = this.mergeList[i].col2;
+                var mrow = this.mergeList[i].row;
+                var mrow2 = this.mergeList[i].row2;
+                if (mrow >= row) {
+                    if (mcol <= col && mcol2 >= col) {
+                        if (mcol == mcol2) {
+                            mergeListTemp.push({ col: mcol, row: mrow - 1, col2: mcol2, row2: mrow2 - 1 })
+                        }
+                        this.SetUnmerge(mcol, mrow)
+                    }
+                }
+            }
+        } catch (err) { }
+
+        var prevobjectkey = "";
+        var previtemnew = {};
         var len = 0
-        try{len = this.Data.length;}catch(ex){}
+        try { len = this.Data.length; } catch (ex) { }
         //var len =5;
-        for(var i = len-1; i >= row; i-- ){
+        for (var i = len - 1; i >= row; i--) {
             var item = this.Data[i];
             //console.log(objectkey)
             //console.log(itemnew)
             var objectkey = Object.keys(item)[col];
             var itemnew = item[objectkey]
             //new data 
-            if(i == (len-1)){ 
+            if (i == (len - 1)) {
                 prevobjectkey = objectkey;
                 previtemnew = _sfSpreadAddColumn(this);
             }
@@ -14532,7 +16008,17 @@ P8.SpreadSheet.prototype.RowDeleteShift = function (col,row,norender) {
 
         //_sfSpreadInsertColumnAdjustConfig(this, index);
         this.UpdateFormula(col, row, 0, -1);
-        
+
+        try {
+            for (var i = 0; i < mergeListTemp.length; i++) {
+                var mcol = mergeListTemp[i].col;
+                var mcol2 = mergeListTemp[i].col2;
+                var mrow = mergeListTemp[i].row;
+                var mrow2 = mergeListTemp[i].row2;
+                this.SetMerge(mcol, mrow, mcol2, mrow2);
+            }
+        } catch (err) { }
+
         if (norender == undefined) norender = false;
 
         if (norender == false) {
@@ -14540,13 +16026,82 @@ P8.SpreadSheet.prototype.RowDeleteShift = function (col,row,norender) {
             this.RenderNoEvent();
         }
     }
-    return {col:col,row:row};
+    return { col: col, row: row };
 }
+
+//P8.SpreadSheet.prototype.RowDeleteShift = function (col, row, isdown, col2, rowminus, norender) {
+//    //if (index == undefined) index = obj.CellIndexes.Row;
+//    rowminus = rowminus == undefined ? 1 : rowminus;
+//    row2 = (row + rowminus + 1);
+//    //row = (row2 - rowminus + 1)
+//    if (col == undefined) { }
+//    else {
+//        var prevobjectkey ="";
+//        var previtemnew = {};
+//        var prevData = this.JSONCopy(this.Data);
+//        var currentData = this.JSONCopy(this.Data);
+//        var prev_i = row2;
+//        var len = 0
+//        try { len = currentData.length - 1;}catch(ex){}
+//        //try { len = row2;}catch(ex){}
+//        //var len =5;
+//        for (var i = len; i >= row; i--){
+//            //new data 
+//            if (i >= row && i <= row2) {
+//            } else {
+//                prev_i -= 1;
+//            }
+//            var item = currentData[i];
+//            for (var j = col; j <= col2; j++) {
+//                var objectkey = Object.keys(item)[j];
+//                var itemnew = item[objectkey]
+//                //new data 
+//                if (i > row && i < row2) {
+//                    prevobjectkey = objectkey;
+//                    previtem = _sfSpreadAddColumn(this);
+//                    currentData[i][objectkey] = previtem;
+//                } else {
+//                    if (i >= (len - rowminus)) {
+//                        prevobjectkey = objectkey;
+//                        previtem = _sfSpreadAddColumn(this);
+//                        currentData[i][objectkey] = previtem;
+//                    } else {
+//                        //var previtem = prevData[i+1][objectkey];
+//                        //currentData[i][objectkey] = previtem;
+//                    }
+//                }
+//            }
+//        }
+//        var r_run = row+1;
+//        for (var i = (row2 + 1); i < prevData.length; i++) {
+//            r_run += 1;
+//            var item = currentData[r_run];
+//            for (var j = col; j <= col2; j++) {
+//                var objectkey = Object.keys(item)[j];
+//                var previtem = prevData[i][objectkey];
+//                currentData[r_run][objectkey] = previtem;
+//               }
+//        }
+
+//        this.Data = this.JSONCopy(currentData);
+//        //_sfSpreadInsertColumnAdjustConfig(this, index);
+//        this.UpdateFormula(col, row, 0, (rowminus*-1));
+
+//        if (norender == undefined) norender = false;
+
+//        if (norender == false) {
+//            this.ScrollActive = true;
+//            this.RenderNoEvent();
+//        }
+//    }
+//    return {col:col,row:row};
+//}
 
 //karl 01/31/2024 end
 
 //karl 02/22/2024 start
 
+// Function to separate the alphabet and number parts of a cell reference
 function _sfseparateAlphabetAndNumber(cellReference) {
     // Find the index where the first numeric character appears
     var index = cellReference.search(/\d/);
@@ -14557,72 +16112,78 @@ function _sfseparateAlphabetAndNumber(cellReference) {
     return [alphabetPart, numberPart];
 }
 
+// Function to convert a column label to a number (e.g., 'A' -> 1, 'Z' -> 26, 'AA' -> 27)
+function columnLabelToNumber(label) {
+    let result = 0;
+    for (let i = 0; i < label.length; i++) {
+        result = result * 26 + (label.charCodeAt(i) - 'A'.charCodeAt(0) + 1);
+    }
+    return result;
+}
+
+// Function to convert a number to a column label (e.g., 1 -> 'A', 26 -> 'Z', 27 -> 'AA')
+function numberToColumnLabel(number) {
+    let result = '';
+    while (number > 0) {
+        let remainder = (number - 1) % 26;
+        result = String.fromCharCode('A'.charCodeAt(0) + remainder) + result;
+        number = Math.floor((number - 1) / 26);
+    }
+    return result;
+}
+
+// Function to list all cells between two cell references
 function _sflistCellsBetween(cell) {
     var cellrange = cell.split(':');
     var cellfrom = cellrange[0];
     var cellto = cellrange[1] == undefined ? cellrange[0] : cellrange[1];
 
-    var col_temp = p8Spread_CellToRowCol(cellfrom).col;
-    var row_temp = p8Spread_CellToRowCol(cellfrom).row;
-    var col2_temp  = p8Spread_CellToRowCol(cellto).col;
-    var row2_temp  = p8Spread_CellToRowCol(cellto).row;
-
-    var iscolreverse = col_temp > col2_temp;
-    var isrowreverse = col_temp == col2_temp &&  row_temp > row2_temp;
-    if(iscolreverse || isrowreverse){
-        var col = col2_temp;
-        var row =  row2_temp;
-        var col2  = col_temp;
-        var row2  = row_temp;
-    } else {
-        var col = col_temp;
-        var row =  row_temp;
-        var col2  = col2_temp;
-        var row2  = row2_temp;
-    }
-    from = p8Spread_RowColToCell(col,row)
-    to = p8Spread_RowColToCell(col2,row2)
-    var fromArray = _sfseparateAlphabetAndNumber(from);
+    var fromArray = _sfseparateAlphabetAndNumber(cellfrom);
     var from_alphabet = fromArray[0];
-    var from_number = fromArray[1];
-        
-    var toArray = _sfseparateAlphabetAndNumber(to);
+    var from_number = parseInt(fromArray[1]);
+
+    var toArray = _sfseparateAlphabetAndNumber(cellto);
     var to_alphabet = toArray[0];
-    var to_number = toArray[1];
+    var to_number = parseInt(toArray[1]);
+
+    var from_col = columnLabelToNumber(from_alphabet);
+    var to_col = columnLabelToNumber(to_alphabet);
+
     var cellList = [];
     for (var row = from_number; row <= to_number; row++) {
-        for (var col = from_alphabet.charCodeAt(0); col <= to_alphabet.charCodeAt(0); col++) {
-            cellList.push(String.fromCharCode(col) + row);
+        for (var col = from_col; col <= to_col; col++) {
+            cellList.push(numberToColumnLabel(col) + row);
         }
     }
     return cellList;
 }
+
+// Function to list all cells in the given range(s)
 function p8Spread_listCells(cell) {
-    try{cell = cell.toUpperCase()}catch(ex){}
+    try { cell = cell.toUpperCase() } catch (ex) { }
     var celllist = cell.split(",");
     var cellFinalList = [];
     for (var i = 0; i < celllist.length; i++) {
         var cell = celllist[i];
-        if(cell.includes(":")){
+        if (cell.includes(":")) {
             var celllist_t = _sflistCellsBetween(cell);
-            cellFinalList = [...cellFinalList,...celllist_t]
-        }else{
+            cellFinalList = [...cellFinalList, ...celllist_t];
+        } else {
             cellFinalList.push(cell);
         }
-
     }
     return cellFinalList;
 }
 
 
 P8.SpreadSheet.prototype.SetSelectedCell = function (cell) {
-    try{
-        try{cell = cell.toUpperCase()}catch(ex){}
+    try {
+        try { cell = cell.toUpperCase() } catch (ex) { }
         //var cell = "B1:B2"
         var celllist = cell.split(',');
         var len = 0
-        try{len = celllist.length;}catch(ex){}
-        for(var i = 0; i < len; i++ ){
+        try { len = celllist.length; } catch (ex) { }
+        for (var i = 0; i < len; i++) {
             var cell = celllist[i];
             var cellrange = cell.split(':');
             var cellfrom = cellrange[0];
@@ -14630,21 +16191,21 @@ P8.SpreadSheet.prototype.SetSelectedCell = function (cell) {
 
             var col_temp = p8Spread_CellToRowCol(cellfrom).col;
             var row_temp = p8Spread_CellToRowCol(cellfrom).row;
-            var col2_temp  = p8Spread_CellToRowCol(cellto).col;
-            var row2_temp  = p8Spread_CellToRowCol(cellto).row;
+            var col2_temp = p8Spread_CellToRowCol(cellto).col;
+            var row2_temp = p8Spread_CellToRowCol(cellto).row;
 
             var iscolreverse = col_temp > col2_temp;
-            var isrowreverse = col_temp == col2_temp &&  row_temp > row2_temp;
-            if(iscolreverse || isrowreverse){
+            var isrowreverse = col_temp == col2_temp && row_temp > row2_temp;
+            if (iscolreverse || isrowreverse) {
                 var col = col2_temp;
-                var row =  row2_temp;
-                var col2  = col_temp;
-                var row2  = row_temp;
+                var row = row2_temp;
+                var col2 = col_temp;
+                var row2 = row_temp;
             } else {
                 var col = col_temp;
-                var row =  row_temp;
-                var col2  = col2_temp;
-                var row2  = row2_temp;
+                var row = row_temp;
+                var col2 = col2_temp;
+                var row2 = row2_temp;
             }
             var option = {
                 col: col,
@@ -14656,30 +16217,31 @@ P8.SpreadSheet.prototype.SetSelectedCell = function (cell) {
         }
         this.ScrollActive = true;
         this.RenderNoEvent();
-    }catch(ex){}
+    } catch (ex) { }
     return this.GetSelectedIndexes();
 };
 
 P8.SpreadSheet.prototype.GetSelectedCell = function () {
     var celllist = "";
-    try{
+    try {
         var item = this.GetSelectedIndexes();
         var row = p8Spread_GetJsonValue(item, "row");
         var row2 = p8Spread_GetJsonValue(item, "row2");
         var col = p8Spread_GetJsonValue(item, "col");
         var col2 = p8Spread_GetJsonValue(item, "col2");
         var cell = p8_NumberToCell(col + 1) + (row + 1);
-        cell += ":"+p8_NumberToCell(col2 + 1) + (row2 + 1);
+        cell += ":" + p8_NumberToCell(col2 + 1) + (row2 + 1);
         celllist = p8Spread_listCells(cell);
-    }catch(ex){}
+    } catch (ex) { }
     return celllist
 }
+
 
 P8.SpreadSheet.prototype.UpdateFormula = function (col, row, coladd, rowadd, col2add, row2add) {
     col2add = col2add || coladd;
     row2add = row2add || rowadd;
     //if (index == undefined) index = obj.CellIndexes.Row;
-    var _this = mSpreadBook.ActiveSheet.JSONCopy(this.Data);
+    var _this = this.JSONCopy(this.Data);
     var len = 0
     try { len = _this.length; } catch (ex) { }
     for (var i = 0; i < len; i++) {
@@ -14688,7 +16250,7 @@ P8.SpreadSheet.prototype.UpdateFormula = function (col, row, coladd, rowadd, col
         var keys = Object.keys(item);
         //Loop column (per row)
         for (var j = 0; j < keys.length; j++) {
-              
+
             var key = keys[j];
             if (key.includes("aag")) {
 
@@ -14714,7 +16276,7 @@ P8.SpreadSheet.prototype.UpdateFormula = function (col, row, coladd, rowadd, col
                 //        var col2config = value[0].col2;
                 //        var rowconfig = value[0].row;
                 //        var row2config = value[0].row2;
-     
+
                 //        ////cell after
                 //        if (coladd != 0) {
                 //            if (col <= colconfig) {
@@ -14751,36 +16313,51 @@ P8.SpreadSheet.prototype.UpdateFormula = function (col, row, coladd, rowadd, col
     return col;
 }
 
-P8.SpreadSheet.prototype.DeleteConfigData = function (col,row,data){
-    try{
-        var col_a = p8_NumberToCell(col+1);
-        var jsonconfig = this.Data[row][col_a].Config
+P8.SpreadSheet.prototype.DeleteConfigData = function (col, row, data) {
+    try {
+        var col_a = p8_NumberToCell(col + 1);
+        //   var jsonconfig = this.Data[row][col_a].Config
+        var jsonconfig = this.Data[row]?.[col_a]?.Config || null;
+        if (!jsonconfig || jsonconfig.length === 0) {
+            try {
+                var itemmerge = this.mergeList;
+                for (var l = itemmerge.length - 1; l >= 0; l--) {
+                    var itemm = itemmerge[l];
+                    var colm = p8Spread_GetJsonValue(itemm, "col");
+                    var rowm = p8Spread_GetJsonValue(itemm, "row");
+                    if (colm == col && rowm == row) {
+                        itemmerge.splice(l, 1);
+                    }
+                }
+            } catch (ex) { }
+        }
 
         for (var i = jsonconfig.length - 1; i >= 0; i--) {
             var item = jsonconfig[i];
-            var id = p8Spread_GetJsonValue(item,"id")
+            var id = p8Spread_GetJsonValue(item, "id")
             if (id === data || data == undefined) {
                 jsonconfig.splice(i, 1);
-                if(id == "merge"){
-                    try{
+                if (id == "merge") {
+                    try {
                         var itemmerge = this.mergeList;
                         for (var l = itemmerge.length - 1; l >= 0; l--) {
                             var itemm = itemmerge[l];
-                            var colm = p8Spread_GetJsonValue(itemm,"col");
-                            var rowm = p8Spread_GetJsonValue(itemm,"row");
+                            var colm = p8Spread_GetJsonValue(itemm, "col");
+                            var rowm = p8Spread_GetJsonValue(itemm, "row");
                             if (colm == col && rowm == row) {
                                 itemmerge.splice(l, 1);
                             }
                         }
-                    }catch(ex){}
-                }else if(id == "backgroundColor"){
-                    mSpreadBook.ActiveSheet.SetBackground(col,row,this.DefaultSettings.backgroundColor)
+                    } catch (ex) { }
+                } else if (id == "backgroundColor") {
+                    this.SetBackground(col, row, this.DefaultSettings.backgroundColor)
                 }
             }
         }
-    }catch(ex){}
+    } catch (ex) { }
 }
-P8.SpreadSheet.prototype.GetConfigData = function (col,row,data){ //,col2,row2
+
+P8.SpreadSheet.prototype.GetConfigData = function (col, row, data) { //,col2,row2
     var jsondata = [];
     try {
         if (col == -247) {
@@ -14830,130 +16407,143 @@ P8.SpreadSheet.prototype.GetConfigData = function (col,row,data){ //,col2,row2
     } catch (ex) { }
     return jsondata;
 }
-P8.SpreadSheet.prototype.SetConfigData = function (col,row,data,id){
+P8.SpreadSheet.prototype.SetConfigData = function (col, row, data, id) {
     var colcell = p8_NumberToCell(parseInt(col) + 1);
-    if(!p8Spread_IsNull(id)){
-        this.Data[row][colcell].Config[id] = data;
-    }else{
-        this.Data[row][colcell].Config = data;
+    var Data = this.JSONCopy(this.Data);
+    if (!p8Spread_IsNull(id)) {
+        Data[row][colcell].Config[id] = data;
+    } else {
+        Data[row][colcell].Config = data;
     }
+    this.Data = Data;
 }
-P8.SpreadSheet.prototype.SetUnmerge = function (col,row,col2,row2){
-    try{
+P8.SpreadSheet.prototype.SetUnmerge = function (col, row, col2, row2) {
+    try {
         var item = this.GetSelectedIndexes();
-        if(col == undefined){ col = p8Spread_GetJsonValue(item, "col");}
-        if(col2 == undefined){ col2 = p8Spread_GetJsonValue(item, "col2");}
-        if(row == undefined){ row = p8Spread_GetJsonValue(item, "row");}
-        if(row2 == undefined){ row2 = p8Spread_GetJsonValue(item, "row2");}
-
+        if (col == undefined) { col = p8Spread_GetJsonValue(item, "col"); }
+        if (col2 == undefined) { col2 = p8Spread_GetJsonValue(item, "col2"); }
+        if (row == undefined) { row = p8Spread_GetJsonValue(item, "row"); }
+        if (row2 == undefined) { row2 = p8Spread_GetJsonValue(item, "row2"); }
+        if (col > col2) { col2 = col }
+        if (row > row2) { row2 = row }
         var len = 0
-        try{len = jsonconfig.length;}catch(ex){}
-        for(var m = row; m <=row2; m++ ){
+        try { len = jsonconfig.length; } catch (ex) { }
+        for (var m = row; m <= row2; m++) {
 
-            var col_a = p8_NumberToCell(col+1);
+            var col_a = p8_NumberToCell(col + 1);
             var jsonconfig = this.Data[m][col_a].Config
             var len = 0
-            try{len = jsonconfig.length;}catch(ex){}
-            for(var i = 0; i <len; i++ ){
+            try { len = jsonconfig.length; } catch (ex) { }
+            for (var i = 0; i < len; i++) {
                 var itemconfig = jsonconfig[i]
-                var id = p8Spread_GetJsonValue(itemconfig,"id")
-                if(id == "merge"){
+                var id = p8Spread_GetJsonValue(itemconfig, "id")
+                if (id == "merge") {
                     var value = itemconfig.element.value[0];
-                    var itemcol = p8Spread_GetJsonValue(value,"col")
-                    var itemcol2 = p8Spread_GetJsonValue(value,"col2")
-                    var itemrow = p8Spread_GetJsonValue(value,"row")
-                    var itemrow2 = p8Spread_GetJsonValue(value,"row2")
+                    var itemcol = p8Spread_GetJsonValue(value, "col")
+                    var itemcol2 = p8Spread_GetJsonValue(value, "col2")
+                    var itemrow = p8Spread_GetJsonValue(value, "row")
+                    var itemrow2 = p8Spread_GetJsonValue(value, "row2")
+                    try {
+                        var mergeListTemp = nwJson(this.mergeList, "col", col, false)
+                        mergeListTemp = nwJson(mergeListTemp, "row", row, false)
+                        if (mergeListTemp[0].col2 > itemcol2) {
+                            itemrow2 = mergeListTemp[0].col2;
+                        }
+                        if (mergeListTemp[0].row2 > itemrow2) {
+                            itemrow2 = mergeListTemp[0].row2;
+                        } 
+                    } catch (ex) { }
                     for (var k = itemrow; k <= itemrow2; k++) {
                         for (var j = itemcol; j <= itemcol2; j++) {
-                            this.DeleteConfigData(j, k,"merge");
+                            this.DeleteConfigData(j, k, "merge");
                             //clear value
                             if (col != j && row != k) {
-                                this.SetText(j, k,"");
+                                this.SetText(j, k, "");
                             }
                         }
                     }
                 }
             }
         }
-        if(itemcol == undefined){
-            var colu =  col;
-            var col2u  = col2;
-            var rowu =  row;
-            var row2u  = row2;
-        } else{
-            var colu =  col > itemcol ? itemcol : col;
-            var col2u  = col2 > itemcol2 || itemcol2 == undefined ? col2: itemcol2;
-            var rowu =  row > itemrow2 ? itemrow: row;
-            var row2u  = row2 > itemrow2 ? row2: itemrow2;
-        }
-        var option = {
-            col: colu,
-            col2: col2u,
-            row: rowu,
-            row2: row2u,
-        }
-        this.SetSelectedIndexes(option)
+        //if (itemcol == undefined) {
+        //    var colu = col;
+        //    var col2u = col2;
+        //    var rowu = row;
+        //    var row2u = row2;
+        //} else {
+        //    var colu = col > itemcol ? itemcol : col;
+        //    var col2u = col2 > itemcol2 || itemcol2 == undefined ? col2 : itemcol2;
+        //    var rowu = row > itemrow2 ? itemrow : row;
+        //    var row2u = row2 > itemrow2 ? row2 : itemrow2;
+        //}
+        //var option = {
+        //    col: colu,
+        //    col2: col2u,
+        //    row: rowu,
+        //    row2: row2u,
+        //}
+        //this.SetSelectedIndexes(option)
 
         this.ScrollActive = true;
         this.RenderNoEvent();
-    }catch(ex){}
+    } catch (ex) { }
 }
 
-P8.SpreadSheet.prototype.SetCrossMerge = function (col,row,col2,row2){
-    try{
+P8.SpreadSheet.prototype.SetCrossMerge = function (col, row, col2, row2) {
+    try {
         var item = this.GetSelectedIndexes();
-        if(col == undefined){ col = p8Spread_GetJsonValue(item, "col");}
-        if(col2 == undefined){ col2 = p8Spread_GetJsonValue(item, "col2");}
-        if(row == undefined){ row = p8Spread_GetJsonValue(item, "row");}
-        if(row2 == undefined){ row2 = p8Spread_GetJsonValue(item, "row2");}
+        if (col == undefined) { col = p8Spread_GetJsonValue(item, "col"); }
+        if (col2 == undefined) { col2 = p8Spread_GetJsonValue(item, "col2"); }
+        if (row == undefined) { row = p8Spread_GetJsonValue(item, "row"); }
+        if (row2 == undefined) { row2 = p8Spread_GetJsonValue(item, "row2"); }
 
         for (var i = row; i <= row2; i++) {
             this.SetMerge(col, i, col2, i, true);
         }
         this.ScrollActive = true;
         this.RenderNoEvent();
-    }catch(ex){}
+    } catch (ex) { }
 }
 
-P8.SpreadSheet.prototype.AutoSum = function (col,row,data,col2,row2){
+P8.SpreadSheet.prototype.AutoSum = function (col, row, data, col2, row2) {
     //data - sum,average,count numbers,max,min
-    try{
-       
+    try {
+
         var item = this.GetSelectedIndexes();
-        if(col == undefined){ col = p8Spread_GetJsonValue(item, "col");}
-        if(col2 == undefined){ col2 = p8Spread_GetJsonValue(item, "col2");}
-        if(row == undefined){ row = p8Spread_GetJsonValue(item, "row");}
-        if(row2 == undefined){ row2 = p8Spread_GetJsonValue(item, "row2");}
+        if (col == undefined) { col = p8Spread_GetJsonValue(item, "col"); }
+        if (col2 == undefined) { col2 = p8Spread_GetJsonValue(item, "col2"); }
+        if (row == undefined) { row = p8Spread_GetJsonValue(item, "row"); }
+        if (row2 == undefined) { row2 = p8Spread_GetJsonValue(item, "row2"); }
 
         var total = 0;
-        var fromcell = p8_NumberToCell(col+1)+(row+1);
-        var tocell = p8_NumberToCell(col2+1)+(row2+1);
-        if(fromcell == tocell){
+        var fromcell = p8_NumberToCell(col + 1) + (row + 1);
+        var tocell = p8_NumberToCell(col2 + 1) + (row2 + 1);
+        if (fromcell == tocell) {
             tocell = "";
         }
         var valuex = fromcell;
-        if(!p8Spread_IsNull(tocell)){
-            valuex += ":" +tocell;
+        if (!p8Spread_IsNull(tocell)) {
+            valuex += ":" + tocell;
         }
 
         data = data || "SUM";
-        valuex = "="+data.toUpperCase()+"("+valuex+")"
+        valuex = "=" + data.toUpperCase() + "(" + valuex + ")"
         var coldiff = col2 - col;
         var rowdiff = row2 - row;
-        if(coldiff > rowdiff){
-            var colu =col2+1;
-            var rowu =row2;
-        }else{
-            var colu =col2;
-            var rowu =row2+1;
+        if (coldiff > rowdiff) {
+            var colu = col2 + 1;
+            var rowu = row2;
+        } else {
+            var colu = col2;
+            var rowu = row2 + 1;
         }
-        this.SetFormula(colu,rowu,valuex);
+        this.SetFormula(colu, rowu, valuex);
 
         this.ScrollActive = true;
         this.RenderNoEvent();
-    }catch(ex){}
+    } catch (ex) { }
 }
-function _sfAdjustFormula(col, row, formula, colAdd, rowAdd,currentCol,currentRow) {
+function _sfAdjustFormula(col, row, formula, colAdd, rowAdd, currentCol, currentRow) {
     // Regular expression to match cell references in the formula (e.g., A1, B2)
     var cellReferenceRegex = /[A-Z]+\d+/g;
 
@@ -14984,7 +16574,7 @@ function _sfAdjustFormula(col, row, formula, colAdd, rowAdd,currentCol,currentRo
         if (cellcol < 0) {
             cellcol = 0;
         }
-        
+
         var newcell = p8Spread_RowColToCell(cellcol, cellrow)
         // Return the adjusted cell reference
         return newcell;
@@ -14996,8 +16586,70 @@ function _sfAdjustFormula(col, row, formula, colAdd, rowAdd,currentCol,currentRo
     return adjustedFormula;
 }
 
+
+//function _sfAdjustFormula(formula, colAdd, rowAdd) {
+//    // Regular expression to match cell references in the formula (e.g., A1, B2)
+//    var cellReferenceRegex = /[A-Z]+\d+/g;
+
+//    // Function to adjust cell references based on colAdd and rowAdd
+//    function adjustCellReference(currentData) {
+//        // Extract the column part of the cell reference (e.g., A, B)
+
+//        var cellcol = p8Spread_CellToRowCol(currentData).col;
+//        var cellrow = p8Spread_CellToRowCol(currentData).row;
+
+//        if (colAdd != 0) {
+//            if (cellcol >= col) {
+//                if (cellrow == currentRow || currentRow == Spread_ALLROW) {
+//                    cellcol = cellcol + colAdd;
+//                }
+//            }
+//        }
+//        if (rowAdd != 0) {
+//            if (cellrow >= row) {
+//                if (cellcol == currentCol || currentCol == Spread_ALLCOL) {
+//                    cellrow = cellrow + rowAdd;
+//                }
+//            }
+//        }
+//        if (cellrow < 0) {
+//            cellrow = 0;
+//        }
+//        if (cellcol < 0) {
+//            cellcol = 0;
+//        }
+
+//        var newcell = p8Spread_RowColToCell(cellcol, cellrow)
+//        // Return the adjusted cell reference
+//        return newcell;
+//    }
+
+//    // Replace cell references in the formula using the adjustCellReference function
+//    var adjustedFormula = formula.replace(cellReferenceRegex, adjustCellReference);
+
+//    return adjustedFormula;
+//}
+
 P8.SpreadSheet.prototype.JSONCopy = function (json) {
-    return JSON.parse(JSON.stringify(json));
+    //return JSON.parse(JSON.stringify(json));
+    // return structuredClone(json); // Reference the original object
+    const deepCopy = (obj) => {
+        if (obj === null || typeof obj !== "object") return obj;
+
+        if (Array.isArray(obj)) {
+            return obj.map(deepCopy); // Recursively copy arrays
+        }
+
+        const copy = {};
+        for (const key in obj) {
+            if (Object.hasOwn(obj, key)) {
+                copy[key] = deepCopy(obj[key]); // Recursively copy objects
+            }
+        }
+        return copy;
+    };
+
+    return deepCopy(json);
 }
 P8.SpreadSheet.prototype.JSONRemoveDuplicateRows = function (json) {
     // Create a Set to store unique string representations of the objects
@@ -15035,50 +16687,1006 @@ function _sfJSONConvertKeysToLowerCase(json) {
         return json; // Base case: return non-object values as is
     }
 }
-//karl edit end
 
 
 
-class P8ConditionalFormat {
-    static Contains = 1;
-    static Equal = 1;
+
+P8.SpreadSheet.prototype.GetFormulaList = function (c, r, c2, r2) {
+    var json = [];
+    c = c == undefined ? this.CellIndexes.col : c;
+    r = r == undefined ? this.CellIndexes.row : r;
+    c2 = c2 == undefined ? c : c2;
+    r2 = r2 == undefined ? r : r2;
+    try {
+        var colcell = p8_NumberToCell(parseInt(c) + 1);
+        if (c == -247 && r == -247) {
+            var len = 0
+            try { len = this.Data.length; } catch (ex) { }
+            //loop row data
+            for (var i = 0; i < len; i++) {
+                var item = this.Data[i];
+                var keys = Object.keys(item);
+                var len_j = 0
+                try { len_j = keys.length; } catch (ex) { }
+                for (var j = 0; j < len_j; j++) {
+                    var key = keys[j];
+                    var formula = item[key].formula;
+                    if (!p8Spread_IsNull(formula)) {
+                        var data = [];
+                        data.col = j;
+                        data.row = i;
+                        data.formula = formula;
+                        json.push(data);
+                    }
+                }
+            }
+        } else {
+            for (var row_r = r; row_r <= r2; row_r++) {
+                for (var col_r = c; col_r <= c2; col_r++) {
+                    var formula = this.Data[row_r][p8_NumberToCell(col_r + 1)].formula;
+                    if (!p8Spread_IsNull(formula)) {
+                        var data = [];
+                        data.col = col_r;
+                        data.row = row_r;
+                        data.formula = formula;
+                        json.push(data);
+                    }
+                }
+            }
+        }
+    } catch (ex) { }
+    return json;
+}
+
+P8.SpreadSheet.prototype.RefreshFormula = function (c, r, c2, r2) {
+    //c = c == undefined ? this.CellIndexes.col : c;
+    //r = r == undefined ? this.CellIndexes.row : r;
+    c = c == undefined ? Spread_ALLCOL : c;
+    r = r == undefined ? Spread_ALLROW : r;
+    c2 = c2 == undefined ? c : c2;
+    r2 = r2 == undefined ? r : r2;
+    try {
+        //compute formula
+        this.CellFomulaList = [];
+        var json = this.GetFormulaList(c, r, c2, r2)
+        for (fi = 0; fi < json.length; fi++) {
+            this.SetFormula(json[fi].col, json[fi].row, json[fi].formula)
+        }
+    } catch (ex) { }
+
+}
+
+
+// Function to replicate COUNTIF functionality
+function _sfCountIf(range, criterion) {
+    var count = 0;
+    for (var i = 0; i < range.length; i++) {
+        if (range[i].toLowerCase() === criterion.toLowerCase()) {
+            count++;
+        }
     }
-class P8Themes {
-    static DEFAULT = 1;
-    static FANCY = 2;
+    return count;
+}
+
+// Function to replicate COUNTA functionality
+function _sfCountA(range) {
+    var count = 0;
+    for (var i = 0; i < range.length; i++) {
+        if (range[i] !== undefined && range[i] !== null && range[i] !== '') {
+            count++;
+        }
+    }
+    return count;
+}
+
+// Function to replicate COUNT functionality
+function _sfCount(range) {
+    return range.length;
+}
+
+// Function to replicate MIN functionality
+function _sfMin(range) {
+    return Math.min.apply(null, range);
+}
+
+// Function to replicate MAX functionality
+function _sfMax(range) {
+    return Math.max.apply(null, range);
+}
+
+// Function to replicate AVG and AVERAGE functionality
+function _sfAvg(range) {
+    var sum = 0;
+    for (var i = 0; i < range.length; i++) {
+        sum += _sfGetNum(range[i]);
+    }
+    return sum / range.length;
+}
+
+// Function to replicate SUM functionality
+function _sfSum(values) {
+    var total = 0;
+    try {
+        if (values.length == undefined) {
+            try {
+                if (!isNaN(values)) {
+                    total = _sfGetNum(values);
+                }
+            } catch (ex) { }
+        } else {
+
+            for (var i = 0; i < values.length; i++) {
+                try {
+                    var value = _sfGetNum(values[i]);
+                    if (!isNaN(value)) {
+                        total += value;
+                    }
+                } catch (ex) { }
+            }
+        }
+    } catch (ex) { }
+    return total;
+}
 
 
-    //constructor() {
+function _sfSumIf(range, criteria, sum_range) {
+    var sum = 0;
+    for (var i = 0; i < sum_range.length; i++) {
+        criteria = criteria + "";
+        if (range[i].toLowerCase() === criteria.toLowerCase()) {
+            sum += _sfGetNum(sum_range[i]);
+        }
+    }
+    return sum;
+}
 
-    //    const privateVariable = 'private value'; // Private variable at the constructor scope
-    //    this.publicVariable = 'public value'; // Public property
-
-    //    this.privilegedMethod = function() {
-    //        // Public Method with access to the constructor scope variables
-    //        console.log(privateVariable);
-    //    };
+function _sfSumIfs(sum_range, ...args) {
+    //if (args.length % 2 !== 0) {
+    //    throw "Arguments must be provided in pairs (criteria_range, criteria).";
     //}
 
-    //// Prototype methods:
-    //publicMethod() {
-    //    console.log(this.publicVariable);
-    //}
+    var sum = 0;
 
-    //// Static properties shared by all instances
-    //static staticProperty = 'static value';
+    for (var i = 0; i < sum_range.length; i++) {
+        var match = true;
 
-    //static staticMethod() {
-    //    console.log(this.staticProperty);
-    //}
+        for (var j = 0; j < args.length; j += 2) {
+            var criteria_range = args[j];
+            var criteria = args[j + 1] + "";
+
+            //if (criteria_range.length !== sum_range.length) {
+            //    throw "Criteria range length must match sum range length.";
+            //}
+            if (criteria === "<>") {
+                if (criteria_range[i] === "") {
+                    match = false;
+                    break;
+                }
+            } else {
+                if (criteria_range[i].toLowerCase() !== criteria.toLowerCase()) {
+                    match = false;
+                    break;
+                }
+            }
+        }
+        if (match) {
+            sum += _sfGetNum(sum_range[i]);
+        }
     }
 
-// We can add properties to the class prototype
-//P8Themes.prototype.additionalMethod = function() {
-//    console.log(this.publicVariable);
-//};
-//myInstance.publicMethod();       // "public value"
-//myInstance.additionalMethod(); // "public value"
-//myInstance.privilegedMethod(); // "private value"
-//P8Themes.staticMethod(); 
+    return sum;
+}
+
+function _sfCountIfs(...args) {
+    //if (args.length % 2 !== 0) {
+    //    throw "Arguments must be provided in pairs (criteria_range, criteria).";
+    //}
+
+    // Initialize count
+    var count = 0;
+
+    // Get the count range
+    var count_range = args[0];
+
+    // Iterate over each value in the count range
+    for (var i = 0; i < count_range.length; i++) {
+        // Flag to track if all criteria match for the current value
+        var match = true;
+
+        // Iterate over each pair of criteria range and criteria
+        for (var j = 0; j < args.length; j += 2) {
+            var criteria_range = args[j];
+            var criteria = args[j + 1] + "";
+
+            // Check if the length of the criteria range matches the count range
+            //if (criteria_range.length !== count_range.length) {
+            //    throw "Criteria range length must match count range length.";
+            //}
+
+            var criteria_range_val = criteria_range[i];
+            var criteria_val = criteria;
+            if (!isNaN(criteria_range_val)) {
+                criteria_range_val = _sfGetNum(criteria_range_val) + "";
+            }
+            if (!isNaN(criteria_val)) {
+                criteria_val = _sfGetNum(criteria_val) + "";
+            }
+            // Check if the current value in the criteria range matches the criteria
+            if (criteria_range_val.toLowerCase() !== criteria_val.toLowerCase()) {
+                match = false;
+                break; // Exit the loop if criteria not met
+            }
+        }
+
+        // If all criteria match for the current value, increment count
+        if (match) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+function _sfRound(value, decimals) {
+    if (isNaN(value) || isNaN(decimals)) {
+        throw new Error("Invalid number or decimal places");
+    }
+    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+}
+
+// Function to replicate DAY functionality
+function _sfDay(date) {
+    var d = new Date(date);
+    if (isNaN(d.getTime())) {
+        return "#VALUE!";
+    }
+    return d.getDate();
+}
+
+// Function to replicate YEAR functionality
+function _sfYear(date) {
+    var d = new Date(date);
+    if (isNaN(d.getTime())) {
+        return "#VALUE!";
+    }
+    return d.getFullYear();
+}
+
+// Function to replicate MONTH functionality
+function _sfMonth(date) {
+    var d = new Date(date);
+    if (isNaN(d.getTime())) {
+        return "#VALUE!";
+    }
+    return d.getMonth() + 1;
+}
+
+// Function to replicate TEXT functionality
+function _sfText(value, format) {
+    var dateFormats = {
+        "d": { options: { day: "numeric" } },
+        "dd": { options: { day: "2-digit" } },
+        "m": { options: { month: "numeric" } },
+        "mm": { options: { month: "2-digit" } },
+        "mmm": { options: { month: "short" } },
+        "mmmm": { options: { month: "long" } },
+        "yy": { options: { year: "2-digit" } },
+        "yyyy": { options: { year: "numeric" } },
+        "d/m/yyyy": { options: { day: "numeric", month: "numeric", year: "numeric" }, separator: "/" },
+        "dd/mm/yyyy": { options: { day: "2-digit", month: "2-digit", year: "numeric" }, separator: "/" },
+        "m/d/yyyy": { options: { day: "numeric", month: "numeric", year: "numeric" }, separator: "/" },
+        "mm/dd/yyyy": { options: { day: "2-digit", month: "2-digit", year: "numeric" }, separator: "/" },
+        "d-m-yyyy": { options: { day: "numeric", month: "numeric", year: "numeric" }, separator: "-" },
+        "dd-mm-yyyy": { options: { day: "2-digit", month: "2-digit", year: "numeric" }, separator: "-" },
+        "m-d-yyyy": { options: { day: "numeric", month: "numeric", year: "numeric" }, separator: "-" },
+        "mm-dd-yyyy": { options: { day: "2-digit", month: "2-digit", year: "numeric" }, separator: "-" },
+        "d mmm yyyy": { options: { day: "numeric", month: "short", year: "numeric" }, separator: " " },
+        "d mmmm yyyy": { options: { day: "numeric", month: "long", year: "numeric" }, separator: " " },
+        "mmmm d, yyyy": { options: { day: "numeric", month: "long", year: "numeric" }, separator: " " },
+        "mmm d, yyyy": { options: { day: "numeric", month: "short", year: "numeric" }, separator: " " },
+        "yyyy-mm-dd": { options: { year: "numeric", month: "2-digit", day: "2-digit" }, separator: "-" },
+        "yyyy/mm/dd": { options: { year: "numeric", month: "2-digit", day: "2-digit" }, separator: "/" },
+        "dd mmm yyyy": { options: { day: "2-digit", month: "short", year: "numeric" }, separator: " " },
+        "dd mmmm yyyy": { options: { day: "2-digit", month: "long", year: "numeric" }, separator: " " }
+    };
+
+    var date = new Date(value);
+    if (isNaN(date.getTime())) {
+        return "#VALUE!";
+    }
+
+    if (dateFormats[format.toLowerCase()]) {
+        var options = dateFormats[format.toLowerCase()].options;
+        var separator = dateFormats[format.toLowerCase()].separator || "/";
+
+        var formattedDate = date.toLocaleDateString("en-US", options);
+
+        if (separator !== "/") {
+            formattedDate = formattedDate.replace(/\//g, separator);
+        }
+
+        return formattedDate;
+    }
+    return "#VALUE!";
+}
 
 
+function _sfGetNum(val) {
+    try {
+        val = parseFloat((val).replace(/,/g, "")) || 0;
+    } catch (ex) { }
+    return val;
+}
+
+// Function to parse and evaluate the formula
+
+
+function _sfEvaluateFormula(obj, c, r, formula) {
+    var isOperatorsOnly = isValidFormula(formula);
+    // Remove leading '=' if present
+    for (var i = 0; i < conFormulaFunc.length; i++) {
+        var f = conFormulaFunc[i].toUpperCase() + "("; // Convert function to uppercase for case-insensitive comparison
+        var searchString = "=" + f.toUpperCase();
+        var index = formula.toUpperCase().indexOf(searchString);
+
+        while (index !== -1) {
+            // Replace the function in the formula
+            formula = formula.substring(0, index) + "=" + f + formula.substring(index + searchString.length);
+
+            // Search for the next occurrence of the function
+            index = formula.toUpperCase().indexOf(searchString, index + f.length);
+        }
+    }
+
+    if (formula.startsWith('=')) {
+        formula = formula.slice(1);
+    }
+
+    var ranges = [];
+    //var regex = /[A-Z]+\d+:[A-Z]+\d+|[A-Z]+\d+/g;
+    var regex = /[A-Z]+\d+:[A-Z]+\d+|[A-Z]+\d+|"[^"]+"|\d+/g;
+    var matches = formula.match(regex);
+
+    var validCellRanges = [];
+    var invalidCellRanges = [];
+    if (matches) {
+        matches.forEach(function (match) {
+            if (_sfIsValidCellRangeFormat(match)) {
+                validCellRanges.push(match);
+            } else {
+                invalidCellRanges.push(match);
+            }
+        });
+        ranges = invalidCellRanges.concat(validCellRanges);
+    }
+
+
+    /*var matches = extractRangesFromFormula(formula);*/
+    for (var i = 0; i < ranges.length; i++) {
+        try {
+            var valuelist = [];
+            var iscell = _sfIsValidCellRangeFormat(ranges[i]);
+            if (iscell) {
+                var celllist = p8Spread_listCells(ranges[i]);
+                //_sfLoadFormulaValue(celllist, obj, formula, c, r, function(result) {
+                //    console.log('Processing complete. Result:', result);
+                //    valuelist.push(...result);  // Spread operator to push all elements
+                //    // Do something with valuelist or process further
+                //});
+                for (var f = 0; f < celllist.length; f++) {
+                    var col = cellA1ToIndex(celllist[f]).col;
+                    var row = cellA1ToIndex(celllist[f]).row;
+                    try {
+                        if (row >= obj.Data.length) {
+                            break;
+                        }
+                        //var value = obj.GetValue(col, row);
+                        var value = obj.Data[row][p8_NumberToCell(col + 1)].value;
+                        if (!isNaN(parseFloat(value)) && value < 0) {
+                            value = " "+value;
+                            //  console.log('The value is a negative number:', value);
+                        } else {
+                            // console.log('The value is either not a number or not negative.');
+                        }
+                        _sfLoadFormulaRef(obj, celllist[f], col, row, c, r, formula);
+                        valuelist.push(value)
+                    } catch (ex) { }
+                }
+            } else {
+                valuelist.push(ranges[i])
+            }
+            if (iscell && ranges[i].includes(":")) {
+                var resultString = valuelist.map(function (item) {
+                    return '"' + item + '"';
+                    //return isNaN(item) ? '"' + item + '"' : item;
+                }).join(", ");
+                resultString = "[" + resultString + "]"
+            } else {
+                //var insideformula = _sfIsRangeUsed(formula, ranges[i]);
+                if (iscell) {
+                    //if (!insideformula) {
+                    //    if (!isNaN(valuelist[0])) {
+                    //        resultString = valuelist[0];
+                    //    } else {
+                    //        resultString = `"` + valuelist[0] + `"`;
+                    //    }
+                    //} else {
+                    //    resultString = `["` + valuelist[0] + `"]`;
+                    //}
+                    if (!isNaN(valuelist[0])) {
+                        resultString = valuelist[0];
+                    } else {
+                        resultString = `"` + valuelist[0] + `"`;
+                    }
+                }
+                else {
+                    //if (isNaN(valuelist[0])) {
+                    //    resultString = `[` + valuelist[0] + `]`;
+                    //if (!insideformula) {
+                    resultString = valuelist[0];
+                    //} else {
+                    //resultString = `[` + valuelist[0] + `]`;
+                }
+                //}
+                //}
+            }
+            if(resultString == ""){
+                //    var isValid = isFormulaValid(formula, ranges)
+                if(isOperatorsOnly){
+                    resultString = "0";
+                }
+                //    //var operation = isMathOperationOnly(formula, resultString);
+            }
+            // Convert cell references to corresponding values
+            formula = formula.replace(ranges[i], resultString);
+        } catch (ex) { }
+    }
+
+    formula = formula.replace(excelFunctions, function (match) {
+        var functionName = match.slice(0, -1); // Remove the opening parenthesis
+        functionName = functionName.toUpperCase();
+        //return '_' + functionMap[functionName].name + '('; // Call the corresponding JavaScript function
+        return functionMap[functionName].name + '('; // Call the corresponding JavaScript function
+    });
+
+    // Regular expression to match cell references, string literals, and numbers
+    var regex = /("[^"]+"|[A-Z]+\d+|\d+|[+&])/g;
+    var matches = formula.match(regex);
+    if (matches) {
+        if (matches.includes('+') && matches.includes('&')) {
+            return "#VALUE!";
+        }
+        if (matches.includes('&')) {
+
+            var formulatemp = "";
+            matches.forEach(function (match) {
+                if (match === '&') {
+                    formulatemp += "+";
+                } else {
+                    formulatemp += match;
+                }
+            });
+            formula = formulatemp;
+        }
+    }
+    // Evaluate the modified formula
+    return _sfExecFormula(formula);
+}
+function _sfExecFormula(expr) {
+    try {
+        return new Function('return ' + expr)();
+    } catch (err) { return "#VALUE!"; }
+}
+//function _sfLoadFormulaValue(celllist, obj, formula, c, r, callback) {
+//    var chunkSize = 1000;  // Define the chunk size
+//    var index = 0;
+//    var valuelist = [];  // Local variable to store the values
+
+//    function LoadFormulaValue() {
+//        var end = Math.min(index + chunkSize, celllist.length);
+
+//        for (var f = index; f < end; f++) {
+//            var col = cellA1ToIndex(celllist[f]).col;
+//            var row = cellA1ToIndex(celllist[f]).row;
+//            try {
+//                if (row >= obj.Data.length) {
+//                    break;
+//                }
+//                var value = obj.Data[row][p8_NumberToCell(col + 1)].value;
+//                _sfLoadFormulaRef(obj, celllist[f], col, row, c, r, formula);
+//                valuelist.push(value);
+//            } catch (ex) { 
+//                console.error('Error processing cell:', celllist[f], ex);
+//            }
+//        }
+
+//        index += chunkSize;
+//        if (index < celllist.length) {
+//            // Schedule the next chunk to process
+//            setTimeout(LoadFormulaValue, 0);
+//        } else {
+//            // All chunks processed, call the callback with results
+//            callback(valuelist);
+//        }
+//    }
+
+//    // Start processing
+//    LoadFormulaValue();
+//}
+
+function isValidFormula(formula) {
+    // Remove leading '=' if present
+    formula = formula.startsWith('=') ? formula.slice(1) : formula;
+
+    // Regular expression to match valid cell references (e.g., A1, B2, Z99)
+    var cellReferenceRegex = /([A-Z]+\d+)/g;
+
+    // Replace valid cell references with a number placeholder (e.g., 1)
+    var formulaWithPlaceholders = formula.replace(cellReferenceRegex, '1');
+
+    // Regular expression to validate the formula structure
+    // It allows numbers, operators, and correctly matched parentheses
+    var validFormulaRegex = /^[\d+\-*/().]+$/;
+
+    // Check if the formula contains only valid characters
+    if (!validFormulaRegex.test(formulaWithPlaceholders)) {
+        return false;
+    }
+
+    // Check if the parentheses are balanced and operators are placed correctly
+    var parenthesesStack = [];
+    for (var i = 0; i < formulaWithPlaceholders.length; i++) {
+        var char = formulaWithPlaceholders[i];
+        if (char === '(') {
+            parenthesesStack.push(char);
+        } else if (char === ')') {
+            if (parenthesesStack.length === 0) {
+                return false; // Unmatched closing parenthesis
+            }
+            parenthesesStack.pop();
+        }
+    }
+    if (parenthesesStack.length !== 0) {
+        return false; // Unmatched opening parenthesis
+    }
+
+    // Regular expression to validate proper placement of numbers and operators
+    var operatorPlacementRegex = /^(?:\d+|\d*\.\d+)(?:[+\-*/](?:\d+|\d*\.\d+|\(\d+(?:[+\-*/]\d+)*\)))*$/;
+
+    // Check if the formula has valid placement of numbers and operators
+    return operatorPlacementRegex.test(formulaWithPlaceholders);
+}
+
+
+
+function _sfIsValidCellRangeFormat(cellRange) {
+    // Define a regular expression pattern to match valid cell range formats
+    var pattern = /^[A-Za-z]+\d+(:[A-Za-z]+\d+)?$/;
+    // Test if the cell range format matches the pattern
+    if (pattern.test(cellRange)) {
+        // If the format is valid, check if it needs to be swapped
+        var cells = cellRange.split(':');
+        if (cells.length === 2) {
+            var cell1 = cells[0];
+            var cell2 = cells[1];
+            // Extract row and column numbers
+            var row1 = parseInt(cell1.match(/\d+/)[0]);
+            var row2 = parseInt(cell2.match(/\d+/)[0]);
+            // If row1 > row2, swap the cells to ensure row1 <= row2
+            if (row1 > row2) {
+                cellRange = cell2 + ':' + cell1;
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
+P8.SpreadSheet.prototype.SetRowHeight = function (r, h) {
+    //c = c == undefined ? this.CellIndexes.col : c;
+    //r = r == undefined ? this.CellIndexes.row : r;
+    if (r == undefined || h == undefined) {
+        return;
+    }
+    try {
+        if (r == Spread_ALLROW) {
+            var len = 0
+            try { len = this.Data.length; } catch (ex) { }
+            //loop row data
+            for (var i = 0; i < len; i++) {
+                this.Data[r].aagrowHeight = h;
+            }
+        } else {
+            this.Data[r].aagrowHeight = h;
+        }
+        this.RenderNoEvent();
+    } catch (ex) { }
+
+}
+
+P8.SpreadSheet.prototype.GetRowHeight = function (r) {
+    try {
+        return this.Data[r].aagrowHeight || def_Height;
+    } catch (ex) { }
+}
+
+P8.SpreadSheet.prototype.SetFocus = function (c, r) {
+
+    if (c == undefined || r == undefined) {
+        return;
+    }
+    try {
+        var startCol = c;
+        var startRow = r;
+        if (this.FreezeCol < startCol && this.FreezeCol >= 0) {
+            startCol = c - this.FreezeCol;
+        }
+        if (this.FreezeRow < startRow && this.FreezeRow >= 0) {
+            startRow = r - this.FreezeRow;
+        }
+        this.startCol = startCol + 1;
+        this.startRow = startRow + 1;
+        this.CellIndexes.Col = c;
+        this.CellIndexes.Col2 = c;
+        this.CellIndexes.Row = r;f
+        this.CellIndexes.Row2 = r;
+        this.RenderNoEvent();
+    } catch (ex) { }
+
+}
+P8.SpreadSheet.prototype.GetFocus = function () {
+    try {
+        return {
+            row: this.CellIndexes.Row
+            , col: this.CellIndexes.Col
+        };
+    } catch (ex) { }
+}
+
+
+P8.SpreadSheet.prototype.SetExportHide = function (name, rowexporthide, colexporthide) {
+    try {
+        try {
+            var key = "name"
+            var columnkey = name
+            var jsondata_delete = this.exportList;
+            for (var i = jsondata_delete.length - 1; i >= 0; i--) {
+                var item = jsondata_delete[i];
+
+                var id = item[key];
+                if (columnkey == id) {
+                    jsondata_delete.splice(i, 1);
+                }
+            }
+        } catch (ex) {
+        }
+        if ((rowexporthide == undefined || rowexporthide == "")
+            && (colexporthide == undefined || colexporthide == "")) {
+
+        } else {
+            this.exportList.push({
+                name: name,
+                rowexporthide: rowexporthide,
+                colexporthide: colexporthide,
+            });
+        }
+    } catch (ex) { }
+}
+P8.SpreadSheet.prototype.GetExportHide = function (name) {
+    try {
+        if (name == "" || name == undefined) {
+            return this.exportList
+        } else {
+            return nwJson(this.exportList, "name", name, false);
+        }
+    } catch (ex) { }
+}
+
+function _sfSpreadAdjustMergeList(obj, index, rowAdd = 0, colAdd = 0) {
+    try {
+        for (var i = obj.mergeList.length - 1; i >= 0; i--) {
+            var item = obj.mergeList[i];
+            var updatemerge = false;
+            var colorig = item.col;
+            var roworig = item.row;
+            // Adjust rows
+            if (rowAdd !== 0) {
+                if (item.row >= index) {
+                    item.row += rowAdd;
+                    updatemerge = true;
+                }
+                if (item.row2 >= index) {
+                    item.row2 += rowAdd;
+                    updatemerge = true;
+                }
+                if (rowAdd < 0 && item.row > index + rowAdd - 1) {
+                    item.row = Math.max(item.row + rowAdd, index);
+                    updatemerge = true;
+                }
+                if (rowAdd < 0 && item.row2 > index + rowAdd - 1) {
+                    item.row2 = Math.max(item.row2 + rowAdd, index);
+                    updatemerge = true;
+                }
+            }
+
+            // Adjust columns
+            if (colAdd !== 0) {
+                if (item.col >= index) {
+                    item.col += colAdd;
+                    updatemerge = true;
+                }
+                if (item.col2 >= index) {
+                    item.col2 += colAdd;
+                    updatemerge = true;
+                }
+                if (colAdd < 0 && item.col > index + colAdd - 1) {
+                    item.col = Math.max(item.col + colAdd, index);
+                    updatemerge = true;
+                }
+                if (colAdd < 0 && item.col2 > index + colAdd - 1) {
+                    item.col2 = Math.max(item.col2 + colAdd, index);
+                    updatemerge = true;
+                }
+            }
+            if (updatemerge) {
+                obj.DeleteConfigData(item.col, item.row, "merge");
+                var col_a = p8_NumberToCell(item.col + 1);
+                var jsonconfig = obj.Data[item.row]?.[col_a]?.Config || null;
+                if (!jsonconfig || jsonconfig.length === 0) {
+
+                }else{
+                    obj.SetMerge(item.col, item.row, item.col2, item.row2);
+                }
+            }
+        }
+    } catch (ex) {
+    }
+}
+
+    
+    
+    P8.SpreadSheet.prototype.SetColumnName = function (c, data) {
+        if (data != undefined) {
+            try {
+                this.ColumnConfig[c].ColumName = data;
+            } catch (err) {
+            }
+        }
+    }
+
+    P8.SpreadSheet.prototype.GetColumnName = function (c) {
+        try {
+            return this.ColumnConfig[c].ColumName;
+        } catch (err) {
+            return "";
+        }
+    }
+    P8.SpreadSheet.prototype.SetHeaderFieldRequired = function (c, data) {
+        if (data != undefined) {
+            try {
+                if(data == true || data == false){
+                    this.ColumnConfig[c].HeaderColumnReq = "nwFieldreq";
+                }
+            } catch (err) {
+            }
+        }
+    }
+    P8.SpreadSheet.prototype.GetHeaderFieldRequired = function (c) {
+        return this.ColumnConfig[c].HeaderColumnReq;
+    }
+    P8.SpreadSheet.prototype.SetHeaderFieldOptional = function (c, data) {
+        if (data != undefined) {
+            try {
+                if(data == true || data == false){
+                    this.ColumnConfig[c].HeaderColumnReq = "nwFieldopt";
+                }
+            } catch (err) {
+            }
+        }
+    }
+    P8.SpreadSheet.prototype.GetHeaderFieldOptional = function (c) {
+        return this.ColumnConfig[c].HeaderColumnReq;
+    }
+    
+
+    $(document).on("keydown", ".P8Spread_Input.isNumber.numC", function (e) {
+        var maxlength = parseInt($(this).attr("maxlength"));
+        if (maxlength > 0) {
+            var allowNegative = false;
+            var less = 0;
+            if ($(this).hasClass("nwNegative")) { allowNegative = true; less = 1; }
+            if (!allowNegative) {
+                var currentValue = $(this).val();
+                if (currentValue.startsWith("-")) {
+                    $(this).val(currentValue.replace("-", ""));
+                }
+            }
+            var nwdp = parseInt($(this).attr("nwdp"));
+            if ($(this).attr("nwdp") == undefined) { nwdp = 2 };
+            if(nwdp == 0){
+                return true;
+            }else{
+                var number = maxlength - 1 - nwdp - less;
+
+                return _sfDecimalFormat($(this), e.which, number, nwdp);
+            }
+        }
+    });
+
+    function _sfDecimalFormat(id, KeyCode, IntLength, DecimalLength) {
+        var sliptvalue;
+        //  var index = crnwTR.index();
+        //if (KeyCode == 109 || KeyCode == 189) {
+        //    // IntLength = IntLength + 1;
+        //    hasNeg = true;
+        //}
+
+        if ($(id).val().indexOf('-') == -1)
+            hasNeg = false;
+        else
+            hasNeg = true;
+
+
+        if (hasNeg)
+            IntLength = IntLength + 1;
+
+        var getvalue = $(id).val()
+        console.log("Value " + getvalue)
+        //39 - right, 40 - down, 37 - left, 38 - up
+        if (KeyCode == 8 || KeyCode == 37 || KeyCode == 38 || KeyCode == 39 || KeyCode == 40 || KeyCode == 65)
+            return true;
+        else if (KeyCode == 189 || KeyCode == 109)
+            return true;
+
+        if ($(id).val().indexOf('.') != -1 && (KeyCode == 190 || KeyCode == 110))
+            event.preventDefault();
+
+
+        var positionCursor = $(id).prop("selectionStart");
+        console.log("positionCursor " + positionCursor)
+
+        var selectionlen = 0;
+        try {
+            selectionlen = window.getSelection().toString().length;
+        } catch (ex) { }
+        if (selectionlen > 0) {
+            getvalue = getvalue.substring(0, positionCursor) + getvalue.substring(positionCursor + selectionlen, getvalue.length);
+        }
+
+        //var positionCursor = $(".txtCntrMinVolReq").prop("selectionStart");
+        var ifIntOrDec;
+        var IntLen = IntLength;
+        var DecLen = DecimalLength;
+
+        if (getvalue.indexOf(".") != -1) {
+            sliptvalue = getvalue.split(".");
+            var WholeNumber = sliptvalue[0].length;
+            var DecimalPlace = sliptvalue[1].length;
+
+            if (positionCursor >= 0 && positionCursor <= WholeNumber)
+                ifIntOrDec = "Int";
+            else if (positionCursor >= (WholeNumber + 1) && positionCursor <= (WholeNumber + 1) + DecimalPlace)
+                ifIntOrDec = "Dec";
+
+            if (sliptvalue[0].length >= IntLen && ifIntOrDec == "Int")
+                return false;
+            else if (sliptvalue[1].length >= DecLen && ifIntOrDec == "Dec")
+                return false;
+            else
+                return true;
+
+        } else {
+
+            if (KeyCode == 190 || KeyCode == 110) {
+                if ($(id).val().indexOf('.') != -1 && (KeyCode == 190 || KeyCode == 110))
+                    event.preventDefault();
+            } else {
+                if (getvalue.length >= IntLen)
+                    return false;
+                else
+                    return true;
+            }
+        }
+    }
+
+    P8.SpreadSheet.prototype.RefreshCheckBoxHeader = function (c) {
+        try{
+            var CheckAll = false;
+            for (row = 0; row < this.Data.length; row++) {
+                var CheckAllRow = this.Data[row][p8_NumberToCell(c + 1)].value;
+                if (_sfGetCheckboxValue(CheckAllRow)) {
+                    CheckAll = true;
+                } else {
+                    if(this.GetEnabled((c),row)){
+                        CheckAll = false;
+                        break;
+                    }
+                }
+            }
+            //if (CheckAll) {
+            this.ColumnConfig[c].CheckBoxValue = CheckAll;
+            //}
+        }catch(ex){}
+    }
+
+    
+    P8.SpreadSheet.prototype.SetDataValidation = function (c, r, Type, option, icol2, irow2) {
+        if(option == undefined){ option = {}}
+        var irow = (r == undefined) ? this.CellIndexes.Row : r; icol = (c == undefined) ? this.CellIndexes.Col : c; icol2 = (icol2 == undefined) ? ((c == undefined) ? this.CellIndexes.Col2 : c) : icol2; irow2 = irow2 == undefined ? ((r == undefined) ? this.CellIndexes.Row2 : r) : irow2;
+        if (Type == "list"){
+            if(irow == Spread_ALLROW){
+                irow = 0;
+                irow2 = this.GetMaxRow()-1;
+            }
+            if(icol == Spread_ALLCOL){
+                icol = 0;
+                icol2 = this.GetMaxCol()-1;
+            }
+            // Delete existing data validation between icol and icol2, irow and irow2
+            this.dataValidationList = this.dataValidationList.filter(function(item) {
+                return item.col < icol || item.col > icol2 || item.row < irow || item.row > irow2;
+            });
+
+            // Loop to insert new data validation within the specified range
+            for (var col = icol; col <= icol2; col++) {
+                for (var row = irow; row <= irow2; row++) {
+                    this.dataValidationList.push({
+                        col: col, 
+                        row: row, 
+                        type: Type, 
+                        option: {
+                            formula1: option.formula1 || "",
+                            allowBlank: option.allowBlank || true,
+                            showErrorMessage: option.showErrorMessage || true,
+                            errorTitle: option.errorTitle || "Invalid Input",
+                            error: option.error || "Please select a valid option."
+                        }
+                    });
+                }
+            }
+
+
+        }
+    }
+
+    class P8ConditionalFormat {
+        static Contains = 1;
+        static Equal = 1;
+        }
+    class P8Themes {
+        static DEFAULT = 1;
+        static FANCY = 2;
+
+
+        //constructor() {
+
+        //    const privateVariable = 'private value'; // Private variable at the constructor scope
+        //    this.publicVariable = 'public value'; // Public property
+
+        //    this.privilegedMethod = function() {
+        //        // Public Method with access to the constructor scope variables
+        //        console.log(privateVariable);
+        //    };
+        //}
+
+        //// Prototype methods:
+        //publicMethod() {
+        //    console.log(this.publicVariable);
+        //}
+
+        //// Static properties shared by all instances
+        //static staticProperty = 'static value';
+
+        //static staticMethod() {
+        //    console.log(this.staticProperty);
+        //}
+        }
+
+        // We can add properties to the class prototype
+        //P8Themes.prototype.additionalMethod = function() {
+        //    console.log(this.publicVariable);
+        //};
+        //myInstance.publicMethod();       // "public value"
+        //myInstance.additionalMethod(); // "public value"
+        //myInstance.privilegedMethod(); // "private value"
+        //P8Themes.staticMethod(); 

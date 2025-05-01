@@ -1,0 +1,101 @@
+﻿.btn-tb-action.btn-tb-collapse ._icon {
+    background-image: url(../media/icons/toolbar/icon-collapse-blue-18x18.png);
+}
+
+.btn-tb-action.btn-tb-expand ._icon {
+    background-image: url(../media/icons/toolbar/icon-expand-blue-18x18.png);
+}
+
+/*Tabs Customize Design*/
+.nk .nk-accordion .nk-li .nk-li-content {
+    line-height: 13px;
+}
+
+.nk .tabs-lbl:first-of-type {
+    margin-left: 0px;
+}
+
+.nk .tabs-lbl {
+    padding: 4px 11px;
+    padding-bottom: 7px;
+    font-size: 11px;
+}
+
+/*.nk .tabs {
+    background-color: transparent;
+}*/
+
+.nk .tabs-text {
+    padding: 0px;
+    border-radius: 0px;
+}
+
+.nk .tabs-rdb:checked + .tabs-lbl {
+    box-shadow: 0 1px 3px #2474c2;
+}
+
+.nk .fieldset[nk-fieldset-style="2"] {
+    box-shadow: 0 0px 0px 0px;
+        margin-top: 15px;
+}
+
+div#nwPaymentDtls ._slide-m {
+    min-width: 79%;
+
+}
+
+div#nwBorrContactDtls ._slide-m {
+    min-width: 30%;
+    min-height: 50%;
+
+}
+
+div#nwBorrLocationDtls ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+
+}
+
+div#nwBorrEmployeeDtls ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+
+}
+
+div#nwBorrBussDtls ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+
+}
+
+
+div#nwOtrSrc ._slide-m {
+    min-width: 30%;
+    min-height: 50%;
+
+}
+
+
+div#nwSignaContactDtls ._slide-m {
+    min-width: 30%;
+    min-height: 50%;
+
+}
+
+div#nwSignaLocation ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+
+}
+
+div#nwSigEmpDtls ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+
+}
+
+div#nwSigBussDtls ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+
+}

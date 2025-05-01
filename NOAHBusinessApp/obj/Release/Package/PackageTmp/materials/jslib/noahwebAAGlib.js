@@ -1,10 +1,10 @@
-﻿/* # NoahWeb JS Library 3.1.0.8
+﻿/* # NoahWeb JS Library 3.1.0.17
 # Company Owner: Forecasting and Planning Technologies Inc. / Promptus8 Inc.
 # Developers : Angelo Carlo A. Gonzales
 : Ma. Edgarda A. Malvar
 
 # Date Created : May 2021
-# Date Modified : January 17 ,2024 11:56 AM  - before: 10-31-2023
+# Date Modified : December 04, 2024 12:01 PM  - before: 10-17-2024
 
 For  NoahWeb Application and Promptus8 Modules used only. 
 
@@ -397,7 +397,7 @@ var crLoadingHTML = "<div class='dot-spin'><div class='dot-spin-dot'></div><div 
 
 
 var nwLoadingDefault = false;
-function nwLoading_Start(nwLoadingID, nwContainer, nwClass) {
+function nwLoading_Start(nwLoadingID, nwContainer, nwClass, nwTitle) {
 
     var isContinue = true;
 
@@ -408,6 +408,10 @@ function nwLoading_Start(nwLoadingID, nwContainer, nwClass) {
     } else if (isContinue && nwContainer != undefined && nwLoadingDefault == false && nwLoadingID != "0") {
         $("body div#nwLoadingContainer").append("<div id=\"aagLoadingN" + nwLoadingID + "\" style=\"display:none;\" class=\"nwLoading nwLoadingDefault " + nwClass + "\">" + nwContainer + "</div>");
         isValid = true;
+    }
+
+    if (nwTitle != undefined) {
+        $("#aagLoadingN" + nwLoadingID).find(".txt").text(nwTitle);
     }
 
     try {
@@ -955,6 +959,10 @@ function func_CreateConfig(datax, conid, instanceID, totalcount, index, perpage,
         func_ActionDriven("actLoadSpreadPageData", false, crSTDLnk);
 
 
+    } else {
+        setTimeout(function () {
+            try { p8Spread_DataBindDone(conid) } catch (exx) { }
+        }, 100);
     }
 }
 
@@ -1415,7 +1423,7 @@ function func_ToolBox_Continue() {
 function func_reloadinit() {
     var isContinue = true;
 
-    nwLoading_Start("nwFirstLoadDataAzie", crLoadingHTML);
+    nwLoading_Start("nwFirstLoadDataAzie", crLoadingHTML,"","Opening");
     try {
         isContinue = func_Reload();
 
@@ -1426,6 +1434,7 @@ function func_reloadinit() {
     return isContinue;
 }
 
+var nkLoadingText = "Loading";
 function func_ToolboxClient(indef, enume) {
     var isContinue = true;
 
@@ -1439,14 +1448,22 @@ function func_ToolboxClient(indef, enume) {
     catch (err) { }
 
     if (nwSec == true) isValue = "1";
+    var ltext = "Loading";
+    
+    if (indef == 1) ltext = "Saving";
+    else if (indef == 2) ltext = "Deleting";
+    else if (indef == 5) ltext = "Processing";
+    else if (indef == 7) ltext = "Exporting";
+    nkLoadingText = ltext;
 
-    nwLoading_Start("nwaagToolBox", crLoadingHTML);
+
+    nwLoading_Start("nwaagToolBox", crLoadingHTML, "", ltext);
 
     if (indef == 0) { if (isValue == "1") { DataAutoComputeGrid = false; crnwcodevalue = ""; func_ClearObjectsSysValue(); func_ClearFooter(); isNewRow = true; isContinue = func_ToolboxADD(indef, enume); } else { isContinue = false; } }
     else if (indef == 1) { if (isValue == "1") { isContinue = func_ToolboxSave(indef, enume); } else { isContinue = false; } }
     else if (indef == 2) { if (isValue == "1") { isContinue = func_ToolboxDelete(indef, enume); crnwcodevalue = ""; func_ToolboxData } else { isContinue = false; } }
     else if (indef == 3) { if (isValue == "1") { func_ClearObjectsSysValue(); DataAutoComputeGrid = false; isContinue = func_ToolboxRefresh(indef, enume); isRefresh = isContinue; isNewRow = false; } else { isContinue = false; } }
-    else if (indef == 4) { if (isValue == "1") { DataAutoComputeGrid = false; isContinue = func_ToolboxInquire(indef, enume); if (isContinue) lookUp_inquire(); } else { isContinue = false; } }
+    else if (indef == 4) { if (isValue == "1") { DataAutoComputeGrid = false; isContinue = func_ToolboxInquire(indef, enume); if (isContinue) lookUp_inquire(); isContinue = false; } else { isContinue = false; } }
     else if (indef == 5) { if (isValue == "1") { isContinue = func_ToolboxProcess(indef, enume); } else { isContinue = false; } }
     else if (indef == 6) { if (isValue == "1") { DataAutoComputeGrid = false; isContinue = func_ToolboxImport(indef, enume); } else { isContinue = false; } }
     else if (indef == 7) { if (isValue == "1") { DataAutoComputeGrid = false; isContinue = func_ToolboxExport(indef, enume); } else { isContinue = false; } }
@@ -1614,6 +1631,14 @@ $.fn.enable = function (data, isAll) {
         if ($(this).hasClass('lookups')) {
             $(this).find("input.idval").prop("disabled", !obj);
             $(this).find("input.idval").attr("ondrop", obj);
+
+        }
+
+        else if ($(this).hasClass('rdo')) {
+            if (obj == true) 
+                $(this).parent().find("label.lbl-rdo").removeClass(xClass);
+            else
+                $(this).parent().find("label.lbl-rdo").addClass(xClass);
 
         }
 
@@ -2311,6 +2336,7 @@ function lookUp_inquire() {
     try {
         $('.lookupcolSearch').val("");
     } catch (err) { }
+    nkLookupClearData();
 
     func_LookUpClass(dimP);
     var isContinue = true;
@@ -2332,7 +2358,12 @@ function lookUp_inquire() {
     refresh_Table(dimP, verTXT);
     fn_LoadModule("menuCreatorContainer");
 
-    $("#menuCreatorContainer input.search").focus();
+   // $("#menuCreatorContainer input.search").focus();
+    //$("#txtlookupsearchF").focus();
+
+    setTimeout(function () {
+        $("#menuCreatorContainer input.search").focus();
+    }, 100);
 }
 
 
@@ -2340,7 +2371,7 @@ $(function () {
     setTimeout(function () {
         if (crLnkGateKey != nwMenuID) {
             var standardCrLnk = crSTDLnk;
-            nwLoading_Start("actLoadMenuItemSec", crLoadingHTML);
+            nwLoading_Start("actLoadMenuItemSec", crLoadingHTML,"","Opening");
             nwParameter_Add("menuID", crLnkGateKey);
             nwParameter_Add("menuID2", nwMenuID);
             nwParameter_Add("data", getParameterByName("nwu"));
@@ -2741,7 +2772,7 @@ function Message_Yes() {
     if (isMessageQuestionToolBox) {
         try { isValid = msgBoxContainerQuestionT(msgBoxContainerQuestion, msgBoxContainerAnsweR); }
         catch (err) { }
-        nwLoading_Start("nwaagToolBox", crLoadingHTML);
+        nwLoading_Start("nwaagToolBox", crLoadingHTML,"",nkLoadingText);
 
         try {
             func_ToolboxMessageYes(msgBoxContainerQuestion);
@@ -3017,14 +3048,16 @@ function lookUpLoadDataSetupRuntime() {
     var curdata;
     if (svalue.trim() != "") {
         var mainfilter = $("#nkcmb-mainfilter").val();
-        if (mainfilter == "") {
-            for (var i = 0; i < nkcrLookupArryData2.length; i++) {
-                optionfilter.push({ "field": nkcrLookupArryData2[i]["Column1"], "value": svalue });
+       
+            if (mainfilter == "" || mainfilter == undefined) {
+                for (var i = 0; i < nkcrLookupArryData2.length; i++) {
+                    optionfilter.push({ "field": nkcrLookupArryData2[i]["Column1"], "value": svalue });
+                }
             }
-        }
-        else {
-            optionfilter.push({ "field": mainfilter, "value": svalue });
-        }
+            else {
+                optionfilter.push({ "field": mainfilter, "value": svalue });
+            }
+      
 
 
         var curdata = nwJsonContains(data, optionfilter, "", false);
@@ -3048,12 +3081,17 @@ function lookUpLoadDataSetupRuntime() {
 
 }
 
-function lookUpLoadDataSetup(dimP, data, data2, tag, isnitial) {
+
+function lookUpLoadDataSetup(dimP, data, data2, tag, isnitial,nodataString,nodataStringCount) {
     if (tag == "list")
         $("#AddtolistCon").show();
     else
         $("#AddtolistCon").hide();
 
+    var nodataStringX = "No Data Found!";
+    if (nodataString != undefined && nodataString != "") nodataStringX = nodataString;
+
+   
 
     if (isnitial == undefined)
         isnitial = true;
@@ -3068,11 +3106,20 @@ function lookUpLoadDataSetup(dimP, data, data2, tag, isnitial) {
     //    data = nkcrLookupArryData;
     //    data2 = nkcrLookupArryData2;
     //}
-
+    
+    $("#menuCreatorContainer").attr("crlookup", dimP);
 
     var xindex = nwJsonSearchIndex(nwlookupJSON, "id", dimP, false);
     if (xindex >= 0) nwJsonDelete(nwlookupJSON, xindex);
-    nwlookupJSON.push({ id: dimP, data: data, data2: data2 });
+    nwlookupJSON.push({ id: dimP, data: data, data2: data2, nodataString: nodataString, nodataStringCount: nodataStringCount });
+
+
+    if (nkisLookupReload == true) {
+        nkisLookupReload = false;
+        lookUpLoadDataSetupRuntime();
+        return;
+    }
+        
 
     var optionstr = "";
     optionstr += "<option value=''>ALL</option>";
@@ -3081,7 +3128,16 @@ function lookUpLoadDataSetup(dimP, data, data2, tag, isnitial) {
     }
     if (isnitial == true) $("#menuCreatorContainer select.cmb").html(optionstr);
 
-    $("#menuCreatorContainer .found-record span").html(data.length);
+    if (nodataStringX != "No Data Found!") {
+        $("#menuCreatorContainer .found-record span").html(nodataStringCount);
+    }
+    else {
+        if (nodataStringCount == undefined) nodataStringCount = data.length;
+        $("#menuCreatorContainer .found-record span").html(nodataStringCount);
+    }
+    
+
+ 
 
     var lookupHeaderhtml = "";
     var lookupBodyhtml = "";
@@ -3090,14 +3146,19 @@ function lookUpLoadDataSetup(dimP, data, data2, tag, isnitial) {
     lookupHeaderhtml += "<tr class='lookUpTRHeader'>";
 
 
-    lookupHeaderhtml += "<th data-type='num' scope='col' class='tbl-row-num'>#</th>";
+    lookupHeaderhtml += "<th data-type='num' scope='col' class='tbl-row-num'></th>";
 
     if (tag == "list")
         lookupHeaderhtml += "<th data-type='num' scope='col' class='tbl-row-num'><input class='nwlookupgridcheck' type='checkbox'></th>";
 
 
     for (var i = 0; i < data2.length; i++) {
-        lookupHeaderhtml += "<th data-type='str' scope='col' class=''>" + data2[i].Column1 + "</th>";
+        var showhide = data2[i].showhide;
+        if (showhide == "0") showhide = "nwHide";
+        var align = data2[i].align || "";
+        align = "nwLookupCon-A" + align.toLocaleLowerCase();
+
+        lookupHeaderhtml += "<th data-type='str' scope='col' class='" + showhide + " " + align + "'>" + data2[i].Column1 + "</th>";
     }
     lookupHeaderhtml += "</tr>";
     lookupHeaderhtml += "<tr class='lookUpTRHeaderSearch'>";
@@ -3110,7 +3171,12 @@ function lookUpLoadDataSetup(dimP, data, data2, tag, isnitial) {
 
 
     for (var i = 0; i < data2.length; i++) {
-        lookupHeaderhtml += "<th data-type='str' scope='col' class=''><input type='text' name='' class='lookupcolSearch txtbox'></th>";
+        var showhide = data2[i].showhide || "";
+        if (showhide == "0") showhide = "nwHide";
+        var align = data2[i].align || "";
+        align = "nwLookupCon-A" + align.toLocaleLowerCase();
+
+        lookupHeaderhtml += "<th data-type='str' scope='col' class='" + showhide + " " + align + "'><input type='text' name='' class='lookupcolSearch txtbox'></th>";
     }
     lookupHeaderhtml += "</tr>";
 
@@ -3129,13 +3195,20 @@ function lookUpLoadDataSetup(dimP, data, data2, tag, isnitial) {
         for (var i2 = 0; i2 < data2.length; i2++) {
             var colname = data2[i2].Column1;
             var value = data[i][colname] || "";
-            lookupBodyhtml += "<td row-th='" + colname + "'><span class='wrap-td'>" + value + "</span></td>";
+
+            var showhide = data2[i2].showhide;
+            if (showhide == "0") showhide = "nwHide";
+            var align = data2[i2].align || "";
+            align = "nwLookupCon-A" + align.toLocaleLowerCase();
+
+            lookupBodyhtml += "<td row-th='" + colname + "' class='" + showhide + " " + align + "'><span class='wrap-td'>" + value + "</span></td>";
         }
         lookupBodyhtml += "</tr>";
     }
     if (data.length <= 0) {
         if (tag == "list") totalcol += 1;
-        lookupBodyhtml += "<tr class='nwLookup-Nodata'><td colspan='" + totalcol + "' class='nwLookup-Nodata'>No Data Found!</td></tr>";
+        
+        lookupBodyhtml += "<tr class='nwLookup-Nodata'><td colspan='" + totalcol + "' class='nwLookup-Nodata'>" + nodataStringX + "</td></tr>";
     }
 
     if (isnitial == true) $("#nkLookupCon").find("table thead").html(lookupHeaderhtml);
@@ -3145,8 +3218,29 @@ function lookUpLoadDataSetup(dimP, data, data2, tag, isnitial) {
 
     setTimeout(function () {
         lookupDataLoadList($('#' + dimP));
+        lookupresizing();
     }, 10);
 }
+
+$(function () {
+    lookupresizing();
+});
+function lookupresizing() {
+    var totalheight = $("#menuCreatorContainer .modal-box-s").height();
+    var hdrheight = $("#menuCreatorContainer .modal-hdr").outerHeight();
+    var bodyheight = $("#menuCreatorContainer .nk-modal-body .row:eq(0) ").outerHeight();
+    var footerheight = $("#menuCreatorContainer #lookupTable .row:eq(1) ").outerHeight();
+    var allheight = totalheight - (hdrheight + bodyheight + footerheight);
+    $("#nkLookupCon").height(allheight);
+}
+$(document).on("click", ".btn-modal-rescale-s", function () {
+
+    setTimeout(function () {
+      
+        lookupresizing();
+    }, 50);
+});
+
 
 $(document).on("mousedown", "#nkLookupCon .lookuprow", function () {
     var vindex = $(this).index() + 1;
@@ -3197,18 +3291,30 @@ function lookUpLoadData(dimP, alterLink) {
 }
 
 
-
+function nkLookupClearData() {
+    $("#menuCreatorContainer select.cmb").html("");
+    $("#menuCreatorContainer .found-record span").html("");
+    $("#nkLookupCon").find("table tbody").html("");
+    $("#nkLookupCon").find(".lookUpTRHeader").find("th").text("");
+    $("#txtlookupsearchF").val("");
+}
 
 
 function lookUp(ver) {
     var dimP = $(ver).parents(".lookups").attr("id");
-    $(".modal-s .modal-hdr-title").text("Look Up");
+    if (dimP == undefined)
+        dimP = $("#menuCreatorContainer").attr("crlookup");
+
+    $("#menuCreatorContainer .modal-s .modal-hdr-title").text("Look Up");
     //$("#menuCreatorContainer .lookup_loading").show();
 
+
+    nkLookupClearData();
 
     try {
         $('.lookupcolSearch').val("");
     } catch (err) { }
+
     func_LookUpClass(dimP);
 
     var isContinue = true;
@@ -3224,9 +3330,9 @@ function lookUp(ver) {
     if (jQuery("#" + dimP).hasClass('adisabled') || jQuery("#" + dimP).hasClass('noah-webui-disabled')) return false;
     $("#menuCreatorContainer").removeClass('list');
     $("#menuCreatorContainer").addClass('single');
-    $("#menuCreatorContainer input.search").val('');
+   // $("#menuCreatorContainer input.search").val('');
 
-    var verTXT = $("#menuCreatorContainer input.search").val();
+    var verTXT = $("#txtlookupsearchF").val();
     refresh_Table(dimP, verTXT);
 
 
@@ -3254,7 +3360,7 @@ function lookUpCustomize(ver, verS, alterLink, isSpread) {
     } catch (err) { }
     $("#menuCreatorContainer .lookup_loading").show();
 
-
+    nkLookupClearData();
     try { var xvalid = func_LookUpInitialize(dimP); if (xvalid == false) return; } catch (err) { }
 
 
@@ -4067,7 +4173,10 @@ function func_xLookupLoaded(counter) {
 
 
     $('#menuCreatorContainer .lookup_loading').hide();
-    $("#menuCreatorContainer input.search").focus();
+    //$("#menuCreatorContainer input.search").focus();
+    setTimeout(function () {
+        $("#menuCreatorContainer input.search").focus();
+    }, 100);
     $(window).resize();
 
 }
@@ -6806,6 +6915,16 @@ function nwPopupForm_BringToFront(verID, isMessageBox) {
         tempzindex = origzindex;
 
 
+    var len = $('.noah-webui-Window.nwShow').length;
+    var curmax = 0;
+    for (var i = 0; i < len; i++) {
+        var zindex = $('.noah-webui-Window.nwShow:eq(' + (i) + ')').css("z-index");
+        if (parseInt(zindex) >= curmax)
+            curmax = parseInt(zindex);
+    }
+    if (curmax <= 100) curmax = 100;
+    tempzindex = curmax + 1;
+
 
 
     //nwconsole.log("window : " + xcount + " : " + $('.noah-webui-Window.nwShow:eq(' + (xcount - 1) + ')').attr("id") + "z-index:" + tempzindex);
@@ -6881,33 +7000,33 @@ function nwPopupForm_ShowModal(verID, timer, link) {
     $("#" + verID).addClass("_show");
     $("#" + verID).find(".modal-box-s").addClass("_slide-m");
 
-    //var nwobject;
-    //nwobject = nwPopupForm_extraCheckIfObject(verID);
-    //if (timer == null || timer == undefined) timer = 0;
-    //if (link != null && link != undefined) {
-    //    if (link.indexOf("?") >= 1)
-    //        link = link + "&" + document.location.search.substring(1, document.location.search.length);
-    //    else
-    //        link = link + "" + document.location.search;
-    //    $(nwobject).find("frame.nwmenuFrame").src = link;
-    //}
+    var nwobject;
+    nwobject = nwPopupForm_extraCheckIfObject(verID);
+    if (timer == null || timer == undefined) timer = 0;
+    if (link != null && link != undefined) {
+        if (link.indexOf("?") >= 1)
+            link = link + "&" + document.location.search.substring(1, document.location.search.length);
+        else
+            link = link + "" + document.location.search;
+        $(nwobject).find("frame.nwmenuFrame").src = link;
+    }
 
 
 
-    //try {
+    try {
     //    $('#dimbgNW' + verID).remove();
     //    if (timer > 0) nwobject.show(timer);
     //    else nwobject.show();
-    //    nwPopupForm_Modal(verID);
-    //    nwobject.addClass("nwModal");
+        nwPopupForm_Modal(verID);
+        nwobject.addClass("nwModal");
     //    $('body').prepend("<div id=\"dimbgNW" + verID + "\" class=\"dimbg openn dimbgNW" + verID + "\"></div>");
     //    $("#dimbgNW" + verID).insertBefore($("#" + verID));
 
     //    //$("#dimbgNW").fadeIn(400);
 
-    //    nwPopupForm_BringToFront(verID);
-    //    $(nwobject).addClass("nwShow");
-    //} catch (err) { }
+        nwPopupForm_BringToFront(verID);
+        $(nwobject).addClass("nwShow");
+    } catch (err) { }
 
 }
 function nwPopupForm_FadeInModal(verID, timer) {
@@ -7167,26 +7286,22 @@ function window_Resize_Grid(verID) {
         var xser = $('#' + verID).find('.nwGridData:eq(' + i + ')').scrollLeft();
         if (xser >= 1) xser = xser - 1;
         else xser = xser + 1;
-
         nwGrid_TableAdjust($('#' + verID).find('.nwGridData:eq(' + i + ')').parents(".nwGrid").attr("id"));
-
-
         $('#' + verID).find('.nwGridData:eq(' + i + ')').animate({ scrollLeft: xser }, 1);
         $('#' + verID).find('.nwGridData:eq(' + i + ')').animate({ scrollLeft: xser }, 1);
-
         $('#' + verID).find('.nwGridData:eq(' + i + ')').scrollLeft(xser);
-
     }
 
 
     $(window).resize();
 }
 
-function window_close(verID) {
-    widow_close(verID);
+function window_close(verID, _this) {
+    widow_close(verID, _this);
 }
-function widow_close(verID) {
+function widow_close(verID, _this) {
     var isContinue = true;
+    if (verID == undefined) return;
 
     var isnewLib = false;
     var isValid = true;
@@ -7210,24 +7325,34 @@ function widow_close(verID) {
     }
 
     if (isContinue) {
-        $('#' + verID).css('display', 'none');
+        //$('#' + verID).css('display', 'none');
 
-        var xcount = $('#dimbgNW' + verID).length;
+        //var xcount = $('#dimbgNW' + verID).length;
 
-        for (var i = 0; i < 4; i++) {
-            if (verID == "") continue;
-            try { $('#dimbgNW' + verID).remove(); } catch (err) { }
-            try { $('#dimbgNW#' + verID).remove(); } catch (err) { }
-        }
-        // $('#dimbgNW').removeClass("openn");
-        $('#' + verID).hide();
-        $("#" + verID).removeClass("nwMaximize");
+        //for (var i = 0; i < 4; i++) {
+        //    if (verID == "") continue;
+        //    try { $('#dimbgNW' + verID).remove(); } catch (err) { }
+        //    try { $('#dimbgNW#' + verID).remove(); } catch (err) { }
+        //}
+        //// $('#dimbgNW').removeClass("openn");
+        //$('#' + verID).hide();
+        //$("#" + verID).removeClass("nwMaximize");
 
-        if ($('.nwMaximize').html() == undefined || $('.nwMaximize').length <= 0)
-            $('body').removeClass("nwbodMaximize");
+        //if ($('.nwMaximize').html() == undefined || $('.nwMaximize').length <= 0)
+        //    $('body').removeClass("nwbodMaximize");
 
-        if (verID == "nwExportContainerMain") {
-            func_ClearGridSession($('#nwExportContainer #nwExportGen').attr("nwinstance"));
+        //if (verID == "nwExportContainerMain") {
+        //    func_ClearGridSession($('#nwExportContainer #nwExportGen').attr("nwinstance"));
+        //}
+        if (_this != undefined){
+            var $a = $(_this).parents(".modal");
+            $a.fadeOut();
+            setTimeout(() => {
+                $a.removeClass("show");
+            }, 300, clearTimeout);
+            setTimeout(() => {
+                $a.css("display", "");
+            }, 500, clearTimeout);
         }
     }
 
@@ -7982,13 +8107,7 @@ $(document).on("keyup", ".lookupcolSearch", function (e) {
     if (e.which == 13) {
         nw_dataLookupFocus = $(this);
         lookUpLoadDataSetupRuntime();
-
         return false;
-        //var txtsearch = $("#txtlookupsearch").val();
-        //txtsearch = "txtlookupsearch_aag" + txtsearch.replaceAll("@", "_").replaceAll(" ", "_").replaceAll("%", "_").replaceAll("#", "_").replaceAll(".", "_").replaceAll("%", "_").replaceAll("*", "_").replaceAll("]", "_").replaceAll("[", "_");
-        //$("#txtlookupsearch").attr("class", "search " + txtsearch);
-        //$('.LookuptableHeader').css('opacity', 0.7); $('.tablecontainter').css('opacity', 0.7);
-        //$('.LookUpRefresh').click();
     }
 
 });
@@ -8605,6 +8724,7 @@ $(document).on("keydown", "body", function (e) {
             //$('.tablecontainter').scrollTop($('.LKselected').offset().top+$('.LKselected').height());
 
             $("#txtlookupsearch").focus();
+            $('#txtlookupsearchF').focus();
         }
         else if (e.which == 38)  // up
         {
@@ -8620,7 +8740,7 @@ $(document).on("keydown", "body", function (e) {
             //$("#txtlookupsearch").val($('.LKselected').offset().top + " " + $('.tablecontainter').scrollTop());
 
             $("#txtlookupsearch").focus();
-
+            $('#txtlookupsearchF').focus();
         }
         else if (e.which == 37) // left
         {
@@ -16903,6 +17023,15 @@ function func_SpreadCreated(spreadID) {
         }, 2000);
 
     }
+
+    if (spreadID == 'nwExportContainer') {
+        var strtitle = $('#nwExportContainer').attr("p8title") || "";
+        if (strtitle.indexOf("Exported Data") >= 0 && (baseTitle || "") != "") {
+            strtitle = baseTitle + " " + "Listing";
+            $('#nwExportContainer').attr("p8title", strtitle);
+        }
+        $("#nwExportContainerMain .modal-hdr-title").text(strtitle);
+    }
 }
 
 
@@ -16925,6 +17054,8 @@ function func_SpreadResizeonContainer(_this) {
     setTimeout(function () {
         _sfResizeScroll(containerID);
     }, 600);
+
+
 }
 
 
@@ -17232,12 +17363,15 @@ $(function ($) {
             icon: false
         }, opts);
 
+
         return this.each(function () {
             let $this = $(this);
             //let ul = document.createElement("ul");
             var ul = "";
 
-            $this.addClass('tabContainer');
+            // $this.addClass('tabContainer');
+            $this.html("<div class='tabs-content'></div>");
+            
 
             $.each(def.list, function (k, v) {
                 //k = index  , v = text
@@ -17246,7 +17380,7 @@ $(function ($) {
                 k++;
                 let id = def.id + 'But-' + k;
 
-                ul += "<input id='" + id + "' type='radio' class='tabs-rdb' checked='' name='tabs-f'>";
+                ul += "<input id='" + id + "' type='radio' class='tabs-rdb' checked='' name='" + def.id + "-tabs-f'>";
                 ul += "<label for='" + id + "' class='tabs-lbl'>" + v + "</label>";
 
                 ul += " <div class='tabs-text'>"
@@ -17274,12 +17408,15 @@ $(function ($) {
                       + "</div>";
 
             });
-            $this.append(ul);
+            $this.find(".tabs-content").append(ul);
 
-            $("#" + def.id).find(".tabs-lbl:eq(0)").click();
+        
+                $("#" + def.id).find(".tabs-lbl:eq(0)").click();
+          
+            
         });
 
-
+        //return true;
     };
 
 }(jQuery));
@@ -17292,13 +17429,17 @@ $(document).on("click", ".btn-del-list", function () {
 $(document).on("keypress", "#txtlookupsearchF", function (e) {
     if (e.which == 13) {
         lookUpLoadDataSetupRuntime();
+        //$("#nkbtnsearch").click();
         return false;
     }
+    
 });
+var nkisLookupReload = false;
 $(document).on("click", "#nkbtnsearch", function (e) {
     var svalue = $("#txtlookupsearchF").val();
-    lookUpLoadDataSetupRuntime();
-    setTimeout(function () { $("#txtlookupsearchF").val(svalue); }, 100);
+    nkisLookupReload = true;
+    lookUpA($(".LookupID").text());
+    //setTimeout(function () { $("#txtlookupsearchF").val(svalue); }, 100);
     return false;
 });
 
@@ -17366,3 +17507,7 @@ setInterval(function(){
     }
 }, 1000);
 
+$(document).on("mouseover", ".descval", function () {
+    var desc =  $(this).val();
+    $(this).attr("title", desc);
+});

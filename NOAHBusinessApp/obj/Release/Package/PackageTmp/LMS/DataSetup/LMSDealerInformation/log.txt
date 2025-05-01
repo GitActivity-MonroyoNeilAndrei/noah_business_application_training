@@ -1,0 +1,456 @@
+﻿Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/28/2024
+Version			   : 10.0.0.3
+Description		   : Addressing of findings
+						#85 Salesperson Assignment Hyperlink Button Server Error
+						#79 "Remove the following fields:
+							> Location Code
+							> Location Type"
+						-Account Number				Required; Data entry, allows maximum of 30 alphanumeric characters; editable even after saving
+
+Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/27/2024
+Version			   : 10.0.0.2
+Description		   : Addressing of findings
+						#75 Default column width is too short, column header has been cut.
+						#84 For fields that require either, the asterisk should be color blue not black.
+						#86 Dealer Contact Information > Mobile No System should limit entry up to 12 numeric characters
+						#87 Dealer Contact Information > Phone (Business) System should limit entry up to 15 alphanumeric characters
+						#88 Requirements Compliance Server error 
+						#121 Location Information>Standard Barangay Should be in advanced lookup
+						#122 Location Information>Municipality Should be in advanced lookup
+
+Modified By			: Peterson Cruz
+Date Modified		: 11/15/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Addressing of Findings
+					> Should be deleted successfully
+
+Modified By			: Peterson Cruz
+Date Modified		: 11/14/2024
+Menu Item Version	: 10.0.0.0
+Reason				: CONVERSION TO V10
+
+Modified By		   : Christian Dayle Dalmaceda
+Date Modified	   : 09/17/2024
+Version			   : 9.0.0.60
+Description		   : Addressing of Findings
+				   > Fixed reccuring Issue Logs#2200 - 2200    VAT Reg Tin must be minimun 9 numeric char and maximum of 12 numeric char
+									    Non VAT Reg Tin must be minimun 9 numeric char and maximum of 12 numeric char
+
+Modified By		   : Alexis Maru Magcalas
+Date Modified	   : 08/17/2024
+Version			   : 9.0.0.59
+Description		   : Addressing of Findings
+				   > Fixed reccuring Issue Logs#2200 - 2200    VAT Reg Tin must be minimun 9 numeric char and maximum of 12 numeric char
+									    Non VAT Reg Tin must be minimun 9 numeric char and maximum of 12 numeric char
+
+Modified By		   : Alexis Maru Magcalas
+Date Modified	   : 08/16/2024
+Version			   : 9.0.0.58
+Description		   : Addressing of Findings
+				   > Fixed reccuring Issue Logs#2200 - 2200    VAT Reg Tin must be minimun 9 numeric char and maximum of 12 numeric char
+									    Non VAT Reg Tin must be minimun 9 numeric char and maximum of 12 numeric char
+
+Modified By		   : Alexis Maru Magcalas
+Date Modified	   : 08/14/2024
+Version			   : 9.0.0.57
+Description		   : Addressing of Findings
+				   > Issue Logs#2203 - 2204	Export window Fix Columns
+								2200    VAT Reg Tin must be minimun 9 numeric char and maximum of 12 numeric char
+									    Non VAT Reg Tin must be minimun 9 numeric char and maximum of 12 numeric char
+								2210	Date of birth should not allow date later that the current date
+								2206	Inquire Additional Column 
+Modified By		   : Cholo Sandoy
+Date Modified	   : 08/07/2024
+Version			   : 9.0.0.56
+Description		   : Addressing of Findings
+				   > Hide Reference and Reference Type
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 07/11/2024
+Version			   : 9.0.0.55
+Description		   : Addressing of Findings
+				   > Issue Logs#1922	Should show the Description of the Contract Status
+								1923	Should show only the Contracts that are related to the specifict Dealer in Dealer Information only
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 06/06/2024
+Version			   : 9.0.0.54
+Description		   : Addressing of Findings
+				   > Issue Logs#6	Area code must have no limit in number of characters
+
+Modified By        : JOHN MIGUEL GRAVINES
+Date Modified      : 06/05/2024
+Version			   : 9.0.0.53
+Reason			   : Addressing of findings
+				   >> Issue Logs# 1700 - Municipality >> Duplicate Records on lookup window >> Should display complete Municipalities 
+				   >> Issue Logs# 1701 - Municipality >> Incomplete Columns >> "Lookup Search Window Column Header should display: Code, Description, Zip Code, Province, Region, Country, City (Yes/No)"
+
+Modified By        : CHOLO SANDOY
+Date Modified      : 05/04/2024
+Version			   : 9.0.0.52
+Reason			   : Addressing of findings
+				   >> Issue Logs#1559	The selected record from the popup window should be loaded on the Dealer information Screen
+
+Modified By        : JOHN MIGUEL GRAVINES
+Date Modified      : 02/22/2024
+Version			   : 9.0.0.51
+Reason			   : Addressing of findings
+				   >> Issue Logs# 1048 - Dealer Location Information > Block >> Upon Clicking New, Block is loaded based in the recent transaction >> Upon Clicking New; All fields should be cleared
+				   >> Issue Logs# 1045 - Dealer Location Information > permanent Address > Full Address >> Can Able to enter Data even full address UNTICKED >> enable only if the full address was TICKED
+
+Modified By        : JOHN MIGUEL GRAVINES
+Date Modified      : 02/21/2024
+Version			   : 9.0.0.50
+Reason			   : Addressing of findings
+				   >> Issue Logs# 1015 - Upon selecting data, showing Code on the line details >> Upon selecting data, should show the Description
+				   >> Issue Logs# 1018 - When there is a Swift Code entered and upon selecting Payment Method. Swift Code disappear >> Swift Code should not be cleared upon selecting Payment Method
+
+Modified By        : JOHN MIGUEL GRAVINES
+Date Modified      : 02/17/2024
+Version			   : 9.0.0.49
+Reason			   : Addressing of findings
+				   >> Issue Logs# 1000 - did not auto load the zipcode >> Should auto load based on the municipality
+
+Modified By        : JOHN MIGUEL GRAVINES
+Date Modified      : 02/15/2024
+Version			   : 9.0.0.48
+Reason			   : Addressing of findings
+				   >> Issue Logs# 953 - Vat Reg TIN >> Maximum of 14 numeric (open format) excluding dash
+				   >> Issue Logs# 954 - Non-Vat Reg TIN >> Maximum of 14 numeric (open format) excluding dash 
+				   >> Issue Logs# 99 - Remove Lookup button > Should be loaded based on the Industry Scheme 1 of selected Industry 
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 02/13/2024
+Version			   : 9.0.0.47
+Description		   : Addressing of Findings
+				   > Issue Logs# 902	Prompts "Cannot be processed. Salesperson Assignment should be approved."
+
+Modified By		   : GRAVINES JOHN MIGUEL
+Date Modified	   : 02/02/2024
+Version			   : 9.0.0.46
+Description		   : Remove validation for enabling in municipality
+
+Modified By		   : GRAVINES JOHN MIGUEL
+Date Modified	   : 02/02/2024
+Version			   : 9.0.0.45
+Description		   : Additional Changes for the buttons functionality
+
+Modified By		   : GRAVINES JOHN MIGUEL
+Date Modified	   : 02/01/2024
+Version			   : 9.0.0.44
+Description		   : Addressing of findings
+					 Issue Logs# 668 - Upon Processing (With Approval Process), Record Status automatically beomes Approved insteatd of For Approval. >> If transaction is not Auto-posted, Record Status  should still be For Approval and will only turn into Approved after successfully being approved on Approval Screen.
+					 Issue Logs# 669 - Processed Transaction with For Approval status is Not shown on the Inquire Window and Screen >> Should be able to show all records except those Deleted and/or Cancelled
+					 Issue Logs# 670 - Processed Transaction with For Approval status is not shown on the records of the Export Window >> Should be able to show all records except those Deleted and/or Cancelled
+					 Issue Logs# 671 - Entry Screen is Disabled >> Should be available for viewing
+					 Issue Logs# 696 - Standardize UI of Full Address >> Follow UI of Full Address Field of Broker Info (Refer on Screenshot)
+					 Issue Logs# 697 - Enabled even after ticking Same as Present Address Checkbox >> Should be Disabled once Same as Present Address Checkbox is ticked
+					 Issue Logs# 700 - Record shown on popup window is different from the Transaction No. Filtered
+
+Modified By		   : GRAVINES JOHN MIGUEL
+Date Modified	   : 01/30/2024
+Version			   : 9.0.0.43
+Description		   : Addressing of findings
+					 Issue Logs# 16 - Branch Name will no longer be required (Remove red asterisk and corresponding Prompt) >> Dealer Information > Dealer Bank Account Information
+
+Modified By		   : GRAVINES JOHN MIGUEL
+Date Modified	   : 01/30/2024
+Version			   : 9.0.0.42
+Description		   : Fixed Location problem for full address
+
+Modified By		   : CHOLO SANDOY
+Date Modified	   : 01/29/2024
+Version			   : 9.0.0.41
+Description		   : Fixed Location
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/24/2024
+Version			   : 9.0.0.40
+Description		   : Addressing of findings
+					 Issue Logs# 506 - Unticked: Incomplete loaded details >> Should include the fields in screenshot
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/24/2024
+Version			   : 9.0.0.39
+Description		   : Additional validation for standard barangay and alternative barangay
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/24/2024
+Version			   : 9.0.0.38
+Description		   : Addressing of Findings
+					 Issue Logs# 2 - Regardless of whether Full Address Checkbox is ticked or Unticked, Standard Barangay down to Zip Code Should now be be ENABLED.
+					 Issue Logs# 3 - Swift Code will on Dealer Bank Account Information Accordion NO longer be a required Field, regardless of which payment Method is chosen; Data Entry
+					 Issue Logs# 4 - Type of Account Field on Dealer Bank Account Information Accordion will NO loger be Required
+					 Issue Logs# 524 - All Payment Methods are shown on the lookup regardless of which Bank was Chosen >> The Payment Method shown should depend on the bank chosen. e.g. If Bank Selected was MBTC, the Payment Method lookup window shoud only show those with ticked Applicable to all Bank checkbox or with MBTC on its line details on the Payment Method Maintenance Setup
+					 Issue Logs# 530 - no red asterisk >> Required Field
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/23/2024
+Version			   : 9.0.0.37
+Description		   : Addressing of Findings
+				   > Issue Logs# Disable Salesperson Assignment button upon New
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/23/2024
+Version			   : 9.0.0.36
+Description		   : Addressing of Findings
+				   > Issue Logs# SwiftCode
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/23/2024
+Version			   : 9.0.0.35
+Description		   : Addressing of Findings
+				   > Issue Logs# 488	not Allowing Alpha characters
+								 489	Does not turn green upon saving
+								 490	Disabled
+								 491	Disabled
+								 501	"it Allows Dupplicate Reference Code : TFSPH-DLRINF-0000000017, TFSPH-DLRINF-0000000018"
+								 502	It allows to select Standard barangay even there is already entered on the Alternative Barangay
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/22/2024
+Version			   : 9.0.0.34
+Description		   : Addressing of Findings
+				   > Issue Logs# 486	Upon Clicking new Process Button: Disabled
+								 489	Salesperson Assignment should turn green upon saving in Salesperson Assignment
+								 490	"If the selected Communication Type is Phone,Column header ""Phone"" should be enabled Format : [Area no.] plus [8 digit number] (042) 8888-8888 Column header ""Mobile"" should be Disabled Column header ""Email"" should be Disabled"
+								 491	"""If the selected Communication Type is Phone, Column header ""Mobile"" should be enabled Format : format should be: 639 plus 9 digit Column header ""Phone"" should be Disabled Column header ""Email"" should be Disabled"""
+								 492	"""If the selected Communication Type is Phone, Column header ""Email"" should be enabled Format : allows maximum of 80 alphanumeric characters Column header ""Phone"" should be Disabled Column header ""Mobile"" should be Disabled"
+								 499	Upon Ticking Same as Present Address. Data under Permanent Address should be cleared
+
+
+Modified By         : Karl Angelo Gamayo
+Modified Date       : 01/20/2024
+Menu Item Version   : 9.0.0.33
+Reason				: Addresssing of Findings
+						Fixed Dealer Bank Account Information.
+
+Modified By         : Karl Angelo Gamayo
+Modified Date       : 01/20/2024
+Menu Item Version   : 9.0.0.32
+Reason				: Addresssing of Findings
+						Payee Name should be input object.
+
+Modified By         : Karl Angelo Gamayo
+Modified Date       : 01/19/2024
+Menu Item Version   : 9.0.0.31
+Reason				: Addresssing of Findings
+						Fixed Accordion.
+
+Modified By         : Karl Angelo Gamayo
+Modified Date       : 01/19/2024
+Menu Item Version   : 9.0.0.30
+Reason				: Addresssing of Findings
+						Swift Code should required.
+
+Modified By		   : Karl Angelo Gamayo
+Date Modified	   : 01/18/2024
+Version			   : 9.0.0.29
+Description		   : Addressing of Findings
+				   > Should not allow Processing on main Screen if record on Salesperson Assignment popup window has not yet been Processed and Approved
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/18/2024
+Version			   : 9.0.0.28
+Description		   : Addressing of Findings
+				   > Issue Logs# 442	Allows Processing even without saved Input in Salesperson Assignment and Requirements Compliance
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/17/2024
+Version			   : 9.0.0.27
+Description		   : Addressing of Findings
+				   > Issue Logs# 230	View Contracts: Enabled
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/17/2024
+Version			   : 9.0.0.26
+Description		   : Addressing of Findings
+				   > Issue Logs# 302	Does not turn into Color Green upon successfully saving of required info in the popup window
+								 303	Change UI
+								 385	Cannot save, should provide Swift Code but it is not supposed to be required according to BRTS
+								 387	"Should be: Phone (Business) - (053) 520-1250 Email Address - philippe.brazas@toyotaormoc.com"
+								 388	"Should be: Full Address - San Pablo (Simangan), Ormoc City, Leyte 6541 Philippines Area - A1 Sample Area1"
+								 390	Check screenshots for before and after
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/16/2024
+Version			   : 9.0.0.25
+Description		   : Addressing of findings
+						Upon saving , Registered Name is still editable.
+						Upon saving , Trade Name is still editable.
+						Upon saving , Check Payee Name is still editable.
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/16/2024
+Version			   : 9.0.0.24
+Description		   : Change View Buttons
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/15/2024
+Version			   : 9.0.0.23
+Description		   : Addressing of Findings
+				   > Issue Logs#280	"Should be defaulted based on Check Payee Name (1) If selected bank is Metrobank, payee is loaded based on Trade Name"
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/15/2024
+Version			   : 9.0.0.22
+Description		   : Change Button Size
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/15/2024
+Version			   : 9.0.0.21
+Description		   : Addressing of Findings
+				   > Issue Logs# 280	Payee is not Defaulted 
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/13/2024
+Version			   : 9.0.0.20
+Description		   : Addressing of Findings
+				   > Issue Logs# 206	Data entry Fields are all enabled
+
+
+Modified By		   : John Rey Balinag
+Date Modified	   : 01/13/2024
+Version			   : 9.0.0.19
+Description		   : Addressing of Findings
+						Hyperlink buttons are already enabled upon clicking new
+						View Contracts: Disabled
+						View Update History: Disabled
+						There's no red asterisk in Payee field (To indicate it as a required field)
+						There's no red asterisk in Branch Name field (To indicate it as a required field)
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/12/2024
+Version			   : 9.0.0.18
+Description		   : Addressing of Findings
+						re-upload
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/12/2024
+Version			   : 9.0.0.17
+Description		   : Addressing of Findings
+						Hyperlink buttons are already enabled upon clicking new
+						Upon saving , Reference Code is not editable.
+						You can still save even if the Reference Code is duplicated
+						Data entry Fields are all enabled
+						Upon saving , Registered Name is editable.
+						Upon saving , Trade Name is not editable.
+						Upon saving , Check Payee Name is not editable.
+						Can be saved even if VAT Reg TIN is duplicated
+						Entry up to 13 Alphanumeric Characters only
+						Entry is limited up to 143Alphanumeric Characters only.
+						Entry up to 13 Alphanumeric Characters only
+						Entry is limited up to 14 Alphanumeric Characters only
+						Can be saved even if Non-VAT Reg TIN is duplicated
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/11/2024
+Version			   : 9.0.0.16
+Description		   : Addressing of Findings
+						export button will be displayed only when data is processed
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/11/2024
+Version			   : 9.0.0.15
+Description		   : Addressing of Findings
+						Upon processing, there's no Export Button
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/11/2024
+Version			   : 9.0.0.14
+Description		   : Addressing of Findings
+						Upon initial opening, Export Button should be hidden and be enabled upon successful Processing of record
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/11/2024
+Version			   : 9.0.0.14
+Description		   : Addressing of Findings
+						changes in saving permanent address
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/10/2024
+Version			   : 9.0.0.13
+Description		   : Validation on address changes
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/10/2024
+Version			   : 9.0.0.12
+Description		   : Additional changes in field Building Name and Landmark for optional asterisk
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/09/2024
+Version			   : 9.0.0.11
+Description		   : Additional changes for the previous findings
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/09/2024
+Version			   : 9.0.0.10
+Description		   : Additional changes for the previous findings
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/09/2024
+Version			   : 9.0.0.9
+Description		   : Addressing of findings
+					 Issue Logs# 53 - Hyperlink button cannot be clicked >>> Upon clicking Hyperlink button, should display Salesperson Assignment popup window and the Dealer field should be loaded based on the record where the Salesperson assignment was opened/clicked.
+					 Issue Logs# 55 - Prompt message upon resaving. >>> Upon resaving, should no longer validate that the record already exists.
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/09/2024
+Version			   : 9.0.0.8
+Description		   : Addressing of findings
+					 Issue Logs# 45 - Disabled even after saving >>> Should be enabled upon saving (8:30 - 6:00)
+					 Issue Logs# 46 - View Contacts >>> View Contracts (8:30 - 6:00)
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/09/2024
+Version			   : 9.0.0.7
+Description		   : additional changes in after binding
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/09/2024
+Version			   : 9.0.0.6
+Description		   : additional changes in initial loading
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/08/2024
+Version			   : 9.0.0.5
+Description		   : Addressing of Findings
+					 Issue Logs# 34 - Upon clicking New, BIR Registration Type is defaulted as non-vat >>> Should be defaulted as VAT
+					 Issue Logs# 35 - EWT* >>> EWT should not be required.
+					 Issue Logs# 36 - Wrong Alternatives >>> If Full Address is unticked: Cannot be saved. At least one of the following is required: Building Name, Street Name, Subdivision. Cannot be saved. At least one of the following is required: Standard Barangay, Alternative Barangay.
+					 Issue Logs# 37 - Province, Region and Country fields were not defaulted upon selecting municipality >>> Province should be loaded based on the assigned Province for selected Municipality. Region should be loaded based on the assigned Region for the Province displayed. Country should be loaded based on the assigned Country for the Region displayed.
+					 Issue Logs# 38 - Province, Region and Country fields were not defaulted upon selecting municipality >>> Should only be Required if Payment Method selected is CITIBANK Peso Net.
+					 Issue Logs# 39 - Data entry field. >>> Should be a button. Upon clincking, should open a data entry popup window. 
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/08/2024
+Version			   : 9.0.0.4
+Description		   : Addressing of Findings
+					 Issue Logs# 32 - Upon initial opening, Requirements Compliance hyperlink button and Fields under Dealer Bank Account Info are already enabled >>> All buttons and fields should be disabled upon initial opening except New and Refresh. Requirements Compliance should only be enabled after initial saving.
+					 Issue Logs# 33 - Upon clicking the New button, cursor is not focused on the first active field. >>> Upon clicking New button, cursor should be focused on Party Type Code field.
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/05/2024
+Version			   : 9.0.0.3
+Description		   : Addressing of Findings
+				   > Issue Logs# 22	Upon initial opening, Collapse button is displayed and cannot be clicked. All accordions are also expanded.
+
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/05/2024
+Version			   : 9.0.0.2
+Description		   : Addressing of Findings
+				   > Issue Logs# 22	Upon initial opening, Collapse button is displayed and cannot be clicked. All accordions are also expanded.
+								 23	Wrong names of accordions 
+
+Modified By		: Alz bulanadi
+Date Modified	: 11/10/2023
+Version			: 9.0.0.1
+reason			: Enhancement of menu item
+
+Created By		: RDA
+Date Created	: 07/20/2023
+Version			: 9.0.0.0
+Reference		: APSupplierInformation

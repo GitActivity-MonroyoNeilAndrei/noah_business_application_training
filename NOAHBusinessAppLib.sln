@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NOAHv10", "NOAHBusinessApp\NOAHv10.csproj", "{2D11A68F-20B7-424D-ACFC-B71B5890418E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NOAH_TRAINING_V10", "NOAHBusinessApp\NOAH_TRAINING_V10.csproj", "{2D11A68F-20B7-424D-ACFC-B71B5890418E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

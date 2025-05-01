@@ -1,0 +1,296 @@
+﻿Modified By			: John Miguel Gravines
+Date Created		: 09/25/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10 and Customization
+
+Modified By		: Arnel Alvarado
+Date Modified	: 07/15/2024
+Version			: 9.0.0.41
+Updates			: Freeze pane up to Last name
+
+Modified By		: Nelson Ryan Arabit
+Date Modified	: 06/25/2024
+Version			: 9.0.0.40
+Updates			: Fax No field is accepting 20 alphanumeric characters instead of 100 (Based of BRSS)
+
+Modified By		: Arnel Alvarado
+Date Modified	: 06/11/2024
+Version			: 9.0.0.39
+Updates			: In Vendor Contacts section, when exporting, all of the existing vendor contacts are displayed.
+
+Modified By		: Arnel Alvarado
+Date Modified	: 06/10/2024
+Version			: 9.0.0.38
+Updates			: After saving multiple contacts, and closing the pop up window by clicking the X button. The Phone No., Mobile No, Email Address, and Fax No. did not turn to color green.
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 03/15/2024
+Version			: 9.0.0.37
+Updates			: Allows 30 alphanumeric characters for   Middle Initial , Phone no, & Local
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 03/15/2024
+Version			: 9.0.0.36
+Updates			: Allows 50 alphanumeric characters for   Middle Initial , Phone no, & Local
+
+Modified By		: NDB
+Date Modified	: 08/20/2021
+Version			: 9.0.0.35
+Updates			: Update viewing
+
+Modified By		: NDB
+Date Modified	: 07/02/2021
+Version			: 9.0.0.34
+Updates			: On dblclick allow lookup if customer is tag as without tin
+
+Modified By		: RDA
+Date Modified	: 05/04/2021
+Version			: 9.0.0.33
+Updates			: Add refrow
+
+Modified By		: RDA
+Date Modified	: 03/03/2021
+Version			: 9.0.0.32
+Updates			: idvallugsupplier to nwSupplierCode in CreateGridMain
+				: Comment status != 01 in isDisabled
+				: Add attr("autocomplete", "nope");
+
+Modified By		: RDA
+Date Modified	: 03/03/2021
+Version			: 9.0.0.31
+Updates			: Fix condition in dblclick
+
+Modified By		: RDA
+Date Modified	: 03/01/2021
+Version			: 9.0.0.30
+Updates			: Add condition for DisableUponView()
+
+Modified By		: RDA
+Date Modified	: 02/24/2021
+Version			: 9.0.0.29
+Updates			: Change Phone to Phone No.
+
+Modified By		: RDA
+Date Modified	: 02/22/2021
+Version			: 9.0.0.28
+Updates			: Address findings
+				: VAPT Compliance
+
+Modified By		: RDA
+Date Modified	: 02/05/2021
+Version			: 9.0.0.26
+Updates			: Enable Status column
+
+Modified By		: RDA
+Date Modified	: 02/03/2021
+Version			: 9.0.0.25
+Updates			: Fix DisableUponView()
+
+Modified By		: RDA
+Date Modified	: 01/30/2021
+Version			: 9.0.0.24
+Updates			: Change prompts
+
+Modified By		: RDA
+Date Modified	: 12/10/2020
+Version			: 9.0.0.23
+Updates			: Enable Contact details if location is provided
+
+Modified By       : CCB
+Date Modified     : 10/06/2020
+Menu Item Version : 9.0.0.22
+Reason		      : Enable saving
+
+Modified By       : SBL
+Date Modified     : 07/29/2020
+Menu Item Version : 9.0.0.21
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified by       : ocr
+Modified Date     : 03.05.2020
+Menu Item Version : 9.0.0.20
+Reason            : addressing of findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=387232434&fvid=1768094295
+
+Modified by       : ocr
+Modified Date     : 03.04.2020
+Menu Item Version : 9.0.0.19
+Reason            : addressing of findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=387232434&fvid=1768094295
+
+Modified by       : ocr
+Modified Date     : 02.28.2020
+Menu Item Version : 9.0.0.18
+Reason            : addressing of findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=387232434&fvid=1768094295
+
+Modified by       : ATR
+Modified Date     : 02.27.2020
+Menu Item Version : 9.0.0.17
+Reason            : removed history
+
+Modified by       : DDD
+Modified Date     : 02.17.2020
+Menu Item Version : 9.0.0.16
+Reason            : Address based on Standard Testing Findings
+
+Modified by       : RMB
+Modified Date     : 02.13.2020
+Menu Item Version : 9.0.0.15
+Reason            : Addressing findings in export
+				  : Addressing fingdings in inquire
+
+Modified by       : RBN
+Modified Date     : 02.07.2020
+Menu Item Version : 9.0.0.14
+Reason            : Added validations upon save
+
+Modified by       : RBN
+Modified Date     : 12.13.2019
+Menu Item Version : 9.0.0.13
+Reason            : Added validations upon save
+
+Modified by       : DJSB
+Modified Date     : 10.14.2019
+Menu Item Version : 9.0.0.12
+Reason            : Address findings from QC testing
+		  : Address findings from Prototype Testing Results
+
+
+Modified by       : DJSB
+Modified Date     : 09.26.2019
+Menu Item Version : 9.0.0.11
+Reason            : Address findings
+
+Modified by       : DJSB
+Modified Date     : 09.22.2019
+Menu Item Version : 9.0.0.10
+Reason            : Make changes based on the minutes of the meeting.
+
+Modified by       : DJSB
+Modified Date     : 09.22.2019
+Menu Item Version : 9.0.0.9
+Reason            : Make changes if the selected Status Code is Inactive
+
+Modified by       : DJSB
+Modified Date     : 09.18.2019
+Menu Item Version : 9.0.0.8
+Reason            : Addressing of findings in Enabling of Phone and Local and Remove button, and Export button in Vendor Listing
+
+Modified by       : DJSB
+Modified Date     : 09.16.2019
+Menu Item Version : 9.0.0.7
+Reason            : Addressing of findings in Phone no, Mobile No, Email and Fax
+
+Modified by       : DJSB
+Modified Date     : 09.15.2019
+Menu Item Version : 9.0.0.6
+Reason            : Addressing of findings of the following:
+					1.) "Phone no. - cannot save"
+					2.) "Phone no, mobile no, email, fax - cannot input in row 1."
+
+Modified by       : FAB
+Modified Date     : 09.14.2019
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.5
+
+Modified by       : DJSB
+Modified Date     : 09.14.2019
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.4
+
+Modified by       : DJSB
+Modified Date     : 09.13.2019
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.3
+
+Modified by       : DJSB
+Modified Date     : 09.12.2019
+Reason            : Addressing of findings in validation of Last name, First name, and Designation
+Menu Item Version : 9.0.0.2
+
+Modified by       : DDD
+Modified Date     : 09.11.2019
+Reason            : UI Related	
+Menu Item Version : 9.0.0.1
+
+Modified by       : CCB
+Modified Date     : 08.31.2019
+Reason            : Enhancement - Alignment with Customer Contacts
+Menu Item Version : 9.0.0.0
+
+Modified by       : RJL
+Modified Date     : 05/03/2019
+Reason            : Address findings in Effective Date
+Menu Item Version : 8.0.0.9
+
+Modified by       : KSG
+Modified Date     : 10/31/2018
+Reason            : Addressing of findings (From Supplier to Vendor)
+Menu Item Version : 8.0.0.8
+
+Modified by       : RJL
+Modification Date : 09/26/2018
+Reason            : Enhancements in AP Standard / Developer's testing
+Menu Item Version : 8.0.0.7
+
+Modified by       : FBP
+Modification Date : 03/08/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.6
+
+Modified by       : FBP
+Modification Date : 03/06/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.5
+
+Modified by       : FBP
+Modification Date : 02/21/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.4
+
+Modified by       : FBP
+Modification Date : 02/17/2018
+Reason            : save title
+Menu Item Version : 8.0.0.3
+
+Modified by       : JRA
+Modification Date : 12/01/2017
+Reason            : Export,Line Details
+Menu Item Version : 8.0.0.2
+
+Modified by       : JRA
+Modification Date : 11/30/2017
+Reason            : Export
+Menu Item Version : 8.0.0.2
+
+Modified by       : JRA
+Modification Date : 10/25/2017
+Reason            : Revision
+Menu Item Version : 8.0.0.2
+
+Modified by       : JRA
+Modification Date : 10/23/2017
+Reason            : Revision
+Menu Item Version : 8.0.0.2
+
+Modified by       : IVD
+Modification Date : 10/16/2017
+Reason            : Revision
+Menu Item Version : 8.0.0.1
+
+Modified by       : JVV
+Modification Date : 09/22/2017
+Reason            : Findings
+Detailed          : Export, Prompt, UI, validation, 
+Menu Item Version : 8.0.0.0
+
+Created By        : MAV
+Date Created      : 08.24.2017
+
+
+
+
+
+
+
+
+

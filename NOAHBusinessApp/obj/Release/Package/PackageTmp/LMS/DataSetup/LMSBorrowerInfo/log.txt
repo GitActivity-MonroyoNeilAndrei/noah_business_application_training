@@ -1,0 +1,783 @@
+﻿Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/26/2024
+Version			   : 10.0.0.2
+Description		   : Addressing of findings
+						#117 Location Information>Barangay Should be in advanced lookup
+						#118 Location Information>Municipality> Should be in advanced lookup
+
+
+Modified By		   : Maki Cruz
+Date Modified	   : 11/08/2024
+Version			   : 10.0.0.1
+Description		   : Fix pop-up
+
+Modified By		   : Maki Cruz
+Date Modified	   : 09/24/2024
+Version			   : 10.0.0.0
+Description		   : Convertion to V10
+
+Modified By		   : CHOLO SANDOY
+Date Modified	   : 07/23/2024
+Version			   : 9.0.0.68
+Description		   : Addressing of Findings
+				   >> Issue Logs# 31	system to accept inputting negative value
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 07/05/2024
+Version			   : 9.0.0.67
+Description		   : Addressing of Findings
+				   >> Issue Logs# 30 - No. of Employees field is not mandatory if the Primary Source of Income is Business >> No. of Employees field should be Mandatory if the Primary Source of Income is Business, and system should prompt an error if the value field is less than 1
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 06/05/2024
+Version			   : 9.0.0.66
+Description		   : Addressing of Findings
+				   > Issue Logs#1705	should saved based on the selected data
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/31/2024
+Version			   : 9.0.0.65
+Description		   : Addressing of Findings
+				   > Issue Logs#1683	Individual Details > TIN should be optional
+								1684	Spouse Information > TIN should be optional
+								1685	Signatories info > TIN should be optional
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/27/2024
+Version			   : 9.0.0.64
+Description		   : Addressing of Findings
+				   > Issue Logs#1654	Does not reflect details in Permanent Address upon clicking Same as Present Address checkbox
+								1655	Does not reflect details in Permanent Address but Same as Present Address checkbox is already ticked (upon clicking Same as Borrower's Location Information)
+								1657	Does not reflect details in Permanent Address but Same as Present Address checkbox is already ticked (upon clicking Same as Borrower's Location Information)
+								  25	Able to save the entered TIN
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/24/2024
+Version			   : 9.0.0.63
+Description		   : Addressing of Findings
+				   > Issue Logs#26	"Unable to select Occupation/Position under Spouse Employment Information.  Scenario: Borrower Marital Status was incorrect. User switch the Marital Status from Single to Married, then encode the Spouse Information Borrower, but was not able to save the details due to Occupation/Position is mandatory item but was greyed out during encoding of Spouse Information"	Able to select Occupation/Position
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/22/2024
+Version			   : 9.0.0.62
+Description		   : Addressing of Findings
+				   > Issue Logs#24	"Beneficial Owner Percentage of Shares: Unable to input the exact percentage of the beneficial owner"
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/21/2024
+Version			   : 9.0.0.61
+Description		   : Addressing of Findings
+				   > Issue Logs#1604	Value should be data entry
+								1639	Should retain the data encoded upon saving
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 05/16/2024
+Version			   : 9.0.0.60
+Description		   : Addressing of findings
+				   >> Issue Logs# 22 - After savings the encoded borrower, the first name and last name is switched.  >> Details should not be switched once saved
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/11/2024
+Version			   : 9.0.0.59
+Description		   : Addressing of Findings and Enhancement
+				   > Issue Logs#"Issue log#1583	Should be Enable  "
+								"Issue log#1584	All Alphanumeric Data Entry Fields should be automatically be in capital letters upon encoding."
+								"Issue log#1585	All Alphanumeric Data Entry Fields should be automatically be in capital letters upon encoding."
+								"Issue log#1586	All Alphanumeric Data Entry Fields should be automatically be in capital letters upon encoding."
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/09/2024
+Version			   : 9.0.0.58
+Description		   : Addressing of Findings and Enhancement
+				   > Issue Logs#"Issue log#1583	Should be Enable  "
+								"Issue log#1584	All Alphanumeric Data Entry Fields should be automatically be in capital letters upon encoding."
+								"Issue log#1585	All Alphanumeric Data Entry Fields should be automatically be in capital letters upon encoding."
+								"Issue log#1586	All Alphanumeric Data Entry Fields should be automatically be in capital letters upon encoding."
+
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/07/2024
+Version			   : 9.0.0.57
+Description		   : Addressing of Findings and Enhancement
+				   > Issue Logs#1579	Should be Optional
+								1580	Should be flexible, Table size itself should be adjustable
+								1581	"If ticked, user will be required to lookup from Political Position/Roles; editable even after saving	 Lookup Search Window Column Header should display the following: Code Description"
+								1582	This field is disabled if the Full Address checkbox has been ticked; Otherwise, this is a data entry field, allows maximum of 80 alphanumeric characters
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/07/2024
+Version			   : 9.0.0.56
+Description		   : Addressing of Findings and Enhancement
+				   > Issue Logs#1577	Should be Enable if the communcation used is LANDLINE NUMBER
+								1578	should be code and description only
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 05/03/2024
+Version			   : 9.0.0.55
+Description		   : Addressing of Findings and Enhancement
+				   > Issue Logs#17	Unable to select Business Income Source under Spouse Business Details since the lookup field is unavailable (greyed out)
+				   >Remove red asterisks and validation in all Business Income Source
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 04/15/2024
+Version			   : 9.0.0.54
+Description		   : Addressing of Findings
+				   > Issue Logs#1442	Should not display prompt and should save successfully and only be enabled upon saving
+								1449	Should be able to save successfully
+								1450	Value should be maintained after saving
+								1453	Value should be maintained after saving
+								1455	"Should retain the Data B-0000000142"
+
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 04/04/2024
+Version			   : 9.0.0.53
+Description		   : Addressing of Findings
+				   > Issue Logs#3	"System will validate if the selected Primary Source (Employer, Business, Others) has details in (Employer Details, Business Details, Others). ex. User selected Business, but encoded employment details, system should validate that the business income details is required"
+								4	If the user incorrectly select the Marital status then save, user should still correct the Marital status
+								5	User misspelled Place of Birth, user should still correct the data inputted
+								6	User should able to encode/select Marital status of Spouse
+								7	To remove the textbox in Financial Statement Field
+								8	To remove effective date field/column.
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 04/01/2024
+Version			   : 9.0.0.52
+Description		   : Addressing of Findings and Enhancement
+				   > Issue Logs# 1	Total number of dependents should be editable. TFS only input dependent details if the customer is politically exposed.
+								 (ENH)2	Expected result: can encode the area code +7digit landline number of provincial (004)3888-8888 is not acceptable, it should be (043)888-8888. if Metro Manila it should be (028)123-4567 
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 03/27/2024
+Version			   : 9.0.0.51
+Description		   : Addressing of Findings
+				   > Issue Logs# 70	Remove Effective Date Column
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 03/26/2024
+Version			   : 9.0.0.50
+Description		   : Addressing of Findings
+				   > Issue Logs# 1312	should be 16 numeric characters with 2 decimal places
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 03/21/2024
+Version			   : 9.0.0.49
+Description		   : Enhancement
+				   > Add Nature of Business in Corp accordion
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 03/21/2024
+Version			   : 9.0.0.48
+Description		   : Addressing of Findings
+				   > Issue Logs# 1308, 1309, 1310, 1311, 1312, 1313, 1314, 1315, 1316, 1317, 1318, 1319, 1320, 1321, 1322, 1323, 1324, 1325, 1326	should be 16 numeric characters with 2 decimal places
+								 1358	Should be enabled
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 03/13/2024
+Version			   : 9.0.0.47
+Description		   : Addressing of Findings
+				   > Issue Logs# 1222	Should display "Signatories Employment Details"
+								 1223	Should be "Employment Address" 
+
+Modified By         : JOHN MIGUEL GRAVINES
+Modified Date       : 03/13/2024
+Menu Item Version   : 9.0.0.46
+Reason				: Addressing of findings
+					>> Issue Logs# 1191 - Process >> Validaion for Payment Detail is missiing >> should be: "Cannot be Processed. Payment Details is required."
+
+Modified By         : CHOLO SANDOY
+Modified Date       : 03/08/2024
+Menu Item Version   : 9.0.0.45
+Reason				: Addressing of findings
+					  Issue Logs #115	All Alphanumeric Data Entry Fields should be automatically be in capital letters upon encoding.
+								  116	Spouse Location Information and Co-borrower Location Details Accordions:	"Add Checkbox: Same as Borrower Location BR: If Checkbox is ticked, fields under Spouse Location Information accordion & Co-borrower Location Details pop window will be disabled and colored gainsboro. Automatically load details from Location Information Accordion."
+								  117	Duration of Employment (Accordions: Employment Information, Spouse Employment Information, Co-borrower Employment Details, Signatories Employment Details)	Should be a date picker and corresponding Year/s will be system-computed based on current Server Date.
+								  118	Duration of Business (Accordions: Business Information, Spouse Business Information, Co-borrower Business Details, Signatories Business Details)	Should be a date picker and corresponding Year/s will be system-computed based on current Server Date.
+
+
+Modified By         : CHOLO SANDOY
+Modified Date       : 03/08/2024
+Menu Item Version   : 9.0.0.44
+Reason				: Addressing of findings
+					  Issue Logs #115	All Alphanumeric Data Entry Fields should be automatically be in capital letters upon encoding.
+								  116	Spouse Location Information and Co-borrower Location Details Accordions:	"Add Checkbox: Same as Borrower Location BR: If Checkbox is ticked, fields under Spouse Location Information accordion & Co-borrower Location Details pop window will be disabled and colored gainsboro. Automatically load details from Location Information Accordion."
+								  117	Duration of Employment (Accordions: Employment Information, Spouse Employment Information, Co-borrower Employment Details, Signatories Employment Details)	Should be a date picker and corresponding Year/s will be system-computed based on current Server Date.
+								  118	Duration of Business (Accordions: Business Information, Spouse Business Information, Co-borrower Business Details, Signatories Business Details)	Should be a date picker and corresponding Year/s will be system-computed based on current Server Date.
+
+Modified By         : CHOLO SANDOY
+Modified Date       : 02/27/2024
+Menu Item Version   : 9.0.0.43
+Reason				: Addressing of findings
+					  Issue Logs #1053	Should not disappear upon saving
+								  1079	Should be totally optional
+								  1080	Should saved Successfully
+								  1081	Should be totally optional
+								  1083	Should be totally optional
+								  1084	Should be totally optional
+								  1085	Should be totally optional
+								  1086	Should be totally optional
+								  1087	Should be totally optional
+								  1088	Should be totally optional
+								  1089	Should be Employment Contact Info.
+								  1092	Adjust the Accordion "Spouse Business information"
+
+Modified By         : CHOLO SANDOY
+Modified Date       : 02/24/2024
+Menu Item Version   : 9.0.0.42
+Reason				: Addressing of findings
+					  Issue Logs #108	Should always enable and required.
+                                  111	Requirements Compliance button in Co-borrower should be totally Optional only . 
+
+
+Modified By         : CHOLO SANDOY
+Modified Date       : 02/23/2024
+Menu Item Version   : 9.0.0.41
+Reason				: Addressing of findings
+					  Issue Logs #108	Should always enable and required.
+                                  109	"Since Co-Borrower info is Optional. red asterisk should be removed. If one Column was filled with Data. Contact Details and Location Details Should have a red asterisk/required "
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 02/21/2024
+Version			   : 9.0.0.40
+Description		   : Addressing of findings
+					> Issue Logs #107	Required only if the Primary Source of Income is tagged as Others in Individual Details
+								  108	Should always enable and required.
+								  109	"Since Co-Borrower info is Optional. red asterisk should be removed. If one Column was filled with Data. Contact Details and Location Details Should have a red asterisk/required "
+								  110	"Apply the Functionality of the ff buttons based on the selected Primary source of Income in Co-borrower Information 1.Employment Details - Required only if the Primary Source of Income in Co-borrower Information is tagged as Employment 2.Business Details - Required only if the Primary Source of Income in Co-borrower Information is tagged as Business 3.Other Source of Income-Required only if the Primary Source of Income in Co-borrower Information is tagged as Others"
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 02/20/2024
+Version			   : 9.0.0.39
+Description		   : Addressing of findings
+					> Issue Logs #1013	Should be ticked
+								  1014	Should be blank
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 02/19/2024
+Version			   : 9.0.0.38
+Description		   : Addressing of findings
+					> Issue Logs #1004	Should Not have blue Asterisk because it is optional and not alternative
+								  1005	Should Not have blue Asterisk because it is optional and not alternative
+								  107	Required only if the Primary Source of Income is tagged as Others
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 02/19/2024
+Version			   : 9.0.0.37
+Description		   : Addressing of findings
+					> Change all remarks to 255 characters
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 02/19/2024
+Version			   : 9.0.0.36
+Description		   : Addressing of findings
+					> Issue Logs #78	"Always enable and OPTIONAL if borrower type tag as Individual disabled if borrower type tag as BUSINESS ENTITY"
+								  79	"Add field: Remarks below of Zip Code both Present and permanent address"
+								  80	Add field: Remarks below of Zip Code
+								  81	Add field: Remarks below of Zip Code
+								  82	"Add field: Remarks below of Zip Code both Present and permanent address"
+								  83	Add field: Remarks below of Zip Code
+								  84	Add field: Remarks below of Zip Code
+								  85	"Add field: Remarks below of Zip Code both Present and permanent address"
+								  86	Add field: Remarks below of Zip Code
+								  87	Add field: Remarks below of Zip Code
+								  88	"Add field: Remarks below of Zip Code both Present and permanent address"
+								  89	Add field: Remarks below of Zip Code
+								  90	Add field: Remarks below of Zip Code
+								  91	Should be OPTIONAL only
+								  92	Should be OPTIONAL only
+								  93	"Should be DISABLED if borrower type tagged as INDIVIDUAL Should only ENABLED if borrower type tagged as BUSINESS ENTITY"
+								  94	Remove this field
+								  95	Should be OPTIONAL only
+								  96	Should only ENABLE and OPTIONAL if borrower type tagged as BUSINESS ENTITY
+								  97	Requirements Compliance button in Spouse, Co-borrower,Signatory should be Optional only
+								  105	Should be OPTIONAL only regardless of Borrower Type
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 02/14/2024
+Version			   : 9.0.0.35
+Description		   : Addressing of findings
+					> Issue Logs #930	Should be Enable upon process. Should be editable
+
+Modified By		   : Maki Cruz
+Date Modified	   : 02/14/2024
+Version			   : 9.0.0.34
+Description		   : Addressing of findings
+					> Issue Logs #926:Location Information > Municipality	Once full address was Ticked and Unticked, Municipality is disabled 	Should always enable  
+					> Issue Logs #927: Spouse Location Information > Municipality	Once full address was Ticked and Unticked, Municipality is disabled 	Should always enable  
+					> Issue Logs #928: Co-borrower Location Details	Once full address was Ticked and Unticked, Municipality is disabled 	Should always enable  
+					> Issue Logs #929: Signatory Location Details	Once full address was Ticked and Unticked, Municipality is disabled 	Should always enable  
+
+
+Modified By		   : Maki Cruz
+Date Modified	   : 02/10/2024
+Version			   : 9.0.0.33
+Description		   : Addressing of findings
+					> Issue Logs #920: Signatories information > TIN -  - Minimum of 9 and maximum of 12 Numeric characters. (Open Format)
+					> Issue Logs #921: Co-borrower Information > SSS -  - Remove alternative sign / blue asterisk, should totally optional
+					> Issue Logs #922: Co-borrower Information > GSIS -  - Remove alternative sign / blue asterisk, should totally optional
+					> Issue Logs #923: Signatories Information > SSS -  - Remove alternative sign / blue asterisk, should totally optional
+					> Issue Logs #924: Signatories Information > GSIS -  - Remove alternative sign / blue asterisk, should totally optional
+
+
+
+Modified By		   : Maki Cruz
+Date Modified	   : 02/10/2024
+Version			   : 9.0.0.32
+Description		   : Addressing of findings
+					> Issue Logs #879: Individual Details > Date of Birth - When selecting future dates prompt : Cannot Proceed,Date of Birth Should not be earlier than the current server date - prompt should be: Cannot Proceed.Date of Birth Should not be Later than the current server date
+					> Issue Logs #880: Co-borrower information> Date of Birth - when selecting future dates Prompt:Cannot Proceed.Date of Birth Should not be Later than the current server date. but it allows to select future dates - Should not allow to select future dates
+					> Issue Logs #881: Individual Details > SSS -  - Remove alternative sign / blue asterisk, should totally optional
+					> Issue Logs #882: Individual Details > GSIS -  - Remove alternative sign / blue asterisk, should totally optional
+					> Issue Logs #883: Individual Details > TIN -  - Minimum of 9 and maximum of 12 Numeric characters. (Open Format)
+					> Issue Logs #884: Spouse Information > SSS -  - Remove alternative sign / blue asterisk, should totally optional
+					> Issue Logs #885: Spouse Information > GSIS -  - Remove alternative sign / blue asterisk, should totally optional
+					> Issue Logs #886: Spouse Information > TIN -  - Minimum of 9 and maximum of 12 Numeric characters. (Open Format)
+					> Issue Logs #887: Corporation / Non Individual Details > TIN -  - Minimum of 9 and maximum of 12 Numeric characters. (Open Format)
+					> Issue Logs #888: Signatories Information > Date of Birth - allows later dates - prompt should be: Cannot Proceed.Date of Birth Should not be Later than the current server date
+					> Issue Logs #889: Beneficial Owner Information > Date of Birth - allows later dates - prompt should be: Cannot Proceed.Date of Birth Should not be Later than the current server date
+					> Issue Logs #890: Location Information - Upon Selecting Municipality, showing wrong data in Province, Region, Country, Zip Code - Should show the correct data based on the Province,Region, Country and Zip Code
+					> Issue Logs #891: Spouse Location Information - Upon Selecting Municipality, showing wrong data in Province, Region, Country, Zip Code - Should show the correct data based on the Province,Region, Country and Zip Code
+					> Issue Logs #892: Co-borrower Location Details - Upon Selecting Municipality, showing wrong data in Province, Region, Country, Zip Code - Should show the correct data based on the Province,Region, Country and Zip Code
+					> Issue Logs #893: Signatories Location Details - Upon Selecting Municipality, showing wrong data in Province, Region, Country, Zip Code - Should show the correct data based on the Province,Region, Country and Zip Code
+					> Issue Logs #894: Location Information > Home Ownership -  - Should be disabled if the Borrower type is tagged as Corporate
+					> Issue Logs #895: Location Information > Landmark -  - Should be disabled if the Full address was TICKED
+					> Issue Logs #896: Spouse Location Information > Landmark -  - Should be disabled if the Full address was TICKED
+					> Issue Logs #897: Co-borrower Location Details > Landmark -  - Should be disabled if the Full address was TICKED
+					> Issue Logs #898: Signatories Location Details > Landmark -  - Should be disabled if the Full address was TICKED
+
+
+
+Modified By		   : Maki Cruz
+Date Modified	   : 02/10/2024
+Version			   : 9.0.0.31
+Description		   : Addressing of findings
+					Issue Log#876 - Co-borrower Information > Other Source of Income Details	"Upon saved on the On the Co-borrower Other Source of Income Details window. prompt: Cannot be saved atleast one line details is required, even there is a data TFSPH-BRWINF-0000000107"	should save succesfully 
+
+Modified By		   : Maki Cruz
+Date Modified	   : 02/10/2024
+Version			   : 9.0.0.30
+Description		   : Addressing of findings
+					Issue Log#872 - Should show the entry screen of Processed Borrower Information - Fixed View Entry Screen Functionality
+
+
+
+Modified By		   : Maki Cruz
+Date Modified	   : 02/08/2024
+Version			   : 9.0.0.29
+Description		   : Addressing of findings
+					Issue Log#870 - Payment Details	"Did not require Payment Details Upon Process TFSPH-BRWINF-0000000099"	should be required; prompt "Cannot be saved.Payment Details is Required"
+				    Issue Log#871 -Credit Line  	"Did not require Credit Line Upon Process TFSPH-BRWINF-0000000099"	should be required; prompt "Cannot be saved.Credit Line is Required"
+
+
+
+Modified By		   : Maki Cruz
+Date Modified	   : 02/08/2024
+Version			   : 9.0.0.28
+Description		   : Addressing of findings
+					Issue Log#868 - "Prompt upon saved: Error: There is no row at Position row 0 - Borrower type: both Business Entity and Individual"	Should save succesfully 
+
+Modified By		   : Maki Cruz
+Date Modified	   : 02/08/2024
+Version			   : 9.0.0.27
+Description		   : Addressing of findings
+					> "Issue Logs #782 :Corporation/ Non-individual Details - still enable if the borrower type is Individual - Enabled and required only if the Borrower Type is tagged as Business Entity, otherwise, disabled
+
+					disabled if the Borrower type is tagged as Individual"
+					Issue Logs #785 :Other Source of Income Information - Always required - Required only if the Primary Source of Income is tagged as Others
+					"Issue Logs #786 :Dependent's Information - Still enable if borrower type tagged as Business entity - 1.) Enabled only if the Borrower Type is tagged as Individual, otherwise, disabled 
+					2.) Required if Politically Exposed Person is ticked"
+					Issue Logs #791 :Co-borrower Information > Employment Details - Optional button - Required only if the Primary Source of Income is tagged as Employment
+					Issue Logs #792 :Co-borrower Information > Business Details - Optional button - Required only if the Primary Source of Income is tagged as Business
+					Issue Logs #793 :Signatories Information - Disabled - Enabled and required only if the Borrower Type is tagged as Business Entity, otherwise, disabled
+					Issue Logs #794 :Beneficial Owner Information - Disabled - Enabled and required only if the Borrower Type is tagged as Business Entity, otherwise, disabled
+					Issue Logs #797 :Signatories Information > Employment Details -  - Required only if the Primary Source of Income is tagged as Employment
+					Issue Logs #798 :Signatories Information > Business Details -  - Required only if the Primary Source of Income is tagged as Business
+					Issue Logs #800 :Trade Reference - Always required - Enabled and required only if the Borrower Type is tagged as Business Entity, otherwise, disabled
+					Issue Logs #803 :Co-borrower information > Other Source of Income Details - No red Asterisk - Required only if the Primary Source of Income is tagged as Others
+					"Issue Logs #806 :Spouse Information > Politically Exposed Person - Enabled upon saved even it is unticked
+
+					TFSPH-BRWINF-0000000087 - should be disabled if unticked"
+					"Issue Logs #807 :Spouse Information - All fields and all Accordions under Spouse information should be Optional if the selected Marital Status on the Individual Details are the ff
+					1.single
+					2. Separated
+					3.Widow/er
+					4.Annulled/Divorced - Required if the Marital Status is ""Married"""
+					"Issue Logs #812 :Location Information > Full Address - Check the Arrangement of loaded Data - data arrangement should be :
+					unit no.
+					floor no.
+					bldg no.
+					building name
+					landmark
+					house no.
+					lot
+					block
+					phase
+					subdivision
+					zone
+					barangay
+					municipality
+					province
+					region
+					country zipcode"
+					"Issue Logs #813 :Spouse Location Information > Full Address - Check the Arrangement of loaded Data - data arrangement should be :
+					unit no.
+					floor no.
+					bldg no.
+					building name
+					landmark
+					house no.
+					lot
+					block
+					phase
+					subdivision
+					zone
+					barangay
+					municipality
+					province
+					region
+					country zipcode"
+					"Issue Logs #814 :Co-borrower Information > Buttons - Following buttons are can't able to open
+					1.Contact Details
+					2.Location Details
+					3.Employment Details
+					4.Business Details
+					5.Other Source of Income Details
+					6. Requirements Compliance - Should be enable upon saved on the Main Screen"
+					"Issue Logs #815 :Signatories Information > Buttons - Following buttons are can't able to open
+					1.Contact Details
+					2.Location Details
+					3.Employment Details
+					4.Business Details
+					5. Requirements Compliance - Should be enable upon saved on the Main Screen"
+					Issue Logs #816 :Requirements Compliance - Can't Able to open the button - Should be enable upon saved on the Main Screen
+					Issue Logs #817 :Payment Details - Can't Able to open the button - Should be enable upon saved on the Main Screen
+					"Issue Logs #825 :Accordions - Borrower Type tagged as INDIVIDUAL
+
+					Upon saved Color of accordions Changed 
+
+					1.Corporation/Non Individual Details
+					2.Signatories Infor
+					3.Beneficial Owner Info
+					4.Traade Reference - Should be disabled and grey color"
+					Issue Logs #826 :Co-borrower information > Primary Source of Income - Upon saved data selected is not showing - Should retain the data upon saved
+					Issue Logs #827 :Individual Details - disabled after saving - Should be editable after saving
+					"Issue Logs #828 :Spouse Information > Marital Status -  - Should be Loaded based on the Marital Status of Individual Details if the selected data is ""Married"" only
+
+					Locked After Saving"
+					"Issue Logs #829 :Spouse Information > Marital Status -  - Should be Loaded based on the Marital Status of Individual Details if the selected data is ""Married"" only
+
+					Locked After Saving"
+					Issue Logs #830 :Individual Details > Marital Status - Editable after saving - Based on BR, should locked after saving
+					"Issue Logs #831 :Save - Upon saving theres a prompt message for spoouse details
+
+					Borrower Type: Business Entity - Should be save successfully 
+
+					Should be there is no prompt about spouse info."
+					Issue Logs #832 :Open New Credit Line Button - Can't Able to open the button - Should be enable upon saved on the Main Screen
+					"Issue Logs #835 :Borrower Type - Remove Column Header ""individual"" - Lookup Search Window Column Header should display the following: 
+					Code 
+					Description"
+					"Issue Logs #836 :Spouse Business Information - ff fields are Showing of wrong data 
+					1.Municipality
+					2.Province
+					3.Region
+					4.Country
+					5.Zip Code - Should show the correct data per field"
+					Issue Logs #837 : - There's only 6 columns in the export window. Should be 9 columns including (Email, Land Line and Mobile) - Should've column for Email, Land Line and Mobile (If ticked, display Yes. Otherwise, display No)
+					Issue Logs #839 :Beneficial Owner Information > Percentage of Shares - it Allows greater than 100 - Should not allow Greater than 100
+					Issue Logs #853 :Bank Reference - change color of Accordion - Should be color Blue
+					"Issue Logs #854 :Trade Reference - Color of accordion is not similar to those disabled Accordions - Should be color Gray if disabled
+
+					Enabled and required only if the Borrower Type is tagged as Business Entity, otherwise, disabled"
+					Issue Logs #855 :Bank Reference - Disabled - Should always Enable and Required
+					"Issue Logs #856 :Spouse Information > Accordions - ff are wrong color of Accordions
+
+					1.Spouse Contact Information
+					2.Spouse Location Information
+					3.Spouse Employment Information
+					4.Spouse Business Information - Should be color Blue"
+					"Issue Logs #857 :Employment/Business Information > Accordions - ff are wrong color of Accordions
+
+					1.Employment Information
+					2.Business Information
+					3.Other Source of Income Information - Should be color Blue"
+					Issue Logs #858 :Spouse Information > Primary Source of Income - Wrong spelling - should be Primary Source of Income
+					Issue Logs #859 :Spouse Information > Primary Source of Income - Did not require upon saved - Should be required; prompt "Cannot be saved.Primary Source of Income in Spouse Information is Required"
+					Issue Logs #860 :Credit Line > Utilization - Rename Utilization - Should be Utilization Amount
+					"Issue Logs #861 :Save - Upon Clicking save button prompt : Process encountered
+
+					TFSPH-BRWINF-0000000092 - Should prompt ""Cannot be save.Location Details in Co-borrower Information is Required""
+
+					refer to the transaction : TFSPH-BRWINF-0000000092"
+					Issue Logs #862 :Spouse Employment Information > Phone - Showing 9 numeric characters only - [Area no.] plus [8 digit number] (042) 8888-8888
+					Issue Logs #863 :Spouse Business Information > Phone - Showing 9 numeric characters only - [Area no.] plus [8 digit number] (042) 8888-8888
+					Issue Logs #864 :Co-borrower Information > Co-borrower Location Information Details > Landmark - Disabled when full address was unticked - Should be enable
+					Issue Logs #865 :Co-borrower Information > Co-borrower Location Information Details > Barangay - there is still data when full address was ticked - This field is enabled if Full Address checkbox is not ticked; Otherwise, disabled
+					"Issue Logs #866 :Co-borrower Information > Requirements Compliance - Upon Clicking Process Prompt : cannot be processed. Requirements Compliance is Required in Co-borrower information at row 1 even there is a saved data already - Should have no prompt
+
+					transaction used: TFSPH-BRWINF-0000000094"
+ 
+
+
+Modified By		   : Maki Cruz
+Date Modified	   : 02/07/2024
+Version			   : 9.0.0.26
+Description		   : Sourcecode Review
+					 > Fixed Validations
+					 > Fixed Distorted UI
+					 > Added Tagging for Borrower Type, Marital Status, and Source of Income
+					 > Fixed Disable/Enable of Accordion
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 02/06/2024
+Version			   : 9.0.0.25
+Description		   : Addressing of Findings
+				   > Issue Logs#728	Upon saved, data should retain
+								749	allows 14 characters: 1st 13 characters should be numeric with the last character allowing alphanumeric, excluding dash, formatted as 000-000-000-0000A
+								750	allows 14 characters: 1st 13 characters should be numeric with the last character allowing alphanumeric, excluding dash, formatted as 000-000-000-0000A
+								754	If Communication Type selcted is Phone (Business)  or Phone (Home): Allows input of 15 alphanumeric characters e.g. [Area no.] plus [8 digit number] (042) 8888-8888
+								756	If Communication Type selcted is Phone (Business)  or Phone (Home): Allows input of 15 alphanumeric characters e.g. [Area no.] plus [8 digit number] (042) 8888-8888
+								759	If Communication Type selcted is Phone (Business)  or Phone (Home): Allows input of 15 alphanumeric characters e.g. [Area no.] plus [8 digit number] (042) 8888-8888
+								770	should be data entry 
+								772	should be data entry 
+								773	should be data entry 
+								781	Enabled and required only if the Borrower Type is tagged as Individual, otherwise, disabled
+								782	Enabled and required only if the Borrower Type is tagged as Business Entity, otherwise, disabled
+								783	Required only if the Primary Source of Income is tagged as Employment
+								784	Required only if the Primary Source of Income is tagged as Business
+								785	Required only if the Primary Source of Income is tagged as Others
+								786	"1.) Enabled only if the Borrower Type is tagged as Individual, otherwise, disabled 2.) Required if Politically Exposed Person is ticked"
+								787	Enabled only if the Borrower Type is tagged as Individual, otherwise, disabled
+								788	Required only if the Primary Source of Income is tagged as Employment
+								789	Required only if the Primary Source of Income is tagged as Business
+								790	Enabled only if the Borrower Type is tagged as Individual, otherwise, disabled
+								793	Enabled and required only if the Borrower Type is tagged as Business Entity, otherwise, disabled
+								794	Enabled and required only if the Borrower Type is tagged as Business Entity, otherwise, disabled
+								796	Enabled and required only if the Borrower Type is tagged as Individual, otherwise, disabled
+								800	Enabled and required only if the Borrower Type is tagged as Business Entity, otherwise, disabled
+								801	"Should be required field upon saved  Should have a red asterisk"
+								802	"Should be required field upon saved  Should have a red asterisk"
+								804	"Should be required field upon saved  Should have a red asterisk"
+								805	"Should be required field upon saved  Should have a red asterisk"
+								806	should be disabled if unticked 
+								807	Required if the Marital Status is "Married"
+								808	Include : Province, Region and Country
+								809	Include : Province, Region and Country
+								810	Include : Province, Region and Country
+								811	Include : Province, Region and Country
+								812	"data arrangement should be :
+								unit no.
+								floor no.
+								bldg no.
+								building name
+								landmark
+								house no.
+								lot
+								block
+								phase
+								subdivision
+								zone
+								barangay
+								municipality
+								province
+								region
+								country zipcode"
+								813	"data arrangement should be :
+								unit no.
+								floor no.
+								bldg no.
+								building name
+								landmark
+								house no.
+								lot
+								block
+								phase
+								subdivision
+								zone
+								barangay
+								municipality
+								province
+								region
+								country zipcode"
+
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 02/05/2024
+Version			   : 9.0.0.24
+Description		   : Addressing of Findings
+				   > Issue Logs#746	Enabled; Data entry, allows maximum of 12 numeric characters with no decimal places; format should be: 639 plus 9 digit
+								748	allows 14 characters: 1st 13 characters should be numeric with the last character allowing alphanumeric, excluding dash, formatted as 000-000-000-0000A
+								749	allows 14 characters: 1st 13 characters should be numeric with the last character allowing alphanumeric, excluding dash, formatted as 000-000-000-0000A
+								750	allows 14 characters: 1st 13 characters should be numeric with the last character allowing alphanumeric, excluding dash, formatted as 000-000-000-0000A
+								752	"allows 14 characters: 1st 13 characters should be numeric with the last character allowing alphanumeric, excluding dash, formatted as 000-000-000-0000A should also load the format - "" ___-___-___-____"""
+								753	If Communication Type selcted is Mobile: Allows maximum of 12 numeric characters with no decimal places; format should be: 639 plus 9 digit
+								754	If Communication Type selcted is Phone (Business)  or Phone (Home): Allows input of 15 alphanumeric characters e.g. [Area no.] plus [8 digit number] (042) 8888-8888
+								755	If Communication Type selcted is Mobile: Allows maximum of 12 numeric characters with no decimal places; format should be: 639 plus 9 digit
+								756	If Communication Type selcted is Phone (Business)  or Phone (Home): Allows input of 15 alphanumeric characters e.g. [Area no.] plus [8 digit number] (042) 8888-8888
+								757	"allows 14 characters: 1st 13 characters should be numeric with the last character allowing alphanumeric, excluding dash, formatted as 000-000-000-0000A should also load the format - "" ___-___-___-____"""
+								758	If Communication Type selcted is Mobile: Allows maximum of 12 numeric characters with no decimal places; format should be: 639 plus 9 digit
+								759	If Communication Type selcted is Phone (Business)  or Phone (Home): Allows input of 15 alphanumeric characters e.g. [Area no.] plus [8 digit number] (042) 8888-8888
+								768	should be data entry 
+								769	should be data entry 
+								770	should be data entry 
+								771	should be data entry 
+								772	should be data entry 
+								773	should be data entry 
+								776	All field under Permanent Address should be disabled once Same as Present address was ticked
+								777	All field under Permanent Address should be disabled once Same as Present address was ticked
+								780	Should be save successfully 
+
+Modified By		   : Harley Llevado
+Date Modified	   : 02/03/2024
+Version			   : 9.0.0.23
+Description		   : Addressing of findings
+						737	Individual Details> Date of Birth	upon entering of Data not showing. it defaults to 99/99/9999
+						738	Dependents infotmation> Date of Birth	upon entering of Data not showing. it defaults to 99/99/9999
+						739	Spouse information> Date of Birth	upon entering of Data not showing. it defaults to 99/99/9999
+						740	Co-borrower Information > Date of birth	upon entering of Data not showing. it defaults to 99/99/9999
+						741	Co-borrower Information > TIN	upon entering of Data not showing. it defaults to 99/99/9999
+						743	Signatories Information > Date of birth	upon entering of Data not showing. it defaults to 99/99/9999
+						744	Signatories Information > TIN	upon entering of Data not showing. it defaults to 99/99/9999
+						745	Beneficial Owner Information > Effective Date	upon entering of Data not showing. it defaults to 99/99/9999
+						746	Trade Reference > Contact No.	wrong format
+
+Modified By		   : Harley Llevado
+Date Modified	   : 02/03/2024
+Version			   : 9.0.0.22
+Description		   : Addressing of findings
+						742	Co-borrower Information > SSS no.	Allowing more than 10 numeric characters
+
+Modified By		   : Harley Llevado
+Date Modified	   : 02/03/2024
+Version			   : 9.0.0.21
+Description		   : Addressing of findings
+						737	Individual Details> Date of Birth	upon entering of Data not showing. it defaults to 99/99/9999
+
+Modified By		   : Harley Llevado
+Date Modified	   : 02/03/2024
+Version			   : 9.0.0.20
+Description		   : Addressing of findings
+						728	Other Business Information > Land	Upon saved. data entered defaulted to zero
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 02/02/2024
+Version			   : 9.0.0.19
+Description		   : All fields that contain Communication Type > Phone(Business/Landline) (999)9999-9999
+
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 02/02/2024
+Version			   : 9.0.0.18
+Description		   : allows maximum of 3 numeric and 2 decimal characters for Percentage of Shares 
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 02/02/2024
+Version			   : 9.0.0.17
+Description		   : https://docs.google.com/spreadsheets/d/1HAFkWWhUYw8ztMO2A-iLXNSv1tx_Eq5OuHIeP7wCI9U/edit#gid=0
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/02/2024
+Version			   : 9.0.0.16
+Description		   : https://docs.google.com/spreadsheets/d/1HAFkWWhUYw8ztMO2A-iLXNSv1tx_Eq5OuHIeP7wCI9U/edit#gid=0
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/31/2024
+Version			   : 9.0.0.15
+Description		   : upon Ticking the checkbox. fields under permanent address should be cleared
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/31/2024
+Version			   : 9.0.0.14
+Description		   :  Upon Ticking Same as Present Address - Fields Under Permanent Address Should be Disabled
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/30/2024
+Version			   : 9.0.0.13
+Description		   :  https://docs.google.com/spreadsheets/d/1HAFkWWhUYw8ztMO2A-iLXNSv1tx_Eq5OuHIeP7wCI9U/edit#gid=0
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/30/2024
+Version			   : 9.0.0.12
+Description		   :  https://docs.google.com/spreadsheets/d/1HAFkWWhUYw8ztMO2A-iLXNSv1tx_Eq5OuHIeP7wCI9U/edit#gid=0
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/24/2024
+Version			   : 9.0.0.11
+Description		   : Contact Details, Location Details, Employment Information, Business Information, 
+					 Other Source of Income Information buttons should turn into color green upon saving
+					  or required information on the popup window *To indicate that required details have already been provided
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/19/2024
+Version			   : 9.0.0.10
+Description		   : Contact Information 
+						- If Communication Type selcted is Mobile: Allows maximum of 12 numeric characters 
+						  with no decimal places; format should be: 639 plus 9 digit
+						- If Communication Type selcted is Phone (Business)  or Phone (Home): 
+						  Allows input of 15 alphanumeric characters e.g. [Area no.] plus [8 digit number] (042) 8888-8888
+
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/19/2024
+Version			   : 9.0.0.9
+Description		   : Spouse Information 
+						> Place of Birth
+							- Data Entry, allows maximum of 80 alphanumeric characters
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/19/2024
+Version			   : 9.0.0.9
+Description		   : Spouse Information 
+						> Place of Birth
+							- Data Entry, allows maximum of 80 alphanumeric characters
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/16/2024
+Version			   : 9.0.0.8
+Description		   : https://docs.google.com/spreadsheets/d/1HAFkWWhUYw8ztMO2A-iLXNSv1tx_Eq5OuHIeP7wCI9U/edit#gid=0
+
+Modified By		   : Nixon Padaen Lemon
+Date Modified	   : 01/1232024
+Version			   : 9.0.0.7
+Description		   : https://docs.google.com/spreadsheets/d/1HAFkWWhUYw8ztMO2A-iLXNSv1tx_Eq5OuHIeP7wCI9U/edit#gid=0
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/1232024
+Version			   : 9.0.0.6
+Description		   : Enabling of fields
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/12/2024
+Version			   : 9.0.0.5
+Description		   : Addressing of Findings
+				   > Issue Logs# 98	Borrower Reference Code was disabled
+								 100	Should have a Red Asterisk
+								 106	Payment Details>Method - Wrong Data
+								 107	Payment Details> Initial Method - Wrong Data
+
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/11/2023
+Version			   : 9.0.0.4
+Description		   : Popup link for credit line module change
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/11/2023
+Version			   : 9.0.0.3
+Description		   : Popup link for credit line
+
+Modified By		   : JOHN MIGUEL GRAVINES
+Date Modified	   : 01/11/2023
+Version			   : 9.0.0.2
+Description		   : Additional button and it functionality to popup another menu item.
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/05/2023
+Version			   : 9.0.0.1
+Description		   : Addressing of Findings
+				   > Issue Logs# 17	Upon initial opening, Collapse button is displayed. Once clicked, changes to "Expand All" and no longer goes back to "Collapse All" after reclicking.
+
+Created By		: Nixon Jamel P.Lemon
+Date Created	: 01/04/2024
+Version			: 9.0.0.0
+Reason			: New Development

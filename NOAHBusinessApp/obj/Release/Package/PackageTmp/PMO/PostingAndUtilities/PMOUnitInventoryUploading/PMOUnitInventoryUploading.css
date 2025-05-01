@@ -1,0 +1,32 @@
+﻿.btncuz{
+    height:auto !important;
+    font-size: 11px !important;
+}
+.nwgrid_HeaderShowHide{
+    display:none !important;
+}
+.cl_rightalign{
+    text-align:right;
+}
+.btn-default-yellow-cuz{
+     background: linear-gradient(to bottom, #ecfd48, #ece73e) !important;
+        color:black !important;
+}
+.btn-default-red-cuz{
+     background: linear-gradient(to bottom, #fd5848, #ec3e3e) !important;
+}
+
+#nwValidate .modal-box-s._slide-m{
+        width: 60%;
+    height: 60%;
+}
+
+#txtLastDownload{
+    font-size: 11px;
+    font-style: italic;
+}
+
+div#frmValidationList ._slide-m {
+    height: 70%;
+    width: 70%;
+}

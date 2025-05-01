@@ -206,3 +206,124 @@ a.btnView {
 /*.menuitem-container.full {
     overflow: hidden;
 }*/
+
+
+#my_camera {
+    position: relative;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden;
+    margin-left: 0px !important;
+}
+
+video {
+    position: absolute;
+    /*transform: rotateY(180deg);*/
+    height: 98% !important;
+    width: 100% !important;
+    object-fit: fill;
+    object-position: center;
+    /*object-position: right;*/
+    /*position: absolute;
+        transform: rotateY(180deg);
+        height: 98% !important;
+        width: 100% !important;
+        left: 50%;
+        margin-left: -50%;
+        object-fit: cover;
+        object-position: center;*/
+}
+
+#imgresult {
+    width: 100% !important;
+    height: 98% !important;
+}
+
+
+
+#btnCaptureImage {
+    position: absolute;
+    display: block;
+    background-image: url(images/camera-blue4.png) !important;
+    background-repeat: no-repeat !important;
+    height: 80px;
+    width: 80px;
+    background-size: 80px !important;
+    bottom: 0px;
+    left: 45%;
+}
+
+#btnCaptureImageRetake {
+    position: absolute;
+    display: block;
+    background-image: url(images/camera-blue4-Retake.png) !important;
+    background-repeat: no-repeat !important;
+    height: 80px;
+    width: 80px;
+    background-size: 80px !important;
+    bottom: 0px;
+    left: 45%;
+}
+.zoominbuttoncss .noah-webui-Toolbox-Item-Icon {
+    background-image: url("images/plus18.png");
+    /*background-image: url('../../../materials/icons/plus18.png');*/
+    margin-top: 1px;
+}
+
+.zoomoutbuttoncss .noah-webui-Toolbox-Item-Icon {
+    background-image: url("images/minus18.png");
+    /*background-image: url('../../../materials/icons/minus18.png');*/
+    margin-top: 1px;
+}
+
+/*.hdr{z-index:1}
+.noah-webui-Window {
+    z-index: 200
+}
+._layout .left-pnl.expand ~ .menuitem-container .modal, ._layout .left-pnl.expand ~ .menuitem-container .modal-s, ._layout .left-pnl.expand ~ .menuitem-container .mdl-cc, ._layout .left-pnl.expand ~ .menuitem-container .spinner-load-c, ._layout .left-pnl.expand ~ .menuitem-container .screen-container, ._layout .left-pnl.expand ~ .menuitem-container .pnlHelp-c, ._layout .left-pnl.expand ~ .menuitem-container .pulse-fixed, ._layout .left-pnl.expand ~ .menuitem-container .rescale-ready.fullscreen {
+    left: 230px;
+    top: 38px;
+}*/
+/*.modal-box-s.fullscreen {
+    margin-top: 23px;
+    height: 97%;
+}
+
+.left-pnl.expand .modal-box-s.fullscreen {
+    width: 89%;
+    margin-left: -89px;
+}*/
+
+/*.ui-datepicker {
+ display:none !important;
+}*/
+
+    /*.nkListViewValue {
+        border: .10px solid gray;
+    }
+
+.ui-datepicker {
+    display: none !important;
+}
+.nkListViewValue.buttonflat{
+    color: black;
+}*/
+
+        #ui-datepicker-div {
+        display: none !important;
+    }
+
+    .nkListViewValue {
+        border: .10px solid gray;
+    }
+
+    .nkListView .P8Spread_Input.hasDatepicker {
+    display: none !important;
+}
+
+.nkListViewValue {
+    border: .10px solid gray;
+}
+
+
+

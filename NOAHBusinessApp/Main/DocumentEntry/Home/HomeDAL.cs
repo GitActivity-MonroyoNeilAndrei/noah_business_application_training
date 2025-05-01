@@ -96,5 +96,26 @@ namespace DALComponent
 
             return SFObjects.LoadDataTable(sql, _ConnectionString2); ;
         }
+        public string getverse()
+        {
+            return SFObjects.returnText(@"SELECT TOP 1 '<b><i>'+versetitle+'</i></b><br>'+versebody+'' FROM FPTI_NW.Verse WHERE effectivedate <= CAST(dbo.GetNoahDate() AS DATE) ORDER BY effectivedate desc", _ConnectionString2);
+        }
+
+        public System.Data.DataTable Get_SystemNotification(string compID, string reuser)
+        {
+            string xquery = "";
+            if (compID != "nwnone")
+            {
+                xquery = string.Format(@"Select Distinct a.code,a.noti_template,b.SqlQuery,b.Description,dbo.getNoahDate() Recdate, x.sysuser From [FPTI_NW].[noahweb_CompanyAlertOtherMaintenance] a 
+                                        inner join FPTI.CompanyUserAlertMapping x on x.company = a.company  and x.sysuser = '{1}'
+                                        inner join [FPTI].[CompanyAlert] b on a.Code = b.Code and x.alert = b.Code                  
+                                        where a.Company = '{0}' and a.status_noti = 1  and x.sysuser = '{1}'", compID, reuser);
+            }
+            else
+            {
+                xquery = string.Format(@"SELECT * FROM [FPTI].[CompanyAlert] WHERE [Code] != '0' OR [Description]!='0'");
+            }
+            return SFObjects.LoadDataTable(xquery, _ConnectionString2);
+        }
     }
 }

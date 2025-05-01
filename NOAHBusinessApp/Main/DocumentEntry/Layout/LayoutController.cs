@@ -20,7 +20,26 @@ namespace InterfaceV3.Controllers
         public DataSet dsData = new DataSet();
         public ActionResult Index()
         {
-            
+
+            string menutitle = "";
+            try
+            {
+                ViewBag.menutitle = "";
+                menutitle =Request.QueryString["ntitle"].ToString();
+                menutitle = nwSystem.StringDecryptAES(menutitle, true);
+                ViewBag.menutitle = menutitle;
+            }
+            catch { }
+            string menuversion = "";
+            try
+            {
+                ViewBag.menuversion = "";
+                menuversion = Request.QueryString["nver"].ToString();
+                menuversion = nwSystem.StringDecryptAES(menuversion, true);
+                ViewBag.menuversion = menuversion;
+            }
+            catch { }
+            ViewBag.menuitemname = menutitle + " " + menuversion;
 
             return null;
 

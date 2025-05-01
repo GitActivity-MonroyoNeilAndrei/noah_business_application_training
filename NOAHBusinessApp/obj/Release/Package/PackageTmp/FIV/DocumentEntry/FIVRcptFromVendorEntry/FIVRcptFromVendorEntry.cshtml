@@ -1,0 +1,692 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Receipt From Vendor Entry";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/FIV/DocumentEntry/FIVRcptFromVendorEntry/FIVRcptFromVendorEntry.js"></script>
+    <link href="~/FIV/DocumentEntry/FIVRcptFromVendorEntry/FIVRcptFromVendorEntry.css" rel="stylesheet" />
+</head>
+@*<body class="">*@
+
+@*TOOLBOX*@
+
+<div class="nk-toolbar-c">
+    <div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+        <div class="nk-toolbar-btn noah-webui-Toolbox">
+            <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">New</div>
+            </div>
+            <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+            <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Delete</div>
+            </div>
+            <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Refresh</div>
+            </div>
+            <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Inquire</div>
+            </div>
+            <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+            <div id="noah-webui-default-Print" class="btn-tb-action btn-tb-print noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Print</div>
+            </div>           
+        </div>
+    </div>
+</div>
+
+
+<div class="nk-container-flex padding-10">
+    <div class="row row-parent">
+        <div class="col col-6 col-parent">
+            <input id="tagChkRcptRefNoConfig" class="nwHide" />
+            <input id="txtServerdate" class="nwHide" />
+            <input id="txtChkAllowBackdate" class="nwHide" />
+
+            @*Purchase Order No.*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Purchase Order No.<span class="nwRequiredField">*</span></label>
+                </div>
+                <div id="lugPurchaseOrderNo" class="col col-8 col-parent lookups">
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox idval" />
+                    </div>
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox descval" />
+                        <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            @*Ref. No. (BS/SI/SOA)*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Ref. No. (BS/SI/SOA)<span class="nwOptionalField">*</span></label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtSINo" type="text" maxlength="30"
+                           name=""
+                           class="idval" />
+                </div>
+            </div>
+            @*Ref. Date*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Ref. Date<span class="nwOptionalField">*</span></label>
+                </div>
+                <div class="col col-8">
+                    <input id="dtpSIDate" class="txtbox clrtxt nwDatePick" type="text" disabled="" autocomplete="off">
+                </div>
+            </div>
+
+
+            @*Counter Date*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Counter Date</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtCounterDate" class="txtbox clrtxt nwDatePick" type="text" disabled="" autocomplete="off">
+                </div>
+            </div>
+            @*DR/COC No.*@
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">DR/COC No.<span class="nwOptionalField">*</span></label>
+                </div>
+                <div class="col col-8">
+
+                    <input id="txtDRNo" type="text" maxlength="30"
+                           name=""
+                           class="idval" />
+                </div>
+            </div>
+            @*DR/COC Date*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">DR/COC Date<span class="nwOptionalField">*</span></label>
+                </div>
+                <div class="col col-8">
+                    <input id="dtpDRDate" class="txtbox clrtxt nwDatePick" type="text" disabled="" autocomplete="off">
+                </div>
+            </div>
+
+            @*REMARKS*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Remarks<span class="nwRequiredField">*</span></label>
+                </div>
+                <div class="col col-8">
+                    <textarea id="txtParticular" maxlength="500" class="txtarea autoresize" rows="3"></textarea>
+                </div>
+            </div>
+
+            @*Value Date*@
+            <div class="row" id="tagDocdate">
+                <div class="col col-4">
+                    <label class="lbltxt">Value Date<span class="nwRequiredField">*</span></label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtDocDate" class="txtbox clrtxt nwDatePick" type="text" disabled="" autocomplete="off">
+                </div>
+            </div>
+
+            @*BUTTONS*@
+
+            <div class="row">
+                <div class="col col-4"></div>
+                <div class="col col-8">
+                    <div id="btnViewAttachment" class="btn btn-default fullwidth">Review Attachment(s)</div>
+
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-4"></div>
+                <div class="col col-8">
+                    <div id="btnReqCompliance" class="btn btn-default btn-default-orange fullwidth">Requirement Compliance</div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <div class="col col-6 col-parent">
+            @*TRANSACTION NUMBER*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Transaction No.</label>
+                </div>
+                <div class="col col-8">
+                    <input type="text" id="txtTransactionNo" name="" class="txtbox" disabled>
+                </div>
+            </div>
+            @*Date Submitted*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Date Submitted</label>
+                </div>
+                <div class="col col-8">
+                    <input type="text" id="txtSubmittedDate" name="" class="txtbox" disabled>
+                </div>
+            </div>
+            @*Date Posted*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Date Posted</label>
+                </div>
+                <div class="col col-8">
+                    <input type="text" id="txtDatePosted" name="" class="txtbox" disabled>
+                </div>
+            </div>
+            @*PO Location*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">PO Location</label>
+                </div>
+
+                <div id="lugLocForm" class="col col-8 col-parent lookups lookupsCust">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                    </div>
+                </div>
+            </div>
+
+            @*Delivery Location*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Delivery Location</label>
+                </div>
+                <div id="lugDelLocForm" class="col col-8 col-parent lookups lookupsCust">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                    </div>
+                </div>
+            </div>
+
+            @*Delivery Sublocation*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Delivery Sublocation</label>
+                </div>
+                <div id="lugSubLoc1" class="col col-8 col-parent lookups lookupsCust">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                    </div>
+                </div>
+            </div>
+
+            @*Cost Center*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Cost Center</label>
+                </div>
+                <div id="lugCostCenter" class="col col-8 col-parent lookups lookupsCust">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                    </div>
+                </div>
+            </div>
+
+            @*Vendor*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Vendor</label>
+                </div>
+                <div id="lugVendor" class="col col-8 col-parent lookups lookupsCust">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                    </div>
+                </div>
+            </div>
+
+            @*Item Type*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Item Type</label>
+                </div>
+                <div class="col col-8">
+                    <input type="text" id="txtItemType" name="" maxlength="80" class="txtbox" disabled>
+                </div>
+            </div>
+
+            @*Total Qty*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Total Qty</label>
+                </div>
+                <div class="col col-8">
+                    <input type="text" id="txtTotalQty" name="" maxlength="80" disabled>
+                </div>
+            </div>
+
+            @*DOCUMENT STATUS*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Document Status</label>
+                </div>
+                <div class="col col-8">
+                    <input type="text" id="txtStatus" name="" class="txtbox" disabled>
+                </div>
+            </div>
+            @*REASON FOR DISAPPROVAL*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Reason for Disapproval</label>
+                </div>
+                <div class="col col-8">
+                    <input type="text" id="txtReasonDisapp" name="" class="txtbox" disabled>
+                </div>
+            </div>
+            @*REMARKS FOR DISAPPROVAL*@
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Disapproval Remarks</label>
+                </div>
+                <div class="col col-8">
+                    <textarea id="txtDisappRemarks" class="txtarea autoresize" maxlength="500" rows="3" disabled></textarea>
+                </div>
+            </div>
+
+            @*Button*@
+
+            <div class="row">
+                <div class="col col-4"></div>
+                <div class="col col-8">
+                    <div id="btnViewJournal" class="btn btn-default fullwidth">View Journal Entries</div>
+                    @*<div class="col col-8">*@
+                    @*<div id="btnViewAttachment" class="btn btn-default">Review Attachment(s)</div>*@
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Component: Accordion -->
+<div class="row row-parent">
+    <div class="col col-12 col-parent padding-x-5">
+        <div class="row">
+            <div class="col col-12">
+                <div class="btn btn-default collapseExpand" id="btnCollapseAll">Expand All</div>
+            </div>
+        </div>
+        <div class="col col-parent col-12">
+            <div class="nk-accordion col col-12" nk-style-accordion="1" id="accordion_main">
+                <div class="nk-ul">
+                    <div class="nk-li classHeader">
+                        <div class="nk-li-title nwCuz001">Delivery Details</div>
+                        <div class="nk-li-content">
+                            <div class="nk-li-text">
+                                <div class="col col-5">
+                                </div>
+                                <div class="row">
+                                    <div class="col col-12">
+                                        <div id="nwGridConCustom" class="col col-12 fullwidth">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="nk-li classHeader">
+                        <div class="nk-li-title nwCuz001">PO Balance Details</div>
+                        <div class="nk-li-content">
+                            <div class="nk-li-text">
+                                <div class="col col-5">
+                                </div>
+                                <div class="row">
+
+
+                                    <div class="col col-12">
+                                        <div id="nwGridPOBalDtlsCon" class="col col-12 fullwidth">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="nk-li classHeader">
+                        <div class="nk-li-title nwCuz001">Delivery Allocation</div>
+                        <div class="nk-li-content">
+                            <div class="nk-li-text">
+                                <div class="col col-5">
+                                </div>
+                                <div class="row row-parent">
+                                    <div class="col col-12 col-parent">
+                                        <div id="btnAttachWindowSave2" class="btn-action btn-save">
+                                            <div class="_btn-icon"></div>
+                                            <div class="_lbl-txt">Save</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <label class="lbltxt">Item</label>
+                                            </div>
+                                            <div id="lugItem" class="col col-6 col-parent lookups lookupsCust">
+                                                <div class="col col-4">
+                                                    <input type="text" name="" class="txtbox idval" disabled>
+                                                </div>
+                                                <div class="col col-8">
+                                                    <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <label class="lbltxt">Qty Received</label>
+                                            </div>
+                                            <div class="col col-6">
+                                                <input type="text"
+                                                       id="txtQtyRcvd_DA" class="txtbox nwAlignRight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <label class="lbltxt">% of Completion</label>
+                                            </div>
+                                            <div class="col col-6">
+                                                <input type="text"
+                                                       id="txtPOC_DA" class="txtbox nwAlignRight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div id="nwGridConDeliveryDetails" class="col col-12 fullwidth">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                    <div class="nk-li classHeader">
+                        <div class="nk-li-title nwCuz001">Request Allocation</div>
+                        <div class="nk-li-content">
+                            <div class="nk-li-text">
+                                <div class="col col-5">
+                                </div>
+                                <div class="row row-parent">
+                                    <div class="col col-12 col-parent">
+                                        <div id="btnSaveRequestDetails" class="btn-action btn-save">
+                                            <div class="_btn-icon"></div>
+                                            <div class="_lbl-txt">Save</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <label class="lbltxt">Item</label>
+                                            </div>
+
+                                            <div id="lugItem_rd" class="col col-6 col-parent lookups lookupsCust">
+                                                <div class="col col-4">
+                                                    <input type="text" name="" class="txtbox idval" disabled>
+                                                </div>
+                                                <div class="col col-8">
+                                                    <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <label class="lbltxt">Qty Received</label>
+                                            </div>
+                                            <div class="col col-6">
+                                                <input type="text"
+                                                       id="txtQtyRcvd_rd" class="txtbox nwAlignRight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <label class="lbltxt">Allocated Qty</label>
+                                            </div>
+                                            <div class="col col-6">
+                                                <input type="text"
+                                                       id="txtAllocQty_rd" class="txtbox nwAlignRight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <label class="lbltxt">Unallocated Qty</label>
+                                            </div>
+                                            <div class="col col-6">
+                                                <input type="text"
+                                                       id="txtUnallocQty_rd" name="" class="txtbox nwAlignRight" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div id="nwGridReqDtlsCon" class="col col-12 fullwidth">
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+            </div>
+      
+    @*Previous Receipt*@
+    <div id="nwPrevRcpts" title="Previous Receipts" class="nkPopupCon">
+        <div class="row row-parent">
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Item</label>
+                </div>
+                <div id="lugItemCode_pr" class="col col-8 col-parent lookups lookupsCust">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox txtlookup descval" disabled>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">PO Qty</label>
+                </div>
+                <div class="col col-8">
+                    <input type="text" id="txtPOQty_pr" name="" class="txtbox nwAlignRight" disabled>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">PO UOM</label>
+                </div>
+                <div id="lugPOUOMCode_pr" class="col col-8 col-parent lookups lookupsCust">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox txtlookup descval" disabled>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Current Receipt UOM</label>
+                </div>
+                <div id="lugCurrRcptUOMCode_pr" class="col col-8 col-parent lookups lookupsCust">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox txtlookup descval" disabled>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Total Qty Received (Receipt UOM)</label>
+                </div>
+                <div class="col col-8">
+                    <input type="text" id="txtTotalQtyRcvd_pr" name="" class="txtbox nwAlignRight" disabled>
+
+                </div>
+            </div>
+        </div>
+        <div class="row row-parent">
+            <div class="col col-12 sampleLight">
+                <div id="nwGridPrevRcptsCon" class="nwCuz008">
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Journal Details*@
+    <div id="nwJournalDetails" title="View Journal Entries" class="nkPopupCon">
+        <div class="row row-parent">
+            <div class="col col-12 col-parent">
+                <div id="btnExportJrnl" class="btn-action btn-export">
+                    <div class="_btn-icon"></div>
+                    <div class="_lbl-txt">Export</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-12">
+                    <div id="nwGridJournalCon" class="col col-12 fullwidth">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+    </div><div class="nk-footer-c">
+        <div class="nk-footer-info">
+            <div class="nk-footer-create">
+                <div class="nkf nk-f-createBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
+                </div>
+                <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
+                <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
+            </div>
+            <div class="nk-footer-x"></div>
+            <div class="nk-footer-modified">
+                <div class="nkf nk-f-modifiedBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
+                </div>
+                <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
+                <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @*HIDDEN
+        @*<input id="txtQtyRcvd_rd" class="value" type="hidden" />*@
+    <input id="tagChkRcptRefNoConfig" type="hidden" />
+    <input id="txtServerdate" type="hidden" />
+    <input id="txtChkAllowBackdate" type="hidden" />
+    <input id="txtLineID" type="hidden" />
+    <input id="txtRefLineID" type="hidden" />
+    <input id="txtRownum" type="hidden" />
+    <input id="txtPurchaseUOM" type="hidden" />
+    <input id="txtReceiptUOM" type="hidden" />
+    <input id="txtLineID1" type="hidden" />
+    <input id="txtPOLineID" type="hidden" />
+    <input id="txtPODate" type="hidden" />
+    <div id="lugLocForm" class="lookups nwDiv adisabled" hidden>
+        <div class="conval" hidden>
+            <input class="idval lookupcodecss clrtxt" type="text" hidden />
+            <input class="descval clrtxt" type="text" value="" hidden />
+        </div>
+    </div>
+    @*<div id="lugItem_rd" class="lookups nwDiv adisabled" hidden>
+            <div class="conval" hidden>
+                <input class="idval lookupcodecss clrtxt cl_lookupcode" type="text" hidden />
+                <input class="descval clrtxt nwHide" type="text" value="" hidden />
+            </div>
+        </div>*@
+    @*<input id="txtQtyRcvd_rd" class="nwTxtBox clrtxt nwAlignRight" type="text" disabled="" autocomplete="off" hidden>
+        <input id="txtAllocQty_rd" class="nwTxtBox clrtxt nwAlignRight" type="text" disabled="" autocomplete="off" hidden>
+        <input id="txtUnallocQty_rd" class="nwTxtBox clrtxt nwAlignRight" type="text" disabled="" autocomplete="off" hidden>*@
+
+    @*</body>*@
+
+    @*@RenderPage("~/WMS/DocumentEntry/SBBulkReservation/Popup/nwAddPaymentTermDTL.cshtml", "SBBulkReservation")*@
+    @*@RenderPage("~/DC/DataSetup/DCRequirementCompliance/DCRequirementCompliance.cshtml", "SBBulkReservation")*@
+
+    @*RenderPage("~/FIV/DocumentEntry/FIVRcptFromVendorEntry/Popup/JournalDetails.cshtml", "Receipt From Vendor Entry")*@

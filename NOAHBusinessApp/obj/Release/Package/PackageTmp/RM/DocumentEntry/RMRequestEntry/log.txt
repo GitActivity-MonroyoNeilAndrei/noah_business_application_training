@@ -1,0 +1,137 @@
+﻿Modified by		: Jenny May Cabantug
+Date Modified	: 10/18/2024
+Version			: 10.0.0.12
+Reason			: Addressing of findings
+					- remove .makecss in all popup
+					- remove nwGridBdgtCtrlCon  
+					- convert nwGridViewConsoChargingCon
+					- hide view details
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 10/14/2024
+Version			: 10.0.0.11
+Reason			: Addressing of findings
+					- add allowback dating
+					- #59 If Unit Cost (VATEX) has been edited, Unit Cost (VATIN) must be computed based on formula: Unit Cost (VATEX) multiplied by (1 plus the VAT Rate from SG.VATRate [System default VAT Rate]. This should consider latest effective VAT Rate.
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 10/12/2024
+Version			: 10.0.0.10
+Reason			: Addressing of findings
+					- add padding in container flex
+					- Payment Component title should be the same with button name
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 10/09/2024
+Version			: 10.0.0.9
+Reason			: Addressing of findings
+					- remaining qty and remaining budget
+					- pop up title of notification/notes
+					- pop up tile of vendor details
+					- apply standard pop up css 80% width and height
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 10/02/2024
+Version			: 10.0.0.8
+Reason			: Addressing of findings
+					- fix intermittent add to list done functionality catalogue and non catalogue
+					- total amount vatex and vatin should not display NaN
+					- remove asterisk in VATEX and VATTin in catalogue, this should be loaded
+					- #3 "Cannot Save Transaction No row at Position 0."
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 10/07/2024
+Version			: 10.0.0.7
+Reason			: Addressing of findings
+					- lookup of item group is not functional in non catalogue
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 10/01/2024
+Version			: 10.0.0.6
+Reason			: Addressing of findings
+					- print name should be "NOAH_"+[MenuI tem Name]+"_"+[Current Date and Time excluded special chars]+"_"+[Transaction No.]
+					- Catalogue requested quantity should be gainsboro
+					- get data from quotation delivery did not load correctly
+					- upon clicking delivery details prompt quantity is required even if there is already quatity in line details (non-catalogue)
+					- total requested quantity, total split quantity and remaining balance should be right align
+					- Upon clicking the New button, Save and Refresh buttons are enabled. Single Delivery: Disabled
+					- Single Delivery > Gray: use for viewing only
+					-  Cannot be saved. Charging Details is required.  
+					- Total, Allocated and Unallocated should be right align
+					- SOH Details
+					- Pending PO Details Window
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 09/25/2024
+Version			: 10.0.0.5
+Reason			: Enhancement
+					- addition objective type (Non Catalogue enhancement)
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 09/19/2024
+Version			: 10.0.0.4
+Reason			: Addressing of findings
+					- remove new bindings
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 09/18/2024
+Version			: 10.0.0.3
+Reason			: Addressing of findings
+					- forever loading upon click of selected historical template
+					- change charging details window design
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 09/18/2024
+Version			: 10.0.0.2
+Reason			: Addressing of findings
+					- window close change to hide modal
+					- particulars pop up
+					- fix pop up design
+					- requirement compliance turn green after saving delivery details
+					- fix button color
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 09/17/2024
+Version			: 10.0.0.1
+Reason			: Addressing of findings
+					- all pop should have class="nkPopupCon"
+					- "If Single Docno, downloaded Print Preview Filename should be ""NOAH_""+[MenuI tem Name]+""_""+[Current Date and Time
+					- Add Payment Component
+					- update pop up link
+
+Modified by		: Jenny May Cabantug
+Date Modified	: 09/17/2024
+Version			: 10.0.0.0
+Reason			: Enhancement
+					Convert to V10
+
+Modified by: Dean Pilacan
+Date Modified: 08.27.2024
+Version : 9.0.0.5
+Reason : Update to new bindings 
+		 Change column name depending on selected trantype
+
+Modified by: Dean Pilacan
+Date Modified: 08.22.2024
+Version : 9.0.0.4
+Reason : Fix lookup of Other trantypes than REQCON
+
+Modified by: Dean Pilacan
+Date Modified: 08.21.2024
+Version : 9.0.0.3
+Reason : Add vendor price assignment on qoutation details
+
+Modified by: Dean Pilacan
+Date Modified: 08.01.2024
+Version : 9.0.0.2
+Reason : Show reason for request
+
+Modified by: Dean Pilacan
+Date Modified: 07.05.2024
+Version : 9.0.0.1
+Reason : Hide Remaining Budget Quantity
+
+Created by:Dean Pilacan
+Date Created: 07.01.2024
+Version : 9.0.0.0
+Reason : Enhancement for APMC from Standard RMRequestEntry_9.0.0.240

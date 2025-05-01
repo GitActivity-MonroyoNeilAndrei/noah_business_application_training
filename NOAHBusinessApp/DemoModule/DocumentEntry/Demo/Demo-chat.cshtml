@@ -1,0 +1,233 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Demo-Chat";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/DemoModule/DocumentEntry/DemoIcon/Demo.js"></script>
+    <link href="~/DemoModule/DocumentEntry/DemoIcon/Demo.css" rel="stylesheet" />
+</head>
+
+<div class="container-flex">
+    <!--Component: Chat Box-->
+    <div class="chat-bx">
+        <button class="open-button" onclick="openForm()">
+            <svg fill="#ffffff" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" xml:space="preserve">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+            <style type="text/css">
+                .st0 {
+                    fill: none;
+                }
+</style>
+            <g id="surface1">
+            <path d="M4,2C2.9,2,2,2.9,2,4v13l3-3h10c1.1,0,2-0.9,2-2V4c0-1.1-0.9-2-2-2H4z M18,7v5c0,1.7-1.3,3-3,3H7v2c0,1.1,0.9,2,2,2h10l3,3 V9c0-1.1-0.9-2-2-2H18z"></path>
+                </g>
+            <rect class="st0" width="24" height="24"></rect>
+            </g>
+        </svg>
+        </button>
+        <div class="chat-popup" id="myForm">
+
+            <div class="form-container">
+                <div class="chat-bx-hdr">
+                    <div class="user-info">
+                        <div class="nk-pr">
+                            <img src="~/DemoModule/DocumentEntry/Demo/Media/icons/_overview/user-profile-from-freepik-photo.png" />
+                        </div>
+                        <div class="nk-name">Messaging</div>
+                    </div>
+                    <div class="btn-actions">
+                        <div class="nk-options" onclick="showDropRightHdr()" id="opt-chat-hdr"></div>
+                        <div class="nk-create"></div>
+                        <div class="nk-minimize" onclick="closeForm()"></div>
+                    </div>
+                    <div class="nk-opt-right-hdr" id="nk-left-hdr-opt" onmouseleave="hideDropRightHdr()">
+                        <ul class="nk-drop-opt">
+                            <li class="nk-drop-opt">Manage conversations</li>
+                            <li class="nk-drop-opt">Messaging settings</li>
+                            <li class="nk-drop-opt">Set away message</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="left">
+                    <div class="top">
+                        <input type="text" placeholder="Search messages">
+                        @*<a href="javascript:;" class="search" onclick="showSortOpt()"></a>*@
+                        <div class="search" onclick="showSortOpt()"></div>
+                        <div class="nk-opt-sort" id="nk-sub-hdr-opt" onmouseleave="hideSortOpt()">
+                            <ul class="nk-drop-opt">
+                                <li class="nk-drop-opt">Unread</li>
+                                <li class="nk-drop-opt">Starred</li>
+                                <li class="nk-drop-opt">InMail</li>
+                                <li class="nk-drop-opt">Archived</li>
+                                <li class="nk-drop-opt">Spam</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ul class="people">
+                        <li class="person" data-chat="person1" onclick="showChat()">
+                            <span class="name">Thomas Bangalter</span>
+                            <span class="time">2:09 PM</span>
+                            <span class="preview">I was wondering...</span>
+                            <div class="nk-options" onclick="showDropCnt(event)" id="opt-chat-pvw">
+                                <div class="nk-opt-conv" id="nk-contact-list" onmouseleave="hideDropCntOpt(event)">
+                                    <ul class="nk-drop-opt">
+                                        <li class="nk-drop-opt">Move to other</li>
+                                        <li class="nk-drop-opt">Mark as unread</li>
+                                        <li class="nk-drop-opt">Star</li>
+                                        <li class="nk-drop-opt">Mute</li>
+                                        <li class="nk-drop-opt">Archive</li>
+                                        <li class="nk-drop-opt">Report/Block</li>
+                                        <li class="nk-drop-opt">Delete conversation</li>
+                                        <li class="nk-drop-opt">Manage settings</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="person active" data-chat="person2" onclick="showChat()">
+                            <span class="name">Francisco Lachowski</span>
+                            <span class="time">1:44 PM</span>
+                            <span class="preview">I've forgotten how it felt before</span>
+                            <div class="nk-options" onclick="showDropCnt(event)" id="opt-chat-pvw">
+                                <div class="nk-opt-conv" id="nk-contact-list" onmouseleave="hideDropCntOpt(event)">
+                                    <ul class="nk-drop-opt">
+                                        <li class="nk-drop-opt">Move to other</li>
+                                        <li class="nk-drop-opt">Mark as unread</li>
+                                        <li class="nk-drop-opt">Star</li>
+                                        <li class="nk-drop-opt">Mute</li>
+                                        <li class="nk-drop-opt">Archive</li>
+                                        <li class="nk-drop-opt">Report/Block</li>
+                                        <li class="nk-drop-opt">Delete conversation</li>
+                                        <li class="nk-drop-opt">Manage settings</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="person" data-chat="person3" onclick="showChat()">
+                            <span class="name">Louis CK</span>
+                            <span class="time">1:44 PM</span>
+                            <span class="preview">But we’re probably gonna need a new carpet.</span>
+                            <span class="unread">1</span>
+                            <div class="nk-options" onclick="showDropCnt(event)" id="opt-chat-pvw">
+                                <div class="nk-opt-conv" id="nk-contact-list" onmouseleave="hideDropCntOpt(event)">
+                                    <ul class="nk-drop-opt">
+                                        <li class="nk-drop-opt">Move to other</li>
+                                        <li class="nk-drop-opt">Mark as unread</li>
+                                        <li class="nk-drop-opt">Star</li>
+                                        <li class="nk-drop-opt">Mute</li>
+                                        <li class="nk-drop-opt">Archive</li>
+                                        <li class="nk-drop-opt">Report/Block</li>
+                                        <li class="nk-drop-opt">Delete conversation</li>
+                                        <li class="nk-drop-opt">Manage settings</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="person active" data-chat="person4" onclick="showChat()">
+                            <span class="name">Bo Jackson</span>
+                            <span class="time">2:09 PM</span>
+                            <span class="preview">It’s not that bad...</span>
+                            <div class="nk-options" onclick="showDropCnt(event)" id="opt-chat-pvw">
+                                <div class="nk-opt-conv" id="nk-contact-list" onmouseleave="hideDropCntOpt(event)">
+                                    <ul class="nk-drop-opt">
+                                        <li class="nk-drop-opt">Move to other</li>
+                                        <li class="nk-drop-opt">Mark as unread</li>
+                                        <li class="nk-drop-opt">Star</li>
+                                        <li class="nk-drop-opt">Mute</li>
+                                        <li class="nk-drop-opt">Archive</li>
+                                        <li class="nk-drop-opt">Report/Block</li>
+                                        <li class="nk-drop-opt">Delete conversation</li>
+                                        <li class="nk-drop-opt">Manage settings</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="person" data-chat="person5" onclick="showChat()">
+                            <span class="name">Michael Jordan</span>
+                            <span class="time">2:09 PM</span>
+                            <span class="preview">I was wondering...</span>
+                            <div class="nk-options" onclick="showDropCnt(event)" id="opt-chat-pvw">
+                                <div class="nk-opt-conv" id="nk-contact-list" onmouseleave="hideDropCntOpt(event)">
+                                    <ul class="nk-drop-opt">
+                                        <li class="nk-drop-opt">Move to other</li>
+                                        <li class="nk-drop-opt">Mark as unread</li>
+                                        <li class="nk-drop-opt">Star</li>
+                                        <li class="nk-drop-opt">Mute</li>
+                                        <li class="nk-drop-opt">Archive</li>
+                                        <li class="nk-drop-opt">Report/Block</li>
+                                        <li class="nk-drop-opt">Delete conversation</li>
+                                        <li class="nk-drop-opt">Manage settings</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="person active" data-chat="person6" onclick="showChat()">
+                            <span class="name">Drake</span>
+                            <span class="time">1:44 PM</span>
+                            <span class="preview">wasup?</span>
+                            <div class="nk-options" onclick="showDropCnt(event)" id="opt-chat-pvw">
+                                <div class="nk-opt-conv" id="nk-contact-list" onmouseleave="hideDropCntOpt(event)">
+                                    <ul class="nk-drop-opt">
+                                        <li class="nk-drop-opt">Move to other</li>
+                                        <li class="nk-drop-opt">Mark as unread</li>
+                                        <li class="nk-drop-opt">Star</li>
+                                        <li class="nk-drop-opt">Mute</li>
+                                        <li class="nk-drop-opt">Archive</li>
+                                        <li class="nk-drop-opt">Report/Block</li>
+                                        <li class="nk-drop-opt">Delete conversation</li>
+                                        <li class="nk-drop-opt">Manage settings</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!---->
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div class="right" id="right-container">
+            <div class="chat-bx-hdr">
+                <div class="user-info">
+                    <span class="profile"></span>
+                    <span class="name">Louis CK</span>
+                    <span class="status active"></span>
+                </div>
+                <div class="btn-actions">
+                    <div class="nk-options" onclick="showDropRight()" id="opt-chat"></div>
+                    <div class="nk-video"></div>
+                    <div class="nk-maximize"></div>
+                    <div class="nk-create"></div>
+                    <div class="nk-exit" onclick="closeRight()"></div>
+                </div>
+                <div class="nk-opt-left-hdr" id="nk-right-opt" onmouseleave="hideDropRight()">
+                    <ul class="nk-drop-opt">
+                        <li class="nk-drop-opt">Move to other</li>
+                        <li class="nk-drop-opt">Mark as unread</li>
+                        <li class="nk-drop-opt">Star</li>
+                        <li class="nk-drop-opt">Mute</li>
+                        <li class="nk-drop-opt">Archive</li>
+                        <li class="nk-drop-opt">Report/Block</li>
+                        <li class="nk-drop-opt">Delete conversations</li>
+                        <li class="nk-drop-opt">Manage settings</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="chat-bx-body">
+                <ul class="chat-items"></ul>
+            </div>
+            <div class="chat-bx-send">
+                <input type="text" id="chatInput">
+                <span class="nk-attachment"></span>
+                <span class="nk-smiley"></span>
+                <span class="nk-send" onclick="sendMessage()"></span>
+            </div>
+        </div>
+        <!---->
+    </div>
+
+</div>

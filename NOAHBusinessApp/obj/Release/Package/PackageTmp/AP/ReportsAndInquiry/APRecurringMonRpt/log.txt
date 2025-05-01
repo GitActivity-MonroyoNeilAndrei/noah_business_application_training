@@ -1,0 +1,47 @@
+﻿Modified By			: Joshua Andrew Obina
+Date Modified		: 10/05/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 09/28/2023
+Version			: 9.0.0.6
+Reason			: Enhancement
+					- Main Grid 
+							> Remove nonfunctioning code on main grid
+
+Modified By		: NDB
+Date Modified	: 11/18/2021
+Version			: 9.0.0.5
+Updates			: Update as of date
+
+Modified By		: RJL
+Date Modified	: 06/02/2021
+Version			: 9.0.0.4
+Updates			: Addressing of findings
+					a. Rename No. of Remaining Periods into No. of Recurrence
+					b. Add column Last Recurrence Date before No. of Periods of Recurrence 
+
+Modified By		: RJL
+Date Modified	: 05/14/2021
+Version			: 9.0.0.3
+Updates			: Add Report Type label
+
+Modified By		: RJL
+Date Modified	: 04/29/2021
+Version			: 9.0.0.2
+Updates			: Address findings
+					a. No Recurring Amount shown in the table 
+					b. Fixed splitted of grid
+					c. Alignment of scrollbar in grid
+					d. Upon generation of the next period recurring transaction it is not showed in the monitoring report.
+
+Modified By		: RJL
+Date Modified	: 03/31/2021
+Version			: 9.0.0.1
+Updates			: Address findings in VAPT
+
+Created By		: RJL
+Date Created	: 03/19/2021
+Version			: 9.0.0.0
+Reason			: 

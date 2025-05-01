@@ -1,0 +1,52 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Demo-Calendar";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/DemoModule/DocumentEntry/DemoIcon/Demo.js"></script>
+    <link href="~/DemoModule/DocumentEntry/DemoIcon/Demo.css" rel="stylesheet" />
+</head>
+
+<div class="container-flex padding-10">
+    <!--Component: Calendar View Style #1-->
+    <div class="row row-parent child-centered">
+        <div class="col col-8 child-centered">
+            <div class="calendar-c" calendar-style="1">
+                <div class="title-content">
+                    <button id="last-1">&lt;</button>
+                    <span class="monthYr-wrapper">
+                        <div id="month-1">September</div>
+                        <div id="year-1">2024</div>
+                    </span>
+                    <button id="next-1">&gt;</button>
+                </div>
+
+                <div id="calendar-1" class="ci-cal-container">
+                    <!-- Calendar will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Component: Calendar View Style #2-->
+    <div class="row row-parent child-centered">
+        <div class="col col-8 child-centered">
+            <div class="calendar-c" calendar-style="2">
+                <div class="title-content">
+                    <button id="last-2">&lt;</button>
+                    <span class="monthYr-wrapper">
+                        <div id="month-2">September</div>
+                        <div id="year-2">2024</div>
+                    </span>
+                    <button id="next-2">&gt;</button>
+                </div>
+
+                <div id="calendar-2" class="ci-cal-container">
+                    <!-- Calendar will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

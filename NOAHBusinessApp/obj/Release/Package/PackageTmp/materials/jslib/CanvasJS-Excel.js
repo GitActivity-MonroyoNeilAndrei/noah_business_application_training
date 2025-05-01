@@ -1,10 +1,11 @@
 ﻿
-/* # Canvas JS Library 1.1.2.15
+/* # Canvas JS Library 1.1.2.17
 # Company Owner: Forecasting and Planning Technologies Inc. / Promptus8 Inc.
-# Developers : Angelo Carlo Gonzales
+# Developers : Karl Angelo Gmayo
+Angelo Carlo Gonzales
 Omar B. Credito
 # Date Created : November 2020
-# Date Modified : February 27 2024 / 03:28 AM - before: 02-15-2024
+# Date Modified : September 19 2024 / 01:44 PM - before: 07-16-2024
 
 For  NoahWeb Application and Promptus8 Modules used only. 
 
@@ -15,7 +16,7 @@ Modification of this Library is Prohibited.
 
 
 $(function () {
-    window.NOAH_SpreadCanvasExcel = { "version": "1.1.2.15" }
+    window.NOAH_SpreadCanvasExcel = { "version": "1.1.2.17" }
     console.log("NOAH_SpreadCanvasExcel: " + window.NOAH_SpreadCanvasExcel);
 });
 
@@ -11679,7 +11680,7 @@ $JExcel = {
     var align = {
         L: "left", C: "center", R: "right", T: "top", B: "bottom", W: "wrapText"
     }
-
+   
     function componentToHex(c) {
         var hex = c.toString(16);
         return hex.length == 1 ? "0" + hex : hex;
@@ -11786,7 +11787,7 @@ $JExcel = {
         'xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac" ' +
         'xmlns:xm="http://schemas.microsoft.com/office/excel/2006/main">' +
         '{views}{columns}' +
-        '<sheetData>{rows}</sheetData><sheetProtection sheet="1" objects="1" scenarios="1"/> {mergeCells}</worksheet>';
+        '<sheetData>{rows}</sheetData>{sheetProtection} {mergeCells}</worksheet>';
 
 
     // --------------------- BEGIN of generic UTILS
@@ -11835,7 +11836,8 @@ $JExcel = {
         return templateSheet.replace('{views}', generateViews(sheet.views))
                             .replace('{columns}', generateColums(sheet.columns))
                             .replace("{rows}", generateRows(sheet.rows, sheet.mergeCells))
-                            .replace("{mergeCells}", generateMergeCells(sheet.mergeCells));
+                            .replace("{mergeCells}", generateMergeCells(sheet.mergeCells))
+                            .replace("{sheetProtection}", sheet.sheetProtection == false ? "" : `<sheetProtection sheet="1" objects="1" scenarios="1"/>`);
     }
 
 
@@ -11881,14 +11883,17 @@ $JExcel = {
         var view = { panes: [pane] };
         view.workbookViewId = pushI(this.views, view);
     }
+    function setSheetProtection(value) {
+        this.sheetProtection = value;
+    }
     // ------------------- END Sheet DATA Handling
 
 
     function createSheets() {
         var oSheets = {
             sheets: [],
-            add: function (name) {
-                var sheet = { id: this.sheets.length + 1, rId: "rId" + (3 + this.sheets.length), name: name, rows: [], columns: [], getColumn: getColumn, set: setSheet, getRow: getRow, getCell: getCell, mergeCells: [], views: [], freezePane: freezePane };
+            add: function (name, sheetProtection) {
+                var sheet = { id: this.sheets.length + 1, rId: "rId" + (3 + this.sheets.length), name: name, rows: [], columns: [], getColumn: getColumn, set: setSheet, getRow: getRow, getCell: getCell, mergeCells: [], views: [], freezePane: freezePane, sheetProtection: setSheetProtection };
                 return pushI(this.sheets, sheet);
             },
             get: function (index) {
@@ -12225,6 +12230,7 @@ $JExcel = {
         var s = '<row r="' + rowIndex + '" '
         if (row.ht) s = s + ' ht="' + row.ht + '" customHeight="1" ';
         if (row.style) s = s + 's="' + row.style + '" customFormat="1"';
+        if (row.hidden) s = s + 'hidden="1" ht="0" ';
         return s + ' >' + oCells.join('') + '</row>';
     }
 
@@ -12384,7 +12390,21 @@ $JExcel = {
         excel.freezePane = function (s, x, y) {
             sheets.get(s).freezePane(x, y);
         }
+        excel.sheetProtection = function (s, value) {
+            sheets.get(s).sheetProtection(value);
+        }
 
+        // Function to hide a row
+        excel.hideRow = function (sheetIndex, rowIndex) {
+            var sheet = sheets.get(sheetIndex);
+            if (!sheet.rows) {
+                sheet.rows = {};
+            }
+            if (!sheet.rows[rowIndex]) {
+                sheet.rows[rowIndex] = {};
+            }
+            sheet.rows[rowIndex].hidden = true;
+        };
         excel.generate = function (filename) {
             CombineStyles(sheets.sheets, styles);
             var zip = new JSZip();                                                                              // Create a ZIP file
@@ -12862,6 +12882,18 @@ function p8Spread_Export(msbook, fileName) {
     var startRow = 5;
     var dataVal = "";
     var SheetNames = msbook.GetSheets();// Object.keys(dtExport);
+    // Ensure sheet names do not exceed 31 characters
+    for (var i = 0; i < SheetNames.length; i++) {
+        // SheetNames[i] = SheetNames[i].replaceAll("&", "&amp;")
+        // Replace forbidden characters with a space or underscore
+        SheetNames[i] = SheetNames[i].replace(/[:\/\\\?\*\[\]]/g, ' ');
+        if (SheetNames[i].length > 31) {
+            SheetNames[i] = SheetNames[i].substring(0, 31);
+        }
+        SheetNames[i] = SheetNames[i].replaceAll("&", "&amp;")
+    }
+
+
     var hdrNames = [];
     var excel = $JExcel.new("Arial 10 #333333");
     var formula = "";
@@ -12870,19 +12902,27 @@ function p8Spread_Export(msbook, fileName) {
         excel.addSheet(SheetNames[i]);
     }
 
-
-
     var rowadd = 0;
 
 
     for (var isheet = 0; isheet < SheetNames.length; isheet++) {
         var rowcount = msbook.Sheet[isheet].Data.length;
         var colcount = msbook.Sheet[isheet].ColumnConfig.length;
-
+        //karl edit
+        var rowexporthide = "";
+        var colexporthide = "";
+        try {
+            var exportList = nwJson(msbook.Sheet[isheet].exportList, "name", $("#cmbnwExport").val(), false);
+            if (exportList.length > 0) {
+                rowexporthide = exportList[0].rowexporthide
+                colexporthide = exportList[0].colexporthide
+            }
+        } catch (ex) { }
         rowadd = 0;
         if (msbook.Sheet[isheet].exportColumn) rowadd = 1;
 
-        for (var irow = 0 - rowadd; irow < rowcount ; irow++) {
+        for (var irow = 0 - rowadd; irow < rowcount; irow++) {
+
             for (var icol = 0; icol < colcount; icol++) {
 
                 if (irow == -1) {
@@ -12890,37 +12930,87 @@ function p8Spread_Export(msbook, fileName) {
                     excel.set(isheet, icol, 0, msbook.Sheet[isheet].ColumnName(icol), formats, undefined);
                     continue;
                 }
-
                 var formats = p8Spread_ExportGetFormat(excel, msbook.Sheet[isheet], icol, irow);
-                dataVal = msbook.Sheet[isheet].GetValue(icol, irow) + "";
-                formula = msbook.Sheet[isheet].GetFormula(icol, irow) + "";
+                //dataVal = msbook.Sheet[isheet].GetValue(icol, irow) + "";
+                var dataVal = "";
+                try { dataVal = msbook.Sheet[isheet].Data[irow][p8_NumberToCell(icol + 1)].value; } catch (ex) { }
+                if (dataVal == "null") { dataVal = "" }
+                var formula = "";
+                try { formula = msbook.Sheet[isheet].Data[irow][p8_NumberToCell(icol + 1)].formula; } catch (ex) { }
+                //formula = msbook.Sheet[isheet].GetFormula(icol, irow) + "";
+                //karl edit 03/2024
+                datatype = msbook.Sheet[isheet].GetDataType(icol, irow) + "";
                 dataVal = (dataVal) + "";
                 formula = (formula) + "";
+                //karl edit 03/2024
+                datatype = (datatype) + "";
                 if (formula.startsWith('=')) {
 
                     if (msbook.Sheet[isheet].exportColumn) {
-                        excel.set(isheet, icol, irow + rowadd, dataVal, formats, undefined);
+                        formula = _sfAdjustFormula(-1, -1, formula, 0, 1, Spread_ALLCOL, -1);
+                        formula = _sfp8exportescapeFormula(formula); //formula.replaceAll("&", "&amp;")
+                        excel.set(isheet, icol, irow + rowadd, formula, formats, undefined);
+                        //excel.set(isheet, icol, irow + rowadd, dataVal, formats, undefined);
                     } else {
+                        formula = _sfp8exportescapeFormula(formula); //formula = formula.replaceAll("&","&amp;")
                         excel.set(isheet, icol, irow + rowadd, formula, formats, undefined);
                     }
 
                     //excel.set(isheet, icol, irow , formula, formats, undefined);
                 }
                 else {
+                    //karl edit 03/2024
+                    if (datatype == "currency") {
+                        dataVal = dataVal.replaceAll(",", "");
+                    }
+                    //else if (formats == "4") {
+                    //    dataVal = "'" + dataVal;  // Prefix with a single quote to retain leading zero in Excel
+                    //}
                     excel.set(isheet, icol, irow + rowadd, dataVal, formats, undefined);
+                   
+                }
+            }
+
+            // hide
+            if (rowexporthide != "") {
+                var isRowExist = _sfisRowInExportHide(rowexporthide, irow);
+                if (isRowExist) {
+                    excel.hideRow(isheet, irow + rowadd - 1);
+                    //excel.set(isheet, undefined, irow + rowadd - 1, 0);
                 }
             }
         }
         for (var icol = 0; icol < colcount; icol++) {
-
-            excel.set(isheet, icol, undefined, msbook.Sheet[isheet].GetColumnWidth(icol) / 5.3);
+            if (colexporthide != "") {
+                var isColExist = _sfisColInExportHide(colexporthide, icol);
+                if (isColExist) {
+                    colwidth = 0;
+                } else {
+                    colwidth = msbook.Sheet[isheet].GetColumnWidth(icol) / 5.3
+                }
+            } else {
+                    colwidth = msbook.Sheet[isheet].GetColumnWidth(icol) / 5.3
+            }
+            excel.set(isheet, icol, undefined, colwidth);
         }
-
-        excel.freezePane(isheet, msbook.Sheet[isheet].FreezeCol, msbook.Sheet[isheet].FreezeRow + 1);
-        excel.set(isheet, 0, 1, undefined, undefined, msbook.Sheet[isheet].mergeList);
+        //karl edit 05/2024
+        var FreezeCol = msbook.Sheet[isheet].FreezeCol;
+        if (FreezeCol < 0) { FreezeCol = 0; }
+        var FreezeRow = msbook.Sheet[isheet].FreezeRow;
+        if (FreezeRow < 0) { FreezeRow = 0; }
+        excel.freezePane(isheet, FreezeCol, FreezeRow + 1);
+        var MergeCnt = 0;
+        try { MergeCnt = msbook.Sheet[isheet].mergeList.length; } catch (ex) { }
+        if (MergeCnt > 0) {
+            excel.set(isheet, 0, 0, undefined, undefined, msbook.Sheet[isheet].mergeList);
+        }
+        excel.sheetProtection(isheet, msbook.Sheet[isheet].excelSheetProtection);
+        
     }
+    //msbook.ExcelSheetProtection
     excel.generate(fileName + ".xlsx");
 }
+
 function p8Spread_ExportGetFormatHeader(excel, activesheet) {
     var bgcolor = wordToHex["gainsboro"];
     var txtColor = wordToHex["black"];
@@ -12943,8 +13033,10 @@ function p8Spread_ExportGetFormatHeader(excel, activesheet) {
     return formats;
 }
 function p8Spread_ExportGetFormat(excel, activesheet, icol, irow) {
-    var bgcolor = wordToHex[activesheet.GetBackground(icol, irow).toLowerCase()];
-    var txtColor = wordToHex[activesheet.GetTextColor(icol, irow).toLowerCase()];
+    var getbgcolor = activesheet.GetBackground(icol, irow).toLowerCase();
+    var bgcolor = wordToHex[getbgcolor];
+    var gettextcolor = activesheet.GetTextColor(icol, irow).toLowerCase();
+    var txtColor = wordToHex[gettextcolor];
     var datatype = activesheet.GetDataType(icol, irow).toLowerCase();
     var Precision = activesheet.GetPrecision(icol, irow);
     var fontBold = activesheet.GetBold(icol, irow) != false && activesheet.GetBold(icol, irow) != undefined ? (activesheet.GetBold(icol, irow) == true ? 'B' : activesheet.GetBold(icol, irow).toUpperCase().substring(0, 1)) : '';
@@ -12982,24 +13074,37 @@ function p8Spread_ExportGetFormat(excel, activesheet, icol, irow) {
                   (BorderWidth.borderWidthTop.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleTop + ' ' + (wordToHex[BorderColor.borderColorTop] == undefined ? "none " : wordToHex[BorderColor.borderColorTop]))) + ',' +
                   (BorderWidth.borderWidthBottom.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleBottom + ' ' + (wordToHex[BorderColor.borderColorBottom] == undefined ? "none " : wordToHex[BorderColor.borderColorBottom])))
                  ).toLowerCase().replaceAll('solid', 'thin');
+    isstring = undefined;
+    try {
+       // var value = activesheet.GetValue(icol, irow);
+        var value = activesheet.Data[irow][p8_NumberToCell(icol + 1)].value;
+        if (value.startsWith("0") && format === "General") {
+            format = '@';  // Set format to text
+            isstring = true;
+        } else if (/^\d+$/.test(value) && (datatype == "text" || datatype == "") && format === "General") {
+            format = '@';  // Set format to text
+            isstring = true;
+        }
+    }catch(ex){}
 
     if (format == "General") {
         formats = excel.addStyle({
             //border: "thin,thin,thin,thin #000000",
-            font: activesheet.GetFontFamily(icol, irow) + ' ' + activesheet.GetFontSize(icol, irow) + ' ' + (txtColor == undefined ? activesheet.GetTextColor(icol, irow) : txtColor) + ' ' + fontBold + ' ' + fontUnderline + ' ' + fontItalic,
+            font: activesheet.GetFontFamily(icol, irow) + ' ' + activesheet.GetFontSize(icol, irow) + ' ' + (txtColor == undefined ? gettextcolor : txtColor) + ' ' + fontBold + ' ' + fontUnderline + ' ' + fontItalic,
             align: activesheet.GetTextAlign(icol, irow).substring(0, 1).toUpperCase() + ' C' + (activesheet.AutoWrap ? ' W' : ''),
-            fill: (bgcolor == undefined ? activesheet.GetBackground(icol, irow) : bgcolor),
+            fill: (bgcolor == undefined ? getbgcolor : bgcolor),
             format: "General",
             border: borders
         });
     } else {
         formats = excel.addStyle({
             //border: "thin,thin,thin,thin #000000",
-            font: activesheet.GetFontFamily(icol, irow) + ' ' + activesheet.GetFontSize(icol, irow) + ' ' + (txtColor == undefined ? activesheet.GetTextColor(icol, irow) : txtColor) + ' ' + fontBold + ' ' + fontUnderline + ' ' + fontItalic,
+            font: activesheet.GetFontFamily(icol, irow) + ' ' + activesheet.GetFontSize(icol, irow) + ' ' + (txtColor == undefined ? gettextcolor : txtColor) + ' ' + fontBold + ' ' + fontUnderline + ' ' + fontItalic,
             align: activesheet.GetTextAlign(icol, irow).substring(0, 1).toUpperCase() + ' C' + (activesheet.AutoWrap ? ' W' : ''),
-            fill: (bgcolor == undefined ? activesheet.GetBackground(icol, irow) : bgcolor),
+            fill: (bgcolor == undefined ? getbgcolor : bgcolor),
             format: format,
-            border: borders
+            border: borders,
+            isstring: isstring
         });
     }
 
@@ -13025,8 +13130,10 @@ function p8Spread_ExportCSV(msbook, fileName) {
         var ColumnHeaderIndex = 0;
         try{
             ColumnHeaderIndex = msbook.Sheet[isheet].ColumnHeaderIndex;
-        }catch(err){}
-        if (ColumnHeaderIndex <= 0) {
+        } catch (err) { }
+        //karl edit 03/2024
+        if (ColumnHeaderIndex >= 0) {
+        //if (ColumnHeaderIndex <= 0) {
             for (var icol = 0; icol < colcount; icol++) {
                 if (msbook.Sheet[isheet].ColumnWidth(icol) <= 0) continue;
                 dataVal = msbook.Sheet[isheet].ColumnName(icol);
@@ -13035,15 +13142,40 @@ function p8Spread_ExportCSV(msbook, fileName) {
             data.push(datacolumnS);
         }
         
-
+        //karl edit
+        var rowexporthide = "";
+        var colexporthide = "";
+        try {
+            var exportList = nwJson(msbook.Sheet[isheet].exportList, "name", $("#cmbnwExport").val(), false);
+            if (exportList.length > 0) {
+                rowexporthide = exportList[0].rowexporthide
+                colexporthide = exportList[0].colexporthide
+            }
+        } catch (ex) { }
 
 
         for (var irow = 0; irow < rowcount; irow++) {
+            // hide
+            if (rowexporthide != "") {
+                var isRowExist = _sfisRowInExportHide(rowexporthide, irow);
+                if (isRowExist) {
+                    continue;
+                }
+            }
             var datacolumn = [];
             for (var icol = 0; icol < colcount; icol++) {
                 if (msbook.Sheet[isheet].ColumnWidth(icol) <= 0) continue;
-
+                if (colexporthide != "") {
+                    var isColExist = _sfisColInExportHide(colexporthide, icol);
+                    if (isColExist) {
+                        continue;
+                    }
+                }
                 dataVal = msbook.Sheet[isheet].GetText(icol, irow);
+                //karl edit 03/2024
+                if (dataVal == undefined || dataVal == "") {
+                    dataVal = msbook.Sheet[isheet].GetValue(icol, irow);
+                }
                 datacolumn.push(dataVal);
             }
             data.push(datacolumn);
@@ -13102,6 +13234,7 @@ $(function () {
     $("#PrintCanvasCon").hide();
 });
 function p8Spread_Print(msbook, fileName) {
+    
     var doc;
     var orientation = "l";
 
@@ -13126,8 +13259,17 @@ function p8Spread_Print(msbook, fileName) {
     });
 
     var obj = msbook.ActiveSheet;
-    
 
+    //karl edit
+    var rowexporthide = "";
+    var colexporthide = "";
+    try {
+        var exportList = nwJson(obj.exportList, "name", $("#cmbnwExport").val(), false);
+        if (exportList.length > 0) {
+            rowexporthide = exportList[0].rowexporthide
+            colexporthide = exportList[0].colexporthide
+        }
+    } catch (ex) { }
 
     var startRow = 5;
     var dataVal = "";
@@ -13150,7 +13292,18 @@ function p8Spread_Print(msbook, fileName) {
 
 
     for (var ic = 0; ic < obj.ColumnConfig.length; ic++) {
-        var colwidth = parseInt(obj.GetColumnWidth(ic));
+        //karl edit
+        if (colexporthide != "") {
+            var isColExist = _sfisColInExportHide(colexporthide, ic);
+            if (isColExist) {
+                colwidth = 0;
+            } else {
+                colwidth = parseInt(obj.GetColumnWidth(ic));
+            }
+        } else {
+            colwidth = parseInt(obj.GetColumnWidth(ic));
+        }
+       // var colwidth = parseInt(obj.GetColumnWidth(ic));
         if (colwidth > 5) {
             conwidth += colwidth + borderMargin;
         }
@@ -13170,7 +13323,13 @@ function p8Spread_Print(msbook, fileName) {
 
         console.log("loop:" + print_StartRow);
         if (pageno >= 2) {
-            print_StartRow += print_PageJump - (obj.HideHeaderIndex -  1);
+            //karl edit
+            if (obj.HideHeaderIndex == undefined) {
+                print_StartRow += print_PageJump;
+            } else {
+                print_StartRow += print_PageJump - (obj.HideHeaderIndex - 1);
+            }
+            
         } else if (pageno >= 1){
             print_StartRow += print_PageJump - (obj.FreezeRow);
         }
@@ -13273,9 +13432,18 @@ function p8Spread_Print(msbook, fileName) {
         try {
             widthcol = obj.ColumnConfig[icounter].width;
         } catch (err) { }
+        //karl edit
+        if (colexporthide != "") {
+            var isColExist = _sfisColInExportHide(colexporthide, icounter);
+            if (isColExist) {
+                widthcol = 0;
+            }
+        }
 
         if (applyfreezeW < obj.FreezeCol) {
-            widthcol = obj.ColumnConfig[applyfreezeW].width;
+            if (colexporthide != "") { } else {
+                widthcol = obj.ColumnConfig[applyfreezeW].width;
+            }
             applyfreezeW++;
             if ((conWidthDraw - widthcol) <= 0) break;
           
@@ -13288,7 +13456,8 @@ function p8Spread_Print(msbook, fileName) {
         obj.CellColMax += 1;
         conWidthDraw -= widthcol;
         if (icounter >= 1000) break;
-    }
+        }
+
     var maxLimitRowAdd = obj.CellRowMaxAdd;
     var maxLimitRow = obj.CellRowMax + maxLimitRowAdd;
     var maxLimitCol = obj.CellColMax;
@@ -13432,7 +13601,13 @@ function p8Spread_Print(msbook, fileName) {
             current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
             //console.log(ix + " " + current_Height);
         } catch (err) { }
-
+        // karl edit
+        if (rowexporthide != "") {
+            var isRowExist = _sfisRowInExportHide(rowexporthide, ix - 1);
+            if (isRowExist) {
+                current_Height = 0;
+            }
+        }
         var isFreezeCol = false;
 
 
@@ -13467,8 +13642,14 @@ function p8Spread_Print(msbook, fileName) {
                 current_Width = def_Width;
                 current_Width = parseInt(obj.ColumnConfig[icx - 1].width);
             } catch (err) { }
+            //karl edit
+            if (colexporthide != "") {
+                var isColExist = _sfisColInExportHide(colexporthide, icx - 1);
+                if (isColExist) {
+                    current_Width = 0;
+                } 
+            }
 
- 
             var isaffected = false;
             for (var it = 0; it < mergeList.length; it++) {
                 if ((mergeList[it].col2 >= icx - 1 && mergeList[it].col <= icx - 1)
@@ -13500,7 +13681,13 @@ function p8Spread_Print(msbook, fileName) {
                                     xcurrent_Width = def_Width;
                                     xcurrent_Width = parseInt(obj.ColumnConfig[icc].width); // + 1
                                 } catch (err) { }
-
+                                //karl edit
+                                if (colexporthide != "") {
+                                    var isColExist = _sfisColInExportHide(colexporthide, icc);
+                                    if (isColExist) {
+                                        xcurrent_Width = 0;
+                                    }
+                                }
                                 if (xcurrent_Width <= 1) {
                                     continue;
                                 }
@@ -13516,7 +13703,13 @@ function p8Spread_Print(msbook, fileName) {
                                 try { //get Row height if there is
                                     totalheight = obj.Data[icc].aagrowHeight || def_Height;
                                 } catch (err) { }
-
+                                // karl edit
+                                if (rowexporthide != "") {
+                                    var isRowExist = _sfisRowInExportHide(rowexporthide, icc);
+                                    if (isRowExist) {
+                                        totalheight = 0;
+                                    }
+                                }
                                 curHeight += borderMargin + totalheight;
                                 if (icc < ix - 1) {
                                     curYorigin -= borderMargin + totalheight;
@@ -13565,7 +13758,13 @@ function p8Spread_Print(msbook, fileName) {
                         xcurrent_Width = def_Width;
                         xcurrent_Width = parseInt(obj.ColumnConfig[icc].width); 
                     } catch (err) { }
-
+                    //karl edit
+                    if (colexporthide != "") {
+                        var isColExist = _sfisColInExportHide(colexporthide, icc);
+                        if (isColExist) {
+                            xcurrent_Width = 0;
+                        }
+                    }
                     if (icc < xFreezeCol - 1) { }
                     else if (icc >= (xFreezeCol - 1) && icc < firstFreezeCol) {
                         continue;
@@ -13589,7 +13788,13 @@ function p8Spread_Print(msbook, fileName) {
                     try { //get Row height if there is
                         totalheight = obj.Data[icc].aagrowHeight || def_Height;
                     } catch (err) { }
-
+                    // karl edit
+                    if (rowexporthide != "") {
+                        var isRowExist = _sfisRowInExportHide(rowexporthide, icc);
+                        if (isRowExist) {
+                            totalheight = 0;
+                        }
+                    }
                     //must check the row height +1
                     plusHeight += borderMargin + totalheight;
                 }
@@ -13686,7 +13891,13 @@ function p8Spread_Print(msbook, fileName) {
         try { 
             current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
         } catch (err) { }
-
+        // karl edit
+        if (rowexporthide != "") {
+            var isRowExist = _sfisRowInExportHide(rowexporthide, ix - 1);
+            if (isRowExist) {
+                current_Height = 0;
+            }
+        }
 
 
         for (var ic = obj_startCol; ic <= scolumn; ic++) {
@@ -13710,6 +13921,13 @@ function p8Spread_Print(msbook, fileName) {
                 current_Width = def_Width;
                 current_Width = parseInt(obj.ColumnConfig[icx - 1].width);
             } catch (err) { }
+            //karl edit
+            if (colexporthide != "") {
+                var isColExist = _sfisColInExportHide(colexporthide, icx - 1);
+                if (isColExist) {
+                    current_Width = 0;
+                }
+            }
 
             curCol = icx;
             curRow = ix;
@@ -13750,6 +13968,13 @@ function p8Spread_Print(msbook, fileName) {
                                     xcurrent_Width = def_Width;
                                     xcurrent_Width = parseInt(obj.ColumnConfig[icc].width); // + 1
                                 } catch (err) { }
+                                //karl edit
+                                if (colexporthide != "") {
+                                    var isColExist = _sfisColInExportHide(colexporthide, icc);
+                                    if (isColExist) {
+                                        xcurrent_Width = 0;
+                                    }
+                                }
 
                                 if (xcurrent_Width <= 1) {
                                     
@@ -13768,7 +13993,13 @@ function p8Spread_Print(msbook, fileName) {
                                 try { 
                                     totalheight = obj.Data[icc].aagrowHeight || def_Height;
                                 } catch (err) { }
-
+                                // karl edit
+                                if (rowexporthide != "") {
+                                    var isRowExist = _sfisRowInExportHide(rowexporthide, icc);
+                                    if (isRowExist) {
+                                        totalheight = 0;
+                                    }
+                                }
                                 curHeight += borderMargin + totalheight;
                                 if (icc < ix - 1) {
                                     curYorigin -= borderMargin + totalheight;
@@ -13815,7 +14046,13 @@ function p8Spread_Print(msbook, fileName) {
                         xcurrent_Width = def_Width;
                         xcurrent_Width = parseInt(obj.ColumnConfig[icc].width); // + 1
                     } catch (err) { }
-
+                    //karl edit
+                    if (colexporthide != "") {
+                        var isColExist = _sfisColInExportHide(colexporthide, icc);
+                        if (isColExist) {
+                            xcurrent_Width = 0;
+                        }
+                    }
                     if (icc < xFreezeCol - 1) { }
                     else if (icc >= (xFreezeCol - 1) && icc < firstFreezeCol)
                         continue;
@@ -13835,7 +14072,13 @@ function p8Spread_Print(msbook, fileName) {
                     try { //get Row height if there is
                         totalheight = obj.Data[icc].aagrowHeight || def_Height;
                     } catch (err) { }
-
+                    // karl edit
+                    if (rowexporthide != "") {
+                        var isRowExist = _sfisRowInExportHide(rowexporthide, icc);
+                        if (isRowExist) {
+                            totalheight = 0;
+                        }
+                    }
                     //must check the row height +1
                     plusHeight += borderMargin + totalheight;
                 }
@@ -13926,6 +14169,13 @@ function p8Spread_Print(msbook, fileName) {
         try {
             current_Height = obj.Data[i].aagrowHeight || def_Height;
         } catch (err) { }
+        // karl edit
+        if (rowexporthide != "") {
+            var isRowExist = _sfisRowInExportHide(rowexporthide, i);
+            if (isRowExist) {
+                current_Height = 0;
+            }
+        }
         HeadertotalHeight += current_Height + borderMargin;
     }
     contextSheet.fillStyle = print_bgcolormain;
@@ -14011,6 +14261,13 @@ function p8Spread_Print(msbook, fileName) {
         try {
             current_Width = parseInt(obj.ColumnConfig[i].width) || def_Width;
         } catch (err) { }
+        //karl edit
+        if (colexporthide != "") {
+            var isColExist = _sfisColInExportHide(colexporthide, i);
+            if (isColExist) {
+                current_Width = 0;
+            }
+        }
         HeadertotalWidth += current_Height + borderMargin;
     }
 
@@ -14048,7 +14305,13 @@ function p8Spread_Print(msbook, fileName) {
             try { //get Row height if there is
                 current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
             } catch (err) { }
-
+            // karl edit
+            if (rowexporthide != "") {
+                var isRowExist = _sfisRowInExportHide(rowexporthide, ix - 1);
+                if (isRowExist) {
+                    current_Height = 0;
+                }
+            }
 
             current_X = borderMargin;
             var myCell = {
@@ -14110,6 +14373,13 @@ function p8Spread_Print(msbook, fileName) {
                 try {
                     current_Width = def_Width;
                     current_Width = parseInt(obj.ColumnConfig[icx - 1].width);
+                    //karl edit
+                    if (colexporthide != "") {
+                        var isColExist = _sfisColInExportHide(colexporthide, icx - 1);
+                        if (isColExist) {
+                            current_Width = 0;
+                        }
+                    }
                 } catch (err) { }
                 FreezeLineCol = sheetStart_x + current_X + borderMargin + current_Width;
             }
@@ -14123,6 +14393,13 @@ function p8Spread_Print(msbook, fileName) {
                 current_Width = def_Width;
                 current_Width = parseInt(obj.ColumnConfig[icx - 1].width);
             } catch (err) { }
+            //karl edit
+            if (colexporthide != "") {
+                var isColExist = _sfisColInExportHide(colexporthide, icx - 1);
+                if (isColExist) {
+                    current_Width = 0;
+                }
+            }
 
             if (current_Width <= 0) continue;
 
@@ -14161,6 +14438,13 @@ function p8Spread_Print(msbook, fileName) {
                                 tmp_current_Width = def_Width;
                                 tmp_current_Width = parseInt(obj.ColumnConfig[ihx].width);
                             } catch (err) { }
+                            //karl edit
+                            if (colexporthide != "") {
+                                var isColExist = _sfisColInExportHide(colexporthide, ihx);
+                                if (isColExist) {
+                                    tmp_current_Width = 0;
+                                }
+                            }
                             tmp_current_Width += borderMargin;
                             fnl_current_Width += tmp_current_Width;
                         }
@@ -14581,3 +14865,82 @@ function createHeaders(keys) {
     }
     return result;
 }
+
+function _sfp8exportescapeFormula(formula) {
+    return formula
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function _sfisRowInExportHide(rowexporthide, row) {
+    var ranges = rowexporthide.split(',');
+    var rows = new Set();
+
+    ranges.forEach(range => {
+        var bounds = range.split('-');
+        if (bounds.length === 1) {
+            // Single number
+            rows.add(parseInt(bounds[0]));
+        } else if (bounds.length === 2) {
+            // Range of numbers
+            var start = parseInt(bounds[0]);
+            var end = parseInt(bounds[1]);
+            for (var i = start; i <= end; i++) {
+                rows.add(i);
+            }
+        }
+    });
+
+    return rows.has(row);
+}
+
+function _sfisColInExportHide(colExportHide, colIndexToCheck) {
+    var colToCheck = p8_NumberToCell(colIndexToCheck + 1)
+    var ranges = colExportHide.split(',');
+    var cols = new Set();
+
+    ranges.forEach(range => {
+        var bounds = range.split('-');
+        if (bounds.length === 1) {
+            // Single column
+            cols.add(bounds[0].toUpperCase());
+        } else if (bounds.length === 2) {
+            // Range of columns
+            var start = bounds[0].toUpperCase().charCodeAt(0);
+            var end = bounds[1].toUpperCase().charCodeAt(0);
+            for (var i = start; i <= end; i++) {
+                cols.add(String.fromCharCode(i));
+            }
+        }
+    });
+
+    return cols.has(colToCheck.toUpperCase());
+}
+function _sfExcelCopyArray(obj) {
+    const seen = new WeakMap();
+
+    function copy(obj) {
+        if (obj === null || typeof obj !== 'object') {
+            return obj;
+        }
+
+        if (seen.has(obj)) {
+            return seen.get(obj);
+        }
+
+        const copyObj = Array.isArray(obj) ? [] : {};
+        seen.set(obj, copyObj);
+
+        Object.keys(obj).forEach(key => {
+            copyObj[key] = copy(obj[key]);
+        });
+
+        return copyObj;
+    }
+
+    return copy(obj);
+}
+

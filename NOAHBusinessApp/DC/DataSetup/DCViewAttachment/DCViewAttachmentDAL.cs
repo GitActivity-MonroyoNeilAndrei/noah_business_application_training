@@ -212,7 +212,7 @@ namespace DALComponent
 
         public DataTable getSuppDocData(string docno)
         {
-            string sql = string.Format($@"EXEC [PRT].[nsp_DCRequirementComplianceL] @docno='{docno}', @QueryType=0");
+            string sql = string.Format($@"EXEC [DC].[nsp_RequirementComplianceL] @docno='{docno}', @QueryType=0");
 
             return SFObjects.LoadDataTable(sql, _ConnectionString);
         }

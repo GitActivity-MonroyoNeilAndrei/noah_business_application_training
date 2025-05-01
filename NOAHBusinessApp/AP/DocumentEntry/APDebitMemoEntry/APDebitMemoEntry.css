@@ -1,0 +1,32 @@
+﻿.two {
+    border-color: cyan !important; 
+    outline-color: blue !important; 
+    outline-width: initial !important; 
+}
+
+.nwCuz072 { 
+    color: red !important; 
+    font-style: italic !important; 
+}
+
+.nwOptionalField{
+    color:#0404fc !important;
+}
+
+div#nwGenerateGriddebitwith ._slide-m, div#nwGenerateDetails ._slide-m,
+div#nwGenerateGriddebitwithout ._slide-m, div#nwGenerateGridLineDetails ._slide-m,
+div#nwGenerateDetailsLD ._slide-m, div#nwGenerateGridLDWithout ._slide-m,
+div#nwGenerateGridTotalAPV ._slide-m, div#FormProcess ._slide-m,
+div#nwGenerateGridJE ._slide-m {
+    max-height: 90%;
+    min-height: 80%;
+    min-width: 80%;
+}
+
+#txtDebitNote, #txtlocalforex, #txtHomeforex, #txtwDebitNote, #txtLineDetails, #txtLineDetailwithout, #txtTotalAPV, #total {
+    text-align: right;
+}
+
+#txtJESub, #txtVat, #txtVatafter, #txtEWT, #txtNetAmount, #txtDPAdv, #txtDMApp, #txtRetention, #txtTotalAmt {
+    text-align: right;
+}

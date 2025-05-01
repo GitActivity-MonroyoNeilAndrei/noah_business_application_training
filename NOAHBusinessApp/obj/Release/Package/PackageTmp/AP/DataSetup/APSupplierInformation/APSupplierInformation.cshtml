@@ -1,0 +1,962 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+     ViewBag.Title = "Vendor Information";
+     Layout =NoahWebLib.nwSystem.GetDefaultLayout();
+
+}
+
+<head>
+    <script src="~/AP/DataSetup/APSupplierInformation/APSupplierInformation.js"></script>
+    <script src="~/AP/DataSetup/APSupplierInformation/APSupplierInformationCustom.js"></script>
+    <link href="~/AP/DataSetup/APSupplierInformation/APSupplierInformation.css" rel="stylesheet" />
+</head>
+
+<body class="">
+    <div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+
+        <div id="noah-webui-Toolbox-BindingNavigator" nwbind="noah-webui-Toolbox-Grid" class="noah-webui-Toolbox-BindingNavigator nwHide">
+            <div id="noah-webui-default-first" class="noah-webui-Toolbox-Item-Icon BN-button">
+                <div></div>
+            </div>
+            <div id="noah-webui-default-previous" class="noah-webui-Toolbox-Item-Icon BN-button">
+                <div></div>
+            </div>
+            <div class="BN-record">
+                <input id="noah-webui-default-currentRec" type="text" value="0" />
+                <span>of 0</span>
+            </div>
+            <div id="noah-webui-default-next" class="noah-webui-Toolbox-Item-Icon BN-button">
+                <div></div>
+            </div>
+            <div id="noah-webui-default-last" class="noah-webui-Toolbox-Item-Icon BN-button">
+                <div></div>
+            </div>
+        </div>
+
+        <div class="nk-toolbar-btn noah-webui-Toolbox">
+            <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">New</div>
+            </div>
+            <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+            <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Delete</div>
+            </div>
+            <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Refresh</div>
+            </div>
+            <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Inquire</div>
+            </div>
+            <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+            <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex">
+        <div class="row row-parent padding-10">
+            <div class="col col-6 col-parent margin-top-10">
+
+
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Tax Registration Type</label>
+                    </div>
+                    <div class="col col-8">
+                        <div class="row">
+                            <div class="col col-4">
+                                <div class="rdo-wrapper">
+                                    <input id="Individual" type="radio" name="vatype" class="rdo">
+                                    <label class="lbl-rdo" for="Individual">Individual</label>
+                                </div>
+                            </div>
+                            <div class="col col-4">
+                                <div class="rdo-wrapper">
+                                    <input id="Corporate" type="radio" name="vatype" class="rdo">
+                                    <label class="lbl-rdo" for="Corporate">Corporate</label>
+                                </div>
+                            </div>
+                            <div class="col col-4">
+                                <div class="rdo-wrapper">
+                                    <input id="WithoutTIN" type="radio" name="vatype" class="rdo">
+                                    <label class="lbl-rdo" for="WithoutTIN">Without TIN</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Vendor Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtSuppliercode" maxlength="30">
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Payee Sub Type<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugPayeeSubType">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Vendor Tier<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugVendorTier">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Cross Reference Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtCrossCode" maxlength="30">
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Currency<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugCurrency">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                    </div> 
+                    <div class="col col-8">
+                        <div class="chk-wrapper child-centered">
+                            <input id="CurrencySelection" type="checkbox" class="chk">
+                            <label class="lbl-chk" for="CurrencySelection" id="lblCurrencySelection">Allow Currency Selection (Source)</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Registered Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtRegName" maxlength="180">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Trade Name (Business Style)<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtTradeName" maxlength="180">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Check Payee Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtCheckPayeeName" maxlength="180">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                    </div> 
+                    <div class="col col-8">
+                        <div class="chk-wrapper child-centered">
+                            <input id="chkLoadOwnersName" type="checkbox" class="chk">
+                            <label class="lbl-chk" for="chkLoadOwnersName" id="lblLoadOwnersName">Load Owner's Name</label>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Alternative Check Payee Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtAltCheckPayeeName" maxlength="180">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Check Issuance Type</label>
+                    </div>
+                    <div class="col col-8">
+                        <div class="row">
+                            <div class="col col-6">
+                                <div class="rdo-wrapper">
+                                    <input id="rdbLumpsum" type="radio" name="chkIssuance" class="rdo">
+                                    <label class="lbl-rdo" for="rdbLumpsum">Lump sum</label>
+                                </div>
+                            </div>
+                            <div class="col col-6">
+                                <div class="rdo-wrapper">
+                                    <input id="rdbCheckIndividual" type="radio" name="chkIssuance" class="rdo">
+                                    <label class="lbl-rdo" for="rdbCheckIndividual">Per Transaction</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Website</label>
+                    </div>
+                    <div class="col col-8">
+                        <a id="txtWebsiteLink" draggable="false" href="http://fpti.com.ph" target="_blank" class="fullwidth">
+                            @*<input id="txtWebsite" class="nwNoSpace" type="text" maxlength="80" autocomplete="off">*@
+                            <input type="text" name="" class="txtbox nwNoSpace" id="txtWebsite" maxlength="80">
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Vendor Approval ID</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtVendorID" maxlength="30">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Vendor Status</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtStatus" maxlength="30">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                    </div>
+                    <div class="col col-8">
+                        <div class="btn btn-default btnMedium fullwidth" id="btnDisappRemarks" disabled>Disapproval Details</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <div class="title-with-leftborder nwUnderline"><i>Individual Details</i></div>
+                    </div>
+                    <div class="col col-8">
+                        
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Salutation</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugSalutation">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Last Name<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtLastName" maxlength="80">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">First Name<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtFirstName" maxlength="80">
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Name Suffix</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugNameSuffix">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Middle Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtMidInitial" maxlength="30">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Nickname</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtNickName" maxlength="80">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Date of Birth</label>
+                    </div>
+                    <div class="col col-8">
+                        <div class="row">
+                            <div class="col col-5">
+                                <input type="text" name="" class="txtbox hasDatepicker" id="txtDateBirth" maxlength="30">
+                            </div>
+                            <div class="col col-2">
+                                <label class="lbltxt">Age</label>
+                            </div>
+                            <div class="col col-5">
+                                <input type="text" name="" class="txtbox" id="txtAge" maxlength="30" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Place of Birth</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtPlaceBirth" maxlength="255">
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Gender</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugGender">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Civil Status</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugCivilStatus">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Nationality</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugNationality">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Religion</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugReligion">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col col-6 col-parent padding-left-10">
+                
+                <div class="row">
+                    <div class="col col-4">
+                        <div class="title-with-leftborder nwUnderline"><i>Main Location</i></div>
+                    </div>
+                    <div class="col col-8">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Location Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtLocationCode" maxlength="30">
+                    </div>
+                </div>
+
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Location Type<span class="nwRequiredField">*</span></label>
+                    </div>
+
+                    <div id="lugLocationType" class="col col-8 col-parent lookups lookupsCust">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval" disabled>
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Location Type</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugLocationType">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">*@
+                            @*<div class="btn btn-sm-default btn-sm-default-lookup"></div>*@
+                        @*</div>
+                    </div>
+                </div>*@
+               
+                <div class="row">
+                    <div class="col col-4">
+                        <div class="chk-wrapper child-centered">
+                            <input id="cbFullAddress" type="checkbox" class="chk" >
+                            <label class="lbl-chk" for="cbFullAddress" name="cbFullAddress" />Full Address
+                        </div>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtFullAddress" maxlength="255">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Unit No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <div class="row">
+                            <div class="col col-2">
+                                <input type="text" name="" class="txtbox" id="txtUnitNo" maxlength="12">
+                            </div>
+                            <div class="col col-3">
+                                <label class="lbltxt">Floor No.</label>
+                            </div>
+                            <div class="col col-2">
+                                <input type="text" name="" class="txtbox" id="txtFloorNo" maxlength="12">
+                            </div>
+                            <div class="col col-3">
+                                <label class="lbltxt">Bldg. No.</label>
+                            </div>
+                            <div class="col col-2">
+                                <input type="text" name="" class="txtbox" id="txtBldgNo" maxlength="12">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Establishment Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtEstablishment" maxlength="80">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Building Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtBuilding" maxlength="80">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Landmark<span class="nwOptional">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtLandmark" maxlength="80">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Street No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <div class="row">
+                            <div class="col col-2">
+                                <input type="text" name="" class="txtbox" id="txtStreetNo" maxlength="12">
+                            </div>
+                            <div class="col col-3">
+                                <label class="lbltxt">Street Name<span class="nwOptional">*</span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input type="text" name="" class="txtbox" id="txtStreetName" maxlength="80">
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Lot</label>
+                    </div>
+                    <div class="col col-8">
+                        <div class="row">
+                            <div class="col col-2">
+                                <input type="text" name="" class="txtbox" id="txtLot" maxlength="25">
+                            </div>
+                            <div class="col col-3">
+                                <label class="lbltxt">Block</label>
+                            </div>
+                            <div class="col col-2">
+                                <input type="text" name="" class="txtbox" id="txtBlock" maxlength="25">
+                            </div>
+                            <div class="col col-3">
+                                <label class="lbltxt">Phase</label>
+                            </div>
+                            <div class="col col-2">
+                                <input type="text" name="" class="txtbox" id="txtPhase" maxlength="12">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Subdivision<span class="nwOptional">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <div class="row">
+                            <div class="col col-7">
+                                <input type="text" name="" class="txtbox" id="txtSubdivision" maxlength="80">
+                            </div>
+                            <div class="col col-3">
+                                <label class="lbltxt">Zone</label>
+                            </div>
+                            <div class="col col-2">
+                                <input type="text" name="" class="txtbox" id="txtZone" maxlength="80">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Area</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugArea">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Standard Barangay<span class="nwOptional">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugStdBarangay">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Alternative Barangay<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtAltBrgy" maxlength="30" disabled>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Municipality<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugMunicipality">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugProvince">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugRegion">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Country</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugCountry">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">International Sub Group</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugInternationalSubGroup">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">International Group</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugInternationalGroup">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">ZIP Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtZip" maxlength="30" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <div class="title-with-leftborder nwUnderline"><i>Contact Details</i></div>
+                    </div>
+                    <div class="col col-8">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Phone No.<span class="nwOptional">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtPhone" maxlength="50">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Local</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtLocal" maxlength="50">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Mobile No.<span class="nwOptional">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtMobile" maxlength="20">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Email Address<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtEmailAdd" maxlength="100">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Fax No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtFax" maxlength="100">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <div class="title-with-leftborder nwUnderline "><i>Bank Details</i></div>
+                    </div>
+                    <div class="col col-8">
+
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Bank</label>
+                    </div>
+                    <div class="col col-8 col-parent adisabled lookups" id="lugBank">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc txtlookup descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Bank Account No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtBankAccountNo" maxlength="80">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Bank Branch Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox" id="txtBankAddress" maxlength="500">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row row-parent padding-10">
+            <div class="col col-6 col-parent">
+                <div class="row">
+                    <div class="col col-6">
+                    </div>
+                    <div class="col col-6">
+                        <div class="btn btn-default btn-default-orange fullwidth" id="btnReqCompliance">
+                            Requirements Compliance
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-6">
+                    </div>
+                    <div class="col col-6">
+                        <div class="btn btn-default btn-default-orange fullwidth" id="btnVendorLocation">
+                            Vendor Location
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-6">
+                    </div>
+                    <div class="col col-6">
+                        <div class="btn btn-default btn-default-orange fullwidth" id="btnVendorContact">
+                            Vendor Contacts
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-6">
+                    </div>
+                    <div class="col col-6">
+                        <div class="btn btn-default btn-default-orange fullwidth" id="btnVendorTaxInfo">
+                            Vendor Taxes Information
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col col-6 col-parent">
+                <div class="row">
+                    <div class="col col-6">
+                        <div class="btn btn-default btn-default-orange fullwidth" id="btnBasisforAgingAssignment">
+                            Vendor Basis for Aging Assignment
+                        </div>
+                    </div>
+                    <div class="col col-6">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-6">
+                        <div class="btn btn-default btn-default-orange fullwidth" id="btnPaymentTerm">
+                            Vendor Payment Term Assignment
+                        </div>
+                    </div>
+                    <div class="col col-6">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-6">
+                        <div class="btn btn-default btn-default-orange fullwidth" id="btnVendorBranch">
+                            Vendor Branch Group Assignment
+                        </div>
+                    </div>
+                    <div class="col col-6">
+                    </div>
+                </div>
+                <div class="row margin-bottom-30">
+                    <div class="col col-6">
+                        <div class="btn btn-default btn-default-orange fullwidth" id="btnVendorBIR">
+                            Vendor System Permit
+                        </div>
+                    </div>
+                    <div class="col col-6">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="nwDisappDtls" title="Disapproval Details" class="nkPopupCon">
+        <div class="row row-parent">
+            <div class="row with-label-lookup">
+                <div class="col col-4">
+                    <label class="lbltxt">Reason for Disapproval</label>
+                </div>
+                <div id="lugReasonforDisapp" class="col col-8 col-parent lookups lookupsCust">
+                    <div class="col col-4 conval">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8 conval">
+                        <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Disapproval Remarks</label>
+                </div>
+                <div class="col col-8">
+                    <textarea id="txtDisappRemarks" class="txtarea" type="text" maxlength="500" rows="4" cols="50" disabled="disabled"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+
+
+    <div class="nk-footer-c">
+        <div class="nk-footer-info">
+            <div class="nk-footer-create">
+                <div class="nkf nk-f-createBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
+                </div>
+                <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
+                <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
+            </div>
+            <div class="nk-footer-x"></div>
+            <div class="nk-footer-modified">
+                <div class="nkf nk-f-modifiedBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
+                </div>
+                <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
+                <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
+            </div>
+        </div>
+    </div>
+
+    @*@section noahpopup{
+        @RenderPage("~/AP/DataSetup/APSupplierInformation/Popup/cuzPopup.cshtml", "APSupplierInformation");
+    }*@
+    @*@RenderPage("~/AP/DataSetup/APSupplierInformation/Popup/DisapPopup.cshtml", "APSupplierInformation")*@
+
+</body>

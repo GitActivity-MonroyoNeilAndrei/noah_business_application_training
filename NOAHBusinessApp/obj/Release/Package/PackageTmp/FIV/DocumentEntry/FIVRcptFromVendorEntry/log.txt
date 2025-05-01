@@ -1,0 +1,398 @@
+﻿Modified By		: Jenny May Cabantug
+Date Modified	: 11/29/2024
+Version			: 10.0.0.10
+Reason			: Addressing of findings
+					- .val() should not be used on BL to avoid Parsing concerns
+					- Javascript Library Function Name shall be reused.
+					- remove List<SqlCommand> This may cause duplication of docno
+
+
+Modified By		: Jenny May Cabantug
+Date Modified	: 11/22/2024
+Version			: 10.0.0.9
+Reason			: Addressing of findings
+					#227 "Should save since the Qty to be Allocated is equal to the Qty Received. Issue: Allocated Quantity not computing > System Computed; Summation of Qty Received (Receipt UOM)"
+					#234 "Column Lables should be:
+							1. PO Qty (Receipt UOM)
+							2. Prev. Qty Received (Receipt UOM)
+							3. PO Qty Balance(Receipt UOM)
+							Refer to BR : Receipt from Vendor Entry Work Control.xlsx \"
+
+Modified By		: Jenny May Cabantug
+Date Modified	: 11/21/2024
+Version			: 10.0.0.8
+Reason			: Addressing of findings
+					#291 Wrong prompt message
+
+Modified By		: Jenny May Cabantug
+Date Modified	: 11/20/2024
+Version			: 10.0.0.7
+Reason			: Addressing of findings
+					#289 Request Allocation Accordion Line Details All fileds are disabled and no data
+
+Modified By		: Jenny May Cabantug
+Date Modified	: 11/01/2024
+Version			: 10.0.0.6
+Reason			: Addressing of findings
+					#174 "Based on the business rule this field is disabled when the item used is tagged as Goods Reference Docno used : 0043-PURCHS-0000000021"
+					- black asterisk should be blue asterisk
+
+Modified By		: Jenny May Cabantug
+Date Modified	: 11/09/2024
+Version			: 10.0.0.5
+Reason			: Addressing of findings
+					#274 "Action: Upon Saving Issue: Cannot be saved. Please setup Location Transaction Type Assignment for the Location."
+
+Modified By		: Peterson Cruz
+Date Modified	: 11/07/2024
+Version			: 10.0.0.4
+Reason			: Addressing of findings
+					-Delivery Details-Accordion>> % of Completion, field is disabled when the item used is tagged as Goods
+
+Modified By		: Peterson Cruz
+Date Modified	: 11/05/2024
+Version			: 10.0.0.3
+Reason			: CONVERSION TO V10
+
+Modified By		: Arnel Alvarado
+Date Modified	: 10/28/2024
+Version			: 10.0.0.2
+Reason			: Addressing of findings
+					- Must display line details of Delivery Allocation based on BR.
+
+
+Modified By		: Jenny May Cabantug
+Date Modified	: 10/26/2024
+Version			: 10.0.0.1
+Reason			: Addressing of findings
+					- #204 "Action: Upon Saving Prompt: ""Process/Action Encountered Issues. Please Try Again Later"""
+
+Modified By		: Peterson Cruz
+Date Modified	: 09/17/2024
+Version			: 10.0.0.0
+Reason			: CONVERSION TO V10
+
+Modified By		: Arnel Alvarado
+Date Modified	: 08/28/2024
+Version			: 9.0.0.63
+Reason			: Optimization
+				  New Binding
+
+Modified By		: Arnel Alvarado
+Date Modified	: 08/19/2024
+Version			: 9.0.0.62
+Reason			: Addressing of findings
+				  Ref No(BS/SI/SOA) - Limits entry up to 30 Alphanumeric Characters
+				  DR/COC No. - Limits entry up to 30 Alphanumeric Characters
+
+Modified By		: Romar Julius Lucero
+Date Modified	: 04/19/2024
+Version			: 9.0.0.61
+Reason			: Addressing of findings
+				  Add PO LINE ID
+
+Modified By		: RDA
+Date Modified	: 09/04/2023
+Version			: 9.0.0.60
+Reason			: Remove Changing of value date upon selection of ref date
+				
+Modified By		: RDA
+Date Modified	: 12/06/2022
+Version			: 9.0.0.59
+Reason			: Remove validation in Value Date
+				: Clear Value Date upon lookup in Purchase Order No.
+
+Modified By		: RDA
+Date Modified	: 12/06/2022
+Version			: 9.0.0.58
+Reason			: Additional validation in Value Date
+
+Modified By		: RJL
+Date Modified	: 12/02/2022
+Version			: 9.0.0.57
+Reason			: Add validation in Value Date
+				  Cannot proceed. Value Date should not be earlier than the PO Date.
+
+Modified By		: RJL
+Date Modified	: 12/01/2022
+Version			: 9.0.0.56
+Reason			: Changes in Value Date
+
+Modified By		: RJL
+Date Modified	: 12/01/2022
+Version			: 9.0.0.55
+Reason			: Changes in Value Date
+
+Modified By		: EMB
+Date Modified	: 11/30/2022
+Version			: 9.0.0.54
+Updates			: Additional Validation for Value Date
+
+Modified By		: RDA
+Date Modified	: 11/25/2022
+Version			: 9.0.0.53
+Updates			: Centralized Value Date validation
+
+Modified By		: RDA
+Date Modified	: 08/01/2022
+Version			: 9.0.0.52
+Updates			: Add Line Type in filtering Item
+
+Modified By		: RDA
+Date Modified	: 10/06/2021
+Version			: 9.0.0.51
+Updates			: Auto-load Counter Date and Value Date based on Ref. Date and DR/COC Date
+
+Modified By		: RDA
+Date Modified	: 09/29/2021
+Version			: 9.0.0.50
+Updates			: Change set values lookup done of UOM
+
+Modified By		: RDA
+Date Modified	: 09/18/2021
+Version			: 9.0.0.49
+Updates			: Add validation for Ref. No. and DR/COC if used in Payment Request
+
+Modified By		: RDA
+Date Modified	: 08/13/2021
+Version			: 9.0.0.48
+Updates			: Update function disableExpDate() in js
+
+Modified By		: RDA
+Date Modified	: 07/26/2021
+Version			: 9.0.0.47
+Updates			: Add lookup of Item Code in initialize
+
+Modified By		: RDA
+Date Modified	: 06/03/2021
+Version			: 9.0.0.46
+Updates			: Address concerns related to JSN
+
+Modified By		: RDA
+Date Modified	: 04/29/2021
+Version			: 9.0.0.45
+Updates			: Add condition if Value Date and Date Posted is equal
+
+Modified By		: RDA
+Date Modified	: 04/26/2021
+Version			: 9.0.0.44
+Updates			: Change default date
+
+Modified By		: RDA
+Date Modified	: 04/26/2021
+Version			: 9.0.0.43
+Updates			: Add default upon New in Value Date then validate
+
+Modified By		: RDA
+Date Modified	: 04/26/2021
+Version			: 9.0.0.42
+Updates			: Add condition in chkReviewAttachment for docno != ""
+
+Modified By		: RDA
+Date Modified	: 04/16/2021
+Version			: 9.0.0.41
+Updates			: Disable Counter Date for viewing
+
+Modified By		: RDA
+Date Modified	: 04/06/2021
+Version			: 9.0.0.40
+Updates			: Fix saving upon process
+
+Modified By		: RDA
+Date Modified	: 04/06/2021
+Version			: 9.0.0.39
+Updates			: Fix saving upon process
+
+Modified By		: RDA
+Date Modified	: 04/05/2021
+Version			: 9.0.0.38
+Updates			: Add saving upon process
+
+Modified By		: RDA
+Date Modified	: 04/01/2021
+Version			: 9.0.0.37
+Updates			: VAPT Compliance
+
+Modified By		: RDA
+Date Modified	: 03/25/2021
+Version			: 9.0.0.36
+Updates			: Add Costing Method validation
+
+Modified By		: RDA
+Date Modified	: 02/26/2021
+Version			: 9.0.0.35
+Updates			: VAPT Compliance
+
+Modified By		: RDA
+Date Modified	: 01/30/2021
+Version			: 9.0.0.34
+Updates			: Add Export in Journal Entries
+
+Modified By		: RDA
+Date Modified   : 01/08/2021
+Version			: 9.0.0.33
+Updates			: Dynamic naming for Cost Center
+
+Modified By		: RDA
+Date Modified   : 12/19/2020
+Version			: 9.0.0.32
+Updates			: Change link for Review Attachment
+				: Change View Attachment to Review Attachment(s)
+
+Modified By		: RDA
+Date Modified   : 12/19/2020
+Version			: 9.0.0.31
+Updates			: Add nwCurrDocno in view attachment link
+				: Fix query for View Journal Entry
+
+Modified By		: RDA
+Date Modified   : 12/19/2020
+Version			: 9.0.0.30
+Updates			: Fix applyto
+
+Modified By		: RDA
+Date Modified   : 12/19/2020
+Version			: 9.0.0.29
+Updates			: Add checking of config upon New
+
+Modified By		: RDA
+Date Modified   : 12/17/2020
+Version			: 9.0.0.28
+Updates			: Add chkReviewAttachment
+
+Modified By		: RDA
+Date Modified   : 12/16/2020
+Version			: 9.0.0.27
+Updates			: Change fn_reqCompVal to fn_reqCompVal_IGT
+
+Modified By		: RDA
+Date Modified   : 12/15/2020
+Version			: 9.0.0.26
+Updates			: Change fn_valReqCompHDR to fn_reqCompVal
+
+Modified By		: RDA
+Date Modified   : 12/14/2020
+Version			: 9.0.0.25
+Updates			: Add parameter for retrieving Journal Details
+
+Modified By		: RDA
+Date Modified   : 12/02/2020
+Updates			: Change parameter for location upon process in validation of Currency Assignment
+Version			: 9.0.0.24
+
+Modified By		: RDA
+Date Modified   : 11/26/2020
+Updates			: Fix nwDocno in BL and nwTranNo in js
+Version			: 9.0.0.23
+
+Modified By		: RDA
+Date Modified   : 11/25/2020
+Updates			: Add Percent of Completion in validation upon clicking of Process
+Version			: 9.0.0.22
+
+Modified By		: RDA
+Date Modified   : 11/24/2020
+Updates			: Fix decimal for % of Completion
+Version			: 9.0.0.21
+
+Modified By		: RDA
+Date Modified   : 11/24/2020
+Updates			: Fix decimal for % of Completion
+Version			: 9.0.0.20
+
+Modified By		: RDA
+Date Modified   : 11/23/2020
+Updates			: Change allocation of POC to PO Qty
+Version			: 9.0.0.19
+
+Modified By		: RDA
+Date Modified   : 11/19/2020
+Updates			: Add getConsoItem in js
+Version			: 9.0.0.17
+
+Modified By		: RDA
+Date Modified   : 11/19/2020
+Updates			: Fix nwTranNo in BL
+Version			: 9.0.0.16
+
+Modified By		: RDA
+Date Modified   : 11/19/2020
+Updates			: Change prompt for exceed input
+Version			: 9.0.0.15
+
+Modified By		: RDA
+Date Modified   : 11/18/2020
+Updates			: Do not validate if Freebies
+				: Add settimeout for prompt of Completion
+Version			: 9.0.0.14
+
+Modified By		: RDA
+Date Modified   : 11/18/2020
+Updates			: Address findings
+Version			: 9.0.0.13
+
+Modified By		: RDA
+Date Modified   : 11/15/2020
+Updates			: Address findings
+Version			: 9.0.0.12
+
+Modified By		: RDA
+Date Modified   : 11/14/2020
+Updates			: Add Line Type for filtering of Request Allocation
+Version			: 9.0.0.11
+
+Modified By		: RDA
+Date Modified   : 11/07/2020
+Updates			: Add value of QtyRcvd in setGridProperties()
+Version			: 9.0.0.10
+
+Modified By		: RDA
+Date Modified   : 11/07/2020
+Updates			: Fix decimal places shown for QtyRcvd column
+Version			: 9.0.0.9
+
+Modified By		: RDA
+Date Modified   : 11/06/2020
+Updates			: Fix decimal places shown for QtyRcvd column
+Version			: 9.0.0.8
+
+Modified By		: RDA
+Date Modified   : 11/06/2020
+Updates			: Enable Line Type for blank rows
+				: Add container for View Journal grid
+Version			: 9.0.0.7
+
+Modified By		: RDA
+Date Modified   : 11/04/2020
+Updates			: Change parameter of delLocForm to idvallugDelLocForm
+Version			: 9.0.0.6
+
+Modified By		: RDA
+Date Modified	: 10/29/2020
+Updates			: Default isEither
+Version			: 9.0.0.5
+
+Modified By		: RDA
+Date Modified	: 10/19/2020
+Updates			: Change to 2 decimal places allowed for POC
+Version			: 9.0.0.4
+
+Modified By		: RDA
+Date Modified	: 10/17/2020
+Updates			: Add default for Qty to be Received in Delivery Allocation upon input in Qty Received in Delivery Details
+Version			: 9.0.0.3
+
+Modified By		: RDA
+Date Modified	: 10/16/2020
+Updates			: Add default for Qty to be Received in Delivery Allocation upon input in Qty Received in Delivery Details
+Version			: 9.0.0.2
+
+Modified By		: RDA
+Date Modified	: 10/09/2020
+Updates			: Fix labels in Delivery and Request Allocation
+Version			: 9.0.0.1
+
+Created By		: RDA
+Date Created	: 10/09/2020
+Reference		: FIVRcptFromVendorEntry
+Version			: 9.0.0.0

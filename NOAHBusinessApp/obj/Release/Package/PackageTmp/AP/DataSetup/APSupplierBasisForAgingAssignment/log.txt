@@ -1,0 +1,163 @@
+﻿Modified By			: Joshua Andrew Obina
+Date Modified		: 10/10/2024
+Menu Item Version	: 10.0.0.5
+Reason				: Addressing of findings
+					- fixed the width of Basis of Aging in line details
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 10/9/2024
+Menu Item Version	: 10.0.0.4
+Reason				: Addressing of findings
+					- Display and fixed the save, refresh and export buttons
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 10/3/2024
+Menu Item Version	: 10.0.0.3
+Reason				: Addressing of findings
+					  >field label should be col-4, idval col-4, descval col-8
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 09/20/2024
+Menu Item Version	: 10.0.0.2
+Reason				: fixed disabled lookup
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 09/19/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Fixed Export file name
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 09/17/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10
+
+Modified By       : EMB
+Date Modified     : 10/27/2022
+Menu Item Version : 9.0.0.24
+Reason		      : Addressing of Findings : Display Grid on Export
+
+Modified By       : AZNA
+Date Modified     : 10/23/2021
+Menu Item Version : 9.0.0.23
+Reason		  : Removed inline CSS and Script
+
+Modified By		: AZNA
+Date Modified	: 02/18/2021
+Version			: 9.0.0.22
+Updates			: VAPT Compliance
+
+Modified By		: RDA
+Date Modified	: 12/17/2020
+Version			: 9.0.0.21
+Updates			: Change Cannot Save to Cannot be saved
+
+Modified By       : SBL
+Date Modified     : 07/29/2020
+Menu Item Version : 9.0.0.20
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified by       : ocr
+Modification Date : 03.05.2020
+Menu Item Version : 9.0.0.19
+Reason            : addressing of findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=387232434&fvid=1221479042
+
+Modified by       : ATR
+Modified Date     : 02.27.2020
+Reason            : removed history
+Menu Item Version : 9.0.0.18
+
+Modified by       : DDD
+Modified Date     : 02.22.2020
+Reason            : Added Insert Row
+Menu Item Version : 9.0.0.17
+
+Modified by       : RMB
+Modified Date     : 02.14.2020
+Reason            : Address findings in Export window
+				  : Add Delete Row button and remove per column (x) button
+Menu Item Version : 9.0.0.16
+
+Modified by       : 
+Modified Date     : 
+Reason            : 
+Menu Item Version : 9.0.0.15
+
+Modified by       : RBN
+Modified Date     : 12.16.2019
+Reason            : Changed Company name
+Menu Item Version : 9.0.0.14
+
+Modified by       : DJSB
+Modified Date     : 10.14.2019
+Reason            : Address the findings from QC testing
+Menu Item Version : 9.0.0.13
+
+Modified by       : DJSB
+Modified Date     : 10.10.2019
+Reason            : Change the prompt message in selecting existing effective date
+Menu Item Version : 9.0.0.12
+
+Modified by       : DJSB
+Modified Date     : 09.30.2019
+Reason            : Change the prompt message in selecting existing effective date
+Menu Item Version : 9.0.0.11
+
+Modified By       : DJSB
+Date Modified     : 08/30/2017
+Menu Item Version : 9.0.0.10
+Reason            : Address findings in Saving. There is no validation if the grid is empty.
+
+Modified By       : DJSB
+Date Modified     : 08/26/2017
+Menu Item Version : 9.0.0.9
+Reason            : Address findings in Date and Basis for Aging lookup
+
+Modified By       : DJSB
+Date Modified     : 08/20/2017
+Menu Item Version : 9.0.0.8
+Reason            : Address findings
+
+Modified By       : DJSB
+Date Modified     : 08/20/2017
+Menu Item Version : 9.0.0.7
+Reason            : Address the finding of "Prompt message when selecting effective date earlier than the current server date:
+										    C in ""Continue"" must be in small letter."
+
+Modified By       : DJSB
+Date Modified     : 08/20/2017
+Menu Item Version : 9.0.0.6
+Reason            : Address the finding viewing in Vendor Listing
+
+Modified By       : DJSB
+Date Modified     : 08/18/2017
+Menu Item Version : 9.0.0.5
+Reason            : Address the finding in Export and validation and prompt message and Enabling grid
+
+Modified By       : DJSB
+Date Modified     : 08/16/2017
+Menu Item Version : 9.0.0.4
+Reason            : Address the finding upon selection of record in Inquire - "No data source key to bind.":
+
+Modified By       : DJSB
+Date Modified     : 08/15/2017
+Menu Item Version : 9.0.0.3
+Reason            : Addressing of finding of the following:
+					1.) "No effectivity date -change prompt message to "Cannot Save. Effectivity Date is required in row [no]."
+					2.) "No data in export button."
+					3.) "Upon saving, prompt message menu Item name should be Vendor Basis for Aging Assignment"
+
+Modified By       : DJSB	
+Date Modified     : 08/15/2017
+Reason            : Addressing of finding in Inquire and Export header menu item name.
+Menu Item Version : 9.0.0.2
+
+Modified By       : DJSB
+Date Modified     : 08/15/2017
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.1
+
+Created By        : DJSB
+Date Created      : 08/14/2017
+Reason            : Additional in Vendor Information
+Menu Item Version : 9.0.0.0

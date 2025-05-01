@@ -1,0 +1,16 @@
+﻿#tbl_total table td {
+    border: 1px solid black;
+}
+.noah-webui-containerRow > .noah-webui-containerRowItem:nth-child(1) {
+    padding-left: 12px;
+}
+
+.design {
+    min-width: 323px;
+    max-width: 300px;
+    maxlength ="80";
+}
+.radiodesign {
+    margin-left: 20px;
+}
+

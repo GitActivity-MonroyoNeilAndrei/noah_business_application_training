@@ -1,0 +1,25 @@
+﻿div#nwDisappDtls ._slide-m {
+    min-width: 30%;
+    min-height: 30%;
+}
+
+div#actViewContacts ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwUploadHistory ._slide-m {
+    min-width: 60%;
+    min-height: 60%;
+}
+
+div#nwPopWindowSPSASS ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwPopUpRequireCompliance ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+

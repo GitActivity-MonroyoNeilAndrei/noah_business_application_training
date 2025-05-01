@@ -1,0 +1,69 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+
+    ViewBag.Title = "PopupWindows";
+}
+
+
+<div id="nwDisappDtls" title="Disapproval Details" class="nkPopupCon">
+    <div class="row row-parent">
+        <div class="row with-label-lookup">
+            <div class="col col-4">
+                <label class="lbltxt">Reason for Disapproval</label>
+            </div>
+            <div id="lugReasonforDisapp" class="col col-8 col-parent lookups lookupsCust">
+                <div class="col col-4">
+                    <input type="text" name="" class="txtbox idval" disabled>
+                </div>
+                <div class="col col-8">
+                    <input type="text" name="" class="txtbox txtlookup descval" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-4">
+                <label class="lbltxt">Disapproval Remarks</label>
+            </div>
+            <div class="col col-8">
+                <textarea id="txtDisappRemarks" class="txtarea" type="text" maxlength="500" rows="4" cols="50" disabled="disabled"></textarea>
+            </div>
+        </div>
+
+    </div>
+</div>
+    
+
+<div id="actViewContacts" title="View Contracts" class="nkPopupCon">
+    <div class="row row-parent">
+        <div class="row">
+            <div class="col col-12">
+                <div id="nwGridCon3Custom" class="col col-12 fullwidth">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="nwUploadHistory" title="View Update History" class="nkPopupCon">
+    <div class="row row-parent">
+        <div class="col col-12 col-parent">
+            <div id="btnUpdateHistoryExport" class="btn-action btn-export">
+                <div class="_btn-icon"></div>
+                <div class="_lbl-txt">Export</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-12">
+                <div id="nwUploadHistoryGridCon" class="col col-12 fullwidth">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

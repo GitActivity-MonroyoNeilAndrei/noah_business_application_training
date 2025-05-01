@@ -1,33 +1,38 @@
-﻿
+﻿var _canvasID,
+_row,
+_col;
+
 baseTitle = "Requirements Compliance";
 
-var SPR_COMPILEDHDR = 1,
-    SPR_REQUIREDHDR = 2,
-    SPR_ALTERNATIVE = 3,
-    SPR_DOCUMENTGRP = 4,
-    SPR_WORKINSTRUCTIONS = 5,
-    SPR_DOCDETAILSCODEHDR = 6,
-    SPR_DOCDETAILSHDR = 7,
-    SPR_DOCNOHDR = 8,
-    SPR_DOCDATEHDR = 9,
-    SPR_EXPIRYDATEHDR = 10,
-    SPR_URLHDR = 11,
-    SPR_ATTACHHDR = 12,
-    SPR_VIEWHDR = 13,
-    SPR_REMOVEHDR = 14,
-    SPR_TAGDOCNOHDR = 15,
-    SPR_TAGDOCDATEHDR = 16,
-    SPR_TAGEXPIRYDATEHDR = 17,
-    SPR_TAGATTACHHDR = 18,
-    SPR_TAGURLHDR = 19,
-    SPR_FILEPATH = 20,
-    SPR_DELETEROW = 21,
-    SPR_TAG = 22,
-    SPR_GRPNO = 23,
-    SPR_DEPT = 24,
-    SPR_TYPE = 25,
-    SPR_LINEID = 26,
-    SPR_FORCONFALL = 27;
+var startindex = 0,
+    SPR_COMPILEDHDR = ++startindex,
+    SPR_REQUIREDHDR = ++startindex,
+    SPR_ALTERNATIVE = ++startindex,
+    SPR_DOCUMENTGRP = ++startindex,
+    SPR_WORKINSTRUCTIONS = ++startindex,
+    SPR_DOCDETAILSCODEHDR = ++startindex,
+    SPR_DOCDETAILSHDR = ++startindex,
+    SPR_DOCNOHDR = ++startindex,
+    SPR_DOCDATEHDR = ++startindex,
+    SPR_EXPIRYDATEHDR = ++startindex,
+    SPR_URLHDR = ++startindex,
+    SPR_ATTACHHDR = ++startindex,
+    SPR_CAPTUREHDR = ++startindex,
+    SPR_VIEWHDR = ++startindex,
+    SPR_REMOVEHDR = ++startindex,
+    SPR_TAGDOCNOHDR = ++startindex,
+    SPR_TAGDOCDATEHDR = ++startindex,
+    SPR_TAGEXPIRYDATEHDR = ++startindex,
+    SPR_TAGATTACHHDR = ++startindex,
+    SPR_TAGURLHDR = ++startindex,
+    SPR_FILEPATH = ++startindex,
+    SPR_DELETEROW = ++startindex,
+    SPR_TAG = ++startindex,
+    SPR_GRPNO = ++startindex,
+    SPR_DEPT = ++startindex,
+    SPR_TYPE = ++startindex,
+    SPR_LINEID = ++startindex,
+    SPR_FORCONFALL = ++startindex;
 
 let tranNo = "";
 let tranType = "";
@@ -89,6 +94,7 @@ function func_Reload() {
     nwParameter_Add("nwDocDtls", nwDocDtls);
 
     nwPopupForm_Create("docattview", true);
+    nwPopupForm_Create("nwCaptureFrame", true);
     nwPopupForm_Create("nwUploadCon", false);
 
     var isContinue = true;    
@@ -378,7 +384,8 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
     var cnt = nwGrid_Book.ActiveSheet.GetMaxRow('nwGrid2');
 
     //if (crnwTD.index() == SPR_DOCDETAILSCODEHDR) {
-    if (nwGrid_Book.ActiveSheet.CellSelected.col - 1 == SPR_DOCDETAILSCODEHDR - 1) {
+   // if (nwGrid_Book.ActiveSheet.CellSelected.col - 1 == SPR_DOCDETAILSCODEHDR - 1) {
+    if (nwGrid_Book.ActiveSheet.GetSelectedIndexes().col == SPR_DOCDETAILSCODEHDR - 1) {
 
         var code = addtoListTableRec.find('tr:eq(' + index + ') td:eq(1)').text();
         var desc = addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text();
@@ -585,6 +592,9 @@ function GridValidation() {
     var $row;
     var isLoaded;
 
+    nwGrid_Book.ActiveSheet.ColumnConfig[SPR_COMPILEDHDR - 1].CheckBoxShow = false
+    nwGrid_Book.ActiveSheet.ColumnConfig[SPR_REQUIREDHDR - 1].CheckBoxShow = false
+    nwGrid_Book.ActiveSheet.ColumnConfig[SPR_ALTERNATIVE - 1].CheckBoxShow = false
     //crnwTable = $("#nwGrid2 .tblGridBody");
 
     //var len = crnwTable.find("tr").length;
@@ -592,7 +602,7 @@ function GridValidation() {
     nwGrid_Book.ActiveSheet.RenderStatus = false;
 
     var len = nwGrid_Book.ActiveSheet.Data.length;
-    nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDETAILSCODEHDR - 1, Spread_ALLROW, true);
+  //  nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDETAILSCODEHDR - 1, Spread_ALLROW, true);
 
     for (var i = 0; i < len ; i++) {
         //isLoaded = crnwTable.find("tr:eq(" + i + ")").find("td:eq(" + SPR_TAG + ")").text();
@@ -602,10 +612,10 @@ function GridValidation() {
         nwGrid_Book.ActiveSheet.SetEnable(SPR_ALTERNATIVE - 1, i, false);
 
         //enable fields
-        nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCNOHDR - 1, i, true);
-        nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDATEHDR - 1, i, true);
-        nwGrid_Book.ActiveSheet.SetEnable(SPR_EXPIRYDATEHDR - 1, i, true);
-        nwGrid_Book.ActiveSheet.SetEnable(SPR_URLHDR - 1, i, true);
+        //nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCNOHDR - 1, i, true);
+        //nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDATEHDR - 1, i, true);
+        //nwGrid_Book.ActiveSheet.SetEnable(SPR_EXPIRYDATEHDR - 1, i, true);
+        //nwGrid_Book.ActiveSheet.SetEnable(SPR_URLHDR - 1, i, true);
 
 
         if (isLoaded) {
@@ -620,8 +630,10 @@ function GridValidation() {
 
             nwGrid_Book.ActiveSheet.SetEnable(SPR_REQUIREDHDR - 1, i, false);
             nwGrid_Book.ActiveSheet.SetEnable(SPR_WORKINSTRUCTIONS - 1, i, false);
+            nwGrid_Book.ActiveSheet.SetBackground(SPR_WORKINSTRUCTIONS - 1, i, "gainsboro");
             nwGrid_Book.ActiveSheet.SetEnable(SPR_REQUIREDHDR - 1, i, false);
             nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDETAILSCODEHDR - 1, i, false);
+            nwGrid_Book.ActiveSheet.SetBackground(SPR_DOCDETAILSCODEHDR - 1, i, "gainsboro");
             //nwGrid_Book.ActiveSheet.SetBackground(SPR_DOCDETAILSCODEHDR - 1, i,"gainsboro");
             //nwGrid_Book.ActiveSheet.SetBackground(SPR_WORKINSTRUCTIONS - 1, i, "gainsboro");
             //nwGrid_Book.ActiveSheet.SetBackground(SPR_WORKINSTRUCTIONS - 1, i, "gainsboro");
@@ -636,8 +648,8 @@ function GridValidation() {
             nwGrid_Book.ActiveSheet.SetEnable(SPR_COMPILEDHDR - 1, i, false);
             nwGrid_Book.ActiveSheet.SetEnable(SPR_ALTERNATIVE - 1, i, false);
 
-            nwGrid_Book.ActiveSheet.SetEnable(SPR_WORKINSTRUCTIONS - 1, i, true);
-            nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDETAILSCODEHDR - 1, i, true);
+           // nwGrid_Book.ActiveSheet.SetEnable(SPR_WORKINSTRUCTIONS - 1, i, true);
+          //  nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDETAILSCODEHDR - 1, i, true);
 
         }
         //let filepath = crnwTable.find("tr:eq(" + i + ")").find("td:eq(" + SPR_FILEPATH + ")").text();
@@ -656,6 +668,9 @@ function GridValidation() {
             nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, i, "black");
 
         }
+        if (nwGrid_Book.ActiveSheet.GetValue(SPR_DOCDETAILSCODEHDR - 1, i) == '') {
+            AutoCompiled(i);
+        }
     }
     nwGrid_Book.ActiveSheet.SetBackground(SPR_ATTACHHDR - 1, Spread_ALLROW, "#1974D1");
     nwGrid_Book.ActiveSheet.SetTextColor(SPR_ATTACHHDR - 1, Spread_ALLROW, "white");
@@ -663,6 +678,11 @@ function GridValidation() {
     nwGrid_Book.ActiveSheet.SetObjectType(SPR_ATTACHHDR - 1, Spread_ALLCOL, "buttonflat");
     nwGrid_Book.ActiveSheet.SetText2(SPR_ATTACHHDR - 1, Spread_ALLROW, "Attach");
 
+    nwGrid_Book.ActiveSheet.SetBackground(SPR_CAPTUREHDR - 1, Spread_ALLROW, "#1974D1");
+    nwGrid_Book.ActiveSheet.SetTextColor(SPR_CAPTUREHDR - 1, Spread_ALLROW, "white");
+    nwGrid_Book.ActiveSheet.SetTextAlign(SPR_CAPTUREHDR - 1, Spread_ALLROW, "CENTER");
+    nwGrid_Book.ActiveSheet.SetObjectType(SPR_CAPTUREHDR - 1, Spread_ALLCOL, "buttonflat");
+    nwGrid_Book.ActiveSheet.SetText2(SPR_CAPTUREHDR - 1, Spread_ALLROW, "Capture");
 
     nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, Spread_ALLROW, "#1974D1");
     nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, Spread_ALLROW, "#EDEDED");
@@ -700,10 +720,11 @@ function GridValidation() {
 
 
 
-    $("#nwGrid2Data .gvHeaderStyle").find("th:eq(" + SPR_ATTACHHDR + ")").text("");
-    $("#nwGrid2Data .gvHeaderStyle").find("th:eq(" + SPR_VIEWHDR + ")").text("");
-    $("#nwGrid2Data .gvHeaderStyle").find("th:eq(" + SPR_REMOVEHDR + ")").text("");
-    $("#nwGrid2Data .gvHeaderStyle").hide();
+    //$("#nwGrid2Data .gvHeaderStyle").find("th:eq(" + SPR_ATTACHHDR + ")").text("");
+    //$("#nwGrid2Data .gvHeaderStyle").find("th:eq(" + SPR_CAPTUREHDR + ")").text("");
+    //$("#nwGrid2Data .gvHeaderStyle").find("th:eq(" + SPR_VIEWHDR + ")").text("");
+    //$("#nwGrid2Data .gvHeaderStyle").find("th:eq(" + SPR_REMOVEHDR + ")").text("");
+    //$("#nwGrid2Data .gvHeaderStyle").hide();
 
     $("#btnReloadDtls").addClass("btnBlue");
 
@@ -896,7 +917,10 @@ function func_WindowCloseTrigger(verID) {
     var ICode = "";
     //var currentRow = nwGrid_Book.ActiveSheet.CellIndexes.Row;
     //var serverlink = $("#txtserverlink").val();
-
+    if (verID == "nwCaptureFrame") {
+        Webcam.reset();
+        $("#nwCaptureFrame").removeClass("isshow");
+    }
     //if (verID == "nwUploadCon") {
 
     //    if (curupload != undefined) {
@@ -1224,43 +1248,101 @@ function DisableUponView() {
     var isDisabled = isView.toLowerCase() == "true" ? true : false;
 
     if (isDisabled) {
+        setTimeout(function () {
+            $("#nwGrid2").enable(true);
+            $(".nwgrid_Insert.nwgrid_buttons").enable(false);
+            $(".nwgrid_Delete.nwgrid_buttons").enable(false);
+            $("#btnCopyFrom").enable(false);
+            try {
+                nwGrid_Book.ActiveSheet.RenderStatus = false;
+                for (var i = 0; i < nwGrid_Book.ActiveSheet.GetMaxRow() ; i++) {
+                    nwGrid_Book.ActiveSheet.SetBackground(Spread_ALLCOL, i, "gainsboro");
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_COMPILEDHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_REQUIREDHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_ALTERNATIVE - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCUMENTGRP - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_WORKINSTRUCTIONS - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDETAILSCODEHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDETAILSHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCNOHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_DOCDATEHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_EXPIRYDATEHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_URLHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_ATTACHHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_CAPTUREHDR - 1, i, false);
+                    //nwGrid_Book.ActiveSheet.SetEnable(SPR_VIEWHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_REMOVEHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_TAGDOCNOHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_TAGDOCDATEHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_TAGEXPIRYDATEHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_TAGATTACHHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_TAGURLHDR - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_FILEPATH - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_DELETEROW - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_TAG - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_GRPNO - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_DEPT - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_TYPE - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_LINEID - 1, i, false);
+                    nwGrid_Book.ActiveSheet.SetEnable(SPR_FORCONFALL - 1, i, false);
 
-        var $row;
-        $(`#nwGrid2-nwData tr`).each(function (i, n) {
-            $row = $(n);
+                }
+                //for (var i = 0; i < nwGrid_Book.ActiveSheet.GetMaxCol() ; i++) {
+                //    nwGrid_Book.ActiveSheet.SetBackground(i, Spread_ALLROW, "gainsboro");
+                //    nwGrid_Book.ActiveSheet.SetEnable(i, Spread_ALLROW, false);
+                //}
+                nwGrid_Book.ActiveSheet.RenderStatus = true;
+                nwGrid_Book.ActiveSheet.Refresh();
 
-            $row.find(`td:eq(${SPR_COMPILEDHDR}) input`).enable(false);
-            $row.find(`td:eq(${SPR_REQUIREDHDR}) input`).enable(false);
-            $row.find(`td:eq(${SPR_WORKINSTRUCTIONS}) input`).enable(false);
-            $row.find(`td:eq(${SPR_WORKINSTRUCTIONS}) input`).addClass("disableInput");
-            $row.find(`td:eq(${SPR_WORKINSTRUCTIONS})`).css("background-color", "gainsboro");
-            $row.find(`td:eq(${SPR_DOCDETAILSCODEHDR})`).enable(false);
-            $row.find(`td:eq(${SPR_DOCDETAILSHDR}) input`).enable(false);
-            $row.find(`td:eq(${SPR_DOCNOHDR}) input`).enable(false);
-            $row.find(`td:eq(${SPR_DOCNOHDR}) input`).addClass("disableInput");
-            $row.find(`td:eq(${SPR_DOCNOHDR})`).addClass("disableColor");
-            $row.find(`td:eq(${SPR_DOCDATEHDR}) input`).enable(false);
-            $row.find(`td:eq(${SPR_DOCDATEHDR}) input`).addClass("disableInput");
-            $row.find(`td:eq(${SPR_DOCDATEHDR})`).addClass("disableColor");
-            $row.find(`td:eq(${SPR_EXPIRYDATEHDR}) input`).enable(false);
-            $row.find(`td:eq(${SPR_EXPIRYDATEHDR}) input`).addClass("disableInput");
-            $row.find(`td:eq(${SPR_EXPIRYDATEHDR})`).addClass("disableColor");
-            $row.find(`td:eq(${SPR_URLHDR}) input`).enable(false);
-            $row.find(`td:eq(${SPR_URLHDR}) input`).addClass("disableInput");
-            $row.find(`td:eq(${SPR_URLHDR})`).addClass("disableColor");
-            $row.find(`td:eq(${SPR_ATTACHHDR}) a`).enable(false);
-            $row.find(`td:eq(${SPR_REMOVEHDR}) a`).enable(false);
-            $row.find(`td:eq(${SPR_DELETEROW}) .nwBtnClose`).enable(false);
+                $('#btnReloadDtls').enable(false);
+            } catch (ex) { }
+        }, 300);
+        //var $row;
+        //$(`#nwGrid2-nwData tr`).each(function (i, n) {
+        //    $row = $(n);
 
-        });
+        //    $row.find(`td:eq(${SPR_COMPILEDHDR}) input`).enable(false);
+        //    $row.find(`td:eq(${SPR_REQUIREDHDR}) input`).enable(false);
+        //    $row.find(`td:eq(${SPR_WORKINSTRUCTIONS}) input`).enable(false);
+        //    $row.find(`td:eq(${SPR_WORKINSTRUCTIONS}) input`).addClass("disableInput");
+        //    $row.find(`td:eq(${SPR_WORKINSTRUCTIONS})`).css("background-color", "gainsboro");
+        //    $row.find(`td:eq(${SPR_DOCDETAILSCODEHDR})`).enable(false);
+        //    $row.find(`td:eq(${SPR_DOCDETAILSHDR}) input`).enable(false);
+        //    $row.find(`td:eq(${SPR_DOCNOHDR}) input`).enable(false);
+        //    $row.find(`td:eq(${SPR_DOCNOHDR}) input`).addClass("disableInput");
+        //    $row.find(`td:eq(${SPR_DOCNOHDR})`).addClass("disableColor");
+        //    $row.find(`td:eq(${SPR_DOCDATEHDR}) input`).enable(false);
+        //    $row.find(`td:eq(${SPR_DOCDATEHDR}) input`).addClass("disableInput");
+        //    $row.find(`td:eq(${SPR_DOCDATEHDR})`).addClass("disableColor");
+        //    $row.find(`td:eq(${SPR_EXPIRYDATEHDR}) input`).enable(false);
+        //    $row.find(`td:eq(${SPR_EXPIRYDATEHDR}) input`).addClass("disableInput");
+        //    $row.find(`td:eq(${SPR_EXPIRYDATEHDR})`).addClass("disableColor");
+        //    $row.find(`td:eq(${SPR_URLHDR}) input`).enable(false);
+        //    $row.find(`td:eq(${SPR_URLHDR}) input`).addClass("disableInput");
+        //    $row.find(`td:eq(${SPR_URLHDR})`).addClass("disableColor");
+        //    $row.find(`td:eq(${SPR_ATTACHHDR}) a`).enable(false);
+        //    $row.find(`td:eq(${SPR_CAPTUREHDR}) a`).enable(false);
+        //    $row.find(`td:eq(${SPR_REMOVEHDR}) a`).enable(false);
+        //    $row.find(`td:eq(${SPR_DELETEROW}) .nwBtnClose`).enable(false);
+
+        //});
 
         //Disable other buttons
-        $('.nwgrid_buttons').enable(false);   
-        $('#noah-webui-default-Save').enable(false);
+       
+        $('.btn-tb-save').enable(false);
     }
 
 }
-
+function p8Spread_Click_Sheet(canvasID, sheetindex) {
+    if (canvasID == "nwGrid2") {
+        setTimeout(function () {
+        var isDisabled = isView.toLowerCase() == "true" ? true : false;
+        if (isDisabled) {
+            $('#btnReloadDtls').enable(false);
+        }
+        }, 100);
+    }
+}
 
 
 function $fn() {
@@ -1335,10 +1417,14 @@ function p8Spread_DblClick(canvasID, row, col) {
     $('#txtColumnDblClick').text(col);
 
     if (canvasID == "nwGrid2") {
-        if (col == SPR_DOCDETAILSCODEHDR - 1) {
-            //lookUpCustomize("lugDocDtlHdr", 2);
-            //$("#menuCreatorContainer").addClass('p8spreadlookup');
-            workIns_ = nwGrid_Book.ActiveSheet.GetValue(SPR_WORKINSTRUCTIONS - 1, row)
+        var data = nwGrid_Book.ActiveSheet.GetBackground(col, row);
+        if (data == "cyan") {
+            if (col == SPR_DOCDETAILSCODEHDR - 1) {
+
+                lookUpCustomize("lugDocDtlHdr", 2, undefined, true);
+                //$("#menuCreatorContainer").addClass('p8spreadlookup');
+                workIns_ = nwGrid_Book.ActiveSheet.GetValue(SPR_WORKINSTRUCTIONS - 1, row)
+            }
         }
     }
 
@@ -1347,45 +1433,62 @@ function p8Spread_DblClick(canvasID, row, col) {
 
 function p8Spread_Click(canvasID, row, col) {
     console.log("p8Spread_Click " + canvasID + " " + row + " " + col);
-
-    $('#txtCanvasClick').text(canvasID);
-    $('#txtRowClick').text(row);
-    $('#txtColumnClick').text(col);
-
-    var serverlink = $("#txtserverlink").val();
-    var path = nwGrid_Book.ActiveSheet.GetValue(SPR_FILEPATH - 1, row)
-
-
-    if (col == SPR_ATTACHHDR - 1) {
-        currentRow = nwGrid_Book.ActiveSheet.CellIndexes.Row;
-        globalRow = row;
-        nwPopupForm_ShowModal("nwUploadCon");
-
-    } else if (col == SPR_VIEWHDR - 1) {
-
-
-        if (path == "") {
-            MessageBox("No attachment found.", "Document Attachment", "error");
+    _canvasID = canvasID;
+    _row = row;
+    _col = col;
+    if (canvasID == "nwGrid2") {
+        $('#txtCanvasClick').text(canvasID);
+        $('#txtRowClick').text(row);
+        $('#txtColumnClick').text(col);
+        var data = nwGrid_Book.ActiveSheet.GetBackground(col, row);
+        if (data == "gainsboro") {
             return false;
         }
 
-        filepath = serverlink + path;
-        nwviewattach(filepath);
+       // nwTrustedLinks.push("iamcv9.promptus8.com")
+        var serverlink = $("#txtserverlink").val();
+      //  var serverlink = 'https://iamcv9.promptus8.com/IAMC_NOAHDrive/Retrieve/view?sv=C001'
+        var path = nwGrid_Book.ActiveSheet.GetValue(SPR_FILEPATH - 1, row)
 
-    } else if (col == SPR_REMOVEHDR - 1) {
 
-        globalRow = row;
+        if (col == SPR_ATTACHHDR - 1) {
+            currentRow = nwGrid_Book.ActiveSheet.CellIndexes.Row;
+            globalRow = row;
+            nwPopupForm_ShowModal("nwUploadCon");
 
-        if (path == "") {
-            MessageBox("No attachment found.", "Document Attachment", "error");
-            return false;
-        } else {
-            msgBoxContainerQuestion = "btnRemove";
-            parent_MessageBoxQuestion("Do you want to remove the attachment?", "Document Attachment", "");
-            return true;
+        } else if (col == SPR_CAPTUREHDR - 1) {
+            nwPopupForm_ShowModal("nwCaptureFrame");
+            attachclick = "captureFile";
+            $("#nwCaptureFrame").addClass("isshow");
+            currentRow = nwGrid_Book.ActiveSheet.CellIndexes.Row;
+            globalRow = row;
+            TakeImage();
+        }
+        else if (col == SPR_VIEWHDR - 1) {
+
+
+            if (path == "") {
+                MessageBox("No attachment found.", "Document Attachment", "error");
+                return false;
+            }
+
+            filepath = serverlink + path;
+            nwviewattach(filepath);
+
+        } else if (col == SPR_REMOVEHDR - 1) {
+
+            globalRow = row;
+
+            if (path == "") {
+                MessageBox("No attachment found.", "Document Attachment", "error");
+                return false;
+            } else {
+                msgBoxContainerQuestion = "btnRemove";
+                parent_MessageBoxQuestion("Do you want to remove the attachment?", "Document Attachment", "");
+                return true;
+            }
         }
     }
-
 }
 function p8Spread_Change(canvasID, row, col) {
     console.log("p8Spread_Change " + canvasID + " " + row + " " + col);
@@ -1427,19 +1530,19 @@ function p8Spread_Change(canvasID, row, col) {
     }
 }
 
-function p8Spread_Focus(canvasID, row, col) {
-    console.log("p8Spread_Focus " + canvasID + " " + row + " " + col);
+//function p8Spread_Focus(canvasID, row, col) {
+//    console.log("p8Spread_Focus " + canvasID + " " + row + " " + col);
 
-    $('#txtCanvasFocus').text(canvasID);
-    $('#txtRowFocus').text(row);
-    $('#txtColumnFocus').text(col);
+//    $('#txtCanvasFocus').text(canvasID);
+//    $('#txtRowFocus').text(row);
+//    $('#txtColumnFocus').text(col);
 
-    if (col == SPR_DOCNOHDR - 1 || col == SPR_URLHDR - 1 || col == SPR_DOCDATEHDR - 1 || col == SPR_EXPIRYDATEHDR - 1) {
-        DocdateAndExpDateValidation(row);
-        AutoCompiled(row);
-    }
+//    if (col == SPR_DOCNOHDR - 1 || col == SPR_URLHDR - 1 || col == SPR_DOCDATEHDR - 1 || col == SPR_EXPIRYDATEHDR - 1) {
+//        DocdateAndExpDateValidation(row);
+//        AutoCompiled(row);
+//    }
 
-}
+//}
 
 function AttViewDelete() {
 
@@ -1450,14 +1553,256 @@ function AttViewDelete() {
     for (var i = 0; i < len ; i++) {
         
         nwGrid_Book.ActiveSheet.SetText(SPR_ATTACHHDR - 1, i, "Attach");
+        nwGrid_Book.ActiveSheet.SetText(SPR_CAPTUREHDR - 1, i, "Capture");
         nwGrid_Book.ActiveSheet.SetText(SPR_VIEWHDR - 1, i, "View");
         nwGrid_Book.ActiveSheet.SetText(SPR_REMOVEHDR - 1, i, "Remove");
 
         nwGrid_Book.ActiveSheet.SetTextAlign(SPR_ATTACHHDR - 1, i, "Center")
+        nwGrid_Book.ActiveSheet.SetTextAlign(SPR_CAPTUREHDR - 1, i, "Center")
         nwGrid_Book.ActiveSheet.SetTextAlign(SPR_VIEWHDR - 1, i, "Center")
         nwGrid_Book.ActiveSheet.SetTextAlign(SPR_REMOVEHDR - 1, i, "Center")
     }
 
     nwGrid_Book.ActiveSheet.RenderStatus = true;
 
+}
+
+
+
+
+
+
+$(document).on('click', '#docattviewzoomin', function () {
+    ZoomIn();
+});
+
+$(document).on('click', '#docattviewzoomout', function () {
+    ZoomOut();
+});
+
+var zoomAtual = 1;
+
+function ZoomIn() {
+    var myPDF = document.getElementById("vwImage");
+
+    if (zoomAtual >= 10) return false;
+    else {
+        zoomAtual = zoomAtual + 0.5;
+        myPDF.style.zoom = zoomAtual;
+    }
+}
+
+function ZoomOut() {
+    var myPDF = document.getElementById("vwImage");
+
+    if (zoomAtual <= 0.5) return false;
+    else {
+        zoomAtual = zoomAtual - 0.5;
+        myPDF.style.zoom = zoomAtual;
+    }
+}
+
+function TakeImage() {
+    $("#my_camera").removeClass("nwHide");
+    $("#btnCaptureImage").removeClass("nwHide");
+
+    $('#imgresult').addClass("nwHide");
+    $('#imgresult').attr("src", "");
+    $('#btnCaptureImageRetake').addClass("nwHide");
+
+    OpenCam();
+}
+
+
+$(document).on('click', '#btnCaptureImage', function () {
+    setTimeout(function () {
+        take_snapshot();
+
+        $("#my_camera").addClass("nwHide");
+        $("#btnCaptureImage").addClass("nwHide");
+
+        $('#imgresult').removeClass("nwHide");
+        $('#btnCaptureImageRetake').removeClass("nwHide");
+
+        Webcam.reset();
+    }, 100);
+
+    return false;
+});
+
+$(document).on('click', '#btnCaptureImageRetake', function () {
+    TakeImage();
+    return false;
+});
+
+function take_snapshot() {
+    try {
+        Webcam.snap(function (data_uri) {
+
+            nwParameter_Add("imgresult", data_uri);
+            func_ActionDriven("actBase64ToPath", false);
+            window_close('nwCaptureFrame');
+            // $('#imgresult').attr("src", data_uri);
+
+
+            //nwLoading_Start("actLoadImage", crLoadingHTML);
+
+            //cust_GetPara();
+            //nwParameter_Add("img", data_uri);
+            //func_ActionDriven("actLoadImage", false);
+        });
+    } catch (err) { }
+
+}
+
+//var attachWebcam = function () {
+//    var width = 320;
+//    var height = 240;
+
+//    if (screen.width < screen.height) {
+//        width = 240;
+//        height = 320;
+//    }
+
+//    Webcam.set({
+//        //width: 1080,
+//        //height: 1920,
+//        //dest_width: 1080,
+//        //dest_height: 1920,
+//        flip_horiz: false,
+//        force_flash: false,
+//        image_format: 'jpeg',
+//        jpeg_quality: 100,
+//        fps: 45,
+//        // I add this object constraints
+//        constraints: {
+//            facingMode: 'environment'
+//        }
+//    });
+
+//    Webcam.attach('#my_camera');
+//};
+
+window.addEventListener('orientationchange', function () {
+    //Webcam.reset();
+    //attachWebcam();
+    OpenCam();
+});
+$(window).resize(function () {
+    try {
+        var width = $(".nwGrid").width();
+
+        if (window.innerWidth <= 600) {
+            width -= 30;
+        } else {
+            width -= 40;
+        }
+        $(".nwGrid.AutoLayout .tblGridBody tr").css("width", width + "px");
+        $(".nwGrid.AutoLayout .tblGridBody tr").css("min-width", width + "px");
+        $(".nwGrid.AutoLayout .tblGridBody tr").css("max-width", width + "px");
+    } catch (ex) { }
+    OpenCam();
+});
+
+function OpenCam() {
+    if (!$("#nwCaptureFrame").hasClass("isshow")) {
+        return false;
+    }
+    //if (msgBoxContainerQuestion == "NotAccess")
+    //{
+    //    return;
+    //}
+    var widthwindow = $(window).innerWidth()
+    var heightwindow = $(window).innerHeight()
+    if (widthwindow > heightwindow) {
+        widthwindow = heightwindow;
+        heightwindow = heightwindow;
+    } else {
+        widthwindow = widthwindow;
+        heightwindow = widthwindow;
+    }
+    widthwindow -= 50;
+    heightwindow -= 50;
+    $("#nwCaptureFrame").height(widthwindow + "px");
+    $("#nwCaptureFrame").width(heightwindow + "px");
+
+
+    var dest_width = $("#my_camera").innerWidth()
+    var dest_height = $("#my_camera").innerHeight()
+    if (dest_width == 0) {
+        return false;
+    }
+
+    var widthwindow = 0;
+    var heightwindow = 0;
+
+    try {
+        initStream(dest_width, dest_height)
+    } catch (ex) {
+        console.log("has error")
+    }
+}
+
+function dynamicallyLoadScript(url, callback) {
+    var script = document.createElement("script");  // create a script DOM node
+    script.src = url;  // set its src to the provided URL
+    script.onload = callback;
+
+    document.head.appendChild(script);  // add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
+}
+
+function initStream(dest_width, dest_height) {
+    dynamicallyLoadScript('DC/DataSetup/DCRequirementCompliance/lib/webcam.min.js', () => {
+        Webcam.set('constraints', {
+            facingMode: 'environment',
+            dest_width,
+            dest_height,
+        });
+        //if (!Webcam.userMedia) {
+        //    MessageBox("Cannot proceed. Camera is not allowed.", baseTitle);
+        //    return false;
+        //}
+        Webcam.attach('#my_camera');
+        //$('#my_camera').append('<span id="btnCaptureImage"></span>');
+
+    });
+}
+
+function funcwebcam_error(l) {
+
+    //if (msgBoxContainerQuestion == "") {
+    // msgBoxContainerQuestion = "NotAccess"
+    Webcam.reset();
+    window_close('nwCaptureFrame');
+    MessageBox("Cannot be continued. Could not access webcam.", baseTitle, "error");
+
+    //}
+}
+//msgBoxContainerQuestion
+//function Message_OkF() {
+//    msgBoxContainerQuestion == "";
+//}
+
+
+function SetFilePath(fromcapture, filepathcapture) {
+    //var serverlink = $("#txtserverlink").val();
+    //var serverlink = 'https://iamcv9.promptus8.com/IAMC_NOAHDrive/Retrieve/view?sv=C001'
+
+    var filepath = $("#nwUploadCon .noahdriveID").text() || "";
+    if (filepath == "") {
+        filepath = $("#nwUploadCon .aagfilename").text();
+    }
+    if (fromcapture) {
+        filepath = filepathcapture;
+    }
+
+    var path = filepath;
+
+    if (filepath != "") {
+      //  var row = nwGrid_Book.ActiveSheet.CellIndexes.Row;
+        nwGrid_Book.ActiveSheet.SetText(SPR_FILEPATH - 1, _row, path);
+        nwGrid_Book.ActiveSheet.SetTextColor(SPR_VIEWHDR - 1, _row, 'white');
+        nwGrid_Book.ActiveSheet.SetBackground(SPR_VIEWHDR - 1, _row, 'green');
+        AutoCompiled(_row);
+    }
 }

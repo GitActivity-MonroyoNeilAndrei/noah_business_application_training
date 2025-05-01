@@ -1,0 +1,873 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+
+    ViewBag.Title = "PopupWindows";
+}
+
+
+<div id="nwValidationList" nwTitle="Validation List" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="noah-webui-default-Export-Validation" class="btn-tb-action btn-tb-export">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridValListCon" p8title="NOAH Business Applications Export"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="frmApplyToOneLoc" nwTitle="Apply to One Delivery Location and Sub Location" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnApplyToOneLocSave" class="btn-tb-action btn-btnApplyToOneLocSave">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row with-label-lookup">
+                    <div class="col col-5">
+                        <label class="lbltxt">Location</label>
+                    </div>
+                    <div id="lugApplyToOneLoc_DelLoc" class="col col-7 col-parent lookups">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-5">
+                        <label class="lbltxt">Sub Location</label>
+                    </div>
+                    <div id="lugApplyToOneLoc_Subloc" class="col col-7 col-parent lookups">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Delivery Address</label>
+                    </div>
+                    <div class="col col-7">
+                        <textarea id="txtApplyToOneLoc_DelAddr" class="txtarea autoresize" rows="3"></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="nwDeliveryDetailsWindow" nwTitle="Delivery Details Window" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnDDSave" class="btn-tb-action btn-tb-btnDDSave">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row row-parent">
+            <div class="col col-6">
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Item</label>
+                    </div>
+                    <div id="lugDDItem" class="col col-8 col-parent lookups">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Request UOM</label>
+                    </div>
+                    <div id="lugDDReqUOM" class="col col-8 col-parent lookups">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+                <div class="row nwHide">
+                    <div class="col col-4">
+                        <label class="lbltxt">Based UOM</label>
+                    </div>
+                    <div id="lugDDBasedUOM" class="col col-8 col-parent  lookups">
+                        <input type="text" name="" class="txtbox idval">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Total Requested Quantity</label>
+                    </div>
+                    <div class="col col-8 adisabled">
+                        <input id="txtDDTotalReqQty" type="text" name="" class="txtbox isNumber">
+                        <input id="txtDDTotalReqCost" type="text" name="" class="txtbox nwHide">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Total Split Quantity</label>
+                    </div>
+                    <div class="col col-8 adisabled">
+                        <input id="txtDDTotalSplitQty" type="text" name="" class="txtbox isNumber">
+                        <input id="txtDDTotalAllocQty" type="text" name="" class="txtbox nwHide">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remaining Balance</label>
+                    </div>
+                    <div class="col col-8 adisabled">
+                        <input id="txtDDRemainingBalance" type="text" name="" class="txtbox isNumber">
+                        <input id="txtDDNumericDecimal" type="text" name="" class="txtbox nwHide">
+                        <input id="txtDDLineID" type="text" name="" class="txtbox nwHide">
+                        <input id="txtDDRownum" type="text" name="" class="txtbox nwHide">
+                        <input id="txtDDRemainingBalance2" type="text" name="" class="txtbox nwHide">
+                        <input id="txtDDSublocationCode" type="text" name="" class="txtbox nwHide">
+                        <input id="txtDDSublocationDesc" type="text" name="" class="txtbox nwHide">
+                        <input id="txtDDDeliveryAddress" type="text" name="" class="txtbox nwHide">
+                        <input id="txtDDISAllowMultiple" type="text" name="" class="txtbox nwHide">
+                    </div>
+                    <div class="col col-4">
+                        <label class="lbltxt"></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-6">
+                    </div>
+                    <div class="col col-6">
+                        <div id="btnDlvyAppToAll" class="btn btn-default btn-default-orange btnMedium fullwidth nwHide">
+                            Apply to One Delivery Location and Sub Location
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6">
+                <div class="row">
+                    <div class="col col-4">
+                    </div>
+                    <div class="col col-8">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div id="nwGridConDeliveryID" class="fullwidth">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwQuotationDetailsWindow" nwTitle="Quotation Details Window" class="nkPopupCon">
+     <div class="nk-toolbar-c">
+         <div class="nk-toolbar-btn">
+             <div id="btnSaveQuotation" class="btn-tb-action btnSaveQuotation">
+                 <div class="_icon"></div>
+                 <div class="_lbl">Save</div>
+             </div>
+         </div>
+     </div>
+     <div class="container-flex">
+                <div class="row row-parent">
+                    <div class="col col-12">
+                        <div class="row with-label-lookup">
+                            <div class="col col-2">
+                                <label class="lbltxt">Item</label>
+                            </div>
+                            <div id="lugQuotItem" class="col col-5 col-parent lookups">
+                                <div class="col col-4">
+                                    <input type="text" name="" class="txtbox idval">
+                                </div>
+                                <div class="col col-8">
+                                    <input type="text" name="" class="txtbox descval">
+                                    <input id="txtQuotRownum" type="text" name="" class="txtbox nwHide">
+                                    <input id="txtQuotUOM" type="text" name="" class="txtbox nwHide">
+                                    <input id="txtQuotLineID" type="text" name="" class="txtbox nwHide">
+                                </div>
+                            </div>
+                            <div class="col col-5">
+                                <label class="lbltxt"></label>
+                            </div>
+                        </div>
+                        <div class="row with-label-lookup">
+                            <div class="col col-2">
+                                <label class="lbltxt">Request UOM</label>
+                            </div>
+                            <div id="lugQuotUom" class="col col-5 col-parent lookups">
+                                <div class="col col-4">
+                                    <input type="text" name="" class="txtbox idval">
+                                </div>
+                                <div class="col col-8">
+                                    <input type="text" name="" class="txtbox descval">
+                                </div>
+                            </div>
+                            <div class="col col-5">
+                                <label class="lbltxt"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-2">
+                                <label class="lbltxt">Requested Quantity</label>
+                            </div>
+                            <div class="col col-5">
+                                <input id="txtQuoQty" type="text" name="" class="txtbox idval isNumber numC">
+                            </div>
+                            <div class="col col-5">
+                                <label class="lbltxt"></label>
+                            </div>
+                        </div>
+                        <div class="col col-12 col-parent">
+                            <div class="row">
+                                <div id="nwGridConQuotationDetails" class="fullwidth">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
+<div id="nwSOHDetailsWindow" nwTitle="SOH Details Window" class="nkPopupCon">
+    <div class="container-flex padding-10">
+        <div class="row row-parent">
+            <div class="col col-6 col-parent">
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Item</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txtSOHItem" type="text" name="" class="txtbox">
+                        <input id="txtSOHItemCode" type="text" name="" class="txtbox nwHide">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Request UOM</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txtSOHReqUOM" type="text" name="" class="txtbox">
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6 col-parent">
+                <div class="row">
+                    <div class="col col-5">
+                    </div>
+                    <div class="col col-7">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div id="nwGridConSOH">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+
+<div id="nwBdgtCheckingWindow" nwTitle="Charging Details Window" class="nkPopupCon">
+            <div class="nk-toolbar-c">
+                <div class="nk-toolbar-btn">
+                    <div id="btnBdgtCheck" class="btn-tb-action btnBdgtCheck">
+                        <div class="_icon"></div>
+                        <div class="_lbl">Save</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-parent">
+                <div class="col col-12 col-parent">
+                    <div class="row">
+                        <div class="col col-2 col-parent">
+                            <div class="col col-12">
+                                <label class="lbltxt"></label>
+                            </div>
+                        </div>
+                        <div class="col col-4 col-parent lookups">
+                            <div class="col col-12">
+                                <label class="lbltxt"></label>
+                            </div>
+                        </div>
+                        <div class="col col-2 col-parent">
+                            <div class="col col-12">
+                                <label class="lbltxt"></label>
+                            </div>
+                        </div>
+                        <div class="col col-4 col-parent lookups">
+                            <div class="col col-6">
+                                <label class="lbltxt">Quantity</label>
+                            </div>
+                            <div class="col col-6">
+                                <label class="lbltxt">Total Amount (VATEX)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row with-label-lookup">
+                        <div class="col col-2 col-parent">
+                            <div class="col col-12">
+                                <label class="lbltxt">Item</label>
+                            </div>
+                        </div>
+                        <div id="lugBdgtChk_Item" class="col col-4 col-parent lookups">
+                            <div class="col col-4">
+                                <input type="text" name="" class="txtbox idval">
+                            </div>
+                            <div class="col col-8">
+                                <input type="text" name="" class="txtbox descval">
+                            </div>
+                        </div>
+                        <div class="col col-2 col-parent">
+                            <div class="col col-12">
+                                <label class="lbltxt">Total</label>
+                            </div>
+                        </div>
+                        <div class="col col-4 col-parent lookups">
+                            <div class="col col-6">
+                                <input id="txtTotalQty" type="text" name="" class="txtbox isNumber">
+                            </div>
+                            <div class="col col-6">
+                                <input id="txtTotalAmntVatex" type="text" name="" class="txtbox isNumber">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row with-label-lookup">
+                        <div class="col col-2 col-parent">
+                            <div class="col col-12">
+                                <label class="lbltxt">Item Group Type</label>
+                            </div>
+                        </div>
+                        <div id="lugBdgtChk_ItemGrpType" class="col col-4 col-parent lookups">
+                            <div class="col col-4">
+                                <input type="text" name="" class="txtbox idval">
+                            </div>
+                            <div class="col col-8">
+                                <input type="text" name="" class="txtbox descval">
+                            </div>
+                        </div>
+                        <div class="col col-2 col-parent">
+                            <div class="col col-12">
+                                <label class="lbltxt">Allocated</label>
+                            </div>
+                        </div>
+                        <div class="col col-4 col-parent lookups">
+                            <div class="col col-6">
+                                <input id="txtAppliedQty" type="text" name="" class="txtbox isNumber">
+                            </div>
+                            <div class="col col-6">
+                                <input id="txtAppliedVatex" type="text" name="" class="txtbox isNumber">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row with-label-lookup">
+                        <div class="col col-2 col-parent">
+                            <div class="col col-12">
+                                <label id="lblMAIN">>GL Account</label>
+                            </div>
+                        </div>
+                        <div id="lugBdgtChk_GLAccntChrge" class="col col-4 col-parent lookups">
+                            <div class="col col-4">
+                                <input type="text" name="" class="txtbox idval">
+                            </div>
+                            <div class="col col-8">
+                                <input type="text" name="" class="txtbox descval">
+                            </div>
+                        </div>
+                        <div class="nwHide">
+                            <div class="col col-4">
+                                <input id="txtBCLLineID" type="text" />
+                                <input id="txtBCLItemCode" type="text" />
+                                <input id="txtBCLUom" type="text" />
+                            </div>
+                        </div>
+                        <div class="col col-2 col-parent">
+                            <div class="col col-12">
+                                <label class="lbltxt">Unallocated</label>
+                            </div>
+                        </div>
+                        <div class="col col-4 col-parent lookups">
+                            <div class="col col-6">
+                                <input id="txtUnappliedQty" type="text" name="" class="txtbox isNumber">
+                            </div>
+                            <div class="col col-6">
+                                <input id="txtUnappliedVatex" type="text" name="" class="txtbox isNumber">
+                            </div>
+                        </div>
+                        <div class="nwHide">
+                            <div>
+                                <input id="txtTotalPrcnt" type="text" name="" class="txtbox">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row row-parent">
+                <div class="col col-12 col-parent padding-x-5">
+                    <div class="nk-accordion fullwidth" nk-style-accordion="1">
+                        <div class="nk-ul">
+                            <div class="nk-li">
+                                <div class="nk-li-title">Budget Charging Details</div>
+                                <div class="nk-li-content">
+                                    <div class="row padding-20">
+                                        <div class="row row-parent row-parent-mob">
+                                            <div class="col col-12">
+                                                <div class="col col-12 col-parent">
+                                                    <div class="row">
+                                                        <div id="nwGridConBgtChkLIN" class="fullwidth">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-parent">
+                <div class="col col-12 col-parent padding-x-5">
+                    <div class="nk-accordion fullwidth" nk-style-accordion="1">
+                        <div class="nk-ul">
+                            <div class="nk-li">
+                                <div class="nk-li-title">Budget Account Combination</div>
+                                <div class="nk-li-content">
+                                    <div class="row padding-20">
+                                        <div class="row row-parent row-parent-mob">
+                                            <div class="col col-12">
+                                                <div class="col col-12 col-parent">
+                                                    <div class="row">
+                                                        <div id="nwGridConBgtChkHeader" class="fullwidth">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-parent">
+                <div class="col col-12 col-parent padding-x-5">
+                    <div class="nk-accordion fullwidth" nk-style-accordion="1">
+                        <div class="nk-ul">
+                            <div class="nk-li">
+                                <div class="nk-li-title">Budget Checking Details</div>
+                                <div class="nk-li-content">
+                                    <div class="row padding-20">
+                                        <div class="row row-parent row-parent-mob">
+                                            <div class="col col-12">
+                                                <div class="col col-12 col-parent">
+                                                    <div class="row">
+                                                        <div id="nwGridConBgtChkDetails" class="fullwidth">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div id="nwAllocProcessWindow" nwTitle="Allocation Details" class="nkPopupCon">
+            <div class="nk-toolbar-c">
+                <div class="nk-toolbar-btn">
+                    <div id="btnAllocProcess" class="btn-tb-action btnAllocProcess">
+                        <div class="_icon"></div>
+                        <div class="_lbl">Save</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-parent">
+                <div class="col col-12 col-parent nwHide">
+                    <div class="row">
+                        <div class="col col-5">
+                        </div>
+                        <div class="col col-7 col-parent adisabled">
+                            <input id="txtAllocTagSeg3" type="text" name="" class="txtbox nwHide">
+                            <input id="txtAllocTagSeg4" type="text" name="" class="txtbox nwHide">
+                            <input id="txtBdgtSegCode" type="text" name="" class="txtbox nwHide">
+                            <input id="txtAllocRowNum" type="text" name="" class="txtbox nwHide">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Total</label>
+                        </div>
+                        <div class="col col-4">
+                            <input id="txtAllocTotalQty" type="text" name="" class="txtbox">
+                        </div>
+                        <div class="col col-4">
+                            <input id="txtAllocTotalAmntVatex" type="text" name="" class="txtbox">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Allocated</label>
+                        </div>
+                        <div class="col col-4">
+                            <input id="txtAllocAppliedQty" type="text" name="" class="txtbox">
+                        </div>
+                        <div class="col col-4">
+                            <input id="txtAllocAppliedVatex" type="text" name="" class="txtbox">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Unallocated</label>
+                        </div>
+                        <div class="col col-4">
+                            <input id="txtAllocUnappliedQty" type="text" name="" class="txtbox">
+                        </div>
+                        <div class="col col-4">
+                            <input id="txtAllocUnappliedVatex" type="text" name="" class="txtbox">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Total Percentage</label>
+                        </div>
+                        <div class="col col-8">
+                            <input id="txtAllocPercentage" type="text" name="" class="txtbox">
+                        </div>
+                    </div>
+                    <div class="rown nwHide">
+                        <div class="col col-5">
+                        </div>
+                        <div class="col col-7">
+                            <input id="txtAllocTag1" type="text" name="" class="txtbox">
+                            <input id="txtAllocTag1SegCode" type="text" name="" class="txtbox">
+                            <input id="txtAllocTag2" type="text" name="" class="txtbox">
+                            <input id="txtAllocTag2SegCode" type="text" name="" class="txtbox">
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-12 col-parent">
+                    <div class="row">
+                        <div id="nwGridConAllocProcess">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+<div id="nwRequestObjective" nwTitle="Request Objective" class="nkPopupCon">
+    <div class="container-flex padding-10">
+                <div class="row row-parent">
+                    <div class="col col-12 col-parent child-centered">
+                        <div class="row">
+                            <div class="col col-12">
+                                <label class="lbltxt">Please select Request Objective</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-12">
+                                <select id="cbReqObjective" class="cmb fullwidth"></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-4">
+                            </div>
+                            <div class="col col-8">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-4">
+                                <div id="btnProceed" class="btn btn-default btnMedium fullwidth">
+                                    Proceed >>
+                                </div>
+                            </div>
+                            <div class="col col-8">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+</div>
+
+<div id="nwSingleDelDetailsWindow" nwTitle="Single Delivery Window" class="nkPopupCon">
+            <div class="nk-toolbar-c">
+                <div class="nk-toolbar-btn">
+                    <div id="btnSingleDel" class="btn-tb-action btn-tb-btnSingleDel">
+                        <div class="_icon"></div>
+                        <div class="_lbl">Save</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-parent">
+                <div class="col col-12 col-parent">
+                    <div class="row">
+                        <div id="nwGridConSingleDel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div id="nwDateRange" nwTitle="Load from Historical Template" class="nkPopupCon">
+            <div class="container-flex padding-10">
+                <div class="row row-parent">
+                    <div class="col col-12 col-parent">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">From <span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtDRDateFrom" type="text" name="" class="txtbox nwDatePicker">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">To <span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtDRDateTo" type="text" name="" class="txtbox nwDatePicker">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-8">
+                            </div>
+                            <div class="col col-4">
+                                <div id="btnDROk" class="btn btn-default btnMedium fullwidth">
+                                    Load >>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<div id="nwSelectTransaction" nwTitle="Select Transaction" class="nkPopupCon">
+            <div class="row row-parent">
+                <div class="col col-12 col-parent">
+                    <div class="col col-12 col-parent">
+                        <div class="row">
+                            <div id="nwGridConSelect">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div id="nwBudgetCtrlDetails" nwTitle="Budget Control Details/SOH Details" class="nkPopupCon">
+            <div class="row row-parent">
+                <div class="col col-12 col-parent">
+                    <fieldset class="fieldset">
+                        <legend>Budget Control Details</legend>
+                        <form action="">
+                            <div class="row padding-20">
+                                <div class="row row-parent row-parent-mob">
+                                    <div class="col col-12">
+                                        <div class="row">
+                                            <div class="col col-5">
+                                                <label class="lbltxt">Budget Control No.</label>
+                                            </div>
+                                            <div class="col col-7">
+                                                <input id="txtBdgtCtrlNo" type="text" name="" class="txtbox" />
+                                                <input id="txtBdgtCtrlReqDocno" type="text" name="" class="txtbox nwHide" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-5">
+                                                <label class="lbltxt">Transaction Date</label>
+                                            </div>
+                                            <div class="col col-7">
+                                                <input id="txtTransDate" type="text" name="" class="txtbox" />
+                                            </div>
+                                        </div>
+                                        <div class="col col-12 col-parent">
+                                            <div class="row">
+                                                <div id="nwGridBdgtCtrlCon">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
+                </div>
+
+            </div>
+        </div>
+
+<div id="nwCreateSBR" nwTitle="Create SBR" class="nkPopupCon">
+            <div class="container-flex">
+                <div class="row row-parent">
+                    <div class="col col-12 col-parent">
+                        <div class="row">
+                            <div class="col col-12">
+                                <label class="lbltxt">Please select transaction.</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="btnRealignment" class="btn btn-default btnMedium fullwidth">
+                                    Budget Realignment
+                                </div>
+                                <input type="text" id="txtValidRea" class="nwHide" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-12">
+                                <div id="btnSupplemental" class="btn btn-default btnMedium fullwidth">
+                                    Supplemental Budget
+                                </div>
+                                <input type="text" id="txtValidSup" class="nwHide" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+<div id="nwViewPendingPO" nwTitle="View Pending PO Details Window" class="nkPopupCon">
+    <div class="container-flex padding-10">
+        <div class="row row-parent">
+            <div class="col col-6 col-parent">
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Item</label>
+                    </div>
+                    <div id="lugVPOItem" class="col col-8 col-parent lookups">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Cost Center</label>
+                    </div>
+                    <div id="lugVPOCostCnter" class="col col-8 col-parent lookups">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                        <label class="lbltxt">Sublocation</label>
+                    </div>
+                    <div id="lugVPOSublocation" class="col col-8 col-parent lookups">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6 col-parent">
+                <div class="row with-label-lookup">
+                    <div class="col col-4">
+                    </div>
+                    <div id="lugVPOSublocation" class="col col-8 col-parent lookups">
+                        <div class="col col-4">
+                        </div>
+                        <div class="col col-8">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div id="nwGridConVwPendingPO">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ViewConsoChargeDetailsWindow" nwTitle="View Consolidated Charging Details" class="nkPopupCon">
+            <div class="row row-parent">
+                <div class="col col-12 col-parent">
+                    <div class="col col-12 col-parent">
+                        <div class="row">
+                            <div id="nwGridViewConsoChargingCon">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div id="nwPaymentComponentWindow" nwTitle="Payment Component" class="nkPopupCon">
+    <div class="row row-parent">
+        <div class="col col-12 col-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div id="nwGridConPaymentComponents">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

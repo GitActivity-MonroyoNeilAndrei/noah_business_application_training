@@ -1,0 +1,14 @@
+﻿Created by			: Neil Andrei Monroyo
+Date Created		: 03/28/2025
+Menu Item Version	: 10.0.0.0
+Reason				: Development 
+						Header button
+							- new
+							- save
+							- delete
+							- inquire
+							- process
+						Header fields
+							- Code
+							- Description
+							- Number of Days

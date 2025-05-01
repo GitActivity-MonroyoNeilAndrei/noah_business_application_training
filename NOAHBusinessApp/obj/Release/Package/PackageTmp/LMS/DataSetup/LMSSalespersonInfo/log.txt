@@ -1,0 +1,42 @@
+﻿Created By: Harley Llevado
+Date Created: 11/27/2024
+Menu Item Version: 10.0.0.2
+Reason: Addressing Findings
+90	Salesperson Information	Save > Prompt message	Upon saving, system prompts that at least Street Name or Subdivision is required even if Building Name field has been filled out.
+91	Salesperson Information	Salesperson Bank Account Information > Bank, Type of Account, Payment Method	Upon selection of record in the lookup fields of Salesperson Bank Account Information, the data loaded to the main screen is not the selected one.
+92	Salesperson Information	Salesperson Address	Building Name, Street Name, and Subdivision field labes have no blue asterisk when Full Address checkbox is not tciked
+93	Salesperson Information	Salesperson Bank Account Information > Bank	"Upon saving, data in the Bank field disappeared."
+94	Salesperson Information	Salesperson Address	"Remove the following fields: -Location Code -Location Type"
+95	Salesperson Information	Salesperson Bank Account Information > Account Number	System allows entry of more than 30 alphanumeric characters
+119	Salesperson Information	Location Information>Standard Barangay	Broken Field
+120	Salesperson Information	Location Information>Municipality	Broken Field
+
+Created By: Harley Llevado
+Date Created: 11/26/2024
+Menu Item Version: 10.0.0.1
+Reason: Addressing Findings
+64	Salesperson Information	A red asterisk appears even if the checkbox is unticked
+66	Salesperson Information	No Defaulted Entry
+67	Salesperson Information	Incorrect selection of records
+68	Salesperson Information	Incorrect selection of records
+71	Salesperson Information	No data loaded
+73	Salesperson Information	Incorrect selection of records
+81	Salesperson Information	Upon saving, the salutation is concatenated with salesperson name
+82	Salesperson Information	The name suffix is not retained upon saving
+
+Created By: Harley Llevado
+Date Created: 11/16/2024
+Menu Item Version: 10.0.0.0
+Reason: 
+		-Menu buttons
+			>New 
+			>Refresh
+			>Save
+			>Inquire
+			>Export
+			>Delete
+
+		-Develop Fields
+			>Code [data entry] 
+			>Desc [data entry] 
+

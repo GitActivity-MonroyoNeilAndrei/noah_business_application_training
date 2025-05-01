@@ -8,6 +8,9 @@
     @*<script src="~/Main/DocumentEntry/Home/lib/pagination.js"></script>*@
     <script src="~/Main/DocumentEntry/Home/Home.js"></script>
     <link href="~/Main/DocumentEntry/Home/lib/magnific-popup/magnific-popup.css" rel="stylesheet" />
+    <link href="~/Main/DocumentEntry/Home/Home.css" rel="stylesheet" />
+
+ 
 </head>
 
 <body class="nw-ui nk _home _layout">
@@ -52,13 +55,25 @@
                     <div class="col col-12 with-spacing-4">
                         <div class="spl-ms-col spl-ms-col_msg">
                             <div class="spl-ms-subcol">
-                                <div class="_logo"></div>
-                                <div class="_greetings">Hi, <span id="gtFname">-</span>!</div> 
-                                <div class="_greetings_sub">@NoahWebLib.nwSystem.GetAppSettings("LayoutSubWelcomeText","")</div>
-                                <span class="spl-misc-bg"></span>
+                                <div class="container-flex">
+                                    <div class="row row-parent">
+                                        <div class="col col-6">
+                                            <div class="_logo"></div>
+                                            <div class="_greetings">Hi, <span id="gtFname">-</span>!</div>
+                                            <div class="_greetings_sub">@NoahWebLib.nwSystem.GetAppSettings("LayoutSubWelcomeText", "")</div>
+                                            <span class="spl-misc-bg"></span>
+                                        </div>
+                                        <div class="col col-6">
+                                            <div class="_greetings_sub1">
+                                                
+                                                <div id="versehome" class="verse"></div>
+                                            </div>
+                                            <span class="spl-misc-bg"></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            @*<div class="spl-ms-subcol _img">
-                                </div>*@
+
                         </div>
                     </div>
 

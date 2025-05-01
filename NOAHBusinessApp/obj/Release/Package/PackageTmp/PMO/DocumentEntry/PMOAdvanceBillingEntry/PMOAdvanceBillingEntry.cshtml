@@ -1,0 +1,306 @@
+﻿@inherits System.Web.Mvc.WebViewPage			
+@{			
+    ViewBag.Title = "Advance Billing";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}			
+<head>
+    <script src="~/PMO/DocumentEntry/PMOAdvanceBillingEntry/PMOAdvanceBillingEntry.js"></script>
+    <script src="~/PMO/DocumentEntry/PMOAdvanceBillingEntry/UploadCustom.js"></script>
+    <link href="~/PMO/DocumentEntry/PMOAdvanceBillingEntry/PMOAdvanceBillingEntry.css" rel="stylesheet" />
+</head>		
+<body>
+    <div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+        <div class="nk-toolbar-btn noah-webui-Toolbox">
+            <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">New</div>
+            </div>
+            <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+            <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Delete</div>
+            </div>
+            <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Refresh</div>
+            </div>
+            <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Inquire</div>
+            </div>
+            <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+            <div id="noah-webui-default-Print" class="btn-tb-action btn-tb-print noah-webui-Toolbox-Item nwHide">
+                <div class="_icon"></div>
+                <div class="_lbl">Print</div>
+            </div>
+            <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export noah-webui-Toolbox-Item nwHide">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex padding-10">
+            <div class="row row-parent">
+                <div class="col col-6 col-parent">
+                    <div class="row with-label-lookup">
+                         <div class="col col-4">
+                             <label>Location With Accountable Forms <span class="nwRequiredField">*</span></label>
+                         </div>
+                         <div id="lugAccountableForms" class="col col-8 col-parent lookups">
+                             <div class="col col-4">
+                                 <input class="txtbox idval" type="text" />
+                             </div>
+                             <div class="col col-8">
+                                 <input class="txtbox descval" type="text" />
+                                 <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                             </div>
+                         </div>
+                     </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Phase/Tower<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugPhaseTower" class="col col-8 col-parent lookups">
+                            <div class="col col-4">
+                                <input class="txtbox idval" type="text" />
+                            </div>
+                            <div class="col col-8">
+                                <input class="txtbox descval" type="text" />
+                                <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Account No.</label>
+                        </div>
+                        <div id="lugAccount" class="col col-8 col-parent lookups">
+                            <div class="col col-4">
+                                <input class="txtbox idval" type="text" />
+                            </div>
+                            <div class="col col-8">
+                                <input class="txtbox descval" type="text" />
+                                <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Remarks<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div class="col col-8">
+                            <textarea id="txtRemarks" class="txtarea noresize" rows="3" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Invoice Date<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div class="col col-8">
+                            <input id="dtpBillingDate" class="nwDatePick" type="text" maxlength="12" placeholder="MM/DD/YYYY" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Bill Period From<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div class="col col-8">
+                            <select id="cmbBillPeriodFrom" class="cmb fullwidth"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Bill Period To <span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div class="col col-8">
+                            <select id="cmbBillPeriodTo" class="cmb fullwidth"></select>
+                        </div>
+                    </div>
+
+                    <input id="txtTotalBillServiceProvider" type="text" maxlength="255" class="nwHide" />
+                    <input id="txtTotalConsumptionServiceProvider" type="text" maxlength="255" class="nwHide" />
+                    <input id="txtUtilityRateServiceProvider" type="text" maxlength="255" class="nwHide" />
+                    <input id="txtTotalBillPropertyReading" type="text" maxlength="255" class="nwHide" />
+                    <input id="txtTotalConsumptionPropertyReading" type="text" maxlength="255" class="nwHide" />
+                    <input id="txtUtilityRatePropertyReading" type="text" maxlength="255" class="nwHide" />
+                    <input id="txtTotalConsumptionVariance" type="text" maxlength="255" class="nwHide" />
+                    <input id="txtUtilityRateVariance" type="text" maxlength="255" class="nwHide" />
+                    <input id="txtTotalConsumptionPercent" type="text" maxlength="255" class="nwHide" />
+                    <input id="txtUtilityRatePercent" type="text" maxlength="255" class="nwHide" />
+                    <div><input id="txtEnableSeg" type="text" maxlength="255" class="nwHide" /></div>
+                    <div><input id="txtCommonArea" type="checkbox" class="nwHide" /></div>
+                    <input id="isFixedMain" type="text" maxlength="255" class="nwHide" />
+
+                </div>
+                <div class="col col-6 col-parent">
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Batch No.</label>
+                        </div>
+                        <div class="col col-8">
+                            <input id="txtTransactionNo" class="idval" type="text" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Date Submitted</label>
+                        </div>
+                        <div class="col col-8">
+                            <input id="dtpDateSubmitted" class="nwDatePick" type="text"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Date Posted</label>
+                        </div>
+                        <div class="col col-8">
+                            <input id="dtpDatePosted" class="nwDatePick" type="text"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Reason for Disapproval</label>
+                        </div>
+                        <div class="col col-8">
+                            <input id="txtReasonforDisapproval" class="idval  isNumber numC" nwdp="2" type="text" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label>Remarks for Disapproval</label>
+                        </div>
+                        <div class="col col-8">
+                            <input id="txtDisapprovalRemarks" class="idval  isNumber numC" nwdp="2" type="text" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-4">
+                            <label></label>
+                        </div>
+                        <div class="col col-8">
+                            <div id="btnDocumentAttachment" class="btn btn-default btn-default-orange fullwidth">Requirements Compliance</div>
+                        </div>
+                    </div>
+                    
+                </div>
+             </div>
+
+            <div class="row row-parent">
+                <div class="col col-12 col-parent">
+                    <div class="row">
+                        <div id="nwGridMainCon" class="fullwidth">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="nk-footer-c">
+        <div class="nk-footer-info">
+            <div class="nk-footer-create">
+                <div class="nkf nk-f-createBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
+                </div>
+                <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
+                <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
+            </div>
+            <div class="nk-footer-x"></div>
+            <div class="nk-footer-modified">
+                <div class="nkf nk-f-modifiedBy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                        <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                        </path>
+                    </svg>
+                    <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
+                </div>
+                <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
+                <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
+                <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
+            </div>
+        </div>
+    </div>
+
+        <div id="modal-remarks" title="Remarks" class="">
+            <div class="form-header">
+                <button id="btnDoneRemarks" class="form-button" type="button">Done</button>
+            </div>
+            <div class="form-body">
+                <textarea id="modaltxtRemarks" class="form-textarea" cols="2" rows="2" maxlength="255"></textarea>
+            </div>
+        </div>
+
+
+        <div id="modal-dremarks" title="Disapproval Remarks" class="">
+            <div class="form-header">
+                <button id="btnDoneDRemarks" class="form-button" type="button">Done</button>
+            </div>
+            <div class="form-body">
+                <textarea id="modaltxtDRemarks" class="form-textarea" cols="2" rows="2" maxlength="255"></textarea>
+            </div>
+        </div>
+
+      @*<div id="nwDetails" title="Utility Rate" class="">
+            <div class="noah-webui-Toolbox noah-webui-Color-Gray">
+
+                <div class="noah-webui-Toolbox-start"></div>
+
+                <div id="btnSaveContact" class="noah-webui-Toolbox-Item">
+                    <div class="noah-webui-Toolbox-Item-Icon"><img src="../../../materials/icons/icon_save.png"></div>
+                    <div class="btnSave">Save</div>
+                </div>
+
+            </div>
+           <input id="isFixed"  type="text"  maxlength="255" class="nwHide"  />
+            <div class="noah-webui-default-Content_Container">
+                <div class="noah-webui-container" id="">
+                    <div class="noah-webui-containerRow">
+                        <div class="noah-webui-containerRowItem">
+                            <div id="GridPopUpDetails" class="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>*@
+        @*<div id="nwUploadCon" title="Upload">
+            <div class="nwUploadConDiv">
+                <div>
+                    <input id="fileCon" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                        name="myfile[]" /><br />
+                    <input type="submit" value="Upload" id="btnupload" />
+                    <div class="progress">
+                        <div class="bar">
+                        </div>
+                        <div class="percent">
+                            0%
+                        </div>
+                    </div>
+                    <div id="status">
+                    </div>
+                    <div>
+                        <i>Notes:<br />
+                            Please use the provided excel type/format for loading.<br />
+                            Acceptable file types include xlsx, xls.
+                        </i>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+</body>
+@section noahpopup{
+    @RenderPage("~/Views/Form_Standards/Uploading.cshtml", "PMOUnitInventoryUploading");
+    @RenderPage("~/PMO/DocumentEntry/PMOAdvanceBillingEntry/Popup/PopupWindows.cshtml", "PopupWindows");
+}
+

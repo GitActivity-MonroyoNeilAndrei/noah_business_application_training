@@ -1,0 +1,45 @@
+﻿Modified By		  : JOHN MIGUEL GRAVINES
+Date Modified	  : 10/26/2024
+Version			  : 10.0.0.7
+Updates			  : Fixing upon closing the vendor item taxes information should turn green.
+
+Modified By		  : JOHN MIGUEL GRAVINES
+Date Modified	  : 10/25/2024
+Version			  : 10.0.0.6
+Updates			  : Fixing the problem in requirement compliance after closing the window.
+
+Modified By			: Peterson Cruz
+Date Created		: 10/17/2024
+Menu Item Version	: 10.0.0.5
+Reason				: Addressing of findings
+					-Apply standard in pop up Window
+					
+Modified By			: Peterson Cruz
+Date Created		: 10/16/2024
+Menu Item Version	: 10.0.0.4
+Reason				: Addressing of findings
+					-Show Process button 
+					-Fix full address field
+
+Modified By			: Peterson Cruz
+Date Created		: 10/09/2024
+Menu Item Version	: 10.0.0.3
+Reason				: Addressing of findings
+					-fixed check box
+					-Change color of button
+					
+Modified By			: Peterson Cruz
+Date Created		: 10/04/2024
+Menu Item Version	: 10.0.0.2
+Reason				: Process encountered
+
+Modified By			: Peterson Cruz
+Date Created		: 10/04/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Should save record immediately.
+
+Converted BY       : CHOLO SANDOY
+Date Converted     : 09/09/2020
+Menu Item Version : 10.0.0.0
+Reason			  : Conversion to v10
+

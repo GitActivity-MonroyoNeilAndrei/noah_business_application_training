@@ -1,0 +1,170 @@
+﻿/*
+    # NEW NOAH WEB UI
+    # Company Owner: Forecasting and Planning Technologies Inc. | NOAH Business Applications | PROMPTUS 8
+    # Developer : April Rose Cabalhug
+    # Designer : April Rose Cabalhug
+    # Date Created : September 19, 2024
+    # Last Date Modified : Sept 23, 2024 | ARC
+    # Date Modified : Sept 23, 2024 | ARC
+*/
+/*CALENDAR*/
+.calendar-c {
+    tr {
+        background-color: transparent !important;
+    }
+
+    &[calendar-style="1"] {
+        width: 100%;
+        border-radius: 10px;
+        border: 2px solid #2575c4;
+
+        div#year-1 {
+            font-size: 14px;
+        }
+
+        div#month-1 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .monthYr-wrapper {
+            display: block;
+            color: #eee;
+        }
+
+        .title-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, #3885d2, #2575c4);
+            padding: 8px;
+            border-bottom: 2px solid #2575c4;
+            border-radius: 7px 7px 0px 0px;
+        }
+
+        .title-content button {
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #calendar-1.ci-cal-container {
+            margin: 0 auto;
+            background-color: white;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #calendar-1 table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #calendar-1 th,
+        #calendar-1 td {
+            padding: 5px;
+            text-align: center;
+        }
+
+        #calendar-1 th {
+            background: #d0e7fd;
+            color: #fff;
+            border-bottom: 2px solid #2575c4;
+            text-transform: uppercase;
+        }
+
+        #calendar-1 td {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        #calendar-1 td.today {
+            background: #f5f5f5;
+            color: #307fcc;
+            font-weight: 600;
+        }
+    }
+
+    &[calendar-style="2"] {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        background-color: #f1f1f2;
+
+        div#year-1 {
+            font-size: 14px;
+        }
+
+        div#month-1 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .monthYr-wrapper {
+            display: block;
+            color: #eee;
+        }
+
+        .title-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, #3885d2, #2575c4);
+            padding: 10px;
+            border-bottom: 2px solid #2575c4;
+            border-radius: 7px 7px 0px 0px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .title-content button {
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #calendar.ci-cal-container {
+            margin: 0 auto;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        #calendar-2 table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 5px;
+        }
+
+        #calendar-2 th,
+        #calendar-2 td {
+            padding: 5px;
+            text-align: center;
+        }
+
+        #calendar-2 th {
+            background: linear-gradient(to bottom, #eaeaea, #ddd);
+            color: #666;
+            border-bottom: 2px solid #2575c4;
+        }
+
+        #calendar-2 td {
+            background-color: transparent;
+            cursor: pointer;
+            color: #777;
+        }
+
+        #calendar-2 td.today {
+            color: #307fcc;
+            font-weight: 600;
+        }
+    }
+}
+}
+
+/* Extra Small Devices (phones) */
+@media only screen and (max-width: 576px) {}
+
+/* Small devices (landscape phones, 576px and up) */
+@media only screen and (min-width: 577px) and (max-width: 768px) {}

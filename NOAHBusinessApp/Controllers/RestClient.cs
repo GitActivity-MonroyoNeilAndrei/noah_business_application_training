@@ -73,15 +73,15 @@ namespace HttpUtils
 
             
             //FLI Hardcode
-            string username = "fpti";
-            string password = "Dcod@2022";
-            System.Net.CredentialCache credentialCache = new System.Net.CredentialCache();
-            credentialCache.Add(
-                new System.Uri(EndPoint),
-                "Basic",
-                new System.Net.NetworkCredential(username, password)
-            );
-            request.Credentials = credentialCache;
+            //string username = "fpti";
+            //string password = "Dcod@2022";
+            //System.Net.CredentialCache credentialCache = new System.Net.CredentialCache();
+            //credentialCache.Add(
+            //    new System.Uri(EndPoint),
+            //    "Basic",
+            //    new System.Net.NetworkCredential(username, password)
+            //);
+            //request.Credentials = credentialCache;
 
 
          

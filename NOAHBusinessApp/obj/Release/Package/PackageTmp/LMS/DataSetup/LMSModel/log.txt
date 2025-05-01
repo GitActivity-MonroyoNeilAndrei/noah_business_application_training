@@ -1,0 +1,35 @@
+﻿Modified By			: Jenny May Cabantug
+Date Modified		: 11/28/2024
+Menu Item Version	: 10.0.0.2
+Reason				: Addressing of findings
+						- 154 Upon selecting a record in the Inquire window, screen will always load ASJDNJ
+
+Modified By			: Jenny May Cabantug
+Date Modified		: 11/26/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Addressing of findings
+						- #77 Server Error upon clicking
+						- export should be disable upon initial loading
+						- apply col-4 col-8 standard
+
+Modified By: Cholo Sandoy
+Date Modified: 12/21/2023
+Menu Item Version: 9.0.0.1
+Reason: Change of Page Title
+
+Created By: Cholo Sandoy
+Date Created: 12/20/2023
+Menu Item Version: 9.0.0.0
+Reason: 
+		-Menu buttons
+			>New 
+			>Refresh
+			>Save
+			>Inquire
+			>Export
+			>Delete
+
+		-Develop Fields
+			>Code [data entry] 
+			>Desc [data entry] 
+

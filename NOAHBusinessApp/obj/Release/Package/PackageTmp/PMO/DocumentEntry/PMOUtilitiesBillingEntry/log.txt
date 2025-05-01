@@ -1,0 +1,584 @@
+﻿Modified By			: Jenny May Cabantug
+Date Modified		: 10/28/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Enhancement
+						- Changes in BR
+							MAIN SCREEN:									
+								Invoice Type			Loaded to INVUTL - Utilities Billing						
+								Location with Accountable Forms			Required; Defaulted to Location with Accountable Forms from SG Default Location with Accountable Forms Assignment with transaction type of INVOIC under PMO module; 						
+											"Lookup from SG Default Location with Accountable Forms Assignment of the user login.This field is locked after saving.							"						
+								Phase/Tower			Required; Lookup from Phase/Tower setup						
+											Lookup columns should be: Phase/Tower and Project.						
+								Project			Loaded based on the selected Phase/Tower.						
+								Utility			Required; Lookup from Charges tag as Utility and NOT tag as Common.						
+											Validate if was not filled-up: "Cannot save. Utility is required."						
+								Bill Period From			Required; Date format: mm/dd/yyyy.						
+											For the first transaction, this should be enabled and allow to encode the date. This should be enabled until there is transaction with status not equal to cancelled of the same Project, Phase/Tower and utility.						
+											For the 2nd and succeeding transactions, this should be locked and loaded the Bill Period To + 1 day of the last transaction with status not equal to cancelled of the same Project, Phase/Tower, utility and billing type.						
+											Validate if was not filled-up: "Cannot save. Bill Period From is required."						
+								Bill Period To			Required; Date format: mm/dd/yyyy.						
+											Validate if was not filled-up: "Cannot save. Bill Period To is required."						
+								Invoice Date			Required; Defaulted to current date.						
+											"Should be within the set Period Dates; Should also be within the Period not yet closed. Validate if was not filled-up: ""Cannot save. Invoice Date is required.""							"						
+								Total Utility Bill			Required if tag as Regular only; Data Entry with maximum of 12 numeric characters with 2 decimal places. Negative value and 0.00 is not allowed.						
+											Validate if zero amount: "Cannot save. Total Utility Bill must be greater than 0.00."						
+											If tag as Phase/Tower, display the Total Bill Amount from Utility Rate button.						
+								Total Billable Amount			Display the total amount of Total Billable Amount.						
+								Adjustments			System computed: Total Utility Bill less Total Billable Amount.						
+											The amount here should be directly charge to expense.						
+								Remarks			Optional; Data Entry; Alphanumeric with maximum of 500 characters.						
+								Utility Rate			Button; Required and enabled only if tag as Phase/Tower and the Current Consumption of all loaded units has been field out, otherwise, disabled; Upon clicking, a new window will display.						
+											This will always reset everytime there are changes made in Current Consumption column.	
+																Batch No.			Loaded based on the transaction no. configuration and Location with Accountable Forms Transaction Type Assignment. Transaction Type is UTLBTH - Utilities Batch Entry						
+								Transaction Status			"System assigned. Status will be:
+								SAVED - Upon saving.
+								FOR APPROVAL- Upon processing, the transaction shall be forwarded to the Approval window and will be cleared from the screen.
+								DISAPPROVED (FOR REVISION)- If disapproved by the Approver, the entry shall be sent back to the Document Entry window.
+								DISAPPROVED (REVISED)- Upon saving of the disapproved transaction."						
+								Reason for Disapproval			Loaded from Utilities Billing Approval based on the selected Reason for Disapproval.						
+								Disapproval Remarks			Loaded from Utilities Billing Approval based on the encoded Remarks.						
+								Account Segment 			Column header label is dynamic depending on the Account Segment Configuration. The number of columns to be displayed depending on the number of setup from Account Segment Configuration excluding the Segment Level 1 (MAIN).						
+								Cost Center			Required; Lookup from Account Segment Definition with status of approved or loaded and approved.						
+								Requirements Compliance			Based on the standard button for requirements compliance.						
+						
+							Upon clicking Utility Rate:									
+								Service Provider									
+											Total Bill - Required; Data Entry with maximum of 12 numeric characters plus 2 decimal places.						
+											Total Consumption- Required; Data Entry with maximum of 12 numeric characters and no decimal places.						
+											Utility Rate - System computed: Total Bill divided by Total Consumption						
+								Property Reading									
+											Total Bill - Loaded based on the encoded Total Bill under Service Provider column						
+											If the Basis of Utility Rate is tag as Fixed in Utilities Billing Threshold with same Item Group Type, Phase/Tower and Charges and with latest effective date, this must be locked and system computed: Total Consumption*Utility Rate						
+											Total Consumption- Loaded based on the Total Current Consumption column						
+											Utility Rate - System computed: Total Bill divided by Total Consumption						
+											If the Basis of Utility Rate is tag as Fixed, get the rate from Utilities Billing Threshhold with same Item Group Type, Phase/Tower and Property Charges and latest effective date.						
+								Variance									
+											Total Bill - Blank						
+											Total Consumption- Service Provider less Property Reading. Display in absolute value. If Service Provider is greater than Property Reading, add letter "UF" after the amount otherwise "F".						
+											Utility Rate - System computed: Service Provider less Property Reading Utility Rate.						
+								% Increase (Decrease)									
+											Total Bill - Blank						
+											Total Consumption- System computed: (Service Provider less Property Reading) divided by Property Reading						
+											Utility Rate- System computed: (Service Provider less Property Reading) divided by Property Reading						
+								Save			Button; Do not allow to save if all the required fields are not filled up.						
+											If the % Increase/Decrease is equal or greater than the Percentage of Allowable Increase or Decrease from Utilities Billing Threshold with same Property Charges, prompt a message:						
+											"The Percentage Increase/Decrease equal or exceeds the allowable threshold, would you like to continue?"						
+											Yes - Save the setup						
+											No - Retain to the setup window		
+											
+					Consumption Details									
+									
+								Select All			Required; Checkbox.						
+								Unit			Loaded based on the selected Item Group Type, Item Group, Project, Phase/Tower, Utility and/or Meter No.						
+											Do not allow to load anymore if the unit code with the same Billing Period and Utility is already created with status of not equal to cancelled.						
+											Display unit code from Unit Inventory.						
+											Consider that the Billing Period From is within the Contract Start and End Date of the unit from Current Account Status Transition with status of approved or loaded and approved and with tag as Active.						
+											This should be ordered by Unit Code but load always at the top the Property Charges from Meter Details tag as Phase/Tower.						
+								Customer			Get the customer of the units from Customer Enrollment Entry with the same Item Group Type, Item Group, Project, Phase/Tower, Unit Code and with status of approved or loaded and approved.Get the trade name from Customer Information.						
+											Consider that the Billing Period From is within the Contract Start and End Date of the unit from Current Account Status Transition with status of approved or loaded and approved and with tag as Active.						
+											If the customer class of the customer from Customer Account Enrollment Entry tagged as Developer, this should display disregard the Billing Date From and To comparing to Current Account Status Transition but still with status of active.						
+								Transaction No.			System generated. This is configured based on the defined setup in the SG.TransactionNoConfig. Generation is per meter no.						
+											First:		Transaction Type (INVOIC)				
+											Second:		Location with Accountable Forms				
+											Third:		Year				
+											Series:		Numeric Series (0000001)				
+											Sample Document No:		INVOIC-FPTI-00000000000001				
+													sg.fn_Getdocno()				
+											The sequence will be based on the setup.						
+											If Reset was tagged as 1, include the Year and in what sequence. If 0, there should be no more year in the transaction no.						
+											If Reset was tagged as 1, the Year will be based on the Year of the current server date.						
+											If Reset was tagged as 1, the numeric series should be reset to 1 once the year has change.						
+											The number of series will be based on the number indicated in the setup.						
+								Account No.			Get the account no. of the units from Customer Enrollment Entry with the same Item Group Type, Item Group, Project, Phase/Tower, Unit Code and with status of approved or loaded and approved.						
+											Consider that the Billing Period From is within the Contract Start and End Date of the unit from Current Account Status Transition with status of approved or loaded and approved and with tag as Active.						
+								Meter No.			Load the meter no. of the unit from meter details setup with maximum effective date and with same utility type.						
+								Previous Reading			For the first transaction with same Item Group Type, Item Group, Project, Phase/Tower and utility, this should be loaded to 0.						
+											For the 2nd and succeeding transactions, this should be loaded the current reading of the last transaction with status not equal to cancelled of the same Item Group Type, Item Group, Project, Phase/Tower, and utility.						
+								Current Reading			Required; Data Entry with maximum of 12 numeric characters with no decimal places. Negative value and zero is not allowed.						
+								Current Consumption			System computed: Current Reading - Previous Reading.						
+											Validate if was not filled-up: "Cannot save. Current Consumption is required."						
+								Previous Consumption			Loaded the current consumption of the last transaction with status not equal to cancelled of the same Item Group Type, Item Group, Project, Phase/Tower, and utility.						
+								% Increase (Decrease)			System computed: (Current Consumption - Previous Consumption) / Previous Consumption						
+											Display in Percentage format with 2 decimal places.						
+								Utility Rate			Load the utility rate from the Utility Rate button under column Service Provider.						
+											If the Basis of Utility Rate is tag as Fixed, get the rate from Property Reading in the Utility Rate window.						
+								Total Amount			System computed: (Current Consumption * Utility Rate). Rounded off to 2 decimal places						
+											If the Total Consumption of Service Provider and Property Reading in Utility Rate button is the same, force balance the last unit to equal to Total Bill.						
+											If the Total Consumption of Service Provider and Property Reading in Utility Rate button is not the same, there is no need to force balance.						
+								Mark-up Rate			Loaded based on the setup from Utilities Billing Threshold with latest Effective Date and with same Item Group Type+ItemG Group+Project+Phase/Tower						
+								Minimum Billing Amount			Load the assigned Minimum Billing Amount of the Account from Customer Account Enrollment Entry with status of approved or loaded and approved with same property charges.						
+								Utility (Net of VAT)			"If there is no Minimum Billing Amount, Total Amount* (1+Markup Rate)                                                
+																			  "						
+											If there is Minimum Billing Amount and Minimum Billing Amount is less than Total Amount, (Total Amount) (Total Amount)*(1+Markup Rate)						
+											If there is Minimum Billing Amount and Minimum Billing Amount is greater than Total Amount, (Minimum Billable Amount) (Total Amount)*(1+Markup Rate)						
+								VAT			Computed as amount of  each charge multiple by the tax code rate assigned to each charges.                                        						
+								Utility (Gross Amount)			Summation of Utility (Net of VAT) plus VAT						
+								CWT			Computed as Net of VAT multiple by the CWT Rate based on CWT Code.						
+								Utility (Billable Amount)			Computed as Utility (Gross Amount) less CWT Amount.						
+								Sewer Fee (Net of VAT)			Computed as Sewer Rate (VATEX) multiple by the current consumption.						
+								VAT			System computed; Sewer Fee (VATEX) * VAT Rate.                                 						
+								Sewer Fee (Gross Amount)			Summation of Sewer Fee (Net of VAT) plus VAT.						
+								CWT			System computed; Sewer Fee (VATEX) * CWT Rate.                              						
+								Sewer Fee (Billable Amount)			Computed as Sewer Fee (Gross Amount) less CWT Amount.							
+											
+					Additional Business Rules									
+									
+									1			Do not allow to save if all the required fields has not been filled-up.						
+									2			Do not allow to save if there is no ticked units.						
+												Validate: "Cannot save. Please select atleast 1 unit no.						
+									3			The Unit Code to be loaded should only those with the same Item Group Type, Item Group, Project, Phase/Tower from Customer Account Enrollment Entry. Do not allow to load anymore if the unit is already existing with status of not equal to cancelled and with same Account No. + Utility + Billing Month.						
+									4			Upon changing either Billing Period, Phase/Tower,billing type, utility, the line details should reset.						
+									5			The amount charged to unit tag as Utility and common is not included in the generation of the journal entry.						
+									6			Export functionality in the line details will allow the maker or approver of the transaction to export the listing of generated invoices in CSV Format. Columns is equal to the line details.						
+									7			VAT on Billable Amount (column is hidden)						
+												The VAT amount will be computed based on the tax code. Get the Rate from Tax Type 1 of the selected VAT tax code from the Customer Account Enrollment Entry of the same account no. and the selected utility/charges. Connect the Tax Type 1 of the tax code from SG.TAXTYPE.						
+												System computed; Billable Amount / (1+(Rate/100) * (Rate/100)).						
+												If the selected tax code has no tax type 1, the rate should automatically equal to 0.00.						
+												Always force balance the last unit to prevent rounding difference.						
+												To force balance: (Total Utility Bill / (1+(Rate/100) * (Rate/100))) - (sum of VAT on Billable Amount per unit except for the last loaded unit).						
+									8			Creditable Withholding Tax (column is hidden)						
+												The CWT amount will be computed based on the tax code. Get the Rate from Tax Type 2 of the selected CWT tax code from the Customer Account Enrollment Entry of the same account no. and of the selected utility/charges. Connect the Tax Type 2 of the tax code from SG.TAXTYPE.						
+												System computed; Total Billable Amount * (Rate/100)).						
+												If the selected tax code has no tax type 2, the rate should automatically equal to 0.00.						
+												Always force balance the last unit to prevent rounding difference.						
+												To force balance: (Billable Amount * (Rate/100)) - (sum of Creditable Withholding Tax per unit except for the last loaded unit).						
+												
+
+Modified By			: Jenny May Cabantug
+Date Modified		: 10/28/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Enhancment
+					> Convert to V10
+
+
+Modified By			: Maricar Lyka Putol
+Date Modified		: 08.03.2024
+Menu Item Version	: 9.0.0.82
+Reason				: Enhancment
+					> Convert to new spread
+					> Convert to bulk insert
+
+Modified By			: KFS
+Date Modified		: 02.07.2023
+Menu Item Version	: 9.0.0.81
+Reason				: Remove Default Billing Date
+
+Modified By			: NDB
+Date Modified		: 01.19.2023
+Menu Item Version	: 9.0.0.80
+Reason				: Add Export in Line Details
+
+Modified By			: NDB
+Date Modified		: 06.16.2022
+Menu Item Version	: 9.0.0.79
+Reason				: Add billing date on getUpliadValidation
+
+Modified By			: NDB
+Date Modified		: 02.28.2022
+Menu Item Version	: 9.0.0.78
+Reason				: Fix 0.01 Variance on Total Billable Amount
+
+Modified By			: NDB
+Date Modified		: 02.18.2022
+Menu Item Version	: 9.0.0.77
+Reason				: Revise Billing Period dropdown
+
+Modified By			: NDB
+Date Modified		: 11.15.2021
+Menu Item Version	: 9.0.0.76
+Reason				: Add totalBillAmt computation on ComputeTotalBillableAmountWithMultiplier
+
+Modified By			: NDB
+Date Modified		: 10.20.2021
+Menu Item Version	: 9.0.0.75
+Reason				: Add totalBillAmt computation for phase tower
+
+Modified By			: NDB
+Date Modified		: 09.30.2021
+Menu Item Version	: 9.0.0.74
+Reason				: Update Loadschema hdr
+
+Modified By			: NDB
+Date Modified		: 09.30.2021
+Menu Item Version	: 9.0.0.73
+Reason				: Update Loadschema hdr
+
+Modified By			: NDB
+Date Modified		: 09.25.2021
+Menu Item Version	: 9.0.0.72
+Reason				: Optimization of javascript functions
+
+Modified By			: NDB
+Date Modified		: 09.25.2021
+Menu Item Version	: 9.0.0.71
+Reason				: Revision of Uploading validation
+
+Modified By			: NDB
+Date Modified		: 09.22.2021
+Menu Item Version	: 9.0.0.70
+Reason				: Compute Current consumption upon next page
+
+Modified By			: NDB
+Date Modified		: 09.15.2021
+Menu Item Version	: 9.0.0.69
+Reason				: Enable Utility Rate upon Import uploading file
+
+Modified By			: NDB
+Date Modified		: 09.15.2021
+Menu Item Version	: 9.0.0.68
+Reason				: Uncomment dtCheckLength validation
+
+Modified By			: NDB
+Date Modified		: 09.15.2021
+Menu Item Version	: 9.0.0.67
+Reason				: Update JS function used in saveToTempTable
+
+Modified By			: NDB
+Date Modified		: 09.14.2021
+Menu Item Version	: 9.0.0.66
+Reason				: Update DisableCurrentConsumption
+
+Modified By			: NDB
+Date Modified		: 09.14.2021
+Menu Item Version	: 9.0.0.65
+Reason				: Update custom func GridOnLoad
+
+
+Modified By			: NDB
+Date Modified		: 09.13.2021
+Menu Item Version	: 9.0.0.64
+Reason				: upon change on billing period from, error occured
+
+Modified By			: NDB
+Date Modified		: 09.11.2021
+Menu Item Version	: 9.0.0.63
+Reason				: Addressing of Findings.
+					a. Update Sewer Fees computation to Current consumption * Sewer Rate
+
+
+
+					
+Modified By			: EA
+Date Modified		: 04.26.2021
+Menu Item Version	: 9.0.0.62
+Reason				: Addressing of Findings.
+
+Modified By			: EA
+Date Modified		: 04.23.2021
+Menu Item Version	: 9.0.0.61
+Reason				: Added new column on grid, Multiplier.
+
+Modified By			: EA
+Date Modified		: 04.08.2021
+Menu Item Version	: 9.0.0.60
+Reason				: Addressing of Findings, Import Related.
+
+
+Modified By			: EA
+Date Modified		: 03.25.2021
+Menu Item Version	: 9.0.0.59
+Reason				: Addressing of Findings, Error upon loading of data.
+
+Modified By			: EA
+Date Modified		: 03.22.2021
+Menu Item Version	: 9.0.0.58
+Reason				: Addressing of Findings, Added Project in Download template.
+
+Modified By			: EA
+Date Modified		: 03.19.2021
+Menu Item Version	: 9.0.0.57
+Reason				: Addressing of Findings, Removed Extra object in the header and Comment path for uploading.
+
+Modified By			: EA
+Date Modified		: 03.10.2021
+Menu Item Version	: 9.0.0.56
+Reason				: Addressing of Findings in Computation of Sewer Amount and Auto Computation in Utility Rate Popup.
+
+Modified By			: EA
+Date Modified		: 03.03.2021
+Menu Item Version	: 9.0.0.55
+Reason				: Added Sewer Rate and Sewer Fees in Line Details.
+
+Modified By			: EA
+Date Modified		: 02.22.2021
+Menu Item Version	: 9.0.0.54
+Reason				: Major changes on the downloading and importing of file.
+
+Modified By			: NDB
+Date Modified		: 10.24.2020
+Menu Item Version	: 9.0.0.53
+Reason				: Upon import excel, it should validate if there is an duplicate record
+
+Modified By			: SBL/JMM
+Date Modified		: 10.17.2020
+Menu Item Version	: 9.0.0.52
+Reason				: Addressing of UI Findings (Button and Gray Textbox on bottom part)
+
+Modified By			: MSC
+Date Modified		: 10.17.2020
+Menu Item Version	: 9.0.0.51
+Reason				: Align to NOAH Drive
+
+Modified By			: KSG
+Date Modified		: 10.09.2020
+Menu Item Version	: 9.0.0.50
+Reason				: Update Library.
+
+Modified By       : EQP
+Date Modified     : 09/16/2020
+Menu Item Version : 9.0.0.49
+Reason		  : Fix total amount if unit and regular is true
+
+Modified By       : EQP
+Date Modified     : 09/08/2020
+Menu Item Version : 9.0.0.48
+Reason		  : Add MeterNo in filter for BillFrom
+
+Modified By       : EQP
+Date Modified     : 09/02/2020
+Menu Item Version : 9.0.0.47
+Reason		  : Add Project in Saving
+
+Modified By       : EQP
+Date Modified     : 08/25/2020
+Menu Item Version : 9.0.0.46
+Reason		  : Addressing of findings in Fix Rate
+
+Modified By       : EQP
+Date Modified     : 08/25/2020
+Menu Item Version : 9.0.0.45
+Reason		  : Addressing of findings in Fix Rate
+
+Modified By       : EQP
+Date Modified     : 08/25/2020
+Menu Item Version : 9.0.0.44
+Reason		  : Addressing of findings in Fix Rate
+
+Modified By       : EQP
+Date Modified     : 08/24/2020
+Menu Item Version : 9.0.0.43
+Reason		  : Addressing of findings in Fix Rate
+
+Modified By       : EQP
+Date Modified     : 08/24/2020
+Menu Item Version : 9.0.0.42
+Reason		  : Addressing of findings in Fix Rate
+
+Modified By       : EQP
+Date Modified     : 08/19/2020
+Menu Item Version : 9.0.0.41
+Reason		  : Addressing of findings in Fix Rate
+
+Modified By       : EQP
+Date Modified     : 08/17/2020
+Menu Item Version : 9.0.0.40
+Reason		  : Addressing of findings in Fix Rate
+
+Modified By       : EQP
+Date Modified     : 08/15/2020
+Menu Item Version : 9.0.0.39
+Reason		  : Apply Changes in Utility Billing Threshhold
+
+Modified By       : EQP
+Date Modified     : 08/13/2020
+Menu Item Version : 9.0.0.38
+Reason		  : Apply Changes in Utility Billing Threshhold
+				
+
+Modified By       : SBL
+Date Modified     : 08/12/2020
+Menu Item Version : 9.0.0.37
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified By: EQP
+Date Modified: 07/15/2020
+Reason : Fix Segment
+Version : 9.0.0.36
+
+Modified By: EQP
+Date Modified: 05/29/2020
+Reason : Fix Grid
+Version : 9.0.0.35
+
+
+Modified By: EQP
+Date Modified: 05/29/2020
+Reason : Fix Grid
+Version : 9.0.0.34
+
+Modified By: EQP
+Date Modified: 05/26/2020
+Reason : Fix Segment
+Version : 9.0.0.33
+
+Modified By: EQP
+Date Modified: 05/25/2020
+Reason : Fix Segment
+Version : 9.0.0.32
+
+Modified By: EQP
+Date Modified: 05/22/2020
+Reason : Fix Common Area
+Version : 9.0.0.31
+
+Modified By: EQP
+Date Modified: 05/18/2020
+Reason : Fix Total Bil
+Version : 9.0.0.30
+
+Modified By: EQP
+Date Modified: 05/14/2020
+Reason : Fix Force Balance when 1 row only
+Version : 9.0.0.29
+
+Modified By: EQP
+Date Modified: 05/14/2020
+Reason : Fix Force Balance when 1 row only
+Version : 9.0.0.28
+
+Modified By: EQP
+Date Modified: 05/06/2020
+Reason : Fix Saving
+Version : 9.0.0.27
+
+Modified By: EQP
+Date Modified: 05/06/2020
+Reason : Fix Saving
+Version : 9.0.0.26
+
+Modified By: EQP
+Date Modified: 05/05/2020
+Reason : Fix uploading
+Version : 9.0.0.25
+
+Modified By: EQP
+Date Modified: 05/05/2020
+Reason : Fix uploading
+Version : 9.0.0.24
+
+Modified By: EQP
+Date Modified: 05/05/2020
+Reason : Fix uploading
+Version : 9.0.0.23
+
+Modified By: EQP
+Date Modified: 05/04/2020
+Reason : Fix Download/Upload
+Version : 9.0.0.22
+
+Modified By: EQP
+Date Modified: 05/04/2020
+Reason :
+Version : 9.0.0.21
+
+Modified By: EQP
+Date Modified: 05/04/2020
+Reason :
+Version : 9.0.0.20
+
+Modified By: EQP
+Date Modified: 05/04/2020
+Reason :
+Version : 9.0.0.20
+
+Modified By: EQP
+Date Modified: 04/30/2020
+Reason :
+Version : 9.0.0.19
+
+Modified By: EQP
+Date Modified: 04/30/2020
+Reason :
+Version : 9.0.0.18
+
+Modified By: EQP
+Date Modified: 04/26/2020
+Reason :
+Version : 9.0.0.17
+
+Modified By: EQP
+Date Modified: 04/25/2020
+Reason :
+Version : 9.0.0.16
+
+Modified By: EQP
+Date Modified: 04/26/2020
+Reason :
+Version : 9.0.0.15
+
+Modified By: EQP
+Date Modified: 04/25/2020
+Reason :
+Version : 9.0.0.14
+
+Modified By: EQP
+Date Modified: 04/25/2020
+Reason :
+Version : 9.0.0.13
+
+Modified By: EQP
+Date Modified: 04/25/2020
+Reason :
+Version : 9.0.0.12
+
+Modified By: EQP
+Date Modified: 04/23/2020
+Reason :
+Version : 9.0.0.11
+
+Modified By: EQP
+Date Modified: 04/23/2020
+Reason :
+Version : 9.0.0.10
+
+Modified By: EA
+Date Modified: 04/23/2020
+Reason :
+Version : 9.0.0.9
+
+Modified By: EA
+Date Modified: 04/23/2020
+Reason :
+Version : 9.0.0.8
+
+Modified By: EA
+Date Modified: 04/22/2020
+Reason :
+Version : 9.0.0.7
+
+Modified By: EQP
+Date Modified: 04/15/2020
+Reason :
+Version : 9.0.0.6
+
+Modified By: EQP
+Date Modified: 04/15/2020
+Reason :
+Version : 9.0.0.5
+
+Modified By: EQP
+Date Modified: 04/13/2020
+Reason :
+Version : 9.0.0.4
+
+Modified By: EQP
+Date Modified: 04/13/2020
+Reason :
+Version : 9.0.0.3
+
+
+Modified By: EQP
+Date Modified: 04/07/2020
+Reason :
+Version : 9.0.0.2
+
+Modified By: EQP
+Date Modified: 04/04/2020
+Reason :
+Version : 9.0.0.1
+
+Created By: EQP
+Date Created: 03/21/2020
+Reason :
+Version : 9.0.0.0

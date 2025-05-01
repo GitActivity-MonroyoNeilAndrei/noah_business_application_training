@@ -1,0 +1,33 @@
+﻿.nk .nk-accordion .nk-li .nk-li-content {
+    line-height: 13px;
+}
+
+.nk .tabs-lbl:first-of-type {
+    margin-left: 0px;
+}
+    
+.nk .tabs-lbl {
+    padding: 4px 11px;
+    padding-bottom: 7px;
+    font-size: 11px;
+}
+
+
+div#frmValidationList ._slide-m {
+    height: 80%;
+    width: 80%;
+}
+
+div#nwBdgtCheckingWindow ._slide-m {
+    min-width: 68%;
+}
+
+div#nwPopUpRequireCompliance ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwPopUpRequireComplianceL ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}

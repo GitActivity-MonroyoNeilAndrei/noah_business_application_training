@@ -1,0 +1,148 @@
+﻿Modified By		: Arnel Alvarado
+Date Modified	: 10/03/2024
+Version			: 10.0.0.0
+Reason			: Version Upgrade
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 01/10/2024
+Version			: 9.0.0.27
+Reason			: Enhancement
+					- Main Grid 
+							> Old To New Spread
+							> Add Show/Hide Button
+
+Modified by			: EMB
+Date Created		: 01/20/2022
+Menu Item Version	: 9.0.0.26
+Reason				: Year selected in Filter does not reflect on "For The Year" in Report Header
+
+Modified by			: EMB
+Date Created		: 01/07/2022
+Menu Item Version	: 9.0.0.25
+Reason				: Display "All Locations" if no location in filter
+
+Modified by			: NDB  
+Date Created		: 12/23/2022
+Menu Item Version	: 9.0.0.24
+Reason				: convert to standard location
+
+Modified by			: NDB  
+Date Created		: 12/23/2022
+Menu Item Version	: 9.0.0.23
+Reason				: Add default location upon initial loading
+
+
+Modified by			: NDB  
+Date Created		: 05/06/2021
+Menu Item Version	: 9.0.0.21
+Reason				: On get_method update peruseraccess variable
+
+Modified by			: NDB  
+Date Created		: 03/31/2021
+Menu Item Version	: 9.0.0.20
+Reason				: Update Width of filter
+
+Modified by			: NDB  
+Date Created		: 03/22/2021
+Menu Item Version	: 9.0.0.19
+Reason				: Update Width of filter
+
+Modified by			: NDB  
+Date Created		: 02/02/2020
+Menu Item Version	: 9.0.0.18
+Reason				: Update loading name based on action driven name
+
+Modified by			: NDB  
+Date Created		: 01/30/2020
+Menu Item Version	: 9.0.0.17
+Reason				: VAPT
+
+Modified by			: NDB  
+Date Created		: 01/18/2020
+Menu Item Version	: 9.0.0.16
+Reason				: Add 3 colummns require allocation, Allocation Method, Recipient of Allocation
+
+Modified by			: NDB  
+Date Created		: 01/16/2020
+Menu Item Version	: 9.0.0.15
+Reason				: Addressing of findings
+
+Modified by			: NDB  
+Date Created		: 01/08/2020
+Menu Item Version	: 9.0.0.14
+Reason				: Addressing of findings
+					1. Per Cost Center Access should also be dynamic based on SG Account Segments tagged as Cost Center
+					2. Upon initial opening of the report, Cost Center columns is displayed as Cost Center. but upon refresh, it is based on the account segments. Upon initial opening, it should still be based on SG Account Segments
+
+Modified by			: NDB  
+Date Created		: 12/02/2020
+Menu Item Version	: 9.0.0.13
+Reason				: Set default header location
+
+
+Modified by			: NDB  
+Date Created		: 11/03/2020
+Menu Item Version	: 9.0.0.12
+Reason				: Add Resize workaround upon hiding/showing report header
+
+
+Modified by			: NDB  
+Date Created		: 11/02/2020
+Menu Item Version	: 9.0.0.11
+Reason				: Add Resize workaround upon hiding/showing report header
+
+
+Modified by			: NDB  
+Date Created		: 10/09/2020
+Menu Item Version	: 9.0.0.10
+Reason				: Addresing of findings #https://docs.google.com/spreadsheets/d/11odaSdWJKYZE0YWhTJJ871FBbhJgvHIlG-cFptg842E/edit#gid=0&range=A1492
+
+Modified by			: NDB  
+Date Created		: 10/09/2020
+Menu Item Version	: 9.0.0.9
+Reason				: Added parameter (LocForm) for request entry
+
+Modified by			: NDB  
+Date Created		: 10/05/2020
+Menu Item Version	: 9.0.0.8
+Reason				: Added parameter for request entry
+
+Modified by			: NDB  
+Date Created		: 09/29/2020
+Menu Item Version	: 9.0.0.7
+Reason				:  disable both (Per Cost Center Access & Per Report Access) if recuser has only one setup
+
+Modified by			: NDB  
+Date Created		: 09/29/2020
+Menu Item Version	: 9.0.0.6
+Reason				: Validation upon initial loading
+
+Modified by			: NDB  
+Date Created		: 09/25/2020
+Menu Item Version	: 9.0.0.5
+Reason				: Amount Alignment Update
+
+Modified by			: NDB  
+Date Created		: 09/25/2020
+Menu Item Version	: 9.0.0.4
+Reason				: Amount Alignment Update
+
+Modified by			: NDB  
+Date Created		: 09/24/2020
+Menu Item Version	: 9.0.0.3
+Reason				: GL Account segment, set as tick and disable
+
+
+Modified by			: NDB  
+Date Created		: 09/23/2020
+Menu Item Version	: 9.0.0.2
+Reason				: Delopers Testing Update
+
+Modified by			: NDB  
+Date Created		: 09/22/2020
+Menu Item Version	: 9.0.0.1
+Reason				: Delopers Testing Update
+
+Created by			: NDB  
+Date Created		: 09/19/2020
+Menu Item Version	: 9.0.0.0

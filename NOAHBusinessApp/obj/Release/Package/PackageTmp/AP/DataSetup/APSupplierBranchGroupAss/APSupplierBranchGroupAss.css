@@ -1,0 +1,71 @@
+﻿#tbl_total table td {
+    border: 1px solid black;
+}
+
+.noah-webui-containerRow > .noah-webui-containerRowItem:nth-child(1) {
+    padding-left: 12px;
+}
+
+.design {
+    min-width: 323px;
+    max-width: 300px;
+    maxlength ="80";
+}
+
+.radiodesign {
+    margin-left: 20px;
+}
+
+.history-container {
+    width: 632px;
+    max-width: 632px;
+    min-width: 632px;
+}
+
+.hist-div {
+    margin-left: 44px;
+}
+
+#btnHistory {
+    margin-right: 20px;
+    min-width: 120px;
+    max-width: 120px;
+    border-radius: 5px;
+    color: white;
+    background: linear-gradient(to bottom, #dcdcdc -10%, #2d2a26 100%);
+}
+
+.nwGrid table tr td.nwGButton {
+    background-repeat: repeat-x;
+    -webkit-transform: translatez(0);
+    -moz-transform: translatez(0);
+    -ms-transform: translatez(0);
+    -o-transform: translatez(0);
+    transform: translatez(0);
+    background-color: rgba(240, 240, 240, 1) !important;
+    background-image: -moz-linear-gradient(top,#FFFFFF, #DBDBDB) !important;
+    background-image: -ms-linear-gradient(top, #FFFFFF, #DBDBDB) !important;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from (#FFFFFF), to(#DBDBDB)) !important;
+    background-image: -webkit-linear-gradient(top, #FFFFFF, #DBDBDB) !important;
+    background-image: -o-linear-gradient(top, #FFFFFF,#DBDBDB) !important;
+    background-image: linear-gradient(top, #FFFFFF, #DBDBDB) !important;
+    background-repeat: repeat-x;
+    text-align: center !important;
+}
+#txtHeadOfficeDesc {
+    min-width: 100%;
+    resize: none;
+    border: 1px solid skyblue;
+    font-family: Verdana;
+    border-radius: 2px;
+    font-size: 12px;
+}
+
+.nwGrid .nwGridFreezeScroll {
+    visibility: hidden !important;
+}
+
+.tblGrid_Panel1 {
+    width: 100%!important;
+}
+

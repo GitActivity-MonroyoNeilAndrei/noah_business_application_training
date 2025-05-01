@@ -1,0 +1,144 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+
+    ViewBag.Title = "PopupWindows";
+}
+
+
+@* EXTRA GRID *@
+<div id="nwRemarks" title="Review and Approval Details">
+    <div class="container-flex">
+        <div class="row row-parent">
+            <div class="col col-12">
+                <textarea id="txtRemarks" class="txtarea autoresize" rows="3" disabled></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* Holding History Window GRID *@
+<div id="HoldingHst" title="Holding History Window">
+
+    <div class="container-flex">
+        <div class="row row-parent">
+            <div class="left">
+                <div class="row">
+                    <div class="col col-12">
+                        <label class="lbltxt">APV No.</label>
+                        <input id="txtDocno_HH" type="text" maxlength="12" disabled />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-12">
+                        <label class="lbltxt">Ref No. (BS/SI/SOA)</label>
+                        <input id="txtRefno_HH" type="text" maxlength="12" disabled />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col col-12 fullwidth">
+        <div class="col col-12">
+            <div id="nwGridHoldHst">
+            </div>
+        </div>
+    </div>
+</div>
+
+@* DM Details Window GRID *@
+<div id="DMDetails" title="DM Details Window">
+
+    <div class="container-flex">
+        <div class="row row-parent">
+
+            <div class="row">
+                <div class="col col-12">
+                    <label class="lbltxt">Payment Request No.</label>
+                    <input id="txtPRFNo_DM" type="text" maxlength="12" disabled />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-12">
+                    <label class="lbltxt">APV No.</label>
+                    <input id="txtAPVNo_DM" type="text" maxlength="12" disabled />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col col-12 fullwidth">
+        <div class="col col-12">
+            <div id="nwGridDM">
+            </div>
+        </div>
+    </div>
+</div>
+
+@* PV Details Window GRID *@
+<div id="PVDetails" title="PV Details Window">
+
+    <div class="container-flex">
+        <div class="row row-parent">
+
+            <div class="row">
+                <div class="col col-12">
+                    <label class="lbltxt">Payment Request No.</label>
+                    <input id="txtPRFNo_PV" type="text" maxlength="12" disabled />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-12">
+                    <label class="lbltxt">APV No.</label>
+                    <input id="txtAPVNo_PV" type="text" maxlength="12" disabled />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col col-12 fullwidth">
+        <div class="col col-12">
+            <div id="nwGridPV">
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Payment Release Details Window GRID *@
+<div class="container-flex PayRelDetails">
+    <div id="PayRelDetails" title="Payment Release Details Window">
+
+        <div class="row row-parent">
+            <div class="left">
+                <div class="row">
+                    <div class="col col-12">
+                        <label class="lbltxt">Payment Request No.</label>
+                        <input id="txtPRFNo_PR" type="text" maxlength="12" disabled />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-12">
+                        <label class="lbltxt">Ref No. (BS/SI/SOA)</label>
+                        <input id="txtAPVNo_PR" type="text" maxlength="12" disabled />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col col-12 fullwidth">
+            <div class="col col-12">
+                <div id="nwGridPR">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

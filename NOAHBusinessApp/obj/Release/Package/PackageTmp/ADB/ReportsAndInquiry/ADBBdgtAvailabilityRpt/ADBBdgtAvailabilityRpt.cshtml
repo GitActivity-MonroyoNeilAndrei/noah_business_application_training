@@ -1,0 +1,219 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Budget Availability Report";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/ADB/ReportsAndInquiry/ADBBdgtAvailabilityRpt/ADBBdgtAvailabilityRpt.js"></script>
+    <link href="~/ADB/ReportsAndInquiry/ADBBdgtAvailabilityRpt/ADBBdgtAvailabilityRpt.css" rel="stylesheet" />
+</head>
+
+@*ToolBox*@
+<div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+
+    <div id="noah-webui-Toolbox-BindingNavigator" nwbind="noah-webui-Toolbox-Grid" class="noah-webui-Toolbox-BindingNavigator nwHide">
+        <div id="noah-webui-default-first" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div id="noah-webui-default-previous" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div class="BN-record">
+            <input id="noah-webui-default-currentRec" type="text" value="0" />
+            <span>of 0</span>
+        </div>
+        <div id="noah-webui-default-next" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div id="noah-webui-default-last" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+    </div>
+
+    <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">New</div>
+    </div>
+    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Save</div>
+    </div>
+    <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Delete</div>
+    </div>
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+    <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Inquire</div>
+    </div>
+    <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Export</div>
+    </div>
+</div>
+
+@*Main*@
+<div class="container-flex">
+    <div class="container-flex  margin-bottom-10">
+        <div class="row row-parent">
+            <div class="col col-12 col-parent">
+                @* Start of filter container *@
+                    <div class="col col-6 col-parent">
+                        <div class="row">
+                            <fieldset class="fieldset">
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <input type="radio" id="isPerCostCenter" name="cbCostCenter" />Cost Center Access
+                                    </div>
+                                    <div class="col col-6">
+                                        <input type="radio" id="isAllCostCenter" name="cbCostCenter" />Per Report Access
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <div class="col col-12 col-parent">
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <div class="row">
+                                            <fieldset class="fieldset">
+                                                <legend>View Type</legend>
+                                                <div class="row">
+                                                    <div class="col col-6">
+                                                        <label class="lbltxt" for="rbQuarter">Budget Year</label>
+                                                    </div>
+                                                    <div class="col col-6">
+                                                        <input id="txtBdgtYear" type="number" name="txtBdgtYear" class="txtbox" >
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-12">
+                                                        <input type="radio" id="isAnnual" name="cbViewType" />Annual
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-12 col-parent">
+                                                        <div class="row">
+                                                            <div class="col col-5">
+                                                                <div class="row">
+                                                                    <input type="radio" id="isMonthly" name="cbViewType" />Monthly
+                                                                </div>
+                                                            </div>
+                                                            <div class="col col-7">
+                                                                <div class="row">
+                                                                    <div class="col col-12 col-parent">
+                                                                        <div class="row">
+                                                                            <div class="col col-4">
+                                                                                <label class="lbltxt">From</label>
+                                                                            </div>
+                                                                            <div class="col col-8">
+                                                                                <select id="txtFrom" name="txtFrom" class="cmb">
+                                                                                    <option value="September">September</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col col-12 col-parent">
+                                                                        <div class="row">
+                                                                            <div class="col col-4">
+                                                                                <label class="lbltxt">To</label>
+                                                                            </div>
+                                                                            <div class="col col-8">
+                                                                                <select id="txtTo" name="txtTo" class="cmb">
+                                                                                    <option value="September">September</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col col-6">
+                                        <div class="row">
+                                            <fieldset class="fieldset">
+                                                <legend>Budget Account Combination</legend>
+                                                <div class="row">
+                                                    <div class="col col-12 col-parent">
+                                                        <div class="col col-6 col-parent">
+                                                            <div class="row">
+                                                                <div class="col col-12">
+                                                                    <input type="checkbox" id="isSegmen1" name="isSegmen1" /><span><label id="segmen1Desc">[Segment 1 Description]</label></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col col-12">
+                                                                    <input type="checkbox" id="isSegmen2" name="isSegmen2" /><label id="segmen2Desc">[Segment 2 Description]</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col col-12">
+                                                                    <input type="checkbox" id="isSegmen3" name="isSegmen3" /><label id="segmen3Desc">[Segment 3 Description]</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col col-12">
+                                                                    <input type="checkbox" id="isSegmen4" name="isSegmen4" /><label id="segmen4Desc">[Segment 4 Description]</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col col-12">
+                                                                    <input type="checkbox" id="isSegmen5" name="isSegmen5" /><label id="segmen5Desc">[Segment 5 Description]</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-6 col-parent">
+                                                            <div class="row">
+                                                                <div class="col col-12">
+                                                                    <input type="checkbox" id="isItemGrpType" name="isItemGrpType" /> Item Group Type
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col col-12">
+                                                                    <input type="checkbox" id="isItmLevel" name="isItmLevel" /> Item Level
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col col-12">
+                                                                    <input type="checkbox" id="isItem" name="isItem" /> Item
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col col-6 col-parent">
+                        <fieldset  class="fieldset" >
+                            <legend>Filter By</legend>
+                                <div id="settingstabs">
+                                </div>
+                        </fieldset>
+                    </div>
+            </div>
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div id="nwGridMainCon" class="fullwidth"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

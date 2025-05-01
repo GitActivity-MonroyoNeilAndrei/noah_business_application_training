@@ -1,0 +1,85 @@
+﻿.nk .right {
+    justify-content: right;
+    margin-right: 0;
+}
+
+.text-Aright {
+    text-align: right;
+}
+
+div#ViewJournal ._slide-m {
+    min-width: 75%;
+}
+
+div#ViewConsoCharging ._slide-m {
+    min-width: 75%;
+}
+
+div#nwPCCCAlloc ._slide-m {
+    min-width: 90%;
+}
+
+div#ExpenseAlloc ._slide-m {
+    min-width: 75%;
+}
+
+div#nwRequestType ._slide-m {
+    min-width: 20%;
+    min-height: 30%;
+}
+
+div#AllocProcess ._slide-m {
+    min-width: 85%;
+}
+
+div#process ._slide-m {
+    min-width: 80%;
+}
+
+div#nwValidationList ._slide-m {
+    min-width: 80%;
+}
+
+div#nwBudgetCtrlDetails ._slide-m {
+    min-width: 80%;
+}
+
+div#nwValidationList_Alloc ._slide-m {
+    min-width: 80%;
+}
+
+div#nwValidationList ._slide-m {
+    min-width: 80%;
+}
+
+div#nwCreateSBR ._slide-m {
+    min-width: 20%;
+    min-height: 25%;
+}
+
+div#ApplyAdvDM ._slide-m {
+    min-width: 85%;
+}
+
+div#AppliedAmt ._slide-m {
+    min-width: 65%;
+}
+
+div#DefAppliedAmt ._slide-m {
+    min-width: 65%;
+}
+
+div#nwBdgtCheckingWindow ._slide-m {
+    min-width: 80%;
+}
+
+
+
+
+
+
+
+
+
+
+

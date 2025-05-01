@@ -2624,7 +2624,7 @@ body[ver="3"] #Button1 {
 }
 
 .comp-img {
-    width: 138px;
+    /*width: 138px;*/  width: 250px;
     height: 140px;
     position: relative;
     object-fit: cover;

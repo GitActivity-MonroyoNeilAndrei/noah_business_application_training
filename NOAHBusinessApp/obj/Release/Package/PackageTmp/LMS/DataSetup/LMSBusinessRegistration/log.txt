@@ -1,0 +1,33 @@
+﻿Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/27/2024
+Version			   : 10.0.0.1
+Description		   : Addressing of findings
+						#39 Upon clicking New, Save and Inquire buttons are enabled.
+						#41 Filename of downloaded file is "Business Registration Listing” for both Export to Excel and CSV.
+
+Modified By		   : Lance Justine Aleonar
+Date Modified	   : 09/24/2024
+Version			   : 10.0.0.0
+Description		   : Conversion from V9 to V10
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/24/2024
+Version			   : 9.0.0.3
+Description		   : Addressing of Findings - fixed isUsed functionality
+
+Created By: Allen Aguilar
+Date Created: 11/16/2023
+Menu Item Version: 9.0.0.2
+Reason: 
+		-Menu buttons
+			>New 
+			>Refresh
+			>Save
+			>Inquire
+			>Export
+			>Delete
+
+		-Develop Fields
+			>Code [data entry] 
+			>Desc [data entry] 
+

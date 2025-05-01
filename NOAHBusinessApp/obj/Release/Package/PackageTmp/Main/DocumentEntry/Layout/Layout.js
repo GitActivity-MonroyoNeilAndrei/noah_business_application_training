@@ -7,7 +7,17 @@ var crLnkLayout = "";
 var gen_disUname = "code";
 var lnkHome = 0;
 
+var jsonMainData;
+var jsonMainCompany;
 
+var nkmenutitle;
+var nkmenuversion;
+
+
+function nkLocalStore( _jsonMainData,_jsonMainCompany) {
+    localStorage["jsonMainData"] = _jsonMainData;
+    localStorage["jsonMainCompany"] = _jsonMainCompany;
+}
 
 $(function () {
     try {
@@ -79,8 +89,6 @@ $(function () {
         nw_GetMenuitemList(crModule);
 
         fx_ExplorerTitleHide();
-        
-
 
         nwLoading_End("nwInitLoad");
         } catch (err) { }
@@ -90,14 +98,29 @@ $(function () {
     //func_ActionDriven("actAccess", false,GetCurrentURL() + "../Layout/Layout_Gateway");
     var isContinue = true;
     //init_request();
-    ToolBoxGetData = false;
+    //ToolBoxGetData = false;
 
     try {
         var pathname = window.location.pathname + "";
-        for (var i = 0; i < $("#mainModList a").length; i++) {
-            if (pathname.toLowerCase() == $("#mainModList a:eq(" + i + ")").attr("href").toLowerCase())
-                $("#mainModList a:eq(" + i + ") .btn").addClass("selected");
+
+
+        //for (var i = 0; i < $("#mainFavList a").length; i++) {
+        //    if (pathname.toLowerCase() == $("#mainFavList a:eq(" + i + ")").attr("href").toLowerCase())
+        //        $("#mainFavList a:eq(" + i + ") .btn").addClass("selected");
+        //}
+        var umod = "";
+        for (var i = 0; i < jsonMainData.UModules.length; i++) {
+            umod += "<div cid='" + jsonMainData.UModules[i]["AppID"] + "' cabv='" + jsonMainData.UModules[i]["AppAbv"] + "' title='" + jsonMainData.UModules[i]["AppName"] + "' class='btn btn-modules'>" + jsonMainData.UModules[i]["AppName"] + "</div>";
         }
+        $("#mainModList ").html(umod);
+
+    } catch (err) { }
+
+    try{
+        nkmenutitle = nkmenutitle || "";
+        if (nkmenutitle != "")
+            document.title = nkmenutitle + " " + (nkmenuversion || "");
+        $("#menuVersion").text(document.title);
     } catch (err) { }
 });
 
@@ -107,6 +130,137 @@ function nw_GetNotificationList(curdate) {
     nwLoading_SpinnerPrepend("conNotifLay");
     func_ActionDriven("actGetNotificationList", false, crLnkLayout);
 }
+function nw_GetMenuitemListDetailsSearch(txtsearch) {
+    var template2 = '<div class="menu-grp-lbl menuitem" mid="mn-{0}" title="{1}"><a href="{2}" id="{0}" class="no-urderline">{1}</a></div>';
+    var jsonmenu = nwJson(jsonMainData['UAccess'], "ItemParentApplication", _crModule);
+
+    for (var i = 0; i < jsonSub.length; i++) {
+
+    }
+}
+function nw_GetMenuitemListDetails(_crModule) {
+    var jsonmenu = nwJson(jsonMainData['UAccess'], "ItemParentApplication", _crModule);
+    var template = '<div class="menu-grp-li" mid="mn-{0}"><div class="menu-grp-lbl">{1}</div><div class="menu-grp-ul">{2}</div></div>';
+    var template2 = '<div class="menu-grp-lbl menuitem" mid="mn-{0}" title="{1}"><a href="{2}" id="{0}" class="no-urderline">{1}</a></div>';
+    var parent = "root";
+    var htmlparent = "#menuitemListData";
+    $(htmlparent).html("");
+
+    var jsonSub = nwJson(jsonmenu, "ItemParentItem", parent);
+    console.log(jsonSub);
+    for (var i = 0; i < jsonSub.length; i++) {
+
+        var link = jsonSub[i]["link"] || "";
+        var ItemID = jsonSub[i]["ItemID"] || "";
+        var ItemName = jsonSub[i]["ItemName"] || "";
+        var version = jsonSub[i]["version"] || "";
+
+        var value = $("#uInfoCompany").val();
+
+        if (link.indexOf(".aspx") >= 0) {
+            var templink = link;
+            link = "Menuitem";
+            if (link.indexOf("?") >= 0)
+                link += "&nsc=" + value;
+            else
+                link += "?nsc=" + value;
+
+            value = $("#dpAccountNoF").val();
+            link += "&nsu=" + value;
+
+            link += "&plink=" + (p8Encrypted(templink) + "").replaceAll("+", "AAGxAAG");
+            link += "&nmid=" + (p8Encrypted(ItemID) + "").replaceAll("+", "AAGxAAG");
+            link += "&ntitle=" + (p8Encrypted(ItemName) + "").replaceAll("+", "AAGxAAG");
+            link += "&nver=" + (p8Encrypted(version) + "").replaceAll("+", "AAGxAAG");
+        }
+        else {
+            if (link.indexOf("?") >= 0)
+                link += "&nsc=" + value;
+            else
+                link += "?nsc=" + value;
+
+            value = $("#dpAccountNoF").val();
+            link += "&nsu=" + value;
+            link += "&ntitle=" + (p8Encrypted(ItemName) + "").replaceAll("+", "AAGxAAG");
+            link += "&nver=" + (p8Encrypted(version) + "").replaceAll("+", "AAGxAAG");
+        }
+
+       
+       
+        var content = nw_GetMenuitemListDetailsSub(ItemID, jsonmenu);
+        if (jsonSub[i]["ItemType"] == "0") {
+            if (content != "")
+                $(htmlparent).append(String.Format(template, ItemID, ItemName, content));
+        }
+        else 
+            $(htmlparent).append(String.Format(template2, ItemID, ItemName, link));
+    }
+    fnMenuGroupTreeView();
+}
+
+
+
+function nw_GetMenuitemListDetailsSub(parent,jsonmenu) {
+    var template = '<div class="menu-grp-li" mid="mn-{0}"><div class="menu-grp-lbl">{1}</div><div class="menu-grp-ul">{2}</div></div>';
+    var template2 = '<div class="menu-grp-lbl menuitem" mid="mn-{0}" title="{1}"><a href="{2}" id="{0}" class="no-urderline">{1}</a></div>';
+    var stringcontent = "";
+
+    var jsonSub = nwJson(jsonmenu, "ItemParentItem", parent);
+    for (var i = 0; i < jsonSub.length; i++) {
+
+        var link = jsonSub[i]["link"] || "";
+        var ItemID = jsonSub[i]["ItemID"] || "";
+        var ItemName = jsonSub[i]["ItemName"] || "";
+        var version = jsonSub[i]["version"] || "";
+
+        var value = $("#uInfoCompany").val();
+
+        if (link.indexOf(".aspx") >= 0) {
+            var templink = link;
+            link = "Menuitem";
+            if (link.indexOf("?") >= 0)
+                link += "&nsc=" + value;
+            else
+                link += "?nsc=" + value;
+
+            value = $("#dpAccountNoF").val();
+            link += "&nsu=" + value;
+
+            link += "&plink=" + (p8Encrypted(templink) + "").replaceAll("+", "AAGxAAG");
+            link += "&nmid=" + (p8Encrypted(ItemID) + "").replaceAll("+", "AAGxAAG");
+            link += "&ntitle=" + (p8Encrypted(ItemName) + "").replaceAll("+", "AAGxAAG");
+            link += "&nver=" + (p8Encrypted(version) + "").replaceAll("+", "AAGxAAG");
+        }
+        else {
+            if (link.indexOf("?") >= 0)
+                link += "&nsc=" + value;
+            else
+                link += "?nsc=" + value;
+
+            value = $("#dpAccountNoF").val();
+            link += "&nsu=" + value;
+            link += "&ntitle=" + (p8Encrypted(ItemName) + "").replaceAll("+", "AAGxAAG");
+            link += "&nver=" + (p8Encrypted(version) + "").replaceAll("+", "AAGxAAG");
+        }
+        
+
+
+
+        var content = nw_GetMenuitemListDetailsSub(ItemID, jsonmenu);
+        if (jsonSub[i]["ItemType"] == "0"){
+            if (content != "")
+                stringcontent += (String.Format(template, ItemID, ItemName, content));
+        }
+            
+        else
+            stringcontent += (String.Format(template2, ItemID, ItemName, link));
+    }
+
+    return stringcontent;
+}
+
+
+
 function nw_GetMenuitemList(_crModule) {
     var jsonmenu = nwJson(jsonMainData['UAccess'], "ItemParentApplication", _crModule);
     var template = '<a href="{0}"  id="{1}" class="no-urderline"><div title="{3}" class="btn btn-modules btn-menuitem" cabv="{2}">{3}</div></a>';
@@ -120,11 +274,15 @@ function nw_GetMenuitemList(_crModule) {
             link += "&nsc=" + value;
         else
             link += "?nsc=" + value;
+
+        value = $("#dpAccountNoF").val();
+        link += "&nsu=" + value;
+
            
         $("#menucon ").append(String.Format(template, link, jsonmenu[i]["ItemID"], jsonmenu[i]["icon"], jsonmenu[i]["ItemName"]));
 
-        if ($("#overviewBoard").html() != undefined)
-            $("#overviewBoard").append(String.Format(template2, link, jsonmenu[i]["ItemID"], jsonmenu[i]["icon"], jsonmenu[i]["ItemName"]));
+        //if ($("#overviewBoard").html() != undefined)
+        //    $("#overviewBoard").append(String.Format(template2, link, jsonmenu[i]["ItemID"], jsonmenu[i]["icon"], jsonmenu[i]["ItemName"]));
 
         
     }
@@ -292,10 +450,16 @@ function nw_GetNotificationAddItem(title,message,date){
 
 function nw_ReloadCompany() {
     $("#uInfoCompany").html("");
+    var compsel = ""; var issame = false;
     for (var i = 0; i < jsonMainCompany.length; i++) {
         $("#uInfoCompany").append("<option nwvalue='" + jsonMainCompany[i]["Company"] + "' value='" + jsonMainCompany[i]["CompanyCode"] + "'>" + jsonMainCompany[i]["Description"] + "</option>");
+        if (jsonMainCompany[i]["Company"] == crComp) {
+            compsel = jsonMainCompany[i]["CompanyCode"];
+            $("#uInfoCompany").val(compsel);
+            issame = true;
+        }
     }
-    $("#uInfoCompany").val(crComp);
+    if (issame== false) $("#uInfoCompany").val(crComp);
 
     if (lnkHome == 1) {
         $("#lnkHome").text($("#uInfoCompany option:selected").text());
@@ -334,7 +498,8 @@ $(document).on("change", "#dpAccountNoF", function () {
 
 $(document).on("change", "#uInfoCompany", function () {
     nw_ChangeCompanyParam();
-    $("#dpAccountNoF").change();
+
+   // $("#dpAccountNoF").change();
     return false;
 });
 $(document).on("click", "#btnSettingsL", function () {
@@ -343,8 +508,10 @@ $(document).on("click", "#btnSettingsL", function () {
 });
 
 function nw_ChangeCompanyParam() {
-    var value = $("#uInfoCompany").val();
+    var value = $("#uInfoCompany option:Selected").val();;//$("#uInfoCompany").val();
     nk_ChangeParam("nsc", value);
+    console.log("run change company");
+    nw_ReloadPage();
 }
 
 function nw_ChangeAccount(_this) {
@@ -352,13 +519,161 @@ function nw_ChangeAccount(_this) {
     $("#dpAccountNo").val(value);
     $("#dpAccountNoF").val(value);
     nk_ChangeParam("nsu", value);
-    nw_ChangeCompanyParam();
+   // nw_ReloadPage();
+   // nw_ChangeCompanyParam();
+    console.log("run change account");
+
 
     nwParameter_Add("accountno", value);
-    func_ActionDriven('actChangeUser', false, crLnkLayout)
+    func_ActionDriven('actChangeUser', false, crLnkLayout);
     nwLoading_Start('actChangeUser', crLoadingHTML);
 }
 function nw_ReloadPage() {
     nwLoading_Start("nwChangeAccount", crLoadingHTML);
     location.reload();
+}
+
+
+$(document).on("contextmenu", "#menuitemListData a, #overviewBoard a", function (e) {
+    e.preventDefault();
+    // Get the link's URL
+    var linkUrl = $(this).attr('href');
+
+    // Position and show the custom context menu
+    $('#RightClickContextMenu').css({
+        top: e.pageY + 'px',
+        left: e.pageX + 'px',
+    }).show();
+
+    // Store the link URL in the menu for use later
+    $('#RightClickContextMenu').data('linkUrl', linkUrl);
+
+    return false;
+});
+
+//$(document).on("mousedown", "#menuitemListData a, #overviewBoard a", function (e) {
+
+//    var isvalid = true;
+//    switch (event.which) {
+//        case 1:
+//            //alert('Left Mouse button pressed.');
+
+//            break;
+//        case 2:
+//            alert('Middle Mouse button pressed.');
+//            break;
+//        case 3:
+//            //alert('Right Mouse button pressed.');
+//            //e.preventDefault();
+//            var linkUrl = $(this).attr('href');
+//            $('#RightClickContextMenu').css({
+//                top: e.pageY + 'px',
+//                left: e.pageX + 'px',
+//            }).show();
+
+//            // Store the link URL in the menu for use later
+//            $('#RightClickContextMenu').data('linkUrl', linkUrl);
+//            isvalid = false;
+//            break;
+//        default:
+//            alert('You have a strange Mouse!');
+//    }
+   
+
+//    return isvalid;
+//});
+
+
+
+$(document).on("click", "#openNewTab", function (e) {
+    var linkUrl = $('#RightClickContextMenu').data('linkUrl');
+    window.open(linkUrl, '_blank');
+    $('#RightClickContextMenu').hide();
+    return false;
+});
+
+
+$(document).on('click', function (e) {
+    // Check if the context menu is visible
+    if ($('#RightClickContextMenu').is(':visible')) {
+        $('#RightClickContextMenu').hide();
+    }
+});
+
+$(document).on('keypress', "#txt-SearchMenuItem", function (e) {
+    if (e.which == 13) {
+        nk_SearchMenu();
+        return false;
+    }
+    
+});
+
+
+function nk_SearchMenu() {
+
+    var jsonmenu = nwJson(jsonMainData['UAccess'], "ItemType", "1");
+    var jsonmenuData = [];
+    var htmlparent = "#menuitemListData";
+    var stext = $("#txt-SearchMenuItem").val();
+    $(htmlparent).html("");
+    if (stext != "") {
+        for (var i = 0; i < jsonmenu.length; i++) {
+            var isvalid = true;
+            stext = stext.toLowerCase();
+            var stextdata = stext.split(" ");
+
+            var stext2 = jsonmenu[i]["ItemName"];
+            stext2 = stext2.toLowerCase();
+            var stextdata2 = stext2.split(" ");
+
+            for (var i2 = 0; i2 < stextdata.length; i2++) {
+                if (!stextdata2.includes(stextdata[i2]))
+                    isvalid = false;
+            }
+            if (isvalid)
+                jsonmenuData.push(jsonmenu[i]);
+        }
+        var template2 = '<div class="menu-grp-lbl menuitem" mid="mn-{0}" title="{1}"><a href="{2}" id="{0}" class="no-urderline">{1}</a></div>';
+        var stringcontent = "";
+        for (var i = 0; i < jsonmenuData.length; i++) {
+            var link = jsonmenuData[i]["link"] || "";
+            var ItemID = jsonmenuData[i]["ItemID"] || "";
+            var ItemName = jsonmenuData[i]["ItemName"] || "";
+            var version = jsonmenuData[i]["version"] || "";
+
+            var value = $("#uInfoCompany").val();
+
+            if (link.indexOf(".aspx") >= 0) {
+                var templink = link;
+                link = "Menuitem";
+                if (link.indexOf("?") >= 0)
+                    link += "&nsc=" + value;
+                else
+                    link += "?nsc=" + value;
+
+                value = $("#dpAccountNoF").val();
+                link += "&nsu=" + value;
+
+                link += "&plink=" + (p8Encrypted(templink) + "").replaceAll("+", "AAGxAAG");
+                link += "&nmid=" + (p8Encrypted(ItemID) + "").replaceAll("+", "AAGxAAG");
+                link += "&ntitle=" + (p8Encrypted(ItemName) + "").replaceAll("+", "AAGxAAG");
+                link += "&nver=" + (p8Encrypted(version) + "").replaceAll("+", "AAGxAAG");
+            }
+            else {
+                if (link.indexOf("?") >= 0)
+                    link += "&nsc=" + value;
+                else
+                    link += "?nsc=" + value;
+
+                value = $("#dpAccountNoF").val();
+                link += "&nsu=" + value;
+                link += "&ntitle=" + (p8Encrypted(ItemName) + "").replaceAll("+", "AAGxAAG");
+                link += "&nver=" + (p8Encrypted(version) + "").replaceAll("+", "AAGxAAG");
+            }
+
+            stringcontent += (String.Format(template2, ItemID, ItemName, link));
+        }
+
+        $(htmlparent).html(stringcontent);
+    }
 }

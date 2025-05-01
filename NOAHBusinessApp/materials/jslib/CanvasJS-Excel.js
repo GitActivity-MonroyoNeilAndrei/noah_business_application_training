@@ -1,10 +1,11 @@
 ﻿
-/* # Canvas JS Library 1.1.2.15
+/* # Canvas JS Library 1.1.2.17a
 # Company Owner: Forecasting and Planning Technologies Inc. / Promptus8 Inc.
-# Developers : Angelo Carlo Gonzales
+# Developers : Karl Angelo Gmayo
+Angelo Carlo Gonzales
 Omar B. Credito
 # Date Created : November 2020
-# Date Modified : February 27 2024 / 03:28 AM - before: 02-15-2024
+# Date Modified : September 19 2024 / 01:44 PM - before: 07-16-2024
 
 For  NoahWeb Application and Promptus8 Modules used only. 
 
@@ -15,7 +16,7 @@ Modification of this Library is Prohibited.
 
 
 $(function () {
-    window.NOAH_SpreadCanvasExcel = { "version": "1.1.2.15" }
+    window.NOAH_SpreadCanvasExcel = { "version": "1.1.2.17a" }
     console.log("NOAH_SpreadCanvasExcel: " + window.NOAH_SpreadCanvasExcel);
 });
 
@@ -11679,7 +11680,7 @@ $JExcel = {
     var align = {
         L: "left", C: "center", R: "right", T: "top", B: "bottom", W: "wrapText"
     }
-
+   
     function componentToHex(c) {
         var hex = c.toString(16);
         return hex.length == 1 ? "0" + hex : hex;
@@ -11780,13 +11781,24 @@ $JExcel = {
 
 
 
+    //var templateSheet = '<?xml version="1.0" ?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" ' +
+    //    'xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mv="urn:schemas-microsoft-com:mac:vml" ' +
+    //    'xmlns:mx="http://schemas.microsoft.com/office/mac/excel/2008/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" ' +
+    //    'xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac" ' +
+    //    'xmlns:xm="http://schemas.microsoft.com/office/excel/2006/main">' +
+    //    '{views}{columns}' +
+    //    '<sheetData>{rows}</sheetData>{sheetProtection} {mergeCells}</worksheet>';
     var templateSheet = '<?xml version="1.0" ?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" ' +
-        'xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mv="urn:schemas-microsoft-com:mac:vml" ' +
-        'xmlns:mx="http://schemas.microsoft.com/office/mac/excel/2008/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" ' +
-        'xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac" ' +
-        'xmlns:xm="http://schemas.microsoft.com/office/excel/2006/main">' +
-        '{views}{columns}' +
-        '<sheetData>{rows}</sheetData><sheetProtection sheet="1" objects="1" scenarios="1"/> {mergeCells}</worksheet>';
+    'xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mv="urn:schemas-microsoft-com:mac:vml" ' +
+    'xmlns:mx="http://schemas.microsoft.com/office/mac/excel/2008/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" ' +
+    'xmlns:x14="http://schemas.microsoft.com/office/spreadsheetml/2009/9/main" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac" ' +
+    'xmlns:xm="http://schemas.microsoft.com/office/excel/2006/main">' +
+    '{views}{columns}' +
+    '<sheetData>{rows}</sheetData>' +
+    '{sheetProtection}' +
+    '{mergeCells}' +
+    '{dataValidations}' + // Place the <dataValidations> here
+'</worksheet>';
 
 
     // --------------------- BEGIN of generic UTILS
@@ -11832,10 +11844,19 @@ $JExcel = {
 
 
     function getAsXml(sheet) {
+        const passwordHash = sheet.sheetProtectionPassword 
+        ? generatePasswordHash(sheet.sheetProtectionPassword) 
+        : null;
+
         return templateSheet.replace('{views}', generateViews(sheet.views))
                             .replace('{columns}', generateColums(sheet.columns))
                             .replace("{rows}", generateRows(sheet.rows, sheet.mergeCells))
-                            .replace("{mergeCells}", generateMergeCells(sheet.mergeCells));
+                            .replace("{mergeCells}", generateMergeCells(sheet.mergeCells))
+                            .replace('{dataValidations}', generateDataValidations(sheet.rows))
+                            .replace("{sheetProtection}", sheet.sheetProtection === false 
+                            ? "" 
+                            : `<sheetProtection sheet="1" objects="1" scenarios="1" ${passwordHash ? `password="${passwordHash}"` : ""}/>`);
+                            //.replace("{sheetProtection}", sheet.sheetProtection == false ? "" : `<sheetProtection sheet="1" objects="1" scenarios="1"/>`);
     }
 
 
@@ -11857,11 +11878,29 @@ $JExcel = {
         return (row[x] ? row[x] : setV(row, x, {}));
     }
 
-    function setCell(cell, value, style, isstring, colspan) {
-        if (value != undefined) cell.v = value;
-        cell.isstring = isstring;
-        if (style) cell.s = style;
-        if (colspan) cell.colspan = colspan;
+    //function setCell(cell, value, style, isstring, colspan) {
+    //    if (value != undefined) cell.v = value;
+    //    cell.isstring = isstring;
+    //    if (style) cell.s = style;
+    //    if (colspan) cell.colspan = colspan;
+    //}
+    function setCell(cell, value, style, isstring, colspan, dataValidation) {
+        if (value !== undefined) cell.v = value; // Set the cell value
+        cell.isstring = isstring; // Indicate if it's a string
+        if (style) cell.s = style; // Apply the style
+        if (colspan) cell.colspan = colspan; // Apply colspan if provided
+
+        // Add data validation to the cell
+        if (dataValidation) {
+            cell.dataValidation = {
+                type: dataValidation.type || 'list', // Default type is 'list'
+                formula1: dataValidation.formula1 || '', // Formula or list of options
+                allowBlank: dataValidation.allowBlank || false, // Allow blank values
+                showErrorMessage: dataValidation.showErrorMessage || false, // Show error message on invalid input
+                errorTitle: dataValidation.errorTitle || 'Invalid Input', // Error message title
+                error: dataValidation.error || 'Please provide a valid input.' // Error message
+            };
+        }
     }
 
     function setColumn(column, value, style) {
@@ -11881,6 +11920,13 @@ $JExcel = {
         var view = { panes: [pane] };
         view.workbookViewId = pushI(this.views, view);
     }
+    function setSheetProtection(value) {
+        this.sheetProtection = value;
+    }
+    function setSheetProtectionPassword(value) {
+        this.sheetProtectionPassword = value;
+    }
+    
     // ------------------- END Sheet DATA Handling
 
 
@@ -11888,7 +11934,7 @@ $JExcel = {
         var oSheets = {
             sheets: [],
             add: function (name) {
-                var sheet = { id: this.sheets.length + 1, rId: "rId" + (3 + this.sheets.length), name: name, rows: [], columns: [], getColumn: getColumn, set: setSheet, getRow: getRow, getCell: getCell, mergeCells: [], views: [], freezePane: freezePane };
+                var sheet = { id: this.sheets.length + 1, rId: "rId" + (3 + this.sheets.length), name: name, rows: [], columns: [], getColumn: getColumn, set: setSheet, getRow: getRow, getCell: getCell, mergeCells: [], views: [], freezePane: freezePane, sheetProtection: setSheetProtection, sheetProtectionPassword: setSheetProtectionPassword };
                 return pushI(this.sheets, sheet);
             },
             get: function (index) {
@@ -11908,7 +11954,6 @@ $JExcel = {
                 if (value) this.sheets[sheet].colWidths[column] = isNaN(value) ? value.toString().toLowerCase() : value;
                 if (style) this.sheets[sheet].colStyles[column] = style;
             },
-
             toWorkBook: function () {
                 var s = '<?xml version="1.0" standalone="yes"?>' +
                     '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
@@ -12225,6 +12270,7 @@ $JExcel = {
         var s = '<row r="' + rowIndex + '" '
         if (row.ht) s = s + ' ht="' + row.ht + '" customHeight="1" ';
         if (row.style) s = s + 's="' + row.style + '" customFormat="1"';
+        if (row.hidden) s = s + 'hidden="1" ht="0" ';
         return s + ' >' + oCells.join('') + '</row>';
     }
 
@@ -12292,6 +12338,65 @@ $JExcel = {
         return s;
     }
 
+    function generateDataValidations(rows) {
+        let dataValidations = [];
+
+        // Iterate over the rows
+        for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+            const row = rows[rowIndex];
+            if (row && row.cells) {
+                // Iterate over each cell in the row
+                for (let colIndex = 0; colIndex < row.cells.length; colIndex++) {
+                    const cell = row.cells[colIndex];
+                    if (cell && cell.dataValidation) {
+                        const dv = cell.dataValidation;
+
+                        // Generate cell reference dynamically
+                        const ref = generateExcelReference(rowIndex, colIndex);
+
+                        // Ensure formula1 is correctly escaped
+                        let formula1 = dv.formula1 || '';
+                        formula1 = formula1.replace(/"/g, '&quot;'); // Escape double quotes in formula1
+
+                        // Generate XML for data validation
+                        dataValidations.push(`
+                        <dataValidation type="${dv.type}" 
+                                         allowBlank="${dv.allowBlank ? 1 : 0}" 
+                                         showErrorMessage="${dv.showErrorMessage ? 1 : 0}" 
+                                         sqref="${ref}" 
+                                         errorTitle="${dv.errorTitle}" 
+                                         error="${dv.error}">
+                            <formula1>${formula1}</formula1>
+                        </dataValidation>
+                    `);
+                    }
+                }
+            }
+        }
+        var dataValidationFinal = dataValidations.join('');
+        if (dataValidationFinal.trim() !== "") {
+            dataValidationFinal = `<dataValidations>${dataValidationFinal}</dataValidations>`;
+        }
+
+        return dataValidationFinal;
+    }
+
+    function generatePasswordHash(password) {
+        // Excel uses a simple XOR-based hashing algorithm for sheet protection passwords.
+        let hash = 0;
+        for (let i = 0; i < password.length; i++) {
+            const charCode = password.charCodeAt(i);
+            hash = ((hash >> 14) & 0x01) | ((hash << 1) & 0x7FFF);
+            hash ^= charCode;
+        }
+        return hash.toString(16).toUpperCase();
+    }
+
+    function generateExcelReference(rowIndex, colIndex) {
+        const columnLetter = String.fromCharCode(65 + colIndex); // 65 is ASCII value for 'A'
+        const rowNumber = rowIndex + 1; // Assuming rowIndex is 0-based
+        return columnLetter + rowNumber;
+    }
     function isObject(v) {
         return (v !== null && typeof v === 'object');
     }
@@ -12366,25 +12471,74 @@ $JExcel = {
             return styles.add(a);
         }
 
-        excel.set = function (s, column, row, value, style, colspan) {
-            if (isObject(s)) return this.set(s.sheet, s.column, s.row, s.value, s.style);                                        // If using Object form, expand it
-            if (!s) s = 0;                                                                                                       // Use default sheet
+        //excel.set = function (s, column, row, value, style, colspan) {
+        //    if (isObject(s)) return this.set(s.sheet, s.column, s.row, s.value, s.style);                                        // If using Object form, expand it
+        //    if (!s) s = 0;                                                                                                       // Use default sheet
+        //    s = sheets.get(s);
+        //    if (isNaN(column) && isNaN(row)) return s.set(value, style);                                                         // If this is a sheet operation
+        //    if (!isNaN(column)) {                                                                                                // If this is a column operation
+        //        if (!isNaN(row)) {
+        //            var isstring = style && styles.getStyle(style - 1).isstring;
+        //            return setCell(s.getCell(column, row), value, style, isstring, colspan);                                              // and also a ROW operation the this is a CELL operation
+        //        }
+        //        return setColumn(s.getColumn(column), value, style);                                                             // if not we confirm than this is a COLUMN operation
+        //    }
+        //    return setRow(s.getRow(row), value, style);                                                                          // If got here, thet this is a Row operation
+        //}
+        excel.set = function (s, column, row, value, style, colspan, dataValidation) {
+            if (isObject(s)) {
+                return this.set(s.sheet, s.column, s.row, s.value, s.style, undefined, s.dataValidation);
+            }
+
+            if (!s) s = 0; // Default sheet
             s = sheets.get(s);
-            if (isNaN(column) && isNaN(row)) return s.set(value, style);                                                         // If this is a sheet operation
-            if (!isNaN(column)) {                                                                                                // If this is a column operation
+
+            if (isNaN(column) && isNaN(row)) return s.set(value, style); // Sheet operation
+            if (!isNaN(column)) { // Column operation
                 if (!isNaN(row)) {
                     var isstring = style && styles.getStyle(style - 1).isstring;
-                    return setCell(s.getCell(column, row), value, style, isstring, colspan);                                              // and also a ROW operation the this is a CELL operation
+                    return setCell(s.getCell(column, row), value, style, isstring, colspan, dataValidation); // Pass dataValidation
                 }
-                return setColumn(s.getColumn(column), value, style);                                                             // if not we confirm than this is a COLUMN operation
+                return setColumn(s.getColumn(column), value, style); // Column operation
             }
-            return setRow(s.getRow(row), value, style);                                                                          // If got here, thet this is a Row operation
-        }
+            return setRow(s.getRow(row), value, style); // Row operation
+        };
 
         excel.freezePane = function (s, x, y) {
             sheets.get(s).freezePane(x, y);
         }
+        excel.sheetProtection = function (s, value) {
+            sheets.get(s).sheetProtection(value);
+        }
+        excel.sheetProtectionPassword = function (s, value) {
+            sheets.get(s).sheetProtectionPassword(value);
+        }
 
+        // Function to hide a row
+        excel.hideRow = function (sheetIndex, rowIndex) {
+            var sheet = sheets.get(sheetIndex);
+            if (!sheet.rows) {
+                sheet.rows = {};
+            }
+            if (!sheet.rows[rowIndex]) {
+                sheet.rows[rowIndex] = {};
+            }
+            sheet.rows[rowIndex].hidden = true;
+        };
+        excel.setRowHeight = function (sheetIndex, rowIndex, height) {
+            var sheet = sheets.get(sheetIndex);
+            if (!sheet.rows[rowIndex]) sheet.rows[rowIndex] = {};
+            sheet.rows[rowIndex].ht = height; // Set the height
+
+            //var sheet = sheets.get(sheetIndex);
+            //if (!sheet.rows) {
+            //    sheet.rows = {};
+            //}
+            //if (!sheet.rows[rowIndex]) {
+            //    sheet.rows[rowIndex] = {};
+            //}
+            //sheet.rows[rowIndex].ht = height;
+        };
         excel.generate = function (filename) {
             CombineStyles(sheets.sheets, styles);
             var zip = new JSZip();                                                                              // Create a ZIP file
@@ -12857,70 +13011,370 @@ $(function () {
     p8Spread_JSExport = true;
 });
 
+//function p8Spread_Export(msbook, fileName) {
+//    //dtExport = dtExport[0]
+//    var startRow = 5;
+//    var dataVal = "";
+//    var SheetNames = msbook.GetSheets();// Object.keys(dtExport);
+//    // Ensure sheet names do not exceed 31 characters
+//    for (var i = 0; i < SheetNames.length; i++) {
+//        // SheetNames[i] = SheetNames[i].replaceAll("&", "&amp;")
+//        // Replace forbidden characters with a space or underscore
+//        SheetNames[i] = SheetNames[i].replace(/[:\/\\\?\*\[\]]/g, ' ');
+//        if (SheetNames[i].length > 31) {
+//            SheetNames[i] = SheetNames[i].substring(0, 31);
+//        }
+//        SheetNames[i] = SheetNames[i].replaceAll("&", "&amp;")
+//    }
+
+
+//    var hdrNames = [];
+//    var excel = $JExcel.new("Arial 10 #333333");
+//    var formula = "";
+//    excel.set({ sheet: 0, value: SheetNames[0] });
+//    for (var i = 1; i < SheetNames.length; i++) {
+//        excel.addSheet(SheetNames[i]);
+//    }
+
+//    var rowadd = 0;
+
+
+//    for (var isheet = 0; isheet < SheetNames.length; isheet++) {
+//        var rowcount = msbook.Sheet[isheet].Data.length;
+//        var colcount = msbook.Sheet[isheet].ColumnConfig.length;
+//        //karl edit
+//        var rowexporthide = "";
+//        var colexporthide = "";
+//        try {
+//            var exportList = nwJson(msbook.Sheet[isheet].exportList, "name", $("#cmbnwExport").val(), false);
+//            if (exportList.length > 0) {
+//                rowexporthide = exportList[0].rowexporthide
+//                colexporthide = exportList[0].colexporthide
+//            }
+//        } catch (ex) { }
+//        rowadd = 0;
+//        if (msbook.Sheet[isheet].exportColumn) rowadd = 1;
+
+//        for (var irow = 0 - rowadd; irow < rowcount; irow++) {
+
+//            for (var icol = 0; icol < colcount; icol++) {
+
+//                if (irow == -1) {
+//                    var formats = p8Spread_ExportGetFormatHeader(excel, msbook.Sheet[isheet]);
+//                    excel.set(isheet, icol, 0, msbook.Sheet[isheet].ColumnName(icol), formats, undefined);
+//                    continue;
+//                }
+//                var formats = p8Spread_ExportGetFormat(excel, msbook.Sheet[isheet], icol, irow);
+//                //dataVal = msbook.Sheet[isheet].GetValue(icol, irow) + "";
+//                var dataVal = "";
+//                try { dataVal = msbook.Sheet[isheet].Data[irow][p8_NumberToCell(icol + 1)].value; } catch (ex) { }
+//                if (dataVal == "null") { dataVal = "" }
+//                var formula = "";
+//                try { formula = msbook.Sheet[isheet].Data[irow][p8_NumberToCell(icol + 1)].formula; } catch (ex) { }
+//                //formula = msbook.Sheet[isheet].GetFormula(icol, irow) + "";
+//                //karl edit 03/2024
+//                datatype = msbook.Sheet[isheet].GetDataType(icol, irow) + "";
+//                dataVal = (dataVal) + "";
+//                formula = (formula) + "";
+//                //karl edit 03/2024
+//                datatype = (datatype) + "";
+//                if (formula.startsWith('=')) {
+
+//                    if (msbook.Sheet[isheet].exportColumn) {
+//                        formula = _sfAdjustFormula(-1, -1, formula, 0, 1, Spread_ALLCOL, -1);
+//                        formula = _sfp8exportescapeFormula(formula); //formula.replaceAll("&", "&amp;")
+//                        excel.set(isheet, icol, irow + rowadd, formula, formats, undefined);
+//                        //excel.set(isheet, icol, irow + rowadd, dataVal, formats, undefined);
+//                    } else {
+//                        formula = _sfp8exportescapeFormula(formula); //formula = formula.replaceAll("&","&amp;")
+//                        excel.set(isheet, icol, irow + rowadd, formula, formats, undefined);
+//                    }
+
+//                    //excel.set(isheet, icol, irow , formula, formats, undefined);
+//                }
+//                else {
+//                    //karl edit 03/2024
+//                    if (datatype == "currency") {
+//                        dataVal = dataVal.replaceAll(",", "");
+//                    }
+//                    //else if (formats == "4") {
+//                    //    dataVal = "'" + dataVal;  // Prefix with a single quote to retain leading zero in Excel
+//                    //}
+//                    excel.set(isheet, icol, irow + rowadd, dataVal, formats, undefined);
+                   
+//                }
+//            }
+
+//            // hide
+//            if (rowexporthide != "") {
+//                var isRowExist = _sfisRowInExportHide(rowexporthide, irow);
+//                if (isRowExist) {
+//                    excel.hideRow(isheet, irow + rowadd - 1);
+//                    //excel.set(isheet, undefined, irow + rowadd - 1, 0);
+//                }
+//            }
+//        }
+//        for (var icol = 0; icol < colcount; icol++) {
+//            if (colexporthide != "") {
+//                var isColExist = _sfisColInExportHide(colexporthide, icol);
+//                if (isColExist) {
+//                    colwidth = 0;
+//                } else {
+//                    colwidth = msbook.Sheet[isheet].GetColumnWidth(icol) / 5.3
+//                }
+//            } else {
+//                    colwidth = msbook.Sheet[isheet].GetColumnWidth(icol) / 5.3
+//            }
+//            excel.set(isheet, icol, undefined, colwidth);
+//        }
+//        //karl edit 05/2024
+//        var FreezeCol = msbook.Sheet[isheet].FreezeCol;
+//        if (FreezeCol < 0) { FreezeCol = 0; }
+//        var FreezeRow = msbook.Sheet[isheet].FreezeRow;
+//        if (FreezeRow < 0) { FreezeRow = 0; }
+//        excel.freezePane(isheet, FreezeCol, FreezeRow + 1);
+//        var MergeCnt = 0;
+//        try { MergeCnt = msbook.Sheet[isheet].mergeList.length; } catch (ex) { }
+//        if (MergeCnt > 0) {
+//            excel.set(isheet, 0, 0, undefined, undefined, msbook.Sheet[isheet].mergeList);
+//        }
+//        excel.sheetProtection(isheet, msbook.Sheet[isheet].excelSheetProtection);
+        
+//    }
+//    //msbook.ExcelSheetProtection
+//    excel.generate(fileName + ".xlsx");
+//}
+
+
 function p8Spread_Export(msbook, fileName) {
-    //dtExport = dtExport[0]
-    var startRow = 5;
-    var dataVal = "";
-    var SheetNames = msbook.GetSheets();// Object.keys(dtExport);
-    var hdrNames = [];
-    var excel = $JExcel.new("Arial 10 #333333");
-    var formula = "";
-    excel.set({ sheet: 0, value: SheetNames[0] });
-    for (var i = 1; i < SheetNames.length; i++) {
-        excel.addSheet(SheetNames[i]);
+    const BATCH_SIZE = 500; // Number of rows per batch
+    const TIMEOUT_DELAY = 50; // Delay in ms between batches
+    let SheetNames = msbook.GetSheets();
+
+    // Ensure sheet names are sanitized
+    SheetNames = SheetNames.map(sheetName => {
+        sheetName = sheetName.replace(/[:\/\\\?\*\[\]]/g, ' '); // Replace forbidden characters
+        sheetName = sheetName.length > 31 ? sheetName.substring(0, 31) : sheetName; // Truncate if too long
+        return sheetName.replaceAll("&", "&amp;");
+    });
+
+    const excel = $JExcel.new("Arial 10 #333333");
+    SheetNames.forEach((name, index) => {
+        index === 0 ? excel.set({ sheet: 0, value: name }) : excel.addSheet(name);
+    });
+
+    let totalSheets = SheetNames.length;
+    let currentSheet = 0;
+
+    // Function to display progress
+    function updateProgress(sheetIndex, rowIndex, totalRows) {
+        let sheetProgress = (rowIndex / totalRows) * 100; // Progress for the current sheet
+        let overallProgress = ((sheetIndex + rowIndex / totalRows) / totalSheets) * 100; // Overall progress
+        try{
+            $(".nwShowPercentage").find(".nwLoadingInfo").text(`Loading ${overallProgress.toFixed(2)}%`)
+        }catch(ex){}
+        try{
+            $(".nwShowPercentage").find(".ldfx").find(".txt").text(`Loading ${overallProgress.toFixed(2)}%`)
+        }catch(ex){}
+        //console.log(`Progress: ${overallProgress.toFixed(2)}%`);
+        // Update a progress bar if you have one in your UI
+        // Example:
+        // document.getElementById("progressBar").style.width = `${overallProgress}%`;
     }
 
+    // Process sheets one by one
+    function p8Spread_ProcessSheet(isheet) {
+        if (isheet >= SheetNames.length) {
+            // All sheets processed; generate the file
+            excel.generate(fileName + ".xlsx");
+            console.log("Export Complete: 100%");
+            nwLoading_End("nwp8spread_export");
+            return;
+        }
 
-
-    var rowadd = 0;
-
-
-    for (var isheet = 0; isheet < SheetNames.length; isheet++) {
-        var rowcount = msbook.Sheet[isheet].Data.length;
-        var colcount = msbook.Sheet[isheet].ColumnConfig.length;
-
-        rowadd = 0;
-        if (msbook.Sheet[isheet].exportColumn) rowadd = 1;
-
-        for (var irow = 0 - rowadd; irow < rowcount ; irow++) {
-            for (var icol = 0; icol < colcount; icol++) {
-
-                if (irow == -1) {
-                    var formats = p8Spread_ExportGetFormatHeader(excel, msbook.Sheet[isheet]);
-                    excel.set(isheet, icol, 0, msbook.Sheet[isheet].ColumnName(icol), formats, undefined);
-                    continue;
+        currentSheet = isheet;
+        const sheet = msbook.Sheet[isheet];
+        const rowcount = sheet.Data.length;
+        const colcount = sheet.ColumnConfig.length;
+        let rowexporthide = "";
+        let colexporthide = "";
+        let rowadd = sheet.exportColumn ? 1 : 0;
+        let excelRowAutoResize = sheet.excelRowAutoResize;
+        try {
+            var exportList = [];
+            if (sheet.exportList.length > 0) {
+                if (sheet.exportList.length == 1) {
+                    exportList = sheet.exportList;
+                } else {
+                    exportList = nwJson(sheet.exportList, "name", $("#cmbnwExport").val(), false);
                 }
-
-                var formats = p8Spread_ExportGetFormat(excel, msbook.Sheet[isheet], icol, irow);
-                dataVal = msbook.Sheet[isheet].GetValue(icol, irow) + "";
-                formula = msbook.Sheet[isheet].GetFormula(icol, irow) + "";
-                dataVal = (dataVal) + "";
-                formula = (formula) + "";
-                if (formula.startsWith('=')) {
-
-                    if (msbook.Sheet[isheet].exportColumn) {
-                        excel.set(isheet, icol, irow + rowadd, dataVal, formats, undefined);
-                    } else {
-                        excel.set(isheet, icol, irow + rowadd, formula, formats, undefined);
-                    }
-
-                    //excel.set(isheet, icol, irow , formula, formats, undefined);
-                }
-                else {
-                    excel.set(isheet, icol, irow + rowadd, dataVal, formats, undefined);
+                if (exportList.length > 0) {
+                    rowexporthide = exportList[0].rowexporthide;
+                    colexporthide = exportList[0].colexporthide;
                 }
             }
-        }
-        for (var icol = 0; icol < colcount; icol++) {
+        } catch (ex) { }
 
-            excel.set(isheet, icol, undefined, msbook.Sheet[isheet].GetColumnWidth(icol) / 5.3);
+        let irow = -rowadd;
+
+        // Batch processing rows
+        function p8Spread_ProcessRowsBatch() {
+            const batchEnd = Math.min(irow + BATCH_SIZE, rowcount);
+            for (; irow < batchEnd; irow++) {
+                for (let icol = 0; icol < colcount; icol++) {
+                    let formats = null;
+                    let dataVal = "";
+                    let formula = "";
+                    let datatype = "";
+
+                    if (irow === -1) {
+                        // Header row
+                        formats = p8Spread_ExportGetFormatHeader(excel, sheet);
+                        excel.set(isheet, icol, 0, sheet.ColumnName(icol), formats, undefined);
+                        continue;
+                    }
+
+                    formats = p8Spread_ExportGetFormat(excel, sheet, icol, irow);
+                    try { dataVal = sheet.Data[irow][p8_NumberToCell(icol + 1)].value || ""; } catch (ex) { }
+                    try { formula = sheet.Data[irow][p8_NumberToCell(icol + 1)].formula || ""; } catch (ex) { }
+                    try { datatype = sheet.GetDataType(icol, irow) || ""; } catch (ex) { }
+
+                    dataVal = dataVal === "null" ? "" : dataVal;
+                    formula = formula.startsWith("=") ? formula : "";
+                    datatype = datatype || "";
+
+                    if (formula) {
+                                            if (msbook.Sheet[isheet].exportColumn) {
+                                                formula = _sfAdjustFormula(-1, -1, formula, 0, 1, Spread_ALLCOL, -1);
+                                                formula = _sfp8exportescapeFormula(formula); //formula.replaceAll("&", "&amp;")
+                                                excel.set(isheet, icol, irow + rowadd, formula, formats, undefined);
+                                                //excel.set(isheet, icol, irow + rowadd, dataVal, formats, undefined);
+                                            } else {
+                                                formula = _sfp8exportescapeFormula(formula); //formula = formula.replaceAll("&","&amp;")
+                                                excel.set(isheet, icol, irow + rowadd, formula, formats, undefined);
+                                            }
+                        //formula = _sfAdjustFormula(-1, -1, formula, 0, 1, Spread_ALLCOL, -1);
+                        //formula = _sfp8exportescapeFormula(formula);
+                        //excel.set(isheet, icol, irow + rowadd, formula, formats, undefined);
+                    } else {
+                        if (datatype === "currency") {
+                            try { dataVal = dataVal.replaceAll(",", ""); } catch (ex) { } }
+                        if (datatype === "percent") {
+                            //try { dataVal = dataVal.replaceAll(",", ""); } catch (ex) { }
+                            try { 
+                                if(isNaN(parseFloat((dataVal + "").replaceAll(",", "")))){}else{dataVal = parseFloat(dataVal.replaceAll(",", "")) / 100;} 
+                            } catch (ex) { }
+                        }
+
+                     
+                        //else{
+                            excel.set(isheet, icol, irow + rowadd, dataVal, formats, undefined);
+                        //}
+                            //if (icol === 0 &&  (irow + rowadd) == 2 ) { // Column index starts from 0
+                            //    //addDataValidation(excel, isheet, icol, irow + rowadd, 'list', '"Option1,Option2,Option3"');
+                            //    const type = 'list';
+                            //    const formula1 = '"Option1,Option2,Option3"';
+
+                            //    excel.set(isheet, icol, irow + rowadd, undefined, undefined, undefined, {
+                            //        type: type, // 'list' type
+                            //        formula1: formula1, // Comma-separated options
+                            //        allowBlank: true, // Allow blank values
+                            //        showErrorMessage: true,
+                            //        errorTitle: "Invalid Input",
+                            //        error: "Please select a valid option."
+                            //    });
+                            //}
+                       
+                    }
+                }
+
+             
+                // Hide rows
+                if (rowexporthide && _sfisRowInExportHide(rowexporthide, irow + rowadd + 1)) {
+                    excel.hideRow(isheet, irow + rowadd);
+                } else {
+                    if(!excelRowAutoResize){
+                        var ht = def_Height;
+                        try { ht = sheet.Data[irow].aagrowHeight || def_Height; } catch (ex) { }
+                        ht -= 7;
+                        excel.setRowHeight(isheet, irow + rowadd, ht);
+                    }
+                }
+
+
+            }
+
+            // Update progress
+            updateProgress(currentSheet, irow, rowcount);
+
+            if (irow < rowcount) {
+                nwLoading_Start("nwp8spread_export", crLoadingHTML,"nwShowPercentage");
+                setTimeout(p8Spread_ProcessRowsBatch, TIMEOUT_DELAY); // Process the next batch
+            } else {
+                // Process column widths and merge info after all rows
+                p8Spread_ProcessColumnAndMerge();
+            }
         }
 
-        excel.freezePane(isheet, msbook.Sheet[isheet].FreezeCol, msbook.Sheet[isheet].FreezeRow + 1);
-        excel.set(isheet, 0, 1, undefined, undefined, msbook.Sheet[isheet].mergeList);
-    }
-    excel.generate(fileName + ".xlsx");
+        function p8Spread_ProcessColumnAndMerge() {
+            for (let icol = 0; icol < colcount; icol++) {
+                const colwidth = colexporthide && _sfisColInExportHide(colexporthide, icol)
+                    ? 0
+                    : sheet.GetColumnWidth(icol) / 5.3;
+                excel.set(isheet, icol, undefined, colwidth);
+            }
+
+            // Freeze panes
+            const freezeCol = Math.max(sheet.FreezeCol || 0, 0);
+            const freezeRow = Math.max(sheet.FreezeRow || 0, 0);
+            excel.freezePane(isheet, freezeCol, freezeRow + 1);
+
+            // Merge list
+            try{
+                if (sheet.mergeList.length > 0) {
+                    excel.set(isheet, 0, 0, undefined, undefined, sheet.mergeList);
+                }
+            }catch(ex){}
+            excel.sheetProtection(isheet, msbook.Sheet[isheet].excelSheetProtection);
+            excel.sheetProtectionPassword(isheet, msbook.Sheet[isheet].excelSheetProtectionPassword);
+            // Process dataValidationList
+            try {
+                if (sheet.dataValidationList.length > 0) {
+                    sheet.dataValidationList.forEach(validation => {
+                        const { col, row, type, option } = validation;
+                        //console.log("col:"+col)
+                        //console.log("row:"+row)
+                        excel.set(isheet, col, row, undefined, undefined, undefined, {
+                            type: type, // 'list' type
+                            formula1: option.formula1 || '', // Comma-separated options
+                            allowBlank: option.allowBlank || true, // Allow blank values
+                            showErrorMessage: option.showErrorMessage || true,
+                            errorTitle: option.errorTitle || "",
+                            error: option.error || ""
+                        });
+                    });
+                }
+            } catch (ex) { }
+
+        // Proceed to the next sheet
+        p8Spread_ProcessSheet(isheet + 1);
+        }
+
+    // Start processing rows for the current sheet
+    p8Spread_ProcessRowsBatch();
 }
+
+// Start processing sheets
+p8Spread_ProcessSheet(0);
+}
+
+
+
+
+
+
+
+
 function p8Spread_ExportGetFormatHeader(excel, activesheet) {
     var bgcolor = wordToHex["gainsboro"];
     var txtColor = wordToHex["black"];
@@ -12943,8 +13397,10 @@ function p8Spread_ExportGetFormatHeader(excel, activesheet) {
     return formats;
 }
 function p8Spread_ExportGetFormat(excel, activesheet, icol, irow) {
-    var bgcolor = wordToHex[activesheet.GetBackground(icol, irow).toLowerCase()];
-    var txtColor = wordToHex[activesheet.GetTextColor(icol, irow).toLowerCase()];
+    var getbgcolor = activesheet.GetBackground(icol, irow).toLowerCase();
+    var bgcolor = wordToHex[getbgcolor];
+    var gettextcolor = activesheet.GetTextColor(icol, irow).toLowerCase();
+    var txtColor = wordToHex[gettextcolor];
     var datatype = activesheet.GetDataType(icol, irow).toLowerCase();
     var Precision = activesheet.GetPrecision(icol, irow);
     var fontBold = activesheet.GetBold(icol, irow) != false && activesheet.GetBold(icol, irow) != undefined ? (activesheet.GetBold(icol, irow) == true ? 'B' : activesheet.GetBold(icol, irow).toUpperCase().substring(0, 1)) : '';
@@ -12976,85 +13432,260 @@ function p8Spread_ExportGetFormat(excel, activesheet, icol, irow) {
     }
     var formats;
 
+    //var borders = (
+    //              (BorderWidth.borderWidthLeft.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleLeft + ' ' + (wordToHex[BorderColor.borderColorLeft] == undefined ? "none " : wordToHex[BorderColor.borderColorLeft]))) + ',' +
+    //              (BorderWidth.borderWidthRight.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleRight + ' ' + (wordToHex[BorderColor.borderColorRight] == undefined ? "none " : wordToHex[BorderColor.borderColorRight]))) + ',' +
+    //              (BorderWidth.borderWidthTop.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleTop + ' ' + (wordToHex[BorderColor.borderColorTop] == undefined ? "none " : wordToHex[BorderColor.borderColorTop]))) + ',' +
+    //              (BorderWidth.borderWidthBottom.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleBottom + ' ' + (wordToHex[BorderColor.borderColorBottom] == undefined ? "none " : wordToHex[BorderColor.borderColorBottom])))
+    //             ).toLowerCase().replaceAll('solid', 'thin');
     var borders = (
-                  (BorderWidth.borderWidthLeft.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleLeft + ' ' + (wordToHex[BorderColor.borderColorLeft] == undefined ? "none " : wordToHex[BorderColor.borderColorLeft]))) + ',' +
-                  (BorderWidth.borderWidthRight.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleRight + ' ' + (wordToHex[BorderColor.borderColorRight] == undefined ? "none " : wordToHex[BorderColor.borderColorRight]))) + ',' +
-                  (BorderWidth.borderWidthTop.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleTop + ' ' + (wordToHex[BorderColor.borderColorTop] == undefined ? "none " : wordToHex[BorderColor.borderColorTop]))) + ',' +
-                  (BorderWidth.borderWidthBottom.toLowerCase() == 'none' ? 'none ' : (BorderStyle.borderStyleBottom + ' ' + (wordToHex[BorderColor.borderColorBottom] == undefined ? "none " : wordToHex[BorderColor.borderColorBottom])))
-                 ).toLowerCase().replaceAll('solid', 'thin');
+
+        (BorderWidth.borderWidthLeft.toLowerCase() == 'none' || BorderColor.borderColorLeft.toLowerCase() == 'transparent' ? 'none ' : (BorderStyle.borderStyleLeft + ' ' + (wordToHex[BorderColor.borderColorLeft] == undefined ? isHexColor(BorderColor.borderColorLeft) ? BorderColor.borderColorLeft : "none " : wordToHex[BorderColor.borderColorLeft]))) + ',' +
+
+        (BorderWidth.borderWidthRight.toLowerCase() == 'none' || BorderColor.borderColorRight.toLowerCase() == 'transparent' ? 'none ' : (BorderStyle.borderStyleRight + ' ' + (wordToHex[BorderColor.borderColorRight] == undefined ? isHexColor(BorderColor.borderColorRight) ? BorderColor.borderColorRight : "none " : wordToHex[BorderColor.borderColorRight]))) + ',' +
+
+        (BorderWidth.borderWidthTop.toLowerCase() == 'none' || BorderColor.borderColorTop.toLowerCase() == 'transparent' ? 'none ' : (BorderStyle.borderStyleTop + ' ' + (wordToHex[BorderColor.borderColorTop] == undefined ? isHexColor(BorderColor.borderColorTop) ? BorderColor.borderColorTop : "none " : wordToHex[BorderColor.borderColorTop]))) + ',' +
+
+        (BorderWidth.borderWidthBottom.toLowerCase() == 'none' || BorderColor.borderColorBottom.toLowerCase() == 'transparent' ? 'none ' : (BorderStyle.borderStyleBottom + ' ' + (wordToHex[BorderColor.borderColorBottom] == undefined ? isHexColor(BorderColor.borderColorBottom) ? BorderColor.borderColorBottom : "none " : wordToHex[BorderColor.borderColorBottom])))
+
+    ).toLowerCase().replaceAll('solid', 'thin');
+
+    isstring = undefined;
+    try {
+       // var value = activesheet.GetValue(icol, irow);
+        var value = activesheet.Data[irow][p8_NumberToCell(icol + 1)].value;
+        if (value.startsWith("0") && format === "General") {
+            format = '@';  // Set format to text
+            isstring = true;
+        } else if (/^\d+$/.test(value) && (datatype == "text" || datatype == "") && format === "General") {
+            format = '@';  // Set format to text
+            isstring = true;
+        }
+    }catch(ex){}
 
     if (format == "General") {
         formats = excel.addStyle({
             //border: "thin,thin,thin,thin #000000",
-            font: activesheet.GetFontFamily(icol, irow) + ' ' + activesheet.GetFontSize(icol, irow) + ' ' + (txtColor == undefined ? activesheet.GetTextColor(icol, irow) : txtColor) + ' ' + fontBold + ' ' + fontUnderline + ' ' + fontItalic,
+            font: activesheet.GetFontFamily(icol, irow) + ' ' + activesheet.GetFontSize(icol, irow) + ' ' + (txtColor == undefined ? gettextcolor : txtColor) + ' ' + fontBold + ' ' + fontUnderline + ' ' + fontItalic,
             align: activesheet.GetTextAlign(icol, irow).substring(0, 1).toUpperCase() + ' C' + (activesheet.AutoWrap ? ' W' : ''),
-            fill: (bgcolor == undefined ? activesheet.GetBackground(icol, irow) : bgcolor),
+            fill: (bgcolor == undefined ? getbgcolor : bgcolor),
             format: "General",
             border: borders
         });
     } else {
         formats = excel.addStyle({
             //border: "thin,thin,thin,thin #000000",
-            font: activesheet.GetFontFamily(icol, irow) + ' ' + activesheet.GetFontSize(icol, irow) + ' ' + (txtColor == undefined ? activesheet.GetTextColor(icol, irow) : txtColor) + ' ' + fontBold + ' ' + fontUnderline + ' ' + fontItalic,
+            font: activesheet.GetFontFamily(icol, irow) + ' ' + activesheet.GetFontSize(icol, irow) + ' ' + (txtColor == undefined ? gettextcolor : txtColor) + ' ' + fontBold + ' ' + fontUnderline + ' ' + fontItalic,
             align: activesheet.GetTextAlign(icol, irow).substring(0, 1).toUpperCase() + ' C' + (activesheet.AutoWrap ? ' W' : ''),
-            fill: (bgcolor == undefined ? activesheet.GetBackground(icol, irow) : bgcolor),
+            fill: (bgcolor == undefined ? getbgcolor : bgcolor),
             format: format,
-            border: borders
+            border: borders,
+            isstring: isstring
         });
     }
 
     return formats;
 }
 
-function p8Spread_ExportCSV(msbook, fileName) {
-    var final_filename
-    fileName = fileName.replace(".csv");
+//function p8Spread_ExportCSV(msbook, fileName) {
+//    var final_filename
+//    fileName = fileName.replace(".csv");
 
-    for (var isheet = 0; isheet < msbook.Sheet.length; isheet++) {
-        if (msbook.Sheet.length <= 1) fileName = fileName + ".csv";
-        else fileName = fileName + "_" + (isheet + 1) + ".csv";
+//    for (var isheet = 0; isheet < msbook.Sheet.length; isheet++) {
+//        if (msbook.Sheet.length <= 1) fileName = fileName + ".csv";
+//        else fileName = fileName + "_" + (isheet + 1) + ".csv";
 
 
 
-        var rowcount = msbook.Sheet[isheet].Data.length;
-        var colcount = msbook.Sheet[isheet].ColumnConfig.length;
-        var data = [];
+//        var rowcount = msbook.Sheet[isheet].Data.length;
+//        var colcount = msbook.Sheet[isheet].ColumnConfig.length;
+//        var data = [];
 
-        var datacolumnS = [];
+//        var datacolumnS = [];
 
-        var ColumnHeaderIndex = 0;
-        try{
-            ColumnHeaderIndex = msbook.Sheet[isheet].ColumnHeaderIndex;
-        }catch(err){}
-        if (ColumnHeaderIndex <= 0) {
-            for (var icol = 0; icol < colcount; icol++) {
-                if (msbook.Sheet[isheet].ColumnWidth(icol) <= 0) continue;
-                dataVal = msbook.Sheet[isheet].ColumnName(icol);
-                datacolumnS.push(dataVal);
-            }
-            data.push(datacolumnS);
-        }
+//        var ColumnHeaderIndex = 0;
+//        try{
+//            ColumnHeaderIndex = msbook.Sheet[isheet].ColumnHeaderIndex;
+//        } catch (err) { }
+//        //karl edit 03/2024
+//        if (ColumnHeaderIndex >= 0) {
+//        //if (ColumnHeaderIndex <= 0) {
+//            for (var icol = 0; icol < colcount; icol++) {
+//                if (msbook.Sheet[isheet].ColumnWidth(icol) <= 0) continue;
+//                dataVal = msbook.Sheet[isheet].ColumnName(icol);
+//                datacolumnS.push(dataVal);
+//            }
+//            data.push(datacolumnS);
+//        }
         
+//        //karl edit
+//        var rowexporthide = "";
+//        var colexporthide = "";
+//        try {
+//            var exportList = nwJson(msbook.Sheet[isheet].exportList, "name", $("#cmbnwExport").val(), false);
+//            if (exportList.length > 0) {
+//                rowexporthide = exportList[0].rowexporthide
+//                colexporthide = exportList[0].colexporthide
+//            }
+//        } catch (ex) { }
+
+
+//        for (var irow = 0; irow < rowcount; irow++) {
+//            // hide
+//            if (rowexporthide != "") {
+//                var isRowExist = _sfisRowInExportHide(rowexporthide, irow);
+//                if (isRowExist) {
+//                    continue;
+//                }
+//            }
+//            var datacolumn = [];
+//            for (var icol = 0; icol < colcount; icol++) {
+//                if (msbook.Sheet[isheet].ColumnWidth(icol) <= 0) continue;
+//                if (colexporthide != "") {
+//                    var isColExist = _sfisColInExportHide(colexporthide, icol);
+//                    if (isColExist) {
+//                        continue;
+//                    }
+//                }
+//                dataVal = msbook.Sheet[isheet].GetText(icol, irow);
+//                //karl edit 03/2024
+//                if (dataVal == undefined || dataVal == "") {
+//                    dataVal = msbook.Sheet[isheet].GetValue(icol, irow);
+//                }
+//                datacolumn.push(dataVal);
+//            }
+//            data.push(datacolumn);
+//        }
 
 
 
-        for (var irow = 0; irow < rowcount; irow++) {
-            var datacolumn = [];
-            for (var icol = 0; icol < colcount; icol++) {
-                if (msbook.Sheet[isheet].ColumnWidth(icol) <= 0) continue;
+//        p8Spread_ExportCSVDetails(data, fileName);
+//    }
 
-                dataVal = msbook.Sheet[isheet].GetText(icol, irow);
+//}
+
+function p8Spread_ExportCSV(msbook, fileName) {
+    // Ensure the file name does not include ".csv"
+    fileName = fileName.replace(".csv", "");
+
+    const BATCH_SIZE = 1000; // Number of rows per batch
+    const TIMEOUT_DELAY = 50; // Delay in ms between batches
+    const totalSheets = msbook.Sheet.length;
+    let currentSheet = 0;
+
+    // Function to update progress
+    function updateProgress(sheetIndex, rowIndex, totalRows) {
+        const sheetProgress = (rowIndex / totalRows) * 100; // Current sheet progress
+        const overallProgress = ((sheetIndex + rowIndex / totalRows) / totalSheets) * 100; // Overall progress
+        try{
+            $(".nwShowPercentage").find(".nwLoadingInfo").text(`Loading ${overallProgress.toFixed(2)}%`)
+        }catch(ex){}
+        try{
+            $(".nwShowPercentage").find(".ldfx").find(".txt").text(`Loading ${overallProgress.toFixed(2)}%`)
+        }catch(ex){}
+    }
+
+    // Function to process the rows in batches
+    function processBatch(isheet, startRow, totalRows, data) {
+        const sheet = msbook.Sheet[isheet];
+        const colcount = sheet.ColumnConfig.length;
+        const rowcount = sheet.Data.length;
+
+        let rowexporthide = "";
+        let colexporthide = "";
+        try {
+            var exportList = [];
+            if (sheet.exportList.length > 0) {
+                if (sheet.exportList.length == 1) {
+                    exportList = sheet.exportList;
+                } else {
+                    exportList = nwJson(sheet.exportList, "name", $("#cmbnwExport").val(), false);
+                }
+                if (exportList.length > 0) {
+                    rowexporthide = exportList[0].rowexporthide;
+                    colexporthide = exportList[0].colexporthide;
+                }
+            }
+        } catch (ex) { }
+
+        for (let irow = startRow; irow < Math.min(startRow + BATCH_SIZE, rowcount); irow++) {
+            // Skip rows if they are in the hidden list
+            if (rowexporthide && _sfisRowInExportHide(rowexporthide, irow)) continue;
+
+            const datacolumn = [];
+            for (let icol = 0; icol < colcount; icol++) {
+                // Skip columns if their width is zero or in the hidden list
+                if (sheet.ColumnWidth(icol) <= 0) continue;
+                if (colexporthide && _sfisColInExportHide(colexporthide, icol)) continue;
+
+                let dataVal = sheet.GetText(icol, irow);
+                if (!dataVal) {
+                    dataVal = sheet.GetValue(icol, irow);
+                }
                 datacolumn.push(dataVal);
             }
             data.push(datacolumn);
+
+            // Update progress after each row
+            updateProgress(isheet, irow + 1, rowcount);
         }
 
+        // If there are more rows, process the next batch
+        if (startRow + BATCH_SIZE < totalRows) {
+            nwLoading_Start("nwp8spread_export", crLoadingHTML,"nwShowPercentage");
+            setTimeout(() => processBatch(isheet, startRow + BATCH_SIZE, totalRows, data), TIMEOUT_DELAY);
+        } else {
+            var filenametemp = fileName;
+            //if(sheet.ExportCSVFileName != "" && sheet.ExportCSVFileName != undefined){
+            //    filenametemp = sheet.ExportCSVFileName;
+            //}
+            // Once all rows are processed, export the data to CSV
+            filenametemp = filenametemp + ".csv" 
 
-
-        p8Spread_ExportCSVDetails(data, fileName);
+            p8Spread_ExportCSVDetails(data, filenametemp);
+            nwLoading_End("nwp8spread_export");
+        }
     }
 
+    // Process each sheet in the workbook
+    for (let isheet = 0; isheet < totalSheets; isheet++) {
+        currentSheet = isheet;
+
+        // Update the file name with sheet index if multiple sheets
+        const currentFileName = totalSheets > 1 
+            ? `${fileName}_${isheet + 1}.csv` 
+            : `${fileName}.csv`;
+
+        const sheet = msbook.Sheet[isheet];
+        const rowcount = sheet.Data.length;
+
+        // Prepare data for CSV export
+        const data = [];
+        const datacolumnS = [];
+
+        let ColumnHeaderIndex = 0;
+        try {
+            ColumnHeaderIndex = sheet.ColumnHeaderIndex;
+        } catch (err) { }
+
+        if (ColumnHeaderIndex >= 0) {
+            for (let icol = 0; icol < sheet.ColumnConfig.length; icol++) {
+                if (sheet.ColumnWidth(icol) > 0) {
+                    const dataVal = sheet.ColumnName(icol);
+                    datacolumnS.push(dataVal);
+                }
+            }
+            data.push(datacolumnS); // Add headers to data
+        }
+
+        // Start processing the rows in batches
+        processBatch(isheet, 0, rowcount, data);
+    }
+
+    console.log("Export Complete: 100%");
 }
+
+
 function p8Spread_ExportCSVDetails(rows, filename) {
     var processRow = function (row) {
         var finalVal = '';
@@ -13102,6 +13733,7 @@ $(function () {
     $("#PrintCanvasCon").hide();
 });
 function p8Spread_Print(msbook, fileName) {
+    
     var doc;
     var orientation = "l";
 
@@ -13126,8 +13758,17 @@ function p8Spread_Print(msbook, fileName) {
     });
 
     var obj = msbook.ActiveSheet;
-    
 
+    //karl edit
+    var rowexporthide = "";
+    var colexporthide = "";
+    try {
+        var exportList = nwJson(obj.exportList, "name", $("#cmbnwExport").val(), false);
+        if (exportList.length > 0) {
+            rowexporthide = exportList[0].rowexporthide
+            colexporthide = exportList[0].colexporthide
+        }
+    } catch (ex) { }
 
     var startRow = 5;
     var dataVal = "";
@@ -13150,7 +13791,18 @@ function p8Spread_Print(msbook, fileName) {
 
 
     for (var ic = 0; ic < obj.ColumnConfig.length; ic++) {
-        var colwidth = parseInt(obj.GetColumnWidth(ic));
+        //karl edit
+        if (colexporthide != "") {
+            var isColExist = _sfisColInExportHide(colexporthide, ic);
+            if (isColExist) {
+                colwidth = 0;
+            } else {
+                colwidth = parseInt(obj.GetColumnWidth(ic));
+            }
+        } else {
+            colwidth = parseInt(obj.GetColumnWidth(ic));
+        }
+       // var colwidth = parseInt(obj.GetColumnWidth(ic));
         if (colwidth > 5) {
             conwidth += colwidth + borderMargin;
         }
@@ -13170,7 +13822,13 @@ function p8Spread_Print(msbook, fileName) {
 
         console.log("loop:" + print_StartRow);
         if (pageno >= 2) {
-            print_StartRow += print_PageJump - (obj.HideHeaderIndex -  1);
+            //karl edit
+            if (obj.HideHeaderIndex == undefined) {
+                print_StartRow += print_PageJump;
+            } else {
+                print_StartRow += print_PageJump - (obj.HideHeaderIndex - 1);
+            }
+            
         } else if (pageno >= 1){
             print_StartRow += print_PageJump - (obj.FreezeRow);
         }
@@ -13273,9 +13931,18 @@ function p8Spread_Print(msbook, fileName) {
         try {
             widthcol = obj.ColumnConfig[icounter].width;
         } catch (err) { }
+        //karl edit
+        if (colexporthide != "") {
+            var isColExist = _sfisColInExportHide(colexporthide, icounter);
+            if (isColExist) {
+                widthcol = 0;
+            }
+        }
 
         if (applyfreezeW < obj.FreezeCol) {
-            widthcol = obj.ColumnConfig[applyfreezeW].width;
+            if (colexporthide != "") { } else {
+                widthcol = obj.ColumnConfig[applyfreezeW].width;
+            }
             applyfreezeW++;
             if ((conWidthDraw - widthcol) <= 0) break;
           
@@ -13288,7 +13955,8 @@ function p8Spread_Print(msbook, fileName) {
         obj.CellColMax += 1;
         conWidthDraw -= widthcol;
         if (icounter >= 1000) break;
-    }
+        }
+
     var maxLimitRowAdd = obj.CellRowMaxAdd;
     var maxLimitRow = obj.CellRowMax + maxLimitRowAdd;
     var maxLimitCol = obj.CellColMax;
@@ -13432,7 +14100,13 @@ function p8Spread_Print(msbook, fileName) {
             current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
             //console.log(ix + " " + current_Height);
         } catch (err) { }
-
+        // karl edit
+        if (rowexporthide != "") {
+            var isRowExist = _sfisRowInExportHide(rowexporthide, ix - 1);
+            if (isRowExist) {
+                current_Height = 0;
+            }
+        }
         var isFreezeCol = false;
 
 
@@ -13467,8 +14141,14 @@ function p8Spread_Print(msbook, fileName) {
                 current_Width = def_Width;
                 current_Width = parseInt(obj.ColumnConfig[icx - 1].width);
             } catch (err) { }
+            //karl edit
+            if (colexporthide != "") {
+                var isColExist = _sfisColInExportHide(colexporthide, icx - 1);
+                if (isColExist) {
+                    current_Width = 0;
+                } 
+            }
 
- 
             var isaffected = false;
             for (var it = 0; it < mergeList.length; it++) {
                 if ((mergeList[it].col2 >= icx - 1 && mergeList[it].col <= icx - 1)
@@ -13500,7 +14180,13 @@ function p8Spread_Print(msbook, fileName) {
                                     xcurrent_Width = def_Width;
                                     xcurrent_Width = parseInt(obj.ColumnConfig[icc].width); // + 1
                                 } catch (err) { }
-
+                                //karl edit
+                                if (colexporthide != "") {
+                                    var isColExist = _sfisColInExportHide(colexporthide, icc);
+                                    if (isColExist) {
+                                        xcurrent_Width = 0;
+                                    }
+                                }
                                 if (xcurrent_Width <= 1) {
                                     continue;
                                 }
@@ -13516,7 +14202,13 @@ function p8Spread_Print(msbook, fileName) {
                                 try { //get Row height if there is
                                     totalheight = obj.Data[icc].aagrowHeight || def_Height;
                                 } catch (err) { }
-
+                                // karl edit
+                                if (rowexporthide != "") {
+                                    var isRowExist = _sfisRowInExportHide(rowexporthide, icc);
+                                    if (isRowExist) {
+                                        totalheight = 0;
+                                    }
+                                }
                                 curHeight += borderMargin + totalheight;
                                 if (icc < ix - 1) {
                                     curYorigin -= borderMargin + totalheight;
@@ -13565,7 +14257,13 @@ function p8Spread_Print(msbook, fileName) {
                         xcurrent_Width = def_Width;
                         xcurrent_Width = parseInt(obj.ColumnConfig[icc].width); 
                     } catch (err) { }
-
+                    //karl edit
+                    if (colexporthide != "") {
+                        var isColExist = _sfisColInExportHide(colexporthide, icc);
+                        if (isColExist) {
+                            xcurrent_Width = 0;
+                        }
+                    }
                     if (icc < xFreezeCol - 1) { }
                     else if (icc >= (xFreezeCol - 1) && icc < firstFreezeCol) {
                         continue;
@@ -13589,7 +14287,13 @@ function p8Spread_Print(msbook, fileName) {
                     try { //get Row height if there is
                         totalheight = obj.Data[icc].aagrowHeight || def_Height;
                     } catch (err) { }
-
+                    // karl edit
+                    if (rowexporthide != "") {
+                        var isRowExist = _sfisRowInExportHide(rowexporthide, icc);
+                        if (isRowExist) {
+                            totalheight = 0;
+                        }
+                    }
                     //must check the row height +1
                     plusHeight += borderMargin + totalheight;
                 }
@@ -13686,7 +14390,13 @@ function p8Spread_Print(msbook, fileName) {
         try { 
             current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
         } catch (err) { }
-
+        // karl edit
+        if (rowexporthide != "") {
+            var isRowExist = _sfisRowInExportHide(rowexporthide, ix - 1);
+            if (isRowExist) {
+                current_Height = 0;
+            }
+        }
 
 
         for (var ic = obj_startCol; ic <= scolumn; ic++) {
@@ -13710,6 +14420,13 @@ function p8Spread_Print(msbook, fileName) {
                 current_Width = def_Width;
                 current_Width = parseInt(obj.ColumnConfig[icx - 1].width);
             } catch (err) { }
+            //karl edit
+            if (colexporthide != "") {
+                var isColExist = _sfisColInExportHide(colexporthide, icx - 1);
+                if (isColExist) {
+                    current_Width = 0;
+                }
+            }
 
             curCol = icx;
             curRow = ix;
@@ -13750,6 +14467,13 @@ function p8Spread_Print(msbook, fileName) {
                                     xcurrent_Width = def_Width;
                                     xcurrent_Width = parseInt(obj.ColumnConfig[icc].width); // + 1
                                 } catch (err) { }
+                                //karl edit
+                                if (colexporthide != "") {
+                                    var isColExist = _sfisColInExportHide(colexporthide, icc);
+                                    if (isColExist) {
+                                        xcurrent_Width = 0;
+                                    }
+                                }
 
                                 if (xcurrent_Width <= 1) {
                                     
@@ -13768,7 +14492,13 @@ function p8Spread_Print(msbook, fileName) {
                                 try { 
                                     totalheight = obj.Data[icc].aagrowHeight || def_Height;
                                 } catch (err) { }
-
+                                // karl edit
+                                if (rowexporthide != "") {
+                                    var isRowExist = _sfisRowInExportHide(rowexporthide, icc);
+                                    if (isRowExist) {
+                                        totalheight = 0;
+                                    }
+                                }
                                 curHeight += borderMargin + totalheight;
                                 if (icc < ix - 1) {
                                     curYorigin -= borderMargin + totalheight;
@@ -13815,7 +14545,13 @@ function p8Spread_Print(msbook, fileName) {
                         xcurrent_Width = def_Width;
                         xcurrent_Width = parseInt(obj.ColumnConfig[icc].width); // + 1
                     } catch (err) { }
-
+                    //karl edit
+                    if (colexporthide != "") {
+                        var isColExist = _sfisColInExportHide(colexporthide, icc);
+                        if (isColExist) {
+                            xcurrent_Width = 0;
+                        }
+                    }
                     if (icc < xFreezeCol - 1) { }
                     else if (icc >= (xFreezeCol - 1) && icc < firstFreezeCol)
                         continue;
@@ -13835,7 +14571,13 @@ function p8Spread_Print(msbook, fileName) {
                     try { //get Row height if there is
                         totalheight = obj.Data[icc].aagrowHeight || def_Height;
                     } catch (err) { }
-
+                    // karl edit
+                    if (rowexporthide != "") {
+                        var isRowExist = _sfisRowInExportHide(rowexporthide, icc);
+                        if (isRowExist) {
+                            totalheight = 0;
+                        }
+                    }
                     //must check the row height +1
                     plusHeight += borderMargin + totalheight;
                 }
@@ -13926,6 +14668,13 @@ function p8Spread_Print(msbook, fileName) {
         try {
             current_Height = obj.Data[i].aagrowHeight || def_Height;
         } catch (err) { }
+        // karl edit
+        if (rowexporthide != "") {
+            var isRowExist = _sfisRowInExportHide(rowexporthide, i);
+            if (isRowExist) {
+                current_Height = 0;
+            }
+        }
         HeadertotalHeight += current_Height + borderMargin;
     }
     contextSheet.fillStyle = print_bgcolormain;
@@ -14011,6 +14760,13 @@ function p8Spread_Print(msbook, fileName) {
         try {
             current_Width = parseInt(obj.ColumnConfig[i].width) || def_Width;
         } catch (err) { }
+        //karl edit
+        if (colexporthide != "") {
+            var isColExist = _sfisColInExportHide(colexporthide, i);
+            if (isColExist) {
+                current_Width = 0;
+            }
+        }
         HeadertotalWidth += current_Height + borderMargin;
     }
 
@@ -14048,7 +14804,13 @@ function p8Spread_Print(msbook, fileName) {
             try { //get Row height if there is
                 current_Height = obj.Data[ix - 1].aagrowHeight || def_Height;
             } catch (err) { }
-
+            // karl edit
+            if (rowexporthide != "") {
+                var isRowExist = _sfisRowInExportHide(rowexporthide, ix - 1);
+                if (isRowExist) {
+                    current_Height = 0;
+                }
+            }
 
             current_X = borderMargin;
             var myCell = {
@@ -14110,6 +14872,13 @@ function p8Spread_Print(msbook, fileName) {
                 try {
                     current_Width = def_Width;
                     current_Width = parseInt(obj.ColumnConfig[icx - 1].width);
+                    //karl edit
+                    if (colexporthide != "") {
+                        var isColExist = _sfisColInExportHide(colexporthide, icx - 1);
+                        if (isColExist) {
+                            current_Width = 0;
+                        }
+                    }
                 } catch (err) { }
                 FreezeLineCol = sheetStart_x + current_X + borderMargin + current_Width;
             }
@@ -14123,6 +14892,13 @@ function p8Spread_Print(msbook, fileName) {
                 current_Width = def_Width;
                 current_Width = parseInt(obj.ColumnConfig[icx - 1].width);
             } catch (err) { }
+            //karl edit
+            if (colexporthide != "") {
+                var isColExist = _sfisColInExportHide(colexporthide, icx - 1);
+                if (isColExist) {
+                    current_Width = 0;
+                }
+            }
 
             if (current_Width <= 0) continue;
 
@@ -14161,6 +14937,13 @@ function p8Spread_Print(msbook, fileName) {
                                 tmp_current_Width = def_Width;
                                 tmp_current_Width = parseInt(obj.ColumnConfig[ihx].width);
                             } catch (err) { }
+                            //karl edit
+                            if (colexporthide != "") {
+                                var isColExist = _sfisColInExportHide(colexporthide, ihx);
+                                if (isColExist) {
+                                    tmp_current_Width = 0;
+                                }
+                            }
                             tmp_current_Width += borderMargin;
                             fnl_current_Width += tmp_current_Width;
                         }
@@ -14580,4 +15363,87 @@ function createHeaders(keys) {
         });
     }
     return result;
+}
+
+function _sfp8exportescapeFormula(formula) {
+    return formula
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function _sfisRowInExportHide(rowexporthide, row) {
+    var ranges = rowexporthide.split(',');
+    var rows = new Set();
+
+    ranges.forEach(range => {
+        var bounds = range.split('-');
+        if (bounds.length === 1) {
+            // Single number
+            rows.add(parseInt(bounds[0]));
+        } else if (bounds.length === 2) {
+            // Range of numbers
+            var start = parseInt(bounds[0]);
+            var end = parseInt(bounds[1]);
+            for (var i = start; i <= end; i++) {
+                rows.add(i);
+            }
+        }
+    });
+
+    return rows.has(row);
+}
+
+function _sfisColInExportHide(colExportHide, colIndexToCheck) {
+    var colToCheck = p8_NumberToCell(colIndexToCheck + 1)
+    var ranges = colExportHide.split(',');
+    var cols = new Set();
+
+    ranges.forEach(range => {
+        var bounds = range.split('-');
+        if (bounds.length === 1) {
+            // Single column
+            cols.add(bounds[0].toUpperCase());
+        } else if (bounds.length === 2) {
+            // Range of columns
+            var start = bounds[0].toUpperCase().charCodeAt(0);
+            var end = bounds[1].toUpperCase().charCodeAt(0);
+            for (var i = start; i <= end; i++) {
+                cols.add(String.fromCharCode(i));
+            }
+        }
+    });
+
+    return cols.has(colToCheck.toUpperCase());
+}
+function _sfExcelCopyArray(obj) {
+    const seen = new WeakMap();
+
+    function copy(obj) {
+        if (obj === null || typeof obj !== 'object') {
+            return obj;
+        }
+
+        if (seen.has(obj)) {
+            return seen.get(obj);
+        }
+
+        const copyObj = Array.isArray(obj) ? [] : {};
+        seen.set(obj, copyObj);
+
+        Object.keys(obj).forEach(key => {
+            copyObj[key] = copy(obj[key]);
+        });
+
+        return copyObj;
+    }
+
+    return copy(obj);
+}
+
+function isHexColor(color) {
+    // Regular expression to check if the string is a valid hex color
+    return /^#([0-9A-F]{3}|[0-9A-F]{6})$/i.test(color);
 }

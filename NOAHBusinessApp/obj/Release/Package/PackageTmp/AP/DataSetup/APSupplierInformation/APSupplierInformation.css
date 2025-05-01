@@ -1,0 +1,64 @@
+﻿.nwUnderline{
+    text-decoration: underline;
+}
+.nwOptional{
+    color:#0404fc;
+}
+
+
+div#nwDisappDtls ._slide-m {
+    min-width: 50%;
+    min-height: 50%;
+}
+
+div#nwPopUpRequireCompliance ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+    
+div#nwVendorTaxInfo ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwPaymentTerm ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwVendorBranch ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwBasisforAgingAssignment ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwVendorChildAccount ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+
+div#nwVendorContact ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+
+div#nwVendorLocation ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwVendorBIR ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwVendorBIR ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}

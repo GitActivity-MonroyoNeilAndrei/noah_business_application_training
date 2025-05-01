@@ -1,0 +1,81 @@
+﻿Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/27/2024
+Version			   : 10.0.0.1
+Description		   : Addressing of findings
+						#74 Should redirect the user to Salesperson Information viewing
+
+Modified By		   : Lance Justine Aleonar
+Date Modified	   : 10/01/2024
+Version			   : 10.0.0.0
+Description		   : Conversion from V9 to V10
+
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Created		: 03/07/2024
+Menu Item Version	: 9.0.0.11
+Purpose				: Additional validation upon choosing salesperson on lookup. Should not be same effective date with the same effective date, requested by main Analyst
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Created		: 02/27/2024
+Menu Item Version	: 9.0.0.10
+Purpose				: Additional changes for hiding isused column po salesperson code lookup
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Created		: 02/17/2024
+Menu Item Version	: 9.0.0.9
+Purpose				: Addressing of findings
+					>> Issue Logs# 1001 - upon selecting salesperson code Prompt: sales person is already assigned to another dealer..... even it is recently added >> should have no prompt if the salesperson is recently added in data setup salesperson info
+					>> Issue Logs# 1002 - upon selecting salesperson code Prompt: sales person is already assigned to another dealer..... even salesperson tagged as allow multiple dealer >> should allow multiple Dealer if the salesperson tagged as Allow Multiple Dealer
+					>> Issue Logs# 1003 -  not showing the name of salesperson in the Prompt window if already assigned to other Dealer >> Should be salesperson [Juan Dela Cruz] is already assigned to another Dealer.....
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Created		: 02/05/2024
+Menu Item Version	: 9.0.0.8
+Purpose				: Enhancement (Removed Approval ID, Status and additional functionality for add to lsit lookup in Line Details)
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Created		: 01/23/2024
+Menu Item Version	: 9.0.0.7
+Purpose				: Changes upon refresh on popup of other menu item
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/17/2024
+Version			   : 9.0.0.6
+Description		   : Addressing of Findings
+					  Added saving of reference docno
+
+Modified By		   : Cholo Sandoy
+Date Modified	   : 01/13/2024
+Version			   : 9.0.0.5
+Description		   : Addressing of Findings
+				   > Issue Logs# 225	Wrong Column Headers
+								 233	Button cannot be clicked.
+								 238	Upon clicking Process, all fields and buttons are still enabled
+								 241	"Contains other records not relating to the corresponding Dealer. Change Column Names"
+
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Created		: 01/12/2024
+Menu Item Version	: 9.0.0.4
+Purpose				: Back to version 3 (agreed by the previous addresser) and add additional changes if the data is popup on another 
+
+Modified By			: Romeo Javier Jr.
+Date Created		: 01/12/2024
+Menu Item Version	: 9.0.0.3
+Purpose				: Should already be colored green upon saving data in the popup window
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Created		: 01/09/2024
+Menu Item Version	: 9.0.0.2
+Purpose				: Additional changes upon popup for other menu item.
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Created		: 12/22/2023
+Menu Item Version	: 9.0.0.1
+Purpose				: Added a disabled upon opening from another item and Added requried field in line dertails
+
+
+Created By			: JOHN MIGUEL GRAVINES
+Date Created		: 12/18/2023
+Menu Item Version	: 9.0.0.0
+

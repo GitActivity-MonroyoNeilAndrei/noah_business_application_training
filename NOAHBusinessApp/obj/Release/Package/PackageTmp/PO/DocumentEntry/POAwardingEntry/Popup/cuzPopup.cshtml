@@ -1,0 +1,182 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "PO Awarding Entry";
+}
+
+
+  <div id="ApplyOneVendor" title="Apply to One Vendor/Order Type" class="container">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnProcess_AOV" class="btn-tb-action btn-tb-process">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex padding-10">
+        <div class="row row-parent">
+
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Vendor<span class="nwOptionalField">*</span></label>
+                </div>
+                <div class="col col-8 col-parent  lookups " id="lugVendor_AOV">
+                    <div class="col col-4 conval">
+                        <input type="text" name="" class="txtbox idval lookupcodecss clrtxt">
+                    </div>
+                    <div class="col col-8 conval">
+                        <input type="text" name="" class="txtbox descval txtdesc clrtxt">
+                        <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Vendor TIN</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtVendorTIN_AOV" type="text" maxlength="30" class="txtbox" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Vendor Address</label>
+                </div>
+                <div class="col col-8">
+                    <textarea id="txtVendorAddress" maxlength="500" class="txtarea autoresize" rows="5" cols="50"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Order Type<span class="nwOptionalField">*</span></label>
+                </div>
+                <div class="col col-8 col-parent  lookups " id="lugOrderType_AOV">
+                    <div class="col col-4 conval">
+                        <input type="text" name="" class="txtbox idval lookupcodecss clrtxt">
+                    </div>
+                    <div class="col col-8 conval">
+                        <input type="text" name="" class="txtbox descval txtdesc clrtxt">
+                        <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+      
+<div id="ApplySingleDelDate" title="Apply Single Delivery Date" class="container">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnProcess_ASDD" class="btn-tb-action btn-tb-process">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex padding-10">
+        <div class="row row-parent">
+
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Delivery Date</label>
+                </div>
+                <div class="col col-8">
+                    <input id="dtpDeliveryDate_ASDD" type="text" class="dtpCheckDate" />
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="ApplySingleDelDate_Item" title="Apply Single Delivery Date" class="container">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnProcess_ASDDI" class="btn-tb-action btn-tb-process">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex padding-10">
+        <div class="row row-parent">
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Delivery Date</label>
+                </div>
+                <div class="col col-8">
+                    <input id="dtpDeliveryDate_ASDDI" type="text" class="nwDatePick" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Item</label>
+                </div>                
+                <div class="col col-8">
+                    <div id="settingstabs_Item" class="fullwidth">
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="applyPODtls" title="PO Details" class="container">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnSaveApplyPODetails" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex padding-10">
+        <div class="row row-parent">
+
+            
+                <div class="row">
+                    <div class="col-12">
+                        <div id="nwGridApplyPODetailsCon"></div>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="UpdateunaccreditedVendor" title="Update unaccredited Vendor" class="container">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnSaveUpdateunaccreditedVendor" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex padding-10">
+        <div class="row row-parent">           
+                <div class="row">
+                    <div class="col-12">
+                        <div id="nwGridUpdateunaccreditedVendorCon"></div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+

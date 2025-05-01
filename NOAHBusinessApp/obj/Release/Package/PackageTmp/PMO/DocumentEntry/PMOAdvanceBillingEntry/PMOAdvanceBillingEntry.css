@@ -1,0 +1,9 @@
+﻿div#nwDetails ._slide-m {
+    min-width: 60%;
+    min-height: 80%;
+}
+
+div#nwInvoiceType ._slide-m {
+    min-height: 33%;
+    max-width: 40%;
+}

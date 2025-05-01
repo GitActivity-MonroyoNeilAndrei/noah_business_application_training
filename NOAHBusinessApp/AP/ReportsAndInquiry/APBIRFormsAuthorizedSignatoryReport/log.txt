@@ -1,0 +1,27 @@
+﻿Created By			: Neil Andrei Monroyo
+Date Modified		: 04/16/2025
+Menu Item Version	: 10.0.0.0
+Reason				: Development
+						Header button
+							- new
+							- refresh
+							- export
+						Header fields
+							- Date Filter
+								- Monthly
+								- Anually
+								- Quarterly
+								- Date Covered
+							- Filter By
+								- Location
+								- Signatory
+								- Designation
+						Line Details
+							- Location with Accountable Forms
+							- BIR Forms Authorized Signatory
+							- Effective Date
+							- Designation
+							- Tax Identification No.
+							- BIR Form Code
+							- BIR Form Name
+

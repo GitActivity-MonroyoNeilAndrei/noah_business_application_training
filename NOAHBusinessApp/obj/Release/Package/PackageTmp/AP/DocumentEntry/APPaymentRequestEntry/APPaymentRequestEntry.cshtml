@@ -1,0 +1,1203 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Payment Request Entry";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/AP/DocumentEntry/APPaymentRequestEntry/APPaymentRequestEntry.js"></script>		
+    <link href="~/AP/DocumentEntry/APPaymentRequestEntry/APPaymentRequestEntry.css" rel="stylesheet" />
+    <script src="~/AP/DocumentEntry/APPaymentRequestEntry/UploadCustom.js"></script>
+</head>
+
+<body class="">
+
+    @*TOOLBOX*@
+    <div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+
+        <div id="noah-webui-Toolbox-BindingNavigator" nwbind="noah-webui-Toolbox-Grid" class="noah-webui-Toolbox-BindingNavigator nwHide">
+            <div id="noah-webui-default-first" class="noah-webui-Toolbox-Item-Icon BN-button">
+                <div></div>
+            </div>
+            <div id="noah-webui-default-previous" class="noah-webui-Toolbox-Item-Icon BN-button">
+                <div></div>
+            </div>
+            <div class="BN-record">
+                <input id="noah-webui-default-currentRec" type="text" value="0" />
+                <span>of 0</span>
+            </div>
+            <div id="noah-webui-default-next" class="noah-webui-Toolbox-Item-Icon BN-button">
+                <div></div>
+            </div>
+            <div id="noah-webui-default-last" class="noah-webui-Toolbox-Item-Icon BN-button">
+                <div></div>
+            </div>
+        </div>
+
+        <div class="nk-toolbar-btn noah-webui-Toolbox">
+            <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">New</div>
+            </div>
+            <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+            <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Delete</div>
+            </div>
+            @*<div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Refresh</div>
+            </div>*@
+            <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Inquire</div>
+            </div>
+            <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+            <div id="noah-webui-default-Print" class="btn-tb-action btn-tb-print noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Print</div>
+            </div>
+            <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process noah-webui-Toolbox-Item nwHide">
+                <div class="_icon"></div>
+                <div class="_lbl">View Budget Availability Report</div>
+            </div>
+            <div id="btnLoadHstTemp" class="btn-tb-action btn-tb-process noah-webui-Toolbox-Item btnLoadHstTemp">
+                <div class="_icon"></div>
+                <div class="_lbl">Load from Historical Template</div>
+            </div>
+            <div id="btnLoadRecurTran" class="btn-tb-action btn-tb-process noah-webui-Toolbox-Item btnLoadRecurTran">
+                <div class="_icon"></div>
+                <div class="_lbl">Load Recurring Transactions</div>
+            </div>          
+            <div id="noah-webui-default-CreateSBR" class="btn-tb-action btn-tb-process noah-webui-Toolbox-Item noah-webui-default-CreateSBR">
+                <div class="_icon"></div>
+                <div class="_lbl">Create SBR</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="nk-container-flex">
+        <div class="row row-parent">
+            @*first column*@
+            <div class="col col-4 col-parent">
+                <div class="row">
+                    <div class="row with-label-lookup">
+                        <div class="col col-5">
+                            <label class="lbltxt">Location with Accountable Forms<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugLocAcctForms" class="col col-7 col-parents lookups">
+                            <div class="col col-4">
+                                <input type="text" name="" class="txtbox idval">
+                            </div>
+                            <div class="col col-8">
+                                <input type="text" name="" class="txtbox txtdesc descval">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row with-label-lookup">
+                        <div class="col col-5">
+                            <label class="lbltxt">Originating Cost Center<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugOrigCCC" class="col col-7 col-parent lookups">
+                            <div class="col col-4">
+                                <input type="text" name="" class="txtbox idval">
+                            </div>
+                            <div class="col col-8">
+                                <input type="text" name="" class="txtbox txtdesc descval">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row with-label-lookup">
+                        <div class="col col-5">
+                            <label class="lbltxt">Vendor/Payee<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugVendorPayee" class="col col-7 col-parent lookups">
+                            <div class="col col-4">
+                                <input type="text" name="" class="txtbox idval">
+                            </div>
+                            <div class="col col-8">
+                                <input type="text" name="" class="txtbox txtdesc descval">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Payee Sub Type</label>
+                    </div>
+                    <div id="lugPayeeSubType" class="lookups col col-7">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row with-label-lookup">
+                        <div class="col col-5">
+                            <label class="lbltxt">Currency<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugCurrency" class="col col-7 col-parent lookups">
+                            <div class="col col-4">
+                                <input type="text" name="" class="txtbox idval">
+                            </div>
+                            <div class="col col-8">
+                                <input type="text" name="" class="txtbox txtdesc descval">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Check Payee Name</label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtCheckPayeeName" type="text" name="" class="txtbox">
+                        <input id="txtAlterPayeeName" type="text" class="txtbox nwHide" />
+                        <input id="txtRemarks_Alt" type="text" class="nwHide txtbox" />
+                        <input id="txtAlterPayeeID" type="text" class="nwHide txtbox" />
+                        <input id="txtRATag_Alt" type="text" class="nwHide txtbox" />
+                        <input id="txtVendorTag" type="text" class="nwHide txtbox" />
+                        <input id="txtIsUploading" type="text" class="nwHide txtbox" />
+                        <input id="txtRecurDocno" type="text" class="nwHide txtbox" />
+                        <input id="txtRecurNo" type="text" class="nwHide txtbox" />
+                        <input id="txtRecurLineID" type="text" class="nwHide txtbox" />
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt .hide"></label>
+                    </div>
+                    <div class="col col-7 col-parent">
+                        <div class="col col-1">
+                            <div class="chk-wrapper">
+                                <input id="chkAltPayee" type="checkbox" class="chk" disabled>
+                                <label class="lbl-chk" for="chk2"></label>
+                            </div>
+                        </div>
+                        <div class="col col-10">
+                            <div id="btnAlterPayee" class="btn btn-default fullwidth">Alternative Payee</div>
+                        </div>                      
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Payment Request Type</label>
+                    </div>
+                    <div class="col col-7">
+                        <select id="cmbPaymentRqstType" class="cmb fullwidth">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Payment Request Sub Type</label>
+                    </div>
+                    <div class="col col-7">
+                        <select id="cmbPaymentRqstSubType" class="cmb fullwidth">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            @*second column*@
+            <div class="col col-4 col-parent">
+                <div class="row">
+                    <div class="col col-3">
+                        <label class="lbltxt">Transaction No.</label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtDocno" type="text" name="" class="txtbox">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-3">
+                        <label class="lbltxt">Date Submitted</label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtDocDate" type="text" name="" class="txtbox nwDatePick">
+                        <input id="txtServerdate" class="nwDatePick nwHide" type="text" disabled />
+                        <input id="txtRecuser" class="idval nwHide" type="text" disabled />
+                        <input id="txtBasisAging" class="idval nwHide" type="text" disabled />
+                        <input id="txtVendorCode" class="idval nwHide" type="text" disabled />
+                        <input id="txtVendorName" class="idval nwHide" type="text" disabled />
+                        <input id="txtReasonType" class="idval nwHide" type="text" disabled />
+                        <input id="txtTranType" class="idval nwHide" type="text" disabled />
+                        <input id="txtDocnoHstTemp" class="idval nwHide" type="text" disabled />
+                        <input id="txtPayeeType" class="idval nwHide" type="text" disabled />
+                        <input id="txtReasonCode" class="idval nwHide" type="text" disabled />
+                        <input id="txtReasonDesc" class="idval nwHide" type="text" disabled />
+                        <input id="txtReasonTypeOld" class="idval nwHide" type="text" disabled />
+                        <input id="txtLocDesc" class="idval nwHide" type="text" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-3">
+                        <label class="lbltxt">Date Posted</label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtDatePosted" type="text" name="" class="txtbox nwDatePick">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-3">
+                        <label class="lbltxt">Remarks<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-7">
+                        <textarea id="txtRemarks" maxlength="500" class="txtarea autoresize" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-3">
+                        <label class="lbltxt">Other Payment Instructions</label>
+                    </div>
+                    <div class="col col-7">
+                        <textarea id="txtOthrPayIns" maxlength="500" class="txtarea autoresize" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row with-label-lookup">
+                        <div class="col col-3">
+                            <label class="lbltxt">AP Control Account<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugAPCtrlAccnt" class="col col-7 col-parent lookups">
+                            <div class="col col-4">
+                                <input type="text" name="" class="txtbox idval">
+                            </div>
+                            <div class="col col-8">
+                                <input type="text" name="" class="txtbox txtdesc descval">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row with-label-lookup">
+                        <div class="col col-3">
+                            <label class="lbltxt">Reason for Request<span class="nwRequiredField">*</span></label>
+                        </div>
+                        <div id="lugRsnReq" class="col col-7 col-parent lookups">
+                            <div class="col col-4">
+                                <input type="text" name="" class="txtbox idval">
+                            </div>
+                            <div class="col col-8">
+                                <input type="text" name="" class="txtbox txtdesc descval">
+                                <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*third column*@
+            <div class="col col-4 col-parent">
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Document Status</label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtStatus" type="text" name="" class="txtbox">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Reason for Disapproval</label>
+                    </div>
+                    <div id="lugRsnDisapprv" class="col col-7">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Disapproval Remarks</label>
+                    </div>
+                    <div class="col col-7">
+                        <textarea id="txtDisapprvRemarks" class="txtarea autoresize" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Value Date</label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtValueDate" type="text" name="" class="txtbox nwDatePick">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt"></label>
+                    </div>
+                    <div class="col col-7">
+                        <div class="btn btn-default btn-default-orange clrbtn enbtxtRefresh btnStyle fullwidth" id="btnReqCompHDR">Requirements Compliance</div>
+                    </div>
+                    <div class="col col-5"></div>
+                </div>
+                <div id="wrapForexDate" class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Forex Rate Date</label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtForexDate" type="text" name="" class="txtbox nwDatePick">
+                    </div>
+                </div>
+                <div id="wrapForexFields" class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Forex Rate</label>
+                    </div>
+                    <div class="col col-7">
+                        <label id="lblForextLocal">Local</label>
+                        <input id="txtForexLocal" type="text" name="" class="txtbox" disabled>
+                        <label id="lblForexHome">Home</label>
+                        <input id="txtForexHome" type="text" name="" class="txtbox" disabled>     
+                    </div>
+                </div>               
+
+            </div>
+        </div>
+
+
+            <div class="row row-parent">
+                <div class="col col-12 col-parent">
+                    <div class="row">
+                        <div class="col col-12">
+                            <div class="btn btn-default collapseExpand" id="btnCollapseAll">Collapse All</div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="nk-accordion fullwidth" nk-style-accordion="1">
+                        <div class="nk-ul">
+                            @*PRF Details*@
+                            <div class="nk-li classHeader">
+                                <div class="nk-li-title nwCuz001">PRF Details</div>
+                                <div class="nk-li-content">
+                                    <div class="nk-li-text">
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div id="nwGridCon"></div>
+                                            </div>                                         
+                                        </div>  
+
+                                        <div class="row row-parent">
+                                            <div class="col col-10 col-parent">
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt"></label>
+                                                    </div>
+                                                    <div class="col col-3 child-centered">
+                                                        <label class="lbltxt">Transaction Currency</label>
+                                                    </div>
+                                                    <div class="col col-3 child-centered">
+                                                        <label class="lbltxt">Local Currency</label>
+                                                    </div>
+                                                    <div class="col col-3 child-centered">
+                                                        <label class="lbltxt">Home Currency</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Net of VAT</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtSubtotal_TranHist" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtSubtotal_LocalCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtSubtotal_HomeCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Add: VAT</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtAddVat_TranHist" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtAddVat_LocalCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtAddVat_HomeCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Gross Amount</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtGrossAmt_TranHist" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtGrossAmt_LocalCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtGrossAmt_HomeCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Less: EWT</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessEWT_TranHist" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessEWT_LocalCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessEWT_HomeCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Total Amount Due</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtTotalAmt_TranHist" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtTotalAmt_LocalCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtTotalAmt_HomeCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Less: Recoupment of DP/Advances</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessRecoupment_TranHist" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessRecoupment_LocalCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessRecoupment_HomeCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Less: Debit Memo Applied</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessDM_TranHist" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessDM_LocalCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessDM_HomeCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Less: Retention</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtRetention_TranHist" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtRetention_LocalCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtRetention_HomeCurr" type="text" name="" class="txtbox text-Aright" disabled> 
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Net Amount</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtNetAmt_TranHist" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtNetAmt_LocalCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtNetAmt_HomeCurr" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col col-2 col-parent">
+                                            </div>
+                                        </div>                                                         
+                                    </div>
+                                </div>
+                             
+                                </div>
+
+                            @*Charging Details*@
+                            <div class="nk-li classHeader">
+                                <div class="nk-li-title nwCuz001">Charging Details</div>
+                                <div class="nk-li-content">
+                                    <div class="nk-li-text">
+                                        <div class="row row-parent">
+                                            <div id="btnSaveCD" class="btn-action btn-save">
+                                                <div class="_btn-icon"></div>
+                                                <div class="_lbl-txt">Save</div>
+                                            </div>
+                                        </div>
+
+                                            <div class="row row-parent">
+                                                <div class="col col-4 col-parent">
+                                                    <div class="row">
+                                                        <div class="col col-5">
+                                                            <label class="lbltxt">Document No.</label>
+                                                        </div>
+                                                        <div id="lugRefTranNo" class="lookups col col-7">
+                                                            <div class="col col-8">
+                                                                <input type="text" name="" class="txtbox idval" disabled>
+                                                            </div>
+                                                            <div class="col col-4">
+                                                                <input type="text" name="" class="txtbox descval" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-5">
+                                                            <label class="lbltxt">Ref. No. (BS/SI/SOA)</label>
+                                                        </div>
+                                                        <div id="lugRefNoSI" class="lookups col col-7">
+                                                            <div class="col col-8">
+                                                                <input type="text" name="" class="txtbox idval" disabled>
+                                                            </div>
+                                                            <div class="col col-4">
+                                                                <input type="text" name="" class="txtbox descval" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-5">
+                                                            <label class="lbltxt">DR/COC No.</label>
+                                                        </div>
+                                                        <div id="lugDRCOCNo" class="lookups col col-7">
+                                                            <div class="col col-8">
+                                                                <input type="text" name="" class="txtbox idval" disabled>
+                                                            </div>
+                                                            <div class="col col-4">
+                                                                <input type="text" name="" class="txtbox descval" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-4 col-parent">
+                                                    <div class="row">
+                                                        <div class="col col-5">
+                                                            <label class="lbltxt">Payment Term</label>
+                                                        </div>
+                                                        <div id="lugPaymentTerm" class="lookups col col-7">
+                                                            <div class="col col-4">
+                                                                <input type="text" name="" class="txtbox idval" disabled>
+                                                            </div>
+                                                            <div class="col col-8">
+                                                                <input type="text" name="" class="txtbox descval" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-5">
+                                                            <label class="lbltxt">Counter Date</label>
+                                                        </div>
+                                                        <div class="col col-7">
+                                                            <input id="txtCounterDate_CD" type="text" name="" class="txtbox nwDatePick" disabled>
+                                                            <input id="txtTMPID" type="text" name="" class="txtbox nwHide">
+                                                            <input id="txtRateLoc" type="text" name="" class="txtbox nwHide">
+                                                            <input id="txtRateHome" type="text" name="" class="txtbox nwHide">
+                                                            <input id="txtLineID_CD" type="text" name="" class="txtbox nwHide">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-5">
+                                                            <label class="lbltxt">Due Date</label>
+                                                        </div>
+                                                        <div class="col col-7">
+                                                            <input id="txtDueDate_CD" type="text" name="" class="txtbox nwDatePick" disabled>
+                                                            <input id="txtGrossAmt" type="text" name="" class="txtbox nwHide">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-4 col-parent">
+                                                    <div class="row">
+                                                        <div class="col col-5">
+                                                            <label class="lbltxt">Invoice Amount</label>
+                                                        </div>
+                                                        <div class="col col-7">
+                                                            <input id="txtGrossAmt_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-5">
+                                                            <label class="lbltxt">Applied Amount</label>
+                                                        </div>
+                                                        <div class="col col-7">
+                                                            <input id="txtAppliedAmt_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col col-5">
+                                                            <label class="lbltxt">Unapplied Amount</label>
+                                                        </div>
+                                                        <div class="col col-7">
+                                                            <input id="txtUnappliedAmt_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-12">
+                                                    <div id="nwGridChargeDtlsCon"></div>
+                                                </div>
+                                            </div>
+                                        <div class="row row-parent">
+                                            <div class="col col-10 col-parent">
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt"></label>
+                                                    </div>
+                                                    <div class="col col-3 child-centered">
+                                                        <label class="lbltxt">Transaction Currency</label>
+                                                    </div>
+                                                    <div class="col col-3 child-centered">
+                                                        <label class="lbltxt">Local Currency</label>
+                                                    </div>
+                                                    <div class="col col-3 child-centered">
+                                                        <label class="lbltxt">Home Currency</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Net of VAT</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtSubtotal_TranHist_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtSubtotal_LocalCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtSubtotal_HomeCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Add: VAT</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtAddVat_TranHist_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtAddVat_LocalCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtAddVat_HomeCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Gross Amount</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtGrossAmt_TranHist_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtGrossAmt_LocalCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtGrossAmt_HomeCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Less: EWT</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessEWT_TranHist_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessEWT_LocalCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessEWT_HomeCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Total Amount Due</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtTotalAmt_TranHist_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtTotalAmt_LocalCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtTotalAmt_HomeCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Less: Recoupment of DP/Advances</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessRecoupment_TranHist_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessRecoupment_LocalCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessRecoupment_HomeCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Less: Debit Memo Applied</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessDM_TranHist_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessDM_LocalCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtLessDM_HomeCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Less: Retention</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtRetention_TranHist_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtRetention_LocalCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtRetention_HomeCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-3">
+                                                        <label class="lbltxt">Net Amount</label>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtNetAmt_TranHist_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtNetAmt_LocalCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                    <div class="col col-3 padding-x-10">
+                                                        <input id="txtNetAmt_HomeCurr_CD" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col col-2 col-parent">
+                                            </div>
+                                        </div>                      
+                                        </div>
+                                </div>
+                            </div>
+
+                            @*Journal Entries*@
+                            <div class="nk-li classHeader">
+                                <div class="nk-li-title">Journal Entries</div>
+                                <div class="nk-li-content">
+                                    <div class="nk-li-text">
+                                        <div class="row">
+                                            <div id="btnExportJournal" class="btn-action btn-export">
+                                                <div class="_btn-icon"></div>
+                                                <div class="_lbl-txt">Export</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col col-12">
+                                                    <div id="nwGridJournalCon"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                           
+                            @*@*Prepayment Details*@
+                            <div class="nk-li classHeader">
+                                <div class="nk-li-title nwCuz001">Prepayment Details</div>
+                                <div class="nk-li-content">
+                                    <div class="nk-li-text">
+                                        <div class="row row-parent">
+                                            <div id="btnSavePrepayment" class="btn-action btn-save">
+                                                <div class="_btn-icon"></div>
+                                                <div class="_lbl-txt">Save</div>
+                                            </div>
+                                        </div>
+                                        <div class="row row-parent">
+                                            <div class="col col-6 col-parent">
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Document No.</label>
+                                                    </div>
+                                                    <div id="lugDocno_PD" class="lookups col col-8">
+                                                        <div class="col col-8">
+                                                            <input type="text" name="" class="txtbox idval" disabled>
+                                                        </div>
+                                                        <div class="col col-4">
+                                                            <input type="text" name="" class="txtbox descval" disabled>
+                                                        </div>
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Ref. No. (BS/SI/SOA)</label>
+                                                    </div>
+                                                    <div id="lugRefNoSI_PD" class="lookups col col-8">
+                                                        <div class="col col-8">
+                                                            <input type="text" name="" class="txtbox idval" disabled>
+                                                        </div>
+                                                        <div class="col col-4">
+                                                            <input type="text" name="" class="txtbox descval" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">DR/COC No.</label>
+                                                    </div>
+                                                    <div id="lugDRCOCNo_PD" class="lookups col col-8">
+                                                        <div class="col col-8">
+                                                            <input type="text" name="" class="txtbox idval" disabled>
+                                                        </div>
+                                                        <div class="col col-4">
+                                                            <input type="text" name="" class="txtbox descval" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Basis of Amortization</label>
+                                                    </div>
+                                                    <div class="col col-8 col-parent">
+                                                        <div class="col col-5">
+                                                            <div class="rdo-wrapper">
+                                                                <input id="rdbAmortEqually_PD" type="radio" name="basis" class="rdo">
+                                                                <label class="lbl-rdo" for="rdbAmortEqually_PD">Amortize Equally</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-7">
+                                                            <div class="rdo-wrapper">
+                                                                <input id="rdbAmortSchd_PD" type="radio" name="basis" class="rdo">
+                                                                <label class="lbl-rdo" for="rdbAmortSchd_PD">Defined Amortization Schedule</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                               
+                                            </div>
+                                            <div class="col col-4 col-parent">
+                                                <div class="row">
+                                                    <div class="col col-5">
+                                                        <label class="lbltxt">Payment Term</label>
+                                                    </div>
+                                                    <div id="lugPaymentTerm_PD" class="lookups col col-7">
+                                                        <div class="col col-8">
+                                                            <input type="text" name="" class="txtbox idval" disabled>
+                                                        </div>
+                                                        <div class="col col-4">
+                                                            <input type="text" name="" class="txtbox descval" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-5">
+                                                        <label class="lbltxt">Counter Date</label>
+                                                    </div>
+                                                    <div class="col col-7">
+                                                        <input id="txtCounterDate_PD" type="text" name="" class="txtbox nwDatePick" disabled>
+                                                        <input id="txtRowno_PD" type="text" name="" class="txtbox nwHide">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-5">
+                                                        <label class="lbltxt">Due Date</label>
+                                                    </div>
+                                                    <div class="col col-7">
+                                                        <input id="txtDueDate_PD" type="text" name="" class="txtbox nwDatePick" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-5">
+                                                        <label class="lbltxt">Total Prepaid Amount</label>
+                                                    </div>
+                                                    <div class="col col-7">
+                                                        <input id="txtTotalPrepaidAmt" type="text" name="" class="txtbox text-Aright" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col col-2 col-parent">
+                                                <div class="row">
+                                                    <div class="col col-5">                                                    
+                                                    </div>
+                                                    <div class="col col-7">                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div id="nwGridPrepaymentCon"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div id="nwGridPrepayDefCon"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Recurring Details*@
+                            <div class="nk-li classHeader">
+                                <div class="nk-li-title">Recurring Details</div>
+                                <div class="nk-li-content">
+                                    <div class="nk-li-text">
+                                        <div class="row row-parent">
+                                            <div id="btnSaveRecurring" class="btn-action btn-save">
+                                                <div class="_btn-icon"></div>
+                                                <div class="_lbl-txt">Save</div>
+                                            </div>
+                                        </div>
+                                        <div class="row row-parent">
+                                            <div class="col col-6 col-parent">
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Document No.</label>
+                                                    </div>
+                                                    <div id="lugDocNo" class="lookups col col-8">
+                                                        <div class="col col-8">
+                                                            <input type="text" name="" class="txtbox idval" disabled>
+                                                        </div>
+                                                        <div class="col col-4">
+                                                            <input type="text" name="" class="txtbox descval" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Ref. (BS/SI/SOA) No.</label>
+                                                    </div>
+                                                    <div id="lugRefNo" class="lookups col col-8">
+                                                        <div class="col col-8">
+                                                            <input type="text" name="" class="txtbox idval" disabled>
+                                                        </div>
+                                                        <div class="col col-4">
+                                                            <input type="text" name="" class="txtbox descval" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">DR/COC No.</label>
+                                                    </div>
+                                                    <div id="lugDRNo" class="lookups col col-8">
+                                                        <div class="col col-8">
+                                                            <input type="text" name="" class="txtbox idval" disabled>
+                                                        </div>
+                                                        <div class="col col-4">
+                                                            <input type="text" name="" class="txtbox descval" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Payment Term</label>
+                                                    </div>
+                                                    <div id="lugPayTerm" class="lookups col col-8">
+                                                        <div class="col col-8">
+                                                            <input type="text" name="" class="txtbox idval" disabled>
+                                                        </div>
+                                                        <div class="col col-4">
+                                                            <input type="text" name="" class="txtbox descval" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Counter Date</label>
+                                                    </div>
+                                                    <div class="col col-8">
+                                                        <input id="txtCounterDate_RD" type="text" name="" class="txtbox nwDatePick" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Due Date</label>
+                                                    </div>
+                                                    <div class="col col-8">
+                                                        <input id="txtDueDate_RD" type="text" name="" class="txtbox nwDatePick" disabled>
+                                                        <input id="txtRowno_RD" type="text" name="" class="txtbox nwHide">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt"></label>
+                                                    </div>
+                                                    <div class="col col-8 col-parent">
+                                                        <div class="col col-5">
+                                                            <div class="rdo-wrapper">
+                                                                <input id="chkAllowRecur" type="checkbox" name="sample1" class="rdo">
+                                                                <label class="lbl-rdo" for="rdo1">Allow Recurrence</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-7">
+                                                            <div class="rdo-wrapper">
+                                                                <input id="chkApplyToAll_Recur" type="checkbox" name="sample1" class="rdo">
+                                                                <label class="lbl-rdo" for="rdo2">Apply to All Line Details</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Next Recurrence Date<span class="nwRequiredField">*</span></label>
+                                                    </div>
+                                                    <div class="col col-8">
+                                                        <input id="txtNextRecur" type="text" name="" class="txtbox nwDatePick">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Remaining No. of Months<span class="nwRequiredField">*</span></label>
+                                                    </div>
+                                                    <div class="col col-8">
+                                                        <input id="txtNoRecur_RD" type="text" name="" class="txtbox isNumber text-Aright">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">End of Recurrence Date<span class="nwRequiredField">*</span></label>
+                                                    </div>
+                                                    <div class="col col-8">
+                                                        <input id="txtEndRecur_RD" type="text" name="" class="txtbox nwDatePick">
+                                                    </div>
+                                                </div>   
+                                            </div>
+                                            <div class="col col-6 col-parent">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Holding History*@
+                            <div class="nk-li classHeader">
+                                <div class="nk-li-title">Holding History</div>
+                                <div class="nk-li-content">
+                                    <div class="nk-li-text">
+                                        <div class="row row-parent">
+                                            <div class="col col-4 col-parent">
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">APV No.</label>
+                                                    </div>
+                                                    <div class="col col-8">
+                                                        <input id="txtDocno_HH" type="text" name="" class="txtbox" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col col-4 col-parent">
+                                                <div class="row">
+                                                    <div class="col col-4">
+                                                        <label class="lbltxt">Ref No. (BS/SI/SOA)</label>
+                                                    </div>
+                                                    <div class="col col-8">
+                                                        <input id="txtRefno_HH" type="text" name="" class="txtbox" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col col-4 col-parent">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div id="nwGridHoldHstCon"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-12">
+                                                <div id="nwGridPRFUPCon" class="nwHide"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nk-footer-c">
+                <div class="nk-footer-info">
+                    <div class="nk-footer-create">
+                        <div class="nkf nk-f-createBy">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                                <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                                </path>
+                            </svg>
+                            <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
+                        </div>
+                        <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
+                        <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
+                        <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
+                    </div>
+                    <div class="nk-footer-x"></div>
+                    <div class="nk-footer-modified">
+                        <div class="nkf nk-f-modifiedBy">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                                <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                                </path>
+                            </svg>
+                            <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
+                        </div>
+                        <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
+                        <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
+                        <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+
+    @section noahpopup{
+        @RenderPage("~/Views/Form_Standards/Uploading.cshtml", "APPaymentRequestEntry")
+        @RenderPage("~/AP/DocumentEntry/APPaymentRequestEntry/Popup/PopupWindows.cshtml", "PopupWindows")
+    }
+</body>
+
+

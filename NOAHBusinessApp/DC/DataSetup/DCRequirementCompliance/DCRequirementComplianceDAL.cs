@@ -14,7 +14,7 @@ namespace DALComponent
         #region STANDARD
 
         public string MenuItemCode = "DCRequirementCompliance"; // This is default parameter  for version
-        public string MenuItemVersion = "10.0.0.8"; // This is default parameter for version
+        public string MenuItemVersion = "10.0.0.10"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
             if (_MenuItemCode.Trim() != "") MenuItemCode = _MenuItemCode;
@@ -235,5 +235,13 @@ namespace DALComponent
             string a = SFObjects.returnText(@"SELECT TOP 1 isExclude FROM DC.docControlExclude", _ConnectionString);
             return a == "0" ? true : false;
         }
+
+        public string Server_Path()
+        {
+            return SFObjects.returnText(@"SELECT [Value] FROM [dbo].[SystemConfig] where [code]='Server_Path'", _ConnectionString);
+
+            //return @"SamplePath/";
+        }
+
     }
 }

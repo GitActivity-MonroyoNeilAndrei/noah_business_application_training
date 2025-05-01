@@ -1,0 +1,89 @@
+﻿Modified By			: Alexis Maru Magcalas
+Date Modified		: 09/13/24
+Menu Item Version	: 10.0.0.0
+Reason				: Remove Version on the Controller and CSHTMl
+
+Modified By			: Alexis Maru Magalas
+Date Modified		: 09/12/24
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10
+
+Modified By		: Romar Julius Lucero
+Date Modified	: 05/02/2024
+Version			: 9.0.0.12
+Reason			: Addressing of Findings
+				  Issue 107: PMDI>Does not generate details even if there are data. Other filters are working.
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 03/23/2023
+Version			: 9.0.0.11
+Reason			: Addressing of Findings
+					- Refresh Button 
+						>Notification Title: Debit Memo Report"
+										 "Prompt message upon clicking REFRESH:
+										 ""Cannot be continued. Date Covered: To is required."""
+					- Date To/From Filters
+						> "Prompt Message: ""Cannot proceed. Date Covered To should not be earlier than Date Covered From""
+
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 09/28/2023
+Version			: 9.0.0.10
+Reason			: Enhancement
+					- Main Grid 
+							> Add Show/Hide Button
+
+Modified By		: NPL
+Date Modified	: 09/01/2023
+Version			: 9.0.0.09
+Reason			: Old to New Spread Convertion
+
+Modified By		: RJL
+Date Modified	: 03/20/2023
+Version			: 9.0.0.8
+Updates			: Error in filter if multiple
+
+Modified By		: EMB
+Date Modified	: 10/04/2022
+Version			: 9.0.0.7
+Updates			: Remove "Multiple Locations (See Footnote)" on Location row Header Details
+
+Modified By		: RJL
+Date Modified	: 06/16/2021
+Version			: 9.0.0.6
+Updates			: Addressing of findings
+					Date Filter - Month
+					Loaded month should be the current server month when other date filter is selected.
+					Quarter - Should be the quarter where the month belong. Currently, defaulted quarter is 1st Quarter even if the current month falls on the second quarter.
+
+Modified By		: RDA
+Date Modified	: 04/27/2021
+Version			: 9.0.0.5
+Updates			: Remove !important in nwCuz023
+
+Modified By		: NDB
+Date Modified	: 04/07/2021
+Version			: 9.0.0.4
+Reason			: Adjust container height for splitter
+
+Modified By		: RJL
+Date Modified	: 03/31/2021
+Version			: 9.0.0.3
+Reason			: Delete commeted script with style
+
+Modified By		: RJL
+Date Modified	: 02/23/2021
+Version			: 9.0.0.2
+Reason			: Addressing of findings
+					a. Footnote must not be displayed upon initial opening
+					b. VAPT Compliant coding
+
+Modified By		: RDA
+Date Modified	: 01/26/2021
+Version			: 9.0.0.1
+Updates			: Add LocationFilter
+
+Created By		: RDA
+Date Created	: 01/14/2021
+Version			: 9.0.0.0
+Reference		: FIVReceivingReportListingReport

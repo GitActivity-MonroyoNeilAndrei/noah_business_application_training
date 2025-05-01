@@ -1,0 +1,115 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Vendor Item Tax Assignment";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/AP/DataSetup/APVITA/APVITA.js"></script>
+    <link href="~/AP/DataSetup/APVITA/APVITA.css" rel="stylesheet" />
+</head>
+
+<body class="">
+    <div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+        <div class="nk-toolbar-btn noah-webui-Toolbox">
+            <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">New</div>
+            </div>
+            <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+            <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Delete</div>
+            </div>
+            <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Refresh</div>
+            </div>
+            <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Inquire</div>
+            </div>
+            <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+            <div id="noah-webui-default-Process" class="btn-tb-action btn-tb-process noah-webui-Toolbox-Item">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="nk-container-flex padding-10">
+        <div class="row row-parent">
+            <div class="col col-6">
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Vendor<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div id="lugVendor" class="col col-8 col-parent lookups">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remarks<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-8">
+                        <textarea id="txtRemarks" class="txtarea noresize" rows="5" maxlength="500"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6 col-parent"> </div>
+        </div>
+
+        <div class="row row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div class="col col-12">
+                        <div id="nwGridCon" class="fullwidth"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nk-footer-c">
+            <div class="nk-footer-info">
+                <div class="nk-footer-create">
+                    <div class="nkf nk-f-createBy">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                            <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                            </path>
+                        </svg>
+                        <div id="nwlbl_RecUser" class="nkf-txt">Created By:</div>
+                    </div>
+                    <div id="nwtxt_RecUser" class="nkf nk-f-createName"></div>
+                    <div id="nwlbl_RecDate" class="nkf nk-footer-x"></div>
+                    <div id="nwtxt_RecDate" class="nkf nk-f-createDate" value=""></div>
+                </div>
+                <div class="nk-footer-x"></div>
+                <div class="nk-footer-modified">
+                    <div class="nkf nk-f-modifiedBy">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22px" height="22px" class="svg-docFooter-icon" data-name="Layer 1" viewBox="0 0 22 22">
+                            <path class="svg-docFooter-icon-a" d="M13,2H5A3,3,0,0,0,2,5V17a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V5A3,3,0,0,0,13,2Zm2,15a2,2,0,0,1-2,2H5a2,2,0,0,1-2-2V5A2,2,0,0,1,5,3h8a2,2,0,0,1,2,2Zm2.5,0h0a.5.5,0,0,1-.5-.5V5.5a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v11A.5.5,0,0,1,17.5,17Zm2-1h0a.5.5,0,0,1-.5-.5v-9a.5.5,0,0,1,.5-.5h0a.5.5,0,0,1,.5.5v9A.5.5,0,0,1,19.5,16ZM13,8H5V7h8Zm-2,3H5V10h6ZM9,14H5V13H9Z">
+                            </path>
+                        </svg>
+                        <div id="nwlbl_ModUser" class="nkf-txt">Modified By:</div>
+                    </div>
+                    <div id="nwtxt_ModUser" class="nkf nk-f-modifiedName"></div>
+                    <div id="nwlbl_ModDate" class="nkf nk-footer-x"></div>
+                    <div id="nwtxt_ModDate" class="nkf nk-f-modifiedDate" value=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

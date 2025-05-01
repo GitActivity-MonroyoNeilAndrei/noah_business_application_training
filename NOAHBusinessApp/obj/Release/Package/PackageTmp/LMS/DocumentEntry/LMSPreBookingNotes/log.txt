@@ -1,0 +1,121 @@
+﻿Modified By			: Carmela Lumaad
+Date Created		: 11/18/2024
+Menu Item Version	: 10.0.0.4
+Reason				: For conversion to V10
+
+Modified By			: John Miguel Gravines
+Date Created		: 10/04/2024
+Menu Item Version	: 10.0.0.3
+Reason				: Source Code Issue Logs# 5 - field label should be col-4, idval col-4, descval col-8 >> apply standard col class
+
+Modified By			: John Miguel Gravines
+Date Created		: 09/18/2024
+Menu Item Version	: 10.0.0.2
+Reason				: Fixed and show the footer
+
+Modified By			: John Miguel Gravines
+Date Created		: 09/18/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Additional changes on export filename
+
+Modified By			: John Miguel Gravines
+Date Created		: 09/13/2024 - 09/16/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10 and Customization
+
+Modified By       : KFS
+Date Modified     : 04/23/2022
+Menu Item Version : 9.0.0.18
+Reason			  : Addressing of Findings
+
+Modified By       : RJL
+Date Modified     : 03/22/2021
+Menu Item Version : 9.0.0.17
+Reason			  : VAPT compliant
+
+Modified By       : SBL
+Date Modified     : 07/22/2020
+Menu Item Version : 9.0.0.16
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified By:	ATR
+Date Modified:	05/12/2020
+Reason:			Address findings
+Version:		9.0.0.15
+
+Modified By:	ATR
+Date Modified:	05/12/2020
+Reason:			Address findings
+Version:		9.0.0.14
+
+Modified By:	ATR
+Date Modified:	05/09/2020
+Reason:			Address findings
+Version:		9.0.0.13
+
+Modified By:	RBN
+Date Modified:	02/27/2020
+Reason:			History Revisions
+Version:		9.0.0.12
+
+Modified By:	RMB
+Date Modified:	02/20/2020
+Reason:			Add control on remarks button disabled while vendor look up is empty
+Version:		9.0.0.11
+
+Modified By:	JNB
+Date Modified:	02/17/2020
+Reason:			Change Lookup Item Group Type to Add to list.
+				Load the default vat shortdesc of vendor/supplier.
+Version:		9.0.0.10
+
+Modified By:	KRB
+Date Modified:	02/13/2020
+Reason:			Addressing of findings:
+				-column naming in inquire and export
+				-listing name of export
+				-validation upon saving
+Version:		9.0.0.9
+
+
+Created By: DPA
+Date Created: 10/04/2019
+Version: 9.0.0.0
+
+
+Updated By: DPA
+Date Created: 10/10/2019
+Version: 9.0.0.1
+
+
+Updated By: DPA
+Date Created: 10/10/2019
+Version: 9.0.0.2
+
+
+Updated By: DPA
+Date Created: 10/10/2019
+Version: 9.0.0.3
+
+
+Updated By: DPA
+Date Created: 10/15/2019
+Version: 9.0.0.4
+
+
+Updated By: DPA
+Date Created: 10/16/2019
+Version: 9.0.0.5
+
+
+Updated By: DPA
+Date Created: 10/17/2019
+Version: 9.0.0.6
+
+
+Updated By: DPA
+Date Created: 10/21/2019
+Version: 9.0.0.7
+
+

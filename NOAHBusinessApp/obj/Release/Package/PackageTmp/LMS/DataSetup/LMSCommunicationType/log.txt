@@ -1,0 +1,42 @@
+﻿Modified By			: Jenny May Cabantug
+Date Modified		: 11/26/2024
+Menu Item Version	: 10.0.0.3
+Reason				: Addressing of findings
+						- #146 Upon selecting a record in the Inquire window, screen will always load LANDLINE
+						- #152 Upon clicking New, New, Save, and Inquire buttons must be enabled
+
+Modified By			: Jenny May Cabantug
+Date Modified		: 11/26/2024
+Menu Item Version	: 10.0.0.2
+Reason				: Addressing of findings
+						- apply standard V10 UI
+
+Modified By			: Jenny May Cabantug
+Date Modified		: 11/26/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Addressing of findings
+						- #65 Server Error upon clicking
+						- export should be disable upon initial loading
+						- export should be enable upon inquire
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Modified		: 01/24/2024
+Menu Item Version	: 9.0.0.3
+Reason				: Addressing of findings
+					  Issue Logs # 526 - Save and Delete Buttons and Description are still enabled even if record was already used in another menu item. >> Should be disabled
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Modified		: 01/09/2024
+Menu Item Version	: 9.0.0.2
+Reason				: Additional changes for the previous addressing
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Modified		: 01/09/2024
+Menu Item Version	: 9.0.0.1
+Reason				: Addressing of findings
+					  Issue Logs# 58 - Wrong prompt message >>> It should be Cannot be saved. Duplicate [data] are not allowed.
+
+Created By : ALZ BULANADI
+Date Created : 11/10/2023
+Menu Item Version : 9.0.0.0
+Reason : New dev

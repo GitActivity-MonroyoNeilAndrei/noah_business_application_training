@@ -1,0 +1,24 @@
+﻿
+Created by			: Neil Andrei Monroyo
+Date Created		: 04/14/2025
+Menu Item Version	: 10.0.0.0
+Reason				: Development 
+						Header button
+							- new
+							- save
+							- delete
+							- inquire
+							- process
+						Header fields
+							- Vendor
+							- Remarks
+						Line Details
+							- Item Group Type Code
+							- Item Group Type Description
+							- Item Code
+							- Item Description
+							- Base UOM
+							- VAT Short Description
+							- EWT Short Description
+							- Remarks
+

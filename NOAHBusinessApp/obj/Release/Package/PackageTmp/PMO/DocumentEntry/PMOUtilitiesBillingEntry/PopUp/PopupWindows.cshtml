@@ -1,0 +1,66 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+
+    ViewBag.Title = "PopupWindows";
+}
+
+
+<div id="nwDetails" nwTitle="Utility Rate" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnSaveContact" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <input id="isFixed" type="text" maxlength="255" class="nwHide" />
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="GridPopUpDetails" class="fullwidth"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwInvoiceType" nwTitle="Invoice Type" class="nkPopupCon">
+    <div class="container-flex padding-10">
+        <div class="row row-parent">
+            <div class="col col-12 col-parent child-centered">
+                <div class="row">
+                    <div class="col col-12">
+                        <label class="lbltxt">Please select Invoice Type</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-12">
+                        <select id="cbInvoiceType" class="cmb fullwidth">
+                            <option value="INVOIC">Utilities Billing</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                    </div>
+                    <div class="col col-8">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <div id="btnProceed" class="btn btn-default btnMedium fullwidth">
+                            Proceed >>
+                        </div>
+                    </div>
+                    <div class="col col-8">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

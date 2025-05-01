@@ -1,0 +1,222 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Payment Request Monitoring Report";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/AP/ReportsAndInquiry/APPaymentReqMonitorRpt/APPaymentReqMonitorRpt.js"></script>
+    <link href="~/AP/ReportsAndInquiry/APPaymentReqMonitorRpt/APPaymentReqMonitorRpt.css" rel="stylesheet" />
+</head>
+<body>
+@*ToolBox*@
+<div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+
+    <div id="noah-webui-Toolbox-BindingNavigator" nwbind="noah-webui-Toolbox-Grid" class="noah-webui-Toolbox-BindingNavigator nwHide">
+        <div id="noah-webui-default-first" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div id="noah-webui-default-previous" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div class="BN-record">
+            <input id="noah-webui-default-currentRec" type="text" value="0" />
+            <span>of 0</span>
+        </div>
+        <div id="noah-webui-default-next" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div id="noah-webui-default-last" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+    </div>
+
+    <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">New</div>
+    </div>
+    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item">
+            <div class="_icon"></div>
+            <div class="_lbl">Save</div>
+        </div>
+        <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item">
+            <div class="_icon"></div>
+            <div class="_lbl">Delete</div>
+        </div>
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+    <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item">
+            <div class="_icon"></div>
+            <div class="_lbl">Inquire</div>
+        </div>
+    <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Export</div>
+    </div>
+</div>
+
+<div class="container-flex padding-10">
+    <div class="row child-centered row-parent-mob">
+        <div class="col col-12 col-parent child-centered">
+            <div class="col col-5 col-parent inline-block">
+                <div class="row">
+                    <fieldset class="fieldset">
+                        <legend>Date Filter</legend>
+                        <div class="row">
+                            <div class="col col-6">
+
+                                <div class="row">
+                                    <div class="col col-5 child-centered">
+                                        <div class="rdo-wrapper">
+                                            <input id="radioMonthly" type="radio" checked name="datefilter" class="rdo">
+                                            <label class="lbl-rdo" for="radioMonthly">Monthly</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col col-7">
+                                        <select id="cmbMonth" class="cmb fullwidth">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col col-5 child-centered">
+                                        <div class="rdo-wrapper">
+                                            <input id="radioAnnual" type="radio" name="datefilter" class="rdo ">
+                                            <label class="lbl-rdo" for="radioAnnual">Annually</label>
+                                        </div>
+                                    </div>
+                                    <div class="col col-7">
+                                        <select class="cmb fullwidth" id="cboAnnual">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-5 child-centered">
+                                        <div class="rdo-wrapper">
+                                            <input id="radioQuarter" type="radio" name="datefilter" class="rdo">
+                                            <label class="lbl-rdo" for="radioQuarter">Quarterly</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col col-7">
+                                        <select id="cmbQuarter" class="cmb fullwidth">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col col-5">
+                                <div class="row">
+                                    <div class="col col-12">
+                                        <div class="rdo-wrapper">
+                                            <input id="radioDate" type="radio" name="datefilter" class="rdo">
+                                            <label class="lbl-rdo" for="radioDate">Date Covered</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col col-3">
+                                        <label class="lbltxt">From</label>
+                                    </div>
+                                    <div class="col col-7 ">
+                                        <input id="txtDateFrom" type="date" name="" placeholder="mm/dd/yyyy" class="txtbox txtbox-date">
+                                    </div>
+                                    <div class="col col-2 ">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-3">
+                                        <label class="lbltxt">To</label>
+                                    </div>
+                                    <div class="col col-7">
+                                        <input id="txtDateTo" type="date" name="" placeholder="mm/dd/yyyy" class="txtbox txtbox-date">
+                                    </div>
+                                    <div class="col col-2 ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="col col-12">
+                        <div class="col col-5 col-parent">
+                            <fieldset class="fieldset">
+                                <legend>Type</legend>
+                                <div class="row row-parent">
+
+                                    <div class="row">
+                                        <div class="col col-3 ">
+                                            <div class="rdo-wrapper">
+                                                <input id="rdbAll" type="radio" checked name="type" class="rdo" value="all">
+                                                <label class="lbl-rdo" for="rdbAll">All</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col col-3 ">
+                                            <div class="rdo-wrapper">
+                                                <input id="rdbPO" type="radio" name="type" class="rdo" value="po">
+                                                <label class="lbl-rdo" for="rdbPO">PO</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col col-6 ">
+                                            <div class="rdo-wrapper">
+                                                <input id="rdbNonPO" type="radio" name="type" class="rdo" value="nonpo">
+                                                <label class="lbl-rdo" for="rdbNonPO">Non-Po</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col col-7 col-parent">
+                            <fieldset class="fieldset">
+                                <div class="row row-parent">
+                                    <div class="col col-6 ">
+                                        <div class="rdo-wrapper">
+                                            <input id="rdbPerCC" type="radio" checked name="cc" class="rdo" value="PerCC">
+                                            <label class="lbl-rdo" for="rdbPerCC">Per <span id="lblCCDesc">Cost Center</span> Access</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col col-6 ">
+                                        <div class="rdo-wrapper">
+                                            <input id="rdbAllCC" type="radio" name="cc" class="rdo" value="AllCC">
+                                            <label class="lbl-rdo" for="rdbAllCC">Per Report Access</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col col-7">
+                <fieldset class="fieldset">
+                    <legend>Filter By</legend>
+                    <div id="settingstabs">
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="row row-parent-mob">
+        <div class="col col-12 col-parent">
+            <div id="nwGridMainCon"></div>
+        </div>
+    </div>
+</div>
+
+
+@section noahpopup{
+    @RenderPage("~/AP/ReportsAndInquiry/APPaymentReqMonitorRpt/Popup/PopupWindows.cshtml", "ValidationPopup")
+}
+</body>

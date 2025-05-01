@@ -1,0 +1,226 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "VAT Report ";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/AP/ReportsAndInquiry/APVATReport/APVATReport.js"></script>
+    <link href="~/AP/ReportsAndInquiry/APVATReport/APVATReport.css" rel="stylesheet" />
+</head>
+
+@*ToolBox*@
+<div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+
+    <div id="noah-webui-Toolbox-BindingNavigator" nwbind="noah-webui-Toolbox-Grid" class="noah-webui-Toolbox-BindingNavigator nwHide">
+        <div id="noah-webui-default-first" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+
+        <div id="noah-webui-default-previous" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div class="BN-record">
+            <input id="noah-webui-default-currentRec" type="text" value="0" />
+            <span>of 0</span>
+        </div>
+        <div id="noah-webui-default-next" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div id="noah-webui-default-last" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+    </div>
+
+    <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">New</div>
+    </div>
+    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Save</div>
+    </div>
+    <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Delete</div>
+    </div>
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+    <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Inquire</div>
+    </div>
+    <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Export</div>
+    </div>
+</div>
+
+@*Main*@
+<div class="container-flex padding-10">
+    <div class="row child-centered row-parent-mob">
+        <div class="col col-12 col-parent child-centered">
+            <div class="col col-5 inline-block">
+                    <div class="row">
+                        <fieldset class="fieldset">
+                            <legend>Date Filter</legend>
+                            <div class="row">
+                                <div class="col col-6">
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <div class="rdo-wrapper">
+                                                <input id="radioMonthly" type="radio" checked name="dateFilter" class="rdo">
+                                                <label class="lbl-rdo" for="radioMonthly">Monthly</label>
+                                            </div>
+                                        </div>
+                                        <div class="col col-7">
+                                            <select id="cmbMonth" class="cmb fullwidth"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <div class="rdo-wrapper">
+                                                <input id="radioAnnual" type="radio" name="dateFilter" class="rdo" />
+                                                <label class="lbl-rdo" for="radioAnnual">Annually</label>
+                                            </div>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input id="txtAnually" type="number" min="1900" max="2100" name="" class="txtbox">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <div class="rdo-wrapper">
+                                                <input id="radioQuarter" type="radio" name="dateFilter" class="rdo">
+                                                <label class="lbl-rdo" for="radioQuarter">Quarterly</label>
+                                            </div>
+                                        </div>
+                                        <div class="col col-7">
+                                            <select id="cmbQuarter" class="cmb fullwidth"></select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col col-6">
+                                    <div class="row">
+                                        <div class="col col-12">
+                                            <div class="rdo-wrapper">
+                                                <input id="radioDate" type="radio" name="dateFilter" class="rdo cmb fullwidth">
+                                                <label class="lbl-rdo" for="radioDate">Date Covered</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">From</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input id="txtDateFrom" type="date" name="" placeholder="mm/dd/yyyy" class="txtbox txtbox-date">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">To</label>
+                                        </div>
+                                        <div class="col col-7">
+                                            <input id="txtDateTo" type="date" name="" placeholder="mm/dd/yyyy" class="txtbox txtbox-date">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                        <div class="col col-6">
+                            <div id="nwCustBtn" class="btn btn-default col-12">Create DAT File</div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col col-3">
+                <fieldset class="fieldset">
+                    <legend>Document Type</legend>
+                    <div class="row row-parent">
+                        <div class="col col-6 col-parent">
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div class="rdo-wrapper">
+                                        <input id="radioAll" checked type="radio" name="document-type" class="rdo">
+                                        <label class="lbl-rdo" for="radioAll">All</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div class="rdo-wrapper">
+                                        <input id="radioAPV" type="radio" name="document-type" class="rdo">
+                                        <label class="lbl-rdo" for="radioAPV">APV</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div class="rdo-wrapper">
+                                        <input id="radioDebit" type="radio" name="document-type" class="rdo">
+                                        <label class="lbl-rdo" for="radioDebit">Debit Memo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-5">
+                                    <div class="rdo-wrapper">
+                                        <input id="radioNonCheckPayment" type="radio" name="document-type" class="nwHide">
+                                        <label class="nwHide" for="radioNonCheckPayment">Non-Chek Payment Cancellation</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-5">
+                                    <div class="rdo-wrapper">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-6 col-parent">
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div class="rdo-wrapper">
+                                        <input id="radioPaymentRelease" type="radio" name="document-type" class="rdo">
+                                        <label class="lbl-rdo" for="radioPaymentRelease">Payment Release</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div class="rdo-wrapper">
+                                        <input id="radioVoidChecks" type="radio" name="document-type" class="rdo">
+                                        <label class="lbl-rdo" for="radioVoidChecks">Payment Cancellation</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col col-4">
+                <fieldset class="fieldset">
+                    <legend>Filter By</legend>
+                    <div id="settingstabs">
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-parent-mob">
+        <div class="col col-12 col-parent">
+            <div id="nwGridMainCon"></div>
+        </div>
+    </div>
+    <a id="aDownload" target="_blank" class="nwHideImportant" href="#" download>download</a>
+</div>
+
+

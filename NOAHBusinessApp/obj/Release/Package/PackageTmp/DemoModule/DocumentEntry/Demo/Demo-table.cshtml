@@ -1,0 +1,2158 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Demo-Table";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/DemoModule/DocumentEntry/DemoIcon/Demo.js"></script>
+    <link href="~/DemoModule/DocumentEntry/DemoIcon/Demo.css" rel="stylesheet" />
+</head>
+
+<div class="container-flex padding-10">
+    <div class="row row-parent padding-x-10">
+        <div class="col col-12 col-parent">
+            <div id="tblWithTabsWrapperSample2"
+                 class="table-tabs-wrapper rescale-ready"
+                 nk-table-style="2">
+                <div class="table-tabs-actions">
+                    <div class="table-header-mob"></div>
+                    <!-- Left side -->
+                    <div class="table-header-actions-c">
+                        <div class="hrd-filters">
+                            <div class="hrd-closed-sb"></div>
+                            <div class="hrd-title">Grid Filters</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-insert"
+                                 title="Insert Row"></div>
+                            <div class="table-hrd-text">Insert Row</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-delete"
+                                 title="Delete Row"></div>
+                            <div class="table-hrd-text">Delete Row</div>
+                        </div>
+                        <div class="_ver-c"></div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-save"
+                                 title="Save Column Width"></div>
+                            <div class="table-hrd-text">Save Column Width</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-reset"
+                                 title="Reset Column Width"></div>
+                            <div class="table-hrd-text">Reset Column Width</div>
+                        </div>
+                        <div class="_ver-c"></div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-reload"
+                                 title="Reload Details"></div>
+                            <div class="table-hrd-text">Reload Details</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-hrHeader"
+                                 title="Hide Report Header"></div>
+                            <div class="table-hrd-text">Hide Report Header</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-dl-template"
+                                 title="Download Template"></div>
+                            <div class="table-hrd-text">Download Template</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-reverse"
+                                 title="Reverse"></div>
+                            <div class="table-hrd-text">Reverse</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-copy"
+                                 title="Copy Row"></div>
+                            <div class="table-hrd-text">Copy Row</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-load-template"
+                                 title="Load from Valid Historical Template"></div>
+                            <div class="table-hrd-text">
+                                Load from Valid Historical Template
+                            </div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-download-upload-template"
+                                 title="Download Upload Template"></div>
+                            <div class="table-hrd-text">
+                                Download Upload Template
+                            </div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-prepayment"
+                                 title="Prepayments"></div>
+                            <div class="table-hrd-text">Prepayments</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-close-ticket"
+                                 title="Closed ticket"></div>
+                            <div class="table-hrd-text">Closed ticket</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-open-ticket"
+                                 title="Open ticket"></div>
+                            <div class="table-hrd-text">Open ticket</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-takeover-ticket"
+                                 title="Takeover ticket"></div>
+                            <div class="table-hrd-text">Takeover ticket</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-clear-fields"
+                                 title="Clear fields"></div>
+                            <div class="table-hrd-text">Clear fields</div>
+                        </div>
+                        <div class="_ver-c"></div>
+                        <div class="grid-find-c">
+                            <div class="grid-input">
+                                <input type="text"
+                                       name=""
+                                       class="txtbox txtdesc txtlookup" />
+                                <div class="grid-find-btn" title="Find"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right side -->
+                    <div class="table-tabs-actions-right">
+                        <div class="table-search-wrapper">
+                            <input type="text"
+                                   class="table-search-txtbox"
+                                   placeholder="Filter"
+                                   autocomplete="off" />
+                            <span class="table-search-txtbox-clear"
+                                  title="Clear"></span>
+                        </div>
+                        <div class="btn btn-target-rescale"
+                             nk-fx-click="press"
+                             nk-rescale-target="tblWithTabsWrapperSample2"
+                             nk-rescale-mode="fullscreen"
+                             nk-rescale-state="normal"
+                             title="Rescale"></div>
+                    </div>
+                </div>
+                <div id="panelTblTabColSticky" class="table-wrapper">
+                    <table class="table" id="grid-Nsticky" sid="nkTable1">
+                        <thead>
+                            <tr>
+                                <th data-type="str"
+                                    scope="col"
+                                    class="tbl-row-num">
+                                    #
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Remaining Budget Qty
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Remaining Budget Amount (VATEX)
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Item Group Type*
+                                </th>
+                                <th data-type="str" scope="col">Item</th>
+                                <th data-type="str" scope="col">UOM</th>
+                                <th data-type="str" scope="col">Qty*</th>
+                                <th data-type="str" scope="col">
+                                    Unit Cost (VATIN)*
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Unit Cost (VATEX)*
+                                </th>
+                                <th data-type="str" scope="col">
+                                    OCY Amount (VATIN)
+                                </th>
+                                <th data-type="str" scope="col">
+                                    OCY Amount (VATIN)
+                                </th>
+                                <th data-type="str" scope="col">[Segment 2]</th>
+                                <th data-type="str" scope="col">[Segment 3]</th>
+                                <th data-type="str" scope="col">[Segment 4]</th>
+                                <th data-type="str" scope="col">[Segment 5]</th>
+                                <th data-type="str" scope="col">
+                                    [Segment 6]*
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Budget Allocation
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-parent padding-x-10">
+        <div class="col col-12 col-parent">
+            <div id="tblWithTabsWrapperSample4"
+                 class="table-tabs-wrapper rescale-ready"
+                 nk-table-style="1">
+                <div class="table-tabs-actions">
+                    <div class="table-header-mob">
+                        <div class="grid-icon-mob"></div>
+                    </div>
+                    <!-- Left side -->
+                    <div class="table-header-actions-c">
+                        <div class="hrd-filters">
+                            <div class="hrd-closed-sb"></div>
+                            <div class="hrd-title">Grid Filters</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-insert"
+                                 title="Insert Row"></div>
+                            <div class="table-hrd-text">Insert Row</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-delete"
+                                 title="Delete Row"></div>
+                            <div class="table-hrd-text">Delete Row</div>
+                        </div>
+                        <div class="_ver-c"></div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-save"
+                                 title="Save Column Width"></div>
+                            <div class="table-hrd-text">Save Column Width</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-reset"
+                                 title="Reset Column Width"></div>
+                            <div class="table-hrd-text">Reset Column Width</div>
+                        </div>
+                        <div class="_ver-c"></div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-reload"
+                                 title="Reload Details"></div>
+                            <div class="table-hrd-text">Reload Details</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-hrHeader"
+                                 title="Hide Report Header"></div>
+                            <div class="table-hrd-text">Hide Report Header</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-dl-template"
+                                 title="Download Template"></div>
+                            <div class="table-hrd-text">Download Template</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-reverse"
+                                 title="Reverse"></div>
+                            <div class="table-hrd-text">Reverse</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-copy"
+                                 title="Copy Row"></div>
+                            <div class="table-hrd-text">Copy Row</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-icon-load-template"
+                                 title="Load from Valid Historical Template"></div>
+                            <div class="table-hrd-text">
+                                Load from Valid Historical Template
+                            </div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-download-upload-template"
+                                 title="Download Upload Template"></div>
+                            <div class="table-hrd-text">
+                                Download Upload Template
+                            </div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-prepayment"
+                                 title="Prepayments"></div>
+                            <div class="table-hrd-text">Prepayments</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-close-ticket"
+                                 title="Closed ticket"></div>
+                            <div class="table-hrd-text">Closed ticket</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-open-ticket"
+                                 title="Open ticket"></div>
+                            <div class="table-hrd-text">Open ticket</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-takeover-ticket"
+                                 title="Takeover ticket"></div>
+                            <div class="table-hrd-text">Takeover ticket</div>
+                        </div>
+                        <div class="hrd-action-cc">
+                            <div class="table-hrd-icon hrd-clear-fields"
+                                 title="Clear fields"></div>
+                            <div class="table-hrd-text">Clear fields</div>
+                        </div>
+                        <div class="_ver-c"></div>
+                        <div class="grid-find-c">
+                            <div class="grid-input">
+                                <input type="text"
+                                       name=""
+                                       class="grid-search-input" />
+                            </div>
+                            <div class="hrd-action-cc">
+                                <div class="table-hrd-icon hrd-icon-find"
+                                     title="Find"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right side -->
+                    <div class="table-tabs-actions-right">
+                        <div class="table-search-wrapper">
+                            <input type="text"
+                                   class="table-search-txtbox"
+                                   placeholder="Filter"
+                                   autocomplete="off" />
+                            <span class="table-search-txtbox-clear"
+                                  title="Clear"></span>
+                        </div>
+                        <div class="btn btn-target-rescale"
+                             nk-fx-click="press"
+                             nk-rescale-target="tblWithTabsWrapperSample4"
+                             nk-rescale-mode="fullscreen"
+                             nk-rescale-state="normal"
+                             title="Rescale"></div>
+                    </div>
+                </div>
+                <div id="panelTblTabColSticky"
+                     class="table-wrapper table-wrapper-np">
+                    <table class="table" id="grid-sticky" sid="nkTable1">
+                        <thead>
+                            <tr>
+                                <th data-type="str"
+                                    scope="col"
+                                    class="tbl-row-num">
+                                    #
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Remaining Budget Qty
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Remaining Budget Amount (VATEX)
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Item Group Type*
+                                </th>
+                                <th data-type="str" scope="col">Item</th>
+                                <th data-type="str" scope="col">UOM</th>
+                                <th data-type="str" scope="col">Qty*</th>
+                                <th data-type="str" scope="col">
+                                    Unit Cost (VATIN)*
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Unit Cost (VATEX)*
+                                </th>
+                                <th data-type="str" scope="col">
+                                    OCY Amount (VATIN)
+                                </th>
+                                <th data-type="str" scope="col">
+                                    OCY Amount (VATIN)
+                                </th>
+                                <th data-type="str" scope="col">[Segment 2]</th>
+                                <th data-type="str" scope="col">[Segment 3]</th>
+                                <th data-type="str" scope="col">[Segment 4]</th>
+                                <th data-type="str" scope="col">[Segment 5]</th>
+                                <th data-type="str" scope="col">
+                                    [Segment 6]*
+                                </th>
+                                <th data-type="str" scope="col">
+                                    Budget Allocation
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+
+                            <tr>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    <div class="btn btn-default btn-edit">
+                                        Edit
+                                    </div>
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3000.00
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    1000.00
+                                </td>
+                                <td scope="col" row-th="">
+                                    Item Group Type 111
+                                </td>
+                                <td scope="col" row-th="">Item</td>
+                                <td scope="col"
+                                    row-th="*"
+                                    class="tb-align-right">
+                                    11
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    23
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    22
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    2222
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    3333
+                                </td>
+                                <td scope="col"
+                                    row-th=""
+                                    class="tb-align-right">
+                                    4444
+                                </td>
+                                <td scope="col" row-th="">Segment 2</td>
+                                <td scope="col" row-th="">Segment 3</td>
+                                <td scope="col" row-th="">Segment 4</td>
+                                <td scope="col" row-th="">Segment 5</td>
+                                <td scope="col" row-th="">Segment 6</td>
+                                <td scope="col" row-th="">Budget Alloc</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

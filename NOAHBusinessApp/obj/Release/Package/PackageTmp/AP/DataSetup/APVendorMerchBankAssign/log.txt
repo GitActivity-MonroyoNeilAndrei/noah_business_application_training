@@ -1,0 +1,19 @@
+﻿Modified By			: Joshua Andrew Obina
+Date Modified		: 09/21/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10
+
+Modified by			:  EMB
+Date				:  07/28/2023
+Menu Item Version	:  9.0.0.2
+Maneu Item Name		:  Product Code - optional(w/blue asterisk)
+
+Created by			:  EMB
+Date				:  07/28/2023
+Menu Item Version	:  9.0.0.1
+Maneu Item Name		:  Product Code - optional
+
+Created by			:  EMB
+Date				:  01/30/2023
+Menu Item Version	:  9.0.0.0
+Maneu Item Name		:  Vendor Merchant Bank Assignment

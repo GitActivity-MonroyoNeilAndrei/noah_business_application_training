@@ -1,0 +1,175 @@
+﻿Modified By			: Joshua Andrew Obina
+Date Modified		: 09/25/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10
+
+Modified By		: Ejay M. Basit
+Date Modified	: 11/18/2023
+Version			: 9.0.0.18
+Updates			: Addressing of Findings
+					> Error in export
+
+Modified By		: RDA
+Date Modified	: 05/25/2021
+Version			: 9.0.0.17
+Updates			: Disable Inquire and Export if no data upon Refresh
+
+Modified By		: RDA
+Date Modified	: 03/19/2021
+Version			: 9.0.0.16
+Updates			: Add Permit Issued
+
+Modified By		: RDA
+Date Modified	: 02/24/2021
+Version			: 9.0.0.15
+Updates			: Remove , in some sql queries in dal
+
+Modified By       : AZNA
+Date Modified     : 10/23/2021
+Menu Item Version : 9.0.0.14
+Reason		  : Removed inline CSS and Script
+
+Modified By		: AZNA
+Date Modified	: 02/18/2021
+Version			: 9.0.0.13
+Updates			: VAPT Compliance
+
+Modified By		: RDA
+Date Modified	: 12/17/2020
+Updates			: Change Cannot save to Cannot be saved
+Version			: 9.0.0.12
+
+Modified by       : ocr
+Modification Date : 03.05.2020
+Reason            : Address Findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=387232434&fvid=1221479042
+Menu Item Version : 9.0.0.11
+
+Modified by       : ocr
+Modification Date : 03.05.2020
+Reason            : Address Findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=387232434&fvid=1221479042
+Menu Item Version : 9.0.0.10
+
+Modified by       : RMB
+Modification Date : 02.27.2020
+Reason            : removal of History f(x)
+Menu Item Version : 9.0.0.9
+
+Modified by       : RMB
+Modification Date : 02.14.2020
+Reason            : Address Findings on vendor field
+Menu Item Version : 9.0.0.8
+
+Modified by       : RBN
+Modification Date : 02.06.2019
+Reason            : History
+Menu Item Version : 9.0.0.7
+
+Modified by       : DJSB
+Modification Date : 10.11.2019
+Reason            : Add enhancement in Enabling Date Issued and Issued By RDO/LTD
+Menu Item Version : 9.0.0.6
+
+Modified by       : DJSB
+Modification Date : 09.30.2019
+Reason            : Add condition in viewing this menu item.
+Menu Item Version : 9.0.0.5
+
+Modified by       : DJSB
+Modification Date : 09.28.2019
+Reason            : Add condition
+Menu Item Version : 9.0.0.4
+
+Modified by       : DJSB
+Modification Date : 09.14.2019
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.3
+
+Modified by       : DJSB
+Modification Date : 09.13.2019
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.2
+
+Modified by       : DJSB
+Modification Date : 09.12.2019
+Reason            : Addressing of findings in resizing the window.
+Menu Item Version : 9.0.0.1
+
+Modified by       : CCB 
+Modification Date : 09.05.2019
+Reason            : Alignment
+Menu Item Version : 9.0.0.0
+
+Modified by       : FBP 
+Modification Date : 03.08.2018
+Reason            : Save title
+Menu Item Version : 8.0.0.7
+
+Modified by       : FBP 
+Modification Date : 03.07.2018
+Reason            : Save title
+Menu Item Version : 8.0.0.6
+
+Modified by       : FBP 
+Modification Date : 03.06.2018
+Reason            : Save title
+Menu Item Version : 8.0.0.5
+
+Modified by       : FBP 
+Modification Date : 02.17.2018
+Reason            : Save title
+Menu Item Version : 8.0.0.4
+
+Modified by       : JRA 
+Modification Date : 12.01.2017
+Reason            : Inquire
+Menu Item Version : 8.0.0.3
+
+Modified by       : JRA 
+Modification Date : 11.30.2017
+Reason            : Export
+Menu Item Version : 8.0.0.3
+
+Modified by       : JRA 
+Modification Date : 11.30.2017
+Reason            : Navigator Done Tradename,Inquire
+Menu Item Version : 8.0.0.3
+
+Modified by       : IVD
+Modification Date : 10.28.2017
+Reason            : Findings
+Menu Item Version : 8.0.0.3
+
+Modified By       : JRA
+Date Modified     : 10/23/2017
+Reason            : Fixed the No Data Source and make it dual purpose: For Link, And Stand Alone.
+Menu Item Version : 6.0.0.4 
+
+Modification Date : 10.13.2017
+Reason            : Revision
+Menu Item Version : 8.0.0.3
+
+Modified by       : IVD
+Modified by       : JRA
+Modification Date : 11.28.2017
+Reason            : Disable the fields,save and delete when there is already data.
+Menu Item Version : 8.0.0.3
+
+Modified by       : JVV
+Modification Date : 09/19/2017
+Reason            : Findings
+Detailed          : UI, Clearing Data, No Prompt Upon saving, Export, Inquire
+Menu Item Version : 8.0.0.0
+
+Modified by       : SC
+Modification Date : 09/27/2017
+Reason            : Add Menu Item
+Detailed          : B0203 Supplier BIR CAS Permit
+Menu Item Version : 8.0.0.0
+
+Created By        : JRA
+Date Modified     : 08/23/2017
+Reason            : for golden haven
+Menu Item Version : 6.0.0.0
+
+
+

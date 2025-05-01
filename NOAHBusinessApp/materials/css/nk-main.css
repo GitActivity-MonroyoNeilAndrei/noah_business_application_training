@@ -412,7 +412,7 @@ body {
 .btn.btn-modules {
     width: 42px;
     height: 30px;
-    line-height: 28px;
+    line-height: 33px;
     background-color: #ffffff;
     padding: 0 8px;
     white-space: nowrap;
@@ -425,7 +425,7 @@ body {
 }
 .left-pnl.expand .btn.btn-modules,
 .left-pnl.docked:hover .btn.btn-modules {
-    color: #555555;
+    color: #000000;
 }
 .left-pnl.expand .btn.btn-modules,
 .left-pnl.docked:hover .btn.btn-modules,
@@ -499,7 +499,7 @@ body {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 440px;
+    width: 100%;
     z-index: 1;
     padding-left: 230px;
     background-color: #ffffff;
@@ -518,7 +518,7 @@ body {
     line-height: 28px;
     position: relative;
     text-indent: 38px;
-    background-position: 10px;
+    background-position: 8px;
     background-image: url(../media/icons/icon-nw_v2_modules_colored_22x22_72px.png);
     background-repeat: no-repeat;
     font-weight: 600;
@@ -527,8 +527,8 @@ body {
 }
 .left-pnl.docked:hover .left-pnl-title,
 .left-pnl.expand .left-pnl-title {
-    background-position: 8px;
-    text-indent: 28px;
+    background-position: 10px;
+    text-indent: 37px;
 }
 .left-pnl-title > .left-pnl-title-ctr {
     top: 2px;
@@ -560,7 +560,7 @@ body {
 }
 .menu-grp-c {
     padding: 6px 4px;
-    height: 70%;
+    height: 99%;
     overflow: hidden auto;
 }
 .menu-grp-li {
@@ -1734,7 +1734,7 @@ span.left-pnl-title-ctr {
         right: 10px;
         background-color: #ffffff;
         width: 320px;
-        height: 440px;
+        height: 180px; /*JMC_02112024*/
         overflow: hidden;
         border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -3728,11 +3728,14 @@ spl-ms-widget2 ._ico {
 }
 
 
+
 .left-pnl.expand .module-list-c {
-    top: 83px;
+    top: inherit;
+    position: relative;
 }
 .left-pnl .module-list-c {
     top: 0;
+    position: relative;
 }
 
 .left-pnl.expand .row.margin-bottom-5 {
@@ -3880,6 +3883,7 @@ spl-ms-widget2 ._ico {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 24px;
+    /*display:none;*/ /*JMC 01/10/2025 UNCOMMENT IF NOTIFICATION ALREADY FUNCTIONAL*/
 }
 
 .btn.btn-hdr_r.btn-notif.selected > .hrd-notif-icon {
@@ -4049,10 +4053,12 @@ spl-ms-widget2 ._ico {
 }
 
 .spl-sys-banner-text {
-    font-size: 1.14em;
+    font-size: 1em;
     font-weight: 600;
     color: #ffa10d;
     letter-spacing: .4px;
+    margin-bottom: 40px !important; /*JMC_02112024*/
+    margin: 24px;
 }
 
 .spl-sys-r-icon::after {
@@ -5060,3 +5066,82 @@ body {
     cursor: default;
 }
 
+.spl-ms-widget2-lbl {
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.left-pnl.expand.extended {
+    z-index: 1001;
+    width: 70%;
+}
+.menu-grp-ul {
+    font-size: 14px;
+}
+.btn.btn-modules {
+    background-image: url(../../materials/media/icons/_overview/icon-nw_v2_pending_task_colored_44x44_300px.png);
+}
+.nk .lbltxt, .nk label {
+    padding: 6px;
+}
+div#menuitemListDataClose {
+    font-size: 12px;
+    cursor: pointer;
+    color: #ffa10d;
+    font-weight: bold;
+}
+
+.menu-grp-lbl.menuitem {
+    background-image: url(../icons/menuitem.png);
+}
+
+div.main-c.theme_secondary_dark .nk-toolbar-c {
+    background-color: #242526;
+    border-bottom: 1px solid #484848;
+}
+div#versehome {
+    font-size: 12px;
+}
+div#mainModList {
+    overflow: auto;
+    height: 100%;
+    padding-bottom: 100px;
+}
+span#menuVersion {
+    color: white;
+    font-size: 12px;
+    margin-right: 10px;
+}
+.hdr-noah-c {
+    max-width: 85% !important;
+}
+
+/* Hide the default browser context menu */
+.rightclick-context-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    z-index: 1000;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #28396f;
+    border-radius: 3px;
+        font-size: 13px;
+}
+
+.rightclick-context-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.rightclick-context-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #333;
+}
+
+.rightclick-context-menu li:hover {
+    background: linear-gradient(to top, #416fed, #2476d9);
+    color: #fff;
+}

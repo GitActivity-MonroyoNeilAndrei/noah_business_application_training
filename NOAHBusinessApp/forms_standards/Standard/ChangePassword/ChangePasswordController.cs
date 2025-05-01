@@ -22,6 +22,8 @@ namespace NOAHBusinessApp.Controllers.SB
 
         public ActionResult ChangePassword_Gateway()
         {
+            isPublic = true;
+
             #region  Variable needed dafaulted all as true
             isErrorCheckerMessageShow = true;
             isCompanyGet = true;

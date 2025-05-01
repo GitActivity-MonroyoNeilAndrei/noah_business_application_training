@@ -97,13 +97,33 @@ $(document).ready(function () {
         $doc.find(".btn-ham").addClass("active");
     });
 
-    $doc.on("focusin", `.left-pnl .search-c > input[type="text"]`, function () {
+    $doc.on("focusin", '.left-pnl .search-c > input[type="text"]', function () {
         var $this = $(this);
         if (winSize >= 768) {
             $this.parents(".left-pnl").addClass("extended expand");
             $doc.find(".btn-ham").addClass("active");
         }
     });
+    $doc.on("click", ".btn.btn-modules", function () {
+        var $this = $(this);
+        
+         
+            $this.parents(".left-pnl").addClass("extended expand");
+            $doc.find(".btn-ham").addClass("active");
+
+            var _crModule = $(this).attr("cid");
+            nw_GetMenuitemListDetails(_crModule);
+            if (winSize >= 768) { }
+    });
+    $doc.on("click", "#menuitemListDataClose", function () {
+        var $this = $(this);
+        if (winSize >= 768) {
+            $this.parents(".left-pnl").removeClass("extended");
+            $doc.find(".btn-ham").removeClass("active");
+        }
+    });
+
+    
 
     //$doc.on("click", ".left-pnl .search-c > .btn.btn-search", function () {
     //    var $this = $(this);
@@ -549,21 +569,21 @@ $(document).on("click", ".btn-ham", function () {
 });
 
 function fx_ExplorerTitleShow() {
-    var $el2 = $(document).find(".btn-modules");
-    $el2.each(function (i) {
-        var $_this = $el2.eq(i);
-        $_this.attr("title", $_this.attr("nwtitle"));
-        $_this.attr("nwtitle", "");
-    });
+    //var $el2 = $(document).find(".btn-modules");
+    //$el2.each(function (i) {
+    //    var $_this = $el2.eq(i);
+    //    $_this.attr("title", $_this.attr("nwtitle"));
+    //    $_this.attr("nwtitle", "");
+    //});
 }
 
 function fx_ExplorerTitleHide() {
-    var $el2 = $(document).find(".btn-modules");
-    $el2.each(function (i) {
-        var $_this = $el2.eq(i);
-        $_this.attr("nwtitle", $_this.attr("title"));
-        $_this.attr("title", "");
-    });
+    //var $el2 = $(document).find(".btn-modules");
+    //$el2.each(function (i) {
+    //    var $_this = $el2.eq(i);
+    //    $_this.attr("nwtitle", $_this.attr("title"));
+    //    $_this.attr("title", "");
+    //});
 }
 
 

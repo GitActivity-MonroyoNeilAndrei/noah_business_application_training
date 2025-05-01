@@ -32,6 +32,7 @@ namespace InterfaceV3.Controllers
             ViewBag.Message = title;
 
             mainDataAccess main = new mainDataAccess();
+            main.isAccessLoad = true;
             dsData =main.UserAccess(User, this);
 
             return View(@"~\Main\DocumentEntry\Home\Home.cshtml");

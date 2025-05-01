@@ -1,0 +1,154 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "BIR Forms Authorized Signatory Report";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/AP/ReportsAndInquiry/APBIRFormsAuthorizedSignatoryReport/APBIRFormsAuthorizedSignatoryReport.js"></script>
+    <link href="~/AP/ReportsAndInquiry/APBIRFormsAuthorizedSignatoryReport/APBIRFormsAuthorizedSignatoryReport.css" rel="stylesheet" />
+</head>
+
+@*ToolBox*@
+<div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+    <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">New</div>
+    </div>
+    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Save</div>
+    </div>
+    <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Delete</div>
+    </div>
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+    <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Inquire</div>
+    </div>
+    <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Export</div>
+    </div>
+</div>
+
+<div class="container-flex padding-10">
+    <div class="row child-centered row-parent-mob">
+        <div class="col col-12 col-parent child-centered">    
+             <div class="col col-5 col-parent">             
+                    @* <div class="row row-parent-mob">
+                        <fieldset class="fieldset">
+                            <div class="row">
+                                <div class="col col-7">
+                                    <input id="rbPCCA" type="radio" checked name="CCA" class="rdo">
+                                    <label class="lbl-rdo" for="rbPCCA">Per Cost Center Access</label>
+                                </div>
+                                <div class="col col-5">
+                                    <input id="rbACCA" type="radio" name="CCA" class="rdo">
+                                    <label class="lbl-rdo" for="rbACCA">Per Report Access</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div> *@
+                    <div class="row">
+                          <fieldset class="fieldset">
+                              <legend>Date Filter</legend>
+                              <div class="row">
+                                  <div class="col col-7">
+                                      <div class="row">
+                                          <div class="col col-5">
+                                              <div class="rdo-wrapper">
+                                                  <input id="rbMonthly" type="radio" checked name="dateFilter" class="rdo">
+                                                  <label class="lbl-rdo" for="rbMonthly">Monthly</label>
+                                              </div>
+                                          </div>
+             
+                                          <div class="col col-7">
+                                              <select id="cboMonthly" class="cmb fullwidth">
+                                                  <option>Select</option>
+                                              </select>
+                                          </div>
+                                      </div>
+             
+                                      <div class="row">
+                                          <div class="col col-5">
+                                              <div class="rdo-wrapper">
+                                                  <input id="rbAnnual" type="radio" name="dateFilter" class="rdo">
+                                                  <label class="lbl-rdo" for="rbAnnual">Annually</label>
+                                              </div>
+                                          </div>
+                                          <div class="col col-7">
+                                              <input id="txtAnually" type="number" min="1900" max="2100" name="" class="txtbox">
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col col-5">
+                                              <div class="rdo-wrapper">
+                                                  <input id="rbQuarter" type="radio" name="dateFilter" class="rdo">
+                                                  <label class="lbl-rdo" for="rbQuarter">Quarterly</label>
+                                              </div>
+                                          </div>
+             
+                                          <div class="col col-7">
+                                              <select id="cboQuarterly" class="cmb fullwidth">
+                                                  <option>Select</option>
+                                              </select>
+                                          </div>
+                                      </div>
+             
+                                  </div>
+                                  <div class="col col-5">
+                                      <div class="row">
+                                          <div class="col col-12">
+                                              <div class="rdo-wrapper">
+                                                  <input id="rbForThePeriod" type="radio" name="dateFilter" class="rdo">
+                                                  <label class="lbl-rdo" for="rbForThePeriod">Date Covered</label>
+                                              </div>
+                                          </div>
+                                      </div>
+             
+                                      <div class="row">
+                                          <div class="col col-3">
+                                              <label class="lbltxt">From</label>
+                                          </div>
+                                          <div class="col col-9">
+                                              <input id="dtFrom" type="text" name="" placeholder="MM/dd/yyyy" class="txtbox nwDatePick">
+                                          </div>
+                                      </div>
+                                      <div class="row">
+                                          <div class="col col-3">
+                                              <label class="lbltxt">To</label>
+                                          </div>
+                                          <div class="col col-9">
+                                              <input id="dtTo" type="text" name="" placeholder="MM/dd/yyyy" class="txtbox nwDatePick">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </fieldset>
+                      </div>
+              </div>
+             <div class="col col-7 col-parent">
+                    <fieldset class="fieldset">
+                        <legend>Filter By</legend>
+                        <div id="settingstabs">
+                        </div>
+                    </fieldset>
+                </div>
+        </div>
+    </div>
+    <div class="row row-parent-mob">
+        <div class="col col-12 col-parent">
+            <div id="nwGridMainCon"></div>
+        </div>
+    </div>
+</div>
+
+
+
+

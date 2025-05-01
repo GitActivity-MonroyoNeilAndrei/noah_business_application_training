@@ -23,6 +23,8 @@ using DALComponent;
 using System.Collections.Generic;
 using System.IO;
 using System.Data.SqlClient;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 
 namespace Noah_Web.forms_BusinessLayer
@@ -64,33 +66,35 @@ namespace Noah_Web.forms_BusinessLayer
 
         #region SPR
 
-        const int SPR_COMPILEDHDR = 1,
-                  SPR_REQUIREDHDR = 2,
-                  SPR_ALTERNATIVE = 3,
-                  SPR_DOCUMENTGRP = 4,
-                  SPR_WORKINSTRUCTIONS = 5,
-                  SPR_DOCDETAILSCODEHDR = 6,
-                  SPR_DOCDETAILSHDR = 7,
-                  SPR_DOCNOHDR = 8,
-                  SPR_DOCDATEHDR = 9,
-                  SPR_EXPIRYDATEHDR = 10,
-                  SPR_URLHDR = 11,
-                  SPR_ATTACHHDR = 12,
-                  SPR_VIEWHDR = 13,
-                  SPR_REMOVEHDR = 14,
-                  SPR_TAGDOCNOHDR = 15,
-                  SPR_TAGDOCDATEHDR = 16,
-                  SPR_TAGEXPIRYDATEHDR = 17,
-                  SPR_TAGATTACHHDR = 18,
-                  SPR_TAGURLHDR = 19,
-                  SPR_FILEPATH = 20,
-                  SPR_DELETEROW = 21,
-                  SPR_TAG = 22,
-                  SPR_GRPNO = 23,
-                  SPR_DEPT = 24,
-                  SPR_TYPE = 25,
-                  SPR_LINEID = 26,
-                  SPR_FORCONFALL = 27;
+        public static int startindex = 0,
+             SPR_COMPILEDHDR = ++startindex,
+                       SPR_REQUIREDHDR = ++startindex,
+                       SPR_ALTERNATIVE = ++startindex,
+                       SPR_DOCUMENTGRP = ++startindex,
+                       SPR_WORKINSTRUCTIONS = ++startindex,
+                       SPR_DOCDETAILSCODEHDR = ++startindex,
+                       SPR_DOCDETAILSHDR = ++startindex,
+                       SPR_DOCNOHDR = ++startindex,
+                       SPR_DOCDATEHDR = ++startindex,
+                       SPR_EXPIRYDATEHDR = ++startindex,
+                       SPR_URLHDR = ++startindex,
+                       SPR_ATTACHHDR = ++startindex,
+                       SPR_CAPTUREHDR = ++startindex,
+                       SPR_VIEWHDR = ++startindex,
+                       SPR_REMOVEHDR = ++startindex,
+                       SPR_TAGDOCNOHDR = ++startindex,
+                       SPR_TAGDOCDATEHDR = ++startindex,
+                       SPR_TAGEXPIRYDATEHDR = ++startindex,
+                       SPR_TAGATTACHHDR = ++startindex,
+                       SPR_TAGURLHDR = ++startindex,
+                       SPR_FILEPATH = ++startindex,
+                       SPR_DELETEROW = ++startindex,
+                       SPR_TAG = ++startindex,
+                       SPR_GRPNO = ++startindex,
+                       SPR_DEPT = ++startindex,
+                       SPR_TYPE = ++startindex,
+                       SPR_LINEID = ++startindex,
+                       SPR_FORCONFALL = ++startindex;
 
         #endregion
 
@@ -373,7 +377,46 @@ namespace Noah_Web.forms_BusinessLayer
                     CreateReqCommHDR(true);
                     js.ADD("nwLoading_End('xactReloadDtls')");
                     break;
+                case "actBase64ToPath":
+                    try
+                    {
+                        string Server_Path = dal.Server_Path();
+                           Server_Path = @"D:\Work Files\Source Codes\NOAH V9 CONSO\NOAHBusinessApplication\DC\DataSetup\DCRequirementCompliance\SamplePath\SampleMenu";
+                        Server_Path += @"\";
+                        string Folder = "DCRequirementCompliance";
+                        string imgresult = WebApp.nwobjectText("imgresult");
+                        imgresult = Regex.Replace(imgresult, @"^data:image\/[a-zA-Z]+;base64,", string.Empty);
+                        string FileName = "NOAHAttach_" + nwSystem.RandomStrings(10);
+                        string FullPath = System.IO.Path.Combine(Server_Path, Folder, FileName + ".jpeg");
+                        byte[] outPdfBuffer = System.Convert.FromBase64String(imgresult);
 
+                        bool exists = System.IO.Directory.Exists(System.IO.Path.Combine(Server_Path, Folder));
+                        if (!exists) System.IO.Directory.CreateDirectory(System.IO.Path.Combine(Server_Path, Folder));
+                        System.IO.File.WriteAllBytes(FullPath, outPdfBuffer);
+
+                        FileInfo file = new FileInfo(FullPath);
+
+                        string strPathNamer2 = Folder + "\\" + FileName + ".jpeg";
+
+                        string extentionX = file.Extension;
+                        string str1 = strPathNamer2;
+                        string str2 = nwSystem.RandomStrings(30);
+                        str1 = str1 + "|@|" + str2;
+                        str1 = nwSystem.StringEncryptAES(str1);
+                        str1 = Uri.EscapeDataString(str1);
+                        strPathNamer2 = "&per=" + str1 + "&scky=" + str2 + "&ftype=" + extentionX;
+                        // str = nwSystem.StringEncrypt(str);
+                        //  DataTable dt = new DataTable();
+                        ////  dt.Columns.Add("klin");
+                        string dtJson = JsonConvert.SerializeObject(strPathNamer2);
+                        js.ADD(string.Format("SetFilePath(true,{0})", dtJson));
+                    }
+                    catch (Exception err)
+                    {
+                        string err1 = JsonConvert.SerializeObject(err.ToString());
+                        js.ADD(string.Format("console.log({0});", err1));
+                    }
+                    break;
                 default:
                     Prompt.Information("act_Method not found: " + strMethod, "Error");
                     break;
@@ -668,6 +711,7 @@ namespace Noah_Web.forms_BusinessLayer
             m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).ColumnName("Expiry Date");
             m_spread.nwobject(SPR_URLHDR - 1).ColumnName("URL");
             m_spread.nwobject(SPR_ATTACHHDR - 1).ColumnName("Attach");
+            m_spread.nwobject(SPR_CAPTUREHDR - 1).ColumnName("Capture");
             m_spread.nwobject(SPR_VIEWHDR - 1).ColumnName("View");
             m_spread.nwobject(SPR_REMOVEHDR - 1).ColumnName("Remove");
             m_spread.nwobject(SPR_DELETEROW - 1).ColumnName("");
@@ -689,13 +733,29 @@ namespace Noah_Web.forms_BusinessLayer
             //m_spread.nwobject(SPR_COMPILEDHDR - 1).Template("<input type='checkbox' id = 'chkCompiled'></input>");
             //m_spread.nwobject(SPR_REQUIREDHDR - 1).Template("<input type='checkbox' id = 'chkRequired'></input>");
 
-            m_spread.nwobject(SPR_WORKINSTRUCTIONS - 1).Template("<input value='{" + (SPR_WORKINSTRUCTIONS - 1) + "}' class='txtWorkInstructions' maxlength='255' />");
-            m_spread.nwobject(SPR_DOCNOHDR - 1).Template("<input type='text' class='txtDocno' maxlength='30' value='{" + (SPR_DOCNOHDR - 1) + "}' autocomplete='nope'></input>");           
-            //m_spread.nwobject(SPR_DOCDATEHDR - 1).InputDate("txtDocDate");
-            //m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).InputDate("txtExpiryDate");
-            m_spread.nwobject(SPR_DOCDATEHDR - 1).Template("<input value='{" + (SPR_DOCDATEHDR - 1) + "}' class='txtDocDate nwDatePick' autocomplete='nope' />");
-            m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).Template("<input value='{" + (SPR_EXPIRYDATEHDR - 1) + "}' class='txtExpiryDate nwDatePick' autocomplete='nope' />");
-            m_spread.nwobject(SPR_URLHDR - 1).Template("<input type='text' class='txtURL' maxlength='120' value='{" + (SPR_URLHDR - 1) + "}' autocomplete='nope'></input>");
+            //m_spread.nwobject(SPR_WORKINSTRUCTIONS - 1).Template("<input value='{" + (SPR_WORKINSTRUCTIONS - 1) + "}' class='txtWorkInstructions' maxlength='255' />");
+            //m_spread.nwobject(SPR_DOCNOHDR - 1).Template("<input type='text' class='txtDocno' maxlength='30' value='{" + (SPR_DOCNOHDR - 1) + "}' autocomplete='nope'></input>");           
+            ////m_spread.nwobject(SPR_DOCDATEHDR - 1).InputDate("txtDocDate");
+            ////m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).InputDate("txtExpiryDate");
+            //m_spread.nwobject(SPR_DOCDATEHDR - 1).Template("<input value='{" + (SPR_DOCDATEHDR - 1) + "}' class='txtDocDate nwDatePick' autocomplete='nope' />");
+            //m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).Template("<input value='{" + (SPR_EXPIRYDATEHDR - 1) + "}' class='txtExpiryDate nwDatePick' autocomplete='nope' />");
+            //m_spread.nwobject(SPR_URLHDR - 1).Template("<input type='text' class='txtURL' maxlength='120' value='{" + (SPR_URLHDR - 1) + "}' autocomplete='nope'></input>");
+
+            m_spread.nwobject(SPR_WORKINSTRUCTIONS - 1).Input("txtWorkInstructions");
+            m_spread.nwobject(SPR_WORKINSTRUCTIONS - 1).Enabled(true);
+
+            m_spread.nwobject(SPR_DOCNOHDR - 1).Input("txtDocno");
+            m_spread.nwobject(SPR_DOCNOHDR - 1).Enabled(true);
+
+            m_spread.nwobject(SPR_DOCDATEHDR - 1).InputDate("txtDocDate nwDatePick");
+            m_spread.nwobject(SPR_DOCDATEHDR - 1).Enabled(true);
+
+            m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).InputDate("txtExpiryDate nwDatePick");
+            m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).Enabled(true);
+
+            m_spread.nwobject(SPR_URLHDR - 1).Input("txtURL");
+            m_spread.nwobject(SPR_URLHDR - 1).Enabled(true);
+
             #endregion
 
             #region Template
@@ -706,7 +766,7 @@ namespace Noah_Web.forms_BusinessLayer
             //m_spread.nwobject(SPR_REMOVEHDR - 1).Template("<a class='btnRemove' style=''></a>");
 
             
-             m_spread.nwobject(SPR_DOCDETAILSCODEHDR - 1).LookUp("lugDocDtlHdr",false,true);
+           //  m_spread.nwobject(SPR_DOCDETAILSCODEHDR - 1).LookUp("lugDocDtlHdr",false,true);
             #endregion
 
             #region Special
@@ -721,7 +781,7 @@ namespace Noah_Web.forms_BusinessLayer
             #endregion
 
             #region Header Grouping
-            m_spread.HeaderGroupADD("Attachments", (SPR_ATTACHHDR - 1), 3);            
+            m_spread.HeaderGroupADD("Attachments", (SPR_ATTACHHDR - 1), 4);            
             #endregion
 
             #region Width
@@ -737,6 +797,7 @@ namespace Noah_Web.forms_BusinessLayer
             m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).Width(120);
             m_spread.nwobject(SPR_URLHDR - 1).Width(300);
             m_spread.nwobject(SPR_ATTACHHDR - 1).Width(60);
+            m_spread.nwobject(SPR_CAPTUREHDR - 1).Width(60);
             m_spread.nwobject(SPR_VIEWHDR - 1).Width(60);
             m_spread.nwobject(SPR_REMOVEHDR - 1).Width(60);
             m_spread.nwobject(SPR_DELETEROW - 1).Width(0);
@@ -757,11 +818,10 @@ namespace Noah_Web.forms_BusinessLayer
             #region Color
 
             m_spread.nwobject(SPR_COMPILEDHDR - 1).BackgroundColor("white");
-            m_spread.nwobject(SPR_REQUIREDHDR - 1).BackgroundColor("white");
-            //m_spread.nwobject(SPR_ALTERNATIVE - 1).BackgroundColor("Gainsboro");
-            //m_spread.nwobject(SPR_DOCUMENTGRP - 1).BackgroundColor("Gainsboro");
-            m_spread.nwobject(SPR_REQUIREDHDR - 1).BackgroundColor("white");
-            //m_spread.nwobject(SPR_DOCDETAILSCODEHDR - 1).BackgroundColor("cyan");
+            m_spread.nwobject(SPR_REQUIREDHDR - 1).BackgroundColor("Gainsboro");
+            m_spread.nwobject(SPR_ALTERNATIVE - 1).BackgroundColor("Gainsboro");
+            m_spread.nwobject(SPR_DOCUMENTGRP - 1).BackgroundColor("Gainsboro");
+            m_spread.nwobject(SPR_DOCDETAILSCODEHDR - 1).BackgroundColor("cyan");
             m_spread.nwobject(SPR_DOCNOHDR - 1).BackgroundColor("white");
             m_spread.nwobject(SPR_DOCDATEHDR - 1).BackgroundColor("white");
             m_spread.nwobject(SPR_EXPIRYDATEHDR - 1).BackgroundColor("white");
@@ -770,7 +830,7 @@ namespace Noah_Web.forms_BusinessLayer
             //m_spread.nwobject(SPR_VIEWHDR - 1).BackgroundColor("gainsboro");
             //m_spread.nwobject(SPR_REMOVEHDR - 1).BackgroundColor("gainsboro");
 
-            //m_spread.nwobject(SPR_DOCDETAILSHDR - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR_DOCDETAILSHDR - 1).BackgroundColor("gainsboro");
             //m_spread.nwobject(SPR_TAGDOCNOHDR - 1).BackgroundColor("gainsboro");
             //m_spread.nwobject(SPR_TAGDOCDATEHDR - 1).BackgroundColor("gainsboro");
             //m_spread.nwobject(SPR_TAGEXPIRYDATEHDR - 1).BackgroundColor("gainsboro");
@@ -782,6 +842,7 @@ namespace Noah_Web.forms_BusinessLayer
 
             #region Class
             m_spread.nwobject(SPR_ATTACHHDR - 1).Class("buttonGrid");
+            m_spread.nwobject(SPR_CAPTUREHDR - 1).Class("buttonGrid");
             m_spread.nwobject(SPR_VIEWHDR - 1).Class("buttonGrid");
             m_spread.nwobject(SPR_REMOVEHDR - 1).Class("buttonGrid");
             #endregion

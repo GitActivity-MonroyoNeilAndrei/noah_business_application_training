@@ -5,9 +5,8 @@
     NOAHBusinessApp.Main.DocumentEntry.Layout.NKSystemDefault sdefault = NOAHBusinessApp.Main.DocumentEntry.Layout.SetSystemDefaults(Context, User);
 
 
-    
-
-    //jsonMainData["UInfo"][0].Description
+    string menuitemname = "";
+  
 }
 <!DOCTYPE html>
 <html>
@@ -27,17 +26,25 @@
     <link rel="stylesheet" type="text/css" href="~/materials/css/custom.css" />
     <!-- Local Resources -->
     <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style.css" />
-
+    <link rel="stylesheet" type="text/css" href="~/materials/css/nk-icon.css" />
     <link rel="stylesheet" type="text/css" href="~/materials/css/nk-screen.css">
     <link rel="stylesheet" type="text/css" href="~/materials/css/nk-style-set.css">
     <link rel="stylesheet" type="text/css" href="~/materials/css/theme.css">
 
     <link rel="stylesheet" type="text/css" href="~/materials/css/nk-main.css" />
     <link rel="stylesheet" type="text/css" href="~/materials/fonts/new/fonts.css" />
+    <script type="text/javascript" src="~/materials/jslib/noahwebInitial.js"></script>
 
     <script type="text/javascript" src="~/materials/jslib/fpti.js"></script>
     <script type="text/javascript" src="~/materials/jslib/fptiextra.js"></script>
     <script type="text/javascript" src="~/materials/jslib/fptistyle.js"></script>
+
+    @*<script type="text/javascript" >
+        @ViewBag.scriptHeader
+    </script>*@
+    
+
+
     <script type="text/javascript" src="~/materials/jslib/noahwebAAGlib.js"></script>
     <script type="text/javascript" src="~/materials/jslib/noahweb_Format.js"></script>
 
@@ -67,12 +74,12 @@
     @{
         if (sdefault.isPopup == true)
         {
-
+            <script>isEmptyLayout=true;</script>
             <div class="menuitem-container full">
                 @RenderBody()
             </div>
 
-
+            @RenderSection("noahpopup", required: false)
         }
         else
         {
@@ -85,6 +92,7 @@
                     </div>
 
                     <div class="hdr_r">
+                        <span id="menuVersion">@ViewBag.menuitemname</span>
                         <div class="btn btn-hdr_r btn-notif" title="Notification">
                             <div class="hrd-notif-icon"></div>
                         </div>
@@ -181,42 +189,50 @@
                             <div class="left-pnl_t">
                                 <div class="hdr-noah-c hrd-noah-mob">NOAH Business Applications</div>
                                 @*<div class="_hor-b"></div>*@
-                                <div class="row margin-bottom-5 padding-x-5">
+                                <div class="row margin-bottom-5 padding-x-5 nwHide">
                                     <div class="col col-12">
                                         <label class="lbltxt">@NoahWebLib.nwSystem.GetAppSettings("LayoutAccount", "Account")</label>
                                     </div>
                                     <div class="col col-12">
                                         <select id="dpAccountNo" class="cmb fullwidth"> @*aagedit*@
-                                            @*<option>STC00043</option>
-                                            <option>STC00044</option>
-                                            <option>STC00045</option>*@
                                         </select>
                                     </div>
                                 </div>
-                                @*<div class="left-pnl-title">Modules<span class="left-pnl-title-ctr">9</span><div class="btn"></div></div>*@
+                                <div class="search-c">
+                                    <input id="txt-SearchMenuItem" type="text" placeholder="">
+                                    <!-- [Module Code] \ [Menu Code] -->
+                                    <div class="btn btn-search"></div>
+                                </div>
+                                @*<div class="btn btn-toggle-module"></div>*@
 
-                                <div id="mainModList" class="module-list-c">
+                               
+                                
+                               
                                     <a href="Home"  class="no-urderline"><div title="Home" class="btn btn-modules btn-menuitem" cabv="HM">Home</div></a>
-                                 
-                                    <span id="menucon">
-                                        @*<a href="PMOBasicInformation" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="PD">Profile Details</div></a>
-                                        <a href="PMOBillingHistory" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="BL">Billings</div></a>
-                                        <a href="PMORequestEntry" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="RE">Service Entry</div></a>
-                                        <a href="PMOOtherRequest" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="OR">Other Request</div></a>
-                                        <a href="PMOPaymentHistory" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="PH">Payment History</div></a>
-                                        <a href="PMONoticeHistory" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="NT">Notices</div></a>
-                                        <a href="PMOTransaction_History" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="SRT">Service Request Tracker</div></a>
-                                        <a href="News" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="N">News</div></a>
-                                        <a href="FAQ" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="F">FAQ</div></a>
-                                        <a href="PrivacyPolicy" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="PP">Privacy Policy</div></a>
-                                        <a href="TermsAndCondition" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="TC">Terms and Condition</div></a>*@
-                                    </span>
-
-                                   <div id="btnSettingsL" title="Settings"  class="btn btn-modules" cabv="S">Settings</div>
-</div> @*aagedit*@
-                                <div class="btn btn-toggle-module"></div>
-
+                                    
+                                     <div class="left-pnl-title">Modules<span class="left-pnl-title-ctr">9</span><div class="btn"></div></div>
+                                        <div id="mainModList" class="module-list-c scroll-lite">
+                                            <span id="menucon">
+                                                @*<a href="PMOBasicInformation" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="PD">Profile Details</div></a>
+                                                <a href="PMOBillingHistory" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="BL">Billings</div></a>
+                                                <a href="PMORequestEntry" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="RE">Service Entry</div></a>
+                                                <a href="PMOOtherRequest" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="OR">Other Request</div></a>
+                                                <a href="PMOPaymentHistory" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="PH">Payment History</div></a>
+                                                <a href="PMONoticeHistory" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="NT">Notices</div></a>
+                                                <a href="PMOTransaction_History" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="SRT">Service Request Tracker</div></a>
+                                                <a href="News" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="N">News</div></a>
+                                                <a href="FAQ" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="F">FAQ</div></a>
+                                                <a href="PrivacyPolicy" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="PP">Privacy Policy</div></a>
+                                                <a href="TermsAndCondition" class="no-urderline"><div class="btn btn-modules btn-menuitem" cabv="TC">Terms and Condition</div></a>*@
+                                            </span>
+                                        </div> @*aagedit*@
+                                   @*<div id="btnSettingsL" title="Settings"  class="btn btn-modules" cabv="S">Settings</div>*@
+                               
                             </div>
+                            
+                         
+
+
                             @*<div class="left-pnl_b">
                                     <div class="_hor-b"></div>
                                     <div class="btn btn-left-pnl_b btn-item-active" title="Active Items">Active</div>
@@ -228,163 +244,93 @@
                         </div>
                         <div class="pnl_r">
                             <div class="btn-return-modules">Show Modules</div>
-                            <div class="menu-grp-c">
+                            <div class="menu-grp-c scroll-lite">
                                 <div class="selected-module"></div>
                                 <div id="menu-grp-ul">
                                     <div class="menu-grp-ul">
-                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                            <div class="menu-grp-lbl">Data Configuration</div>
-                                            <div class="menu-grp-ul">
 
-                                                @*<div id="menuGrpDataConfig" class="menu-grp-li">
-                                                        <div class="menu-grp-lbl">A01 Transaction Type</div>
+                                        <div><div id="menuitemListDataClose">< Close</div></div>
+
+                                        <div id="menuitemListData">
+
+                                            
+                                            
+
+                                                    <div class="menu-grp-li">
+                                                        <div class="menu-grp-lbl">Data Configuration</div>
                                                         <div class="menu-grp-ul">
-                                                            <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                                <div class="menu-grp-lbl" title="A0101 Transaction Type">@Html.ActionLink("A0101 Transaction Type", "TransactionType")</div>
+                                                            <div class="menu-grp-li">
+                                                                <div class="menu-grp-lbl">A01 Transaction Type</div>
+                                                                <div class="menu-grp-ul">
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0101 Transaction Type">A0101 Transaction Type</div>
+                                                                    </div>
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0102 Transaction No. Configuration">A0102 Transaction No. Configuration</div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                                <div class="menu-grp-lbl" title="A0102 Transaction No. Configuration">@Html.ActionLink("A0102 Transaction No. Configuration", "TransactionNoConfig")</div>
+
+                                                            <div class="menu-grp-li">
+                                                                <div class="menu-grp-lbl">A02 Company</div>
+                                                                <div class="menu-grp-ul">
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0201 BIR CAS Configuration">A0201 BIR CAS Configuration</div>
+                                                                    </div>
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0201 BIR CAS Permit">A0201 BIR CAS Permit</div>
+                                                                    </div>
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0203 BIR Forms">A0203 BIR Forms</div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+
+
                                                         </div>
                                                     </div>
 
-                                                    <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                        <div class="menu-grp-lbl">A02 Company</div>
+
+                                                    <div class="menu-grp-li">
+                                                        <div class="menu-grp-lbl">Data Configuration</div>
                                                         <div class="menu-grp-ul">
-                                                            <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                                <div class="menu-grp-lbl" title="A0201 BIR CAS Configuration">@Html.ActionLink("A0201 BIR CAS Configuration", "BIRCasConfig")</div>
+                                                            <div class="menu-grp-li">
+                                                                <div class="menu-grp-lbl">A01 Transaction Type</div>
+                                                                <div class="menu-grp-ul">
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0101 Transaction Type">A0101 Transaction Type</div>
+                                                                    </div>
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0102 Transaction No. Configuration">A0102 Transaction No. Configuration</div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                                <div class="menu-grp-lbl" title="A0201 BIR CAS Permit">@Html.ActionLink("A0201 BIR CAS Permit", "BIRCasPermit")</div>
+
+                                                            <div class="menu-grp-li">
+                                                                <div class="menu-grp-lbl">A02 Company</div>
+                                                                <div class="menu-grp-ul">
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0201 BIR CAS Configuration">A0201 BIR CAS Configuration</div>
+                                                                    </div>
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0201 BIR CAS Permit">A0201 BIR CAS Permit</div>
+                                                                    </div>
+                                                                    <div class="menu-grp-li">
+                                                                        <div class="menu-grp-lbl" title="A0203 BIR Forms">A0203 BIR Forms</div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                                <div class="menu-grp-lbl" title="A0203 BIR Forms">@Html.ActionLink("A0203 BIR Forms", "BIRForms")</div>
-                                                            </div>
+
+
                                                         </div>
-                                                    </div>*@
+                                                    </div>
+                                                </div>
+
 
 
                                             </div>
-                                        </div>
-                                    </div>
-                                    @*<div id="menuGrpDataSetup" class="menu-grp-li">
-                                            <div class="menu-grp-lbl">Data Setup</div>
-                                            <div class="menu-grp-ul">
-                                                <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                    <div class="menu-grp-lbl" title="B01 Account Segment Definition">B01 Account Segment Definition</div>
-                                                    <div class="menu-grp-ul">
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="B0101 Account Segment Main">@Html.ActionLink("B0101 Account Segment Main", "AccountSegmentMain")</div>
-                                                        </div>
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="B0102 Account Segment Location">@Html.ActionLink("B0102 Account Segment Location", "AccountSegmentLocation")</div>
-                                                        </div>
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="B0103 Account Segment Profit Center">@Html.ActionLink("B0103 Account Segment Profit Center", "AccountSegmentProfitCenter")</div>
-                                                        </div>
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="B0104 Account Segment Cost Center">@Html.ActionLink("B0104 Account Segment Cost Center", "AccountSegmentCostCenter")</div>
-                                                        </div>
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="B0105 Account Segment Market Center">@Html.ActionLink("B0105 Account Segment Market Center", "AccountSegmentMarketGroup")</div>
-                                                        </div>
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="B0106 Account Segment Item Group">B0106 Account Segment Item Group</div>
-                                                        </div>
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="B0107 Common Segment">B0107 Common Segment</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="menuGrpDocEntry" class="menu-grp-li">
-                                            <div class="menu-grp-lbl">Document Entry</div>
-                                            <div class="menu-grp-ul">
-                                                <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                    <div class="menu-grp-lbl" title="C01 Account Segment Deactivation/Reactivation">C01 Account Segment Deactivation/Reactivation</div>
-                                                    <div class="menu-grp-ul">
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="C01 Account Segment Deactivation/Reactivation">@Html.ActionLink("C01 Account Segment Deactivation/Reactivation", "AccountSegmentDecReac")</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
 
-                                                <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                    <div class="menu-grp-lbl" title="C02 Details Modification Entry">C02 Details Modification Entry</div>
-                                                    <div class="menu-grp-ul">
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="C0201 Account Segment Details Modification Entry">@Html.ActionLink("C0201 Account Segment Details Modification Entry", "EmployeeDetailsModEntry")</div>
-                                                        </div>
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="C0202 Employee Details Modification Entry">@Html.ActionLink("C0202 Employee Details Modification Entry", "EmployeeDetailsModEntry")</div>
-                                                        </div>
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="C0203 Item Master Modification Entry">C0203 Item Master Modification Entry</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <div id="menuGrpPostUtilities" class="menu-grp-li">
-                                            <div class="menu-grp-lbl">Posting and Utilities</div>
-                                        </div>
-                                        <div id="menuGrpRepInquiries" class="menu-grp-li">
-                                            <div class="menu-grp-lbl">Reports and Inquiry</div>
-                                            <div class="menu-grp-ul">
-                                                <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                    <div class="menu-grp-lbl" title="E01 Account Segment Report">E01 Account Segment Report</div>
-                                                    <div class="menu-grp-ul">
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="E0101 Account Segment Report">E01 Account Segment Report</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                    <div class="menu-grp-lbl" title="E02 Account Segment Deactivation/Reactivation Entry Report">E02 Account Segment Deactivation/Reactivation Entry Report</div>
-                                                    <div class="menu-grp-ul">
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="E201 Account Segment Deactivation/Reactivation Entry Report">E201 Account Segment Deactivation/Reactivation Entry Report</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                    <div class="menu-grp-lbl" title="E03 Details Modification Entry">E03 Details Modification Entry</div>
-                                                    <div class="menu-grp-ul">
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="E0301 Account Segment Details Modification Report">E0301 Account Segment Details Modification Report</div>
-                                                        </div>
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="E0302 Employee Details Modification Report">E0302 Employee Details Modification Report</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                    <div class="menu-grp-lbl" title="E04 Item Master Report">E04 Item Master Report</div>
-                                                    <div class="menu-grp-ul">
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="E0401 Item Master Report">E0401 Item Master Report</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                    <div class="menu-grp-lbl" title="E04 Item Master Report">E05 History Report</div>
-                                                    <div class="menu-grp-ul">
-                                                        <div id="menuGrpDataConfig" class="menu-grp-li">
-                                                            <div class="menu-grp-lbl" title="E0401 Item Master Report">SG Data Configuration and Setups History Report</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="menuGrpDemo" class="menu-grp-li">
-                                            <div class="menu-grp-lbl"><a href="Home/Demo">Demo</a></div>
-                                        </div>*@
-                                </div>
                             </div>
 
                         </div>
@@ -727,7 +673,9 @@
                         </div>
                     </div>
                 </div>
-
+                <div id="nkPopupLisCon">
+                @RenderSection("noahpopup", required: false)
+                </div>
                 <!-- Do not remove -->
                 <div class="_white"></div>
 
@@ -736,12 +684,18 @@
         }
     }
 
-
+    <div id="RightClickContextMenu" class="rightclick-context-menu">
+        <ul>
+            <li id="openNewTab">Open in New Tab</li>
+            <!-- You can add more options here -->
+        </ul>
+    </div>
 
 
     <!-- Message Box -->
     <div id="mdlPrompt" class="mdl logout">
         <div class="mdl-msg-c">
+            <div id="btnXIcon">x</div>
             <div class="mdl-msg-wrapper">
 
                 <div class="mdl-msg-logo _msg-icon">
@@ -795,29 +749,27 @@
                 <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
             </div>
             <div class="nk-modal-body">
+                <div id="menuCreatorContainerLoading" class="lookup_loading">
+                    <div class="nw-loading-svg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="load-svg-c" viewBox="0 0 50 50" style="
+                             width 42px;; height 42px">
+                            <circle class="path-circle" cx="25" cy="25" r="20"></circle>
+                        </svg>
+                        <div><br>Searching...</div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col col-12">
-                        @*<div class="row">
-                            <div class="col col-5">
-                                <label class="lbltxt">Column Filter</label>
-                            </div>
-                            <div class="col col-7">
-                                <select id="nkcmb-mainfilter" class="cmb fullwidth">
-                                    <option>Select</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                        </div>*@
+              
                         <div class="row margin-bottom-10">
-                            <div class="col col-5">
-                                <label class="lbltxt">Search</label>
+                            <div class="col col-4">
+                                <label class="lbltxt lbltxtLookupSerach">Search</label>
                             </div>
-                            <div class="col col-7">
+                            <div class="col col-8">
                                 <div class="col col-12">
                                     <input id="txtlookupsearchF" type="text" name="" class="search txtbox txtdesc txtlookup">
-                                    <div id="nkbtnsearch" class="btn btn-sm-default btn-sm-default-lookup"></div>
+                                    <div id="nkbtnsearch" title="Click to reload the Data." class="btn btn-sm-default btn-sm-default-lookup"></div>
                                 </div>
                             </div>
                         </div>
@@ -833,15 +785,15 @@
                 @*<hr />*@
                 <div class="row">
                     <div class="col col-12 col-parent">
-                        <div id="tblWithTabsWrapperSample3" class="table-tabs-wrapper rescale-ready">
+                        <div id="lookupTable" class="table-tabs-wrapper rescale-ready">
                             <div class="row">
                                 <div id="nkLookupCon" class="table-wrapper">
                                     <table id="dimTableLookUpCon" class="table nwlookupgridList" sid="nkTable0">
                                         <thead>
                                             <tr>
                                                 @*<th data-type="num" scope="col" class="tbl-row-num asc">#</th>*@
-                                                <th data-type="str" scope="col" class="">Code</th>
-                                                <th data-type="str" scope="col">Description</th>
+                                                <th data-type="str" scope="col" class=""></th>
+                                                <th data-type="str" scope="col"></th>
                                             </tr>
                                             <tr>
                                                 @*<th data-type="num" scope="col" class="tbl-row-num"></th>*@
@@ -862,18 +814,20 @@
                             </div>
                             <div class="row">
                                 @*<div class="col col-6">
-                                    <div class="row">
-                                        <div class="col col-12 child-centered">
-                                            <div id="" class="pagination-n-c" sid="">
-                                                <div class="page-control page-control-prev">Prev</div>
-                                                <input type="text" name="" class="page-search" value="1" autocomplete="off">
-                                                <div class="page-of-txt">of</div>
-                                                <div class="page-count-total">1</div>
-                                                <div class="page-control page-control-next">Next</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>*@
+        <div class="row">
+            <div class="col col-12 child-centered">
+                <div id="" class="pagination-n-c" sid="">
+                    <div class="page-control page-control-first">First</div>
+                    <div class="page-control page-control-prev">Prev</div>
+                    <input type="text" name="" class="page-search" value="1" autocomplete="off">
+                    <div class="page-of-txt">of</div>
+                    <div class="page-count-total">1</div>
+                    <div class="page-control page-control-next">Next</div>
+                    <div class="page-control page-control-last">Last</div>
+                </div>
+            </div>
+        </div>
+    </div>*@
                                 <div class="col col-12 margin-y-5">
                                     <div class="row">
                                         <div class="col col-12 ">
@@ -899,7 +853,7 @@
                 <div class="btn btn-modal-rescale-s" nk-fx-click="press" title="Rescale"></div>
             </div>
             <div class="nk-modal-body">
-                <div class="row margin-y-10">
+                <div class="row">
                     <div class="col col-12 col-parent child-centered">
                         <div class="row">
                             <div class="col col-12">
@@ -983,7 +937,8 @@
         </div>
     </div>
     <div class="alerts-parent"></div>
+
+    
+    @Html.Raw(@ViewBag.AppResult)
 </body>
-
-
 </html>

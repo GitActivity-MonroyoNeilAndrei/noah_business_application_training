@@ -1,0 +1,789 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "PopupWindows";
+}
+
+<div id="nwRequestType" nwTitle="Request Type" class="nkPopupCon">
+    <div class="container-flex padding-10">
+        <div class="row row-parent">
+            <div class="col col-12 col-parent child-centered">
+                <div class="row">
+                    <div class="col col-12">
+                        <label class="lbltxt">Please select Request Type</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-12">
+                        <select id="cmbPaymentRqstTyp" class="cmb fullwidth"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                    </div>
+                    <div class="col col-8">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <div id="btnProceed" class="btn btn-default btnMedium fullwidth">
+                            Proceed>>
+                        </div>
+                    </div>
+                    <div class="col col-8">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%--View Journal Entries Window--%>
+<div id="ViewJournal" nwTitle="View Journal Entries Window" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnExportJrnl" class="btn-tb-action btn-tb-export">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-12 col-parent">
+            <div class="col col-12">
+                <div class="chk-wrapper">
+                    <input id="chkJrnlEntry" type="checkbox" name="chkJrnlEntry" class="chk">
+                    <label class="lbl-chk" for="chk3">Consolidated Journal Entries</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input id="txtLineIDJrnl" type="text" name="" class="txtbox nwHide">
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridJrnlCon" p8title="NOAH Business Applications Export"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <%--View Consolidated Charging Details--%>
+<div id="ViewConsoCharging" nwTitle="View Consolidated Charging Details" class="nkPopupCon">
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridConsoChargingCon" p8title="NOAH Business Applications Export"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%-- Popup Process--%>
+<div id="process" nwTitle="Process" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="NwProcess" class="btn-tb-action btn-tb-process">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridProcessCon" p8title="NOAH Business Applications Export"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--Alternative Payee--%>
+<div id="AlterPayee" nwTitle="Alternative Payee" class="nkPopupCon">
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Original Check Payee Name</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtOrigCheckPayeeName" type="text" name="" class="txtbox" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Alternative Check Payee Name</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtAlterCheckPayeeName" type="text" name="" class="txtbox" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Remarks</label>
+                </div>
+                <div class="col col-8">
+                    <textarea id="txtRemarks_AP" maxlength="500" class="txtarea autoresize" rows="3" disabled></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt"></label>
+                </div>
+                <div class="col col-8">
+                    <div class="btn btn-default btn-default-blue clrbtn enbtxtRefresh btnStyle fullwidth" id="btnRvwAttach_AP">Review Attachment(s)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--Allocation Process Window--%>
+<div id="AllocProcess" nwTitle="Allocation Process Window" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnSave_AP" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="row">
+                    <div class="col col-4">
+                        <label id="lblSegment1" class="lbltxt"></label>
+                    </div>
+                    <div id="lugSegment1" class="lookups col col-8">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval" disabled>
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval" disabled>
+                        </div>
+                    </div>
+                </div>
+                <input id="txtLineID_AP" type="text" class="nwHide" disabled />
+                <input id="txtRefRowno_AP" type="text" class="nwHide" disabled />
+                <input id="txtLocTag_AP" type="text" class="nwHide" disabled />
+                <input id="txtPCTag_AP" type="text" class="nwHide" disabled />
+                <input id="txtCCTag_AP" type="text" class="nwHide" disabled />
+                <input id="txtAllocEqual_AP" type="text" class="nwHide" disabled />
+                <input id="txtAllocPercent_AP" type="text" class="nwHide" disabled />
+            </div>
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt"></label>
+                </div>
+                <div class="col col-4 child-centered">
+                    <label class="lbltxt">Quantity</label>
+                </div>
+                <div class="col col-4 child-centered">
+                    <label class="lbltxt">Amount (VATEX)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Total</label>
+                </div>
+                <div class="col col-4">
+                    <input id="txtTotalQty" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+                <div class="col col-4">
+                    <input id="txtTotalAmount" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Allocated</label>
+                </div>
+                <div class="col col-4">
+                    <input id="txtAllocatedQty" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+                <div class="col col-4">
+                    <input id="txtAllocatedAmount" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Unallocated</label>
+                </div>
+                <div class="col col-4">
+                    <input id="txtUnallocatedQty" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+                <div class="col col-4">
+                    <input id="txtUnallocatedAmount" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridAllocProcessCon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--Profit/Cost Center Allocation Window--%>
+<div id="nwPCCCAlloc" nwTitle="Profit/Cost Center Allocation Window" class="nkPopupCon">
+    <input id="txtAmortAmt_Def" class="nwHide" type="text" />
+    <input id="txtRefRowno_Def" class="nwHide" type="text" />
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridPCCCAllocCon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%--Expense Allocation Window--%>
+<div id="ExpenseAlloc" nwTitle="Expense Allocation Window" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnSaveExpense" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+                <div class="row">                  
+                    <div class="col col-3">
+                        <label class="lbltxt">Cost Center</label>
+                    </div>
+                    <div id="lugCostCenter_EA" class="lookups col col-3">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval" disabled>
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval" disabled>
+                        </div>
+                    </div>
+                    <div class="col col-3">
+                        <label class="lbltxt">Allocated Percentage</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txtAllocPercent_EA" type="text" name="" class="txtbox text-Aright" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-3">
+                        <label class="lbltxt">Profit Center</label>
+                    </div>
+                    <div id="lugProfitCenter_EA" class="lookups col col-3">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval" disabled>
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval" disabled>
+                        </div>
+                    </div>
+                    <div class="col col-3">
+                        <label class="lbltxt">Allocated Amount</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txtAllocAmt_EA" type="text" name="" class="txtbox text-Aright" disabled>
+                    </div>
+                </div>
+
+        </div>
+        <div class="row-parent">
+            <div class="col col-12 left col-parent">
+                <div class="col col-5 left">
+                    <div class="chk-wrapper child-left">
+                        <input id="chkApplyToAll" type="checkbox" name="sample3" class="chk">
+                        <label class="lbl-chk" for="chk5">Apply to All Line Details</label>
+                    </div>
+                </div>
+                <div class="col col-7 left">
+                    <div class="chk-wrapper left">
+                        <input id="chkApplyToPCCC" type="checkbox" name="sample3" class="chk">
+                        <label class="lbl-chk" for="chk6">Apply to All PC/CC</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input id="txtLineID" class="nwHide" type="text" />
+        <input id="txtRefRowno" class="nwHide" type="text" />
+        <input id="txtRowno_Ex" class="nwHide" type="text" />
+        <input id="txtPrepaid" class="nwHide" type="text" />
+        <input id="txtAmount_PCCC" class="nwHide" type="text" />
+
+        <div class="col col-12">
+            <div class="nwe-tbl-content">
+                <div id="nwGridExpenseCon"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwValidationList" nwTitle="Validation List" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnExportUploading" class="btn-tb-action btn-tb-export">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-12">
+        <div class="nwe-tbl-content">
+            <div id="nwGridValListCon"></div>
+        </div>
+    </div>
+</div>
+
+<div id="nwRemarks1" nwTitle="Remarks" class="nkPopupCon">
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="row">
+                <div class="col col-12">
+                    <textarea id="txtnwgRemarkshdr" maxlength="500" class="txtarea autoresize" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--Budget Control Details--%>
+<div id="nwBudgetCtrlDetails" nwTitle="Budget Control Details/SOH Details" class="nkPopupCon">
+    <fieldset class="fieldset">
+        <legend>Budget Control Details</legend>
+
+        <div class="container-flex">
+            <div class="row-parent padding-10">
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Budget Control No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txtBdgtCtrlNo" type="text" name="" class="txtbox" disabled>
+                        <input type="text" id="txtBdgtCtrlReqDocno" class="nwHide" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Transaction Date</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txtTransDate" type="text" name="" class="txtbox nwDatePick" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-12">
+            <div class="nwe-tbl-content">
+                <div id="nwGridBdgtCtrlCon"></div>
+            </div>
+        </div>
+
+    </fieldset>
+</div>
+
+<%--Load from Historical Template--%>
+<div id="LoadHstTemplate" nwTitle="Load from Historical Template" class="nkPopupCon">
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">From<span class="nwRequiredField">*</span></label>
+                </div>
+                <div class="col col-8">
+                    <input id="dtpFrom" type="text" name="" class="txtbox nwDatePick">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">To<span class="nwRequiredField">*</span></label>
+                </div>
+                <div class="col col-8">
+                    <input id="dtpTo" type="text" name="" class="txtbox nwDatePick">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt"></label>
+                </div>
+                <div class="col col-8">
+                    <div id="btnLoad" class="btn btn-default btn-default-green">
+                       Load>>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwValidationList_Alloc" nwTitle="Validation List" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnExportUploading_Alloc" class="btn-tb-action btn-tb-export">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-12">
+        <div class="nwe-tbl-content">
+            <div id="nwGridAllocValListCon"></div>
+        </div>
+    </div>   
+</div>
+
+<%-- POP UP SBAR--%>
+<div id="nwCreateSBR" nwTitle="Create SBR" class="nkPopupCon">
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="row">
+                <span>Please select transaction.</span>
+            </div>
+            <div class="col col-12">
+                <div id="btnRealignment" class="btn btn-default centered fullwidth">Budget Realignment</div>
+                <input type="text" id="txtValidRea" class="nwHide" />
+            </div>
+            <div class="col col-12">
+                <div id="btnSupplemental" class="btn btn-default centered fullwidth">Supplemental Budget</div>
+                <input type="text" id="txtValidSup" class="nwHide" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--Apply Advances/Debit Memo--%>
+<div id="ApplyAdvDM" nwTitle="Apply Advances/Debit Memo Window" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnSaveApplyAdvDM" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+
+        <div class="row-parent padding-10">
+                <div class="row">
+                    <div class="col col-3">
+                        <label class="lbltxt">Total Recoupment of DP/Advances to be applied</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txtTotalAdv" type="text" name="" class="txtbox text-Aright" disabled>
+                    </div>
+                    <div class="col col-3">
+                        <label class="lbltxt">Net of VAT Amount</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txtNetVATAmt" type="text" name="" class="txtbox text-Aright" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-3">
+                        <label class="lbltxt">Total Debit Memo to be applied</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txtTotalDM" type="text" name="" class="txtbox text-Aright" disabled>
+                    </div>
+                    <div class="col col-3">
+                        <label class="lbltxt">Total Amount Due</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txtNetAmtDue" type="text" name="" class="txtbox text-Aright" disabled>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col col-6">
+                    
+                </div>              
+                <div class="col col-3">
+                    <label class="lbltxt">Total Applied Advances</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtTotalAppAdv" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-6">
+
+                </div>
+                <div class="col col-3">
+                    <label class="lbltxt">Total Debit Memo Applied</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtTotalDMApp" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-6">
+
+                </div>
+                <div class="col col-3">
+                    <label class="lbltxt">Remaining Net Amount Due</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtRemNetAmtDue" type="text" name="" class="txtbox text-Aright" disabled>
+                    <input id="txtRefDocno_Adv" type="text" class="nwHide" disabled />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-12">
+        <div class="nwe-tbl-content">
+            <div id="nwGridApplyAdvDMCon"></div>
+        </div>
+    </div>     
+
+</div>
+
+ <%--Applied Amount Window--%>
+<div id="AppliedAmt" nwTitle="Applied Amount Window" class="nkPopupCon">
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt">Document No.</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtDocumentNo_AA" type="text" name="" class="txtbox" disabled>
+                </div>
+                <div class="col col-3">
+                    <label class="lbltxt">Total Applied Amount</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtTotalAppAmt_AA" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-3">
+                    <label class="lbltxt">Advances Amount</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtAmount_AA" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+                <div class="col col-3">
+                    <label class="lbltxt">Balance</label>
+                </div>
+                <div class="col col-3">
+                    <input id="txtBalance_AA" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-12">
+        <div class="nwe-tbl-content">
+            <div id="nwGridAppAmtCon"></div>
+        </div>
+    </div>   
+
+</div>
+
+ <%--Default Applied Amount Details--%>
+<div id="DefAppliedAmt" nwTitle="Default Applied Amount Details" class="nkPopupCon">
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Purchase Order No.</label>
+                </div>
+                <div id="lugPONo" class="lookups col col-8">
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox descval" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Payment Category</label>
+                </div>
+                <div id="lugPayCat" class="lookups col col-8">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox descval" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Payment Term</label>
+                </div>
+                <div id="lugPONo" class="lookups col col-8">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox descval" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Total PO Amount (VATEX)</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtTotalPOAmt_DAA" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Advances %</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtAdvances_DAA" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Advances Amount</label>
+                </div>
+                <div class="col col-8">
+                    <input id="txtAdvancesAmt_DAA" type="text" name="" class="txtbox text-Aright" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-12">
+        <div class="nwe-tbl-content">
+            <div id="nwGridDefAmtCon"></div>
+        </div>
+    </div>
+</div>
+
+<%--BUDGET CHECKING WINDOW--%>
+<div id="nwBdgtCheckingWindow" nwTitle="Budget Charging Details Window" class="nkPopupCon">
+  
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Item</label>
+                </div>
+                <div id="lugBdgtChk_Item" class="lookups col col-8">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox descval" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Item Group Type</label>
+                </div>
+                <div id="lugBdgtChk_ItemGrpType" class="lookups col col-8">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox descval" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">GL Account Charging</label>
+                </div>
+                <div id="lugBdgtChk_GLAccntChrge" class="lookups col col-8">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval" disabled>
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox descval" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <input id="txtBCLLineID" type="text" class="nwHide" disabled="disabled" />
+                <input id="txtBCLItemCode" type="text" class="nwHide" disabled="disabled" />
+                <input id="txtBCLUom" type="text" class="nwHide" disabled="disabled" />
+                <input type="text" class="nwHide" id="txtBdgtchk_RowNum" />
+                <input type="text" class="nwHide" id="txtBdgtchk_PC" />
+                <input type="text" class="nwHide" id="txtBdgtchk_UnitCostVatex" />
+                <input type="text" id="txtBdgtchkQty" class="nwHide" />
+                <input type="text" id="txtBdgtchkVatex" class="nwHide" />
+            </div>
+            <div class="row">
+                <div class="col col-12 col-parent padding-x-5">
+                    <div class="nk-accordion col col-12" nk-style-accordion="5">
+                        <div class="nk-ul">
+
+                            <div class="nk-li">
+                                <div class="nk-li-title">Budget Charging Details</div>
+                                <div class="nk-li-content">
+                                    <div class="nk-li-text">
+                                        <div class="row row-parent">
+                                            <div class="col col-12 col-parent">
+                                                <div class="col col-12">
+                                                    <div class="nwe-tbl-content">
+                                                        <div id="nwGridBdgtChargingCon"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="nk-li">
+                                <div class="nk-li-title">Budget Account Combination</div>
+                                <div class="nk-li-content">
+                                    <div class="nk-li-text">
+                                        <div class="row row-parent">
+                                            <div class="col col-12 col-parent">
+                                                <div class="col col-12">
+                                                    <div class="nwe-tbl-content">
+                                                        <div id="nwGridBgtAcctCombCon"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="nk-li">
+                                <div class="nk-li-title">Budget Checking Details</div>
+                                <div class="nk-li-content">
+                                    <div class="nk-li-text">
+                                        <div class="row row-parent">
+                                            <div class="col col-12 col-parent">
+                                                <div class="col col-12">
+                                                    <div class="nwe-tbl-content">
+                                                        <div id="nwGridBgtChkDtlsCon"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+
+</div>

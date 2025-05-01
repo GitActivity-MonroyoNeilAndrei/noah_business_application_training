@@ -1,0 +1,266 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "";
+}
+
+<div id="FormProcess" @*title="Process"*@ class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="NwProcess" class="btn-tb-action btn-tb-process">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex padding-10">
+        <div class="row row-parent">
+            <div class="col col-6 col-parent">
+                <div class="row">
+                    <div class="col col-5">
+                        <input type="text" class="hide nwHideImportant" id="txtBranchSeg" />
+                        <input type="text" class="hide nwHideImportant" id="txtPCCCSeg" />
+                        <label class="lbltxt">Location<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div id="lugLocForm" class="col col-7 col-parent lookups">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Vendor/Payee<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div id="lugPayee" class="col col-7 col-parent  lookups">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Payee Sub Type<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div id="lugSubPayee" class="col col-7 col-parent adisabled lookups">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc descval">
+                            @*<div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Currency<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div id="lugCurrency" class="col col-7 col-parent lookups">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Date Submitted<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7 col-parent">
+                        <div class="col col-4 conval">
+                            <input id="txtDateSubmitted" type="text" name="" class="txtbox nwDatePick">
+                        </div>
+                        <div class="col col-8 col-parent">
+                            <div class="col col-5 conval">
+                                <label class="lbltxt">Rate to Local<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7 conval">
+                                <input id="txtlocalforex" type="text" name="" class="txtbox">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Date Posted<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7 col-parent">
+                        <div class="col col-4 conval">
+                            <input id="txtDatePosted" type="text" name="" class="txtbox nwDatePick">
+                        </div>
+                        <div class="col col-8 col-parent">
+                            <div class="col col-5 conval">
+                                <label class="lbltxt">Rate to Home<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7 conval">
+                                <input id="txtHomeforex" type="text" name="" class="txtbox">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Reference No.<span class="nwOptionalField">*</span></label>
+                    </div>
+                    <div class="col col-7 col-parent">
+                        <div class="col col-4 conval">
+                            <input id="txtref" type="text" name="" class="txtbox noah-webui-disabled" maxlength="30" disabled="">
+                        </div>
+                        <div class="col col-8 col-parent">
+                            <div class="col col-5 conval">
+                                <label class="lbltxt">Ref Date<span class="nwOptionalField">*</span></label>
+                            </div>
+                            <div class="col col-7 conval">
+                                <input id="txtRefDate" type="text" name="" class="txtbox nwDatePick noah-webui-disabled" disabled="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Remarks<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-7">
+                        <textarea id="txtRemarks" class="txtarea noresize" rows="3" maxlength="500"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <input id="txtcurrencycode" type="text" class="nwHideImportant hide" disabled />
+                    <div class="col col-5">
+                        <label class="lbltxt">Transaction No.<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtDMno" type="text" name="" class="txtbox">
+                    </div>
+                </div>
+                <div class="row">
+                    <input id="txtPayeeAdress" type="text" class="nwHideImportant hide" disabled />
+                    <div class="col col-5">
+                        <label class="lbltxt">Status<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtApDmStatus" type="text" name="" class="txtbox">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Reason for Disapproval<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div id="lugRsnDisapproval" class="col col-7 col-parent adisabled lookups">
+                        <div class="col col-4 conval">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8 conval">
+                            <input type="text" name="" class="txtbox txtdesc descval">
+                            @*<div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Disapproval Remarks<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7">
+                        <textarea id="txtDissRemarks" class="txtarea noresize" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5"> </div>
+                    <div class="col col-7">
+                        <div id="btnDocumentAttached" class="btn btn-default btn-default-orange fullwidth">Requirement Compliance</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6 col-parent">
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Debit Note with Reference<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtDebitNote" type="text" name="" class="txtbox">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Debit Note without Reference<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtwDebitNote" type="text" name="" class="txtbox">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Total APV Reference<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtTotalAPV" type="text" name="" class="txtbox">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">TOTAL<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="total" type="text" name="" class="txtbox">
+                    </div>
+                </div>
+                <div id="valdatehdr" class="row">
+                    <div class="col col-5">
+                        <label class="lbltxt">Value Date<span class="nwRequiredField"></span></label>
+                    </div>
+                    <div class="col col-7">
+                        <input id="txtValueDate" type="text" class="txtbox nwDatePick" />
+                        <input id="txtServerdate" type="text" class="nwDatePick hide nwHideImportant" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5"> </div>
+                    <div class="col col-7">
+                        <div id="btndebitnote" class="btn btn-default fullwidth">Debit Note with Reference</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5"> </div>
+                    <div class="col col-7">
+                        <div id="btndebitnotewithout" class="btn btn-default fullwidth">Debit Note without Reference</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5"> </div>
+                    <div class="col col-7">
+                        <div id="btntotalAPV" class="btn btn-default fullwidth">Total APV Reference</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5"> </div>
+                    <div class="col col-7">
+                        <div id="btnJE" class="btn btn-default fullwidth">View Journal Entries</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-5"> </div>
+                    <div class="col col-7 margin-y-20 border-solid-cyan">
+                        <label class="lbltxt font-defaultRed italic">Note: The Forex Rates are only applicable for transactions without Reference APV.</label>
+                    </div>
+                </div>
+
+                <input id="txtisPayeeCode" type="text" class="hide nwHideImportant" />
+                <input id="txtserverlink" type="text" class="hide nwHideImportant" />
+                <input id="txtserverlink2" type="text" class="hide nwHideImportant" />
+
+            </div>
+        </div>
+    </div>
+</div>

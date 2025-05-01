@@ -1,0 +1,43 @@
+﻿Modified By		   : Jenny May Cabantug
+Date Modified	   : 12/04/2024
+Version			   : 10.0.0.3
+Description		   : Addressing of findings
+						- apply column standard
+
+Modified By		   : Lance Justine Aleonar
+Date Modified	   : 12/02/2024
+Version			   : 10.0.0.2
+Description		   : Apply Column Standard
+
+Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/27/2024
+Version			   : 10.0.0.1
+Description		   : Addressing of findings
+						#17 it should be "Bank Listing” for both Export to Excel and CSV.
+
+Modified By		   : Lance Justine Aleonar
+Date Modified	   : 09/25/2024
+Version			   : 10.0.0.0
+Description		   : Conversion from V9 to V10
+
+Modified By		   : Harley Llevado
+Date Modified	   : 01/24/2024
+Version			   : 9.0.0.4
+Description		   : Addressing of Findings - fixed isUsed functionality
+
+Created By: Allen Aguilar
+Date Created: 11/16/2023
+Menu Item Version: 9.0.0.3
+Reason: 
+		-Menu buttons
+			>New 
+			>Refresh
+			>Save
+			>Inquire
+			>Export
+			>Delete
+
+		-Develop Fields
+			>Code [data entry] 
+			>Desc [data entry] 
+

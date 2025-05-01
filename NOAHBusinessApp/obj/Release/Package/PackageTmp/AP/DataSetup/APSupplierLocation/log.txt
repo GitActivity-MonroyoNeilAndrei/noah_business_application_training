@@ -1,0 +1,308 @@
+﻿Modified By			: Joshua Andrew Obina
+Date Modified		: 09/20/2024
+Menu Item Version	: 10.0.0.2
+Reason				: fixed disabled lookup
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 09/19/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Fixed Export file name
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 09/12/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10
+
+Modified By		: Arnel Alvarado
+Date Modified	: 06/11/2024
+Version			: 9.0.0.36
+Updates			:Addressing of findings
+					-In Vendor Location section, when you add second location all rows are grayed out
+
+Modified By		: Kyla Rizelle Valenton
+Date Modified	: 05/06/2024
+Version			: 9.0.0.35
+Updates			:Addressing of findings
+						Concatenation trigger- Should be upon inputting location details the inputted details must load in Full Address text field
+
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 05/02/2024
+Version			: 9.0.0.34
+Updates			:Enable Fields Upon Refresh
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 03/18/2024
+Version			: 9.0.0.33
+Updates			:Enable Fields Upon Click
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 03/18/2024
+Version			: 9.0.0.33
+Updates			: If clicked, new row should be addedd
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 03/15/2024
+Version			: 9.0.0.32
+Updates			: Allows 50 alphanumeric characters for   Middle Initial , Phone no, & Local
+
+Modified By		: RDA
+Date Modified	: 05/11/2021
+Version			: 9.0.0.31
+Updates			: Allow adding of location even supplier is approved
+
+Modified By		: RDA
+Date Modified	: 02/24/2021
+Version			: 9.0.0.30
+Updates			: Rename column names
+
+Modified By		: RDA
+Date Modified	: 02/23/2021
+Version			: 9.0.0.29
+Updates			: Address findings
+				: VAPT Compliance
+
+Modified By		: RDA
+Date Modified	: 02/05/2021
+Version			: 9.0.0.27
+Updates			: Hide Status columns
+
+Modified By		: RDA
+Date Modified	: 02/05/2021
+Version			: 9.0.0.26
+Updates			: Fix DisableUponView()
+
+Modified By		: RDA
+Date Modified	: 02/03/2021
+Version			: 9.0.0.25
+Updates			: Fix DisableUponView()
+
+Modified By		: CCB
+Date Modified	: 10/06/2020
+Updates			: Enable saving
+Version			: 9.0.0.24
+
+Modified By		: RDA
+Date Modified	: 09/19/2020
+Updates			: Disable Insert and Delete Row buttons
+Version			: 9.0.0.23
+
+Modified By       : SBL
+Date Modified     : 07/29/2020
+Menu Item Version : 9.0.0.22
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified by       : ocr
+Modified Date     : 03.05.2020
+Menu Item Version : 9.0.0.21
+Reason            : addressing of findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=387232434&fvid=1768094295
+
+Modified by       : ocr
+Modified Date     : 02.29.2020
+Menu Item Version : 9.0.0.20
+Reason            : addressing of findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=387232434&fvid=1768094295
+
+Modified by       : ATR
+Modified Date     : 02.27.2020
+Menu Item Version : 9.0.0.19
+Reason            : removed history
+
+Modified by       : RMB
+Modified Date     : 02.14.2020
+Menu Item Version : 9.0.0.18
+Reason            : Address based on Standard Testing Findings
+
+Modified by       : DDD
+Modified Date     : 02.14.2020
+Menu Item Version : 9.0.0.17
+Reason            : Address based on Standard Testing Findings
+
+Modified by       : JBT
+Modified Date     : 02.13.2020
+Menu Item Version : 9.0.0.16
+Reason            : Address based on Standard Testing Findings
+
+Modified by       : RBN
+Modified Date     : 02.07.2020
+Menu Item Version : 9.0.0.15
+Reason            : History
+
+Modified by       : RBN
+Modified Date     : 12.13.2019
+Menu Item Version : 9.0.0.14
+Reason            : Address the findings from QC Testing
+
+Modified by       : DJSB
+Modified Date     : 10.14.2019
+Menu Item Version : 9.0.0.13
+Reason            : Address the findings from QC Testing
+				  : Address the findings from Prototype Testing Results
+
+
+Modified by       : DJSB
+Modified Date     : 09.24.2019
+Menu Item Version : 9.0.0.12
+Reason            : Make changes based on the minutes of the meeting
+
+Modified by       : DJSB
+Modified Date     : 09.24.2019
+Menu Item Version : 9.0.0.11
+Reason            : Zip Code
+
+Modified by       : DJSB
+Modified Date     : 09.22.2019
+Menu Item Version : 9.0.0.10
+Reason            : Disable row if the selected Status Code is Inactive
+
+Modified by       : DJSB
+Modified Date     : 09.19.2019
+Menu Item Version : 9.0.0.9
+Reason            : Make inquire query in Stored Procedure.
+
+Modified by       : DJSB
+Modified Date     : 09.19.2019
+Menu Item Version : 9.0.0.8
+Reason            : Addressing of finding in Remove Button in Viewing
+
+Modified by       : DJSB
+Modified Date     : 09.16.2019
+Menu Item Version : 9.0.0.7
+Reason            : Addressing of finding in Horizontal scroll bar
+
+Modified by       : DJSB
+Modified Date     : 09.15.2019
+Menu Item Version : 9.0.0.6
+Reason            : Addressing of findings of the following:
+					1.) "Export - Arrange by vendor ascending"
+					2.) "Refresh - Arrange based on latest record"
+
+
+Modified by       : DJSB
+Modified Date     : 09.14.2019
+Reason            : Enabling of ZipCode
+Menu Item Version : 9.0.0.5
+
+Modified by       : DJSB
+Modified Date     : 09.14.2019
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.4
+
+Modified by       : DJSB
+Modified Date     : 09.13.2019
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.3
+
+Modified by       : DJSB
+Modified Date     : 09.12.2019
+Reason            : UI Related
+Menu Item Version : 9.0.0.2
+
+Modified by       : DDD
+Modified Date     : 09.11.2019
+Reason            : Saving, UI Related and UI in Export
+Menu Item Version : 9.0.0.1
+
+Modified by       : CCB
+Modified Date     : 08.28.2019
+Reason            : UI alignment with Customer Location
+Menu Item Version : 9.0.0.0
+
+Modified by       : KSG
+Modified Date     : 10/31/2018
+Reason            : Addressing of findings (From Supplier to Vendor)
+Menu Item Version : 8.0.0.7
+
+Modified by       : FBP
+Modified Date     : 03/08/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.6
+
+Modified by       : FBP
+Modified Date     : 03/06/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.6
+
+Modified by       : FBP
+Modified Date     : 02/21/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.5
+
+Modified by       : FBP
+Modified Date     : 02/19/2018
+Reason            : SAVE TITLE
+Menu Item Version : 8.0.0.4
+
+Modified by       : JRA
+Modified Date     : 12/21/2017
+Reason            : Enable Field Upon New
+Menu Item Version : 8.0.0.3
+
+Modified by       : JVV
+Modified Date     : 12/11/2017
+Reason            : Addressing of SIT Findings
+Menu Item Version : 8.0.0.2
+
+Modified by       : FBP
+Modified Date     : 12/07/2017
+Reason            : Addressing of SIT Findings
+Menu Item Version : 8.0.0.2
+
+Modified by       : PJS
+Modified Date     : 12/05/2017
+Reason            : Enable Grid on New
+Menu Item Version : 8.0.0.2
+
+Modified by       : JRA
+Modified Date     : 11/30/2017
+Reason            : Export
+Menu Item Version : 8.0.0.2
+
+Modified by       : JRA
+Modified Date     : 11/30/2017
+Reason            : Tradename, Save
+Menu Item Version : 8.0.0.2
+
+Modified by       : JRA
+Modified Date     : 11/29/2017
+Reason            : Conditions on Inquire and Export 
+Menu Item Version : 8.0.0.2
+
+Modified by       : JRA
+Modified Date     : 11/29/2017
+Reason            : Fixed the Bug when Linked and click refresh grid should be enable
+Menu Item Version : 8.0.0.2
+
+Modified by       : IVD
+Modified Date     : 10/16/2017
+
+Modified by       : JRA
+Modified Date     : 10/23/2017
+Reason            : Fixed the No Data Source and make it dual purpose: For Link, And Stand Alone.
+Menu Item Version : 8.0.0.2
+
+Create by         : JRA
+Created Date      : 08/24/2017
+Menu Item Version : 8.0.0.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

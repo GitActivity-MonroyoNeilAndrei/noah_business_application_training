@@ -1,0 +1,44 @@
+﻿Modified By			: Jenny May Cabantug
+Date Modified		: 12/02/2024
+Menu Item Version	: 10.0.0.6
+Reason				: Addressing of findings
+						- error upon resaving
+						- .val() should not be used on BL to avoid Parsing concerns
+						- This may cause duplication of docno
+
+Modified By			: Jenny May Cabantug
+Date Modified		: 11/19/2024
+Menu Item Version	: 10.0.0.5
+Reason				: Enhancement
+					  CWT		Loaded Text		Computed as Net of VAT multiple by the CWT Rate based on CWT Code. This applies to Association Dues, Parking, Special Assessment and Other Area					
+					  Billable Amount		Loaded Text		Computed as Gross Amount less CWT Amount					
+
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 11/07/2024
+Menu Item Version	: 10.0.0.4
+Reason				: Addressing of findings
+					  >fixed save functionality
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 11/06/2024
+Menu Item Version	: 10.0.0.3
+Reason				: Addressing of findings
+					  >fixed inquire and process functionality
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 11/04/2024
+Menu Item Version	: 10.0.0.2
+Reason				: Addressing of findings
+					  >fixed save functionality
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 10/31/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Addressing of findings
+					  >fixed export button in line details
+
+Created By		: Joshua Andrew Obina
+Date Created	: 10/28/2024
+Version			: 10.0.0.0
+Reason			: Development

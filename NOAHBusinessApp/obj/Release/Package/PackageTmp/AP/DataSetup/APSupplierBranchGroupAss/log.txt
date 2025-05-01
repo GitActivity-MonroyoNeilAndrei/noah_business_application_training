@@ -1,0 +1,191 @@
+﻿Modified By			: Joshua Andrew Obina
+Date Modified		: 09/20/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10
+
+Modified By		: Romnick Casimiro
+Date Modified	: 05/30/2024
+Version			: 9.0.0.21
+Updates			: - Enable Save Button upon Refresh
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 04/03/2024
+Version			: 9.0.0.20
+Updates			: - Enable Grid upon Refresh
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 03/20/2024
+Version			: 9.0.0.19
+Updates			: - Navigation Bar displays 0 of 0. All buttons are disabled except for New and Refresh button.
+				  - Adjust the splitter; a vertical scroll bar should appear on the header and line details of the display pane to view the entire header.
+
+Modified By		: RJL
+Date Modified	: 03/31/2021
+Version			: 9.0.0.18
+Updates			: Address VAPT Compliance
+
+Modified By		: AZNA
+Date Modified	: 02/18/2021
+Version			: 9.0.0.17
+Updates			: VAPT Compliance
+
+Modified By		: RDA
+Date Modified	: 09/19/2020
+Updates			: Change TIN No. to TIN
+Version			: 9.0.0.16
+
+Modified By       : SBL
+Date Modified     : 07/29/2020
+Menu Item Version : 9.0.0.15
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified BY       : ATR
+Date Modified     : 03/06/2020
+Reason            : removed history button
+Version			  : 9.0.0.14
+
+Modified BY       : RMB
+Date Modified     : 02/14/2020
+Reason            : add delete row button and remove per column (x) delete button
+Version			  : 9.0.0.13
+
+Modified BY       : CAR
+Date Modified     : 02/07/2020
+Reason            : Add Historical Button
+Version			  : 9.0.0.12
+
+Modified By       : RBN
+Date Modified     : 12.16.2019
+Version           : 9.0.0.11
+Reason            : Changed Company Name
+
+Modified By       : DJSB
+Date Modified     : 10.10.2019
+Version           : 9.0.0.10
+Reason            : Address the findings from Prototype Testing Results
+
+Modified By       : DJSB
+Date Modified     : 09.26.2019
+Version           : 9.0.0.9
+Reason            : Address the changes based from BR
+
+Modified By       : DJSB
+Date Modified     : 09.25.2019
+Version           : 9.0.0.8
+Reason            : Address the changes based from BR
+
+Modified By       : DJSB
+Date Modified     : 09.20.2019
+Version           : 9.0.0.7
+Reason            : Address the finding in viewing in Report.
+
+Modified By       : DJSB
+Date Modified     : 09.15.2019
+Version           : 9.0.0.6
+Reason            : "All the records must be exported. All records should load in export, not only the record currently on screen"
+
+Modified By       : DJSB
+Date Modified     : 09.14.2019
+Reason            : Enabling of Inquire and Export button
+Version           : 9.0.0.5
+
+Modified By       : DJSB
+Date Modified     : 09.14.2019
+Reason            : Addressing of findings
+Version           : 9.0.0.4
+
+Modified By       : DJSB
+Date Modified     : 09.13.2019
+Reason            : Addressing of findings
+Version           : 9.0.0.3
+
+Modified By       : DJSB
+Date Modified     : 09.12.2019
+Reason            : Export header
+Version           : 9.0.0.2
+
+Modified By       : DDD
+Date Modified     : 09.11.2019
+Reason            : Export button and UI Related
+Version           : 9.0.0.1
+
+Modified By       : CCB
+Date Modified     : 09.05.2019
+Reason            : Alignment
+Version           : 9.0.0.0
+
+Modified By       : FBP
+Date Modified     : 04/03/2018
+Reason            : Addressing of findings
+Version           : 8.0.0.14
+
+Modified By       : FBP
+Date Modified     : 03/08/2018
+Reason            : Addressing of findings
+Version           : 8.0.0.13
+
+Modified By       : FBP
+Date Modified     : 03/06/2018
+Reason            : Addressing of findings
+Version           : 8.0.0.12
+
+Modified By       : FBP
+Date Modified     : 02/21/2018
+Reason            : Addressing of findings
+Version           : 8.0.0.11
+
+Modified By       : JRA
+Date Modified     : 12/08/2017
+Reason            : Inquire
+Version           : 8.0.0.10
+
+Modified By       : JRA
+Date Modified     : 12/01/2017
+Reason            : Inquire
+Version           : 8.0.0.9
+
+Modified By       : JRA
+Date Modified     : 11/30/2017
+Reason            : Export
+Version           : 8.0.0.8
+
+Modified By       : JRA
+Date Modified     : 11/30/2017
+Reason            : Trade Name
+Version           : 8.0.0.7
+
+Modified By       : JRA
+Date Modified     : 11/29/2017
+Reason            : Auto Direct on Head office supplier
+Version           : 8.0.0.6
+
+Modified By       : JRA
+Date Modified     : 11/27/2017
+Reason            : Line Detail lookup change into function
+Menu Item Version : 8.0.0.5
+
+Modified By       : GG
+Date Modified     : 11/02/2017
+Reason            : Enhancement
+Menu Item Version : 8.0.0.4
+
+Modified By       : GAG
+Date Modified     : 10/26/2017
+Reason            : Enhancement
+Menu Item Version : 8.0.0.3
+
+Modified By       : GAG
+Date Modified     : 10/23/2017
+Reason            : Enhancement
+Menu Item Version : 8.0.0.2
+
+Modified By       : GAG
+Date Modified     : 10/19/2017
+Reason            : Enhancement
+Menu Item Version : 8.0.0.1
+
+Created By        : JRA
+Date Modified     : 08/28/2017
+Reason            : for golden haven
+Menu Item Version : 6.0.0.0

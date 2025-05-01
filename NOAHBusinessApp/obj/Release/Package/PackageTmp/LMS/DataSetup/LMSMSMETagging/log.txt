@@ -1,0 +1,41 @@
+﻿Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/27/2024
+Version			   : 10.0.0.3
+Description		   : Addressing of findings
+						#155 Incorrect name: SME Tagging Change to: MSME Tagging
+
+Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/27/2024
+Version			   : 10.0.0.2
+Description		   : Addressing of findings
+						#12 Should be  "MSME Tagging Listing” for both Export to Excel and CSV.
+
+Modified By        : John Dave Abaricia
+Date Modified      : 11/15/2024
+Menu Item Version  : 10.0.0.1
+Updates			   : Addressings Of Findings Buttons Enabled
+					- New 
+					- Inquire 
+
+Modified By         : JOHN DAVE ABARICIA
+Modified Date       : 09/25/2024
+Menu Item Version   : 10.0.0.0
+Reason              : Conversion V10
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Modified		: 02/02/2024
+Menu Item Version	: 9.0.0.2
+Reason				: Addressing of findings
+					  Issue Logs# 705 - Button is not disabled if record is already in used in any menu item >> If record is already used in any menu item and none of the fields are left open, Save button should be disabled
+					  Issue Logs# 706 - Button is not disabled if record is already in used in any menu item >> Should be Loaded based on Contract Ref No. selected
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Modified		: 01/09/2024
+Menu Item Version	: 9.0.0.1
+Reason				: Addressing of findings
+					  Issue Logs# 56 - Wrong prompt message >>> It should be Cannot be saved. Duplicate [data] are not allowed.
+
+Created By : ALZ BULANADI
+Date Created : 10/25/2023
+Menu Item Version : 9.0.0.0
+Reason : New dev

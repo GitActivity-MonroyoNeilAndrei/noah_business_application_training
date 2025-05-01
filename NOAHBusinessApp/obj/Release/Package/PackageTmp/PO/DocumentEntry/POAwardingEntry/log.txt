@@ -1,0 +1,146 @@
+﻿Created by		: Harley Llevado
+Created Date		: 09/12/2024
+Menu Item Version	: 10.0.0.0
+Updates			: V10 Conversion
+
+Modified by			: JOHN MIGUEL GRAVINES
+Modified Date		: 07/15/2024
+Menu Item Version	: 10.0.0.23
+Updates				: Addressing of findings
+					>> Issue Logs# 1445 - "Version 10 (Web) Review Attachments > 404 - File or directory not found. Requirements Compliance > 404 - File or directory not found."
+					>> Issue Logs# 1447 - "Version 10 (Web) on screen load, ""Confirm"" checkbox is clickable and ticks empty records"
+
+Modified by			: JOHN MIGUEL GRAVINES
+Modified Date		: 07/11/2024
+Menu Item Version	: 10.0.0.22
+Updates				: Addressing of findings
+					>> Issue Logs# 1432 - "Version10 - Web Document Location Details > Document Location Upon encoding in the active texfbox of Document Location, auto-complete function is not working. (See screenshot for reference)"
+					>> Issue Logs# 1433 - "Version10 - Web Document Location Details > Document Location lookup window Displays all available data (more than 100) in just one page." >> At initial loading of the lookup search window, first 100 records are displayed/listed with pagination.
+					>> Issue Logs# 1434 - "Version10 - Web Document Location Details > Document Location lookup window. Upon reopening of lookup window, it does not reset the displaying of records.  (Upon initial opening, user scroll down until the last record. Then upon re-opening of search window, last record is still in display)"
+					>> Issue Logs# 1436 - "Version10 - Web No value generated in the Total Document(s) Confirmed field" >> Loaded based on the count in line details ticked as confirmed 
+					>> Issue Logs# 1437 - "Version10 - Web Reason (if not confirmed) Field is enabled all the time" >> This field should be disabled once Confirm checkbox is ticked..
+
+Modified by			: JOHN MIGUEL GRAVINES
+Modified Date		: 07/10/2024
+Menu Item Version	: 10.0.0.21
+Updates				: Addressing of findings
+					>> Issue Logs# 1426 - "Version10 - Web Available records did not display upon clicking Refresh"
+					>> Issue Logs# 1427 - "Version10 - Web Upon clicking a record in the Inquire window, details did not load on the main screen."
+					>> Issue Logs# 1428 - "Version10 - Web After successful saving, record is not displayed in the main screen."
+
+Modified by			: JOHN MIGUEL GRAVINES
+Modified Date		: 07/09/2024
+Menu Item Version	: 10.0.0.20
+Updates				: Addressing of findings
+					>> Issue Logs# 1410 - "Version 9 & 10 Delete button is disabled upon clicking New" >> Delete button should be hidden upon clicking New
+					>> Issue Logs# 1411 - "Version 9 & 10 Rename ""Load Origination Number"" to ""Loan Origination Number"""
+					>> Issue Logs# 1421 - "Version 9 & 10 Inquire Lookup Window Rename ""Location with Accountable Forms"" to ""Operating Unit""" 
+
+Modified by			: JOHN MIGUEL GRAVINES
+Modified Date		: 07/08/2024
+Menu Item Version	: 10.0.0.19
+Updates				: Addressing of findings
+					>> Issue Logs# 1391 - "V10 (Web) All lookup buttons should be in color grey upon inititial opening"
+					>> Issue Logs# 1392 - "V10 (Web) Rename ""Total No of Documents Confirmed"" to ""Total Document(s) Confirmed"""
+					>> Issue Logs# 1393 - "V10 (Web) View Attachments button is not working"
+					>> Issue Logs# 1394 - "Remarks Should be button. Upon clicking should display pop up window for data entry" >> "Remarks Should be button. Upon clicking should display pop up window for data entry"
+					>> Issue Logs# 1936 - "V10 (Web) All entry/text box field outline should be colored cyan. "
+					>> Issue Logs# 1937 - "V10 (Web) Search field of Find is enable" >> All daat entry fields upon opening of the menu item should be disabed
+
+Modified by			: JOHN MIGUEL GRAVINES
+Modified Date		: 07/05/2024 - 07/06/2024
+Menu Item Version	: 10.0.0.18
+Updates				: Addressing of findings
+					>> Issue Logs# 1375 - "Version 10 - Mobile Prompt says ""Cannot be saved. Reason (if not confirmed) in row N is required"" even if reason is placed. ""Confirm"" checkbox needs to be checked before saving"
+					>> Issue Logs# 1376 - "Version 10 - Mobile Reason Code is displayed in reason instead of description" >> Should load reason description
+					>> Issue Logs# 1378 - "Version 10 - Mobile Clicking on the first item in inquire does not load the details of the record in the main screen (only happens for the first record in inquire menu)"
+					>> Issue Logs# 1379 - "Version 10 - Mobile cannot delete first item in inquire, after prompting successful deletion of record, record still shows up in Inquire menu"
+					>> Issue Logs# 1380 - "Version 10 - Mobile Scan barcode allows entry up to max of 100 alphanumeric characters" >> Data Entry; Allow of maximum 50 alphanumeric characters 
+					>> Issue Logs# 1381 - "Version 10 - Mobile remarks allow input of >255 chars" >> Remarks should only allow input a maximum of 255 characters.
+					>> Issue Logs# 1385 - "V10 (Web) Collapse All and Expand All functions are not working"
+					>> Issue Logs# 1386 - "V10 (Web) Upon opening of menu item, fields are not displayed (per tab). "
+
+Modified by			: JOHN MIGUEL GRAVINES
+Modified Date		: 07/02/2024
+Menu Item Version	: 10.0.0.17
+Updates				: Addressing of findings
+					>> Issue Logs# 1348 - "VERSION 10 - Web Upon initial opening, Document Details  field should be disabled and not clickable (for lookups and button)" >> "VERSION 10 - Web Upon initial opening, Document Details  field should be disabled and not clickable (for lookups and button)"
+
+Modified by			: Maki Cruz
+Modified Date		: 05/31/2024
+Menu Item Version	: 9.0.0.9
+Updates				:Addressing of findings:
+						>Issue Log #1079 - When Pullout is with Requested per envelope and Per Document at the same time, data for Requested per Envelope disappears upon saving. Only the documents from Request for Document Internal> Per Document was saved	Should be able to pullout per envelope and per document at the same time
+						>Issue Log #1102 - "Can not be save record if pullout is per envelope TFSPH-PULLNO-0000000129 E1-7110021547"	Should still be able to save even withhout doc details, provided that request was made per envelope in Request for Document INternal
+
+Modified by			: Maki Cruz
+Modified Date		: 04/30/2024
+Menu Item Version	: 9.0.0.8
+Updates				:Addressing of findings:
+						>Issue Log #892 - No data in Review Attachment	Should display ref docno of Request for Documnet Entry Internal (RFDINT and DOCPUL)
+
+Modified by			: Maki Cruz
+Modified Date		: 04/30/2024
+Menu Item Version	: 9.0.0.7
+Updates				:Addressing of findings:
+						>Issue Log #780 - Tick on the pullout checkbox and reason if not pulled out disappears upon saving
+
+Modified by			: Maki Cruz
+Modified Date		: 04/23/2024
+Menu Item Version	: 9.0.0.6
+Updates				:Addressing of findings:
+						>Issue Log #369 - Should allow multiple scanning of barcodes - Once scanned should display the details on the pullout list details and document details
+						>Issue Log #572 - Upon saving, document date displaye 01/01/1900 - Should be blank if no data inputted on Filing Entry
+
+
+Modified by			: Lance Justine Aleonar
+Modified Date		: 04/22/2024
+Menu Item Version	: 9.0.0.5
+Updates				:Addressing of findings:
+						>Issue Log #643 "View entry Screen >Disapproval Remanks, Requirements Compliance and Review Attachment is disbales TRANTYPE: DOCPUL"
+
+Modified by			: Maki Cruz
+Modified Date		: 04/17/2024
+Menu Item Version	: 9.0.0.4
+Updates				:Addressing of findings:
+						>Issue Log #409 - Rename Contract Number to Contract Reference No. (Column in Document Details)
+
+Modified by			: Maki Cruz
+Modified Date		: 04/15/2024
+Menu Item Version	: 9.0.0.3
+Updates				:Addressing of findings:
+						>Issue Log #190 - Pullout All checkbox should be defaulted as tick
+						>Issue Log #197 - Select All checkbox on Doc Details are not working	Should disable all the Reason (if not pulled out) field once select all is ticked 
+						>Issue Log #229 - Source Document Address Description column displays no data	Should be loaded based on document address from request for document entry - internal
+						>Issue Log #232 - No data found in Pull List No. lookup	Pullout List No should display data based on the assigned Pullout List for the 
+						>Issue Log #347 - No data displayed on the Source Document Address Description	Should be loaded based on the request for docs transaction 
+						>Issue Log #348 - Rename Requesting Document Address Code and Description to Destination Document Address Code and Description
+						>Issue Log #349 - No data displayed on the Requesting Document Address Code and Description	Should be loaded based on the pullout list no
+						>Issue Log #370 - Document Details - Document Location should be loaded from the Request from Document Internal link to Filing Entry Lin
+						>Issue Log #371 - Document Details - Document Address should display Description instead of Code
+						>Issue Log #372 - Document Details - Bay, Rack/Cabinet, Layer/Drawer & Bin/Box should be loaded based from teh Document Location
+						>Issue Log #395 - Some document details disappears upon saving the transaction	Data (Envelope to document details column) should not disappear upon saving
+						>Issue Log #409 - Rename Contract Number to Contract Reference No. (Column in Document Details)	Contract Reference No. Column should be displayed
+						>Issue Log #467 - No loaded Source Document Address Description
+						>Issue Log #469 - Incorrect Loaded Document Location
+						>Issue Log #522 - Remove time on the Document Date
+
+Modified by		: Lance Justine Aleonar
+Modified Date		: 04/04/2024
+Menu Item Version	: 9.0.0.2
+Updates				:> #266 Upon clicking the View Entry Screen of any transaction number for PO Awarding Entry transaction type, the details oF a different transaction number is showing up
+					
+
+Modified by		: Lance Justine Aleonar
+Modified Date		: 03/25/2024
+Menu Item Version	: 9.0.0.1
+Updates				:> #652 Rename Loan Organization No to Loan Origination No
+					 > #658 "Rename Fieds:Rack to Rack/Cabinet Layer to Layer/Drawer"
+					 > #666 Pullout All checkbox should be defaulted as tick
+
+
+Created by		: Fritz Bathan
+Created Date		: 02/29/2024
+Menu Item Version	: 9.0.0.0
+Updates			: Development
+

@@ -1,0 +1,92 @@
+﻿Modified By			: Jenny May Cabantug
+Date Modified		: 09/07/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Enhancement
+						- Convert to V10
+
+Modified By			: DMP
+Date Modified		: 07.12.2022
+Menu Item Version	: 9.0.0.16
+Reason				: Fixed validation in uploaded file without records
+
+Modified By			: DMP
+Date Modified		: 07.11.2022
+Menu Item Version	: 9.0.0.15
+Reason				: Add console.log
+
+Modified By			: NDB
+Date Modified		: 05.26.2022
+Menu Item Version	: 9.0.0.14
+Reason				: Add prompt on process
+
+Modified By			: NDB
+Date Modified		: 05.10.2022
+Menu Item Version	: 9.0.0.13
+Reason				: Update debug log upon process
+
+Modified By			: NDB
+Date Modified		: 11.12.2021
+Menu Item Version	: 9.0.0.12
+Reason				: Add debug log upon process
+
+Modified By			: NDB
+Date Modified		: 10.18.2021
+Menu Item Version	: 9.0.0.11
+Reason				: Add recuser on LoadSchema
+
+Modified By			: NDB
+Date Modified		: 09.14.2021
+Menu Item Version	: 9.0.0.10
+Reason				: Remove duplicate parameter on ProcessData
+
+
+Modified By			: NDB
+Date Modified		: 08.12.2021
+Menu Item Version	: 9.0.0.9
+Reason				: Remove duplicate parameter on ProcessData
+
+
+Modified By			: NDB
+Date Modified		: 07.14.2021
+Menu Item Version	: 9.0.0.8
+Reason				: revise processdata
+
+Modified By			: NDB
+Date Modified		: 07.13.2021
+Menu Item Version	: 9.0.0.7
+Reason				: Add deletionof data based on recuser everytime a recuser upload
+
+Modified By			: MSC
+Date Modified		: 10.17.2020
+Menu Item Version	: 9.0.0.6
+Reason				: Align to NOAH Drive
+
+Modified By	   : AAG
+Date Modified	   : 10.17.2020
+Menu Item Version  : 9.0.0.5
+Reason		   : Update Excel File - remove Red font.
+
+Modified By	   : KSG
+Date Modified	   : 10.10.2020
+Menu Item Version  : 9.0.0.4
+Reason		   : Update Library.
+
+Modified By       : SBL
+Date Modified     : 09/14/2020
+Menu Item Version : 9.0.0.3
+Reason		  : Code Review, Removed getToolBoxDataCreate and getToolBoxDataRet
+
+Modified By       : SBL
+Date Modified     : 08/06/2020
+Menu Item Version : 9.0.0.2
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified By		: DSA
+Date Modified	: 05/12/2020
+Version			: 9.0.0.1
+Reason			: aligned to standard uploading for NOAH Drive
+
+Created	By	:	JNB
+Date Created	:	3/14/2020
+Menu Item Version 	: 9.0.0.0

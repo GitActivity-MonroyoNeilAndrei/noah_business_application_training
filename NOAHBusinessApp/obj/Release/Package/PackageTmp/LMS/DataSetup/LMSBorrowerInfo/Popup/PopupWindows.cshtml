@@ -1,0 +1,2649 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+
+    ViewBag.Title = "PopupWindows";
+}
+
+
+<div id="nwPaymentDtls" nwTitle="Payment Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveContacts" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridPaymentDtlsCon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwDisappDtls" nwTitle="Disapproval Details" class="nkPopupCon">
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="row with-label-lookup">
+                <div class="col col-5">
+                    <label class="lbltxt">Reason for Disapproval</label>
+                </div>
+                <div id="lugReasonforDisapp" class="col col-7 col-parent lookups">
+                    <div class="col col-4">
+                        <input type="text" name="" class="txtbox idval">
+                    </div>
+                    <div class="col col-8">
+                        <input type="text" name="" class="txtbox descval">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col col-4">
+                    <label class="lbltxt">Disapproval Remarks</label>
+                </div>
+                <div class="col col-8">
+                    <textarea id="txtDisappRemarks" class="txtarea autoresize" rows="3"></textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="nwBorrContactDtls" nwTitle="Co-borrower Contact Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveBCD" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridCoBorrowerContactInfoCon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwBorrLocationDtls" nwTitle="Co-borrower Location Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveLocBorr" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex">
+        <div class="row row-parent child-centered">
+            <div class="col col-6 col-parent">
+                @*Same as Borrower's Location Information*@
+                <div class="row">
+                    <div class="col col-12 left">
+                        <div class="chk-con">
+                            <input id="cbCLISBLI" type="checkbox" name="cbCLISBLI" class="chk">
+                            <label class="lbl-chk" for="cbCLISBLI">Same as Borrower's Location Information</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                @*Preferred Mailing Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Preferred Mailing Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <select id='cmbCLIPrepMail' class="cmb"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="lbltxt"><i><b><u>Present Address</u></b></i></label>
+                </div>
+
+                @*Home Ownership*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Home Ownership<span id="nwReq_lugCLIHomeOwnrshp" class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCLIHomeOwnrshp">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Full Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <div class="chk-con">
+                            <input id="cb_CLI_FullAddress" type="checkbox" name="cb_CLI_FullAddress" class="chk">
+                            <label class="lbl-chk" for="cb_CLI_FullAddress">Full Address<span id="nwreq_cbFullAddress" class="nwRequiredField">*</span></label>
+                        </div>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_FullAddress" type="text" maxlength="255" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Length of Stay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Length of Stay<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_LengthStay" type="text" maxlength="3" class="txtbox isNumber" />
+                    </div>
+                </div>
+
+                @*Unit No., Floor No., Bldg No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Unit No.</label>
+                    </div>
+                    <div class="col col-2">
+                        <input id="txt_CLI_UnitNo" type="text" maxlength="12" class="txtbox addchgBorrLocInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Floor No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_CLI_FloorNo" type="text" maxlength="12" class="txtbox addchgBorrLocInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Bldg. No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_CLI_BldgNo" type="text" maxlength="12" class="txtbox addchgBorrLocInfo" />
+                    </div>
+
+
+                </div>
+
+                @*Building Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Building Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_BuildingName" type="text" maxlength="80" class="txtbox addchgBorrLocInfo" />
+                    </div>
+                </div>
+
+                @*Landmark*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Landmark<span id="nwReq_txt_CLI_Landmark" class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_Landmark" type="text" maxlength="25" class="txtbox addchgBorrLocInfo" />
+                    </div>
+                </div>
+
+                @*Street No, Street Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">House No.</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CLI_HouseNo" type="text" maxlength="12" class="txtbox addchgBorrLocInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Street Name</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CLI_StreetName" type="text" maxlength="80" class="txtbox addchgBorrLocInfo" />
+                    </div>
+                </div>
+
+                @*Lot, Block, Phase*@
+                <div class="row">
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Lot</label>
+                        </div>
+                        <div class="col col-2">
+                            <input id="txt_CLI_Lot" type="text" maxlength="12" class="txtbox addchgBorrLocInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Block</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_CLI_Block" type="text" maxlength="12" class="txtbox addchgBorrLocInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Phase</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_CLI_Phase" type="text" maxlength="12" class="txtbox addchgBorrLocInfo" />
+                        </div>
+                    </div>
+                </div>
+
+                @*Subdivision*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Subdivision<span class="subdivision">*</span></label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CLI_Subdivision" type="text" maxlength="80" class="txtbox addchgBorrLocInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Zone</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CLI_Zone" type="text" maxlength="25" class="txtbox addchgBorrLocInfo" />
+                    </div>
+                </div>
+
+                @*Barangay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Barangay</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgBorrLocInfo" id="lugCLIBarangay">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Municipality*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Municipality</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgBorrLocInfo" id="lugCLIMunicipality">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Province*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCLIProvince">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Region*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCLIRegion">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Country*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Country</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCLICountry">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Zip Code*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">ZIP Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_Zip" type="text" maxlength="4" class="txtbox addchgBorrLocInfo" />
+                    </div>
+                </div>
+
+                @*Remarks*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remarks</label>
+                    </div>
+                    <div class="col col-8">
+                        <textarea id="txt_CLI_Remarks" maxlength="255" class="nwUpper nwRemarks txtarea autoresize" rows="3" cols="50"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col col-6 col-parent padding-x-5 margin-top-25">
+                @*Permanent Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt"><i><b><u>Permanent Address</u></b></i></label>
+                    </div>
+                    <div class="col col-8">
+                        <div class="chk-con">
+                            <input id="cbCLIPresentAdd" type="checkbox" name="cbCLIPresentAdd" class="chk">
+                            <label class="lbl-chk" for="cbCLIPresentAdd">Same as Present Address</label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                @*Home Ownership*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Home Ownership<span id="nwReq_lugCLIHomeOwnrshp2" class="nwRequiredField nwHide">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCLIHomeOwnrshp2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Full Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <div class="chk-con">
+                            <input id="cb_CLI_FullAddress2" type="checkbox" name="cb_CLI_FullAddress2" class="chk">
+                            <label class="lbl-chk" for="cb_CLI_FullAddress2">Full Address</label>
+                        </div>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_FullAddress2" type="text" maxlength="255" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Length of Stay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Length of Stay<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_LengthStay2" type="text" maxlength="3" class="txtbox isNumber" />
+                    </div>
+                </div>
+
+                @*Unit No., Floor No., Bldg No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Unit No.</label>
+                    </div>
+                    <div class="col col-2">
+                        <input id="txt_CLI_UnitNo2" type="text" maxlength="12" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Floor No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_CLI_FloorNo2" type="text" maxlength="12" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Bldg. No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_CLI_BldgNo2" type="text" maxlength="12" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+
+
+                </div>
+
+                @*Building Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Building Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_BuildingName2" type="text" maxlength="80" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+                </div>
+
+                @*Landmark*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Landmark<span id="nwReq_txt_CLI_Landmark2" class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_Landmark2" type="text" maxlength="25" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+                </div>
+
+                @*Street No, Street Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">House No.</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CLI_HouseNo2" type="text" maxlength="12" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Street Name</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CLI_StreetName2" type="text" maxlength="80" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+                </div>
+
+                @*Lot, Block, Phase*@
+                <div class="row">
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Lot</label>
+                        </div>
+                        <div class="col col-2">
+                            <input id="txt_CLI_Lot2" type="text" maxlength="12" class="txtbox addchgBorrLocInfo2" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Block</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_CLI_Block2" type="text" maxlength="12" class="txtbox addchgBorrLocInfo2" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Phase</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_CLI_Phase2" type="text" maxlength="12" class="txtbox addchgBorrLocInfo2" />
+                        </div>
+                    </div>
+                </div>
+
+                @*Subdivision*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Subdivision<span class="subdivision">*</span></label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CLI_Subdivision2" type="text" maxlength="80" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Zone</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CLI_Zone2" type="text" maxlength="25" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+                </div>
+
+                @*Barangay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Barangay</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgBorrLocInfo2" id="lugCLIBarangay2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Municipality*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Municipality</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgBorrLocInfo" id="lugCLIMunicipality2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Province*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCLIProvince2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Region*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCLIRegion2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Country*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Country</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCLICountry2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Zip Code*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">ZIP Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CLI_Zip2" type="text" maxlength="4" class="txtbox addchgBorrLocInfo2" />
+                    </div>
+                </div>
+
+                @*Remarks*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remarks</label>
+                    </div>
+                    <div class="col col-8">
+                        <textarea id="txt_CLI_Remarks2" maxlength="255" class="nwUpper nwRemarks txtarea autoresize" rows="3" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwBorrEmployeeDtls" nwTitle="Co-borrower Employment Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveEmpBorr" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex">
+        <div class="row row-parent child-centered">
+            <div class="col col-6 col-parent padding-5">
+                @*Employment Type*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employment Type<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCEIEmploymentType">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Employer Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employer Name<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CEI_EmployerName" type="text" maxlength="255" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Employment Status*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employment Status<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCEIEmploymentStatus">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Job Title*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Job Title</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CEI_JobTitle" type="text" maxlength="80" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Nature of Employment*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Nature of Employment<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCEINatureEmplymnt">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Duration of Employment*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Duration of Employment<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CEI_Years" type="text" maxlength="80" class="txtbox nwDatePicker" onchange="calculateAndSetYearsDifference('txt_CEI_Years', 'txt_CEI_Month')" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Year/s</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CEI_Month" type="text" maxlength="3" nwdp="0" class="txtbox isNumber" />
+                    </div>
+                </div>
+
+                @*Position*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Occupation/Position<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCEIPosition">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Gross Monthly Income*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Gross Monthly Income<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CEI_GrossMnthlyIncm" type="text" nwdp="2" maxlength="16" class="txtbox isNumber numC" />
+                    </div>
+                </div>
+
+                @*Business Contact Info.*@
+                <div class="row">
+                    <label class="lbltxt"><i><b><u>Employment Contact Info.</u></b></i></label>
+                </div>
+
+                @*Phone No*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Phone No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CEI_PhoneNo" type="text" maxlength="15" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Mobile No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Mobile No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CEI_MobileNo" type="text" maxlength="12" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Email Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Email Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CEI_EmailAdd" type="text" maxlength="80" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Employment Income Source*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employment Income Source<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCEIBusinessIncSrc">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6 col-parent padding-5">
+
+
+                @*Emplyment Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employment Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CEI_EmploymentAddress" type="text" maxlength="30" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Unit No., Floor No., Bldg No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Unit No.</label>
+                    </div>
+                    <div class="col col-2">
+                        <input id="txt_CEI_UnitNo" type="text" maxlength="12" class="txtbox addchgEmpAddressBorrInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Floor No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_CEI_FloorNo" type="text" maxlength="12" class="txtbox addchgEmpAddressBorrInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Bldg. No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_CEI_BldgNo" type="text" maxlength="12" class="txtbox addchgEmpAddressBorrInfo" />
+                    </div>
+
+
+                </div>
+
+                @*Building Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Building Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CEI_BldgName" type="text" maxlength="80" class="txtbox addchgEmpAddressBorrInfo" />
+                    </div>
+                </div>
+
+                @*Street No, Street Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">House No.</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CEI_House" type="text" maxlength="12" class="txtbox addchgEmpAddressBorrInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Street Name<span class="streetname">*</span></label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CEI_StreetName" type="text" maxlength="80" class="txtbox addchgEmpAddressBorrInfo" />
+                    </div>
+                </div>
+
+                @*Lot, Block, Phase*@
+                <div class="row">
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Lot</label>
+                        </div>
+                        <div class="col col-2">
+                            <input id="txt_CEI_Lot" type="text" maxlength="25" class="txtbox addchgEmpAddressBorrInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Block</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_CEI_Block" type="text" maxlength="25" class="txtbox addchgEmpAddressBorrInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Phase</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_CEI_Phase" type="text" maxlength="25" class="txtbox addchgEmpAddressBorrInfo" />
+                        </div>
+                    </div>
+                </div>
+
+                @*Subdivision*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Subdivision</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CEI_Subdivision" type="text" maxlength="80" class="txtbox addchgEmpAddressBorrInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Zone</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CEI_Zone" type="text" maxlength="25" class="txtbox addchgEmpAddressBorrInfo" />
+                    </div>
+                </div>
+
+                @*Barangay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Barangay</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgEmpAddressBorrInfo" id="lugCEIBarangay">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Municipality*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Municipality</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgEmpAddressBorrInfo" id="lugCEIMunicipality">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Province*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCEIProvince">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Region*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCEIRegion">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Country*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Country</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCEICountry">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Zip Code*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">ZIP Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CEI_Zip" type="text" maxlength="4" class="txtbox addchgEmpAddressBorrInfo" />
+                    </div>
+                </div>
+
+                @*Remarks*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remarks</label>
+                    </div>
+                    <div class="col col-8">
+                        <textarea id="txt_CEI_Remarks" maxlength="255" class="nwUpper nwRemarks txtarea autoresize" rows="3" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwBorrBussDtls" nwTitle="Co-borrower Business Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveBussBorr" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex">
+        <div class="row row-parent child-centered">
+            <div class="col col-6 col-parent padding-5">
+                @*Business Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Business Name<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CBI_BusinessName" type="text" maxlength="255" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Business Type*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Business Type<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCBIBusinessType">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Nature of Business*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Nature of Business<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCBINatureBusiness">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Job Title*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Job Title</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CBI_JobTitle" type="text" maxlength="80" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Occupation/Position*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Occupation/Position<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCBIOccptnPositn">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Duration of Business*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Duration of Business<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CBI_Years" type="text" maxlength="80" class="txtbox nwDatePicker" onchange="calculateAndSetYearsDifference('txt_CBI_Years', 'txt_CBI_Month')" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Year/s</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CBI_Month" type="text" maxlength="3" nwdp="0" class="txtbox isNumber" />
+                    </div>
+                </div>
+
+                @*Gross Monthly Income*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Gross Monthly Income<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CBI_GrossMnthlyIncm" type="text" nwdp="2" maxlength="16" class="txtbox isNumber numC" />
+                    </div>
+                </div>
+
+                @*Business Contact Info.*@
+                <div class="row">
+                    <label class="lbltxt"><i><b><u>Business Contact Info.</u></b></i></label>
+                </div>
+
+                @*Phone No*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Phone No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CBI_PhoneNo" type="text" maxlength="15" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Mobile No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Mobile No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CBI_MobileNo" type="text" maxlength="12" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Email Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Email Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CBI_EmailAdd" type="text" maxlength="80" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Business Income Source*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Business Income Source</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCBIBusinessIncSrc">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6 col-parent padding-5">
+
+
+                @*Business Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Business Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CBI_BusinessAddress" type="text" maxlength="30" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Unit No., Floor No., Bldg No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Unit No.</label>
+                    </div>
+                    <div class="col col-2">
+                        <input id="txt_CBI_UnitNo" type="text" maxlength="12" class="txtbox addchgBussAddEmpInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Floor No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_CBI_FloorNo" type="text" maxlength="12" class="txtbox addchgBussAddEmpInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Bldg. No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_CBI_BldgNo" type="text" maxlength="12" class="txtbox addchgBussAddEmpInfo" />
+                    </div>
+
+
+                </div>
+
+                @*Building Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Building Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CBI_BldgName" type="text" maxlength="80" class="txtbox addchgAddressEmpInfo" />
+                    </div>
+                </div>
+
+                @*Street No, Street Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">House No.</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CBI_House" type="text" maxlength="12" class="txtbox addchgBussAddEmpInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Street Name<span class="streetname nwReq_EmpInfo nwHide">*</span></label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CBI_StreetName" type="text" maxlength="80" class="txtbox addchgBussAddEmpInfo" />
+                    </div>
+                </div>
+
+                @*Lot, Block, Phase*@
+                <div class="row">
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Lot</label>
+                        </div>
+                        <div class="col col-2">
+                            <input id="txt_CBI_Lot" type="text" maxlength="25" class="txtbox addchgBussAddEmpInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Block</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_CBI_Block" type="text" maxlength="25" class="txtbox addchgBussAddEmpInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Phase</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_CBI_Phase" type="text" maxlength="25" class="txtbox addchgBussAddEmpInfo" />
+                        </div>
+                    </div>
+                </div>
+
+                @*Subdivision*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Subdivision</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_CBI_Subdivision" type="text" maxlength="80" class="txtbox addchgBussAddEmpInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Zone</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_CBI_Zone" type="text" maxlength="25" class="txtbox addchgBussAddEmpInfo" />
+                    </div>
+                </div>
+
+                @*Barangay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Barangay</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgBussAddEmpInfo" id="lugCBIBarangay">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Municipality*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Municipality</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgBussAddEmpInfo" id="lugCBIMunicipality">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Province*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCBIProvince">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Region*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCBIRegion">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Country*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Country</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugCBICountry">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Zip Code*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">ZIP Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_CBI_Zip" type="text" maxlength="4" class="txtbox addchgBussAddEmpInfo" />
+                    </div>
+                </div>
+
+                @*Remarks*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remarks</label>
+                    </div>
+                    <div class="col col-8">
+                        <textarea id="txt_CBI_Remarks" maxlength="255" class="nwUpper nwRemarks txtarea autoresize" rows="3" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwOtrSrc" nwTitle="Co-borrower Contact Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveOthSrc" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridBorrOthSrcIncInfoCon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwSignaContactDtls" nwTitle="Signatory Contact Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveSCD" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+    <div class="container-flex">
+        <div class="row-parent padding-10">
+            <div class="col col-12">
+                <div class="nwe-tbl-content">
+                    <div id="nwGridSigntryContactDtlsCon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwSignaLocation" nwTitle="Signatory Location Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveLocSign" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex">
+        <div class="row row-parent child-centered">
+            <div class="col col-6 col-parent">
+
+                @*Preferred Mailing Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Preferred Mailing Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <select id='cmbSigLIPrepMail' class="cmb"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="lbltxt"><i><b><u>Present Address</u></b></i></label>
+                </div>
+
+                @*Home Ownership*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Home Ownership<span id="nwReq_lugSigLIHomeOwnrshp" class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigLIHomeOwnrshp">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Full Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <div class="chk-con">
+                            <input id="cb_SigLI_FullAddress" type="checkbox" name="cb_SigLI_FullAddress" class="chk">
+                            <label class="lbl-chk" for="cb_SigLI_FullAddress">Full Address<span id="nwreq_cbFullAddress" class="nwRequiredField">*</span></label>
+                        </div>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_FullAddress" type="text" maxlength="255" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Length of Stay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Length of Stay<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_LengthStay" type="text" maxlength="3" class="txtbox isNumber" />
+                    </div>
+                </div>
+
+                @*Unit No., Floor No., Bldg No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Unit No.</label>
+                    </div>
+                    <div class="col col-2">
+                        <input id="txt_SigLI_UnitNo" type="text" maxlength="12" class="txtbox addchgSignaLocInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Floor No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_SigLI_FloorNo" type="text" maxlength="12" class="txtbox addchgSignaLocInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Bldg. No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_SigLI_BldgNo" type="text" maxlength="12" class="txtbox addchgSignaLocInfo" />
+                    </div>
+
+
+                </div>
+
+                @*Building Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Building Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_BuildingName" type="text" maxlength="80" class="txtbox addchgSignaLocInfo" />
+                    </div>
+                </div>
+
+                @*Landmark*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Landmark<span id="nwReq_txt_SigLI_Landmark" class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_Landmark" type="text" maxlength="25" class="txtbox addchgSignaLocInfo" />
+                    </div>
+                </div>
+
+                @*Street No, Street Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">House No.</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigLI_HouseNo" type="text" maxlength="12" class="txtbox addchgSignaLocInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Street Name</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigLI_StreetName" type="text" maxlength="80" class="txtbox addchgSignaLocInfo" />
+                    </div>
+                </div>
+
+                @*Lot, Block, Phase*@
+                <div class="row">
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Lot</label>
+                        </div>
+                        <div class="col col-2">
+                            <input id="txt_SigLI_Lot" type="text" maxlength="12" class="txtbox addchgSignaLocInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Block</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_SigLI_Block" type="text" maxlength="12" class="txtbox addchgSignaLocInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Phase</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_SigLI_Phase" type="text" maxlength="12" class="txtbox addchgSignaLocInfo" />
+                        </div>
+                    </div>
+                </div>
+
+                @*Subdivision*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Subdivision<span class="subdivision">*</span></label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigLI_Subdivision" type="text" maxlength="80" class="txtbox addchgSignaLocInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Zone</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigLI_Zone" type="text" maxlength="25" class="txtbox addchgSignaLocInfo" />
+                    </div>
+                </div>
+
+                @*Barangay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Barangay</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgSignaLocInfo" id="lugSigLIBarangay">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Municipality*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Municipality</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgSignaLocInfo" id="lugSigLIMunicipality">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Province*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigLIProvince">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Region*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigLIRegion">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Country*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Country</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigLICountry">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Zip Code*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">ZIP Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_Zip" type="text" maxlength="4" class="txtbox addchgSignaLocInfo" />
+                    </div>
+                </div>
+
+                @*Remarks*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remarks</label>
+                    </div>
+                    <div class="col col-8">
+                        <textarea id="txt_SigLI_Remarks" maxlength="255" class="nwUpper nwRemarks txtarea autoresize" rows="3" cols="50"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col col-6 col-parent padding-x-5 margin-top-25">
+                @*Permanent Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt"><i><b><u>Permanent Address</u></b></i></label>
+                    </div>
+                    <div class="col col-8">
+                        <div class="chk-con">
+                            <input id="cbSigLIPresentAdd" type="checkbox" name="cbSigLIPresentAdd" class="chk">
+                            <label class="lbl-chk" for="cbSigLIPresentAdd">Same as Present Address</label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                @*Home Ownership*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Home Ownership<span id="nwReq_lugSigLIHomeOwnrshp2" class="nwRequiredField nwHide">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigLIHomeOwnrshp2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Full Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <div class="chk-con">
+                            <input id="cb_SigLI_FullAddress2" type="checkbox" name="cb_SigLI_FullAddress2" class="chk">
+                            <label class="lbl-chk" for="cb_SigLI_FullAddress2">Full Address</label>
+                        </div>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_FullAddress2" type="text" maxlength="255" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Length of Stay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Length of Stay<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_LengthStay2" type="text" maxlength="3" class="txtbox isNumber" />
+                    </div>
+                </div>
+
+                @*Unit No., Floor No., Bldg No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Unit No.</label>
+                    </div>
+                    <div class="col col-2">
+                        <input id="txt_SigLI_UnitNo2" type="text" maxlength="12" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Floor No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_SigLI_FloorNo2" type="text" maxlength="12" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Bldg. No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_SigLI_BldgNo2" type="text" maxlength="12" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+
+
+                </div>
+
+                @*Building Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Building Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_BuildingName2" type="text" maxlength="80" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+                </div>
+
+                @*Landmark*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Landmark<span id="nwReq_txt_SigLI_Landmark2" class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_Landmark2" type="text" maxlength="25" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+                </div>
+
+                @*Street No, Street Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">House No.</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigLI_HouseNo2" type="text" maxlength="12" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Street Name</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigLI_StreetName2" type="text" maxlength="80" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+                </div>
+
+                @*Lot, Block, Phase*@
+                <div class="row">
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Lot</label>
+                        </div>
+                        <div class="col col-2">
+                            <input id="txt_SigLI_Lot2" type="text" maxlength="12" class="txtbox addchgSignaLocInfo2" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Block</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_SigLI_Block2" type="text" maxlength="12" class="txtbox addchgSignaLocInfo2" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Phase</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_SigLI_Phase2" type="text" maxlength="12" class="txtbox addchgSignaLocInfo2" />
+                        </div>
+                    </div>
+                </div>
+
+                @*Subdivision*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Subdivision<span class="subdivision">*</span></label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigLI_Subdivision2" type="text" maxlength="80" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Zone</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigLI_Zone2" type="text" maxlength="25" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+                </div>
+
+                @*Barangay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Barangay</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgSignaLocInfo2" id="lugSigLIBarangay2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Municipality*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Municipality</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgSignaLocInfo" id="lugSigLIMunicipality2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Province*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigLIProvince2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Region*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigLIRegion2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Country*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Country</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigLICountry2">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Zip Code*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">ZIP Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigLI_Zip2" type="text" maxlength="4" class="txtbox addchgSignaLocInfo2" />
+                    </div>
+                </div>
+
+                @*Remarks*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remarks</label>
+                    </div>
+                    <div class="col col-8">
+                        <textarea id="txt_SigLI_Remarks2" maxlength="255" class="nwUpper nwRemarks txtarea autoresize" rows="3" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwSigEmpDtls" nwTitle="Signatories Employment Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveEmpSign" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex">
+        <div class="row row-parent child-centered">
+            <div class="col col-6 col-parent padding-5">
+                @*Employment Type*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employment Type<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigEIEmploymentType">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Employer Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employer Name<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigEI_EmployerName" type="text" maxlength="255" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Employment Status*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employment Status<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigEIEmploymentStatus">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Job Title*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Job Title</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigEI_JobTitle" type="text" maxlength="80" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Nature of Employment*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Nature of Employment<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigEINatureEmplymnt">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Duration of Employment*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Duration of Employment<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigEI_Years" type="text" maxlength="80" class="txtbox nwDatePicker" onchange="calculateAndSetYearsDifference('txt_SigEI_Years', 'txt_SigEI_Month')" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Year/s</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigEI_Month" type="text" maxlength="3" nwdp="0" class="txtbox isNumber" />
+                    </div>
+                </div>
+
+                @*Position*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Occupation/Position<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigEIPosition">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Gross Monthly Income*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Gross Monthly Income<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigEI_GrossMnthlyIncm" type="text" nwdp="2" maxlength="16" class="txtbox isNumber numC" />
+                    </div>
+                </div>
+
+                @*Business Contact Info.*@
+                <div class="row">
+                    <label class="lbltxt"><i><b><u>Employment Contact Info.</u></b></i></label>
+                </div>
+
+                @*Phone No*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Phone No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigEI_PhoneNo" type="text" maxlength="15" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Mobile No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Mobile No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigEI_MobileNo" type="text" maxlength="12" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Email Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Email Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigEI_EmailAdd" type="text" maxlength="80" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Employment Income Source*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employment Income Source<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigEIBusinessIncSrc">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6 col-parent padding-5">
+
+
+                @*Emplyment Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Employment Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigEI_EmploymentAddress" type="text" maxlength="30" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Unit No., Floor No., Bldg No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Unit No.</label>
+                    </div>
+                    <div class="col col-2">
+                        <input id="txt_SigEI_UnitNo" type="text" maxlength="12" class="txtbox addchgAddressEmpSigInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Floor No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_SigEI_FloorNo" type="text" maxlength="12" class="txtbox addchgAddressEmpSigInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Bldg. No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_SigEI_BldgNo" type="text" maxlength="12" class="txtbox addchgAddressEmpSigInfo" />
+                    </div>
+
+
+                </div>
+
+                @*Building Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Building Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigEI_BldgName" type="text" maxlength="80" class="txtbox addchgAddressEmpSigInfo" />
+                    </div>
+                </div>
+
+                @*Street No, Street Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">House No.</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigEI_House" type="text" maxlength="12" class="txtbox addchgAddressEmpSigInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Street Name<span class="streetname">*</span></label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigEI_StreetName" type="text" maxlength="80" class="txtbox addchgAddressEmpSigInfo" />
+                    </div>
+                </div>
+
+                @*Lot, Block, Phase*@
+                <div class="row">
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Lot</label>
+                        </div>
+                        <div class="col col-2">
+                            <input id="txt_SigEI_Lot" type="text" maxlength="25" class="txtbox addchgAddressEmpSigInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Block</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_SigEI_Block" type="text" maxlength="25" class="txtbox addchgAddressEmpSigInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Phase</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_SigEI_Phase" type="text" maxlength="25" class="txtbox addchgAddressEmpSigInfo" />
+                        </div>
+                    </div>
+                </div>
+
+                @*Subdivision*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Subdivision</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigEI_Subdivision" type="text" maxlength="80" class="txtbox addchgAddressEmpSigInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Zone</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigEI_Zone" type="text" maxlength="25" class="txtbox addchgAddressEmpSigInfo" />
+                    </div>
+                </div>
+
+                @*Barangay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Barangay</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgAddressEmpSigInfo" id="lugSigEIBarangay">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Municipality*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Municipality</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgAddressEmpSigInfo" id="lugSigEIMunicipality">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Province*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigEIProvince">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Region*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigEIRegion">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Country*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Country</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigEICountry">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Zip Code*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">ZIP Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigEI_Zip" type="text" maxlength="4" class="txtbox addchgAddressEmpSigInfo" />
+                    </div>
+                </div>
+
+                @*Remarks*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remarks</label>
+                    </div>
+                    <div class="col col-8">
+                        <textarea id="txt_SigEI_Remarks" maxlength="255" class="nwUpper nwRemarks txtarea autoresize" rows="3" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nwSigBussDtls" nwTitle="Signatories Business Details" class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnsaveBussSign" class="btn-tb-action btn-tb-save">
+                <div class="_icon"></div>
+                <div class="_lbl">Save</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-flex">
+        <div class="row row-parent child-centered">
+            <div class="col col-6 col-parent padding-5">
+                @*Business Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Business Name<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigBI_BusinessName" type="text" maxlength="255" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Business Type*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Business Type<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigBIBusinessType">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Nature of Business*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Nature of Business<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigBINatureBusiness">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Job Title*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Job Title</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigBI_JobTitle" type="text" maxlength="80" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Occupation/Position*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Occupation/Position<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigBIOccptnPositn">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Duration of Business*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Duration of Business<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigBI_Years" type="text" maxlength="80" class="txtbox nwDatePicker" onchange="calculateAndSetYearsDifference('txt_SigBI_Years', 'txt_SigBI_Month')" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Year/s</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigBI_Month" type="text" maxlength="3" nwdp="0" class="txtbox isNumber" />
+                    </div>
+                </div>
+
+                @*Gross Monthly Income*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Gross Monthly Income<span class="nwRequiredField">*</span></label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigBI_GrossMnthlyIncm" type="text" nwdp="2" maxlength="16" class="txtbox isNumber numC" />
+                    </div>
+                </div>
+
+                @*Business Contact Info.*@
+                <div class="row">
+                    <label class="lbltxt"><i><b><u>Business Contact Info.</u></b></i></label>
+                </div>
+
+                @*Phone No*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Phone No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigBI_PhoneNo" type="text" maxlength="15" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Mobile No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Mobile No.</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigBI_MobileNo" type="text" maxlength="12" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Email Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Email Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigBI_EmailAdd" type="text" maxlength="80" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Business Income Source*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Business Income Source</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigBIBusinessIncSrc">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-6 col-parent padding-5">
+
+
+                @*Business Address*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Business Address</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigBI_BusinessAddress" type="text" maxlength="30" class="txtbox" />
+                    </div>
+                </div>
+
+                @*Unit No., Floor No., Bldg No.*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Unit No.</label>
+                    </div>
+                    <div class="col col-2">
+                        <input id="txt_SigBI_UnitNo" type="text" maxlength="12" class="txtbox addchgSigAddBussInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Floor No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_SigBI_FloorNo" type="text" maxlength="12" class="txtbox addchgSigAddBussInfo" />
+                    </div>
+                    <div class="col col-1-25">
+                        <label class="lbltxt">Bldg. No.</label>
+                    </div>
+                    <div class="col col-1-75">
+                        <input id="txt_SigBI_BldgNo" type="text" maxlength="12" class="txtbox addchgSigAddBussInfo" />
+                    </div>
+
+
+                </div>
+
+                @*Building Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Building Name</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigBI_BldgName" type="text" maxlength="80" class="txtbox addchgAddressEmpInfo" />
+                    </div>
+                </div>
+
+                @*Street No, Street Name*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">House No.</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigBI_House" type="text" maxlength="12" class="txtbox addchgSigAddBussInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Street Name<span class="streetname nwReq_EmpInfo nwHide">*</span></label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigBI_StreetName" type="text" maxlength="80" class="txtbox addchgSigAddBussInfo" />
+                    </div>
+                </div>
+
+                @*Lot, Block, Phase*@
+                <div class="row">
+                    <div class="row">
+                        <div class="col col-4">
+                            <label class="lbltxt">Lot</label>
+                        </div>
+                        <div class="col col-2">
+                            <input id="txt_SigBI_Lot" type="text" maxlength="25" class="txtbox addchgSigAddBussInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Block</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_SigBI_Block" type="text" maxlength="25" class="txtbox addchgSigAddBussInfo" />
+                        </div>
+                        <div class="col col-1-25">
+                            <label class="lbltxt">Phase</label>
+                        </div>
+                        <div class="col col-1-75">
+                            <input id="txt_SigBI_Phase" type="text" maxlength="25" class="txtbox addchgSigAddBussInfo" />
+                        </div>
+                    </div>
+                </div>
+
+                @*Subdivision*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Subdivision</label>
+                    </div>
+                    <div class="col col-3-25">
+                        <input id="txt_SigBI_Subdivision" type="text" maxlength="80" class="txtbox addchgSigAddBussInfo" />
+                    </div>
+                    <div class="col col-1-75">
+                        <label class="lbltxt">Zone</label>
+                    </div>
+                    <div class="col col-3">
+                        <input id="txt_SigBI_Zone" type="text" maxlength="25" class="txtbox addchgSigAddBussInfo" />
+                    </div>
+                </div>
+
+                @*Barangay*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Barangay</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgSigAddBussInfo" id="lugSigBIBarangay">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Municipality*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Municipality</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups addchgSigAddBussInfo" id="lugSigBIMunicipality">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                            <div class="btn btn-sm-default btn-sm-default-lookup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Province*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Province</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigBIProvince">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Region*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Region</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigBIRegion">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Country*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Country</label>
+                    </div>
+                    <div class="col col-8 col-parent lookups" id="lugSigBICountry">
+                        <div class="col col-4">
+                            <input type="text" name="" class="txtbox idval">
+                        </div>
+                        <div class="col col-8">
+                            <input type="text" name="" class="txtbox descval">
+                        </div>
+                    </div>
+                </div>
+
+                @*Zip Code*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">ZIP Code</label>
+                    </div>
+                    <div class="col col-8">
+                        <input id="txt_SigBI_Zip" type="text" maxlength="4" class="txtbox addchgSigAddBussInfo" />
+                    </div>
+                </div>
+
+                @*Remarks*@
+                <div class="row">
+                    <div class="col col-4">
+                        <label class="lbltxt">Remarks</label>
+                    </div>
+                    <div class="col col-8">
+                        <textarea id="txt_SigBI_Remarks" maxlength="255" class="nwUpper nwRemarks txtarea autoresize" rows="3" cols="50"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

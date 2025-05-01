@@ -1,0 +1,123 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Recurring Transactions Monitoring Report";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/AP/ReportsAndInquiry/APRecurringMonRpt/APRecurringMonRpt.js"></script>
+    <link href="~/AP/ReportsAndInquiry/APRecurringMonRpt/APRecurringMonRpt.css" rel="stylesheet" />
+</head>
+
+@*ToolBox*@
+<div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+
+    <div id="noah-webui-Toolbox-BindingNavigator" nwbind="noah-webui-Toolbox-Grid" class="noah-webui-Toolbox-BindingNavigator nwHide">
+        <div id="noah-webui-default-first" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div id="noah-webui-default-previous" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div class="BN-record">
+            <input id="noah-webui-default-currentRec" type="text" value="0" />
+            <span>of 0</span>
+        </div>
+        <div id="noah-webui-default-next" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div id="noah-webui-default-last" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+    </div>
+
+    <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">New</div>
+    </div>
+    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Save</div>
+    </div>
+    <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Delete</div>
+    </div>
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+    <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Inquire</div>
+    </div>
+    <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Export</div>
+    </div>
+</div>
+
+
+<div class="container-flex padding-10">
+        <div class="row child-centered row-parent-mob">
+            <div class="col col-12 col-parent child-centered">
+                <div class="col col-5 col-parent inline-block">
+                    <div class="row">
+                        <fieldset class="fieldset">
+                            <legend>Date Filter</legend>
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div class="row">
+                                        <div class="col col-5">
+                                            <label class="lbltxt">As Of Date</label>
+                                        </div>
+                                        <div class="col col-7">                                   
+                                            <input id="dtpAsOfDate" type="text" name="" class="txtbox nwDatePick">
+                                        </div>
+                                      </div>
+                                 </div>
+                                
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                        <fieldset class="fieldset">
+                            <legend>Report Type</legend>
+                            <div class="row">
+                                <div class="col col-12">
+                                    <div class="row">
+                                        <div class="col col-6 child-centered">
+                                            <div class="rdo-wrapper">
+                                                <input id="rbSummary" type="radio" checked name="Type" class="rdo">
+                                                <label class="lbl-rdo" for="rbSummary">Summary</label>
+                                            </div>
+                                        </div>
+                                        <div class="col col-6 child-centered">
+                                            <div class="rdo-wrapper">
+                                                <input id="rbDetailed" type="radio" name="Type" class="rdo">
+                                                <label class="lbl-rdo" for="rbDetailed">Detailed</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="col col-7 col-parent">
+                    <fieldset class="fieldset">
+                        <legend>Filter By</legend>
+                        <div id="settingstabs">
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+         </div>
+        <div class="row row-parent-mob">
+            <div class="col col-12 col-parent">
+                <div id="nwGridMainCon"></div>
+            </div>
+        </div>
+
+</div>
+

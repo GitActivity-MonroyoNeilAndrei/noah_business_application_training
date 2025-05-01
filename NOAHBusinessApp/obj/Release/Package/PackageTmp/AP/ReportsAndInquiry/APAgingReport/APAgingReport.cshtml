@@ -1,0 +1,150 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "Aging Report";
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+
+<head>
+    <script src="~/AP/ReportsAndInquiry/APAgingReport/APAgingReport.js"></script>
+    <link href="~/AP/ReportsAndInquiry/APAgingReport/APAgingReport.css" rel="stylesheet" />
+</head>
+
+@*ToolBox*@
+<div id="noah-webui-Toolbox" class="nk-toolbar-c noah-webui-Toolbox">
+
+    <div id="noah-webui-Toolbox-BindingNavigator" nwbind="noah-webui-Toolbox-Grid" class="noah-webui-Toolbox-BindingNavigator nwHide">
+        <div id="noah-webui-default-first" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div id="noah-webui-default-previous" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div class="BN-record">
+            <input id="noah-webui-default-currentRec" type="text" value="0" />
+            <span>of 0</span>
+        </div>
+        <div id="noah-webui-default-next" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+        <div id="noah-webui-default-last" class="noah-webui-Toolbox-Item-Icon BN-button">
+            <div></div>
+        </div>
+    </div>
+
+    <div id="noah-webui-default-New" class="btn-tb-action btn-tb-new noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">New</div>
+    </div>
+    <div id="noah-webui-default-Save" class="btn-tb-action btn-tb-save noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Save</div>
+    </div>
+    <div id="noah-webui-default-Delete" class="btn-tb-action btn-tb-delete noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Delete</div>
+    </div>
+    <div id="noah-webui-default-Refresh" class="btn-tb-action btn-tb-refresh noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Refresh</div>
+    </div>
+    <div id="noah-webui-default-Inquire" class="btn-tb-action btn-tb-inquire noah-webui-Toolbox-Item nwHide">
+        <div class="_icon"></div>
+        <div class="_lbl">Inquire</div>
+    </div>
+    <div id="noah-webui-default-Export" class="btn-tb-action btn-tb-export noah-webui-Toolbox-Item">
+        <div class="_icon"></div>
+        <div class="_lbl">Export</div>
+    </div>
+</div>
+
+@*Main*@
+<div class="container">
+    <div class="container-flex  margin-bottom-10">
+        <div class="row row-parent">
+            <div class="col col-12 col-parent">
+                @* Start of filter container *@
+                <div class="row row-parent">
+                    <div class="col col-12 col-parent">
+                        @* Date Filter *@
+                        <div class="col col-4">
+                            <fieldset class="fieldset" nk-fieldset-style="7">
+                                <legend>Date Filter</legend>
+                                <div class="row">
+                                    <div class="col col-12 padding-5">
+                                    </div>
+                                    <div class="col col-12 padding-10">
+                                        </div>
+                                        <div class="col col-12 padding-30">
+                                            <div class="col col-4">
+                                                <label class="lbltxt" for="rbQuarter">As Of Date</label>
+                                            </div>
+                                            <div class="col col-7">
+                                                <input id="dtAsofDate" type="date" name="" placeholder="mm/dd/yyyy" class="txtbox txtbox-date">
+                                            </div>
+                                        </div>
+                                    <div class="col col-12 padding-10">
+                                    </div>
+                                    </div>
+                                
+                            </fieldset>
+                        </div>
+                        @* Report Type *@
+                        <div class="col col-3">
+                            <fieldset class="fieldset" nk-fieldset-style="7">
+                                <legend>Report Type</legend>
+                                <div class="row">
+                                    <div class="col col-12 ">
+                                        <div class="rdo-wrapper">
+                                            <input id="radioDetailed" type="radio" checked name="APPayeeType" class="rdo" >
+                                            <label class="lbl-rdo" for="radioDetailed">Detailed</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col col-12 ">
+                                        <div class="rdo-wrapper">
+                                            <input id="radioInvoice" type="radio"  name="APPayeeType" class="rdo">
+                                            <label class="lbl-rdo" for="radioInvoice">Summary per Reference No.</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col col-12 ">
+                                        <div class="rdo-wrapper">
+                                            <input id="radioSupplier" type="radio"  name="APPayeeType" class="rdo">
+                                            <label class="lbl-rdo" for="radioSupplier">Summary per Payee</label>
+                                        </div>
+                                    </div>
+                                    <div class="col col-12 ">
+                                        <div class="chk-wrapper">
+                                            <input id="checkFullyPaid" type="checkbox" name="APPayeeType" class="chk">
+                                            <label class="lbl-chk" for="checkFullyPaid">Include Closed Transactions</label>
+                                        </div>
+                                    </div>
+                                    <div class="col col-12 padding-15">
+                                    </div>
+                                    </div>
+                            </fieldset>
+                        </div>
+                        @* Filter By *@
+                        <div class="col col-5">
+                            <fieldset class="fieldset" nk-fieldset-style="7">
+                                <legend>Filter By</legend>
+                                <div id="settingstabs">
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="col col-4 col-parent padding-10">
+                        </div>
+                    </div>
+                    <div class="row padding-10">
+                        <div class="col col-12 sampleLight">
+                            <div id="nwConServiceStatus">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* End of Container *@
+            </div>
+        </div>
+    </div>
+</div>

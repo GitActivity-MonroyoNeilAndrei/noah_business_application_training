@@ -1,0 +1,45 @@
+﻿Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/28/2024
+Version			   : 10.0.0.2
+Description		   : Addressing of findings
+						#134 Upon saving a new record, Save and Delete buttons should be enabled unless already used
+						#151 Upon clicking New, New, Save, and Inquire buttons must be enabled
+
+Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/27/2024
+Version			   : 10.0.0.1
+Description		   : Addressing of findings
+						#6 it should be "Borrower Type Listing” for both Export to Excel and CSV.
+
+Modified By		   : Lance Justine Aleonar
+Date Modified	   : 09/24/2024
+Version			   : 10.0.0.0
+Description		   : Conversion from V9 to V10
+
+Modified By         : Jerald Relucio
+Modified Date       : 02/05/2024
+Menu Item Version   : 9.0.0.2
+Reason				: Enhancements add New, save , delete button and add radio button
+
+Modified By         : CHOLO SANDOY
+Modified Date       : 02/05/2024
+Menu Item Version   : 9.0.0.1
+Reason				: Addressing of findings
+					  Issue Logs# 751 - Remove New and save button. Borrower Type should only be: Code: INDIV Description: Individual/Employee, Code: CORPO Description: Corporation/Non-Individual
+
+Created By: Allen Aguilar
+Date Created: 10/11/2023
+Menu Item Version: 9.0.0.0
+Reason: 
+		-Menu buttons
+			>New 
+			>Refresh
+			>Save
+			>Inquire
+			>Export
+			>Delete
+
+		-Develop Fields
+			>Code [data entry] 
+			>Desc [data entry] 
+

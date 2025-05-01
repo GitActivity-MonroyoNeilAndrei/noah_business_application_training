@@ -1,0 +1,330 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = "AP Debit Memo Entry";
+}
+
+
+@*Debit note with reference*@
+<div id="nwGenerateGriddebitwith" @*title="Debit Note with Reference"*@ class="nkPopupCon">
+    <div class="nk-container-flex padding-10">
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div class="col col-6">
+                        <div class="row">
+                            <input id="txtTagPC" type="text" name="" class="txtbox hide">
+                            <div class="col col-6">
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <label class="lbltxt">Total APV Amount<span class="nwRequiredField"></span></label>
+                                    </div>
+                                    <div class="col col-6">
+                                        <input id="txtTotalAPVAmount" type="text" name="" class="txtbox">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-6">
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <label class="lbltxt">Total Open Amount<span class="nwRequiredField"></span></label>
+                                    </div>
+                                    <div class="col col-6">
+                                        <input id="txtTotalOpenAmount" type="text" name="" class="txtbox">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-6"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-parent">
+            <div class="col col-12">
+                <div id="nwGridDebitNoteWithRefereceCon" class="fullwidth"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Details of debit note with reference*@
+<div id="nwGenerateDetails" @*title="Remarks"*@ class="nkPopupCon">
+    <div class="nk-container-flex padding-10">
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div class="col col-6">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">APV Date<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="APVDate" type="text" name="" class="txtbox nwUpper nwNoSpace nwCode">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">APV No.<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="APVNo" type="text" name="" class="txtbox idval" maxlength="80">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">APV AMount<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="APVAmount" type="text" name="" class="txtbox idval" maxlength="80">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-6"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div id="nwGridDebitNoteWithRefereceDetailsCon" class="fullwidth"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Debit note without reference*@
+<div id="nwGenerateGriddebitwithout" @*title="Remarks"*@ class="nkPopupCon">
+    <div class="nk-container-flex padding-10">
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div class="col col-6">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">AP Control Account<span class="nwRequiredField">*</span></label>
+                            </div>
+                            <div id="lugAPControlAccnt" class="col col-7 col-parent lookups">
+                                <div class="col col-4 conval">
+                                    <input type="text" name="" class="txtbox idval">
+                                </div>
+                                <div class="col col-8 conval">
+                                    <input type="text" name="" class="txtbox txtdesc descval">
+                                    <div class="btn btn-sm-default btn-sm-default-lookup LookUp"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-6"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div id="nwGridDebitNoteWithoutRefereceCon" class="fullwidth"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Line Details  with reference*@
+<div id="nwGenerateGridLineDetails" @*title="Line Details with Reference"*@ class="nkPopupCon">
+    <div class="nk-container-flex padding-10">
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div id="nwGridLineDetails" class="fullwidth"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Details of debit note with reference*@
+<div id="nwGenerateDetailsLD" @*title="Debit Note with Reference"*@ class="nkPopupCon">
+    <div class="nk-container-flex padding-10">
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div class="col col-6">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">APV Date<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="APVDateLD" type="text" name="" class="txtbox nwUpper nwNoSpace nwCode" maxlength="12">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">APV No.<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="APVNoLD" type="text" name="" class="txtbox" maxlength="80">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">APV Amount<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="APVAmountLD" type="text" name="" class="txtbox" maxlength="80">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-6"> </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div id="nwGridDetailsLD" class="fullwidth">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Line Details without reference*@
+<div id="nwGenerateGridLDWithout" @*title="Remarks"*@ class="nkPopupCon">
+    <div class="nk-container-flex padding-10">
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div id="nwGridLDWithout" class="fullwidth">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Total APV Window*@
+<div id="nwGenerateGridTotalAPV" @*title="Remarks"*@ class="nkPopupCon">
+    <div class="nk-container-flex padding-10">
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div id="nwGridLDTotalAPV" class="fullwidth">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Journal Entries*@
+<div id="nwGenerateGridJE" @*title="View Journal Entries Window"*@ class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="btnExportJrnl" class="btn-tb-action btn-tb-export">
+                <div class="_icon"></div>
+                <div class="_lbl">Export</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nk-container-flex padding-10">
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div id="nwGridJECon" class="fullwidth"> </div>
+            </div>
+        </div>
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div class="row">
+                    <div class="col col-2"> </div>
+                    <div class="col col-5">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Reversal of DP/Advances Applied<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtDPAdv" type="text" name="" class="txtbox">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Reversal of Debit Memo Applied<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtDMApp" type="text" name="" class="txtbox">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Reversal of Retention<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtRetention" type="text" name="" class="txtbox">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Net Amount<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtNetAmount" type="text" name="" class="txtbox">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-5">
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Net of VAT<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtJESub" type="text" name="" class="txtbox nwUpper nwNoSpace nwCode">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Add: VAT<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtVat" type="text" name="" class="txtbox nwUpper nwNoSpace nwCode">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Gross Amount<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtVatafter" type="text" name="" class="txtbox nwUpper nwNoSpace nwCode">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Less: EWT<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtEWT" type="text" name="" class="txtbox nwUpper nwNoSpace nwCode">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-5">
+                                <label class="lbltxt">Total Amount<span class="nwRequiredField"></span></label>
+                            </div>
+                            <div class="col col-7">
+                                <input id="txtTotalAmt" type="text" name="" class="txtbox nwUpper nwNoSpace nwCode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Popup Process*@
+<div id="FormProcess" @*title="Process"*@ class="nkPopupCon">
+    <div class="nk-toolbar-c">
+        <div class="nk-toolbar-btn">
+            <div id="NwProcess" class="btn-tb-action btn-tb-process">
+                <div class="_icon"></div>
+                <div class="_lbl">Process</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nk-container-flex padding-10">
+        <div class="row-parent">
+            <div class="col col-12 col-parent">
+                <div id="nwGridCon3" class="fullwidth">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

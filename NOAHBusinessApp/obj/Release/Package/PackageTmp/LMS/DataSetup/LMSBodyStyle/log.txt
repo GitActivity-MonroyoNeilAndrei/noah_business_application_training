@@ -1,0 +1,33 @@
+﻿Modified By		   : Jenny May Cabantug
+Date Modified	   : 11/27/2024
+Version			   : 10.0.0.1
+Description		   : Addressing of findings
+						#80 Should be enabled upon screenload
+
+Modified By: John Dave Abaricia
+Date Modified: 09/27/2024
+Menu Item Version: 10.0.0.0
+Reason: Change of Page Title
+
+
+Modified By: Cholo Sandoy
+Date Modified: 12/21/2023
+Menu Item Version: 9.0.0.1
+Reason: Change of Page Title
+
+Created By: Cholo Sandoy
+Date Created: 12/20/2023
+Menu Item Version: 9.0.0.0
+Reason: 
+		-Menu buttons
+			>New 
+			>Refresh
+			>Save
+			>Inquire
+			>Export
+			>Delete
+
+		-Develop Fields
+			>Code [data entry] 
+			>Desc [data entry] 
+

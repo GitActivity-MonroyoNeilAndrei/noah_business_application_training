@@ -1,0 +1,163 @@
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\ApplicationInsights.config
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\csc.exe
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\vbc.exe
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Custom.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\EntityFramework.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Owin.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.Helpers.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.Mvc.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.Optimization.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.Razor.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.WebPages.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\WebGrease.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\ICSharpCode.SharpZipLib.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\BouncyCastle.Crypto.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.Helpers.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.Mvc.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.Optimization.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.Razor.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.WebPages.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\EntityFramework.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\obj\Debug\NOAH_TRAINING_V10.csprojResolveAssemblyReference.cache
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.dll
+F:\CONSO\TRAINING\NOAHV10 - Copy\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.pdb
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\ApplicationInsights.config
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\csc.exe
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\vbc.exe
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\NOAHBusinessApp.dll.config
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\NOAHBusinessApp.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\NOAHBusinessApp.pdb
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Antlr3.Runtime.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Custom.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\EntityFramework.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\EntityFramework.SqlServer.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.Web.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Owin.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.Helpers.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.Mvc.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.Optimization.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.Razor.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.WebPages.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\WebGrease.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.Web.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.ApplicationInsights.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.Helpers.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.Mvc.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.Optimization.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.Razor.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.WebPages.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Antlr3.Runtime.pdb
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\EntityFramework.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\EntityFramework.SqlServer.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.dll
+C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.pdb

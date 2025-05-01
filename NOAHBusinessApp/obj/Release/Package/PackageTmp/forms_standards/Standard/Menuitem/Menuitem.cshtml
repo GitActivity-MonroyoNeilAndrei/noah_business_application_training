@@ -1,0 +1,13 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    ViewBag.Title = ViewBag.menutitle + " " + ViewBag.menuversion;
+    Layout = NoahWebLib.nwSystem.GetDefaultLayout();
+}
+<head>
+    <script src="~/forms_standards/Standard/Menuitem/Menuitem.js"></script>
+    <link href="~/forms_standards/Standard/Menuitem/Menuitem.css" rel="stylesheet" />
+</head>
+<iframe class="nkFrameMenu" src="@ViewBag.url" ></iframe>
+
+
+

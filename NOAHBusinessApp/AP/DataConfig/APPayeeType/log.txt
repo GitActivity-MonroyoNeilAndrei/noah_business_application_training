@@ -1,0 +1,41 @@
+﻿Created by			: Neil Andrei Monroyo
+Date Created		: 03/26/2025
+Menu Item Version	: 10.0.0.1
+Reason				: Addressing of Findings 
+					-Misalign fields (UI)
+
+					-Upon new, Description should be enable
+
+					-Upon saving, Prompt Message 
+					Cannot be saved. Code is required
+					Cannot be saved. Description is required
+
+					-Upon deleting data should prompt "Deleted successfully.
+
+					-Upon inquire should load selected data
+
+					-Export sould be working
+
+					-Code: Should not allow lower case and spacing
+
+					-Description should be maximum of 80 characters only
+
+					-Should saved user log in when saving (recuser) and resaving (moduser)
+
+					-Upon export listing file name should be"Payee Type" not "AP Payee Type"
+
+
+
+Created by			: Jenny May Cabantug
+Date Created		: 01/06/2025
+Menu Item Version	: 10.0.0.0
+Reason				: Development 
+						Header button
+							- new
+							- save
+							- delete
+							- inquire
+							- process
+						Header fields
+							- Code
+							- Description

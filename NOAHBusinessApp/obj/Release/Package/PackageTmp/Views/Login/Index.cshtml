@@ -106,21 +106,25 @@
                         <button id="Button1" class="">Login</button>
                         <div class="fx-container-new">
                             <a id="forgotpass" href="ForgotPassword.aspx">Forgot password?</a>
-                            <div id="registrationpass">Don't have an account? <span class="regsitrationpass-color">Sign up here</span></div>
+                           
                         </div>
                         <br>
                         @{ 
                             string LoginRegisterShow = NoahWebLib.nwSystem.GetAppSettings("LoginRegisterShow");
                             string LoginRegisterText = NoahWebLib.nwSystem.GetAppSettings("LoginRegisterText");
                             string LoginRegisterLink = NoahWebLib.nwSystem.GetAppSettings("LoginRegisterLink");
+                            string LoginRegisterHTML = NoahWebLib.nwSystem.GetAppSettings("LoginRegisterHTML");
 
                             if (LoginRegisterShow == "1")
                             {
-
                                <div class="registercon"><a id='register' href='@LoginRegisterLink'>@LoginRegisterText</a></div>
                             }
-                       }
-    
+                            if (LoginRegisterHTML != "")
+                            {
+                                @LoginRegisterHTML
+                            }
+                         }
+
 
                     </div>
                 </div>

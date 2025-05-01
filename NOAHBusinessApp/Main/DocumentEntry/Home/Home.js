@@ -39,7 +39,7 @@ function nw_GetNotificationAllListRender() {
     }
     nw_GetNotificationAllRefresh();
 }
-function nw_GetNotificationAllAddItem(title, message, date) {
+function nw_GetNotificationAllAddItem(title, message, date,issystemnotif) {
     var strtemplate = "";
     var datetext = date;
 
@@ -48,17 +48,53 @@ function nw_GetNotificationAllAddItem(title, message, date) {
     var today = new Date(datetext);
     datetext = today.toLocaleDateString("en-US", options) + " | " + today.toLocaleTimeString("en-US", options2);
 
+    if (issystemnotif == true) {
+        try {
+            var s = atob(message);
+            message = s;
+        } catch (err) { }
+    }
+    
 
+    if (issystemnotif==true)
+        strtemplate += "<div class='spl-sys-r-c nksysnotif' rdate='" + date + "'>";
+    else
+        strtemplate += "<div class='spl-sys-r-c' rdate='" + date + "'>";
 
-    strtemplate += "<div class='spl-sys-r-c' rdate='" + date + "'>";
     strtemplate += "<div class='spl-sys-r-text'>";
     strtemplate += "<div class='spl-sys-r-title'>" + title + "</div>";
     strtemplate += "<div class='spl-sys-r-subtitle'>" + message + "</div>";
     strtemplate += "<div class='spl-sys-r-date'>" + datetext + "</div>";
     strtemplate += "</div>";
     strtemplate += "</div>";
+
+
     $("#conNotif").prepend(strtemplate);
 }
+
+
+
+function nw_GetNotificationSysRefresh() {
+    isnkSysNotif = true;
+    func_ActionDriven("actSystemNotification", false);
+}
+function nw_GetNotificationSysRefreshDone() {
+    nkSysNotifCounter = 0;
+    isnkSysNotif = false;
+}
+
+var isnkSysNotif = false;
+var nkSysNotifMax = 600; // 600 = 10mins
+var nkSysNotifCounter = nkSysNotifMax;
+setInterval(function () {
+    if (isnkSysNotif == false && nkSysNotifCounter >= nkSysNotifMax)
+    {
+        nw_GetNotificationSysRefresh();
+    }
+    nkSysNotifCounter++;
+
+    //$("#gtFname").text("" + nkSysNotifCounter);
+}, 1000);
 
 
 function nw_GetNotificationAllRefresh() {
@@ -97,4 +133,6 @@ function nw_GetNotificationAllRefresh() {
         $(".spl-sys-psntf").removeClass('show');
     });
 }
+
+
 

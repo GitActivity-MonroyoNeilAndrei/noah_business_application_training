@@ -1,7 +1,0 @@
-﻿
-
-Created BY       : AAG
-Date Created     : 09/23/2023
-Menu Item Version : 10.0.0.0
-Reason			  : Summary Report 
-					Screen Design

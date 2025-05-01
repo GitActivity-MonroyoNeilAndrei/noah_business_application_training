@@ -103,14 +103,10 @@
 	// Component: Modal
 	function fnModal() {
 	    $doc.on("click", ".btn.btn-modal-back", function () {
-	        var $a = $(this).parents(".modal");
-	        $a.fadeOut();
-	        setTimeout(() => {
-	            $a.removeClass("show");
-	        }, 300, clearTimeout);
-	        setTimeout(() => {
-	            $a.css("display", "");
-	        }, 500, clearTimeout);
+	        var verID = $(this).parents(".noah-webui-Window").attr("id");
+            
+	        window_close(verID, this);
+	       
 		});
 
 		$doc.on("click", ".btn.btn-modal-rescale", function () {
@@ -184,6 +180,12 @@
 
 	    // Sort on th click
 	    $doc.on("mouseup", ".table thead th:not([data-type='none'])", function (e) {
+	        var xxindex = $(this).parents().index();
+	        var xxindex0 = $(this).index();
+	        if (xxindex >= 1) return;
+	        if (xxindex0 == 0) return;
+
+
 	        var $this = $(this),
 				$tbl = $(this).parents(".table"),
 				$tr = $tbl.find("tbody > tr"),
@@ -218,7 +220,11 @@
 	                break;
 	        }
 
-	        // Sort method
+	        // Sort method 01062025
+             if ($(this).find(".nwlookupgridcheck").prop("tagName") == "INPUT") {
+                    return true;
+             }
+
 	        rows.sort(compare);
 	        $this.hasClass("desc") && rows.reverse();
 	        $tbl.find("tbody").append(...rows);
@@ -1265,6 +1271,8 @@ $(document).on("click", ".btn.btn-modal-back", function () {
 //ADDED 06022021
 
 $(document).on("click", ".btn.btn-sm-default.btn-sm-default-lookup", function () {
+    if ($(this).attr("id") == "nkbtnsearch") return;
+
     var isContinue = lookUp($(this));
     if (isContinue) {
         fn_LoadModule("menuCreatorContainer");
@@ -1273,6 +1281,7 @@ $(document).on("click", ".btn.btn-sm-default.btn-sm-default-lookup", function ()
 function fn_LoadModule(varID) {
     $("#" + varID).addClass("_show");
     $("#" + varID).find(".modal-box-s").addClass("_slide-m");
+    setTimeout(function(){ $("#txtlookupsearchF").focus();},100);
 }
 
 

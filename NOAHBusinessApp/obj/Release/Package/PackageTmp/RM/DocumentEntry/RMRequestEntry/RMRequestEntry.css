@@ -1,0 +1,106 @@
+﻿#docattviewpdfembedlink
+{
+     width: 90%;
+     height:90%;
+}
+
+#txtDisapprovalRemarks {
+resize: none;
+
+}
+
+div#nwRequestObjective ._slide-m {
+    min-height: 32%;
+    max-width: 40%;
+    max-height: 80%;
+}
+
+div#nwDeliveryDetailsWindow ._slide-m {
+    min-width: 80%;
+}
+
+div#nwBdgtCheckingWindow ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwAllocProcessWindow ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+div#nwDateRange ._slide-m {
+    min-height: 32%;
+}
+
+div#nwPaymentComponentWindow ._slide-m {
+    min-width: 77%;
+    min-height: 36%;
+}
+
+div#nwSelectTransaction ._slide-m {
+    min-height: 80%;
+    min-width: 80%;
+}
+
+div#nwCreateSBR ._slide-m {
+    min-height: 31%;
+    min-width: 40%;
+}
+
+div#spreadRemarksCon ._slide-m {
+    min-width: 50%;
+    min-height: 50%;
+}
+
+div#nwQuotationDetailsWindow ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwSingleDelDetailsWindow ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwSOHDetailsWindow ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwViewPendingPO ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwPopItemDetailsWindow ._slide-m {
+    min-width: 80%;
+    min-height: 80%;
+}
+
+div#nwPopUpRequireCompliance ._slide-m {
+    min-width: 98%;
+    min-height: 98%;
+}
+
+div#nwPopUpRequireComplianceLIN ._slide-m {
+    min-width: 98%;
+    min-height: 98%;
+}
+
+div#nwPopUpRequestEntry ._slide-m {
+    min-width: 98%;
+    min-height: 98%;
+}
+
+
+.nk .nk-accordion .nk-li.collapse .nk-li-content {
+background-color: white;
+}
+
+.zindexHigh{
+     z-index: 1000 !important;
+}
+
+.zindexHigh2{
+     z-index: 1001 !important;
+}

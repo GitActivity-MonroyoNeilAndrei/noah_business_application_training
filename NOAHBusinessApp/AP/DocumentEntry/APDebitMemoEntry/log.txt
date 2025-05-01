@@ -1,0 +1,1096 @@
+﻿Modified By			: Neil Andrei Monroyo
+Date Modified		: 04/23/2024
+Menu Item Version	: 10.0.0.10
+Reason				: Addressing of findings
+						- No Default Location upon clicking New.
+
+						- "Ref. Date 
+							Do not allow encoding of future date.
+							Prompt Message:
+							Cannot proceed. Ref. Date should not be later than the current date."
+
+						- No status loaded in the entry, please check.
+
+						- Remarks field should be in upper case, please also check max length should only be 500 characters.
+
+						- "Please add validation for Currency and Remarks field.
+							Validation Message:
+							Cannot be saved. Currency is required.
+							Cannot be saved. Remarks is required."
+
+						- Upon clicking new , new should be always enable
+
+						- "Add Debit Memo Amount and Remarks column in Process Window.
+							Debit Memo Amount should be formatted in two decimal places and should be right align."
+
+						- "View Journal Entries should be green if Amounts field has amount.
+							Use OCLP-CC-PDMEMO-0000000023"
+
+						- Requirements Compliance button should be disabled and color gray upon initial opening of the menu item.
+
+						- "Requirements Compliance
+							Apply standard color coding upon refresh.
+							If with data should turn into color green else orange.
+							Requirements Compliance button (Orange) use  OCLP-CC-PDMEMO-0000000023
+							Requirements Compliance button (Green) use NOAHTEC-PDMEMO-0000000063"
+
+
+
+Modified By			: Jenny May Cabantug
+Date Modified		: 12/19/2024
+Menu Item Version	: 10.0.0.9
+Reason				: Addressing of findings
+						- Loading with ID 'xSample' should not be used
+						- This may cause duplication of docno
+						- col-2 only used in special scenario 
+
+
+Modified By			: JOHN MIGUEL GRAVINES
+Date Modified		: 12/03/2024
+Menu Item Version	: 10.0.0.8
+Reason				: Fixing the menu item based on the problem raised on Conso Source Code Warning logs 
+
+Modified By			: John Miguel Gravines
+Date Created		: 10/21/2024
+Menu Item Version	: 10.0.0.7
+Reason				: Fix in Grid Changes
+
+Modified By			: John Miguel Gravines
+Date Created		: 10/21/2024
+Menu Item Version	: 10.0.0.6
+Reason				: Addressing of findings
+					  BRSS Issue Logs# 159 - DM OCY VATEX >> During the first encoding of the VATIN amount, VATEX was not automatically computed. >> Autocomputed once DM OCY Amount (VATIN) is inputted , Formula: DM OCY Amount (VATEX) x (1 + VAT Rate/100)
+
+Modified By			: John Miguel Gravines
+Date Created		: 10/18/2024
+Menu Item Version	: 10.0.0.5
+Reason				: Addressing of findings
+					  BRSS Issue Logs# 100 - View Entry Screen >> Date Submitted - no data displayed >> This will be loaded based on the intiial processing date.
+
+Modified By			: John Miguel Gravines
+Date Created		: 10/18/2024
+Menu Item Version	: 10.0.0.4
+Reason				: Addressing of findings
+					  BRSS Issue Logs# 107 - View Journal Entries >> View Journal Entries button is disabled. Ref Test Data: 0043-PDMEMO-0000000015 >> Based on BR, this button should be enabled upon initial saving.
+
+Modified By			: John Miguel Gravines
+Date Created		: 10/14/2024
+Menu Item Version	: 10.0.0.3
+Reason				: Fix the popup and the lookups in the popup line details
+
+Modified By			: John Miguel Gravines
+Date Created		: 10/11/2024
+Menu Item Version	: 10.0.0.2
+Reason				: Fix the popup and the problems in grid in new spread.
+
+Modified By			: John Miguel Gravines
+Date Created		: 09/18/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Fixed the inquire problem
+
+Modified By			: John Miguel Gravines
+Date Created		: 09/09/2024 - 09/16/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10 and Customization
+
+Modified By		: Nelson Ryan Arabit
+Date Modified	: 08/13/2024
+Version			: 9.0.0.119
+Reason			: Addressing of Findings
+					> Optimize Lookup - Vendor/Payee
+
+Modified By		: Ejay M. Basit
+Date Modified	: 07/03/2024
+Version			: 9.0.0.118
+Reason			: Addressing of Findings
+					> Debit Note with Reference > Line Items are being removed when opening then closing the "Review Attachment" screen
+
+Modified By		: Arnel Alvarado
+Date Modified	: 07/03/2024
+Version			: 9.0.0.117
+Reason			: Addressing of Findings
+					> Ref date field should have a red asterisk if Reference No. has data (put blue asterisk ref date and no.)
+
+Modified By		: Arnel Alvarado
+Date Modified	: 05/15/2024
+Version			: 9.0.0.116
+Reason			: Addressing of Findings
+					> The filename does not include the current date and time
+
+Modified By		: Ejay M. Basit
+Date Modified	: 03/22/2024
+Version			: 9.0.0.115
+Reason			: Addressing of Findings
+					> Review Attachments button not changing color upon returning of documents
+
+Modified By		: RJL
+Date Modified	: 05/31/2023
+Version			: 9.0.0.114
+Reason			: Add Date Submitted and Date Posted in Data View
+				  Disable Value Date upon viewing
+				  Date Posted and Date Submitted should be left align
+
+Modified By		: EMB
+Date Modified	: 05/17/2023
+Version			: 9.0.0.113
+Reason			: Add refdate on GetDataView
+
+Modified By		: RJL
+Date Modified	: 12/02/2022
+Version			: 9.0.0.112
+Reason			: Changes in Value Date
+
+Modified By		: RJL
+Date Modified	: 12/01/2022
+Version			: 9.0.0.111
+Reason			: Additional Validation in Value Date field
+
+Modified by		: NDB
+Date Modified	: 11/24/2022
+Version			: 9.0.0.110
+Reason			: clear SL Type and SL Reference in w/o Reference window upon selection of Item Group Type and GL Account
+
+Modified by		: NDB
+Date Modified	: 11/22/2022
+Version			: 9.0.0.109
+Reason			: Debit Note without Reference - Item Group Type lookup window. 
+				  - add ReqSLSA_woRef(reqSL, reqSA);
+
+Modified by		: NDB
+Date Modified	: 11/21/2022
+Version			: 9.0.0.108
+Reason			: Debit Note without Reference - Payee Reference lookup window. 
+				  - comment ReqSLSA_woRef(reqSL, reqSA);
+
+
+
+
+Modified by		: RJL
+Date Modified	: 10/05/2022
+Version			: 9.0.0.107
+Reason			: Debit Note with Reference - APV No. lookup window. 
+				  - Upon selecting the same APV it was not be available for lookup. Should still be available for multiple loook up to input multiple reasons and IGT per APV.
+
+
+
+Modified by		: EMB
+Version			: 9.0.0.105
+Date Modified	: 09/27/2022
+Reason			: Change Column Name "Open Amount" to "Outsatnding Balance" in Debit Note With Reference
+
+Modified by		: NDB
+Version			: 9.0.0.104
+Date Modified	: 06/29/2022
+Reason			: Update value date function
+
+Modified by		: RJL
+Version			: 9.0.0.103
+Date Modified	: 06/18/2021
+Reason			: Upon refresh, if no data was found, disabled Vendor/Payee lookup
+
+Modified by		: RJL
+Version			: 9.0.0.102
+Date Modified	: 04/26/2021
+Reason			: Addressing of findings in backdate
+
+Modified by		: RJL
+Version			: 9.0.0.101
+Date Modified	: 04/26/2021
+Reason			: Addressing of findings 
+				  Add field for Value Date 
+					a. Display only if allow back dating is tick
+					b. Value date should be within the set period dates
+					c. Value date should not be later than the current server date
+					d. If Value date period is tag as closed, it should prompt Cannot proceed. Period is already closed.
+					e. If allow back dating is tick, docdate is equal to value date
+					f. Allow editing of Value Date upon saving
+					g. If docdate is not blank/empty do not override upon approval
+					h. Default to the current server date
+					i. Required field. Notification: Cannot be saved. Value Date is required. 
+
+					Note: Since required field na siya. lagyan mo siya ng red asterisk.
+
+Modified by		: RJL
+Version			: 9.0.0.100
+Date Modified	: 03/29/2021
+Reason			: Addressing of findings 
+					a. Remove Warning message upon process of Entry
+					   Scenario: Location and Trantype has no setup in Workflow Matrix
+					b. Upon process, no requirements compliance data even if i provided Requirements Compliance
+					   Scenario: 1 Debit Note with Reference
+   								 1 Debit Note with Reference, 1 Debit Note without Reference
+					c. Requirements Compliance button should be green upon refresh
+					d. Upon New, Requirements Compliance button should turn into gray and disabled
+
+Modified by		: RJL
+Version			: 9.0.0.99
+Date Modified	: 02/20/2021
+Reason			: Addressing of findings 
+					a. Save in the table the latest address of the Payee which is tagged as mailing address. 
+					b. Lookup of Item Group Type should have no filter of direct prf 
+
+Modified by		: RJL
+Version			: 9.0.0.98
+Date Modified	: 02/19/2021
+Reason			: Addressing of findings 
+					a. Debit Note with Reference
+					   If there is Period To provided, require Period From.
+					   Validate upon clicking Save and Exit button. Prompt:
+					   Cannot be saved. Period From in row [row no.] is required.
+					b. Debit Note with Reference
+					   If there is Period From provided, require Period To.
+					   Validate upon clicking Save and Exit button. Prompt:
+					   Cannot be saved. Period To in row [row no.] is required.
+					c. Debit Note without Reference
+					   If there is Period To provided, require Period From.
+					   Validate upon clicking Save and Exit button. Prompt:
+					   Cannot be saved. Period From in row [row no.] is required.
+					d. Debit Note without Reference
+					   If there is Period From provided, require Period To.
+					   Validate upon clicking Save and Exit button. Prompt:
+					   Cannot be saved. Period To in row [row no.] is required.
+					f. Debit Note with Reference > VAT Short Description
+					   f.1 Upon selection, display VAT Short description. If no short description, display description.
+					g. Debit Note without Reference > Bank Account
+					   g.1 This field must be disabled upon saving.
+					h. Debit Note without Reference > SL Type
+					   h.1 This field must be disabled upon saving.
+					i. Debit Note without Reference > SL Reference
+					   i.1 This field must be enabled upon clicking Reset button if GL Account/Segment 1 tagged as Require Subsidiary Ledger.
+					j. Debit Note with Reference > SL Type
+					   j.1 This field must be disabled upon saving.
+					k. Debit Note with Reference > SL Reference
+					   k.1 This field must be enabled upon clicking Reset button if GL Account/Segment 1 tagged as Require Subsidiary Ledger.
+					l. Debit Note without Reference: Upon selection, display Subsidiary Ledger Reference description.
+					m. Debit Note without Reference: Upon selection, display SL Type description.
+
+Modified by		: RJL
+Version			: 9.0.0.97
+Date Modified	: 02/16/2021
+Reason			: Addressing of findings (Interns)
+					a. Upon clicking New button, cursor is focused on the Location Code field.
+						a.1 No cursor focus in location field
+					b. Codes entered by user in active textbox of lookup fields should be converted to CAPS. (Invalid)
+						b.1 not coverted to caps
+					c. This must be enabled only if any of the following conditions has been meet: (Invalid)
+ 						1. If Allow Currency Selection (Source) is ticked in AP Vendor Information for the selected vendor.
+ 						2. If Allow Currency Selection (Source) is ticked in AP Employee Tax and Currency Assignment
+					   c.1 field was active 
+					d. Duplicate reference no. per Payee is not allowed.
+					   Validate upon saving. Notification message. Cannot be saved. Reference No. already exists for the selected Vendor/Payee.
+					   d.1 Prompt: Cannot proceed. Reference No. already exists for the selected Vendor/Payee.
+					e. This must be have red asterisk indicator since this is a required field. Validate upon saving. Prompt message: Cannot be saved. Remarks field is required.
+					f. Allow entry of date earlier than the current server date.
+					   Validate upon encoding:
+					   Cannot proceed. Period From should not be later than the current server date.
+					   f.1 allow less than or greater than the current server.
+					g. Do not allow entry of date later than the Period To.
+					   Validate upon encoding:
+					   Cannot proceed. Period From should not be later than the Period To.
+					   g.1 Period To was automatically remove
+					h. Allow entry of date earlier than the current server date. Validate upon encoding: Cannot proceed. Period To should not be later than the current server date.
+					   h.1 prompt: Cannot proceed. Period To should be later than Period From.
+					i. Do not allow entry of date earlier than the Period From.
+					   Validate upon encoding:
+					   Cannot proceed. Period To should not be earlier than the Period From.
+					   i.1 prompt: Cannot proceed. Period To should be later than Period From.
+					j. Upon clicking Process button in the Process window, prompt message: 
+					   "Would you like to process the transaction(s)?"
+					   j.1 "Would you like to process the transaction/s?"
+					k. This must be have red asterisk indicator since this is a required field. Validate upon saving if there is reason provided. Prompt message: Cannot be saved. 
+					   APV in row [row no.] is required. (Invalid)
+					l. Upon selection of APV No., Review Attachment(s) will be colored green and will display Source Transactions and Supporting Documents related to the selected APV No. 
+					m. Column headers must display Code and Description. (Invalid)
+					n. Upon selection, code of the assigned Item Group for the selected Item Group Type must be  displayed in the segment set as the last segment (Item Group). (Invalid)
+					o. In the lookup search window, clicking on a specific record loads the details of the identified record on the main screen. (Invalid)
+					p. Upon selection, display Item description. (Invalid)
+					q. If Item has been selected first, Description of the assigned Item Group Type for the selected Item must be automatically displayed in Item Group Type column. (Invalid)
+					r. If code selected and loaded has special character/s, related details being loaded should still be recognized by the system. (Invalid)
+					s. Format should be 18 numeric characters with 2 decimal places. (Invalid)
+
+Modified by		: RJL
+Version			: 9.0.0.96
+Date Modified	: 02/12/2021
+Reason			: Addressing of findings
+					a. Vendor/Payee
+					   Active textbox does not display all available records
+					b. Debit Note with Reference
+					   VAT and EWT computation must be trigger also upon reselection of VAT Short Description and EWT Short Description.
+					   Apply also trigger upon reselection of Payee Reference.
+					c. Debit Note with Reference
+					   Upon selection of APV No., Location code must be displayed for location segment not the description.
+					d. Debit Note with Reference> Bank Account
+					   Lookup window must display Bank Account and Bank Account No.
+					   **Rename Cash Sub Account into Bank Account
+					e. Debit Note without Reference> Bank Account
+					   If GL Account is tagged as Require SL, this is enabled.
+					   If GL Account is tagged as Require Sub Account, this is disabled.
+					f. Debit Note without Reference> SL Type and SL Reference
+					   If GL Account is tagged as Require SL, this is disabled.
+					   If GL Account is tagged as Require Sub Account, this is enabled.
+					g. Do not display Please setup Currency Assignment if there is no selected Location
+					h. Do not display notification messagere: no current exchange rate if there is no selected currency.
+					i. Do not allow clicking of Print button if Total Amount is equal to zero.  
+					   Prompt: Cannot be printed. No Debit Memo details provided.
+
+Modified by		: RJL
+Version			: 9.0.0.95
+Date Modified	: 02/10/2021
+Reason			: Addressing of findings
+					a. Debit Note with Reference
+					   Selected item is not displayed
+					b. Debit Note with Reference
+					   VAT and EWT computation must be trigger also upon reselection of VAT Short Description and EWT Short Description.
+
+Modified by		: RJL
+Version			: 9.0.0.94
+Date Modified	: 02/06/2021
+Reason			: a. Conversion of menu item into VAPT compliant menu item
+
+Modified by		: RJL
+Version			: 9.0.0.93
+Date Modified	: 02/03/2021
+Reason			: Addressing of findings
+					a. Total APV Reference 
+					   Review Attachment(s) is not colored green
+					b. Upon viewing in Review Attachment(s)
+					   Debit Memo fields are enabled
+						> Reference No.
+						> Reference Date
+						> Remarks
+
+Modified by		: RJL
+Version			: 9.0.0.92
+Date Modified	: 02/02/2021
+Reason			: Addressing of findings
+					a. For Open Amount, consider unposted Debit Memo
+					   Use OCLP-CC-PDMEMO-0000000023
+					   Unposted DM OCLP-CC-PDMEMO-0000000022
+					b. Debit Memo with Reference
+					   Upon save and exit, open amount is returned based on original amount.
+					c. Debit Note without Reference: Particulars is disabled upon click.
+					d. Viewing of Entry
+
+Modified by		: RJL
+Version			: 9.0.0.91
+Date Modified	: 02/01/2021
+Reason			: Addressing of findings
+					h. Debit Note with Reference: upon posting in ap.trandocno, apvrowno must be max no. per apv +1
+					i. Debit Note without Reference
+					   Should not require AP Control Account if no line details provided
+					j. Debit Note without Reference
+					   Particulars must still be colored green and enabled if with details
+
+
+Modified by		: RJL
+Version			: 9.0.0.90
+Date Modified	: 02/01/2021
+Reason			: Addressing of findings
+					a. Debit Note with Reference
+					   Particulars must still be colored green and enabled if with details
+					b. Debit Note with Reference
+					   Review Attachment(s) must be colored green even ater Tax Convert
+					c. Vendor/Payee
+					   Payee Name must be based on Trade Name not registered Name
+					d. Process Window
+					   Incorrect Debit Memo Amount displayed
+					e. View Journal Entries - Debit Note with Reference
+					   Incorrect Journal Entries generated
+					f. DM HEADER Tables 
+					   Incorrect Amounts posted
+					   Subtotal, VAT, EWT
+					g. In workflow tables
+						g.1 Incorrect ampunt posted 
+						g.2 Transaction currency and local currency is equal, yet ocy amount and local amount are different
+
+Modified by		: RJL
+Version			: 9.0.0.89
+Date Modified	: 01/29/2021
+Reason			: Addressing of findings
+					a. View Journal Entries
+					   Footer must be based on amount gross of any recoupment, debit memo, and retention
+					b. Add Total Amount in View Journal Entries
+					c. Change location of Net Amount field 
+					d. Total APV Reference 
+					   Total Amount to be displayed must be gross of recoupment
+					e. For Tax Accounts, Segment tagged as cost center must be based on common segments
+					f. upon posting in ap.trandocno, apvrowno must be max no. per apv +1
+					g. Process window
+					   Remarks is not adjusted even with sufficient space
+					h. Upon posting in ap.trandocno, apvrowno must be max no. per apv +1
+					i. Upon deletion of APV then relookup, APV must be available.
+					   Steps to re-create:
+						i.1 Save Total APV with Reference
+						i.2 Open Total APV with Reference
+						i.3 Delete previously saved APV
+						i.4 Relookup- APV must be included in the list available since same Debit Memo No. and Button is used
+					j. Debit Note without Reference
+						j.1. Add AP Control Account in the header
+						j.2. Should have red asterisk
+						j.3. Must be defaulted based on assigned default AP Control Account on the Payee Sub Type upon selection of Reason
+						j.4.Change nitification message re: AP Control Account. 
+						Cannot be saved. AP Control Account is required.
+					k. Debit Note with Reference
+					   Add Cash Flow Type column as last column
+					   Loaded only
+					   Copy from AP Payment Request Entry
+					l. Debit Note without Reference
+					   Add Cash Flow Type column as last column
+					   Loaded only
+					   Copy from AP Payment Request Entry
+
+Modified by		: RJL
+Version			: 9.0.0.88
+Date Modified	: 01/22/2021
+Reason			: Addressing of findings
+					a. Remove validation for at least one line detail  is required to allow deletion of previously saved records
+					b. Debit Note without Reference > Particulars
+					   No default value upon selection of reason code
+					   1. Select Reason Code
+					   2. Edit Particulars (remove the default details.
+					   3. Reselect Reason Code 
+					   Particulars is colored green but no defaulted details
+					   Should be defaulted based on remarks on the main screen if no details available
+					c. View Journal Entries 
+					   Negative values must be displayed in parenthesis
+					d. View Journal Entries 
+					   Add Export button (same feature with Payment Request Entry)
+					e. Add Print button
+					f. Upon deletion of Debit Note with Reference details, amount is cleared on the screen but not on the table
+					   select * from ap.trandocno where docno='OCLP001-PDMEMO-0000000004'
+					   select * from AP.APDEBITMEMOHDR  where docno='OCLP001-PDMEMO-0000000004'
+					g. Debit Note with Reference
+					   Once it prompt: Cannot proceed. Debit Memo Net Amount exceeds Open Amount in row 1.
+					   Clear the following fields for the row: VATIN, VAT, EWT, and Net Amount
+
+Modified by		: RJL
+Version			: 9.0.0.87
+Date Modified	: 01/22/2021
+Reason			: Addressing of findings
+
+Modified by		: RJL
+Version			: 9.0.0.86
+Date Modified	: 01/22/2021
+Reason			: Addressing of findings
+					a. Upon posting in AP.Trandocno, Due date must be based on Date Posted
+					b. Upon posting in AP.Trandocno, No. Ref. No. posted even with reference no. encoded in Debit Memo Main screen
+					c. If no provided compliance, details must be insert in dc.requirementcompliance for review attachment(s) facility during approval
+					d. Wrong computation of Total Debit Note without Reference in Debit Memo HDR
+					e. No date submitted upon process of Debit Memo  
+					f. Upon deletion of Debit Note with Reference details then clicked Save and Exit, 
+					   f.1 Total APV Reference amount has been cleared
+					   f.2 Total APV Reference button has turned to color blue even with previously saved details
+					g. Debit Note with Reference: Particulars button should be color gray upon initial loading, upon select of APV No. should turn green if with remarks else color blue
+					h. Debit Note without Reference: Particulars button should be color gray upon initial loading, upon select of APV No. should turn green if with remarks else color blue
+
+Modified by		: RJL
+Version			: 9.0.0.85
+Date Modified	: 01/21/2021
+Reason			: Addressing of findings
+					j. Debit Note without Reference
+					   Upon selection of Reason Code, Particulars must be defaulted based on the set Remarks in the main screen.
+					   Button must be defaulted to color green
+					   Unless details have been removed, button will be colored blue upon resaving.
+					k. Debit Note without Reference
+					   Upon selection of Reason Code, Payee Reference must be defaulted based on the selected Payee in the main screen.
+					l. Debit Note without reference
+					   Upon selection of Reason Code, AP Control Account will be defaulted based on assigned default control account for the Payee Sub Type of the selected vendor
+					m. Vendor/Payee lookup - View Details
+					   If Payee Type is Employee - display SG Employee screen showing the details of the employee displayed in the specific row wherein view details is ticked
+					   If Payee Type is Vendor - display Vendor Information screen showing the details of the vendor displayed in the specific row wherein view details is ticked
+					n. Debit Note without Reference
+					   Rename Item Code into Item
+
+Modified by		: RJL
+Version			: 9.0.0.84
+Date Modified	: 01/21/2021
+Reason			: Addressing of findings
+					d. Debit Note without Reference
+					   Tax Lines must be displayed after each transaction row
+					e. Debit Note without Reference
+					   DM OCY Amount (VATEX) and DM OCY Amount (VATIN) should be gainsboro when disabled
+					   Period From and Period To should be gainsboro when disabled
+					f. Debit Note without Reference: Remove required field in Particulars column
+					g. Debit Note without Reference: Remove validation of Particulars upon Tax Convert and Save and Exit 
+					h. Once it prompt: Cannot proceed. Debit Memo Net Amount exceeds Open Amount in row 1.
+					   Clear the following fields for the row: VATIN, VAT, EWT, and Net Amount
+					i. Debit Note without reference
+					   Update notification message:
+					   Change "besaved." into "be saved."
+
+Modified by		: RJL
+Version			: 9.0.0.83
+Date Modified	: 01/21/2021
+Reason			: Addressing of findings
+					a. If no latest exchange rate available for the selected currency, validate upon selection. 
+					   Notification message: Cannot proceed. Exchange Rate for the selected currency is not yet set for Local Currency.
+					b. If no latest exchange rate available for the selected currency, validate upon selection. 
+					   Notification message: Cannot proceed. Exchange Rate for the selected currency is not yet set for Home Currency.
+					c. Debit Note with Reference
+					   Tax Lines must be displayed after each transaction row
+
+Modified by		: RJL
+Version			: 9.0.0.82
+Date Modified	: 01/20/2021
+Reason			: Addressing of findings
+					a. Main Screen: Remarks must be editable even after saving
+					b. Duplicate reference no. per Payee is not allowed.
+					   Validate upon encoding. Notification message. Cannot proceed. Reference No. already exists for the selected Vendor/Payee.
+					c. Duplicate reference no. per Payee is not allowed.
+					   Validate upon saving. Notification message. Cannot be saved. Reference No. already exists for the selected Vendor/Payee.
+					d. This must be earlier or equal to the current server date. Validate upon encoding. Cannot proceed. Ref. Date must not be later than the current server date.
+					e. Debit Note with Reference
+					   Upon selection of VAT Short Description, EWT Short Description is also updated based on selected VAT Short Description
+					f. Debit Note without Reference
+					   Particulars must be changed into button
+					   Colored blue if with selected reason for row 
+					   Colored green if with saved details
+					   Back to color blue if resaved without details
+					g. Debit Note with Reference
+					   DM OCY Amount VATEX and VATIN must be colored gainsboro upon saving
+					h. Debit Note with Reference
+					   Period From and To must be colored gainsboro upon saving
+					i. Vendor/Payee lookup
+						Must display the following fields:
+						Payee Code
+						Payee Name
+						Currency
+						TIN
+						View Details 
+					j. Debit Note with Reference
+					   Upon selection of APV, Particulars must be defaulted based on the remarks encoded in the main screen.
+					k. Debit Note with Reference
+					   Particulars must be optional only.
+					   Remove validation upon save and exit or tax convert
+					l. Debit Note with Reference
+					   VAT Short Description and EWT Short Description must be editable only if PDMEMO trantype is tagged as Allow Selection of Tax Code. 
+					   If no setup, consider as loaded or non-editable
+					m. Debit Note without Reference
+					   VAT Short Description and EWT Short Description must be editable only if PDMEMO trantype is tagged as Allow Selection of Tax Code. 
+					   If no setup, consider as loaded or non-editable
+					n. Debit Note with Reference
+					   Upon encoding of DM OCY Amount VATEX or VATIN, validate if computed Net Amount exceeds Open Amount.
+					   Prompt: Cannot proceed. Debit Memo Net Amount exceeds Open Amount in row 1.
+
+Modified by		: RJL
+Version			: 9.0.0.81
+Date Modified	: 01/20/2021
+Reason			: Enhancement in Debit Note without Reference
+
+Modified by		: RJL
+Version			: 9.0.0.80
+Date Modified	: 01/18/2021
+Reason			: Addressing of findings
+					i. Concatenation of segments in Account Description in Debit Note with Reference
+					j. Debit Note with Reference
+					   upon save and exit, Total APV Reference amount in the main screen is also updated
+					k. Debit Note with Reference
+					   upon save and exit, no tax lines displayed even with VAT and EWT tax codes
+					l. View Journal Entries 
+					   NO PC Code displayed for AP Control Account this must be based on Common segments tagged for segment 3 since not segment 1, not location, and not item group.
+
+Modified by		: RJL
+Version			: 9.0.0.79
+Date Modified	: 01/18/2021
+Reason			: Addressing of findings
+					a. Fixed lookup of segments in Debit Note with Reference
+					b. Reset Tax
+ 						b.1 Rename Reset Tax into Reset
+ 						b.2 Add noah loading upon clicking Reset button
+					c. Right Align VAT, EWT, and Net Amount column
+					d. Upon opening of Debit Note with Reference (if with data) or upon clicking Tax Convert; Hide VAT, EWT and Net Amount column
+					e. Insertion of VAT, EWT, and Net Amount in Debit Note with Reference
+					f. No PC data in Tax transaction in Debit Note with Reference 
+					g. If Debit Memo has Advances, insert in AP.PVDIRECTADM for reversing the amounts of Advances
+					h. Exclude APV No. with existing Debit Memo Total APV and Debit Note with Reference
+
+Modified by		: RJL
+Version			: 9.0.0.78
+Date Modified	: 01/18/2021
+Reason			: Addressing of findings in Debit Note with Reference
+
+Modified by		: RJL
+Version			: 9.0.0.77
+Date Modified	: 01/17/2021
+Reason			: Enhancements in Debit Note with Reference button
+
+Modified by		: RJL
+Version			: 9.0.0.76
+Date Modified	: 01/14/2021
+Reason			: Addressing of findings
+					h. Upon final approval, value date must be based on date of posting date
+					i. Refresh>New: Requirements Compliance button should be disabled and gray
+					j. Total APV Button: Apply Remarks config in Remarks column
+					k. Default Remarks in Main Screen in Total APV button (Ongoing)
+					l. Total APV Reference
+					   Reason Description is not displayed upon saving
+					m. Total APV Reference
+					   Rename Remarks into Particulars
+					n. Saved Debit Memo transactions are not displayed in Transaction Log Report 
+					o. No Local Amount displayed in WF Approval for Debit Memo Transaction
+
+Modified by		: RJL
+Version			: 9.0.0.75
+Date Modified	: 01/14/2021
+Reason			: Addressing of findings
+
+Modified by		: RJL
+Version			: 9.0.0.74
+Date Modified	: 01/14/2021
+Reason			: Addressing of findings
+					a. View Journal Entries
+					   a.1 Rename Sub Total into Net of VAT
+					   a.2 Rename Add VAT into Add: VAT
+					   a.3 Rename Amount after VAT into Gross Amount
+					   a.4 Rename Less EWT into Less: EWT
+					   a.5 Add Reversal of DP/Applied Advances Applied
+					   a.6 Add Reversal of Debit Memo Applied
+					   a.7 Add Reversal of Retention
+					b. Upon saving, employee name is not displayed in Payee field
+					c. Test Case 2 findings in Total APV Reference Amount
+					d. Rest Case 2 findings in Total DM Amount
+					e. View Journal Entries
+						e.1 Account Code must be displayed per segment (copy from PRF)
+						e.2 Rename Sub Account into Bank Account
+						e.3 Remove Payee Reference column
+						e.4 Add Cash Flow Type
+					f. Total APV Reference
+					   1. The following should be displayed in absolute value
+						Recoupment of DP/Advances
+						Debit Memo Applied
+						Retention
+					   2. Net Amount Due must be - Total Amount Due Less Recoupment less Debit Memo less Retention
+					   3. Extra columns Trade and Column 1 must be removed
+					g. Total APV Reference - Journal Entries
+					   Consider SL Reference of the reference APV
+
+Modified by		: RJL
+Version			: 9.0.0.73
+Date Modified	: 01/14/2021
+Reason			: Addressing of findings
+					a. Upon processing, record is not saved in workflow tables
+					b. Process window
+						Add the following after Payee Name
+						b.1 Currency - Display Code
+						b.2 Debit Memo Amount  - must be right aligned
+						b.3 Remarks
+						b.4 Location with Accountable Forms
+					c. Process window
+					   c.1 Rename Document No. into Transaction No.
+					   c.2 Rename Value Date into Date Created, then display recdate
+					d. Inquire search window
+					   Rename AP Debit Memo No. into Transaction No.
+					e. Inquire search window
+					   Add Date Created After Transaction No.
+					f. Inquire search window
+					   Add the following after Payee Name
+					   f.1 Currency - Display Code
+					   f.2 Debit Memo Amount  - must be right aligned
+					g. Main Screen
+					   Rename AP Debit Memo No. into Transaction No.
+					   Rename AP Debit Memo Status into Status
+					h. Total APV Reference
+					   Review Attachment(s) must not be colored green if no APV No. selected on the row
+					i. Total APV Reference
+						1. Remove APV Amount
+						2. Add the following fields after Ref. Date
+							i.1 Total Amount Due
+							i.2 Recoupment of DP/Advances
+							i.3 Debit Memo Applied
+							i.4 Retention
+							i.5 Net Amount Due
+					j. Total APV Reference
+					   Review Attachment(s) must not be colored green if no APV No. selected on the row
+					k. Remove Tax Identification No. field in the main screen
+					   Remove Payee Address field in the main screen
+					l. Currency must be lookup field and must be after Payee Sub Type field
+						If payee is vendor, display currency based on the assigned Currency for the selected vendor/payee in AP Vendor Information
+						This is loaded or non-edtiable if allow selection (source) is not ticked in AP Vendor Information
+						This is defaulted or edtiable if allow selection (source) is ticked in AP Vendor Information
+						If Employee, check configuration whether currency lookup will be allowed or not.
+					m. Rename Journal Entries button into View Journal Entries
+
+Modified by		: RJL
+Version			: 9.0.0.72
+Date Modified	: 01/12/2021
+Reason			: Addressing of findings
+					a. Debit Note with Reference
+   						For Item Group Type lookup, remove GLCode and GLDesc column
+					b. Debit Note with Reference
+						For Item Group Type lookup, 
+						b.1 Rename ItemGroupCode into Item Group Code
+						b.2 Rename ItemGroupDesc into Item Group Description
+					c. APV No. lookup, Rename Amount into APV Amount
+					d. Total APV Reference: Align right APV Amount column
+					e. Total APV Reference: Rename Reason into Reason Code
+					f. Update notitification message.
+						Current: Cannot be saved. Reason is required in row: [row no.].
+						Should be: Cannot be saved. Reason Code in row [row no.] is required. 
+
+Modified by		: MSC
+Version			: 9.0.0.71
+Date Modified	: 01.08.2021
+Reason			: Follow standard DC and WF
+
+Modified By       : RJL
+Date Modified     : 01/05/2021
+Menu Item Version : 9.0.0.70
+Reason		      : Addressing of findings
+					a. View Journal Entries: Add Save Column Width and Reset Column Width
+					b. Once View Journal Entries has been maximized, adjust also displaying of columns
+					c. Once View Journal Entries has been maximized, Footer values are distorted
+					d. Debit Note with Reference: APVs must be filtered based on the selected Location with Accountable Forms and Vendor
+					e. Reason available for lookup is Reason Type not Reason Codes
+					   Apply resolution to all buttons
+
+Modified By       : RJL
+Date Modified     : 10/27/2020
+Menu Item Version : 9.0.0.69
+Reason		      : Addressing of findings
+					a. Adjust Code fields so Vendor code will be fully displayed
+					b. Remarks field: Check dbo.remarksconfigi if tagged as All Capital. If yes, should be in UPPERCASE.
+					c. No APV No. available for lookup
+					d. Payee Sub Type must be disabled and color gainsboro
+					e. Upon saving, Location with Accountable Forms must be disabled.
+					f. Rate to Local and Rate to Home must be disabled even after saving 
+					g. If Ref date is blank should not display 1/1/1900 upon saving
+					h. Error upon resaving 
+					i. Fixed color coding of the ff buttons
+					 i.1 Debit Note with Reference
+					 i.2 Debit Note without Reference
+					 i.3 Total APV Reference
+					 i.4 Journal Entries
+					j. Once there is saved record in any of the buttons, disable Vendor/Payee.
+					k. Total APV Reference button: 
+					 k.1 Rename Invoice No. into Ref. No. (BS/SI/SOA)
+					 k.2 Rename Invoice Date  into Ref. Date
+					 k.3 Change Details into Review Attachments
+
+
+Modified By       : NDB
+Date Modified     : 10/09/2020
+Menu Item Version : 9.0.0.68
+Reason		      : Enhancement
+
+Modified By       : NDB
+Date Modified     : 10/09/2020
+Menu Item Version : 9.0.0.67
+Reason		      : Enhancement
+
+Modified By       : SBL
+Date Modified     : 07/29/2020
+Menu Item Version : 9.0.0.66
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified By       : DSA
+Date Modified     : 04/15/2020
+Menu Item Version : 9.0.0.65
+Reason			  : Update version
+
+Modified By       : RJL
+Date Modified     : 07/18/2019
+Menu Item Version : 8.0.0.65
+Reason			  : Addressing of findings in Debit Note w Ref should consider Approve Debit Memo 
+
+Modified By       : RJL
+Date Modified     : 06/25/2019
+Menu Item Version : 8.0.0.64
+Reason			  : Addressing of findings in cost center
+
+Modified By       : RJL
+Date Modified     : 06/06/2019
+Menu Item Version : 8.0.0.63
+Reason			  : Adressing of findings in location
+
+Modified By       : KSG
+Date Modified     : 05/30/2019
+Menu Item Version : 8.0.0.62
+Reason			  : UPDATE AutoallocateDisablePCCC() FROM INT to String
+
+Modified By       : RJL
+Date Modified     : 05/20/2019
+Menu Item Version : 8.0.0.61
+Reason			  : Add validation in Tax Code when no Tax Account and Rate is greater than zero
+
+Modified By       : RJL
+Date Modified     : 04/29/2019
+Menu Item Version : 8.0.0.60
+Reason			  : Addressing of UAT findings
+
+Modified By       : RJL
+Date Modified     : 04/27/2019
+Menu Item Version : 8.0.0.55
+Reason			  : Addressing of UAT findings
+
+Modified By       : RJL
+Date Modified     : 04/26/2019
+Menu Item Version : 8.0.0.54
+Reason			  : Addressing of UAT findings
+
+Modified By       : RJL
+Date Modified     : 04/23/2019
+Menu Item Version : 8.0.0.53
+Reason			  : Addressing of UAT findings
+
+Modified By       : RJL
+Date Modified     : 04/22/2019
+Menu Item Version : 8.0.0.52
+Reason			  : Addressing of UAT findings
+
+Modified By       : RJL
+Date Modified     : 04/15/2019
+Menu Item Version : 8.0.0.51
+Reason			  : Developer's testing 
+
+Modified By       : RJL
+Date Modified     : 04/10/2019
+Menu Item Version : 8.0.0.50
+Reason			  : Addressing of UAT findings
+
+Modified By       : KSG
+Date Modified     : 04/04/2019
+Menu Item Version : 8.0.0.49
+Reason			  : Show Amount,SL Type, SL Ref. in Line Details w/ Ref
+
+Modified By       : KSG
+Date Modified     : 03/22/2019
+Menu Item Version : 8.0.0.48
+Reason			  : VAT ex and VAT in Computation
+
+Modified By       : KSG
+Date Modified     : 03/22/2019
+Menu Item Version : 8.0.0.47
+Reason			  : Enhance Document Attachment 
+
+Modified By       : KSG
+Date Modified     : 03/20/2019
+Menu Item Version : 8.0.0.46
+Reason			  : SL Ref. Column Rename
+
+Modified By       : KSG
+Date Modified     : 03/18/2019
+Menu Item Version : 8.0.0.46
+Reason			  : Rename Fields label of Select Approval Details from APV Transaction No. and Date to Transaction No. and Date
+
+Modified By       : KSG
+Date Modified     : 03/08/2019
+Menu Item Version : 8.0.0.43
+Reason			  : Approval Details and Attachment Validation
+
+Modified By       : KSG
+Date Modified     : 02/28/2019
+Menu Item Version : 8.0.0.42
+Reason			  : Download to View
+
+Modified by		  : KSG
+Date			  : 02/19/2019
+Menu Item Version : 8.0.0.41
+Reason			  : Addressing of findings in SIT
+
+Modified by		  : AGM
+Date			  : 02/07/2019
+Menu Item Version : 8.0.0.40
+Reason			  : Addressing of findings in UAT
+
+Modified by		  : AGM
+Date			  : 01/31/2019
+Menu Item Version : 8.0.0.39
+Reason			  : Addressing of findings in UAT
+
+Modified by		  : AGM
+Date			  : 01/28/2019
+Menu Item Version : 8.0.0.38
+Reason			  : Addressing of findings in UAT
+
+Modified by		  : AGM
+Date			  : 01/22/2019
+Menu Item Version : 8.0.0.37
+Reason			  : Addressing of findings in UAT
+
+Modified by		  : AGM
+Date			  : 01/18/2019
+Menu Item Version : 8.0.0.36
+Reason			  : Addressing of findings in UAT
+
+Modified by		  : AGM
+Date			  : 01/16/2019
+Menu Item Version : 8.0.0.35
+Reason			  : Addressing of findings in UAT
+
+Modified by		  : AGM
+Date			  : 01/14/2019
+Menu Item Version : 8.0.0.34
+Reason			  : Addressing of findings
+
+Modified by		  : AGM
+Date			  : 01/11/2019
+Menu Item Version : 8.0.0.33
+Reason			  : Enhancement
+
+Modified by		  : RJL
+Date			  : 01/08/2019
+Menu Item Version : 8.0.0.30
+Reason			  : Addressing of findings in UAT 
+
+Modified by		  : RJL
+Date			  : 01/07/2019
+Menu Item Version : 8.0.0.29
+Reason			  : Addressing of findings in UAT 
+
+Modified by		  : AGM
+Date			  : 11/17/2018
+Menu Item Version : 8.0.0.28
+Reason			  : Addressing of findings 
+
+Modified by		  : AGM
+Date			  : 11/13/2018
+Menu Item Version : 8.0.0.27
+Reason			  : Addressing of findings 
+
+Modified by		  : AGM
+Date			  : 11/12/2018
+Menu Item Version : 8.0.0.26
+Reason			  : Addressing of findings 
+
+Modified by		  : AGM
+Date			  : 11/08/2018
+Menu Item Version : 8.0.0.25
+Reason			  : Enhancement 
+
+Modified by		  : AGM
+Date			  : 10/31/2018
+Menu Item Version : 8.0.0.24
+Reason			  : Addressing of findings 
+
+Modified by		  : AGM
+Date			  : 10/25/2018
+Menu Item Version : 8.0.0.23
+Reason			  : Addressing of findings 
+
+Modified by		  : AGM
+Date			  : 10/24/2018
+Menu Item Version : 8.0.0.22
+Reason			  : Addressing of findings 
+
+Modified by		  : AGM
+Date			  : 10/16/2018
+Menu Item Version : 8.0.0.21
+Reason			  : Enhancement of AP Debit Memo
+
+Modified by		  : AGM
+Date			  : 10/03/2018
+Menu Item Version : 8.0.0.20
+Reason			  : Addressing of findings
+
+Modified by		  : AGM
+Date			  : 08/23/2018
+Menu Item Version : 8.0.0.18
+Reason			  : Addressing of findings on attachment
+
+Modified by		  : AGM
+Date			  : 08/22/2018
+Menu Item Version : 8.0.0.17
+Reason			  : Addressing of findings.
+
+Modified by		  : KSG
+Date			  : 08/03/2018
+Menu Item Version : 8.0.0.16
+Reason			  : Icon of Process in Process Button and Enhance Document Attachment (add save button)
+
+Modified by		  : AAG
+Date			  : 06/05/2018
+Menu Item Version : 8.0.0.15
+Reason			  : addressing findings	on Forex plus valdiation 	
+
+Modified by		  : AGM
+Date			  : 05/25/2018
+Menu Item Version : 8.0.0.14
+Reason			  : addressing findings			
+
+Modified by : AGM
+Date : 04/26/2018
+Menu Item Version : 8.0.0.13
+Reason: addressing findings  
+
+Modified by : PJS
+Date : 04/20/2018
+Menu Item Version : 8.0.0.12
+Reason: addressing findings  
+
+
+Modified by 	: PJS
+Date : 04/18/2018
+Menu Item Version : 8.0.0.11
+Reason: addressing findings  
+
+
+Modified by 	: PJS
+Date : 04/16/2018
+Menu Item Version : 8.0.0.10
+Reason: addressing findings  
+
+
+Modified by 	: PJS
+Date : 04/13/2018
+Menu Item Version : 8.0.0.8
+Reason: enhancement 
+
+
+Modified by 	: PJS
+Date : 04/04/2018
+Menu Item Version : 8.0.0.7
+Reason: enhancement 
+
+Modified by 	: PJS
+Date : 04/02/2018
+Menu Item Version : 8.0.0.6
+Reason: enhancement 
+
+
+Modified by 	: PJS
+Date : 03/26/2018
+Menu Item Version : 8.0.0.5
+Reason: enhancement 
+
+Modified by 	: PJS
+Date : 03/22/2018
+Menu Item Version : 8.0.0.4
+Reason: enhancement 
+
+Modified by 	: PJS
+Date : 03/15/2018
+Menu Item Version : 8.0.0.3
+Reason: enhancement 
+
+
+
+Modified by 	: JRA
+Date : 12/01/2017
+Menu Item Version : 8.0.0.2
+Reason: Cleaning of Codes - Findings
+
+		
+Modified by 	: JRA
+Date : 11/20/2017
+Menu Item Version : 8.0.0.2
+Reason: UI
+
+
+
+Modified by 	: JRA
+Date : 11/06/2017
+Menu Item Version : 8.0.0.2
+Reason: Add process and select approval function (Only for Select Approver) 
+		Ready the codes for other type of approver matrix
+
+Created by 	: JRA
+Date : 11/03/2017
+Menu Item Version : 8.0.0.0
+
+
+
+
+
+
+

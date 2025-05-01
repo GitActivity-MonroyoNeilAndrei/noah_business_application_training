@@ -1,4 +1,17 @@
-﻿Modified By       : CLS
+﻿Modified By		  : Karl Angelo Gamayo
+Date Modified	  : 07/08/2024
+Version			  : 10.0.0.10
+Updates			  : Addressing of Findings
+					- Fixed functionality
+
+Modified By		  : Peterson Cruz
+Date Modified	  : 06/27/2024
+Version			  : 10.0.0.9E
+Updates			  : Addressing of Findings
+					- Document No. and Document Date should have red asterisk
+					- Document Date,Data entry only, no more popup calendar
+
+Modified By       : CLS
 Date Modified     : 4/20/2023
 Menu Item Version : 10.0.0.8
 Reason			  : Remove Row Adding

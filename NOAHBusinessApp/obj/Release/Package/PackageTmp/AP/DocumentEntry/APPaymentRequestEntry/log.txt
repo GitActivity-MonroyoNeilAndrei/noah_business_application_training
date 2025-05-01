@@ -1,0 +1,22 @@
+﻿Created By			: Arnel Alvarado
+Date Created		: 10/15/2024
+Menu Item Version	: 10.0.0.3
+Reason				: Addressing of Findings
+						-New button should be always enabled
+
+Created By			: Arnel Alvarado
+Date Created		: 10/15/2024
+Menu Item Version	: 10.0.0.2
+Reason				: Addressing of Findings
+						-Server error upon clicking With Reference then proceed 
+
+Created By			: Arnel Alvarado
+Date Created		: 10/15/2024
+Menu Item Version	: 10.0.0.1
+Reason				: Addressing of Findings
+						-Server error upon clicking With Reference then proceed 
+
+Created By			: Romar Julius Lucero
+Date Created		: 10/04/2024
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion/Development

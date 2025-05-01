@@ -1,0 +1,297 @@
+﻿Modified By			: Joshua Andrew Obina
+Date Modified		: 09/20/2024
+Menu Item Version	: 10.0.0.3
+Reason				: disabled Export upon initial loading
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 09/19/2024
+Menu Item Version	: 10.0.0.2
+Reason				: Fixed Export file name
+
+Modified By			: Joshua Andrew Obina
+Date Modified		: 09/09/24
+Menu Item Version	: 10.0.0.0
+Reason				: Conversion from V9 to V10
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 03/20/2024
+Version			: 9.0.0.27
+Updates			: - Added splitter
+				  - The VAT Code, EWT Code, and Tax Identification No. is editable. Should Be Loaded and locked from editing.
+
+Modified By		: Nixon Padaen Lemon
+Date Modified	: 03/20/2024
+Version			: 9.0.0.26
+Updates			: upon clicking Refresh button, 0 of 0 on navigation should be displayed and other buttons should be disabled except for Refresh and New. This happens when there is no record saved in the data source.
+
+Modified By		: EMB
+Date Modified	: 05/12/2023
+Version			: 9.0.0.25
+Updates			: Disregard function MakeOptionalTInNo1 on js
+
+Modified By		: EMB
+Date Modified	: 05/12/2023
+Version			: 9.0.0.24
+Updates			: Fixed optional TIN not working
+
+Modified By		: RJL
+Date Modified	: 03/31/2021
+Version			: 9.0.0.23
+Updates			: Address VAPT Compliance
+
+Modified By		: AZNA
+Date Modified	: 02/18/2021
+Version			: 9.0.0.22
+Updates			: VAPT Compliance
+
+
+Modified By		: RDA
+Date Modified	: 02/02/2021
+Version			: 9.0.0.21
+Updates			: Fix DisableUponView() function
+
+Modified By		: RDA
+Date Modified	: 01/30/2021
+Version			: 9.0.0.20
+Updates			: Enable TIN No. field in DisableUponView()
+
+Modified By		: RDA
+Date Modified	: 01/29/2021
+Version			: 9.0.0.19
+Updates			: Modify function DisableUponView()
+
+Modified By		: RDA
+Date Modified	: 01/02/2021
+Version			: 9.0.0.18
+Updates			: Fix arrangement for validation
+
+Modified By		: RDA
+Date Modified	: 12/28/2020
+Version			: 9.0.0.17
+Updates			: Remove word 'Tax'
+
+Modified By		: RDA
+Date Modified	: 12/09/2020
+Version			: 9.0.0.16
+Updates			: Change Cannot Save to Cannot be saved
+
+Modified By		: RDA
+Date Modified	: 12/09/2020
+Updates			: Add checking also upon lookup Vat Code
+Version			: 9.0.0.15
+
+Modified By		: RDA
+Date Modified	: 12/05/2020
+Updates			: Change validation for required TIN
+Version			: 9.0.0.14
+
+Modified By       : GG
+Date Modified     : 11/06/2020
+Menu Item Version : 9.0.0.13
+Reason			  : Added checking of optional or required TIN No.
+
+Modified By       : SBL
+Date Modified     : 07/29/2020
+Menu Item Version : 9.0.0.12
+Reason		  : Code Review, placed @queryType at the end of the query string
+				Removed Unused Functions
+
+Modified by       : ocr
+Modification Date : 03.05.2020
+Menu Item Version : 9.0.0.11
+Reason            : addressing of findings https://docs.google.com/spreadsheets/d/1ELhHCu2IUz_kEwJwVi3g7Gjzl_zne9UtI_YA5PxxBbw/edit#gid=387232434&fvid=1221479042
+
+Modified by       : AGE
+Modification Date : 02.27.2020
+Menu Item Version : 9.0.0.10
+Reason            : removal of history f(x)
+
+Modified by       : DDD
+Modification Date : 02.24.2020
+Menu Item Version : 9.0.0.9
+Reason            : Address findings based on standards
+
+Modified by       : RMB
+Modification Date : 02.14.2020
+Menu Item Version : 9.0.0.8
+Reason            : Address findings based on standards
+
+Modified by       : RBN
+Modification Date : 02.06.2020
+Menu Item Version : 9.0.0.7
+Reason            : History
+
+Modified by       : RBN
+Modification Date : 11.21.2019
+Menu Item Version : 9.0.0.6
+Reason            : Add condition if TIN is existing.
+		  : Add condition in tracing TIN if exist or not/ Disable all fields upon saving.
+		  : Fixing the incorrect string format
+
+Modified by       : DJSB
+Modification Date : 09.14.2019
+Menu Item Version : 9.0.0.5
+Reason            : Addressing of findings of the following:
+					1.) "Export - Vendor Name - display registered name"
+
+Modified by       : DJSB
+Modification Date : 09.14.2019
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.4
+
+Modified by       : DJSB
+Modification Date : 09.13.2019
+Reason            : Addressing of findings
+Menu Item Version : 9.0.0.3
+
+Modified by       : DJSB
+Modification Date : 09.12.2019
+Reason            : UI related
+Menu Item Version : 9.0.0.2
+
+Modified by       : DDD
+Modification Date : 09.11.2019
+Reason            : UI Related and validation.
+Menu Item Version : 9.0.0.1
+
+Modified by       : CCB
+Modification Date : 09.04.2019
+Reason            : Alignment
+Menu Item Version : 9.0.0.0
+
+Modified by       : RJL
+Modification Date : 06/10/2019
+Reason            : Addressing of findings in VAT/Non VAT
+Menu Item Version : 8.0.0.12
+
+Modified by       : AGM
+Modification Date : 01/17/2019
+Reason            : Addressing of UAT findings
+Menu Item Version : 8.0.0.11
+
+Modified by       : AGM
+Modification Date : 11/28/2018
+Reason            : Changes all PNDE hard code into table PNDE
+Menu Item Version : 8.0.0.10
+
+Modified by       : KSG
+Modification Date : 11/11/2018
+Reason            : Addressing of findings (Payee Look up)
+Menu Item Version : 8.0.0.9
+
+Modified by       : FBP
+Modification Date : 03/09/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.9
+
+Modified by       : FBP
+Modification Date : 03/08/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.8
+
+Modified by       : FBP
+Modification Date : 03/07/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.7
+
+Modified by       : FBP
+Modification Date : 03/06/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.6
+
+Modified by       : FBP
+Modification Date : 02/21/2018
+Reason            : Addressing of findings
+Menu Item Version : 8.0.0.5
+
+Modified by       : FBP
+Modification Date : 02/17/2018
+Reason            : save
+Menu Item Version : 8.0.0.4
+
+Modified by       : JRA
+Modification Date : 12/21/2017
+Reason            : For Withoutin
+Menu Item Version : 6.0.0.3
+
+Modified by       : FBP
+Modification Date : 12/07/2017
+Reason            : Addressing of SIT Findings
+Menu Item Version : 6.0.0.1
+
+Modified by       : JRA
+Modification Date : 11//30/2017
+Reason            : Export
+Menu Item Version : 6.0.0.1
+
+Modified by       : JRA
+Modification Date : 11//30/2017
+Reason            : Default Radio button
+Menu Item Version : 6.0.0.1
+
+Modified by       : JRA
+Modification Date : 11//30/2017
+Reason            : Disabled the checkbox, Validation on Tax
+Menu Item Version : 6.0.0.1
+
+Modified by       : JRA
+Modification Date : 11//29/2017
+Reason            : Order Supplier Code in Inquire
+Menu Item Version : 6.0.0.1
+
+Modified by       : JRA
+Modification Date : 11//28/2017
+Reason            : Disable Save,Fields when there is already data
+Menu Item Version : 6.0.0.1
+
+Modified by       : JRA
+Modification Date : 11//27/2017
+Reason            : Mask on TIN No.
+Menu Item Version : 6.0.0.1
+
+Modified by       : JRA
+Modification Date : 10//25/2017
+Reason            : Setup for Link and Non Link
+Menu Item Version : 6.0.0.1
+
+Modified by       : JRA
+Modification Date : 11//20/2017
+Reason            : Setup for Link and Non Link v2
+Menu Item Version : 6.0.0.1
+
+Modified by       : IVD
+Modification Date : 10/04/2017
+Reason            : Changes
+Menu Item Version : 6.0.0.2
+
+Modified by       : JRA
+Modification Date : 09/20/2017
+Menu Item Version : 6.0.0.1
+
+Modified by       : JVV
+Modification Date : 09/19/2017
+Reason            : Findings
+Detailed          : Export, Prompt, UI, Footerm Inquire, Clearing txtbox, Saving validation, 
+Menu Item Version : 8.0.0.0
+
+Created By        : MAV
+Date Modified     : 08/01/2017
+Reason            : for golden haven
+Menu Item Version : 6.0.0.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
