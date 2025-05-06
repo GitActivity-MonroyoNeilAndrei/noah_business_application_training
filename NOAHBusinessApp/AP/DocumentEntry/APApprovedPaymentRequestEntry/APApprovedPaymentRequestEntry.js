@@ -19,20 +19,23 @@ baseTitle = "Approved Payment Request Entry";
 
 
 
-var  SPR_DOCNO = 1,
-     SPR_DOCPOSTDATE = 2,
-     SPR_REFNO = 3,
-     SPR_REFDATE = 4,
-     SPR_DUEDATE = 5,
-     SPR_ITEMGROUPTYPECODE = 6,
-     SPR_ITEMGROUPTYPEDESC = 7,
-     SPR_ITEMCODE = 8,
-     SPR_ITEMDESC = 9,
-     SPR_UOM = 10,
-     SPR_QTY = 11,
-     SPR_AMOUNT = 12,
-     SPR_TOTALAMOUNT = 13,
-     SPR_REVIEWATTACHMENTS = 14;
+var SPR_DOCNO = 1,
+    SPR_DOCPOSTDATE = 2,
+    SPR_REFNO = 3,
+    SPR_REFDATE = 4,
+    SPR_DUEDATE = 5,
+    SPR_ITEMGROUPTYPECODE = 6,
+    SPR_ITEMGROUPTYPEDESC = 7,
+    SPR_ITEMCODE = 8,
+    SPR_ITEMDESC = 9,
+    SPR_UOM = 10,
+    SPR_QTY = 11,
+    SPR_AMOUNT = 12,
+    SPR_TOTALAMOUNT = 13,
+    SPR_REVIEWATTACHMENTS = 14,
+    SPR_LINEID = 15,
+    SPR_ROWNO = 16,
+    SPR_RATAG = 17;
 
 
 var nwGridCon_Book;
@@ -148,10 +151,10 @@ function cust_GetPara() {
 
     nwParameter_Add("idvallugLocForm", $("#idvallugLocForm").val());
     nwParameter_Add("idvallugPayee", $("#idvallugPayee").val());
-
     nwParameter_Add("idvallugSubPayee", $("#idvallugSubPayee").val());
     nwParameter_Add("idvallugCurrency", $("#idvallugCurrency").val());
     nwParameter_Add("txtCheckPayeeName", $("#txtCheckPayeeName").val());
+    
     nwParameter_Add("txtRemarks", $("#txtRemarks").val());
 
 
@@ -207,6 +210,7 @@ function EnableFields() {
 
     $("#noah-webui-Toolbox").bindingSave().enable(true);
     $("#noah-webui-Toolbox").bindingDelete().visible(false);
+    $("#noah-webui-Toolbox").bindingExport().visible(false);
 }
 function DisableFields() {
     $("#lugLocForm").enable(false);
@@ -232,6 +236,7 @@ function DisableFields() {
     $("#noah-webui-Toolbox").bindingDelete().visible(true);
     $("#noah-webui-Toolbox").bindingInquire().enable(true);
     $("#noah-webui-Toolbox").bindingExport().enable(false);
+    $("#noah-webui-Toolbox").bindingExport().visible(false);
     $("#noah-webui-Toolbox").bindingProcess().enable(false);
     $("#noah-webui-Toolbox").bindingProcess().visible(false);
 }
@@ -341,7 +346,45 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
     var cnt = nwGridCon_Book.ActiveSheet.GetMaxRow();
 
     if (nwGridID == 'nwGridCon') {
-        if (_col == (SPR_ITEMGROUPTYPECODE - 1)) {
+
+        if (_col == (SPR_DOCNO - 1)) {
+            var Grid = nwGridCon_Book.ActiveSheet;
+            var collength = Grid.GetMaxCol();
+            var col = Grid.GetSelectedIndexes().col;
+            var row = Grid.GetSelectedIndexes().row;
+            var code = addtoListTableRec.find('tr:eq(' + index + ') td:eq(1)').text();
+            var desc = addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text();
+            //if (col == SPR_USERCODE - 1) {
+            var data = Grid.GetValue(SPR_DOCNO - 1, _row);
+            var hasValue = false;
+            if (index == 0 && data == "") {
+                for (coli = 0; coli < collength; coli++) {
+                    if ((SPR_DOCNO - 1) == coli) {
+                        continue;
+                    }
+                    var value = Grid.GetValue(coli, _row);
+                    if (value != "") {
+                        hasValue = true;
+                        break;
+                    }
+                }
+            }
+            if (hasValue) {
+                crnwTRtemp = null;
+                Grid.SetText((SPR_DOCNO - 1), _row, addtoListTableRec.find('tr:eq(' + index + ') td:eq(1)').text());
+                Grid.SetText((SPR_DOCPOSTDATE - 1), _row, addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text());
+
+                // Grid.SetText((SPR_ITEMGROUPTYPEDESC - 1), _row, addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text());
+            } else {
+                crnwTRtemp[SPR_DOCNO - 1] = addtoListTableRec.find('tr:eq(' + index + ') td:eq(1)').text();
+                crnwTRtemp[SPR_DOCPOSTDATE - 1] = addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text();
+
+                // crnwTRtemp[SPR_ITEMGROUPTYPEDESC - 1] = addtoListTableRec.find('tr:eq(' + index + ') td:eq(2)').text();
+            }
+
+            // defaultVAT(index);
+
+        } else if (_col == (SPR_ITEMGROUPTYPECODE - 1)) {
             var Grid = nwGridCon_Book.ActiveSheet;
             var collength = Grid.GetMaxCol();
             var col = Grid.GetSelectedIndexes().col;
@@ -509,12 +552,6 @@ function Lookup_DoneFunction(idName, idNum) {
 
 
 
-    if (idName == 'lugPackSizeUOM') {
-
-        nwGridCon_Book.ActiveSheet.SetText((SPR_PACKSIZEUOM - 1), _row, desc);
-        nwGridCon_Book.ActiveSheet.SetText((SPR_PACKSIZEUOMCode - 1), _row, code);
-    }
-
 
     if (idName == 'lugMDRUOM') {
 
@@ -547,9 +584,18 @@ function Lookup_DoneFunction(idName, idNum) {
     }
 
 
-    if (idName == 'lugPackSizeUOM') {
 
-        nwGridCon_Book.ActiveSheet.SetText((SPR_UOM - 1), _row, code);
+    if (idName == 'lugLocForm') {
+        nwParameter_Add("idvallugLocForm", code);
+    }
+
+    if (idName == 'lugPayee') {
+        nwParameter_Add("idvallugPayee", code);
+    }
+
+    if (idName == 'lugPackSizeUOM') 
+    {
+        nwGridCon_Book.ActiveSheet.SetText((SPR_UOM - 1), _row, desc);
         // nwGridCon_Book.ActiveSheet.SetText((SPR_EWTDESC - 1), _row, desc);
     }
 
@@ -740,6 +786,19 @@ function p8Spread_DblClick(canvasID, row, col) {
     }
 
     if (canvasID == "nwGridCon") {
+
+
+        if (col == (SPR_DOCNO - 1)) {
+            var maxRow = nwGridCon_Book.ActiveSheet.GetMaxRow();
+            var item = '';
+            for (var x = 0; x <= maxRow; x++) {
+                item += "|" + nwGridCon_Book.ActiveSheet.GetText((SPR_DOCNO - 1), x);
+            }
+            nwParameter_Add("txtItemCode", item);
+            nwParameter_Add("txtItemGroupTypeCode", nwGridCon_Book.ActiveSheet.GetText((SPR_DOCNO - 1), row));
+            lookUpCustomize("lugDocNo", 2, undefined, true);
+        }
+
         if (col == (SPR_ITEMGROUPTYPECODE - 1)) {
             var maxRow = nwGridCon_Book.ActiveSheet.GetMaxRow();
             var item = '';
@@ -762,16 +821,6 @@ function p8Spread_DblClick(canvasID, row, col) {
             lookUpCustomize("lugItemCode", 2, undefined, true);
         }
 
-        if (col == (SPR_UOM - 1)) {
-            var maxRow = nwGridCon_Book.ActiveSheet.GetMaxRow();
-            var item = '';
-            for (var x = 0; x <= maxRow; x++) {
-                item += "|" + nwGridCon_Book.ActiveSheet.GetText((SPR_ITEMCODE - 1), x);
-            }
-            nwParameter_Add("txtItemCode", item);
-            nwParameter_Add("txtItemGroupTypeCode", nwGridCon_Book.ActiveSheet.GetText((SPR_ITEMGROUPTYPECODE - 1), row));
-            lookUpCustomize("lugPackSizeUOM", 1, undefined, true);
-        }
 
 
 
@@ -799,8 +848,62 @@ function p8Spread_DblClick(canvasID, row, col) {
         //     nwParameter_Add("txtEWTCode", nwGridCon_Book.ActiveSheet.GetText((SPR_EWTDESC - 1), row));
         //     lookUpCustomize("lugEWTCode", 1, undefined, true);
         // }
+
+
+        if (col == (SPR_UOM - 1)) {
+            nwParameter_Add("txtUOM", nwGridCon_Book.ActiveSheet.GetText((SPR_UOM - 1), row));  
+            lookUpCustomize("lugPackSizeUOM", 1, undefined, true);
+        }
     }
 
     return true;
+}
+
+
+
+function p8Spread_Change(canvasID, row, col) {
+    _canvasID = canvasID;
+    _row = row;
+    _col = col;
+    var Grid;
+
+    if (canvasID == "nwGridCon") {
+        Grid = nwGridCon_Book.ActiveSheet;
+
+        if (col == (SPR_QTY - 1)) {
+            var qty = Number(Grid.GetText((SPR_QTY - 1), _row));
+            var amount = Number(Grid.GetText((SPR_AMOUNT - 1), _row));
+            var totalAmount = qty * amount;
+
+            Grid.SetText((SPR_TOTALAMOUNT - 1), _row, totalAmount);
+        }
+
+
+        if (col == (SPR_AMOUNT - 1)) {
+            var qty = Number(Grid.GetText((SPR_QTY - 1), _row));
+            var amount = Number(Grid.GetText((SPR_AMOUNT - 1), _row));
+            var totalAmount = qty * amount;
+
+            Grid.SetText((SPR_TOTALAMOUNT - 1), _row, totalAmount);
+        }
+
+        if (col == (SPR_REFDATE - 1)) {
+            var refDate = Date.parse(nwGridCon_Book.ActiveSheet.GetText((SPR_REFDATE -1), row));
+            var dueDate = Date.parse(nwGridCon_Book.ActiveSheet.GetText((SPR_DUEDATE -1), row));
+            if (refDate < dueDate) {
+                MessageBox("Cannot proceed. Ref Date should not be later than the Due Date.", baseTitle, "error");
+                nwGridCon_Book.ActiveSheet.SetText((SPR_REFDATE -1), row, "");
+            }
+        }
+
+        if (col == (SPR_DUEDATE - 1)) {
+            var refDate = Date.parse(nwGridCon_Book.ActiveSheet.GetText((SPR_REFDATE -1), row));
+            var dueDate = Date.parse(nwGridCon_Book.ActiveSheet.GetText((SPR_DUEDATE -1), row));
+            if (refDate < dueDate) {
+                MessageBox("Cannot proceed. Due Date should not be earlier than Ref. Date.", baseTitle, "error");
+                nwGridCon_Book.ActiveSheet.SetText((SPR_DUEDATE -1), row, "");
+            }
+        }
+    }
 }
 

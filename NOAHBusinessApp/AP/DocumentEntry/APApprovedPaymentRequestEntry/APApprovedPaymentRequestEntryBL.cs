@@ -89,7 +89,10 @@ namespace Noah_Web.forms_BusinessLayer
                   SPR_QTY = 11,
                   SPR_AMOUNT = 12,
                   SPR_TOTALAMOUNT = 13,
-                  SPR_REVIEWATTACHMENTS = 14;
+                  SPR_REVIEWATTACHMENTS = 14,
+                  SPR_LINEID = 15,
+                  SPR_ROWNO = 16,
+                  SPR_RATAG = 17;
 
         #endregion
 
@@ -256,10 +259,26 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
                 
                 case "getlugPayee":
-                    string locForm = "NOAHV09";
+                    string locForm = WebApp.nwobjectText("idvallugLocForm");
                     strSQL = dal.lugPayee(locForm);
                     strMethod = strMethod.Substring(3);
+                    nwObject.ColumnHide(3);
+                    nwObject.ColumnHide(4);
+                    nwObject.ColumnHide(5);
+                    nwObject.ColumnHide(6);
+
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    break;
+
+                case "getlugDocNo":
+                    // string location = WebApp.nwobjectText("idvallugLocForm");
+                    // string vendor = WebApp.nwobjectText("idvallugPayee");
+                    string location = "0000001";
+                    string vendor = "VEND00000251";
+                    strSQL = dal.DocNo(location, vendor);
+                    strMethod = strMethod.Substring(3);
+                    nwObject.ColumnHide(4);
+                    strFinal = nwObject.make_TableLookupList(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
                 case "getlugItemGroupTypeCode":
@@ -388,7 +407,6 @@ namespace Noah_Web.forms_BusinessLayer
 
                     RecordOperationResult = ValidateData();
 
-                    if (RecordOperationResult.Length <= 0)
                     {
                         DataTable dt = new DataTable();
                         DataTable dlin = new DataTable();
@@ -428,6 +446,7 @@ namespace Noah_Web.forms_BusinessLayer
 
                 case eRecordOperation.Refresh:
                     nwToolBox.bindingNavigatorImportItem.Enable = false;
+                    if (RecordOperationResult.Length <= 0)
                     RefreshData();
 
                     break;
@@ -583,11 +602,20 @@ namespace Noah_Web.forms_BusinessLayer
             DataTable _tempSPR = new DataTable();
             _tempSPR = LoadSchemaLIN();
 
-            // if (WebApp.nwobjectText("idvallugVendor").Length <= 0)
-            //     errorResult += "Cannot be saved. Vendor is required.\n";
+                errorResult += "Cannot be saved. Location with Accountable Forms is required.\n";
 
-            // if (_tempSPR.Rows.Count <= 0)
-            //     errorResult += "Cannot be saved. At least one line detail is required.\n";
+            if (WebApp.nwobjectText("idvallugPayee").Length <= 0)
+                errorResult += "Cannot be saved. Vendor/Payee is required.\n";
+
+            if (WebApp.nwobjectText("idvallugCurrency").Length <= 0)
+                errorResult += "Cannot be saved. Currency is required.\n";
+
+            if (WebApp.nwobjectText("txtRemarks").Length <= 0)
+                errorResult += "Cannot be saved. Remarks is required.\n";
+
+            if (WebApp.nwobjectText("idvallugLocForm").Length <= 0)
+            if (_tempSPR.Rows.Count <= 0)
+                errorResult += "Cannot be saved. At least one line detail is required.\n";
 
             // if (_tempSPR.Rows.Count > 0)
             // {
@@ -660,7 +688,7 @@ namespace Noah_Web.forms_BusinessLayer
             m_spread.Type = nwGridType.SpreadCanvas;
 
             m_spread.RowHeight(5);
-            m_spread.CreateExcelGrid(5, SPR_REVIEWATTACHMENTS);
+            m_spread.CreateExcelGrid(5, SPR_RATAG);
             m_spread.TableHeight(200);
             m_spread.minRow(5);
 
@@ -675,7 +703,7 @@ namespace Noah_Web.forms_BusinessLayer
             }
             else
             {
-                m_spread.CreateExcelGrid(5, SPR_REVIEWATTACHMENTS);
+                m_spread.CreateExcelGrid(5, SPR_RATAG);
             }
 
             #region Column Name
@@ -715,10 +743,29 @@ namespace Noah_Web.forms_BusinessLayer
             
             #region Template
 
-            m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).Remarks("...");
-            m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).ObjectType("button");
-            m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).BackgroundColor("#006060");
-            m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).TextAlign("center");
+            m_spread.nwobject(SPR_REFNO - 1).Enabled(true);
+            m_spread.nwobject(SPR_REFDATE - 1).Enabled(true);
+            m_spread.nwobject(SPR_REFDATE - 1).DataType("date");
+            m_spread.nwobject(SPR_DUEDATE - 1).Enabled(true);
+            m_spread.nwobject(SPR_DUEDATE - 1).DataType("date");
+
+
+            m_spread.nwobject(SPR_QTY - 1).Enabled(true);
+            m_spread.nwobject(SPR_AMOUNT - 1).InputCurrency("isNumber", 0, 5);
+
+            
+            m_spread.nwobject(SPR_AMOUNT - 1).Enabled(true);
+            m_spread.nwobject(SPR_AMOUNT - 1).InputCurrency("isNumber", 2, 8);
+
+            m_spread.nwobject(SPR_TOTALAMOUNT - 1).Enabled(true);
+            m_spread.nwobject(SPR_TOTALAMOUNT - 1).InputCurrency("isNumber", 2, 8);
+
+
+
+            // m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).Remarks("...");
+            // m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).ObjectType("button");
+            // m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).BackgroundColor("#006060");
+            // m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).TextAlign("center");
 
             #endregion
 
@@ -734,7 +781,14 @@ namespace Noah_Web.forms_BusinessLayer
 
             #region Width
 
-            // m_spread.nwobject(SPR_ITEMGROUPTYPEDESC - 1).Width(250);
+            m_spread.nwobject(SPR_DOCNO - 1).Width(200);
+
+            m_spread.nwobject(SPR_LINEID - 1).Width(0);
+            m_spread.nwobject(SPR_ROWNO - 1).Width(0);
+            m_spread.nwobject(SPR_RATAG - 1).Width(0);
+
+
+
             // m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).Width(120);
             // m_spread.nwobject(SPR_ITEMDESC - 1).Width(250);
             // m_spread.nwobject(SPR_ITEMCODE - 1).Width(120);
@@ -752,31 +806,20 @@ namespace Noah_Web.forms_BusinessLayer
 
             #region Color
 
-
-            // m_spread.nwobject(SPR_ITEMGROUPTYPEDESC - 1).BackgroundColor("gainsboro");
-            // m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).BackgroundColor("cyan");
-            // m_spread.nwobject(SPR_ITEMDESC - 1).BackgroundColor("gainsboro");
-            // m_spread.nwobject(SPR_ITEMCODE - 1).BackgroundColor("cyan");
-            // m_spread.nwobject(SPR_BASEUOM - 1).BackgroundColor("gainsboro");
-            // m_spread.nwobject(SPR_VATTAXDESC - 1).BackgroundColor("cyan");
-            // m_spread.nwobject(SPR_EWTDESC - 1).BackgroundColor("cyan");
-            // m_spread.nwobject(SPR_REMARKS - 1).BackgroundColor("gainsboro");
-
-
             m_spread.nwobject(SPR_DOCNO - 1).BackgroundColor("cyan");
             m_spread.nwobject(SPR_DOCPOSTDATE - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_REFNO - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_REFDATE - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_DUEDATE - 1).BackgroundColor("gainsboro");
+            // m_spread.nwobject(SPR_REFNO - 1).BackgroundColor("#ffffff");
+            // m_spread.nwobject(SPR_REFDATE - 1).BackgroundColor("#ffffff");
+            // m_spread.nwobject(SPR_DUEDATE - 1).BackgroundColor("#ffffff");
             m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).BackgroundColor("cyan");
             m_spread.nwobject(SPR_ITEMGROUPTYPEDESC - 1).BackgroundColor("gainsboro");
             m_spread.nwobject(SPR_ITEMCODE - 1).BackgroundColor("cyan");
 
             m_spread.nwobject(SPR_ITEMDESC - 1).BackgroundColor("gainsboro");
             m_spread.nwobject(SPR_UOM - 1).BackgroundColor("cyan");
-            m_spread.nwobject(SPR_QTY - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_AMOUNT - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_TOTALAMOUNT - 1).BackgroundColor("gainsboro");
+            // m_spread.nwobject(SPR_QTY - 1).BackgroundColor("#ffffff");
+            // m_spread.nwobject(SPR_AMOUNT - 1).BackgroundColor("#ffffff");
+            // m_spread.nwobject(SPR_TOTALAMOUNT - 1).BackgroundColor("#ffffff");
             m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).BackgroundColor("gainsboro");
 
             #endregion
@@ -898,41 +941,62 @@ namespace Noah_Web.forms_BusinessLayer
             dtLIN = dal.LoadSchemaLIN();
             #endregion
 
-            //DataTable dt = WebApp.nwGridData(WebApp.nwobjectText("nwGridCon"));
+            // DataTable dt = WebApp.nwGridData(WebApp.nwobjectText("nwGridCon"));
 
-            // DataTable dt = new DataTable();
-            // DataSet ds = WebApp.DataSet("nwGridCon");
-            // if(ds.Tables.Count > 0)
-            // {
-            //     dt = ds.Tables[0];
-            // }
-            // dtLIN.Columns.Add("rNo", typeof(int));
+            DataTable dt = new DataTable();
+            DataSet ds = WebApp.DataSet("nwGridCon");
+            if(ds.Tables.Count > 0)
+            {
+                dt = ds.Tables[0];
+            }
+            //dtLIN.Columns.Add("rNo", typeof(int));1588009015
 
-            // int ctr = 1;
+            int ctr = 1;
 
-            // foreach (DataRow dr_details in dt.Rows)
-            // {
-            //     DataRow dr = dtLIN.NewRow();
-            //     if (dr_details[SPR_ITEMGROUPTYPECODE - 1].ToString() != string.Empty 
-            //         || dr_details[SPR_ITEMCODE - 1].ToString() != string.Empty
-            //         || dr_details[SPR_BASEUOMCODE - 1].ToString() != string.Empty
-            //         || dr_details[SPR_VATTAXCODE - 1].ToString() != string.Empty
-            //         || dr_details[SPR_EWTCODE - 1].ToString() != string.Empty
-            //         || dr_details[SPR_REMARKS - 1].ToString() != string.Empty)
-            //     {
-            //         dr["Vendor"] = WebApp.nwobjectText("idvallugVendor");
-            //         dr["ItemGroupType"] = dr_details[SPR_ITEMGROUPTYPECODE - 1].ToString();
-            //         dr["Item"] = dr_details[SPR_ITEMCODE - 1].ToString();
-            //         dr["BaseUOM"] = dr_details[SPR_BASEUOMCODE - 1].ToString();
-            //         dr["VatCode"] = dr_details[SPR_VATTAXCODE - 1].ToString();
-            //         dr["EWTCode"] = dr_details[SPR_EWTCODE - 1].ToString();
-            //         dr["Remarks"] = dr_details[SPR_REMARKS - 1].ToString();
-            //         dr["rNo"] = ctr;
-            //         dtLIN.Rows.Add(dr);
-            //         dtLIN.AcceptChanges();
-            //     }
-            //     ctr++;
-            // }
+            foreach (DataRow dr_details in dt.Rows)
+            {
+
+    // (@docno, @rowno, @lineID, @refDocno, @refNo, @refDate, @dueDate, @igtCode, @itemCode, @uom, @qty, @amount, @totalamt)
+
+
+                DataRow dr = dtLIN.NewRow();
+                if (
+                    dr_details[SPR_DOCNO - 1].ToString() != string.Empty 
+                    || dr_details[SPR_REFNO - 1].ToString() != string.Empty
+                    || dr_details[SPR_REFDATE - 1].ToString() != string.Empty
+                    || dr_details[SPR_DUEDATE - 1].ToString() != string.Empty
+                    || dr_details[SPR_ITEMGROUPTYPECODE - 1].ToString() != string.Empty
+                    || dr_details[SPR_ITEMCODE - 1].ToString() != string.Empty
+                    || dr_details[SPR_UOM - 1].ToString() != string.Empty
+                    || dr_details[SPR_QTY - 1].ToString() != string.Empty
+                    || dr_details[SPR_AMOUNT - 1].ToString() != string.Empty
+                    || dr_details[SPR_TOTALAMOUNT - 1].ToString() != string.Empty
+                    )
+                {
+                    dr["DocNo"] = dr_details[SPR_DOCNO - 1].ToString();
+
+                    dr["RowNo"] = ctr;
+
+                    dr["LineID"] = Parser.ParseInt(dr_details[SPR_LINEID - 1].ToString());
+                    dr["RefDocNo"] = dr_details[SPR_DOCNO - 1].ToString();
+
+                    dr["RefNo"] = dr_details[SPR_REFNO - 1].ToString();
+                    dr["RefDate"] = dr_details[SPR_REFDATE - 1].ToString();
+                    dr["DueDate"] = dr_details[SPR_DUEDATE - 1].ToString();
+                    dr["igtCode"] = dr_details[SPR_ITEMGROUPTYPECODE - 1].ToString();
+                    dr["ItemCode"] = dr_details[SPR_ITEMCODE - 1].ToString();
+                    dr["UOM"] = dr_details[SPR_UOM - 1].ToString();
+
+                    dr["Qty"] = dr_details[SPR_QTY - 1].ToString();
+                    dr["Amount"] = dr_details[SPR_AMOUNT - 1].ToString();
+                    dr["totalamt"] = dr_details[SPR_TOTALAMOUNT - 1].ToString();
+
+                    // dr["rNo"] = ctr;
+                    dtLIN.Rows.Add(dr);
+                    dtLIN.AcceptChanges();
+                }
+                ctr++;
+            }
 
             return dtLIN;
         }

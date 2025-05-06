@@ -68,7 +68,7 @@ namespace DALComponent
         private string storedProcedureName = "[AP].[nsp_ApprovedPaymentRequestEntryHDR_Monroyo]";
         private string storedProcedureNameLIN = "[AP].[nsp_ApprovedPaymentRequestEntryLIN_Monroyo]";
         private string tableName = "[AP].[ApprvPaymentRqstHDR_Monroyo]";
-        private string tableNameLin = "[AP].[ApprovedPaymentRequestEntryLIN_Monroyo]";
+        private string tableNameLin = "[AP].[ApprvPaymentRqstLIN_Monroyo]";
 
 
         // private string storedProcedureName = "[PO].[nsp_VitaHDR]";
@@ -95,6 +95,10 @@ namespace DALComponent
         public string inquireQuery()
         {
             return string.Format(@"EXEC " + storedProcedureName + " @QueryType = 8");
+        }
+        public string DocNo(string locForm, string vendor)
+        {
+            return string.Format($@"EXEC {storedProcedureNameLIN} @locForm='{locForm}', @vendor='{vendor}', @QueryType = 20");
         }
         public string ItemGType()
         {
@@ -223,6 +227,10 @@ namespace DALComponent
                 sqlConn.Open();
                 sqlTrn = sqlConn.BeginTransaction();
 
+                DataRow dr = dtHDR.Rows[0];
+
+                string docno = dr["docno"].ToString();
+
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConn;
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -237,45 +245,61 @@ namespace DALComponent
 
                 cmd.Parameters.AddWithValue("@tranType", Trantype);
 
-
-
-
-
                 cmd.Parameters.AddWithValue("@recuser", dtHDR.Rows[0]["Recuser"].ToString());
                 // cmd.Parameters.AddWithValue("@Moduser", dtHDR.Rows[0]["Moduser"].ToString());
                 cmd.Parameters.AddWithValue("@QueryType", IsNewRow ? 1 : 2);
                 cmd.ExecuteNonQuery();
 
-                // int row = 0;
-                // foreach (DataRow items in dtLIN.Rows)
-                // {
-                //     cmd = new SqlCommand();
-                //     cmd.Connection = sqlConn;
-                //     cmd.CommandType = CommandType.StoredProcedure;
-                //     cmd.Transaction = sqlTrn; // Need to specify for every command
-                //     cmd.Parameters.Clear();
-                //     cmd.CommandText = storedProcedureNameLIN;
-                //     cmd.Parameters.AddWithValue("@VendorCode", dtLIN.Rows[row]["Vendor"].ToString());
-                //     cmd.Parameters.AddWithValue("@ItemGroupType", dtLIN.Rows[row]["ItemGroupType"].ToString());
-                //     cmd.Parameters.AddWithValue("@ItemCode", dtLIN.Rows[row]["Item"].ToString());
-                //     cmd.Parameters.AddWithValue("@BaseUOM", dtLIN.Rows[row]["BaseUOM"].ToString());
-                //     cmd.Parameters.AddWithValue("@VATTaxCode", dtLIN.Rows[row]["VatCode"].ToString());
-                //     cmd.Parameters.AddWithValue("@EWTCode", dtLIN.Rows[row]["EWTCode"].ToString());
-                //     cmd.Parameters.AddWithValue("@Remarks", dtLIN.Rows[row]["Remarks"].ToString());
-                //     cmd.Parameters.AddWithValue("@QueryType", 1);
-                //     cmd.ExecuteNonQuery();
-                //     row++;
-                // }
 
-                // cmd = new SqlCommand();
-                // cmd.Connection = sqlConn;
-                // cmd.CommandType = CommandType.StoredProcedure;
-                // cmd.Transaction = sqlTrn; // Need to specify for every command
-                // cmd.Parameters.Clear();
-                // cmd.CommandText = storedProcedureName;
-                // cmd.Parameters.AddWithValue("@Vendor", dtHDR.Rows[0]["Vendor"].ToString());
-                // cmd.Parameters.AddWithValue("@QueryType", 10);
-                // cmd.ExecuteNonQuery();
+                int maxlineID = 0;
+                if (!IsNewRow)
+                {
+                    cmd = new SqlCommand();
+                    cmd.Connection = sqlConn;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Transaction = sqlTrn; // Need to specify for every command
+                    cmd.Parameters.Clear();
+                    cmd.CommandText = storedProcedureName;
+                    cmd.Parameters.AddWithValue("@docno", docno);
+                    cmd.Parameters.AddWithValue("@QueryType", 24);
+                    maxlineID = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
+                }
+
+
+                int row = 0;
+                foreach (DataRow items in dtLIN.Rows)
+                {
+                    cmd = new SqlCommand();
+                    cmd.Connection = sqlConn;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Transaction = sqlTrn; // Need to specify for every command
+                    cmd.Parameters.Clear();
+                    cmd.CommandText = storedProcedureNameLIN;
+                    cmd.Parameters.AddWithValue("@docno", dtLIN.Rows[row]["DocNo"].ToString());
+                    cmd.Parameters.AddWithValue("@refNo", dtLIN.Rows[row]["RefNo"].ToString());
+
+                    cmd.Parameters.AddWithValue("@refDocno", dtLIN.Rows[row]["RefDocNo"].ToString());
+
+                    
+
+                    cmd.Parameters.AddWithValue("@rowno", dtLIN.Rows[row]["RowNo"].ToString());
+                    cmd.Parameters.AddWithValue("@lineID", dtLIN.Rows[row]["LineID"].ToString());
+                    
+                    cmd.Parameters.AddWithValue("@refDate", dtLIN.Rows[row]["RefDate"].ToString());
+                    cmd.Parameters.AddWithValue("@dueDate", dtLIN.Rows[row]["DueDate"].ToString());
+                    cmd.Parameters.AddWithValue("@igtCode", dtLIN.Rows[row]["igtCode"].ToString());
+                    cmd.Parameters.AddWithValue("@itemCode", dtLIN.Rows[row]["ItemCode"].ToString());
+                    cmd.Parameters.AddWithValue("@uom", dtLIN.Rows[row]["UOM"].ToString());
+
+                    cmd.Parameters.AddWithValue("@qty", dtLIN.Rows[row]["Qty"].ToString());
+                    cmd.Parameters.AddWithValue("@amount", dtLIN.Rows[row]["Amount"].ToString());
+                    cmd.Parameters.AddWithValue("@totalamt", dtLIN.Rows[row]["totalamt"].ToString());
+
+                    cmd.Parameters.AddWithValue("@QueryType", 1);
+                    cmd.ExecuteNonQuery();
+                    row++;
+                }
+
             }
             catch (SqlException sqlEx)
             {
