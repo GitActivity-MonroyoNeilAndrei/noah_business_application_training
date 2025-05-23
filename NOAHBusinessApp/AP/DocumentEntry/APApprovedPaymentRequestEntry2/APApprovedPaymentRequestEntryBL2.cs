@@ -23,15 +23,15 @@ using DALComponent;
 using System.Collections.Generic;
 using System.IO;
 using System.Data.SqlClient;
+using System.Web.WebPages;
 
 
 namespace Noah_Web.forms_BusinessLayer
 {
-    public class APApprovedPaymentRequestEntryBL : nwAction
+    public class APApprovedPaymentRequestEntry2BL : nwAction
     {
         #region Variables needed
         public static string nwDocno;
-
         string _strFinal = ""; // container of string result
         string _strmet = "";
         string _strParameter = "";
@@ -65,21 +65,8 @@ namespace Noah_Web.forms_BusinessLayer
         #endregion
 
         #region SPR
-        // const int SPR_ITEMGROUPTYPECODE = 1,
-        //           SPR_ITEMGROUPTYPEDESC = 2,
-        //           SPR_ITEMCODE = 3,
-        //           SPR_ITEMDESC = 4,
-        //           SPR_BASEUOM = 5,
-        //           SPR_VATTAXDESC = 6,
-        //           SPR_EWTDESC = 7,
-        //           SPR_REMARKS = 8,
-        //           SPR_TAGREMARKS = 9,
-        //           SPR_VATTAXCODE = 10,
-        //           SPR_EWTCODE = 11,
-        //           SPR_BASEUOMCODE = 12;
-
-        const int SPR_DOCNO = 1,
-                  SPR_DOCPOSTDATE = 2,
+        const int SPR_DOCUMENTNO = 1,
+                  SPR_DOCUMENTPOSTINGDATE = 2,
                   SPR_REFNO = 3,
                   SPR_REFDATE = 4,
                   SPR_DUEDATE = 5,
@@ -91,11 +78,24 @@ namespace Noah_Web.forms_BusinessLayer
                   SPR_QTY = 11,
                   SPR_AMOUNT = 12,
                   SPR_TOTALAMOUNT = 13,
-                  SPR_REVIEWATTACHMENTS = 14,
+                  SPR_REVIEWATTACHMENT = 14,
                   SPR_LINEID = 15,
-                  SPR_ROWNO = 16,
-                  SPR_RATAG = 17;
+                  SPR_REVIEWATTACHMENTTAG = 16,
+                  SPR_BASEUOMCODE = 17;
 
+
+
+        #endregion
+
+        #region
+        int SPR3_Checkbox = 1,
+            SPR3_TRANSACTIONNO = 2,
+            SPR3_DATECREATED = 3,
+            SPR3_VENDORPAYEECODE = 4,
+            SPR3_VENDORPAYEENAME = 5,
+            SPR3_CURRENCY = 6,
+            SPR3_CHECKPAYEENAME = 7,
+            SPR3_REMARKS = 8;
         #endregion
 
         public void main(ref string strFinal, string strmet,
@@ -116,7 +116,7 @@ namespace Noah_Web.forms_BusinessLayer
             _strtemp5 = strtemp5;
             based = baseds;
             this.UserDefinedConnectionString = UserDefinedConnection;
-            dal = new APApprovedPaymentRequestEntryDAL(this.UserDefinedConnectionString, this.based.SecurityAccess.ConnectionString, "");
+            dal = new APApprovedPaymentRequestEntry2DAL(this.UserDefinedConnectionString, this.based.SecurityAccess.ConnectionString, "");
             if (_strmet == "get_Initialize") strFinal = get_Initialize();
             else if (_strmet == "func_Toolbox") strFinal = func_Toolbox(strtool_Met, strtool_Poz, strParameter, strValue);
             else if (_strmet == "get_LookUp") strFinal = get_LookUp(strtool_Met, strtool_Poz, strParameter, strValue);
@@ -133,10 +133,10 @@ namespace Noah_Web.forms_BusinessLayer
         public string Trantype = "APVNAM";
         public string Stat = string.Empty;
         string RecordOperationResult = String.Empty;
-        APApprovedPaymentRequestEntryDAL dal;
+        APApprovedPaymentRequestEntry2DAL dal;
         Dictionary<string, string> xdic_chars = new Dictionary<string, string>();
 
-        public APApprovedPaymentRequestEntryBL()
+        public APApprovedPaymentRequestEntry2BL()
         {
 
         }
@@ -251,42 +251,35 @@ namespace Noah_Web.forms_BusinessLayer
                     break;
 
                 case "getlugLocForm":
-                    string trantype = "APVNAM"; 
-                    // WebApp.nwobjectText("TranType");
+                    string trantype = WebApp.nwobjectText("TranType");
                     strSQL = dal.lugLocForm(trantype, based.SecurityAccess.RecUser);
-                    nwObject.ColumnHide(3);
                     nwObject.ColumnSort("Code", "Asc");
                     strMethod = strMethod.Substring(3);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
-                
                 case "getlugPayee":
                     string locForm = WebApp.nwobjectText("idvallugLocForm");
                     strSQL = dal.lugPayee(locForm);
-                    strMethod = strMethod.Substring(3);
                     nwObject.ColumnHide(3);
                     nwObject.ColumnHide(4);
                     nwObject.ColumnHide(5);
                     nwObject.ColumnHide(6);
-
+                    nwObject.ColumnSort("Code", "Asc");
+                    strMethod = strMethod.Substring(3);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
-                case "getlugDocNo":
-                    string location = WebApp.nwobjectText("idvallugLocForm");
-                    string vendor = WebApp.nwobjectText("idvallugPayee");
-                    // string location = "0000001";
-                    // string vendor = "VEND00000251";
-                    strSQL = dal.DocNo(location, vendor);
-                    strMethod = strMethod.Substring(3);
+                case "getlugDocumentNo":
+                    strSQL = dal.DocumentNo(WebApp.nwobjectText("idvallugLocForm"), WebApp.nwobjectText("idvallugPayee"));
                     nwObject.ColumnHide(4);
-                    strFinal = nwObject.make_TableLookupList(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    strMethod = strMethod.Substring(3);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
                 case "getlugItemGroupTypeCode":
                     strSQL = dal.ItemGType();
                     strMethod = strMethod.Substring(3);
-                    strFinal = nwObject.make_TableLookupList(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
                 case "getlugItemCode":
@@ -294,20 +287,26 @@ namespace Noah_Web.forms_BusinessLayer
                     strMethod = strMethod.Substring(3);
                     nwObject.ColumnHide(5);
                     nwObject.ColumnHide(6);
-                    strFinal = nwObject.make_TableLookupList(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
-                case "getlugPackSizeUOM":
-                    strSQL = dal.PackSizeUOM();
+                case "getlugUOM":
+                    strSQL = dal.UOM();
                     strMethod = strMethod.Substring(3);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
-                case "getlugMDRUOM":
-                    strSQL = dal.MDRUOM(WebApp.nwobjectText("txtItemCode"));
-                    strMethod = strMethod.Substring(3);
-                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
-                    break;
+                //case "getlugPackSizeUOM":
+                //    strSQL = dal.PackSizeUOM(WebApp.nwobjectText("txtItemCode"));
+                //    strMethod = strMethod.Substring(3);
+                //    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                //    break;
+
+                //case "getlugMDRUOM":
+                //    strSQL = dal.MDRUOM(WebApp.nwobjectText("txtItemCode"));
+                //    strMethod = strMethod.Substring(3);
+                //    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
+                //    break;
 
                 case "getlugCurrency":
                     strSQL = dal.Currency();
@@ -322,31 +321,12 @@ namespace Noah_Web.forms_BusinessLayer
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
-                case "getlugVattaxCode":
-                    strSQL = dal.VATaxCode();
-                    nwObject.ColumnHide(3);
-                    strMethod = strMethod.Substring(3);
-                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
-                    break;
-
-                case "getlugEWTCode":
-                    strSQL = dal.EWTCode();
-                    nwObject.ColumnHide(3);
-                    strMethod = strMethod.Substring(3);
-                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
-                    break;
-
                 case "getlugDocDtlHdr":
                     strSQL = dal.DocDTLhdr();
                     strMethod = strMethod.Substring(3);
                     strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
                     break;
 
-                case "getlugCopyFrom":
-                    strSQL = dal.GetCopyFrom();
-                    strMethod = strMethod.Substring(3);
-                    strFinal = nwObject.make_TableLookup(strMethod, strSQL, strConn, emptyDT, mouseDownFunc, mouseOverFunc);
-                    break;
 
 
             }
@@ -357,34 +337,25 @@ namespace Noah_Web.forms_BusinessLayer
         private void InitializeValues()
         {
             DataTable dt = new DataTable();
-            nwToolBox.bindingNavigatorSaveItem.Enable = true;
-            nwToolBox.bindingNavigatorAddNewItem.Enable = true;
-            nwToolBox.bindingNavigatorPrintItem.Enable =
-            //nwToolBox.bindingNavigatorInquireItem.Enable =
-            nwToolBox.bindingNavigatorDeleteItem.Enable =
-            //nwToolBox.bindingNavigatorDeleteItem.Visible =
-            nwToolBox.bindingNavigatorExportItem.Enable =
-            nwToolBox.bindingNavigatorProcessItem.Enable = false;
-            nwToolBox.bindingNavigatorImportItem.Enable = true;
-
-
-            dt = dal.getDefaultLocform(based.SecurityAccess.RecUser);
-
-            if (dt.Rows.Count > 0) 
-            {
-                js.makeValueText("#idvallugLocForm", dt.Rows[0]["Code"].ToString());
-                js.makeValueText("#descvallugLocForm", dt.Rows[0]["Description"].ToString());
-
-                // if (dal.valValueDate(dt.Rows[0]["Code"].ToString()))
-                // {
-                //     Prompt.Error("Cannot proceed. Period is already closed.", "AP Approved Payment Request Entry");
-                //     custom_js.makeValueText("txtValueDate", "");
-                // }
-            }
-
-
+            //nwToolBox.bindingNavigatorSaveItem.Enable = true;
+            //nwToolBox.bindingNavigatorAddNewItem.Enable =
+            //nwToolBox.bindingNavigatorPrintItem.Enable =
+            ////nwToolBox.bindingNavigatorInquireItem.Enable =
+            //nwToolBox.bindingNavigatorDeleteItem.Enable =
+            ////nwToolBox.bindingNavigatorDeleteItem.Visible =
+            //nwToolBox.bindingNavigatorExportItem.Enable =
+            //nwToolBox.bindingNavigatorProcessItem.Enable = false;
+            //nwToolBox.bindingNavigatorImportItem.Enable = true;
             var serverdate = SFObject.GetServerDateTime(this.UserDefinedConnectionString);
             js.makeValueText("#txtTranDate", serverdate.ToString("MM/dd/yyyy"));
+            dt = dal.getDefaultLocform(based.SecurityAccess.RecUser);
+
+            if (dt.Rows.Count > 0)
+            {
+                js.makeValueText("#idvallugLocForm", dt.Rows[0]["LocForm Code"].ToString());
+                js.makeValueText("#descvallugLocForm", dt.Rows[0]["LocForm Description"].ToString());
+            }
+
             CreateGrid(true);
         }
 
@@ -401,7 +372,6 @@ namespace Noah_Web.forms_BusinessLayer
                     InitializeValues();
                     js.ADD("$('.nwgbtnRemarks').enable(false);");
                     break;
-
                 case eRecordOperation.Save:
 
                     nwToolBox.bindingNavigatorImportItem.Enable = false;
@@ -409,14 +379,19 @@ namespace Noah_Web.forms_BusinessLayer
 
                     RecordOperationResult = ValidateData();
 
+                    if (RecordOperationResult.Length <= 0)
                     {
+
+
                         DataTable dt = new DataTable();
                         DataTable dlin = new DataTable();
 
                         dt = LoadSchema();
                         dlin = LoadSchemaLIN();
                         RecordOperationResult = dal.SaveData(dt, dlin, isNewRow, Trantype);
+
                     }
+
                     break;
 
                 case eRecordOperation.Delete:
@@ -425,30 +400,19 @@ namespace Noah_Web.forms_BusinessLayer
                     //RecordOperationResult = ValidateData();
                     //if (RecordOperationResult.Length <= 0)
                     //{
-                        string Docno = string.Empty;
-                        Docno = WebApp.nwobjectText("txtDocno");
-                        RecordOperationResult = dal.DeleteData(Docno, based.SecurityAccess.RecUser);
+                    string Vendor = string.Empty;
+                    Vendor = WebApp.nwobjectText("txtTransactionNo");
+                    RecordOperationResult = dal.DeleteData(Vendor, based.SecurityAccess.RecUser);
                     //}
 
                     break;
 
                 case eRecordOperation.Process:
-
-                    nwToolBox.bindingNavigatorImportItem.Visible = true;
-                    nwToolBox.bindingNavigatorImportItem.Enable = false;
-                    RecordOperationResult = ValidateData();
-                    if (RecordOperationResult.Length <= 0)
-                    {
-                        string TransactionNo = string.Empty;
-                        TransactionNo = WebApp.nwobjectText("txtTransactionNo");
-                        RecordOperationResult = dal.ProcessTransaction(TransactionNo);
-                    }
-
+                    CreateProcessGrid(true);
                     break;
 
                 case eRecordOperation.Refresh:
                     nwToolBox.bindingNavigatorImportItem.Enable = false;
-                    if (RecordOperationResult.Length <= 0)
                     RefreshData();
 
                     break;
@@ -479,7 +443,7 @@ namespace Noah_Web.forms_BusinessLayer
 
                     js.Show("#nwExportContainerMain", 0);
                     js.ADD(frmlist.CreateScript());
-                    js.ADD(" $('#nwExportContainer').attr(\"p8title\",\"" + (dal.LISTINGFILENAME + " Listing") +"\");");
+                    js.ADD(" $('#nwExportContainer').attr(\"p8title\",\"" + (dal.LISTINGFILENAME + " Listing") + "\");");
 
                     break;
                 case eRecordOperation.Print:
@@ -528,13 +492,41 @@ namespace Noah_Web.forms_BusinessLayer
                     DefaultItemGroupType();
                     break;
 
-                case "actCopyFrom":
-                    CreateGrid(false);
+                case "actdefaultVAT":
                     break;
 
-                case "actdefaultVAT":
-                    DefaultVatCode();
+                case "actprocess":
+                    RecordOperationResult = Processvalidation();
+                    if (RecordOperationResult.Length <= 0)
+                    {
+                        string recuser = based.SecurityAccess.RecUser;
+                        DataTable dt6 = new DataTable();
+                        DataSet ds6 = WebApp.DataSet("nwGridCon3");
+                        if (ds6.Tables.Count > 0)
+                        {
+                            dt6 = ds6.Tables[0];
+                        }
+                        DataTable dtProcess = WebApp.nwGridData(WebApp.nwobjectText("nwGridCon3"));
+                        RecordOperationResult = dal.MultiUpdateProcess(dt6, recuser);
+
+                        if (RecordOperationResult.Contains("Cannot"))
+                        {
+                            Prompt.Error(RecordOperationResult, based.Title);
+                        }
+                        else
+                        {
+                            Prompt.Information(RecordOperationResult, based.Title);
+                            js.ADD("processclose();");
+                            RefreshData();
+                        }
+                    }
+                    else
+                    {
+                        Prompt.Error(RecordOperationResult, based.Title);
+                    }
+                    js.ADD("nwLoading_End('xactprocess')");
                     break;
+
                 default:
                     Prompt.Information("act_Method not found: " + strMethod, "Error");
                     break;
@@ -550,9 +542,11 @@ namespace Noah_Web.forms_BusinessLayer
             {
                 case "toolbox":
                     nwStandardBL standardBL = new nwStandardBL(WebApp);
-                    standardBL.PrimaryKey = "docno";
+                    standardBL.PrimaryKey = "Transaction No.";
                     string codevalue = WebApp.nwobjectText("codevalue");
-                    strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(codevalue), this.UserDefinedConnectionString);
+                    if (codevalue.Length > 0)
+                        nwDocno = codevalue;
+                    strFinal = standardBL.LoadToolBoxData("#noah-webui-Toolbox-BindingNavigator", dal.GetData(nwDocno), this.UserDefinedConnectionString);
                     break;
             }
 
@@ -564,31 +558,26 @@ namespace Noah_Web.forms_BusinessLayer
         //////////////////////// Common
         private void SetBindings()
         {
-            SFObject.SetControlBinding("#txtDocno", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "docno");
-
             SFObject.SetControlBinding("#idvallugLocForm", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "locForm");
-
             SFObject.SetControlBinding("#descvallugLocForm", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "locFormDesc");
             SFObject.SetControlBinding("#idvallugPayee", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "vendor");
-            SFObject.SetControlBinding("#descvallugPayee", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "vendorName");
-            SFObject.SetControlBinding("#idvallugSubPayee", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "payeeSubTypeCode");
+            SFObject.SetControlBinding("#descvallugPayee", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Vendor/Payee Name");
+            SFObject.SetControlBinding("#idvallugSubPayee", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "PayeeSubType");
             SFObject.SetControlBinding("#descvallugSubPayee", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "payeeSubTypeDesc");
             SFObject.SetControlBinding("#idvallugCurrency", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "currency");
             SFObject.SetControlBinding("#descvallugCurrency", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "currDesc");
-            SFObject.SetControlBinding("#txtCheckPayeeName", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "checkPayeeName");
+            SFObject.SetControlBinding("#txtPayeeName", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "checkPayeeName");
             SFObject.SetControlBinding("#txtRemarks", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "remarks");
 
+            SFObject.SetControlBinding("#txtTransactionNo", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Transaction No.");
+            SFObject.SetControlBinding("#txtDateSubmitted", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "dateSubmit");
+            SFObject.SetControlBinding("#txtDatePosted", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "postdate");
+            SFObject.SetControlBinding("#txtDocumentStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "status");
+            SFObject.SetControlBinding("#idvallugRsnDisapproval", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "reasonDisapproval");
+            SFObject.SetControlBinding("#descvallugRsnDisapproval", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "reasonDisapprovalDesc");
+            SFObject.SetControlBinding("#txtDisRemarks", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "disapprovalRemarks");
 
-            SFObjects.SetControlBinding("#txtDMno", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "docno");
-            SFObjects.SetControlBinding("#txtDateSubmitted", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "dateSubmit");
-            SFObjects.SetControlBinding("#txtDatePosted", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "postdate");
-            SFObjects.SetControlBinding("#txtApDmStatus", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "status");
-            SFObjects.SetControlBinding("#idvallugRsnDisapproval", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "reasonDisapproval");
-            SFObjects.SetControlBinding("#descvallugRsnDisapproval", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "reasonDisapprovalDesc");
-            SFObjects.SetControlBinding("#txtDissRemarks", "Val", "", "#noah-webui-Toolbox-BindingNavigator", "disapprovalRemarks");
-
-
-            // SFObject.SetControlBinding(Stat, "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Status");
+            //SFObject.SetControlBinding(Stat, "Val", "", "#noah-webui-Toolbox-BindingNavigator", "Status");
 
 
 
@@ -603,6 +592,7 @@ namespace Noah_Web.forms_BusinessLayer
 
         private void BindCollection()
         {
+            setRqmtCompProp();
             CreateGrid(false);
             js.ADD("nwLoading_End('actBindCollection');");
         }
@@ -614,7 +604,8 @@ namespace Noah_Web.forms_BusinessLayer
             DataTable _tempSPR = new DataTable();
             _tempSPR = LoadSchemaLIN();
 
-            errorResult += "Cannot be saved. Location with Accountable Forms is required.\n";
+            if (WebApp.nwobjectText("idvallugLocForm").Length <= 0)
+                errorResult += "Cannot be saved. Location with Accountable Forms is required.\n";
 
             if (WebApp.nwobjectText("idvallugPayee").Length <= 0)
                 errorResult += "Cannot be saved. Vendor/Payee is required.\n";
@@ -625,70 +616,50 @@ namespace Noah_Web.forms_BusinessLayer
             if (WebApp.nwobjectText("txtRemarks").Length <= 0)
                 errorResult += "Cannot be saved. Remarks is required.\n";
 
-            if (WebApp.nwobjectText("idvallugLocForm").Length <= 0)
             if (_tempSPR.Rows.Count <= 0)
+            {
                 errorResult += "Cannot be saved. At least one line detail is required.\n";
+            }
 
-            // if (_tempSPR.Rows.Count > 0)
-            // {
-            //     int x = 0;
-            //     foreach (DataRow dr in _tempSPR.Rows)
-            //     {
-            //         if (_tempSPR.Rows[x]["ItemGroupType"].ToString() == string.Empty)
-            //         {
-            //             errorResult += "Cannot be saved. Item Group Type Code in row " + (_tempSPR.Rows[x]["rNo"]) + " is required. \n";
-            //         }
+            if (_tempSPR.Rows.Count > 0)
+            {
+                int x = 0;
+                foreach (DataRow dr in _tempSPR.Rows)
+                {
+                    if (_tempSPR.Rows[x]["refDocno"].ToString() == string.Empty)
+                    {
+                        errorResult += "Cannot be saved. Document No. in row " + (_tempSPR.Rows[x]["rNo"]) + " is required. \n";
+                    }
 
-            //         if (_tempSPR.Rows[x]["VatCode"].ToString() == string.Empty && _tempSPR.Rows[x]["EWTCode"].ToString() == string.Empty)
-            //         {
-            //             errorResult += "Cannot be saved. Either VAT and EWT Short Description in row " + (_tempSPR.Rows[x]["rNo"]) + " must be provided. \n";
-            //         }
+                    if (_tempSPR.Rows[x]["refNo"].ToString() == string.Empty)
+                    {
+                        errorResult += "Cannot be saved. Ref No. in row " + (_tempSPR.Rows[x]["rNo"]) + " is required. \n";
+                    }
 
+                    if (_tempSPR.Rows[x]["refDate"].ToString() == string.Empty)
+                    {
+                        errorResult += "Cannot be saved. Ref Date in row " + (_tempSPR.Rows[x]["rNo"]) + " is required. \n";
+                    }
 
-            //         if (_tempSPR.Rows[x]["VatCode"].ToString() != string.Empty && _tempSPR.Rows[x]["EWTCode"].ToString() != string.Empty)
-            //         {
-            //             errorResult += "Cannot be saved. Only VAT or EWT Short Description in row " + (_tempSPR.Rows[x]["rNo"]) + " should have Value. \n";
-            //         }
+                    if (_tempSPR.Rows[x]["igtCode"].ToString() == string.Empty)
+                    {
+                        errorResult += "Cannot be saved. Item Group Type Code in row " + (_tempSPR.Rows[x]["rNo"]) + " is required. \n";
+                    }
 
-                    //if (_tempSPR.Rows[x]["VatCode"].ToString() == string.Empty)
-                    //{
-                    //    errorResult += "Cannot Save. VAT Short Description is required at row " + (x + 1) + ".\n";
-                    //}
+                    if (_tempSPR.Rows[x]["QTY"].ToString() == string.Empty)
+                    {
+                        errorResult += "Cannot be saved. QTY in row " + (_tempSPR.Rows[x]["rNo"]) + " is required. \n";
+                    }
 
-                    //if (_tempSPR.Rows[x]["EWTCode"].ToString() == string.Empty)
-                    //{
-                    //    errorResult += "Cannot Save. EWT Short Description is required at row " + (x + 1) + ".\n";
-                    //}
+                    if (_tempSPR.Rows[x]["Amount"].ToString() == string.Empty)
+                    {
+                        errorResult += "Cannot be saved. Amount in row " + (_tempSPR.Rows[x]["rNo"]) + " is required. \n";
+                    }
 
-                    // dal.AutoInsertTaxCode(_tempSPR.Rows[x]["VatCode"].ToString(), _tempSPR.Rows[x]["EWTCode"].ToString());
-                    //dal.hasCombination(_tempSPR.Rows[x]["VatCode"].ToString(), _tempSPR.Rows[x]["VatCode"].ToString()) == 1
+                    x++;
+                }
 
-                    //if (_tempSPR.Rows[x]["VatCode"].ToString() == string.Empty && _tempSPR.Rows[x]["EWTCode"].ToString() == string.Empty)
-                    //{
-                    //    errorResult += "Cannot be saved. Either VAT and EWT Short Description in row " + (x + 1) + " must be provided. \n";
-                    //}
-
-            //         x++;
-            //     }
-
-            //     foreach (DataRow items in _tempSPR.Rows)
-            //     {
-            //         if (_tempSPR.Rows.Count > 0)
-            //         {
-            //             string ItemGroup = items[SPR_ITEMGROUPTYPECODE].ToString().Trim();
-            //             string Item = items[SPR_ITEMCODE].ToString().Trim();
-            //             int index = _tempSPR.Rows.IndexOf(items) + 1;
-
-            //             var p = _tempSPR.AsEnumerable()
-            //                     .Select(s => s)
-            //                         .Where(w => w["ItemGroupType"].ToString() == ItemGroup).Where(z => z["Item"].ToString() == Item).Where(i => Parser.ParseInt(i["rNo"]) != index);
-            //             if (p.Count() != 0)
-            //             {
-            //                 errorResult += string.Format($"Cannot be saved. Item Group Type. [{ItemGroup}] already exists at row {items["rNo"]}.\n");
-            //             }
-            //         }
-            //     }
-            // }
+            }
 
             return errorResult;
         }
@@ -700,7 +671,7 @@ namespace Noah_Web.forms_BusinessLayer
             m_spread.Type = nwGridType.SpreadCanvas;
 
             m_spread.RowHeight(5);
-            m_spread.CreateExcelGrid(5, SPR_RATAG);
+            m_spread.CreateExcelGrid(5, SPR_BASEUOMCODE);
             m_spread.TableHeight(200);
             m_spread.minRow(5);
 
@@ -708,77 +679,60 @@ namespace Noah_Web.forms_BusinessLayer
 
             if (!isInitialize)
             {
-                string TranNo = WebApp.nwobjectText("txtDocno");
+                string TranNo = WebApp.nwobjectText("txtTransactionNo");
                 dt = dal.GetLinData(TranNo);
                 m_spread.dataSource(dt);
                 m_spread.minRow(dt.Rows.Count + 1);
             }
             else
             {
-                m_spread.CreateExcelGrid(5, SPR_RATAG);
+                m_spread.CreateExcelGrid(5, SPR_BASEUOMCODE);
             }
 
             #region Column Name
 
-            m_spread.nwobject(SPR_DOCNO - 1).ColumnName("Document No.");
-            m_spread.nwobject(SPR_DOCPOSTDATE - 1).ColumnName("Document Posting Date");
+            m_spread.nwobject(SPR_DOCUMENTNO - 1).ColumnName("Document No.");
+            m_spread.nwobject(SPR_DOCUMENTNO - 1).HeaderFieldRequired(true);
+            m_spread.nwobject(SPR_DOCUMENTPOSTINGDATE - 1).ColumnName("Document Posting Date");
             m_spread.nwobject(SPR_REFNO - 1).ColumnName("Ref No.");
+            m_spread.nwobject(SPR_REFNO - 1).HeaderFieldRequired(true);
             m_spread.nwobject(SPR_REFDATE - 1).ColumnName("Ref Date");
+            m_spread.nwobject(SPR_REFDATE - 1).HeaderFieldRequired(true);
             m_spread.nwobject(SPR_DUEDATE - 1).ColumnName("Due Date");
+            m_spread.nwobject(SPR_DUEDATE - 1).HeaderFieldRequired(true);
             m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).ColumnName("Item Group Type Code");
+            m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).HeaderFieldRequired(true);
             m_spread.nwobject(SPR_ITEMGROUPTYPEDESC - 1).ColumnName("Item Group Type Description");
             m_spread.nwobject(SPR_ITEMCODE - 1).ColumnName("Item Code");
-
             m_spread.nwobject(SPR_ITEMDESC - 1).ColumnName("Item Description");
             m_spread.nwobject(SPR_UOM - 1).ColumnName("UOM");
-            m_spread.nwobject(SPR_QTY - 1).ColumnName("Quantity");
+            m_spread.nwobject(SPR_QTY - 1).ColumnName("QTY");
+            m_spread.nwobject(SPR_QTY - 1).HeaderFieldRequired(true);
             m_spread.nwobject(SPR_AMOUNT - 1).ColumnName("Amount");
+            m_spread.nwobject(SPR_AMOUNT - 1).HeaderFieldRequired(true);
             m_spread.nwobject(SPR_TOTALAMOUNT - 1).ColumnName("Total Amount");
-            m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).ColumnName("Review Attachments");
-
-
-            #endregion
-
-
-            #region Require and Optional
-
-            // m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).HeaderFieldRequired(true);
-            // m_spread.nwobject(SPR_VATTAXDESC - 1).HeaderFieldOptional(true);
-            // m_spread.nwobject(SPR_EWTDESC - 1).HeaderFieldOptional(true);
+            m_spread.nwobject(SPR_REVIEWATTACHMENT - 1).ColumnName("Review Attachment(s)");
 
             #endregion
-
 
             #region Input
 
             #endregion
-            
             #region Template
-
             m_spread.nwobject(SPR_REFNO - 1).Enabled(true);
             m_spread.nwobject(SPR_REFDATE - 1).Enabled(true);
             m_spread.nwobject(SPR_REFDATE - 1).DataType("date");
             m_spread.nwobject(SPR_DUEDATE - 1).Enabled(true);
             m_spread.nwobject(SPR_DUEDATE - 1).DataType("date");
-
-
             m_spread.nwobject(SPR_QTY - 1).Enabled(true);
-            m_spread.nwobject(SPR_AMOUNT - 1).InputCurrency("isNumber", 5, 8);
-
-            
+            m_spread.nwobject(SPR_QTY - 1).InputCurrency("numQTYC", 5, 8);
             m_spread.nwobject(SPR_AMOUNT - 1).Enabled(true);
-            m_spread.nwobject(SPR_AMOUNT - 1).InputCurrency("isNumber", 2, 8);
-
-            m_spread.nwobject(SPR_TOTALAMOUNT - 1).Enabled(true);
-            m_spread.nwobject(SPR_TOTALAMOUNT - 1).InputCurrency("isNumber", 2, 8);
-
-
-
-            // m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).Remarks("...");
-            // m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).ObjectType("button");
-            // m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).BackgroundColor("#006060");
-            // m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).TextAlign("center");
-
+            m_spread.nwobject(SPR_AMOUNT - 1).InputCurrency("numAmountC", 2, 16);
+            m_spread.nwobject(SPR_TOTALAMOUNT - 1).InputCurrency("numTotalC", 2, 16);
+            //m_spread.nwobject(SPR_REMARKS - 1).Remarks("...");
+            m_spread.nwobject(SPR_REVIEWATTACHMENT - 1).ObjectType("button");
+            m_spread.nwobject(SPR_REVIEWATTACHMENT - 1).BackgroundColor("#006060");
+            m_spread.nwobject(SPR_REVIEWATTACHMENT - 1).TextAlign("center");
             #endregion
 
             #region Special
@@ -787,64 +741,51 @@ namespace Noah_Web.forms_BusinessLayer
 
             #region Header Grouping
 
-            //m_spread.HeaderGroupADD("Test", SPR_LOOKUPCODE - 1, 2);h
+            //m_spread.HeaderGroupADD("Test", SPR_LOOKUPCODE - 1, 2);
 
             #endregion
 
             #region Width
 
-            m_spread.nwobject(SPR_DOCNO - 1).Width(200);
-
+            m_spread.nwobject(SPR_DOCUMENTNO - 1).Width(300);
+            m_spread.nwobject(SPR_DOCUMENTPOSTINGDATE - 1).Width(250);
+            m_spread.nwobject(SPR_ITEMGROUPTYPEDESC - 1).Width(250);
+            m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).Width(120);
+            m_spread.nwobject(SPR_ITEMDESC - 1).Width(250);
+            m_spread.nwobject(SPR_ITEMCODE - 1).Width(120);
+            m_spread.nwobject(SPR_UOM - 1).Width(120);
+            m_spread.nwobject(SPR_QTY - 1).Width(120);
+            m_spread.nwobject(SPR_AMOUNT - 1).Width(120);
+            m_spread.nwobject(SPR_REVIEWATTACHMENT - 1).Width(150);
             m_spread.nwobject(SPR_LINEID - 1).Width(0);
-            m_spread.nwobject(SPR_ROWNO - 1).Width(0);
-            m_spread.nwobject(SPR_RATAG - 1).Width(0);
-
-
-
-            // m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).Width(120);
-            // m_spread.nwobject(SPR_ITEMDESC - 1).Width(250);
-            // m_spread.nwobject(SPR_ITEMCODE - 1).Width(120);
-            // m_spread.nwobject(SPR_BASEUOM - 1).Width(120);
-            // m_spread.nwobject(SPR_VATTAXDESC - 1).Width(150);
-            // m_spread.nwobject(SPR_EWTDESC - 1).Width(150);
-            // m_spread.nwobject(SPR_REMARKS - 1).Width(150);
-            // m_spread.nwobject(SPR_TAGREMARKS - 1).Width(0);
-            // m_spread.nwobject(SPR_VATTAXCODE - 1).Width(0);
-            // m_spread.nwobject(SPR_EWTCODE - 1).Width(0);
-            // m_spread.nwobject(SPR_BASEUOMCODE - 1).Width(0);
+            m_spread.nwobject(SPR_REVIEWATTACHMENTTAG - 1).Width(0);
+            m_spread.nwobject(SPR_BASEUOMCODE - 1).Width(0);
 
 
             #endregion
 
             #region Color
 
-            m_spread.nwobject(SPR_DOCNO - 1).BackgroundColor("cyan");
-            m_spread.nwobject(SPR_DOCPOSTDATE - 1).BackgroundColor("gainsboro");
-            // m_spread.nwobject(SPR_REFNO - 1).BackgroundColor("#ffffff");
-            // m_spread.nwobject(SPR_REFDATE - 1).BackgroundColor("#ffffff");
-            // m_spread.nwobject(SPR_DUEDATE - 1).BackgroundColor("#ffffff");
-            m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).BackgroundColor("cyan");
+            m_spread.nwobject(SPR_DOCUMENTNO - 1).BackgroundColor("cyan");
+            m_spread.nwobject(SPR_DOCUMENTPOSTINGDATE - 1).BackgroundColor("gainsboro");
             m_spread.nwobject(SPR_ITEMGROUPTYPEDESC - 1).BackgroundColor("gainsboro");
-            m_spread.nwobject(SPR_ITEMCODE - 1).BackgroundColor("cyan");
-
+            m_spread.nwobject(SPR_ITEMGROUPTYPECODE - 1).BackgroundColor("cyan");
             m_spread.nwobject(SPR_ITEMDESC - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR_ITEMCODE - 1).BackgroundColor("cyan");
             m_spread.nwobject(SPR_UOM - 1).BackgroundColor("cyan");
-            // m_spread.nwobject(SPR_QTY - 1).BackgroundColor("#ffffff");
-            // m_spread.nwobject(SPR_AMOUNT - 1).BackgroundColor("#ffffff");
-            // m_spread.nwobject(SPR_TOTALAMOUNT - 1).BackgroundColor("#ffffff");
-            m_spread.nwobject(SPR_REVIEWATTACHMENTS - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR_TOTALAMOUNT - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR_REVIEWATTACHMENT - 1).BackgroundColor("gainsboro");
+
 
             #endregion
 
 
             #region Grid Buttons
-
             m_spread.buttonInsert = true;
             m_spread.buttonDelete = true;
             m_spread.buttonSearchFind = false;
             m_spread.buttonResetColumn = true;
             m_spread.buttonSaveColumn = true;
-            m_spread.ButtonMenuAdd("btnCopyFrom", "Copy From");
             m_spread.GetSaveWith(this.UserDefinedConnectionString, dal.MenuItemCode + "-1", based.SecurityAccess.RecUser);
 
             #endregion
@@ -860,40 +801,6 @@ namespace Noah_Web.forms_BusinessLayer
             js.ADD("nwGrid_TableFreeze(\"" + gridID + "\",1,0)");
             js.ADD("nwGrid_makeResize(\"" + gridID + "\")");
             js.ADD("HasDataRemarks()");
-        }
-
-        private void DefaultVatCode()
-        {
-            string SupplierCode = string.Empty;
-            string VatDesc = string.Empty;
-            string EWTDesc = string.Empty;
-            string VatCode = string.Empty;
-            string EWTCode = string.Empty;
-            int row = 0;
-            DataTable dt = new DataTable();
-
-            SupplierCode = WebApp.nwobjectText("idvallugVendor");
-            row = Parser.ParseInt(WebApp.nwobjectText("row"));
-
-            dt = dal.DefaultVatCode(SupplierCode);
-            if (dt.Rows.Count > 0)
-            {
-
-                VatDesc = Parser.ParseString(dt.Rows[0]["VatDesc"]);
-                EWTDesc = Parser.ParseString(dt.Rows[0]["EWTDesc"]);
-                VatCode = Parser.ParseString(dt.Rows[0]["VatCode"]);
-                EWTCode = Parser.ParseString(dt.Rows[0]["EWTCode"]);
-
-                string xVATDesc = string.Format($"nwGridCon_Book.ActiveSheet.SetText((SPR_VATTAXDESC - 1), {row}, '{VatDesc}');");
-                string yEWTDesc = string.Format($"nwGridCon_Book.ActiveSheet.SetText((SPR_EWTDESC - 1), {row}, '{EWTDesc}');");
-                string yVATCode = string.Format($"nwGridCon_Book.ActiveSheet.SetText((SPR_VATTAXCODE - 1), {row}, '{VatCode}');");
-                string yEWTCode = string.Format($"nwGridCon_Book.ActiveSheet.SetText((SPR_EWTCODE - 1), {row}, '{EWTCode}');");
-
-                js.ADD(xVATDesc);
-                js.ADD(yEWTDesc);
-                js.ADD(yVATCode);
-                js.ADD(yEWTCode);
-            }
         }
 
         private void DefaultItemGroupType()
@@ -921,20 +828,19 @@ namespace Noah_Web.forms_BusinessLayer
 
         private DataTable LoadSchema()
         {
+
             #region don't change
             DataTable dtHDR = new DataTable();
             dtHDR = dal.LoadSchema();
             #endregion
 
             DataRow dr = dtHDR.NewRow();
-            dr["locForm"] = WebApp.nwobjectText("idvallugLocForm");
+            dr["Docno"] = WebApp.nwobjectText("txtTransactionNo");
+            dr["LocForm"] = WebApp.nwobjectText("idvallugLocForm");
             dr["vendor"] = WebApp.nwobjectText("idvallugPayee");
-
-            dr["currency"] = WebApp.nwobjectText("idvallugCurrency");
-            dr["checkPayeeName"] = WebApp.nwobjectText("txtCheckPayeeName");
+            dr["Currency"] = WebApp.nwobjectText("idvallugCurrency");
+            dr["CheckPayeeName"] = WebApp.nwobjectText("txtPayeeName");
             dr["remarks"] = WebApp.nwobjectText("txtRemarks");
-
-
             dr["Recuser"] = based.SecurityAccess.RecUser;
             dr["Moduser"] = based.SecurityAccess.RecUser;
             dtHDR.Rows.Add(dr);
@@ -953,54 +859,42 @@ namespace Noah_Web.forms_BusinessLayer
             dtLIN = dal.LoadSchemaLIN();
             #endregion
 
-            // DataTable dt = WebApp.nwGridData(WebApp.nwobjectText("nwGridCon"));
-
+            //DataTable dt = WebApp.nwGridData(WebApp.nwobjectText("nwGridCon"));
             DataTable dt = new DataTable();
             DataSet ds = WebApp.DataSet("nwGridCon");
-            if(ds.Tables.Count > 0)
+            if (ds.Tables.Count > 0)
             {
                 dt = ds.Tables[0];
             }
-            //dtLIN.Columns.Add("rNo", typeof(int));1588009015
+            dtLIN.Columns.Add("rNo", typeof(int));
 
             int ctr = 1;
 
             foreach (DataRow dr_details in dt.Rows)
             {
-
                 DataRow dr = dtLIN.NewRow();
-                if (
-                    dr_details[SPR_DOCNO - 1].ToString() != string.Empty 
+                if (dr_details[SPR_DOCUMENTNO - 1].ToString() != string.Empty
+                    || dr_details[SPR_DOCUMENTPOSTINGDATE - 1].ToString() != string.Empty
                     || dr_details[SPR_REFNO - 1].ToString() != string.Empty
                     || dr_details[SPR_REFDATE - 1].ToString() != string.Empty
                     || dr_details[SPR_DUEDATE - 1].ToString() != string.Empty
                     || dr_details[SPR_ITEMGROUPTYPECODE - 1].ToString() != string.Empty
                     || dr_details[SPR_ITEMCODE - 1].ToString() != string.Empty
-                    || dr_details[SPR_UOM - 1].ToString() != string.Empty
-                    || dr_details[SPR_QTY - 1].ToString() != string.Empty
-                    || dr_details[SPR_AMOUNT - 1].ToString() != string.Empty
-                    || dr_details[SPR_TOTALAMOUNT - 1].ToString() != string.Empty
-                    )
+                    || dr_details[SPR_BASEUOMCODE - 1].ToString() != string.Empty
+                    || dr_details[SPR_REVIEWATTACHMENT - 1].ToString() != string.Empty)
                 {
-                    dr["DocNo"] = dr_details[SPR_DOCNO - 1].ToString();
-
-                    dr["RowNo"] = ctr;
-
-                    dr["LineID"] = Parser.ParseInt(dr_details[SPR_LINEID - 1].ToString());
-                    dr["RefDocNo"] = dr_details[SPR_DOCNO - 1].ToString();
-
-                    dr["RefNo"] = dr_details[SPR_REFNO - 1].ToString();
-                    dr["RefDate"] = dr_details[SPR_REFDATE - 1].ToString();
-                    dr["DueDate"] = dr_details[SPR_DUEDATE - 1].ToString();
+                    dr["refDocno"] = dr_details[SPR_DOCUMENTNO - 1].ToString();
+                    dr["refNo"] = dr_details[SPR_REFNO - 1].ToString();
+                    dr["refDate"] = dr_details[SPR_REFDATE - 1].ToString();
+                    dr["dueDate"] = dr_details[SPR_DUEDATE - 1].ToString();
                     dr["igtCode"] = dr_details[SPR_ITEMGROUPTYPECODE - 1].ToString();
-                    dr["ItemCode"] = dr_details[SPR_ITEMCODE - 1].ToString();
-                    dr["UOM"] = dr_details[SPR_UOM - 1].ToString();
-
-                    dr["Qty"] = dr_details[SPR_QTY - 1].ToString();
+                    dr["itemCode"] = dr_details[SPR_ITEMCODE - 1].ToString();
+                    dr["UOM"] = dr_details[SPR_BASEUOMCODE - 1].ToString();
+                    dr["QTY"] = dr_details[SPR_QTY - 1].ToString();
                     dr["Amount"] = dr_details[SPR_AMOUNT - 1].ToString();
                     dr["totalamt"] = dr_details[SPR_TOTALAMOUNT - 1].ToString();
-
-                    // dr["rNo"] = ctr;
+                    dr["rNo"] = ctr;
+                    dr["lineID"] = Parser.ParseInt(dr_details[SPR_LINEID - 1].ToString());
                     dtLIN.Rows.Add(dr);
                     dtLIN.AcceptChanges();
                 }
@@ -1013,29 +907,47 @@ namespace Noah_Web.forms_BusinessLayer
         public void Data_Enable()
         {
             nwToolBox.bindingNavigatorAddNewItem.Visible = true;
-            nwToolBox.bindingNavigatorSaveItem.Visible = true;
-            nwToolBox.bindingNavigatorDeleteItem.Visible = true;
-            nwToolBox.bindingNavigatorInquireItem.Visible = true;
-            nwToolBox.bindingNavigatorExportItem.Visible = true;
-            nwToolBox.bindingNavigatorImportItem.Visible = false;
-            nwToolBox.bindingNavigatorProcessItem.Visible = false;
+            //nwToolBox.bindingNavigatorSaveItem.Visible = true;
+            //nwToolBox.bindingNavigatorDeleteItem.Visible = true;
+            //nwToolBox.bindingNavigatorInquireItem.Visible = true;
+            nwToolBox.bindingNavigatorExportItem.Enable = false;
+            //nwToolBox.bindingNavigatorImportItem.Visible = false;
+            nwToolBox.bindingNavigatorProcessItem.Visible = true;
 
             nwToolBox.bindingNavigatorAddNewItem.Enable = true;
-            nwToolBox.bindingNavigatorSaveItem.Enable = false;
-            nwToolBox.bindingNavigatorDeleteItem.Enable = false;
-            nwToolBox.bindingNavigatorInquireItem.Enable = true;
-            nwToolBox.bindingNavigatorExportItem.Enable = true;
-            nwToolBox.bindingNavigatorImportItem.Enable = false;
+            //nwToolBox.bindingNavigatorSaveItem.Enable = false;
+            //nwToolBox.bindingNavigatorDeleteItem.Enable = false;
+            //nwToolBox.bindingNavigatorInquireItem.Enable = true;
+            //nwToolBox.bindingNavigatorExportItem.Enable = true;
+            //nwToolBox.bindingNavigatorImportItem.Enable = false;
             nwToolBox.bindingNavigatorProcessItem.Enable = false;
-            nwToolBox.bindingNavigatorPrintItem.Enable = false;
+            //nwToolBox.bindingNavigatorPrintItem.Enable = false;
+
+        }
+
+        private void setRqmtCompProp()
+        {
+            if (dal.hasReqComplianceHdr(WebApp.nwobjectText("txtTransactionNo")) == "True")
+            {
+                js.ADD("$('#btnReqCompliance').removeClass('btn-default-orange');");
+                js.ADD("$('#btnReqCompliance').removeClass('btn-default-gainsboro');");
+                js.ADD("$('#btnReqCompliance').addClass('btn-default-green');");
+            }
+            else
+            {
+                js.ADD("$('#btnReqCompliance').removeClass('btn-default-green');");
+                js.ADD("$('#btnReqCompliance').removeClass('btn-default-gainsboro');");
+                js.ADD("$('#btnReqCompliance').addClass('btn-default-orange');");
+            }
         }
 
         private void Main_Load()
         {
             if (based.isInterface == true) dal.UpdateVersion();
-            Data_Enable();
             CreateGrid(true);
             js.ADD("$('#nwGridCon').enable(false);");
+            Data_Enable();
+            js.ADD("mainLoad();");
         }
 
         private void RefreshData()
@@ -1045,7 +957,125 @@ namespace Noah_Web.forms_BusinessLayer
             js.ADD("func_Toolbox_Clear();");
             js.ADD("func_ToolboxData(\"#noah-webui-Toolbox-Grid\", \"toolbox\")"); // goto: getToolBoxData
             nwDocno = WebApp.nwobjectText("nwDocno");
+        }
 
+        public void CreateProcessGrid(bool isinit)
+        {
+            var gridID3 = "nwGridCon3";
+
+            nwGrid m_spread = new nwGrid("nwGridCon3");
+            m_spread.Type = nwGridType.SpreadCanvas;
+            m_spread.CreateExcelGrid(1, SPR3_REMARKS);
+
+            if (isinit)
+            {
+                DataTable dt = new DataTable();
+                string recuser = based.SecurityAccess.RecUser;
+                dt = dal.getProcessData(recuser);
+
+                if (!(dt.Rows.Count == 0))
+                {
+                    m_spread.minRow(dt.Rows.Count);
+                    //dt.Rows.Add();
+                    m_spread.dataSource(dt);
+                }
+                else
+                {
+                    m_spread.minRow(1);
+
+                }
+            }
+
+            #region Column Name
+            m_spread.nwobject(SPR3_Checkbox - 1).ColumnName("Select");
+            m_spread.nwobject(SPR3_TRANSACTIONNO - 1).ColumnName("Transaction No.");
+            m_spread.nwobject(SPR3_DATECREATED - 1).ColumnName("Date Created");
+            m_spread.nwobject(SPR3_VENDORPAYEECODE - 1).ColumnName("Vendor/Payee Code");
+            m_spread.nwobject(SPR3_VENDORPAYEENAME - 1).ColumnName("Vendor/Payee Name");
+            m_spread.nwobject(SPR3_CURRENCY - 1).ColumnName("Currency");
+            m_spread.nwobject(SPR3_CHECKPAYEENAME - 1).ColumnName("Check Payee Name");
+            m_spread.nwobject(SPR3_REMARKS - 1).ColumnName("Remarks");
+            #endregion
+
+            #region Column Background Color
+            m_spread.nwobject(SPR3_Checkbox - 1).BackgroundColor("White");
+            m_spread.nwobject(SPR3_TRANSACTIONNO - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR3_DATECREATED - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR3_VENDORPAYEECODE - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR3_VENDORPAYEENAME - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR3_CURRENCY - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR3_CHECKPAYEENAME - 1).BackgroundColor("gainsboro");
+            m_spread.nwobject(SPR3_REMARKS - 1).BackgroundColor("gainsboro");
+            #endregion
+
+            m_spread.nwobject(SPR3_Checkbox - 1).CheckBox(true, "chkapprove");
+
+            #region Column Width 
+            m_spread.nwobject(SPR3_Checkbox - 1).Width(60);
+            //m_spread.nwobject(SPR3_isValid - 1).Width(60);
+            m_spread.nwobject(SPR3_TRANSACTIONNO - 1).Width(220);
+            m_spread.nwobject(SPR3_REMARKS - 1).Width(300);
+            #endregion
+
+            #region Column Text Align
+            //m_spread.nwobject(SPR3_DMAMT - 1).TextAlign("Right");
+            #endregion
+
+            m_spread.RowHeight(20);
+            m_spread.TableHeight(270);
+            m_spread.backgroundColor("#FFFFFF");
+            m_spread.HeaderBackgroundGradientColor("rgb(255, 255, 255)", "rgb(191, 191, 191)");
+            m_spread.HoverColor("rgba(179, 222, 255, 0.57)", "rgba(219, 117, 36,1)");
+
+            m_spread.HeaderBorderColor("#DEDEDE");
+            m_spread.rowBackground("#FFFFFF", "#FFFFFF");
+            m_spread.TableBorderColor("#BBB");
+            m_spread.BodyBorderColor("#BBB");
+            m_spread.HeaderBackgroundGradientColor("#FEFEFE", "#DEDEDE");
+            m_spread.HeaderTextColor("#131313");
+            m_spread.HoverColor("#DEDEDE", "inherit");
+            m_spread.SelectedRowHover("#DEDEDE");
+            m_spread.SelectedRowHoverColor("inherit");
+
+            m_spread.varSpreadBook = "nwGridCon3_Book";
+            m_spread.varSpreadSheet = "nwGridCon3_Sheet";
+
+            //js.makeHTML("#" + gridID3, m_spread.createTable());
+            js.ADD(m_spread.createTable());
+            js.ADD("nwGrid_TableAdjust(\"" + gridID3 + "\")");
+            js.ADD("nwGrid_TableFreeze(\"" + gridID3 + "\",0,0)");
+            js.ADD("nwGrid_makeResize(\"" + gridID3 + "\")");
+            js.makeCSS("#" + gridID3, "border", "1px solid #BBB1B1");
+        }
+
+        public String Processvalidation()
+        {
+            String errmess = String.Empty;
+            DataTable dt = new DataTable();
+            DataSet ds = WebApp.DataSet("nwGridCon3");
+            if (ds.Tables.Count > 0)
+            {
+                dt = ds.Tables[0];
+            }
+            int row = 1;
+            bool isNoTicked = true;
+            foreach (DataRow dr in dt.Rows)
+            {
+                String checker = string.Empty;
+                if (dr[SPR3_Checkbox - 1].ToString() == "true" || dr[SPR3_Checkbox - 1].ToString() == "1")
+                {
+                    isNoTicked = false;
+
+                }
+                row++;
+            }
+
+            if (isNoTicked)
+            {
+                errmess += $"Cannot be processed. Please select at least one transaction to process.\n";
+            }
+
+            return errmess;
         }
     }
 }

@@ -8,12 +8,12 @@ using NoahWebLib.NoahWebFunction;
 
 namespace DALComponent
 {
-    public class APApprovedPaymentRequestEntryDAL : NoahWebLib.DatabaseHandler
+    public class APApprovedPaymentRequestEntry2DAL : NoahWebLib.DatabaseHandler
     {
         nwSFObjects SFObjects = new nwSFObjects(); /// should be added
         #region STANDARD
 
-        public string MenuItemCode = "APApprovedPaymentRequestEntry"; // This is default parameter  for version
+        public string MenuItemCode = "APApprovedPaymentRequestEntry2"; // This is default parameter  for version
         public string MenuItemVersion = "10.0.0.0"; // This is default parameter for version
         public string UpdateVersion(string _MenuItemCode, string _MenuItemVersion)
         {
@@ -57,26 +57,22 @@ namespace DALComponent
 
 
         //#FOR EXPORT
-        public string LISTINGFILENAME = "Approved Payment Request Entry",
+        public string LISTINGFILENAME = "Vendor Item Tax Assignment",
              GETCOMPANY = "Select CompanyName from SG.BIRCASConfig";
         public int LISTINGSTARTROW = 5;
         //# END
         //--default start row
         public string CurrentSelectedItem;
 
-
         private string storedProcedureName = "[AP].[nsp_ApprovedPaymentRequestEntryHDR_Monroyo]";
         private string storedProcedureNameLIN = "[AP].[nsp_ApprovedPaymentRequestEntryLIN_Monroyo]";
         private string tableName = "[AP].[ApprvPaymentRqstHDR_Monroyo]";
         private string tableNameLin = "[AP].[ApprvPaymentRqstLIN_Monroyo]";
 
+        int SPR_Checkbox = 1,
+            SPR_DOCUMENTNO = 2;
 
-        // private string storedProcedureName = "[PO].[nsp_VitaHDR]";
-        // private string storedProcedureNameLIN = "[PO].[nsp_VitaLIN]";
-        // private string tableName = "[PO].[VitaHDR]";
-        // private string tableNameLin = "[PO].[VitaLIN]";
-
-        public APApprovedPaymentRequestEntryDAL(string ConnectionString, string ConnectionString2, string selectedItem)
+        public APApprovedPaymentRequestEntry2DAL(string ConnectionString, string ConnectionString2, string selectedItem)
         {
             _ConnectionString = ConnectionString;
             _ConnectionString2 = ConnectionString2;
@@ -92,14 +88,31 @@ namespace DALComponent
         {
             return SFObjects.LoadDataTable("SELECT * FROM " + tableName + " WHERE 1<>1", _ConnectionString);
         }
-        public string inquireQuery(string recuser)
+        public string inquireQuery(String recuser)
         {
-            return string.Format(@"EXEC " + storedProcedureName + "@recuser = '" + recuser + "', @QueryType = 4");
+            return string.Format(@"EXEC " + storedProcedureName + "@recuser='{0}', @QueryType = 4", recuser);
         }
-        public string DocNo(string locForm, string vendor)
+
+        public DataTable getDefaultLocform(String recuser)
         {
-            return string.Format($@"EXEC {storedProcedureNameLIN} @locForm='{locForm}', @vendor='{vendor}', @QueryType = 20");
+            return SFObjects.LoadDataTable($"SELECT * FROM SG.fn_DefaultLocation('{recuser}','APVNAM')", _ConnectionString);
         }
+
+        public string lugLocForm(string trantype, string user)
+        {
+            return string.Format($@"EXEC {storedProcedureName} @Recuser='{user}', @trantype='{trantype}', @QueryType=20");
+        }
+
+        public string lugPayee(string locForm)
+        {
+            return string.Format($@"EXEC {storedProcedureName} @locForm = '{locForm}', @QueryType=22");
+        }
+
+        public string DocumentNo(string locForm, string payee)
+        {
+            return string.Format(@"EXEC " + storedProcedureNameLIN + " @locForm = '{0}', @vendor = '{1}', @QueryType = 20", locForm, payee);
+        }
+
         public string ItemGType()
         {
             return string.Format(@"EXEC " + storedProcedureNameLIN + " @QueryType = 21");
@@ -108,9 +121,15 @@ namespace DALComponent
         {
             return string.Format(@"EXEC " + storedProcedureNameLIN + " @igtCode = '{0}', @QueryType = 22", ItemGroupTypeCode);
         }
-        public string PackSizeUOM()
+
+        public string UOM()
         {
             return string.Format(@"EXEC " + storedProcedureNameLIN + " @QueryType = 23");
+        }
+
+        public string PackSizeUOM(string ItemCode)
+        {
+            return string.Format(@"EXEC " + storedProcedureNameLIN + " @ItemCode = '{0}', @QueryType = 8", ItemCode);
         }
 
         public string MDRUOM(string ItemCode)
@@ -118,24 +137,9 @@ namespace DALComponent
             return string.Format(@"EXEC " + storedProcedureNameLIN + " @ItemCode = '{0}', @QueryType = 8", ItemCode);
         }
 
-        public string lugLocForm (string trantype, string user)
-        {
-            return string.Format($@"EXEC {storedProcedureName} @recuser='{user}', @tranType='{trantype}', @QueryType = 20");
-        }
-
-        public string lugPayee (string locForm)
-        {
-            return string.Format($@"EXEC {storedProcedureName} @locForm='{locForm}', @QueryType = 22");
-        }
-
         public string Currency()
         {
-            return string.Format(@"EXEC " + storedProcedureName + " @QueryType = 23");
-        }
-
-        public DataTable getDefaultLocform (string recuser)
-        {
-            return SFObjects.LoadDataTable($@"EXEC {storedProcedureName} @tranType='APVNAM', @recuser='{recuser}', @QueryType= 21", _ConnectionString);
+            return string.Format(@"EXEC " + storedProcedureNameLIN + " @QueryType = 9");
         }
 
         public string Vendor()
@@ -163,14 +167,15 @@ namespace DALComponent
         {
             string a = string.Format(@"EXEC " + storedProcedureName + " @docno = '" + code + "', @QueryType = 0");
 
-
-            // string a = string.Format(@"EXEC " + storedProcedureName + " @docno = 'NOAHV9-APVNAM-0000000010', @QueryType = 0");
-
-
             focusRecordPK = string.Empty;
             a = a.Replace(Environment.NewLine, " "); /*Do not Remove this*/
 
             return a;
+        }
+
+        public string hasReqComplianceHdr(string docno)
+        {
+            return SFObjects.returnText($@"SELECT dc.fn_ChkIfHasReqCompliance('{docno}',0,0)", _ConnectionString);
         }
 
         //public void hasCombination(string VAT, string EWT)
@@ -231,29 +236,26 @@ namespace DALComponent
                 sqlConn.Open();
                 sqlTrn = sqlConn.BeginTransaction();
 
-                DataRow dr = dtHDR.Rows[0];
-
-                string docno = dr["docno"].ToString();
-
+                string docno = dtHDR.Rows[0]["Docno"].ToString();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = sqlConn;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Transaction = sqlTrn; // Need to specify for every command
                 cmd.Parameters.Clear();
                 cmd.CommandText = storedProcedureName;
-                // cmd.Parameters.AddWithValue("@docno", docno);
-                cmd.Parameters.AddWithValue("@locForm", dtHDR.Rows[0]["locForm"].ToString());
+                cmd.Parameters.AddWithValue("@docno", docno);
+                cmd.Parameters.AddWithValue("@locForm", dtHDR.Rows[0]["LocForm"].ToString());
                 cmd.Parameters.AddWithValue("@vendor", dtHDR.Rows[0]["vendor"].ToString());
-                cmd.Parameters.AddWithValue("@currency", dtHDR.Rows[0]["currency"].ToString());
-                cmd.Parameters.AddWithValue("@checkPayeeName", dtHDR.Rows[0]["checkPayeeName"].ToString());
+                cmd.Parameters.AddWithValue("@currency", dtHDR.Rows[0]["Currency"].ToString());
+                cmd.Parameters.AddWithValue("@checkPayeeName", dtHDR.Rows[0]["CheckPayeeName"].ToString());
                 cmd.Parameters.AddWithValue("@remarks", dtHDR.Rows[0]["remarks"].ToString());
-
-                cmd.Parameters.AddWithValue("@tranType", Trantype);
-
-                cmd.Parameters.AddWithValue("@recuser", dtHDR.Rows[0]["Recuser"].ToString());
-                cmd.Parameters.AddWithValue("@moduser", dtHDR.Rows[0]["Moduser"].ToString());
+                cmd.Parameters.AddWithValue("@Recuser", dtHDR.Rows[0]["Recuser"].ToString());
+                cmd.Parameters.AddWithValue("@Moduser", dtHDR.Rows[0]["Moduser"].ToString());
                 cmd.Parameters.AddWithValue("@QueryType", IsNewRow ? 1 : 2);
-                cmd.ExecuteNonQuery();
+                if (IsNewRow)
+                    docno = cmd.ExecuteScalar().ToString();
+                else
+                    cmd.ExecuteNonQuery();
 
                 int maxlineID = 0;
                 if (!IsNewRow)
@@ -269,33 +271,55 @@ namespace DALComponent
                     maxlineID = Convert.ToInt32(cmd.ExecuteScalar()) + 1;
                 }
 
+                cmd = new SqlCommand();
+                cmd.Connection = sqlConn;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Transaction = sqlTrn; // Need to specify for every command
+                cmd.Parameters.Clear();
+                cmd.CommandText = storedProcedureNameLIN;
+                cmd.Parameters.AddWithValue("@docno", docno);
+                cmd.Parameters.AddWithValue("@QueryType", 3);
+                cmd.ExecuteNonQuery();
 
                 int row = 0;
+                int lineID = 0;
+                bool ctr = true;
                 foreach (DataRow items in dtLIN.Rows)
                 {
+                    #region LINE ID CONTROLS
+                    if (!string.IsNullOrEmpty(items["LineID"].ToString()))
+                        lineID = int.Parse(items["LineID"].ToString());
+                    else
+                    {
+                        if (ctr && maxlineID != 0)
+                        {
+                            lineID = maxlineID;
+                            ctr = false;
+                        }
+                        else
+                            lineID++;
+                    }
+                    #endregion
+
                     cmd = new SqlCommand();
                     cmd.Connection = sqlConn;
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Transaction = sqlTrn; // Need to specify for every command
                     cmd.Parameters.Clear();
                     cmd.CommandText = storedProcedureNameLIN;
-                    cmd.Parameters.AddWithValue("@docno", dtLIN.Rows[row]["DocNo"].ToString());
-                    cmd.Parameters.AddWithValue("@refNo", dtLIN.Rows[row]["RefNo"].ToString());
-
-                    cmd.Parameters.AddWithValue("@refDocno", dtLIN.Rows[row]["RefDocNo"].ToString());
-                    cmd.Parameters.AddWithValue("@rowno", dtLIN.Rows[row]["RowNo"].ToString());
-                    cmd.Parameters.AddWithValue("@lineID", dtLIN.Rows[row]["LineID"].ToString());
-                    
-                    cmd.Parameters.AddWithValue("@refDate", dtLIN.Rows[row]["RefDate"].ToString());
-                    cmd.Parameters.AddWithValue("@dueDate", dtLIN.Rows[row]["DueDate"].ToString());
+                    cmd.Parameters.AddWithValue("@docno", docno);
+                    cmd.Parameters.AddWithValue("@rowno", row);
+                    cmd.Parameters.AddWithValue("@lineID", lineID);
+                    cmd.Parameters.AddWithValue("@refDocno", dtLIN.Rows[row]["refDocno"].ToString());
+                    cmd.Parameters.AddWithValue("@refNo", dtLIN.Rows[row]["refNo"].ToString());
+                    cmd.Parameters.AddWithValue("@refDate", dtLIN.Rows[row]["refDate"].ToString());
+                    cmd.Parameters.AddWithValue("@dueDate", dtLIN.Rows[row]["dueDate"].ToString());
                     cmd.Parameters.AddWithValue("@igtCode", dtLIN.Rows[row]["igtCode"].ToString());
-                    cmd.Parameters.AddWithValue("@itemCode", dtLIN.Rows[row]["ItemCode"].ToString());
+                    cmd.Parameters.AddWithValue("@ItemCode", dtLIN.Rows[row]["itemCode"].ToString());
                     cmd.Parameters.AddWithValue("@uom", dtLIN.Rows[row]["UOM"].ToString());
-
-                    cmd.Parameters.AddWithValue("@qty", dtLIN.Rows[row]["Qty"].ToString());
+                    cmd.Parameters.AddWithValue("@qty", dtLIN.Rows[row]["QTY"].ToString());
                     cmd.Parameters.AddWithValue("@amount", dtLIN.Rows[row]["Amount"].ToString());
                     cmd.Parameters.AddWithValue("@totalamt", dtLIN.Rows[row]["totalamt"].ToString());
-
                     cmd.Parameters.AddWithValue("@QueryType", 1);
                     cmd.ExecuteNonQuery();
                     row++;
@@ -341,16 +365,70 @@ namespace DALComponent
             return base.ExecProcedure(cmd, _ConnectionString);
         }
 
-        public string ProcessTransaction(String TransactionNo)
+
+        public string MultiUpdateProcess(DataTable dtProcess, string SystemUser)
+        {
+            try
+            {
+                sqlConn.ConnectionString = _ConnectionString;
+                sqlConn.Open();
+                sqlTrn = sqlConn.BeginTransaction();
+
+                List<SqlCommand> cmdList = new List<SqlCommand>();
+                SqlCommand cmd = new SqlCommand();
+                cmd = new SqlCommand();
+
+                foreach (DataRow dr in dtProcess.Rows)
+                {
+                    if (Parser.ParseBool(dr[SPR_Checkbox - 1].ToString()))
+                    {
+                        cmd.Connection = sqlConn;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Transaction = sqlTrn; // Need to specify for every command
+                        cmd.CommandText = storedProcedureName;
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@Docno", dr[SPR_DOCUMENTNO - 1].ToString());
+                        cmd.Parameters.AddWithValue("@recuser", SystemUser);
+                        cmd.Parameters.AddWithValue("@QueryType", 5);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                sqlTrn.Rollback();
+                sqlConn.Close();
+                string result;
+                if (sqlEx.Number == 547)
+                    result = String.Format("System Cannot perform action.\nData currently in use.", sqlEx.Number);
+                else
+                    result = String.Format("{0}\n", sqlEx.Message);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                sqlTrn.Rollback();
+                sqlConn.Close();
+                return String.Format("{0}\n", ex.Message);
+            }
+
+            sqlTrn.Commit();
+            sqlConn.Close();
+            return "Process completed";
+        }
+
+        public DataTable getProcessData(String user)
         {
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Clear();
             cmd.CommandText = storedProcedureName;
-            cmd.Parameters.AddWithValue("@TransactionNo", TransactionNo);
-            cmd.Parameters.AddWithValue("@QueryType", 6);
-            return base.ExecProcedure(cmd, _ConnectionString);
+            cmd.Parameters.AddWithValue("@recuser", user);
+            cmd.Parameters.AddWithValue("@QueryType", 23);
+            return ExecGetData(cmd, _ConnectionString);
         }
+
+
 
         public string GenerateTranNo(string Loc, string Trantype)
         {

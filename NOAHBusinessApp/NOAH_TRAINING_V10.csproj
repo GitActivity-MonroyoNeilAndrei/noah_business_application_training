@@ -26,6 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -244,6 +245,9 @@
     <Compile Include="AP\DataSetup\APVITA\APVITABL.cs" />
     <Compile Include="AP\DataSetup\APVITA\APVITAController.cs" />
     <Compile Include="AP\DataSetup\APVITA\APVITADAL.cs" />
+    <Compile Include="AP\DocumentEntry\APApprovedPaymentRequestEntry2\APApprovedPaymentRequestEntryBL2.cs" />
+    <Compile Include="AP\DocumentEntry\APApprovedPaymentRequestEntry2\APApprovedPaymentRequestEntryController2.cs" />
+    <Compile Include="AP\DocumentEntry\APApprovedPaymentRequestEntry2\APApprovedPaymentRequestEntryDAL2.cs" />
     <Compile Include="AP\DocumentEntry\APApprovedPaymentRequestEntry\APApprovedPaymentRequestEntryBL.cs" />
     <Compile Include="AP\DocumentEntry\APApprovedPaymentRequestEntry\APApprovedPaymentRequestEntryController.cs" />
     <Compile Include="AP\DocumentEntry\APApprovedPaymentRequestEntry\APApprovedPaymentRequestEntryDAL.cs" />
@@ -356,6 +360,9 @@
     <Content Include="AP\DataSetup\APVITA\APVITA.css" />
     <Content Include="AP\DataSetup\APVITA\APVITA.js" />
     <Content Include="AP\DataSetup\APVITA\log.txt" />
+    <Content Include="AP\DocumentEntry\APApprovedPaymentRequestEntry2\APApprovedPaymentRequestEntry2.css" />
+    <Content Include="AP\DocumentEntry\APApprovedPaymentRequestEntry2\APApprovedPaymentRequestEntry2.js" />
+    <Content Include="AP\DocumentEntry\APApprovedPaymentRequestEntry2\log.txt" />
     <Content Include="AP\DocumentEntry\APApprovedPaymentRequestEntry\APApprovedPaymentRequestEntry.css" />
     <Content Include="AP\DocumentEntry\APApprovedPaymentRequestEntry\APApprovedPaymentRequestEntry.js" />
     <Content Include="AP\DocumentEntry\APApprovedPaymentRequestEntry\log.txt" />
@@ -2124,6 +2131,7 @@
     <Content Include="AP\DocumentEntry\APDebitMemoEntry\APDebitMemoEntry.cshtml" />
     <Content Include="AP\DocumentEntry\APDebitMemoEntry\Popup\Popups.cshtml" />
     <Content Include="AP\DocumentEntry\APApprovedPaymentRequestEntry\APApprovedPaymentRequestEntry.cshtml" />
+    <Content Include="AP\DocumentEntry\APApprovedPaymentRequestEntry2\APApprovedPaymentRequestEntry2.cshtml" />
     <None Include="Properties\PublishProfiles\TestNoahUIVer3.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

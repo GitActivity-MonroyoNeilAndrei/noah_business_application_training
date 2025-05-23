@@ -147,15 +147,25 @@ function func_ToolboxSearch(indef, enume) {
 
 ///////////////////// Bind tool
 function cust_GetPara() {
-    // nwParameter_Add("txtID", $("#txtID").val());
+    nwParameter_Add("txtDocno", $("#txtDocno").val());
 
     nwParameter_Add("idvallugLocForm", $("#idvallugLocForm").val());
     nwParameter_Add("idvallugPayee", $("#idvallugPayee").val());
     nwParameter_Add("idvallugSubPayee", $("#idvallugSubPayee").val());
     nwParameter_Add("idvallugCurrency", $("#idvallugCurrency").val());
     nwParameter_Add("txtCheckPayeeName", $("#txtCheckPayeeName").val());
+
+    nwParameter_Add("txtDMno", $("#txtDMno").val());
     
     nwParameter_Add("txtRemarks", $("#txtRemarks").val());
+
+
+    // nwParameter_Add("txtDateSubmitted", $("#txtDateSubmitted").val());
+    // nwParameter_Add("txtDatePosted", $("#txtDatePosted").val());
+    // nwParameter_Add("txtApDmStatus", $("#txtApDmStatus").val());
+    // nwParameter_Add("idvallugRsnDisapproval", $("#idvallugRsnDisapproval").val());
+    // nwParameter_Add("descvallugRsnDisapproval", $("#descvallugRsnDisapproval").val());
+    // nwParameter_Add("txtDissRemarks", $("#txtDissRemarks").val());
 
 
     try{
@@ -501,9 +511,9 @@ function nwGrid_AddtoListDone(nwGridID, crnwTRtemp, addtoListTableRec, index) {
     //         }
     //     }
 
-    //         if (cnt == (_row + 1)) {
-    //             nwGrid_AddRow(nwGridID, 1);
-    //         }
+            if (cnt == (_row + 1)) {
+                nwGrid_AddRow(nwGridID, 1);
+            }
     //  }
 
     return crnwTRtemp;
@@ -543,14 +553,11 @@ function Lookup_DoneFunction(idName, idNum) {
     //     nwGridCon_Book.ActiveSheet.SetText((SPR_BASEUOM - 1), _row, "");
 
 
-       
     //     if (cnt == (_row + 1)) {
     //         nwGrid_AddRow(nwGridID, 1);
     //     }
    
     // }
-
-
 
 
     if (idName == 'lugMDRUOM') {

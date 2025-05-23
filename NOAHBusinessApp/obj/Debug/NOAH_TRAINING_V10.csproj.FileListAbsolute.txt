@@ -161,6 +161,8 @@ C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Micr
 C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.dll
 C:\Users\NOAH\Downloads\NOAH_TRAINING\NOAH_TRAINING_V10\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.pdb
+C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\obj\Debug\NOAH_TRAINING_V10.csproj.AssemblyReference.cache
+C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\obj\Debug\NOAH_TRAINING_V10.csproj.CoreCompileInputs.cache
 C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\bin\ApplicationInsights.config
 C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\bin\roslyn\csc.exe
 C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -239,8 +241,6 @@ C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_tr
 C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\obj\Debug\NOAH_TRAINING_V10.csproj.AssemblyReference.cache
-C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\obj\Debug\NOAH_TRAINING_V10.csproj.CoreCompileInputs.cache
 C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\obj\Debug\NOAH_TRA.2272E515.Up2Date
 C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.dll
 C:\Users\Neil Andrei\Documents\Noah_important_files\noah_business_application_training\NOAHBusinessApp\obj\Debug\NOAHBusinessApp.pdb
